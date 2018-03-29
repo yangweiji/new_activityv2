@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActionHistory implements Serializable {
 
-    private static final long serialVersionUID = 2143073804;
+    private static final long serialVersionUID = 1265134682;
 
     private Integer   id;
     private Integer   axtenalId;
@@ -31,6 +31,7 @@ public class ActionHistory implements Serializable {
     private String    memo;
     private Timestamp created;
     private Integer   createdBy;
+    private Integer   communityId;
 
     public ActionHistory() {}
 
@@ -41,6 +42,7 @@ public class ActionHistory implements Serializable {
         this.memo = value.memo;
         this.created = value.created;
         this.createdBy = value.createdBy;
+        this.communityId = value.communityId;
     }
 
     public ActionHistory(
@@ -49,7 +51,8 @@ public class ActionHistory implements Serializable {
         Integer   action,
         String    memo,
         Timestamp created,
-        Integer   createdBy
+        Integer   createdBy,
+        Integer   communityId
     ) {
         this.id = id;
         this.axtenalId = axtenalId;
@@ -57,6 +60,7 @@ public class ActionHistory implements Serializable {
         this.memo = memo;
         this.created = created;
         this.createdBy = createdBy;
+        this.communityId = communityId;
     }
 
     public Integer getId() {
@@ -107,6 +111,14 @@ public class ActionHistory implements Serializable {
         this.createdBy = createdBy;
     }
 
+    public Integer getCommunityId() {
+        return this.communityId;
+    }
+
+    public void setCommunityId(Integer communityId) {
+        this.communityId = communityId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ActionHistory (");
@@ -117,6 +129,7 @@ public class ActionHistory implements Serializable {
         sb.append(", ").append(memo);
         sb.append(", ").append(created);
         sb.append(", ").append(createdBy);
+        sb.append(", ").append(communityId);
 
         sb.append(")");
         return sb.toString();

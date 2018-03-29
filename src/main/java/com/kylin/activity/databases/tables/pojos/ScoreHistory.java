@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistory implements Serializable {
 
-    private static final long serialVersionUID = -278423663;
+    private static final long serialVersionUID = 1683489171;
 
     private Integer   id;
     private Integer   score;
@@ -31,6 +31,7 @@ public class ScoreHistory implements Serializable {
     private Integer   activityId;
     private String    memo;
     private Timestamp created;
+    private Integer   communityId;
 
     public ScoreHistory() {}
 
@@ -41,6 +42,7 @@ public class ScoreHistory implements Serializable {
         this.activityId = value.activityId;
         this.memo = value.memo;
         this.created = value.created;
+        this.communityId = value.communityId;
     }
 
     public ScoreHistory(
@@ -49,7 +51,8 @@ public class ScoreHistory implements Serializable {
         Integer   userId,
         Integer   activityId,
         String    memo,
-        Timestamp created
+        Timestamp created,
+        Integer   communityId
     ) {
         this.id = id;
         this.score = score;
@@ -57,6 +60,7 @@ public class ScoreHistory implements Serializable {
         this.activityId = activityId;
         this.memo = memo;
         this.created = created;
+        this.communityId = communityId;
     }
 
     public Integer getId() {
@@ -107,6 +111,14 @@ public class ScoreHistory implements Serializable {
         this.created = created;
     }
 
+    public Integer getCommunityId() {
+        return this.communityId;
+    }
+
+    public void setCommunityId(Integer communityId) {
+        this.communityId = communityId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ScoreHistory (");
@@ -117,6 +129,7 @@ public class ScoreHistory implements Serializable {
         sb.append(", ").append(activityId);
         sb.append(", ").append(memo);
         sb.append(", ").append(created);
+        sb.append(", ").append(communityId);
 
         sb.append(")");
         return sb.toString();

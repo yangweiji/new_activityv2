@@ -208,4 +208,11 @@ public class ActivityDao extends DAOImpl<ActivityRecord, com.kylin.activity.data
     public List<com.kylin.activity.databases.tables.pojos.Activity> fetchByScoreInfos(String... values) {
         return fetch(Activity.ACTIVITY_.SCORE_INFOS, values);
     }
+
+    /**
+     * Fetch records that have <code>community_id IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Activity> fetchByCommunityId(Integer... values) {
+        return fetch(Activity.ACTIVITY_.COMMUNITY_ID, values);
+    }
 }

@@ -7,12 +7,13 @@ package com.kylin.activity.databases;
 import com.kylin.activity.databases.tables.ActionHistory;
 import com.kylin.activity.databases.tables.Activity;
 import com.kylin.activity.databases.tables.ActivityFavorite;
+import com.kylin.activity.databases.tables.ActivityPhoto;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.Company;
-import com.kylin.activity.databases.tables.Parameter;
+import com.kylin.activity.databases.tables.Article;
+import com.kylin.activity.databases.tables.Community;
+import com.kylin.activity.databases.tables.CommunityUser;
 import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.PriceHistory;
 import com.kylin.activity.databases.tables.ScoreHistory;
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
@@ -49,6 +50,11 @@ public class Tables {
     public static final ActivityFavorite ACTIVITY_FAVORITE = com.kylin.activity.databases.tables.ActivityFavorite.ACTIVITY_FAVORITE;
 
     /**
+     * 活动相册
+     */
+    public static final ActivityPhoto ACTIVITY_PHOTO = com.kylin.activity.databases.tables.ActivityPhoto.ACTIVITY_PHOTO;
+
+    /**
      * 活动门票
      */
     public static final ActivityTicket ACTIVITY_TICKET = com.kylin.activity.databases.tables.ActivityTicket.ACTIVITY_TICKET;
@@ -59,24 +65,24 @@ public class Tables {
     public static final ActivityUser ACTIVITY_USER = com.kylin.activity.databases.tables.ActivityUser.ACTIVITY_USER;
 
     /**
-     * 单位公司
+     * 文章 内容发布
      */
-    public static final Company COMPANY = com.kylin.activity.databases.tables.Company.COMPANY;
+    public static final Article ARTICLE = com.kylin.activity.databases.tables.Article.ARTICLE;
 
     /**
-     * 字典参数
+     * 社团
      */
-    public static final Parameter PARAMETER = com.kylin.activity.databases.tables.Parameter.PARAMETER;
+    public static final Community COMMUNITY = com.kylin.activity.databases.tables.Community.COMMUNITY;
+
+    /**
+     * 社团成员
+     */
+    public static final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
      * The table <code>activity.pay_order</code>.
      */
     public static final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
-
-    /**
-     * 缴费历史
-     */
-    public static final PriceHistory PRICE_HISTORY = com.kylin.activity.databases.tables.PriceHistory.PRICE_HISTORY;
 
     /**
      * 积分历史

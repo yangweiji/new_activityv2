@@ -103,4 +103,11 @@ public class ScoreHistoryDao extends DAOImpl<ScoreHistoryRecord, com.kylin.activ
     public List<com.kylin.activity.databases.tables.pojos.ScoreHistory> fetchByCreated(Timestamp... values) {
         return fetch(ScoreHistory.SCORE_HISTORY.CREATED, values);
     }
+
+    /**
+     * Fetch records that have <code>community_id IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.ScoreHistory> fetchByCommunityId(Integer... values) {
+        return fetch(ScoreHistory.SCORE_HISTORY.COMMUNITY_ID, values);
+    }
 }

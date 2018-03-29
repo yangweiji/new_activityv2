@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
 
-    private static final long serialVersionUID = -50266500;
+    private static final long serialVersionUID = 88923790;
 
     /**
      * The reference instance of <code>activity.activity_favorite</code>
@@ -71,9 +71,9 @@ public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
     public final TableField<ActivityFavoriteRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户id");
 
     /**
-     * The column <code>activity.activity_favorite.created</code>. 创建时间
+     * The column <code>activity.activity_favorite.created</code>.
      */
-    public final TableField<ActivityFavoriteRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
+    public final TableField<ActivityFavoriteRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
      * Create a <code>activity.activity_favorite</code> table reference

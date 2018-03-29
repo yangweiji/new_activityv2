@@ -39,7 +39,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activity extends TableImpl<ActivityRecord> {
 
-    private static final long serialVersionUID = 1713526660;
+    private static final long serialVersionUID = 858160370;
 
     /**
      * The reference instance of <code>activity.activity</code>
@@ -158,6 +158,11 @@ public class Activity extends TableImpl<ActivityRecord> {
      * The column <code>activity.activity.score_infos</code>. 活动奖励积分信息
      */
     public final TableField<ActivityRecord, String> SCORE_INFOS = createField("score_infos", org.jooq.impl.SQLDataType.VARCHAR(1000), this, "活动奖励积分信息");
+
+    /**
+     * The column <code>activity.activity.community_id</code>.
+     */
+    public final TableField<ActivityRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>activity.activity</code> table reference

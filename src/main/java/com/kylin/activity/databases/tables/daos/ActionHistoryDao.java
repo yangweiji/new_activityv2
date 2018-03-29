@@ -103,4 +103,11 @@ public class ActionHistoryDao extends DAOImpl<ActionHistoryRecord, com.kylin.act
     public List<com.kylin.activity.databases.tables.pojos.ActionHistory> fetchByCreatedBy(Integer... values) {
         return fetch(ActionHistory.ACTION_HISTORY.CREATED_BY, values);
     }
+
+    /**
+     * Fetch records that have <code>community_id IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.ActionHistory> fetchByCommunityId(Integer... values) {
+        return fetch(ActionHistory.ACTION_HISTORY.COMMUNITY_ID, values);
+    }
 }

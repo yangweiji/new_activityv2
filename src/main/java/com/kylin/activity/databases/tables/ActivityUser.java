@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser extends TableImpl<ActivityUserRecord> {
 
-    private static final long serialVersionUID = -107814078;
+    private static final long serialVersionUID = 1323385770;
 
     /**
      * The reference instance of <code>activity.activity_user</code>
@@ -87,14 +87,14 @@ public class ActivityUser extends TableImpl<ActivityUserRecord> {
     public final TableField<ActivityUserRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.activity_user.attend_time</code>. 活动报名时间
+     * The column <code>activity.activity_user.attend_time</code>.
      */
-    public final TableField<ActivityUserRecord, Timestamp> ATTEND_TIME = createField("attend_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "活动报名时间");
+    public final TableField<ActivityUserRecord, Timestamp> ATTEND_TIME = createField("attend_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.activity_user.check_in_time</code>. 活动签到时间
+     * The column <code>activity.activity_user.check_in_time</code>.
      */
-    public final TableField<ActivityUserRecord, Timestamp> CHECK_IN_TIME = createField("check_in_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "活动签到时间");
+    public final TableField<ActivityUserRecord, Timestamp> CHECK_IN_TIME = createField("check_in_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
      * The column <code>activity.activity_user.real_name</code>. 名称

@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
 
-    private static final long serialVersionUID = -1658934957;
+    private static final long serialVersionUID = 168950404;
 
     /**
      * The reference instance of <code>activity.score_history</code>
@@ -84,6 +84,11 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
      * The column <code>activity.score_history.created</code>.
      */
     public final TableField<ScoreHistoryRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+
+    /**
+     * The column <code>activity.score_history.community_id</code>.
+     */
+    public final TableField<ScoreHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>activity.score_history</code> table reference

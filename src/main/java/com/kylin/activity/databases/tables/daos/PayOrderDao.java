@@ -153,4 +153,11 @@ public class PayOrderDao extends DAOImpl<PayOrderRecord, com.kylin.activity.data
     public List<com.kylin.activity.databases.tables.pojos.PayOrder> fetchByOtherInfo(String... values) {
         return fetch(PayOrder.PAY_ORDER.OTHER_INFO, values);
     }
+
+    /**
+     * Fetch records that have <code>community_id IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.PayOrder> fetchByCommunityId(Integer... values) {
+        return fetch(PayOrder.PAY_ORDER.COMMUNITY_ID, values);
+    }
 }

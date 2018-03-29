@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrder extends TableImpl<PayOrderRecord> {
 
-    private static final long serialVersionUID = -1750484773;
+    private static final long serialVersionUID = 2087134620;
 
     /**
      * The reference instance of <code>activity.pay_order</code>
@@ -92,14 +92,14 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
     public final TableField<PayOrderRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL(18, 2), this, "付款金额");
 
     /**
-     * The column <code>activity.pay_order.pay_time</code>. 付款完成时间
+     * The column <code>activity.pay_order.pay_time</code>.
      */
-    public final TableField<PayOrderRecord, Timestamp> PAY_TIME = createField("pay_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "付款完成时间");
+    public final TableField<PayOrderRecord, Timestamp> PAY_TIME = createField("pay_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.pay_order.cancel_time</code>. 订单取消时间
+     * The column <code>activity.pay_order.cancel_time</code>.
      */
-    public final TableField<PayOrderRecord, Timestamp> CANCEL_TIME = createField("cancel_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "订单取消时间");
+    public final TableField<PayOrderRecord, Timestamp> CANCEL_TIME = createField("cancel_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
      * The column <code>activity.pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
@@ -112,14 +112,19 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
     public final TableField<PayOrderRecord, String> EXTENAL_ID = createField("extenal_id", org.jooq.impl.SQLDataType.VARCHAR(255), this, "微信统一订单id");
 
     /**
-     * The column <code>activity.pay_order.created</code>. 订单创建时间
+     * The column <code>activity.pay_order.created</code>.
      */
-    public final TableField<PayOrderRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "订单创建时间");
+    public final TableField<PayOrderRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
      * The column <code>activity.pay_order.other_info</code>. 活动报名时的报名json信息
      */
     public final TableField<PayOrderRecord, String> OTHER_INFO = createField("other_info", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "活动报名时的报名json信息");
+
+    /**
+     * The column <code>activity.pay_order.community_id</code>.
+     */
+    public final TableField<PayOrderRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>activity.pay_order</code> table reference

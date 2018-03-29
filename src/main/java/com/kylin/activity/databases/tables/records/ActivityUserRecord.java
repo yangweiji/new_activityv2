@@ -31,7 +31,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> implements Record15<Integer, Integer, Integer, Integer, Timestamp, Integer, Timestamp, Timestamp, String, String, String, BigDecimal, Integer, Timestamp, Integer> {
 
-    private static final long serialVersionUID = -1445994916;
+    private static final long serialVersionUID = 2057870634;
 
     /**
      * Setter for <code>activity.activity_user.id</code>. 编号
@@ -118,28 +118,28 @@ public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> 
     }
 
     /**
-     * Setter for <code>activity.activity_user.attend_time</code>. 活动报名时间
+     * Setter for <code>activity.activity_user.attend_time</code>.
      */
     public void setAttendTime(Timestamp value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.attend_time</code>. 活动报名时间
+     * Getter for <code>activity.activity_user.attend_time</code>.
      */
     public Timestamp getAttendTime() {
         return (Timestamp) get(6);
     }
 
     /**
-     * Setter for <code>activity.activity_user.check_in_time</code>. 活动签到时间
+     * Setter for <code>activity.activity_user.check_in_time</code>.
      */
     public void setCheckInTime(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.check_in_time</code>. 活动签到时间
+     * Getter for <code>activity.activity_user.check_in_time</code>.
      */
     public Timestamp getCheckInTime() {
         return (Timestamp) get(7);

@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityFavoriteRecord extends UpdatableRecordImpl<ActivityFavoriteRecord> implements Record4<Integer, Integer, Integer, Timestamp> {
 
-    private static final long serialVersionUID = -243667361;
+    private static final long serialVersionUID = 2012732471;
 
     /**
      * Setter for <code>activity.activity_favorite.id</code>. 编号
@@ -75,14 +75,14 @@ public class ActivityFavoriteRecord extends UpdatableRecordImpl<ActivityFavorite
     }
 
     /**
-     * Setter for <code>activity.activity_favorite.created</code>. 创建时间
+     * Setter for <code>activity.activity_favorite.created</code>.
      */
     public void setCreated(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.activity_favorite.created</code>. 创建时间
+     * Getter for <code>activity.activity_favorite.created</code>.
      */
     public Timestamp getCreated() {
         return (Timestamp) get(3);

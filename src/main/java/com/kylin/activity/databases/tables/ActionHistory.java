@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActionHistory extends TableImpl<ActionHistoryRecord> {
 
-    private static final long serialVersionUID = 1323668493;
+    private static final long serialVersionUID = -1187242198;
 
     /**
      * The reference instance of <code>activity.action_history</code>
@@ -84,6 +84,11 @@ public class ActionHistory extends TableImpl<ActionHistoryRecord> {
      * The column <code>activity.action_history.created_by</code>.
      */
     public final TableField<ActionHistoryRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>activity.action_history.community_id</code>.
+     */
+    public final TableField<ActionHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>activity.action_history</code> table reference

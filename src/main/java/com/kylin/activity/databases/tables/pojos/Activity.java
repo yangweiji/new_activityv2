@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activity implements Serializable {
 
-    private static final long serialVersionUID = 125615694;
+    private static final long serialVersionUID = -468386636;
 
     private Integer   id;
     private String    title;
@@ -46,6 +46,7 @@ public class Activity implements Serializable {
     private Integer   activityType;
     private Boolean   public_;
     private String    scoreInfos;
+    private Integer   communityId;
 
     public Activity() {}
 
@@ -71,6 +72,7 @@ public class Activity implements Serializable {
         this.activityType = value.activityType;
         this.public_ = value.public_;
         this.scoreInfos = value.scoreInfos;
+        this.communityId = value.communityId;
     }
 
     public Activity(
@@ -94,7 +96,8 @@ public class Activity implements Serializable {
         String    coordinate,
         Integer   activityType,
         Boolean   public_,
-        String    scoreInfos
+        String    scoreInfos,
+        Integer   communityId
     ) {
         this.id = id;
         this.title = title;
@@ -117,6 +120,7 @@ public class Activity implements Serializable {
         this.activityType = activityType;
         this.public_ = public_;
         this.scoreInfos = scoreInfos;
+        this.communityId = communityId;
     }
 
     public Integer getId() {
@@ -287,6 +291,14 @@ public class Activity implements Serializable {
         this.scoreInfos = scoreInfos;
     }
 
+    public Integer getCommunityId() {
+        return this.communityId;
+    }
+
+    public void setCommunityId(Integer communityId) {
+        this.communityId = communityId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Activity (");
@@ -312,6 +324,7 @@ public class Activity implements Serializable {
         sb.append(", ").append(activityType);
         sb.append(", ").append(public_);
         sb.append(", ").append(scoreInfos);
+        sb.append(", ").append(communityId);
 
         sb.append(")");
         return sb.toString();
