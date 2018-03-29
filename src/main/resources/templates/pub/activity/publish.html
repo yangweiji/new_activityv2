@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div class="get">
+    <div class="c-bg"></div>
+    <div class="c-publish">
+        <div class="am-u-lg-12">
+            <div class="get-title">
+                <a href="/sec/activity/publish?type=1" class="get_font_left">
+                    <img src="/img/activity/activity.png" alt="" />
+                    <br />
+                    <span style="color:white;font-size: 35px;white-space:nowrap">活动</span>
+                </a>
+                <div style="width:100px;" class="get_font_center" ></div>
+                <a href="/sec/activity/publish?type=2" class="get_font_rigth">
+                    <img src="/img/activity/match.png" alt="" />
+                    <br />
+                    <span style="color:white;font-size: 35px;white-space:nowrap">赛事</span>
+                </a>
+            </div>
+
+            <div class="font_line">
+                <!--<img src="/img/font_line.png" alt="" />-->
+                <span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    .c-publish .get-title{
+        height: 335px;
+    }
+</style>
+</body>
+</html>

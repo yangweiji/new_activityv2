@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "username": "18500045355",
+      "displayname": "18500045355",
+      "password": "$2a$10$Bh5KIMJvJ7ExzQxeeXkpfO4a3ZUy199LkDHjscAKxJiwPL8Kffboy",
+      "enabled": true,
+      "created": "2017-10-21T10:03:14.000+0000"
+    },
+    {
+      "id": 2,
+      "username": "13910438997",
+      "displayname": "Richard",
+      "password": "$2a$10$LiHkeo3gj3KNL2MIM1kbd.WjB6wA5n8Fw5yjuLwEeFHnj6PRK.iDW",
+      "enabled": true,
+      "gender": 1,
+      "created": "2017-11-20T14:17:40.000+0000",
+      "level": 1,
+      "idCard": "421023198008080050",
+      "realName": "胡冲",
+      "realTime": "2017-11-30T10:24:31.000+0000",
+      "isReal": true,
+      "avatar": "ytwE5et4mT.png"
+    },
+    {
+      "id": 3,
+      "username": "17600092253",
+      "displayname": "17600092253",
+      "password": "$2a$10$Qj2ZD2AZOHATIFbmaVHNtuJ6anVZTPZ8Vp9hdNCIEumwxynIr.SuS",
+      "enabled": true,
+      "created": "2017-11-30T06:35:41.000+0000",
+      "openId": "o5fKLw73moYdKm4OGQD2unqhKUeg"
+    }
+  ]
+}

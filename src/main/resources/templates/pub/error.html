@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div id="c_sec_activity_result_app">
+    <div class="amz-container">
+
+        <div class="c-alert">
+            <h1>
+                <i class="fa fa-exclamation-circle" style="color:red;" aria-hidden="true"></i>
+                &nbsp;
+                <span th:text="${message}"></span>
+            </h1>
+            <a href="javascript:window.history.back()" class="am-btn am-btn-default" >返回上一页</a>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #c_sec_activity_result_app{
+        margin: 50px;
+        min-height: 500px;
+    }
+</style>
+</body>
+</html>

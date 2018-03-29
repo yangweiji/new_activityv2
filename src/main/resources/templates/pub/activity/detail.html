@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div id="app">
+    <div class="amz-container">
+        <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default article_nr"
+                 data-am-paragraph="{ tableScrollable: true, pureview: true }">
+
+            <h1 class="article_nr_title" th:text="${activity.get('title')}"></h1>
+            <div class="am_list_author">
+                <a href="javascript:void(0)">
+                    <span class="am_list_author_ico" th:style="'background-image: url(' + ${activity.get('user_avatar')} + ');'"></span>
+                    <span class="name" th:text="${activity.get('displayname')}"></span>
+                </a>
+                <span class="am_news_time">
+                &nbsp;•&nbsp;
+                    <span class="timeago"
+                          th:title="${#dates.format(activity.get('created'), 'yyyy-MM-dd HH:mm')}"
+                          th:text="${#kylin.fromNow(activity.get('created'))}"></span>
+                </span>
+
+            </div>
+            <!--<div class="article_nr_content" th:text='${activity.get("body")}'>
+            </div>-->
+            <div class="article_nr_content">
+                <p>活动时间:
+                    <span th:text="${#dates.format(activity.get('start_time'), 'yyyy-MM-dd HH:mm')}"></span>
+                    ~
+                    <span th:text="${#dates.format(activity.get('end_time'), 'yyyy-MM-dd HH:mm')}"></span></p>
+                <p>活动地点: <span th:text="${activity.get('address')}"></span></p>
+                <p><img th:src="${activity.get('avatar')}"></p>
+                <p>摘要: <span th:text="${activity.get('summary')}"></span></p>
+                <div th:utext="${activity.get('body')}"></div>
+            </div>
+
+            <div class="article_nr_more">
+                <div class="article_nr_l">
+                    <a href="javascript:void(0);" v-on:click="favorite()"><i class="am-icon-btn am-icon-thumbs-o-up"></i></a>
+                    <span id="favorite_count">{{favorite_count}}</span>
+                </div>
+                <div class="article_nr_more_r">
+                    <span>分享 </span>
+                    <span class="article_nr_more_ico ">
+                      <a href="###" class="am-icon-btn am-secondary am-icon-qq"></a>
+                      <a href="###" class="am-icon-btn am-success am-icon-weixin"></a>
+                      <a href="###" class="am-icon-btn am-danger am-icon-weibo"></a>
+                    </span>
+                </div>
+            </div>
+        </article>
+
+        <p style="text-align:center;">
+            <a th:href="@{/sec/activity/attend/{activityId}(activityId=${activity.get('id')})}"
+               class="am-btn am-btn-lg get-btn am-radius banner_ios ">我要报名</a>
+        </p>
+
+        <!--<div th:inline="text">[[${activity}]]</div>-->
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #app{
+        margin: 50px;
+        min-height: 500px;
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var g_data = {
+        activityId: [[${activity.get('id')}]],
+        favorite_count: [[${activity.get('favorite_count')}]],
+        userId: [[${#httpServletRequest.remoteUser}]]
+    }
+    /*]]>*/
+</script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
+<script type="text/javascript" src="/js/pub/detail.js"></script>
+</body>
+</html>

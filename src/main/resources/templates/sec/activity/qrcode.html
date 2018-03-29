@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app">
+    <div class="manage-l">
+        <div th:replace="fragments/leftnav :: default"></div>
+    </div>
+
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>活动二维码</strong></div>
+            <div class="vip_adv"></div>
+        </div>
+
+        <div class="am-tabs-bd">
+
+            <div class="am-list-news-bd am_news_list_all qr_code">
+                <div class="am-g">
+                    <ul class="am-list">
+                        <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left am_list_li">
+                            <div class="am-u-sm-3 am-list-thumb am_list_thumb">
+                                <a class="" th:href="@{/pub/activity/detail/{id}(id=${activity.get('id')})}"
+                                   target="_blank">
+                                    <img class="am_news_list_img" alt="图片加载中..."
+                                         th:attr="data-url=${activity.get('avatar')}" v-translator
+                                    />
+                                </a>
+                            </div>
+                            <div class="am-u-sm-9 am-list-main am_list_main">
+                                <h3 class="am-list-item-hd am_list_title">
+                                    <a th:href="@{/pub/activity/detail/{id}(id=${activity.get('id')})}" target="_blank"
+                                       class="" th:text="${activity.get('title')}"></a>
+                                </h3>
+
+                                <div class="am_list_author">
+                                    <i class="fa fa-clock-o"></i> <span
+                                        th:text="${#dates.format(activity.get('created'),'yyyy年MM月dd日')}"></span>
+                                </div>
+
+                                <div class="am_list_author">
+                                    地点: &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span th:text="${activity.get('address')}"></span>
+                                </div>
+                                <div class="am_list_author">
+                                    时间: &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span th:text="${#dates.format(activity.get('start_time'),'yyyy-MM-dd HH:mm')}"></span>
+                                    ~ <span
+                                        th:text="${#dates.format(activity.get('end_time'),'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="am-g qr_code">
+                    <div class="am-u-sm-6">
+                        <img th:src="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/>
+                        (<a th:href="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}">下载报名二维码</a>)
+                    </div>
+                    <div class="am-u-sm-6">
+                        <img th:src="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/>
+                        (<a th:href="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}">下载签到二维码</a>)
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: default"></div>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
+<script type="text/javascript" src="/js/sec/activity/qrcode.js"></script>
+</body>
+</html>
+
+

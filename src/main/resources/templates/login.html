@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+
+</head>
+<body>
+<style type="text/css">
+    /* Write your styles */
+    .c-am-g{
+        max-width:400px;
+    }
+    /* 登陆logo */
+    .c-login-logo { font-size: 130px; color: #ff6a4c; }
+    .c-alert { text-align: center; margin: 10px;color:#ff6a4c; }
+    .am-form-set { margin-bottom: 10px;}
+    .c-login-form .c-login-input-text { font-size: 14px!important; padding-left: 48px!important; line-height: 1.8!important; border-radius: 30px!important; margin-top: 8px;}
+    .c-login-form .c-login-input-text:focus { border-color: #ff6a4c!important; -webkit-box-shadow: inset 0 1px 1px rgba(225,86,86,.075),0 0 5px rgba(225,86,86,.3)!important;box-shadow: inset 0 1px 1px rgba(225,86,86,.075),0 0 5px rgba(225,86,86,.3)!important; }
+    .am-form-set>input:first-child {border-radius: 30px!important;}
+    .c-login-form .am-form-icon i {color: #ccc; padding-left: 15px;}
+    .c-login-form-submit { background: #ff6a4c; border-radius: 30px; border-color: #ff6a4c;}
+    .c-login-form-submit:hover { background: #ff8e77;border-color: #ff8e77;}
+    .c-login-form-shortcut { position: relative; height: 30px; line-height: 30px; margin-top: 30px; padding: 0; width: 88%;  overflow: hidden;box-sizing: border-box;-webkit-box-sizing: border-box; }
+    .c-login-form-shortcut .c-login-form-hr { background: #ccc;  position: absolute; top:50%; left:0; right:0;display: block;  width: 100%; z-index: 1;}
+    .c-login-form-shortcut .c-login-form-hr-font { display: inline-block; padding: 0 16px; background: #fff; position: relative; font-size: 12px; color: #ccc; z-index: 2;}
+    .c-login-form-listico { padding-top: 30px;}
+    .c-login-form-listico .am-icon-btn { width: 60px; height: 60px; line-height: 60px; font-size: 30px;}
+    .c-login-form-listico .am-icon-btn:hover { opacity: .9;}
+</style>
+<div class="am-g c-am-g">
+    <!-- LOGO -->
+    <div class="am-u-sm-12 am-text-center" >
+        <i class="am-icon-twitch c-login-logo"></i>
+    </div>
+    <!-- 登陆框 -->
+    <div class="am-u-sm-11 am-u-sm-centered">
+        <div class="c-alert" th:if="${param.error}">
+            无效的用户名和密码
+        </div>
+        <div class="c-alert"  th:if="${param.logout}">
+            您已成功登出
+        </div>
+        <form th:action="@{/login}" method="post" class="am-form">
+            <fieldset class="c-login-form am-form-set">
+                <div class="am-form-group am-form-icon">
+                    <i class="am-icon-user"></i>
+                    <input type="text" th:value="${username}" name="username" class="c-login-input-text am-form-field" placeholder="请输入您的账号" />
+                </div>
+                <div class="am-form-group am-form-icon">
+                    <i class="am-icon-lock"></i>
+                    <input type="password" name="password" class="c-login-input-text am-form-field" placeholder="至少6个字符" />
+                </div>
+            </fieldset>
+            <button type="submit" class="c-login-form-submit am-btn am-btn-primary am-btn-block ">登 陆</button>
+        </form>
+    </div>
+
+    <div class="am-text-center am-u-sm-11 am-u-sm-centered c-login-form-shortcut">
+        <hr class="c-login-form-hr" />
+        <a href="/pub/register" class="c-login-form-hr-font">注册新帐号</a>
+        <a href="/pub/changepassword" class="c-login-form-hr-font">忘记密码</a>
+    </div>
+    <!--
+    <div class="am-u-sm-12 am-text-center c-login-form-listico" >
+        <div class="am-u-sm-4 am-text-center" >
+            <i class="am-icon-btn am-primary am-icon-qq"></i>
+        </div>
+        <div class="am-u-sm-4 am-text-center" >
+            <i class="am-icon-btn am-danger am-icon-weibo"></i>
+        </div>
+        <div class="am-u-sm-4 am-text-center" >
+            <i class="am-icon-btn am-success am-icon-weixin"></i>
+        </div>
+    </div>
+    -->
+</div>
+</body>
+</html>
