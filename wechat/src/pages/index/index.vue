@@ -23,9 +23,27 @@ export default {
   },
 
   methods: {
+    getData(){
+      wx.request({
+        url: 'https://a.9kylin.cn', //仅为示例，并非真实的接口地址
+        data: {
+          x: '' ,
+          y: ''
+        },
+        header: {
+            'content-type': 'application/json' // 默认值
+        },
+        success: function(res) {
+          console.log(res.data)
+        },fail:function(error){
+          console.log(error)
+        }
+      })
+    }
   },
 
   created() {
+    this.getData()
   }
 }
 </script>
