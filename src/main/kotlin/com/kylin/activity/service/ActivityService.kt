@@ -126,6 +126,30 @@ class ActivityService {
     public var activityCount: Long = 0
 
     /**
+     *  获取活动信息、活动参与人数、活动收藏人数及用户选择的团队活动信息
+     */
+    fun getTeamActivities(sid: Int,tag:String):Result<Record>{
+       //获取团队活动信息
+        var sql="select t1.*, "+
+                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count,"+
+                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count "+
+                "from activity t1"+
+                " where 1=1 {0}{1}"
+        var sqlsid=""
+        if(sid !=0 ){
+            sqlsid = "and community_id = sid"
+        }
+           sql=sql.replace("{0}",sqlsid)
+        var sqltag=""
+        if(!tag.isNullOrBlank()&& !tag.equals("0")){
+            sqltag="and tags ='{0}'".replace("{0}",tag)
+        }
+        sql = sql.replace("{1}",sqltag)
+        var items = create!!.resultQuery(sql).fetch()
+        return items
+    }
+
+    /**
      * 取得活动信息、活动参与人数、活动收藏人数
      */
     fun getPublicActivities(tag: String, time: String, pay: String): Result<Record> {

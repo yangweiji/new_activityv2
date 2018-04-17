@@ -12,14 +12,31 @@ export default {
   // 这个字段走 app.json
   config: {
     pages: [
-      '^pages/index/index'
-
+      '^pages/index/index',
+      'pages/tool/tool',
+      'pages/oneself/oneself'
     ], // Will be filled in webpack
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'weui for mpvue',
       navigationBarTextStyle: 'black'
+    },
+    tabBar:{
+      list:[
+        {
+          pagePath:'pages/index/index',
+          text:'首页'
+        },
+        {
+          pagePath:'pages/tool/tool',
+          text:'小工具'
+        },
+        {
+          pagePath:'pages/oneself/oneself',
+          text:'我'
+        }
+      ]
     }
     /* tabBar: {
       color: '#999999',
