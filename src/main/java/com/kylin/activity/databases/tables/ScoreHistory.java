@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activity;
+import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ScoreHistoryRecord;
@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
 
-    private static final long serialVersionUID = 168950404;
+    private static final long serialVersionUID = 220665332;
 
     /**
-     * The reference instance of <code>activity.score_history</code>
+     * The reference instance of <code>activityv2.score_history</code>
      */
     public static final ScoreHistory SCORE_HISTORY = new ScoreHistory();
 
@@ -56,56 +56,56 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
     }
 
     /**
-     * The column <code>activity.score_history.id</code>. 编号
+     * The column <code>activityv2.score_history.id</code>. 编号
      */
     public final TableField<ScoreHistoryRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activity.score_history.score</code>. 分值
+     * The column <code>activityv2.score_history.score</code>. 分值
      */
     public final TableField<ScoreHistoryRecord, Integer> SCORE = createField("score", org.jooq.impl.SQLDataType.INTEGER, this, "分值");
 
     /**
-     * The column <code>activity.score_history.user_id</code>. 用户Id
+     * The column <code>activityv2.score_history.user_id</code>. 用户Id
      */
     public final TableField<ScoreHistoryRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户Id");
 
     /**
-     * The column <code>activity.score_history.activity_id</code>.
+     * The column <code>activityv2.score_history.activity_id</code>.
      */
     public final TableField<ScoreHistoryRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.score_history.memo</code>. 积分说明
+     * The column <code>activityv2.score_history.memo</code>. 积分说明
      */
     public final TableField<ScoreHistoryRecord, String> MEMO = createField("memo", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "积分说明");
 
     /**
-     * The column <code>activity.score_history.created</code>.
+     * The column <code>activityv2.score_history.created</code>.
      */
     public final TableField<ScoreHistoryRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.score_history.community_id</code>.
+     * The column <code>activityv2.score_history.community_id</code>.
      */
     public final TableField<ScoreHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * Create a <code>activity.score_history</code> table reference
+     * Create a <code>activityv2.score_history</code> table reference
      */
     public ScoreHistory() {
         this(DSL.name("score_history"), null);
     }
 
     /**
-     * Create an aliased <code>activity.score_history</code> table reference
+     * Create an aliased <code>activityv2.score_history</code> table reference
      */
     public ScoreHistory(String alias) {
         this(DSL.name(alias), SCORE_HISTORY);
     }
 
     /**
-     * Create an aliased <code>activity.score_history</code> table reference
+     * Create an aliased <code>activityv2.score_history</code> table reference
      */
     public ScoreHistory(Name alias) {
         this(alias, SCORE_HISTORY);
@@ -124,7 +124,7 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activity.ACTIVITY;
+        return Activityv2.ACTIVITYV2;
     }
 
     /**

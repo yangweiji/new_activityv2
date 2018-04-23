@@ -3,20 +3,13 @@ package com.kylin.activity.service
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityFavoriteDao
-import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityFavorite
-import com.kylin.activity.databases.tables.pojos.User
-import com.kylin.activity.databases.tables.pojos.Vercode
 import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.*
-import org.jooq.impl.DSL
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
-import java.sql.Timestamp
 
 @Service
 class ActivityService {
@@ -93,7 +86,7 @@ class ActivityService {
 
     /**
      * 取得活动信息、活动参与人数、活动收藏人数
-     * 最新的前50条记录
+     * 最新的前1000条记录
      */
     fun getPublicActivities(): Result<Record> {
 
@@ -104,32 +97,54 @@ class ActivityService {
                 "from activity t1 " +
                 "left join user t2 on t1.created_by = t2.id " +
                 "order by t1.start_time desc " +
-                "limit 30"
+                "limit 1000"
 
         var items = create!!.resultQuery(sql).fetch()
-//        for (r in items) {
-//            if (r.get("avatar") != null) {
-//                r.setValue(Tables.ACTIVITY_.AVATAR, commonService!!.getDownloadUrl(r.get("avatar").toString()))
-//            }
-//
-//            if (r.get("user_avatar") != null) {
-//                r.setValue(r.fieldsRow().field("user_avatar", String::class.java), commonService!!.getDownloadUrl(r.get("user_avatar").toString()))
-//            }
-//        }
-
         return items
     }
 
     /**
-     * 取得活动总数
+     * 取得活动信息、活动参与人数、活动收藏人数
+     * 最新的前1000条记录
      */
-    public var activityCount: Long = 0
+    fun getPublicActivities(tags: String): Result<Record> {
+
+        //构建活动数据源
+        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
+                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+                "from activity t1 " +
+                "left join user t2 on t1.created_by = t2.id " +
+                "where 1=1 {0} " +
+                "order by t1.start_time desc " +
+                "limit 1000"
+        var strCondition = ""
+        if (!tags.isNullOrBlank())
+        {
+            if (tags.contains('-'))
+            {
+                var ss = ""
+                for (s in tags.split("-"))
+                {
+                    ss = "$ss,'$s'"
+                }
+                strCondition = "and t1.tags in ({0})".replace("{0}", ss.substring(1))
+            }
+            else {
+                strCondition = "and t1.tags = '{0}'".replace("{0}", tags)
+            }
+        }
+        sql = sql.replace("{0}", strCondition)
+
+        var items = create!!.resultQuery(sql).fetch()
+        return items
+    }
 
     /**
      *  获取活动信息、活动参与人数、活动收藏人数及用户选择的团队活动信息
      */
     fun getTeamActivities(sid: Int,tag:String):Result<Record>{
-       //获取团队活动信息
+        //获取团队活动信息
         var sql="select t1.*, "+
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count,"+
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count "+
@@ -139,7 +154,7 @@ class ActivityService {
         if(sid !=0 ){
             sqlsid = "and community_id = sid"
         }
-           sql=sql.replace("{0}",sqlsid)
+        sql=sql.replace("{0}",sqlsid)
         var sqltag=""
         if(!tag.isNullOrBlank()&& !tag.equals("0")){
             sqltag="and tags ='{0}'".replace("{0}",tag)
@@ -148,6 +163,11 @@ class ActivityService {
         var items = create!!.resultQuery(sql).fetch()
         return items
     }
+
+    /**
+     * 取得活动总数
+     */
+    public var activityCount: Long = 0
 
     /**
      * 取得活动信息、活动参与人数、活动收藏人数
@@ -211,15 +231,6 @@ class ActivityService {
         sql = sql.replace("{99}", (page*size).toString())
         sql = sql.replace("{100}", size.toString())
         var items = create!!.resultQuery(sql).fetch()
-//        for (r in items) {
-//            if (r.get("avatar") != null) {
-//                r.setValue(Tables.ACTIVITY_.AVATAR, commonService!!.getDownloadUrl(r.get("avatar").toString()))
-//            }
-//
-//            if (r.get("user_avatar") != null) {
-//                r.setValue(r.fieldsRow().field("user_avatar", String::class.java), commonService!!.getDownloadUrl(r.get("user_avatar").toString()))
-//            }
-//        }
 
         return items
     }
@@ -321,22 +332,46 @@ class ActivityService {
     }
 
     /**
-     * 按活动标题查询活动
+     * 按活动标题、分类、状态查询活动
      */
-    fun getAllActivityUserItems(title: String?): Result<Record> {
+    fun getAllActivityUserItems(title: String?, tags: String?, status: String?): Result<Record> {
         var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
-                "where 1=1 {0} " +
+                "where 1=1 {0} {1} {2}" +
                 "order by t1.start_time desc "
         var strCondition = ""
         if (!title.isNullOrBlank())
         {
             strCondition = "and t1.title like '%{0}%'".replace("{0}", title!!)
         }
-
         sql = sql.replace("{0}", strCondition)
+
+        if (!tags.isNullOrBlank() && tags != "0")
+        {
+            strCondition = "and t1.tags = '{0}'".replace("{0}", tags!!)
+        }
+        sql = sql.replace("{1}", strCondition)
+
+
+        if (status == "1")
+        {
+            //未开始的活动
+            strCondition = "and t1.start_time > CURDATE()"
+        }
+        else if (status == "2")
+        {
+            //进行中的活动
+            strCondition = "and t1.start_time <= CURDATE() and end_time > CURDATE()"
+        }
+        else if (status == "3")
+        {
+            //已结束的活动
+            strCondition = "and t1.end_time <= CURDATE()"
+        }
+        sql = sql.replace("{2}", strCondition)
+
         var items = create!!.resultQuery(sql).fetch()
         return items
     }
@@ -344,7 +379,7 @@ class ActivityService {
     /**
      * 活动报名信息
      */
-    fun getAttendUsers(activityId: String?, title: String?, mobile: String?, real_name: String?, ticket_title: String?, checked: String?): Result<Record> {
+    fun getAttendUsers(start: String?, end: String?, activityId: String?, title: String?, mobile: String?, real_name: String?, ticket_title: String?, checked: String?, status: String?, other_info: String?): Result<Record> {
         //构建数据源
         var sql = "select t1.id, t1.user_id, t1.activity_id, t1.activity_ticket_id, t1.created, t1.created_by " +
                 ", t1.attend_time, t1.check_in_time, t1.real_name, t1.mobile, t1.other_info, t1.price, t1.score " +
@@ -354,8 +389,9 @@ class ActivityService {
                 "left join user t2 on t1.user_id = t2.id " +
                 "left join activity t3 on t1.activity_id = t3.id " +
                 "left join activity_ticket t4 on t1.activity_ticket_id = t4.id and t3.Id = t4.activity_id " +
-                "where 1=1 {0} {1} {2} {3} {4} {5} " +
-                "order by t1.created desc "
+                "where 1=1 {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} " +
+                "order by t1.created desc " +
+                "{99}"
         var strCondition = ""
         if (!mobile.isNullOrBlank())
         {
@@ -393,8 +429,127 @@ class ActivityService {
         }
         sql = sql.replace("{5}", strCondition)
 
-        var items = create!!.resultQuery(sql).fetch()
+        if (!start.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
+        }
+        sql = sql.replace("{6}", strCondition)
 
+        if (!end.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
+        }
+        sql = sql.replace("{7}", strCondition)
+
+        if(!status.isNullOrBlank()){
+            strCondition = " and t1.status = $status "
+        } else {
+            strCondition = " and (t1.status is null or t1.status = 0)  "
+        }
+        sql = sql.replace("{8}", strCondition)
+
+        if(!other_info.isNullOrBlank()){
+            strCondition = "and t1.other_info like '%{0}%'".replace("{0}", other_info!!)
+        }
+        sql = sql.replace("{9}", strCondition)
+
+        var strLimit = ""
+        if (strCondition.isNullOrBlank())
+        {
+            //如果无条件，默认取得最近的100条记录
+            //strLimit = "limit 100"
+        }
+        sql = sql.replace("{99}", strLimit)
+
+        var items = create!!.resultQuery(sql).fetch()
+        return items
+    }
+
+    /**
+     * 阳光杯活动报名信息
+     */
+    fun getSunnyCupAttendUsers(start: String?, end: String?, activityId: String?, title: String?, mobile: String?, real_name: String?, ticket_title: String?, checked: String?, status:String?, other_info: String?): Result<Record> {
+        //构建数据源
+        var sql = "select t1.id, t1.user_id, t1.activity_id, t1.activity_ticket_id, t1.created, t1.created_by " +
+                ", t1.attend_time, t1.check_in_time, t1.real_name, t1.mobile, t1.other_info, t1.price, t1.score, t1.status " +
+                ", t2.displayname, t2.avatar user_avatar " +
+                ", t3.title, t4.price as activity_price, t4.title as ticket_title " +
+                "from activity_user t1 " +
+                "left join user t2 on t1.user_id = t2.id " +
+                "left join activity t3 on t1.activity_id = t3.id " +
+                "left join activity_ticket t4 on t1.activity_ticket_id = t4.id and t3.Id = t4.activity_id " +
+                "where t1.activity_id = 128 {0} {1} {2} {3} {4} {5} {6} {7} {8} {9} " +
+                "order by t1.created desc " +
+                "{99}"
+        var strCondition = ""
+        if (!mobile.isNullOrBlank())
+        {
+            strCondition = "and t1.mobile = '{0}'".replace("{0}", mobile!!)
+        }
+        sql = sql.replace("{0}", strCondition)
+
+        if (!title.isNullOrBlank())
+        {
+            strCondition = "and t3.title like '%{0}%'".replace("{0}", title!!)
+        }
+        sql = sql.replace("{1}", strCondition)
+
+        if (!real_name.isNullOrBlank())
+        {
+            strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
+        }
+        sql = sql.replace("{2}", strCondition)
+
+        if (!activityId.isNullOrBlank())
+        {
+            strCondition = "and t1.activity_id = {0}".replace("{0}", activityId!!)
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        if (!checked.isNullOrBlank())
+        {
+            strCondition = "and t1.check_in_time is not null"
+        }
+        sql = sql.replace("{4}", strCondition)
+
+        if (!ticket_title.isNullOrBlank())
+        {
+            strCondition = "and t4.title like '%{0}%'".replace("{0}", ticket_title!!)
+        }
+        sql = sql.replace("{5}", strCondition)
+
+        if (!start.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
+        }
+        sql = sql.replace("{6}", strCondition)
+
+        if (!end.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
+        }
+        sql = sql.replace("{7}", strCondition)
+
+        if(!status.isNullOrBlank()){
+            strCondition = " and t1.status = $status "
+        } else {
+            strCondition = " and (t1.status is null or t1.status = 0)  "
+        }
+        sql = sql.replace("{8}", strCondition)
+
+        if(!other_info.isNullOrBlank()){
+            strCondition = "and t1.other_info like '%{0}%'".replace("{0}", other_info!!)
+        }
+        sql = sql.replace("{9}", strCondition)
+
+        var strLimit = ""
+        if (strCondition.isNullOrBlank())
+        {
+            strLimit = ""
+        }
+        sql = sql.replace("{99}", strLimit)
+
+        var items = create!!.resultQuery(sql).fetch()
         return items
     }
 
@@ -461,5 +616,14 @@ class ActivityService {
         var sql = "select count(*) from activity_user where activity_id = ?"
         var count = create!!.resultQuery(sql, activityId).single()[0]
         return count
+    }
+
+    /**
+     * 更新活动报名状态
+     */
+    fun  updateActivityUserStatus(id: Int, status: Int?): Any {
+        val sql = "update activity_user set status = ? where id = ?"
+        var rs = create!!.execute(sql, status, id)
+        return rs
     }
 }

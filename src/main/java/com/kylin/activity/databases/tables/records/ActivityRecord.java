@@ -30,311 +30,311 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implements Record22<Integer, String, String, String, String, String, String, Integer, Timestamp, Timestamp, Timestamp, Timestamp, Integer, Timestamp, Integer, String, String, String, Integer, Boolean, String, Integer> {
 
-    private static final long serialVersionUID = 784563057;
+    private static final long serialVersionUID = 2033080469;
 
     /**
-     * Setter for <code>activity.activity.id</code>. 编号
+     * Setter for <code>activityv2.activity.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.activity.id</code>. 编号
+     * Getter for <code>activityv2.activity.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.activity.title</code>. 标题
+     * Setter for <code>activityv2.activity.title</code>. 标题
      */
     public void setTitle(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.activity.title</code>. 标题
+     * Getter for <code>activityv2.activity.title</code>. 标题
      */
     public String getTitle() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>activity.activity.avatar</code>. 标题图片
+     * Setter for <code>activityv2.activity.avatar</code>. 标题图片
      */
     public void setAvatar(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.activity.avatar</code>. 标题图片
+     * Getter for <code>activityv2.activity.avatar</code>. 标题图片
      */
     public String getAvatar() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activity.activity.summary</code>. 摘要
+     * Setter for <code>activityv2.activity.summary</code>. 摘要
      */
     public void setSummary(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.activity.summary</code>. 摘要
+     * Getter for <code>activityv2.activity.summary</code>. 摘要
      */
     public String getSummary() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activity.activity.body</code>. 正文
+     * Setter for <code>activityv2.activity.body</code>. 正文
      */
     public void setBody(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activity.activity.body</code>. 正文
+     * Getter for <code>activityv2.activity.body</code>. 正文
      */
     public String getBody() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>activity.activity.unit</code>. 发布单位
+     * Setter for <code>activityv2.activity.unit</code>. 发布单位
      */
     public void setUnit(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activity.activity.unit</code>. 发布单位
+     * Getter for <code>activityv2.activity.unit</code>. 发布单位
      */
     public String getUnit() {
         return (String) get(5);
     }
 
     /**
-     * Setter for <code>activity.activity.tags</code>. 标签
+     * Setter for <code>activityv2.activity.tags</code>. 标签
      */
     public void setTags(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activity.activity.tags</code>. 标签
+     * Getter for <code>activityv2.activity.tags</code>. 标签
      */
     public String getTags() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>activity.activity.status</code>. 状态 0 草稿 1 发布 -1 禁用
+     * Setter for <code>activityv2.activity.status</code>. 状态 0 草稿 1 发布 -1 禁用
      */
     public void setStatus(Integer value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activity.activity.status</code>. 状态 0 草稿 1 发布 -1 禁用
+     * Getter for <code>activityv2.activity.status</code>. 状态 0 草稿 1 发布 -1 禁用
      */
     public Integer getStatus() {
         return (Integer) get(7);
     }
 
     /**
-     * Setter for <code>activity.activity.start_time</code>.
+     * Setter for <code>activityv2.activity.start_time</code>.
      */
     public void setStartTime(Timestamp value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activity.activity.start_time</code>.
+     * Getter for <code>activityv2.activity.start_time</code>.
      */
     public Timestamp getStartTime() {
         return (Timestamp) get(8);
     }
 
     /**
-     * Setter for <code>activity.activity.end_time</code>.
+     * Setter for <code>activityv2.activity.end_time</code>.
      */
     public void setEndTime(Timestamp value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activity.activity.end_time</code>.
+     * Getter for <code>activityv2.activity.end_time</code>.
      */
     public Timestamp getEndTime() {
         return (Timestamp) get(9);
     }
 
     /**
-     * Setter for <code>activity.activity.attend_due_time</code>.
+     * Setter for <code>activityv2.activity.attend_due_time</code>.
      */
     public void setAttendDueTime(Timestamp value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activity.activity.attend_due_time</code>.
+     * Getter for <code>activityv2.activity.attend_due_time</code>.
      */
     public Timestamp getAttendDueTime() {
         return (Timestamp) get(10);
     }
 
     /**
-     * Setter for <code>activity.activity.created</code>.
+     * Setter for <code>activityv2.activity.created</code>.
      */
     public void setCreated(Timestamp value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activity.activity.created</code>.
+     * Getter for <code>activityv2.activity.created</code>.
      */
     public Timestamp getCreated() {
         return (Timestamp) get(11);
     }
 
     /**
-     * Setter for <code>activity.activity.created_by</code>. 创建人
+     * Setter for <code>activityv2.activity.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>activity.activity.created_by</code>. 创建人
+     * Getter for <code>activityv2.activity.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(12);
     }
 
     /**
-     * Setter for <code>activity.activity.modified</code>.
+     * Setter for <code>activityv2.activity.modified</code>.
      */
     public void setModified(Timestamp value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activity.activity.modified</code>.
+     * Getter for <code>activityv2.activity.modified</code>.
      */
     public Timestamp getModified() {
         return (Timestamp) get(13);
     }
 
     /**
-     * Setter for <code>activity.activity.modified_by</code>. 修改人
+     * Setter for <code>activityv2.activity.modified_by</code>. 修改人
      */
     public void setModifiedBy(Integer value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>activity.activity.modified_by</code>. 修改人
+     * Getter for <code>activityv2.activity.modified_by</code>. 修改人
      */
     public Integer getModifiedBy() {
         return (Integer) get(14);
     }
 
     /**
-     * Setter for <code>activity.activity.attend_infos</code>. 报名需要提交的表单信息 报名信息json
+     * Setter for <code>activityv2.activity.attend_infos</code>. 报名需要提交的表单信息 报名信息json
      */
     public void setAttendInfos(String value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activity.activity.attend_infos</code>. 报名需要提交的表单信息 报名信息json
+     * Getter for <code>activityv2.activity.attend_infos</code>. 报名需要提交的表单信息 报名信息json
      */
     public String getAttendInfos() {
         return (String) get(15);
     }
 
     /**
-     * Setter for <code>activity.activity.address</code>. 活动地址
+     * Setter for <code>activityv2.activity.address</code>. 活动地址
      */
     public void setAddress(String value) {
         set(16, value);
     }
 
     /**
-     * Getter for <code>activity.activity.address</code>. 活动地址
+     * Getter for <code>activityv2.activity.address</code>. 活动地址
      */
     public String getAddress() {
         return (String) get(16);
     }
 
     /**
-     * Setter for <code>activity.activity.coordinate</code>. 活动坐标
+     * Setter for <code>activityv2.activity.coordinate</code>. 活动坐标
      */
     public void setCoordinate(String value) {
         set(17, value);
     }
 
     /**
-     * Getter for <code>activity.activity.coordinate</code>. 活动坐标
+     * Getter for <code>activityv2.activity.coordinate</code>. 活动坐标
      */
     public String getCoordinate() {
         return (String) get(17);
     }
 
     /**
-     * Setter for <code>activity.activity.activity_type</code>.
+     * Setter for <code>activityv2.activity.activity_type</code>.
      */
     public void setActivityType(Integer value) {
         set(18, value);
     }
 
     /**
-     * Getter for <code>activity.activity.activity_type</code>.
+     * Getter for <code>activityv2.activity.activity_type</code>.
      */
     public Integer getActivityType() {
         return (Integer) get(18);
     }
 
     /**
-     * Setter for <code>activity.activity.public</code>.
+     * Setter for <code>activityv2.activity.public</code>.
      */
     public void setPublic(Boolean value) {
         set(19, value);
     }
 
     /**
-     * Getter for <code>activity.activity.public</code>.
+     * Getter for <code>activityv2.activity.public</code>.
      */
     public Boolean getPublic() {
         return (Boolean) get(19);
     }
 
     /**
-     * Setter for <code>activity.activity.score_infos</code>. 活动奖励积分信息
+     * Setter for <code>activityv2.activity.score_infos</code>. 活动奖励积分信息
      */
     public void setScoreInfos(String value) {
         set(20, value);
     }
 
     /**
-     * Getter for <code>activity.activity.score_infos</code>. 活动奖励积分信息
+     * Getter for <code>activityv2.activity.score_infos</code>. 活动奖励积分信息
      */
     public String getScoreInfos() {
         return (String) get(20);
     }
 
     /**
-     * Setter for <code>activity.activity.community_id</code>.
+     * Setter for <code>activityv2.activity.community_id</code>.
      */
     public void setCommunityId(Integer value) {
         set(21, value);
     }
 
     /**
-     * Getter for <code>activity.activity.community_id</code>.
+     * Getter for <code>activityv2.activity.community_id</code>.
      */
     public Integer getCommunityId() {
         return (Integer) get(21);

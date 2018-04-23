@@ -40,7 +40,7 @@ import org.jooq.impl.AbstractKeys;
 
 /**
  * A class modelling foreign key relationships and constraints of tables of 
- * the <code>activity</code> schema.
+ * the <code>activityv2</code> schema.
  */
 @Generated(
     value = {
@@ -57,7 +57,7 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final Identity<ActionHistoryRecord, Integer> IDENTITY_ACTION_HISTORY = Identities0.IDENTITY_ACTION_HISTORY;
-    public static final Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY_ = Identities0.IDENTITY_ACTIVITY_;
+    public static final Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY = Identities0.IDENTITY_ACTIVITY;
     public static final Identity<ActivityFavoriteRecord, Integer> IDENTITY_ACTIVITY_FAVORITE = Identities0.IDENTITY_ACTIVITY_FAVORITE;
     public static final Identity<ActivityPhotoRecord, Integer> IDENTITY_ACTIVITY_PHOTO = Identities0.IDENTITY_ACTIVITY_PHOTO;
     public static final Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = Identities0.IDENTITY_ACTIVITY_TICKET;
@@ -100,7 +100,7 @@ public class Keys {
 
     private static class Identities0 extends AbstractKeys {
         public static Identity<ActionHistoryRecord, Integer> IDENTITY_ACTION_HISTORY = createIdentity(ActionHistory.ACTION_HISTORY, ActionHistory.ACTION_HISTORY.ID);
-        public static Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY_ = createIdentity(Activity.ACTIVITY_, Activity.ACTIVITY_.ID);
+        public static Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY = createIdentity(Activity.ACTIVITY_, Activity.ACTIVITY_.ID);
         public static Identity<ActivityFavoriteRecord, Integer> IDENTITY_ACTIVITY_FAVORITE = createIdentity(ActivityFavorite.ACTIVITY_FAVORITE, ActivityFavorite.ACTIVITY_FAVORITE.ID);
         public static Identity<ActivityPhotoRecord, Integer> IDENTITY_ACTIVITY_PHOTO = createIdentity(ActivityPhoto.ACTIVITY_PHOTO, ActivityPhoto.ACTIVITY_PHOTO.ID);
         public static Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = createIdentity(ActivityTicket.ACTIVITY_TICKET, ActivityTicket.ACTIVITY_TICKET.ID);

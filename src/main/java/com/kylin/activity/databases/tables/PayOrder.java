@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activity;
+import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.PayOrderRecord;
@@ -41,10 +41,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrder extends TableImpl<PayOrderRecord> {
 
-    private static final long serialVersionUID = 2087134620;
+    private static final long serialVersionUID = -359686288;
 
     /**
-     * The reference instance of <code>activity.pay_order</code>
+     * The reference instance of <code>activityv2.pay_order</code>
      */
     public static final PayOrder PAY_ORDER = new PayOrder();
 
@@ -57,91 +57,91 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
     }
 
     /**
-     * The column <code>activity.pay_order.id</code>. 主键编号
+     * The column <code>activityv2.pay_order.id</code>. 主键编号
      */
     public final TableField<PayOrderRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "主键编号");
 
     /**
-     * The column <code>activity.pay_order.user_id</code>. 付款用户id
+     * The column <code>activityv2.pay_order.user_id</code>. 付款用户id
      */
     public final TableField<PayOrderRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "付款用户id");
 
     /**
-     * The column <code>activity.pay_order.activity_id</code>. 付款活动id
+     * The column <code>activityv2.pay_order.activity_id</code>. 付款活动id
      */
     public final TableField<PayOrderRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "付款活动id");
 
     /**
-     * The column <code>activity.pay_order.activity_ticket_id</code>. 付款活动票id
+     * The column <code>activityv2.pay_order.activity_ticket_id</code>. 付款活动票id
      */
     public final TableField<PayOrderRecord, Integer> ACTIVITY_TICKET_ID = createField("activity_ticket_id", org.jooq.impl.SQLDataType.INTEGER, this, "付款活动票id");
 
     /**
-     * The column <code>activity.pay_order.title</code>. 付款商品标题
+     * The column <code>activityv2.pay_order.title</code>. 付款商品标题
      */
     public final TableField<PayOrderRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR(255), this, "付款商品标题");
 
     /**
-     * The column <code>activity.pay_order.body</code>. 付款说明
+     * The column <code>activityv2.pay_order.body</code>. 付款说明
      */
     public final TableField<PayOrderRecord, String> BODY = createField("body", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "付款说明");
 
     /**
-     * The column <code>activity.pay_order.price</code>. 付款金额
+     * The column <code>activityv2.pay_order.price</code>. 付款金额
      */
     public final TableField<PayOrderRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL(18, 2), this, "付款金额");
 
     /**
-     * The column <code>activity.pay_order.pay_time</code>.
+     * The column <code>activityv2.pay_order.pay_time</code>.
      */
     public final TableField<PayOrderRecord, Timestamp> PAY_TIME = createField("pay_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.pay_order.cancel_time</code>.
+     * The column <code>activityv2.pay_order.cancel_time</code>.
      */
     public final TableField<PayOrderRecord, Timestamp> CANCEL_TIME = createField("cancel_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
+     * The column <code>activityv2.pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
      */
     public final TableField<PayOrderRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消");
 
     /**
-     * The column <code>activity.pay_order.extenal_id</code>. 微信统一订单id
+     * The column <code>activityv2.pay_order.extenal_id</code>. 微信统一订单id
      */
     public final TableField<PayOrderRecord, String> EXTENAL_ID = createField("extenal_id", org.jooq.impl.SQLDataType.VARCHAR(255), this, "微信统一订单id");
 
     /**
-     * The column <code>activity.pay_order.created</code>.
+     * The column <code>activityv2.pay_order.created</code>.
      */
     public final TableField<PayOrderRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.pay_order.other_info</code>. 活动报名时的报名json信息
+     * The column <code>activityv2.pay_order.other_info</code>. 活动报名时的报名json信息
      */
     public final TableField<PayOrderRecord, String> OTHER_INFO = createField("other_info", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "活动报名时的报名json信息");
 
     /**
-     * The column <code>activity.pay_order.community_id</code>.
+     * The column <code>activityv2.pay_order.community_id</code>.
      */
     public final TableField<PayOrderRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * Create a <code>activity.pay_order</code> table reference
+     * Create a <code>activityv2.pay_order</code> table reference
      */
     public PayOrder() {
         this(DSL.name("pay_order"), null);
     }
 
     /**
-     * Create an aliased <code>activity.pay_order</code> table reference
+     * Create an aliased <code>activityv2.pay_order</code> table reference
      */
     public PayOrder(String alias) {
         this(DSL.name(alias), PAY_ORDER);
     }
 
     /**
-     * Create an aliased <code>activity.pay_order</code> table reference
+     * Create an aliased <code>activityv2.pay_order</code> table reference
      */
     public PayOrder(Name alias) {
         this(alias, PAY_ORDER);
@@ -160,7 +160,7 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activity.ACTIVITY;
+        return Activityv2.ACTIVITYV2;
     }
 
     /**

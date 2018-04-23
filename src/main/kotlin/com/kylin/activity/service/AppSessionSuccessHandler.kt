@@ -1,6 +1,7 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.model.AuthUser
+import com.kylin.activity.util.LogUtil
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
@@ -31,9 +32,7 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
         val userDetails = authentication.principal as UserDetails
         //将登录用户信息存入session中
         session.setAttribute("USER_CONTEXT", (userDetails as AuthUser).user)
-
-        println("IP :" + getIpAddress(request))
-        println("login success")
+        LogUtil.printLog("IP :" + getIpAddress(request))
         super.onAuthenticationSuccess(request, response, authentication)
     }
 

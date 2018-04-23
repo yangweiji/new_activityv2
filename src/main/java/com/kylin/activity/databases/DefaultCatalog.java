@@ -27,7 +27,7 @@ import org.jooq.impl.CatalogImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultCatalog extends CatalogImpl {
 
-    private static final long serialVersionUID = 375511377;
+    private static final long serialVersionUID = -460639947;
 
     /**
      * The reference instance of <code></code>
@@ -35,9 +35,9 @@ public class DefaultCatalog extends CatalogImpl {
     public static final DefaultCatalog DEFAULT_CATALOG = new DefaultCatalog();
 
     /**
-     * The schema <code>activity</code>.
+     * The schema <code>activityv2</code>.
      */
-    public final Activity ACTIVITY = com.kylin.activity.databases.Activity.ACTIVITY;
+    public final Activityv2 ACTIVITYV2 = com.kylin.activity.databases.Activityv2.ACTIVITYV2;
 
     /**
      * No further instances allowed
@@ -55,6 +55,6 @@ public class DefaultCatalog extends CatalogImpl {
 
     private final List<Schema> getSchemas0() {
         return Arrays.<Schema>asList(
-            Activity.ACTIVITY);
+            Activityv2.ACTIVITYV2);
     }
 }

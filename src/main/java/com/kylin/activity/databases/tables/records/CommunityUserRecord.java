@@ -28,73 +28,73 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUserRecord extends UpdatableRecordImpl<CommunityUserRecord> implements Record5<Integer, Integer, Integer, String, Integer> {
 
-    private static final long serialVersionUID = -1739531740;
+    private static final long serialVersionUID = 693052012;
 
     /**
-     * Setter for <code>activity.community_user.id</code>.
+     * Setter for <code>activityv2.community_user.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.community_user.id</code>.
+     * Getter for <code>activityv2.community_user.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.community_user.community_id</code>.
+     * Setter for <code>activityv2.community_user.community_id</code>.
      */
     public void setCommunityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.community_user.community_id</code>.
+     * Getter for <code>activityv2.community_user.community_id</code>.
      */
     public Integer getCommunityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activity.community_user.user_id</code>.
+     * Setter for <code>activityv2.community_user.user_id</code>.
      */
     public void setUserId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.community_user.user_id</code>.
+     * Getter for <code>activityv2.community_user.user_id</code>.
      */
     public Integer getUserId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activity.community_user.role</code>. 成员在社团中的角色 admin、publish
+     * Setter for <code>activityv2.community_user.role</code>. 成员在社团中的角色 admin、publish
      */
     public void setRole(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.community_user.role</code>. 成员在社团中的角色 admin、publish
+     * Getter for <code>activityv2.community_user.role</code>. 成员在社团中的角色 admin、publish
      */
     public String getRole() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activity.community_user.created</code>. 加入时间
+     * Setter for <code>activityv2.community_user.created</code>. 加入时间
      */
     public void setCreated(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activity.community_user.created</code>. 加入时间
+     * Getter for <code>activityv2.community_user.created</code>. 加入时间
      */
     public Integer getCreated() {
         return (Integer) get(4);

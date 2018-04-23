@@ -14,9 +14,17 @@ class HomeController : BaseController() {
     private val activityService: ActivityService? = null
 
     @GetMapping("/")
-    fun index(@RequestParam(required = false) s: Int?, model: Model): String {
+    fun index(@RequestParam(required = false) s: Int?,
+              @RequestParam(required = false) tags: String?,
+              model: Model): String {
         //取得活动信息
         var activities = activityService!!.getPublicActivities()
+
+        if (!tags.isNullOrBlank())
+        {
+            activities = activityService!!.getPublicActivities(tags!!)
+        }
+
         activities = when (s) {
         //人气最高
             2 -> activities.sortDesc("attend_user_count")
@@ -25,6 +33,7 @@ class HomeController : BaseController() {
         }
 
         model.addAttribute("s", if (s == 2) 2 else 1)
+        model.addAttribute("tags", tags)
         model.addAttribute("activities", activities)
 
         return "index"

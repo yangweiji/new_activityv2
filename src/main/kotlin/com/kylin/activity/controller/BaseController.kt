@@ -32,12 +32,6 @@ open class BaseController {
             request.session.setAttribute("USER_CONTEXT", user)
         }
 
-    fun getAppbaseUrl(request: HttpServletRequest, url: String): String {
-        Assert.hasLength(url, "url不能为空")
-        Assert.isTrue(url.startsWith("/"), "必须以/开头")
-        return request.contextPath + url
-    }
-
     val PAGE_SIZE:Int = 12
     val USER_CONTEXT:String = "USER_CONTEXT"
 
