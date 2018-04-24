@@ -12,6 +12,10 @@ $(function () {
         language: {
             url: "/json/chinese.json",
         },
+        //当处理大数据时，延迟渲染数据，有效提高Datatables处理能力
+        deferRender: true,
+        //指定每页显示10行数据
+        iDisplayLength:10,
         columns: [
             {"data":"no"},
             {"data": "id"},

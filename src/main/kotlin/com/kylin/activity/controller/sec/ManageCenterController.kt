@@ -79,6 +79,7 @@ class ManageCenterController : BaseController() {
         return "sec/manage/home"
     }
 
+
     /**
      * 用户活动积分信息
      * @param model

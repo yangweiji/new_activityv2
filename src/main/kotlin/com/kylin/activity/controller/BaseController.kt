@@ -1,5 +1,6 @@
 package com.kylin.activity.controller
 
+import com.kylin.activity.databases.tables.daos.CommunityDao
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.util.CommonService
 import org.springframework.beans.factory.annotation.Autowired
@@ -14,12 +15,16 @@ import org.springframework.web.context.request.ServletRequestAttributes
 
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
+import com.kylin.activity.databases.tables.pojos.Community
 
 /**
  * Created by 9kylin on 2017-12-04.
  */
 @Controller
 open class BaseController {
+
+    @Autowired
+    private var communityDao: CommunityDao? = null
 
     protected var sessionUser: User
         get() {
@@ -30,6 +35,22 @@ open class BaseController {
         set(user) {
             val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
             request.session.setAttribute("USER_CONTEXT", user)
+        }
+
+    protected var sessionCommunity: Community
+        get() {
+            val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
+            val session = request.session
+            var result =  session.getAttribute("COMMUNITY_CONTEXT") as Community
+            if(result == null){
+                result = communityDao!!.fetchOneById(1)
+                sessionCommunity = result
+            }
+            return  result
+        }
+        set(community) {
+            val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
+            request.session.setAttribute("COMMUNITY_CONTEXT", community)
         }
 
     fun getAppbaseUrl(request: HttpServletRequest, url: String): String {
