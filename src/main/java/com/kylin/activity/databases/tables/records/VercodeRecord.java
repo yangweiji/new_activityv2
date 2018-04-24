@@ -30,59 +30,59 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VercodeRecord extends UpdatableRecordImpl<VercodeRecord> implements Record4<Integer, String, String, Timestamp> {
 
-    private static final long serialVersionUID = 1165807872;
+    private static final long serialVersionUID = -1785994296;
 
     /**
-     * Setter for <code>activity.vercode.id</code>. 编号
+     * Setter for <code>activityv2.vercode.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.vercode.id</code>. 编号
+     * Getter for <code>activityv2.vercode.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.vercode.mobile</code>.
+     * Setter for <code>activityv2.vercode.mobile</code>.
      */
     public void setMobile(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.vercode.mobile</code>.
+     * Getter for <code>activityv2.vercode.mobile</code>.
      */
     public String getMobile() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>activity.vercode.code</code>.
+     * Setter for <code>activityv2.vercode.code</code>.
      */
     public void setCode(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.vercode.code</code>.
+     * Getter for <code>activityv2.vercode.code</code>.
      */
     public String getCode() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activity.vercode.created</code>.
+     * Setter for <code>activityv2.vercode.created</code>.
      */
     public void setCreated(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.vercode.created</code>.
+     * Getter for <code>activityv2.vercode.created</code>.
      */
     public Timestamp getCreated() {
         return (Timestamp) get(3);

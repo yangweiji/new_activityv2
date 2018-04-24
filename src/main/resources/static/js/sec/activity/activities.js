@@ -1,31 +1,27 @@
 $(function () {
 
-    $.fn.dataTable.ext.buttons.create = {
-        className: 'buttons-create',
-
-        action: function ( e, dt, node, config ) {
-            // alert( this.text() );
-            location.href = "/sec/activity/publish?type=1";
-        }
-    };
-
     //JQuery DataTables HTML (DOM) sourced data
-    var t = $('#bmTable').DataTable({
+    var t = $('#bmTable')
+        .on('init.dt', function () {
+            // $('#bmBody').show();
+        })
+        .on('preXhr.dt', function ( e, settings, data ) {
+            Util.loading(true);
+        })
+        .on('xhr.dt', function ( e, settings, json, xhr ) {
+            // for ( var i=0, ien=json.aaData.length ; i<ien ; i++ ) {
+            //     json.aaData[i].sum = json.aaData[i].one + json.aaData[i].two;
+            // }
+            // Note no return - manipulate the data directly in the JSON object.
+            $('#totalCount').text(json.length);
+            Util.loading(false);
+        }).DataTable({
         language: {
             url: "/json/chinese.json",
+            buttons: {
+                colvis: '显示栏位',
+            }
         },
-        "columns": [
-            {"data": "no"},
-            {"data": "id"},
-            {"data": "title"},
-            {"data": "start_time"},
-            {"data": "end_time"},
-            // {"data": "created"},
-            {"data": "attend_user_count"},
-            {"data": "check_user_count"},
-            {"data": "action"},
-        ],
-
         // dom: 'Blfrtip',
         dom: '<"top">Bfrt<"bottom">lip<"clear">',
         buttons: [
@@ -41,30 +37,104 @@ $(function () {
                 exportOptions: {
                     // columns: ':visible'
                     columns: [
-                        1,2,3,4,5,6
+                        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
                     ],
+                    // columns: ':not(:eq(-1))',//jquery to exclude column -1
                     modifier: {
                         search: 'none'
+                    },
+                    format: {
+                        body: function ( data, row, column, node ) {
+                            //身份证号的处理
+                            return ("\u200C" + data);
+                        }
                     }
                 },
                 filename: '活动记录',
+            },
+            {
+                extend: 'colvis',
+                // postfixButtons: [ 'colvisRestore' ],
+                columns: ':not(.noVis)',
+                collectionLayout: 'fixed four-column'
             }
         ],
+        // processing: true,
+        // serverSide: true,
+        ajax: {
+            "url": "/sec/activity/getActivities",
+            "contentType": "application/json;charset=utf-8",
+            "type": "POST",
+            "data": function () {
+                //查询条件参数
+                var param = {
+                    status: $("#status").val().trim(),
+                    tags: $("#tags").val().trim(),
+                    title: $("#title").val().trim(),
+                };
+                return JSON.stringify(param);
+            },
+            "dataSrc": ""
+        },
+        columns: [
+            {"data": "id", "width": "30px"},
+            {"data": "id", "width": "50px"},
+            {"data": "title", "width": "200px"},
+            {"data": "start_time"},
+            {"data": "end_time"},
+            {"data": "attend_user_count"},
+            {"data": "check_user_count"},
+            {"data": "status", defaultContent: "",
+                render: function (data, type, row) {
+                    if (data == 1) {
+                        return "发布";
+                    }
+                    else {
+                        return "草稿";
+                    }
+                }},
+            {"data": "created"},
+            {"data": "displayname"},
+            {"data": "public", defaultContent: "",
+                render: function (data, type, row) {
+                    if (data == true) {
+                        return "公开";
+                    }
+                    else {
+                        return "非公开";
+                    }
+                }},
+            {"data": "unit"},
+            {"data": "action", "width": "160px", defaultContent: "",
+                render: function (data, type, row) {
+                    return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
+                        + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
+                        + '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
+                        + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
+                }},
+        ],
 
+        //栏定义
+        columnDefs: [
+            {
+                searchable: false,
+                orderable: false,
+                targets: 0
+            },
+            { targets: [0,1,2,3,4,5,6,-1], visible: true},
+            { targets: '_all', visible: false }
+        ],
+        //默认排序
+        order: [[3, 'desc']],
         autoWidth: false,
+        scrollX: true,
+        // scrollY: '50vh',
+        // scrollCollapse: true,
+        deferRender: true,
         // select: true,
         // autoFill: {
         //     columns: ':not(:first-child)'
         // },
-
-        //栏定义
-        "columnDefs": [{
-            "searchable": false,
-            "orderable": false,
-            "targets": 0
-        }],
-        //默认排序
-        "order": [[3, 'desc']],
     });
 
     //添加索引序号
@@ -74,20 +144,38 @@ $(function () {
         });
     }).draw();
 
-    //编辑
+    /**
+     * 查询
+     */
+    $("#btnSearch").click(function () {
+        // t.ajax.reload(null, false);
+        t.ajax.reload();
+    });
+
+    /**
+     * 添加活动
+     * @type {{className: string, action: $.fn.dataTable.ext.buttons.create.action}}
+     */
+    $.fn.dataTable.ext.buttons.create = {
+        className: '',
+
+        action: function ( e, dt, node, config ) {
+            // alert( this.text() );
+            location.href = "/sec/activity/publish?type=1";
+        }
+    };
+
+    /**
+     * 编辑活动
+     */
     $('#bmTable tbody').on('click', 'button#editrow', function () {
         var data = t.row( $(this).parents('tr') ).data();
-        // var fields = $("#add-form").serializeArray();
-        // jQuery.each( fields, function(i, field){
-        //     //jquery根据name属性查找
-        //     $(":input[name='"+field.name+"']").val(data[i]);
-        // });
-        // $(":input[name='mark']").val("edit");
-        // $("#modal-form").modal("show");//弹出框show
         location.href = "/sec/activity/publish?id="+data.id;
     });
 
-    //删除
+    /**
+     * 删除活动
+     */
     $('#bmTable tbody').on('click', 'button#delrow', function () {
         var data = t.row( $(this).parents('tr') ).data();
         if (window.confirm("请确认删除？"))
@@ -96,18 +184,20 @@ $(function () {
         }
     });
 
-    //二维码
+    /**
+     * 查看活动二维码
+     */
     $('#bmTable tbody').on('click', 'button#qrcoderow', function () {
         var data = t.row( $(this).parents('tr') ).data();
-        // location.href = "/sec/activity/qrcode?id="+data.id;
         window.open("/sec/activity/qrcode?id="+data.id);
     });
 
-    //报名签到
+    /**
+     * 活动报名签到情况
+     */
     $('#bmTable tbody').on('click', 'button#attendrow', function () {
         var data = t.row( $(this).parents('tr') ).data();
-        // location.href = "/sec/activity/attendusers?activityId="+data.id+"&title="+data.title;
-        window.open("/sec/activity/attendusers?activityId="+data.id+"&title="+data.title);
+        window.open("/sec/activity/attendusers?activityId="+data.id+"&title="+data.title+"&start=2018-01-01&end=");
     });
 });
 

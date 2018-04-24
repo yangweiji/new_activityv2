@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activity;
+import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
@@ -39,10 +39,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = 153226303;
+    private static final long serialVersionUID = 562127463;
 
     /**
-     * The reference instance of <code>activity.community_user</code>
+     * The reference instance of <code>activityv2.community_user</code>
      */
     public static final CommunityUser COMMUNITY_USER = new CommunityUser();
 
@@ -55,46 +55,46 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
     }
 
     /**
-     * The column <code>activity.community_user.id</code>.
+     * The column <code>activityv2.community_user.id</code>.
      */
     public final TableField<CommunityUserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>activity.community_user.community_id</code>.
+     * The column <code>activityv2.community_user.community_id</code>.
      */
     public final TableField<CommunityUserRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.community_user.user_id</code>.
+     * The column <code>activityv2.community_user.user_id</code>.
      */
     public final TableField<CommunityUserRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.community_user.role</code>. 成员在社团中的角色 admin、publish
+     * The column <code>activityv2.community_user.role</code>. 成员在社团中的角色 admin、publish
      */
     public final TableField<CommunityUserRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR(255), this, "成员在社团中的角色 admin、publish");
 
     /**
-     * The column <code>activity.community_user.created</code>. 加入时间
+     * The column <code>activityv2.community_user.created</code>. 加入时间
      */
     public final TableField<CommunityUserRecord, Integer> CREATED = createField("created", org.jooq.impl.SQLDataType.INTEGER, this, "加入时间");
 
     /**
-     * Create a <code>activity.community_user</code> table reference
+     * Create a <code>activityv2.community_user</code> table reference
      */
     public CommunityUser() {
         this(DSL.name("community_user"), null);
     }
 
     /**
-     * Create an aliased <code>activity.community_user</code> table reference
+     * Create an aliased <code>activityv2.community_user</code> table reference
      */
     public CommunityUser(String alias) {
         this(DSL.name(alias), COMMUNITY_USER);
     }
 
     /**
-     * Create an aliased <code>activity.community_user</code> table reference
+     * Create an aliased <code>activityv2.community_user</code> table reference
      */
     public CommunityUser(Name alias) {
         this(alias, COMMUNITY_USER);
@@ -113,7 +113,7 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activity.ACTIVITY;
+        return Activityv2.ACTIVITYV2;
     }
 
     /**

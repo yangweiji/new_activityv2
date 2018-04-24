@@ -22,7 +22,7 @@ import javax.annotation.Generated;
 
 
 /**
- * Convenience access to all tables in activity
+ * Convenience access to all tables in activityv2
  */
 @Generated(
     value = {
@@ -35,14 +35,14 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>activity.action_history</code>.
+     * The table <code>activityv2.action_history</code>.
      */
     public static final ActionHistory ACTION_HISTORY = com.kylin.activity.databases.tables.ActionHistory.ACTION_HISTORY;
 
     /**
      * 活动
      */
-    public static final Activity ACTIVITY_ = com.kylin.activity.databases.tables.Activity.ACTIVITY_;
+    public static final Activity ACTIVITY = com.kylin.activity.databases.tables.Activity.ACTIVITY;
 
     /**
      * 我喜欢的活动列表
@@ -80,7 +80,7 @@ public class Tables {
     public static final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
-     * The table <code>activity.pay_order</code>.
+     * The table <code>activityv2.pay_order</code>.
      */
     public static final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
 

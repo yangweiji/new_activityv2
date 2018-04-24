@@ -1,11 +1,13 @@
 package com.kylin.activity.controller.sec
 
-import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ArticleDao
 import com.kylin.activity.databases.tables.pojos.Article
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.util.CommonService
+
 import org.jooq.DSLContext
+import org.json.JSONArray
+import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -27,6 +29,19 @@ class ArticleController {
 
     @Autowired
     private val commonService: CommonService? = null
+
+    //包含表格的一些信息，需要不变的传回去
+    private val  sEcho:String?=null
+
+    //当你点击下一页或者页数的时候会传到后台的值
+    private val iDisplayStart:String?=null
+
+    //默认是传10
+    private val iDisplayLength:String?=null
+
+
+
+
 
     /**
      * 新增内容
@@ -89,5 +104,4 @@ class ArticleController {
         articleDao!!.update(article)
         return "redirect:/sec/article/articles"
     }
-
 }

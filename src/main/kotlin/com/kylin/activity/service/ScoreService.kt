@@ -71,12 +71,12 @@ class ScoreService {
      * 用户活动积分明细
      * @return
      */
-    fun getUserActivityScores(title: String?, username: String?, displayname: String?): Result<Record> {
-        var sql = "select t1.*, t2.username, t2.displayname, t2.avatar user_avatar, t3.title " +
+    fun getUserActivityScores(start: String?, end: String?, title: String?, username: String?, real_name: String?): Result<Record> {
+        var sql = "select t1.*, t2.username, t2.displayname, t2.avatar user_avatar, t2.real_name, t3.title " +
                 "from score_history t1 " +
                 "left join user t2 on t1.user_id = t2.id " +
                 "left join activity t3 on t1.activity_id = t3.id " +
-                "where 1=1 {0} {1} {2} " +
+                "where 1=1 {0} {1} {2} {3} {4} " +
                 "order by t1.created desc "
         var strCondition = ""
         if (title != null && !title.isEmpty()) {
@@ -89,10 +89,22 @@ class ScoreService {
         }
         sql = sql.replace("{1}", strCondition)
 
-        if (displayname != null && !displayname.isEmpty()) {
-            strCondition = "and t2.displayname like '%{0}%'".replace("{0}", displayname)
+        if (real_name != null && !real_name.isEmpty()) {
+            strCondition = "and t2.real_name like '%{0}%'".replace("{0}", real_name)
         }
         sql = sql.replace("{2}", strCondition)
+
+        if (!start.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        if (!end.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
+        }
+        sql = sql.replace("{4}", strCondition)
 
         return dslContext!!.resultQuery(sql).fetch()
     }

@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser implements Serializable {
 
-    private static final long serialVersionUID = 1233826171;
+    private static final long serialVersionUID = 592219239;
 
     private Integer    id;
     private Integer    userId;
@@ -41,6 +41,7 @@ public class ActivityUser implements Serializable {
     private Integer    score;
     private Timestamp  modified;
     private Integer    modifiedBy;
+    private Integer    status;
 
     public ActivityUser() {}
 
@@ -60,6 +61,7 @@ public class ActivityUser implements Serializable {
         this.score = value.score;
         this.modified = value.modified;
         this.modifiedBy = value.modifiedBy;
+        this.status = value.status;
     }
 
     public ActivityUser(
@@ -77,7 +79,8 @@ public class ActivityUser implements Serializable {
         BigDecimal price,
         Integer    score,
         Timestamp  modified,
-        Integer    modifiedBy
+        Integer    modifiedBy,
+        Integer    status
     ) {
         this.id = id;
         this.userId = userId;
@@ -94,6 +97,7 @@ public class ActivityUser implements Serializable {
         this.score = score;
         this.modified = modified;
         this.modifiedBy = modifiedBy;
+        this.status = status;
     }
 
     public Integer getId() {
@@ -216,6 +220,14 @@ public class ActivityUser implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
+    public Integer getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ActivityUser (");
@@ -235,6 +247,7 @@ public class ActivityUser implements Serializable {
         sb.append(", ").append(score);
         sb.append(", ").append(modified);
         sb.append(", ").append(modifiedBy);
+        sb.append(", ").append(status);
 
         sb.append(")");
         return sb.toString();

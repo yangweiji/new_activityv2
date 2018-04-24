@@ -21,7 +21,7 @@
                     <div class="get_font_rigth">
                         <!--<img src="/img/font_zty.png" alt="" />-->
                         <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
-                    </div>
+                </div>
                 </div>
 
                 <div class="font_line">
@@ -46,19 +46,19 @@
                 <h3 class="select_qu_tit">分类：</h3>
                 <ul class="select_ul" id="hd_tag" th:attr=(data-id=${tag})>
                     <li><a th:classappend="${tag=='0'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=0;time='+time+';pay='+pay}"><span>全部</span></a></li>
+                    <li><a th:classappend="${tag=='b5'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b5;time='+time+';pay='+pay}"><span>跑步训练</span></a></li>
+                    <li><a th:classappend="${tag=='b13'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b13;time='+time+';pay='+pay}"><span>运动装备</span></a></li>
+                    <li><a th:classappend="${tag=='b12'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b12;time='+time+';pay='+pay}"><span>会员福利</span></a></li>
+                    <li><a th:classappend="${tag=='b10'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b10;time='+time+';pay='+pay}"><span>国内赛事</span></a></li>
+                    <li><a th:classappend="${tag=='b11'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b11;time='+time+';pay='+pay}"><span>国际赛事</span></a></li>
                     <li><a th:classappend="${tag=='b1'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b1;time='+time+';pay='+pay}"><span>徒步</span></a></li>
                     <li><a th:classappend="${tag=='b2'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b2;time='+time+';pay='+pay}"><span>越野</span></a></li>
                     <li><a th:classappend="${tag=='b3'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b3;time='+time+';pay='+pay}"><span>聚餐</span></a></li>
                     <li><a th:classappend="${tag=='b4'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b4;time='+time+';pay='+pay}"><span>骑行</span></a></li>
-                    <li><a th:classappend="${tag=='b5'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b5;time='+time+';pay='+pay}"><span>跑步训练</span></a></li>
                     <li><a th:classappend="${tag=='b6'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b6;time='+time+';pay='+pay}"><span>会议</span></a></li>
                     <li><a th:classappend="${tag=='b7'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b7;time='+time+';pay='+pay}"><span>招募</span></a></li>
                     <li><a th:classappend="${tag=='b8'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b8;time='+time+';pay='+pay}"><span>讲座</span></a></li>
-                    <li><a th:classappend="${tag=='b9'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b9;time='+time+';pay='+pay}"><span>赛事报名</span></a></li>
-                    <li><a th:classappend="${tag=='b10'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b10;time='+time+';pay='+pay}"><span>国内赛事</span></a></li>
-                    <li><a th:classappend="${tag=='b11'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b11;time='+time+';pay='+pay}"><span>国际赛事</span></a></li>
-                    <li><a th:classappend="${tag=='b12'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b12;time='+time+';pay='+pay}"><span>会员福利</span></a></li>
-                    <li><a th:classappend="${tag=='b13'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b13;time='+time+';pay='+pay}"><span>运动装备</span></a></li>
+                    <!--<li><a th:classappend="${tag=='b9'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b9;time='+time+';pay='+pay}"><span>赛事报名</span></a></li>-->
                 </ul>
             </div>
             <div class="select_qu_zu">

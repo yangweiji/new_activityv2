@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activity;
+import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
 
-    private static final long serialVersionUID = 1728640027;
+    private static final long serialVersionUID = 345408515;
 
     /**
-     * The reference instance of <code>activity.activity_photo</code>
+     * The reference instance of <code>activityv2.activity_photo</code>
      */
     public static final ActivityPhoto ACTIVITY_PHOTO = new ActivityPhoto();
 
@@ -56,56 +56,56 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
     }
 
     /**
-     * The column <code>activity.activity_photo.id</code>. 编号
+     * The column <code>activityv2.activity_photo.id</code>. 编号
      */
     public final TableField<ActivityPhotoRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activity.activity_photo.activity_id</code>. 关联编号
+     * The column <code>activityv2.activity_photo.activity_id</code>. 关联编号
      */
     public final TableField<ActivityPhotoRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "关联编号");
 
     /**
-     * The column <code>activity.activity_photo.picture</code>. 图片
+     * The column <code>activityv2.activity_photo.picture</code>. 图片
      */
     public final TableField<ActivityPhotoRecord, String> PICTURE = createField("picture", org.jooq.impl.SQLDataType.VARCHAR(255), this, "图片");
 
     /**
-     * The column <code>activity.activity_photo.description</code>. 描述
+     * The column <code>activityv2.activity_photo.description</code>. 描述
      */
     public final TableField<ActivityPhotoRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "描述");
 
     /**
-     * The column <code>activity.activity_photo.created</code>.
+     * The column <code>activityv2.activity_photo.created</code>.
      */
     public final TableField<ActivityPhotoRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.activity_photo.created_by</code>.
+     * The column <code>activityv2.activity_photo.created_by</code>.
      */
     public final TableField<ActivityPhotoRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.activity_photo.axtenal_url</code>. 外部相册地址
+     * The column <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
      */
     public final TableField<ActivityPhotoRecord, String> AXTENAL_URL = createField("axtenal_url", org.jooq.impl.SQLDataType.VARCHAR(255), this, "外部相册地址");
 
     /**
-     * Create a <code>activity.activity_photo</code> table reference
+     * Create a <code>activityv2.activity_photo</code> table reference
      */
     public ActivityPhoto() {
         this(DSL.name("activity_photo"), null);
     }
 
     /**
-     * Create an aliased <code>activity.activity_photo</code> table reference
+     * Create an aliased <code>activityv2.activity_photo</code> table reference
      */
     public ActivityPhoto(String alias) {
         this(DSL.name(alias), ACTIVITY_PHOTO);
     }
 
     /**
-     * Create an aliased <code>activity.activity_photo</code> table reference
+     * Create an aliased <code>activityv2.activity_photo</code> table reference
      */
     public ActivityPhoto(Name alias) {
         this(alias, ACTIVITY_PHOTO);
@@ -124,7 +124,7 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activity.ACTIVITY;
+        return Activityv2.ACTIVITYV2;
     }
 
     /**

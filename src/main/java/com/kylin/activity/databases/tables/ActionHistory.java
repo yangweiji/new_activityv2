@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activity;
+import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActionHistoryRecord;
@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActionHistory extends TableImpl<ActionHistoryRecord> {
 
-    private static final long serialVersionUID = -1187242198;
+    private static final long serialVersionUID = 1058289050;
 
     /**
-     * The reference instance of <code>activity.action_history</code>
+     * The reference instance of <code>activityv2.action_history</code>
      */
     public static final ActionHistory ACTION_HISTORY = new ActionHistory();
 
@@ -56,56 +56,56 @@ public class ActionHistory extends TableImpl<ActionHistoryRecord> {
     }
 
     /**
-     * The column <code>activity.action_history.id</code>.
+     * The column <code>activityv2.action_history.id</code>.
      */
     public final TableField<ActionHistoryRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>activity.action_history.axtenal_id</code>.
+     * The column <code>activityv2.action_history.axtenal_id</code>.
      */
     public final TableField<ActionHistoryRecord, Integer> AXTENAL_ID = createField("axtenal_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.action_history.action</code>.
+     * The column <code>activityv2.action_history.action</code>.
      */
     public final TableField<ActionHistoryRecord, Integer> ACTION = createField("action", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.action_history.memo</code>.
+     * The column <code>activityv2.action_history.memo</code>.
      */
     public final TableField<ActionHistoryRecord, String> MEMO = createField("memo", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "");
 
     /**
-     * The column <code>activity.action_history.created</code>.
+     * The column <code>activityv2.action_history.created</code>.
      */
     public final TableField<ActionHistoryRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activity.action_history.created_by</code>.
+     * The column <code>activityv2.action_history.created_by</code>.
      */
     public final TableField<ActionHistoryRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activity.action_history.community_id</code>.
+     * The column <code>activityv2.action_history.community_id</code>.
      */
     public final TableField<ActionHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * Create a <code>activity.action_history</code> table reference
+     * Create a <code>activityv2.action_history</code> table reference
      */
     public ActionHistory() {
         this(DSL.name("action_history"), null);
     }
 
     /**
-     * Create an aliased <code>activity.action_history</code> table reference
+     * Create an aliased <code>activityv2.action_history</code> table reference
      */
     public ActionHistory(String alias) {
         this(DSL.name(alias), ACTION_HISTORY);
     }
 
     /**
-     * Create an aliased <code>activity.action_history</code> table reference
+     * Create an aliased <code>activityv2.action_history</code> table reference
      */
     public ActionHistory(Name alias) {
         this(alias, ACTION_HISTORY);
@@ -124,7 +124,7 @@ public class ActionHistory extends TableImpl<ActionHistoryRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activity.ACTIVITY;
+        return Activityv2.ACTIVITYV2;
     }
 
     /**

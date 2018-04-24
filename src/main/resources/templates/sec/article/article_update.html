@@ -98,19 +98,6 @@
                     </div>
                 </div>
                 <div class="am-form-group">
-                    <label for="article_community" class="am-u-sm-2 am-form-label">发布平台</label>
-                    <div class="am-u-sm-10">
-                        <label class="am-radio-inline">
-                            <input type="radio" th:checked="${article.communityId ==0}" th:value="0"
-                                   name="communityId"> 平台发布
-                        </label>
-                        <label class="am-radio-inline">
-                            <input type="radio" th:checked="${article.communityId ==1}" th:value="1" name="communityId">
-                            团体发布
-                        </label>
-                    </div>
-                </div>
-                <div class="am-form-group">
                     <label for="article_unit" class="am-u-sm-2 am-form-label">发布单位</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="article_unit" name="unit" th:value="${article.unit}"
