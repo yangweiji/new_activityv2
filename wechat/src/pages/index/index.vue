@@ -3,20 +3,20 @@
 
  
      <div>
-      <span>切换团体</span>
-      <image></image>
+      <span style="position:absolute;right:0;margin-top:10px;margin-right:25px;">切换团体</span>
+      <image :src=url style="height:200px; width:100%;"> </image>
      </div>
 
      <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
         <block v-for="item in grids":key="index">
           <navigator url="" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
-           <image class="weui-grid__icon":src="icon60"/>
+           <image class="weui-grid__icon":src='icon60'/>
            <div class="weui-grid_label">{{item.name}}</div>
           </navigator>
         </block>
      </div>
 
-      <div class="weui-navbar" style="top:auto">
+      <div class="weui-navbar" style="top:auto;">
          <block v-for="(item,index) in choice" :key="index">
            <div :id="index" :class="{'weui-bar__item_on' :activeIndex ==index}" class="weui-navbar__item"  @click="tabClick(item.id)">
              <div class="weui-navbar__title" v-if="item.id!='b9'">{{item.matter}}</div>
@@ -33,11 +33,11 @@
       </div>
 
       <div class="weui-tab__panel">
-        <div class="weui-tab__content" :hidden="activeIndex != b5"></div>
+        <!--<div class="weui-tab__content" :hidden="activeIndex != b5"></div>
         <div class="weui-tab__content" :hidden="activeIndex != b13"></div>
         <div class="weui-tab__content" :hidden="activeIndex != b2"></div>
         <div class="weui-tab__content" :hidden="activeIndex != b10"></div>
-        <div class="weui-tab__content" :hidden="activeIndex != ''"></div>
+        <div class="weui-tab__content" :hidden="activeIndex != ''"></div>-->
       </div>
   
     <!-- <div>
@@ -46,7 +46,7 @@
          <div style="float:left;width:60%">
            <p style="margin-left:25px;">用户头像{{item.start_time}}</p>
            <p style="margin-left:25px;">{{item.title}}</p>
-           <p style="margin-left:25px;">喜欢：{{item.favorite_count}}评论：{{item.attend_count}}</p>
+           <p style="margin-left:25px;"> <img class="am_img animated c-img"alt=""/>{{item.favorite_count}}评论：{{item.attend_count}}</p>
          </div>
          
          <div style="float:right;width:40%;">
@@ -58,16 +58,16 @@
     </div>-->
    
     <div>
-      <navigator url="" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" v-for="item in num":key="item.id">    
+      <div class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" v-for="item in num":key="item.id" @click="checkdetails(item.id)">    
            <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-              <div class="weui-media-box__title">用户头像{{item.start_time}}</div>
+              <div class="weui-media-box__title">用户头像  {{item.start_time}}</div>
               <div class="weui-media-box__desc">{{item.title}}</div>
               <div class="weui-media-box__desc">喜欢：{{item.favorite_count}}评论：{{item.attend_count}}</div>
            </div>
-            <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+            <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
              <image class="weui-media-box__thumb" :src=item.avatar />
            </div>
-      </navigator>
+      </div>
     </div>
 
   </div>
@@ -81,15 +81,17 @@ export default {
   
   data(){
     return {
+       url:'../../../static/images/a2.jpg',
        icon60: base64.icon60,
        items:[],
+       eid:'',
        num:[],
        ces:'',
       grids:[
-        {src:'',name:'通知公告'},
-        {src:'',name:'赛事新闻'},
-        {src:'',name:'运动指南'},
-        {src:'',name:'活动相册'}
+        {src:'',name:'通知公告',url:''},
+        {src:'',name:'赛事新闻',url:''},
+        {src:'',name:'运动指南',url:''},
+        {src:'',name:'活动相册',url:''}
       ],
       choice:[
         {id:'b5',matter:'训练'},
@@ -194,13 +196,27 @@ export default {
         this.activeIndex ='b11';
       }
       this.getData();
-    }   
+    },
+      checkdetails(eid){
+         var that = this;
+         that.eid=eid;
+         wx.navigateTo({
+          url:'../../pages/details/details?id='+that.eid
+         })
+         success:{
+            console.log("调用成功"+eid)
+          } 
+        
+     }   
   },
 
   created() {
     this.getData()  
     this.ces=this.ranges[this.index];
+    
   }
+
+
 
 }
 </script>

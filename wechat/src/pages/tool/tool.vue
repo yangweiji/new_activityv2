@@ -1,25 +1,13 @@
 <template>
   <div class="page">
-  <imp></imp>
-    <div class="page__hd">
-      <div class="page__title">
-      
+      <div class="weui-grids">
+        <block v-for="item in NavigationData" :key="index">
+          <navigator url="" class="weui-grid" hover-class="weui-grid_active">
+            <image class="weui-grid__icon" :src="item.src" />
+            <div class="weui-grid__label">{{item.name}}</div>
+          </navigator>
+        </block>
       </div>
-      <div class="page__desc">
-          <div class="weui-cells__title">带说明的列表项</div>
-            <div class="weui-cells">
-              <div class="weui-cell">
-              <div class="weui-cell__bd">
-                <p>标题文字</p>
-               </div>
-         <div class="weui-cell__ft">说明文字</div>
-    </div>
-</div>
-      </div>
-    </div>
-    <div class="page__bd page__bd_spacing">
-        
-    </div>
   </div>
 </template>
 
@@ -28,7 +16,14 @@
 export default {
   data() {
     return {
-      
+          NavigationData:[
+          {url:'',name:'配速计算',src:''},
+          {url:'',name:'配速转换',src:''},
+          {url:'',name:'完整时间计算',src:''},
+          {url:'',name:'马拉松训练配速',src:''},
+          {url:'',name:'比赛成绩预测',src:''},
+          {url:'',name:'跑力值计算',src:''},
+      ]
     }
   },
 

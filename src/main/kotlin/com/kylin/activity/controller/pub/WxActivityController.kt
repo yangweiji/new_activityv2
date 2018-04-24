@@ -79,4 +79,12 @@ class WxActivityController {
 
         return arrayOf(titems,items)
     }
+    @GetMapping("/detail/{id}")
+    fun detail(@RequestParam(required = false) detailId:Int?): Any {
+        var id = if (detailId ==null) 0 else detailId!!
+        var detailactivite = activityService!!.getActivityDetail(id)
+
+
+        return detailactivite
+    }
 }

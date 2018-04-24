@@ -14,7 +14,9 @@ export default {
     pages: [
       '^pages/index/index',
       'pages/tool/tool',
-      'pages/oneself/oneself'
+      'pages/oneself/oneself',
+      'pages/details/details'
+      
     ], // Will be filled in webpack
     window: {
       backgroundTextStyle: 'light',
