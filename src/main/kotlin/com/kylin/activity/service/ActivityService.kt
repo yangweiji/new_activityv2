@@ -27,7 +27,7 @@ class ActivityService {
     private val create: DSLContext? = null
 
 //    fun getPublicActivities(): Result<out Record7<Int, String, Timestamp, Timestamp, String, out Int?, out Int?>>  {
-//        var t1 = Tables.ACTIVITY_.`as`("t1")
+//        var t1 = Tables.ACTIVITY.`as`("t1")
 //        var t2 = create!!.select(Tables.ACTIVITY_USER.ACTIVITY_ID, DSL.ifnull(DSL.count(Tables.ACTIVITY_USER.ID), 0).`as`("attend_count"))
 //                .from(Tables.ACTIVITY_USER)
 //                .groupBy(Tables.ACTIVITY_USER.ACTIVITY_ID).asTable("t2")
@@ -64,14 +64,14 @@ class ActivityService {
      * 取得活动
      */
     fun getActivity(id: Int): Activity? {
-        return activityDao!!.fetchOne(Tables.ACTIVITY_.ID, id)
+        return activityDao!!.fetchOne(Tables.ACTIVITY.ID, id)
     }
 
     /**
      * 取得活动
      */
     fun getAtivity(title: String): Activity? {
-        var activity = activityDao!!.fetchOne(Tables.ACTIVITY_.TITLE, title)
+        var activity = activityDao!!.fetchOne(Tables.ACTIVITY.TITLE, title)
         return activity
     }
 

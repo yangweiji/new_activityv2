@@ -48,10 +48,10 @@ class ProfileController : BaseController() {
     fun profile(model: Model): String {
         var user = this.sessionUser
         model.addAttribute("user", user)
-        var activities = create!!.select(Tables.ACTIVITY_.fields().toList())
-                .from(Tables.ACTIVITY_)
+        var activities = create!!.select(Tables.ACTIVITY.fields().toList())
+                .from(Tables.ACTIVITY)
                 .innerJoin(Tables.ACTIVITY_USER)
-                .on(Tables.ACTIVITY_.ID.eq(Tables.ACTIVITY_USER.ACTIVITY_ID).and(Tables.ACTIVITY_USER.USER_ID.eq(user!!.id)))
+                .on(Tables.ACTIVITY.ID.eq(Tables.ACTIVITY_USER.ACTIVITY_ID).and(Tables.ACTIVITY_USER.USER_ID.eq(user!!.id)))
                 .fetch()
         model.addAttribute("items", activities)
 

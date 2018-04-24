@@ -50,7 +50,7 @@ class ActivityDetailController : BaseController() {
         var activity = activityService!!.getActivityDetail(id)
         if (activity["avatar"] != null)
         {
-            activity.setValue(Tables.ACTIVITY_.AVATAR, commonService!!.getDownloadUrl(activity.get("avatar", String::class.java)))
+            activity.setValue(Tables.ACTIVITY.AVATAR, commonService!!.getDownloadUrl(activity.get("avatar", String::class.java)))
         }
 
         if (activity["user_avatar"] != null)
