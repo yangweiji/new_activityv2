@@ -63,7 +63,7 @@ public class Indexes {
 
     private static class Indexes0 extends AbstractKeys {
         public static Index ACTION_HISTORY_PRIMARY = createIndex("PRIMARY", ActionHistory.ACTION_HISTORY, new OrderField[] { ActionHistory.ACTION_HISTORY.ID }, true);
-        public static Index ACTIVITY_PRIMARY = createIndex("PRIMARY", Activity.ACTIVITY_, new OrderField[] { Activity.ACTIVITY_.ID }, true);
+        public static Index ACTIVITY_PRIMARY = createIndex("PRIMARY", Activity.ACTIVITY, new OrderField[] { Activity.ACTIVITY.ID }, true);
         public static Index ACTIVITY_FAVORITE_PRIMARY = createIndex("PRIMARY", ActivityFavorite.ACTIVITY_FAVORITE, new OrderField[] { ActivityFavorite.ACTIVITY_FAVORITE.ID }, true);
         public static Index ACTIVITY_PHOTO_PRIMARY = createIndex("PRIMARY", ActivityPhoto.ACTIVITY_PHOTO, new OrderField[] { ActivityPhoto.ACTIVITY_PHOTO.ID }, true);
         public static Index ACTIVITY_TICKET_PRIMARY = createIndex("PRIMARY", ActivityTicket.ACTIVITY_TICKET, new OrderField[] { ActivityTicket.ACTIVITY_TICKET.ID }, true);

@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser extends TableImpl<ActivityUserRecord> {
 
-    private static final long serialVersionUID = -967145014;
+    private static final long serialVersionUID = -695040624;
 
     /**
      * The reference instance of <code>activityv2.activity_user</code>
@@ -130,6 +130,11 @@ public class ActivityUser extends TableImpl<ActivityUserRecord> {
      * The column <code>activityv2.activity_user.modified_by</code>.
      */
     public final TableField<ActivityUserRecord, Integer> MODIFIED_BY = createField("modified_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>activityv2.activity_user.status</code>.
+     */
+    public final TableField<ActivityUserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>activityv2.activity_user</code> table reference

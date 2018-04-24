@@ -45,7 +45,7 @@ public class Activity extends TableImpl<ActivityRecord> {
     /**
      * The reference instance of <code>activityv2.activity</code>
      */
-    public static final Activity ACTIVITY_ = new Activity();
+    public static final Activity ACTIVITY = new Activity();
 
     /**
      * The class holding records for this type
@@ -176,14 +176,14 @@ public class Activity extends TableImpl<ActivityRecord> {
      * Create an aliased <code>activityv2.activity</code> table reference
      */
     public Activity(String alias) {
-        this(DSL.name(alias), ACTIVITY_);
+        this(DSL.name(alias), ACTIVITY);
     }
 
     /**
      * Create an aliased <code>activityv2.activity</code> table reference
      */
     public Activity(Name alias) {
-        this(alias, ACTIVITY_);
+        this(alias, ACTIVITY);
     }
 
     private Activity(Name alias, Table<ActivityRecord> aliased) {

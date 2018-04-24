@@ -167,4 +167,11 @@ public class ActivityUserDao extends DAOImpl<ActivityUserRecord, com.kylin.activ
     public List<com.kylin.activity.databases.tables.pojos.ActivityUser> fetchByModifiedBy(Integer... values) {
         return fetch(ActivityUser.ACTIVITY_USER.MODIFIED_BY, values);
     }
+
+    /**
+     * Fetch records that have <code>status IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.ActivityUser> fetchByStatus(Integer... values) {
+        return fetch(ActivityUser.ACTIVITY_USER.STATUS, values);
+    }
 }

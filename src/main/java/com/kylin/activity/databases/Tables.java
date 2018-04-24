@@ -42,7 +42,7 @@ public class Tables {
     /**
      * 活动
      */
-    public static final Activity ACTIVITY_ = Activity.ACTIVITY_;
+    public static final Activity ACTIVITY = com.kylin.activity.databases.tables.Activity.ACTIVITY;
 
     /**
      * 我喜欢的活动列表

@@ -377,7 +377,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Integer> field1() {
-        return Activity.ACTIVITY_.ID;
+        return Activity.ACTIVITY.ID;
     }
 
     /**
@@ -385,7 +385,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field2() {
-        return Activity.ACTIVITY_.TITLE;
+        return Activity.ACTIVITY.TITLE;
     }
 
     /**
@@ -393,7 +393,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field3() {
-        return Activity.ACTIVITY_.AVATAR;
+        return Activity.ACTIVITY.AVATAR;
     }
 
     /**
@@ -401,7 +401,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field4() {
-        return Activity.ACTIVITY_.SUMMARY;
+        return Activity.ACTIVITY.SUMMARY;
     }
 
     /**
@@ -409,7 +409,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field5() {
-        return Activity.ACTIVITY_.BODY;
+        return Activity.ACTIVITY.BODY;
     }
 
     /**
@@ -417,7 +417,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field6() {
-        return Activity.ACTIVITY_.UNIT;
+        return Activity.ACTIVITY.UNIT;
     }
 
     /**
@@ -425,7 +425,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field7() {
-        return Activity.ACTIVITY_.TAGS;
+        return Activity.ACTIVITY.TAGS;
     }
 
     /**
@@ -433,7 +433,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Integer> field8() {
-        return Activity.ACTIVITY_.STATUS;
+        return Activity.ACTIVITY.STATUS;
     }
 
     /**
@@ -441,7 +441,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Timestamp> field9() {
-        return Activity.ACTIVITY_.START_TIME;
+        return Activity.ACTIVITY.START_TIME;
     }
 
     /**
@@ -449,7 +449,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Timestamp> field10() {
-        return Activity.ACTIVITY_.END_TIME;
+        return Activity.ACTIVITY.END_TIME;
     }
 
     /**
@@ -457,7 +457,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Timestamp> field11() {
-        return Activity.ACTIVITY_.ATTEND_DUE_TIME;
+        return Activity.ACTIVITY.ATTEND_DUE_TIME;
     }
 
     /**
@@ -465,7 +465,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Timestamp> field12() {
-        return Activity.ACTIVITY_.CREATED;
+        return Activity.ACTIVITY.CREATED;
     }
 
     /**
@@ -473,7 +473,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Integer> field13() {
-        return Activity.ACTIVITY_.CREATED_BY;
+        return Activity.ACTIVITY.CREATED_BY;
     }
 
     /**
@@ -481,7 +481,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Timestamp> field14() {
-        return Activity.ACTIVITY_.MODIFIED;
+        return Activity.ACTIVITY.MODIFIED;
     }
 
     /**
@@ -489,7 +489,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Integer> field15() {
-        return Activity.ACTIVITY_.MODIFIED_BY;
+        return Activity.ACTIVITY.MODIFIED_BY;
     }
 
     /**
@@ -497,7 +497,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field16() {
-        return Activity.ACTIVITY_.ATTEND_INFOS;
+        return Activity.ACTIVITY.ATTEND_INFOS;
     }
 
     /**
@@ -505,7 +505,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field17() {
-        return Activity.ACTIVITY_.ADDRESS;
+        return Activity.ACTIVITY.ADDRESS;
     }
 
     /**
@@ -513,7 +513,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field18() {
-        return Activity.ACTIVITY_.COORDINATE;
+        return Activity.ACTIVITY.COORDINATE;
     }
 
     /**
@@ -521,7 +521,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Integer> field19() {
-        return Activity.ACTIVITY_.ACTIVITY_TYPE;
+        return Activity.ACTIVITY.ACTIVITY_TYPE;
     }
 
     /**
@@ -529,7 +529,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Boolean> field20() {
-        return Activity.ACTIVITY_.PUBLIC;
+        return Activity.ACTIVITY.PUBLIC;
     }
 
     /**
@@ -537,7 +537,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<String> field21() {
-        return Activity.ACTIVITY_.SCORE_INFOS;
+        return Activity.ACTIVITY.SCORE_INFOS;
     }
 
     /**
@@ -545,7 +545,7 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      */
     @Override
     public Field<Integer> field22() {
-        return Activity.ACTIVITY_.COMMUNITY_ID;
+        return Activity.ACTIVITY.COMMUNITY_ID;
     }
 
     /**
@@ -1136,14 +1136,14 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
      * Create a detached ActivityRecord
      */
     public ActivityRecord() {
-        super(Activity.ACTIVITY_);
+        super(Activity.ACTIVITY);
     }
 
     /**
      * Create a detached, initialised ActivityRecord
      */
     public ActivityRecord(Integer id, String title, String avatar, String summary, String body, String unit, String tags, Integer status, Timestamp startTime, Timestamp endTime, Timestamp attendDueTime, Timestamp created, Integer createdBy, Timestamp modified, Integer modifiedBy, String attendInfos, String address, String coordinate, Integer activityType, Boolean public_, String scoreInfos, Integer communityId) {
-        super(Activity.ACTIVITY_);
+        super(Activity.ACTIVITY);
 
         set(0, id);
         set(1, title);

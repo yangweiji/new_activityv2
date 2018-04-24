@@ -100,7 +100,7 @@ public class Keys {
 
     private static class Identities0 extends AbstractKeys {
         public static Identity<ActionHistoryRecord, Integer> IDENTITY_ACTION_HISTORY = createIdentity(ActionHistory.ACTION_HISTORY, ActionHistory.ACTION_HISTORY.ID);
-        public static Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY = createIdentity(Activity.ACTIVITY_, Activity.ACTIVITY_.ID);
+        public static Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY = createIdentity(Activity.ACTIVITY, Activity.ACTIVITY.ID);
         public static Identity<ActivityFavoriteRecord, Integer> IDENTITY_ACTIVITY_FAVORITE = createIdentity(ActivityFavorite.ACTIVITY_FAVORITE, ActivityFavorite.ACTIVITY_FAVORITE.ID);
         public static Identity<ActivityPhotoRecord, Integer> IDENTITY_ACTIVITY_PHOTO = createIdentity(ActivityPhoto.ACTIVITY_PHOTO, ActivityPhoto.ACTIVITY_PHOTO.ID);
         public static Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = createIdentity(ActivityTicket.ACTIVITY_TICKET, ActivityTicket.ACTIVITY_TICKET.ID);
@@ -116,7 +116,7 @@ public class Keys {
 
     private static class UniqueKeys0 extends AbstractKeys {
         public static final UniqueKey<ActionHistoryRecord> KEY_ACTION_HISTORY_PRIMARY = createUniqueKey(ActionHistory.ACTION_HISTORY, "KEY_action_history_PRIMARY", ActionHistory.ACTION_HISTORY.ID);
-        public static final UniqueKey<ActivityRecord> KEY_ACTIVITY_PRIMARY = createUniqueKey(Activity.ACTIVITY_, "KEY_activity_PRIMARY", Activity.ACTIVITY_.ID);
+        public static final UniqueKey<ActivityRecord> KEY_ACTIVITY_PRIMARY = createUniqueKey(Activity.ACTIVITY, "KEY_activity_PRIMARY", Activity.ACTIVITY.ID);
         public static final UniqueKey<ActivityFavoriteRecord> KEY_ACTIVITY_FAVORITE_PRIMARY = createUniqueKey(ActivityFavorite.ACTIVITY_FAVORITE, "KEY_activity_favorite_PRIMARY", ActivityFavorite.ACTIVITY_FAVORITE.ID);
         public static final UniqueKey<ActivityPhotoRecord> KEY_ACTIVITY_PHOTO_PRIMARY = createUniqueKey(ActivityPhoto.ACTIVITY_PHOTO, "KEY_activity_photo_PRIMARY", ActivityPhoto.ACTIVITY_PHOTO.ID);
         public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = createUniqueKey(ActivityTicket.ACTIVITY_TICKET, "KEY_activity_ticket_PRIMARY", ActivityTicket.ACTIVITY_TICKET.ID);
