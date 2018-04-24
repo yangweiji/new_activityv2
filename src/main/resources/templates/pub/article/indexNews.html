@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app">
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>赛事新闻</strong>共<span th:text="${#lists.size(article)}"></span>条记录</div>
+        </div>
+
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <ul class="am-tabs-nav am-cf am_cf">
+                <li class="" th:classappend="${category}==1">
+                    <a href="/pub/article/indexNotice/1">公告通知</a>
+                </li>
+                <li class="" th:classappend="${category}==2">
+                    <a href="/pub/article/indexNews/2">赛事新闻</a>
+                </li>
+                <li class="" th:classappend="${category}==3">
+                    <a href="/pub/article/indexExercise/3">运动指南</a>
+                </li>
+            </ul>
+
+            <div class="am-tabs-bd">
+                <div class="am-list-news-bd am_news_list_all">
+                    <ul class="am-list">
+                        <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left am_list_li"
+                            th:each="item: ${article}">
+                            <div class="am-u-sm-3 am-list-thumb am_list_thumb">
+                                <a target="_blank" class=""
+                                   th:href="@{/pub/article/newsDetail/{id} (id=${item.get('id')})}">
+                                    <img class="am_news_list_img" alt="图片加载中..."
+                                         th:src="${item.get('avatar')}"
+                                    />
+                                </a>
+                            </div>
+                            <div class=" am-u-sm-9 am-list-main am_list_main">
+                                <h3 class="am-list-item-hd am_list_title">
+                                    <a target="_blank" class=""
+                                       th:href="@{/pub/article/newsDetail/{id} (id=${item.get('id')})}"
+                                       th:text="${item.get('title')}"></a>
+                                </h3>
+                                <div class="am_list_author">
+                                    <span th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"></span>
+                                    <span th:text="${'发布单位：'+item.get('unit')}"></span>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+</body>
+</html>
