@@ -31,213 +31,213 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> implements Record15<Integer, Integer, Integer, Integer, Timestamp, Integer, Timestamp, Timestamp, String, String, String, BigDecimal, Integer, Timestamp, Integer> {
 
-    private static final long serialVersionUID = 2057870634;
+    private static final long serialVersionUID = -685242974;
 
     /**
-     * Setter for <code>activity.activity_user.id</code>. 编号
+     * Setter for <code>activityv2.activity_user.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.id</code>. 编号
+     * Getter for <code>activityv2.activity_user.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.activity_user.user_id</code>.
+     * Setter for <code>activityv2.activity_user.user_id</code>.
      */
     public void setUserId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.user_id</code>.
+     * Getter for <code>activityv2.activity_user.user_id</code>.
      */
     public Integer getUserId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activity.activity_user.activity_id</code>.
+     * Setter for <code>activityv2.activity_user.activity_id</code>.
      */
     public void setActivityId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.activity_id</code>.
+     * Getter for <code>activityv2.activity_user.activity_id</code>.
      */
     public Integer getActivityId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activity.activity_user.activity_ticket_id</code>.
+     * Setter for <code>activityv2.activity_user.activity_ticket_id</code>.
      */
     public void setActivityTicketId(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.activity_ticket_id</code>.
+     * Getter for <code>activityv2.activity_user.activity_ticket_id</code>.
      */
     public Integer getActivityTicketId() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>activity.activity_user.created</code>.
+     * Setter for <code>activityv2.activity_user.created</code>.
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.created</code>.
+     * Getter for <code>activityv2.activity_user.created</code>.
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activity.activity_user.created_by</code>.
+     * Setter for <code>activityv2.activity_user.created_by</code>.
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.created_by</code>.
+     * Getter for <code>activityv2.activity_user.created_by</code>.
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activity.activity_user.attend_time</code>.
+     * Setter for <code>activityv2.activity_user.attend_time</code>.
      */
     public void setAttendTime(Timestamp value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.attend_time</code>.
+     * Getter for <code>activityv2.activity_user.attend_time</code>.
      */
     public Timestamp getAttendTime() {
         return (Timestamp) get(6);
     }
 
     /**
-     * Setter for <code>activity.activity_user.check_in_time</code>.
+     * Setter for <code>activityv2.activity_user.check_in_time</code>.
      */
     public void setCheckInTime(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.check_in_time</code>.
+     * Getter for <code>activityv2.activity_user.check_in_time</code>.
      */
     public Timestamp getCheckInTime() {
         return (Timestamp) get(7);
     }
 
     /**
-     * Setter for <code>activity.activity_user.real_name</code>. 名称
+     * Setter for <code>activityv2.activity_user.real_name</code>. 名称
      */
     public void setRealName(String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.real_name</code>. 名称
+     * Getter for <code>activityv2.activity_user.real_name</code>. 名称
      */
     public String getRealName() {
         return (String) get(8);
     }
 
     /**
-     * Setter for <code>activity.activity_user.mobile</code>. 联系方式
+     * Setter for <code>activityv2.activity_user.mobile</code>. 联系方式
      */
     public void setMobile(String value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.mobile</code>. 联系方式
+     * Getter for <code>activityv2.activity_user.mobile</code>. 联系方式
      */
     public String getMobile() {
         return (String) get(9);
     }
 
     /**
-     * Setter for <code>activity.activity_user.other_info</code>. 其他信息
+     * Setter for <code>activityv2.activity_user.other_info</code>. 其他信息
      */
     public void setOtherInfo(String value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.other_info</code>. 其他信息
+     * Getter for <code>activityv2.activity_user.other_info</code>. 其他信息
      */
     public String getOtherInfo() {
         return (String) get(10);
     }
 
     /**
-     * Setter for <code>activity.activity_user.price</code>. 报名时的缴费金额
+     * Setter for <code>activityv2.activity_user.price</code>. 报名时的缴费金额
      */
     public void setPrice(BigDecimal value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.price</code>. 报名时的缴费金额
+     * Getter for <code>activityv2.activity_user.price</code>. 报名时的缴费金额
      */
     public BigDecimal getPrice() {
         return (BigDecimal) get(11);
     }
 
     /**
-     * Setter for <code>activity.activity_user.score</code>. 报名时的积分抵扣值
+     * Setter for <code>activityv2.activity_user.score</code>. 报名时的积分抵扣值
      */
     public void setScore(Integer value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.score</code>. 报名时的积分抵扣值
+     * Getter for <code>activityv2.activity_user.score</code>. 报名时的积分抵扣值
      */
     public Integer getScore() {
         return (Integer) get(12);
     }
 
     /**
-     * Setter for <code>activity.activity_user.modified</code>.
+     * Setter for <code>activityv2.activity_user.modified</code>.
      */
     public void setModified(Timestamp value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.modified</code>.
+     * Getter for <code>activityv2.activity_user.modified</code>.
      */
     public Timestamp getModified() {
         return (Timestamp) get(13);
     }
 
     /**
-     * Setter for <code>activity.activity_user.modified_by</code>.
+     * Setter for <code>activityv2.activity_user.modified_by</code>.
      */
     public void setModifiedBy(Integer value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>activity.activity_user.modified_by</code>.
+     * Getter for <code>activityv2.activity_user.modified_by</code>.
      */
     public Integer getModifiedBy() {
         return (Integer) get(14);

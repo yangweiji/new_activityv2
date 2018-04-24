@@ -30,101 +30,101 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActionHistoryRecord extends UpdatableRecordImpl<ActionHistoryRecord> implements Record7<Integer, Integer, Integer, String, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = -1394518916;
+    private static final long serialVersionUID = 1104749300;
 
     /**
-     * Setter for <code>activity.action_history.id</code>.
+     * Setter for <code>activityv2.action_history.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.id</code>.
+     * Getter for <code>activityv2.action_history.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.action_history.axtenal_id</code>.
+     * Setter for <code>activityv2.action_history.axtenal_id</code>.
      */
     public void setAxtenalId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.axtenal_id</code>.
+     * Getter for <code>activityv2.action_history.axtenal_id</code>.
      */
     public Integer getAxtenalId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activity.action_history.action</code>.
+     * Setter for <code>activityv2.action_history.action</code>.
      */
     public void setAction(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.action</code>.
+     * Getter for <code>activityv2.action_history.action</code>.
      */
     public Integer getAction() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activity.action_history.memo</code>.
+     * Setter for <code>activityv2.action_history.memo</code>.
      */
     public void setMemo(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.memo</code>.
+     * Getter for <code>activityv2.action_history.memo</code>.
      */
     public String getMemo() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activity.action_history.created</code>.
+     * Setter for <code>activityv2.action_history.created</code>.
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.created</code>.
+     * Getter for <code>activityv2.action_history.created</code>.
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activity.action_history.created_by</code>.
+     * Setter for <code>activityv2.action_history.created_by</code>.
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.created_by</code>.
+     * Getter for <code>activityv2.action_history.created_by</code>.
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activity.action_history.community_id</code>.
+     * Setter for <code>activityv2.action_history.community_id</code>.
      */
     public void setCommunityId(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activity.action_history.community_id</code>.
+     * Getter for <code>activityv2.action_history.community_id</code>.
      */
     public Integer getCommunityId() {
         return (Integer) get(6);

@@ -38,10 +38,9 @@ repositories {
 
 dependencies {
     compile('org.slf4j:slf4j-api:1.7.21')
+    compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
+    testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
     compile('joda-time:joda-time:2.3')
-
-//    compile group: 'org.springframework.data', name: 'spring-data-commons', version: '2.0.2.RELEASE'
-
     compile('org.springframework.boot:spring-boot-starter-jooq')
 	compile('org.springframework.boot:spring-boot-starter-security')
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
@@ -55,7 +54,6 @@ dependencies {
 	compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     compile 'com.xiaoleilu:hutool-all:3.1.1'
     compile "com.fasterxml.jackson.module:jackson-module-kotlin:2.9.0"
-	// https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core
 	compile('com.aliyun:aliyun-java-sdk-core:3.3.1')
     compile('com.aliyun:aliyun-java-sdk-sts:3.0.0')
     compile('com.aliyun.oss:aliyun-sdk-oss:2.8.1')
@@ -67,6 +65,11 @@ dependencies {
 	runtime('mysql:mysql-connector-java:6.0.6')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	testCompile('org.springframework.security:spring-security-test')
+
+    //jackson library
+    compile group: 'org.codehaus.jackson', name: 'jackson-core-asl', version: '1.9.13'
+    compile group: 'org.codehaus.jackson', name: 'jackson-mapper-asl', version: '1.9.13'
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.12'
 }
 
 
@@ -76,13 +79,13 @@ def writer = new StringWriter()
 new groovy.xml.MarkupBuilder(writer).configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
     jdbc() {
         driver('com.mysql.jdbc.Driver')
-        url('jdbc:mysql://47.92.92.242:3306/activity?serverTimezone=GMT%2b8')
+        url('jdbc:mysql://47.92.92.242:3306/activityv2?serverTimezone=GMT%2b8')
         user('root')
         password('123456')
     }
     generator() {
         database() {
-            inputSchema 'activity'
+            inputSchema 'activityv2'
         }
         // Watch out for this caveat when using MarkupBuilder with "reserved names"
         // - https://github.com/jOOQ/jOOQ/issues/4797
@@ -108,4 +111,9 @@ org.jooq.util.GenerationTool.generate(
 
 bootRun {
     jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"
+}
+
+//打包
+war {
+    archiveName 'ROOT.war'
 }

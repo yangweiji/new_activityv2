@@ -13,7 +13,14 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.math.BigDecimal
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.servlet.http.HttpServletRequest
+import java.util.GregorianCalendar
+import java.util.Calendar
+
+
 
 
 /**
@@ -64,7 +71,7 @@ class ManageCenterController : BaseController() {
     @RequestMapping(value = "/home/{status}", method = arrayOf(RequestMethod.GET))
     private fun home(@PathVariable status: Int?, model: Model): String {
         //取得最新的活动记录
-        val activityItems = activityService!!.getAllActivityUserItems(status!!)
+        var activityItems = activityService!!.getAllActivityUserItems(status!!)
         for (r in activityItems) {
             //更新用户头像图片URL
             if (r.get("user_avatar") != null) {
@@ -90,16 +97,55 @@ class ManageCenterController : BaseController() {
     private fun scores(@ModelAttribute score: ScoreHistory,
                        request: HttpServletRequest,
                        model: Model): String {
-        val title = request.getParameter("title")
-        val username = request.getParameter("username")
-        val displayname = request.getParameter("displayname")
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank())
+        {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
 
-        //取得活动积分明细
-        val items = scoreService!!.getUserActivityScores(title, username, displayname)
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank())
+        {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
 
-        model.addAttribute("items", items)
+//        var title = request.getParameter("title")
+//        var username = request.getParameter("username")
+//        var real_name = request.getParameter("real_name")
+//        //取得活动积分明细
+//        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name)
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+//        model.addAttribute("items", items)
         model.addAttribute("score", score)
         return "sec/manage/scores"
+    }
+
+    /**
+     * 查找积分RestController
+     * @author Richard
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getScores", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @ResponseBody
+    fun scores(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
+        var title = map["title"]
+        var username = map["username"]
+        var real_name = map["real_name"]
+
+        //取得活动积分明细
+        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name)
+        var list = items.intoMaps()
+        return list
     }
 
     /**
@@ -205,15 +251,94 @@ class ManageCenterController : BaseController() {
     @RequestMapping(value = "/payments", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     private fun payments(request: HttpServletRequest,
                          model: Model): String {
-        val title = request.getParameter("title")
-        val username = request.getParameter("username")
-        val displayname = request.getParameter("displayname")
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank())
+        {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
 
-        //取得用户缴费订单信息
-        val items = oderService!!.getUserActivityPayments(title, username, displayname)
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank())
+        {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
 
-        model.addAttribute("items", items)
+//        var title = request.getParameter("title")
+//        var username = request.getParameter("username")
+//        var real_name = request.getParameter("real_name")
+//        //取得用户缴费订单信息
+//        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name)
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+//        model.addAttribute("items", items)
         return "sec/manage/payments"
     }
 
+    /**
+     * 查找积分RestController
+     * @author Richard
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getPayments", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @ResponseBody
+    fun payments(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
+        var title = map["title"]
+        var username = map["username"]
+        var real_name = map["real_name"]
+
+        //取得活动积分明细
+        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name)
+        var list = items.intoMaps()
+        return list
+    }
+
+    /**
+     * 用户缴费订单信息
+     * @param model
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/ordersstatistics", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    private fun ordersstatistics(request: HttpServletRequest,
+                         model: Model): String {
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank())
+        {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
+
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank())
+        {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+        var title = request.getParameter("title")
+        //取得用户缴费订单信息
+        var items = oderService!!.getOrdersStatistics(title, start, end)
+        var totalAmount: Double = 0.0
+        for (item in items)
+            totalAmount += java.lang.Double.parseDouble(item.getValue("amount").toString())
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+        model.addAttribute("totalAmount", totalAmount)
+        model.addAttribute("items", items)
+        return "sec/manage/ordersstatistics"
+    }
 }

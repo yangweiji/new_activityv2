@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.sec
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.User
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.text.SimpleDateFormat
+import java.util.*
 
 import javax.servlet.http.HttpServletRequest
 
@@ -77,7 +80,7 @@ class UserController : BaseController() {
     @GetMapping("/registermember")
     fun registerMember(request: HttpServletRequest,
                                model: Model): String {
-        val user = userService!!.getCurrentUserInfo()
+        var user = userService!!.getCurrentUserInfo()
         model.addAttribute("user", user)
 
         //将前页面URL添加至模型数据中
@@ -98,7 +101,7 @@ class UserController : BaseController() {
             redirectAttributes: RedirectAttributes,
             model: Model): String {
         //获取用户的基本注册信息
-        val member = userService!!.getUser(user.id!!)
+        var member = userService!!.getUser(user.id!!)
         member.level = 1 //会员用户
         member.realTime = DateUtil.date().toTimestamp()
         member.isReal = true //认证通过
@@ -124,15 +127,35 @@ class UserController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/members", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     fun member(request: HttpServletRequest, model: Model): String {
-        var username = request.getParameter("username")
-        var displayname = request.getParameter("displayname")
-        var real_name = request.getParameter("real_name")
-        var id_card = request.getParameter("id_card")
-        var level = request.getParameter("level")
-        //全部认证用户
-//        val members = userService!!.getMembers()
-        val members = userService!!.getMembers(username, displayname, real_name, id_card, level)
-        model.addAttribute("members", members)
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank())
+        {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
+
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank())
+        {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+//        var username = request.getParameter("username")
+//        var displayname = request.getParameter("displayname")
+//        var real_name = request.getParameter("real_name")
+//        var id_card = request.getParameter("id_card")
+//        var level = request.getParameter("level")
+//
+//        var members = userService!!.getMembers(start, end, username, displayname, real_name, id_card, level)
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+//        model.addAttribute("members", members)
 
         return "sec/user/members"
     }
@@ -145,14 +168,56 @@ class UserController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/users", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     fun allUsers(request: HttpServletRequest, model: Model): String {
-        var username = request.getParameter("username")
-        //所有用户
-        val users = userService!!.getAllUsersAndScores(username)
-        model.addAttribute("users", users)
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank())
+        {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
 
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank())
+        {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+//        var username = request.getParameter("username")
+//        //所有用户
+//        var users = userService!!.getAllUsersAndScores(start, end, username)
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+//        model.addAttribute("users", users)
         return "sec/user/users"
     }
 
+    /**
+     * 查找用户RestController
+     * @author Richard
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/searchUsers", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @ResponseBody
+    fun searchUsers(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
+        var username = map["username"]
+        var displayname = map["displayname"]
+        var real_name = map["real_name"]
+        var id_card = map["id_card"]
+        var level = map["level"]
+        var isMember = map["isMember"]
+
+        //查询用户
+        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember)
+        var list = items.intoMaps()
+        return list
+    }
 
     /**
      * 更新用户信息

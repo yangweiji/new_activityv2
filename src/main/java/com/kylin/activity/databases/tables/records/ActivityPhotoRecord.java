@@ -30,101 +30,101 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhotoRecord extends UpdatableRecordImpl<ActivityPhotoRecord> implements Record7<Integer, Integer, String, String, Timestamp, Integer, String> {
 
-    private static final long serialVersionUID = -1686060005;
+    private static final long serialVersionUID = 1570696843;
 
     /**
-     * Setter for <code>activity.activity_photo.id</code>. 编号
+     * Setter for <code>activityv2.activity_photo.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.id</code>. 编号
+     * Getter for <code>activityv2.activity_photo.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.activity_photo.activity_id</code>. 关联编号
+     * Setter for <code>activityv2.activity_photo.activity_id</code>. 关联编号
      */
     public void setActivityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.activity_id</code>. 关联编号
+     * Getter for <code>activityv2.activity_photo.activity_id</code>. 关联编号
      */
     public Integer getActivityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activity.activity_photo.picture</code>. 图片
+     * Setter for <code>activityv2.activity_photo.picture</code>. 图片
      */
     public void setPicture(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.picture</code>. 图片
+     * Getter for <code>activityv2.activity_photo.picture</code>. 图片
      */
     public String getPicture() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activity.activity_photo.description</code>. 描述
+     * Setter for <code>activityv2.activity_photo.description</code>. 描述
      */
     public void setDescription(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.description</code>. 描述
+     * Getter for <code>activityv2.activity_photo.description</code>. 描述
      */
     public String getDescription() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activity.activity_photo.created</code>.
+     * Setter for <code>activityv2.activity_photo.created</code>.
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.created</code>.
+     * Getter for <code>activityv2.activity_photo.created</code>.
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activity.activity_photo.created_by</code>.
+     * Setter for <code>activityv2.activity_photo.created_by</code>.
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.created_by</code>.
+     * Getter for <code>activityv2.activity_photo.created_by</code>.
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activity.activity_photo.axtenal_url</code>. 外部相册地址
+     * Setter for <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
      */
     public void setAxtenalUrl(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activity.activity_photo.axtenal_url</code>. 外部相册地址
+     * Getter for <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
      */
     public String getAxtenalUrl() {
         return (String) get(6);

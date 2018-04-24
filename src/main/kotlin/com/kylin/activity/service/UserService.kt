@@ -137,43 +137,13 @@ class UserService {
     /**
      * 查询全部用户与积分
      */
-    fun getAllUsersAndScores(username: String?): Result<Record> {
+    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?,real_name: String?,id_card: String?,level: String?,isMember: String?): Result<Record> {
         var sql = "select t1.*, t2.total_score from user t1 " +
                 "left join (select user_id, sum(score) total_score " +
                 "from score_history " +
                 "group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
-                "where 1=1 {0} "
-        var strCondition = ""
-        if (!username.isNullOrBlank())
-        {
-            strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
-        }
-
-        sql = sql.replace("{0}", strCondition)
-        var items = create!!.resultQuery(sql).fetch()
-        return items
-    }
-
-    /**
-     * 认证会员
-     */
-    fun getMembers(): List<User> {
-        var items = create!!.selectFrom(Tables.USER).where(Tables.USER.LEVEL.greaterThan(0)).fetch().map(userDao!!.mapper())
-        return items
-    }
-
-    /**
-     * 认证会员
-     */
-    fun getMembers(username: String?,displayname: String?,real_name: String?,id_card: String?,level: String?): Result<Record> {
-
-        var sql = "select t1.*, t2.total_score from user t1 " +
-                "left join (select user_id, sum(score) total_score " +
-                "from score_history " +
-                "group by user_id) t2 " +
-                "on t1.id = t2.user_id " +
-                "where t1.level > 0 {0} {1} {2} {3} {4} "
+                "where 1=1 {0} {1} {2} {3} {4} {5} {6} {7} "
         var strCondition = ""
         if (!username.isNullOrBlank())
         {
@@ -205,9 +175,91 @@ class UserService {
         }
         sql = sql.replace("{4}", strCondition)
 
-        var items = create!!.resultQuery(sql).fetch()
+        if (!start.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
+        }
+        sql = sql.replace("{5}", strCondition)
 
-//        var items = create!!.selectFrom(Tables.USER).where(Tables.USER.LEVEL.greaterThan(0)).fetch().map(userDao!!.mapper())
+        if (!end.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
+        }
+        sql = sql.replace("{6}", strCondition)
+
+        if (!isMember.isNullOrBlank())
+        {
+            strCondition = "and t1.level > 0"
+        }
+        sql = sql.replace("{7}", strCondition)
+
+        var items = create!!.resultQuery(sql).fetch()
+        return items
+    }
+
+    /**
+     * 认证会员
+     */
+    fun getMembers(): List<User> {
+        var items = create!!.selectFrom(Tables.USER).where(Tables.USER.LEVEL.greaterThan(0)).fetch().map(userDao!!.mapper())
+        return items
+    }
+
+    /**
+     * 认证会员
+     */
+    fun getMembers(start: String?, end: String?, username: String?, displayname: String?,real_name: String?,id_card: String?,level: String?): Result<Record> {
+
+        var sql = "select t1.*, t2.total_score from user t1 " +
+                "left join (select user_id, sum(score) total_score " +
+                "from score_history " +
+                "group by user_id) t2 " +
+                "on t1.id = t2.user_id " +
+                "where t1.level > 0 {0} {1} {2} {3} {4} {5} {6} "
+        var strCondition = ""
+        if (!username.isNullOrBlank())
+        {
+            strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
+        }
+        sql = sql.replace("{0}", strCondition)
+
+        if (!displayname.isNullOrBlank())
+        {
+            strCondition = "and t1.displayname like '%{0}%'".replace("{0}", displayname!!)
+        }
+        sql = sql.replace("{1}", strCondition)
+
+        if (!real_name.isNullOrBlank())
+        {
+            strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
+        }
+        sql = sql.replace("{2}", strCondition)
+
+        if (!id_card.isNullOrBlank())
+        {
+            strCondition = "and t1.id_card like '%{0}%'".replace("{0}", id_card!!)
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        if (!level.isNullOrBlank())
+        {
+            strCondition = "and t1.level = {0}".replace("{0}", level!!)
+        }
+        sql = sql.replace("{4}", strCondition)
+
+        if (!start.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
+        }
+        sql = sql.replace("{5}", strCondition)
+
+        if (!end.isNullOrBlank())
+        {
+            strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
+        }
+        sql = sql.replace("{6}", strCondition)
+
+        var items = create!!.resultQuery(sql).fetch()
         return items
     }
 

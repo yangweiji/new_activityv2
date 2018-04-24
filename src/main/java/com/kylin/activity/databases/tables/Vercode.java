@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activity;
+import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.VercodeRecord;
@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Vercode extends TableImpl<VercodeRecord> {
 
-    private static final long serialVersionUID = 2095683343;
+    private static final long serialVersionUID = -1833360637;
 
     /**
-     * The reference instance of <code>activity.vercode</code>
+     * The reference instance of <code>activityv2.vercode</code>
      */
     public static final Vercode VERCODE = new Vercode();
 
@@ -56,41 +56,41 @@ public class Vercode extends TableImpl<VercodeRecord> {
     }
 
     /**
-     * The column <code>activity.vercode.id</code>. 编号
+     * The column <code>activityv2.vercode.id</code>. 编号
      */
     public final TableField<VercodeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activity.vercode.mobile</code>.
+     * The column <code>activityv2.vercode.mobile</code>.
      */
     public final TableField<VercodeRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>activity.vercode.code</code>.
+     * The column <code>activityv2.vercode.code</code>.
      */
     public final TableField<VercodeRecord, String> CODE = createField("code", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>activity.vercode.created</code>.
+     * The column <code>activityv2.vercode.created</code>.
      */
     public final TableField<VercodeRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * Create a <code>activity.vercode</code> table reference
+     * Create a <code>activityv2.vercode</code> table reference
      */
     public Vercode() {
         this(DSL.name("vercode"), null);
     }
 
     /**
-     * Create an aliased <code>activity.vercode</code> table reference
+     * Create an aliased <code>activityv2.vercode</code> table reference
      */
     public Vercode(String alias) {
         this(DSL.name(alias), VERCODE);
     }
 
     /**
-     * Create an aliased <code>activity.vercode</code> table reference
+     * Create an aliased <code>activityv2.vercode</code> table reference
      */
     public Vercode(Name alias) {
         this(alias, VERCODE);
@@ -109,7 +109,7 @@ public class Vercode extends TableImpl<VercodeRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activity.ACTIVITY;
+        return Activityv2.ACTIVITYV2;
     }
 
     /**

@@ -30,115 +30,115 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityTicketRecord extends UpdatableRecordImpl<ActivityTicketRecord> implements Record8<Integer, Integer, String, String, BigDecimal, Integer, Integer, Integer> {
 
-    private static final long serialVersionUID = -828481280;
+    private static final long serialVersionUID = -1559397568;
 
     /**
-     * Setter for <code>activity.activity_ticket.id</code>.
+     * Setter for <code>activityv2.activity_ticket.id</code>.
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.id</code>.
+     * Getter for <code>activityv2.activity_ticket.id</code>.
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.activity_id</code>.
+     * Setter for <code>activityv2.activity_ticket.activity_id</code>.
      */
     public void setActivityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.activity_id</code>.
+     * Getter for <code>activityv2.activity_ticket.activity_id</code>.
      */
     public Integer getActivityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.title</code>. 活动票标题
+     * Setter for <code>activityv2.activity_ticket.title</code>. 活动票标题
      */
     public void setTitle(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.title</code>. 活动票标题
+     * Getter for <code>activityv2.activity_ticket.title</code>. 活动票标题
      */
     public String getTitle() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.memo</code>. 活动票说明
+     * Setter for <code>activityv2.activity_ticket.memo</code>. 活动票说明
      */
     public void setMemo(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.memo</code>. 活动票说明
+     * Getter for <code>activityv2.activity_ticket.memo</code>. 活动票说明
      */
     public String getMemo() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.price</code>.
+     * Setter for <code>activityv2.activity_ticket.price</code>.
      */
     public void setPrice(BigDecimal value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.price</code>.
+     * Getter for <code>activityv2.activity_ticket.price</code>.
      */
     public BigDecimal getPrice() {
         return (BigDecimal) get(4);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.count</code>. 票张数 0表示不限制票的张数
+     * Setter for <code>activityv2.activity_ticket.count</code>. 票张数 0表示不限制票的张数
      */
     public void setCount(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.count</code>. 票张数 0表示不限制票的张数
+     * Getter for <code>activityv2.activity_ticket.count</code>. 票张数 0表示不限制票的张数
      */
     public Integer getCount() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.user_level</code>. 要求会员级别，0表示无限制
+     * Setter for <code>activityv2.activity_ticket.user_level</code>. 要求会员级别，0表示无限制
      */
     public void setUserLevel(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.user_level</code>. 要求会员级别，0表示无限制
+     * Getter for <code>activityv2.activity_ticket.user_level</code>. 要求会员级别，0表示无限制
      */
     public Integer getUserLevel() {
         return (Integer) get(6);
     }
 
     /**
-     * Setter for <code>activity.activity_ticket.score</code>. 可用积分抵扣，0不能抵扣， &gt;0 可抵扣
+     * Setter for <code>activityv2.activity_ticket.score</code>. 可用积分抵扣，0不能抵扣， &gt;0 可抵扣
      */
     public void setScore(Integer value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activity.activity_ticket.score</code>. 可用积分抵扣，0不能抵扣， &gt;0 可抵扣
+     * Getter for <code>activityv2.activity_ticket.score</code>. 可用积分抵扣，0不能抵扣， &gt;0 可抵扣
      */
     public Integer getScore() {
         return (Integer) get(7);
