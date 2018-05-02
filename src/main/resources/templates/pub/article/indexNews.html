@@ -14,13 +14,13 @@
 
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
-                <li class="" th:classappend="${category}==1">
+                <li class="" th:classappend="${category}==1?'am-active'">
                     <a href="/pub/article/indexNotice/1">公告通知</a>
                 </li>
-                <li class="" th:classappend="${category}==2">
+                <li class="" th:classappend="${category}==2?'am-active'">
                     <a href="/pub/article/indexNews/2">赛事新闻</a>
                 </li>
-                <li class="" th:classappend="${category}==3">
+                <li class="" th:classappend="${category}==3?'am-active'">
                     <a href="/pub/article/indexExercise/3">运动指南</a>
                 </li>
             </ul>
@@ -45,8 +45,11 @@
                                        th:text="${item.get('title')}"></a>
                                 </h3>
                                 <div class="am_list_author">
-                                    <span th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"></span>
-                                    <span th:text="${'发布单位：'+item.get('unit')}"></span>
+                                    <span th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                          th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                                    ></span>&nbsp;&nbsp;
+                                    <span th:text="${'发布单位：'+item.get('unit')}"></span><br/>
+                                    <span th:text="${'摘要：'+item.get('summary')}"></span>
                                 </div>
                             </div>
                         </li>

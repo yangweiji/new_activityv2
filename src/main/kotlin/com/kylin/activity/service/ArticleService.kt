@@ -76,7 +76,7 @@ class ArticleService {
      * 公告通知查询界面
      */
     fun noticeItems(category: Int): Result<Record> {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit from article a where 1=1 "
+        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary from article a where 1=1 "
         var params = mutableListOf<Any?>()
         if (category != null) {
             sql += "and a.category = 1 "
@@ -91,7 +91,7 @@ class ArticleService {
      * 赛事新闻查询界面
      */
     fun newsItems(category: Int): Result<Record> {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit from article a where 1=1 "
+        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary from article a where 1=1 "
         var params = mutableListOf<Any?>()
         if (category != null) {
             sql += "and a.category = 2 "
@@ -106,7 +106,7 @@ class ArticleService {
      * 运动指南查询界面
      */
     fun exerciseItems(category: Int): Result<Record> {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit from article a where 1=1 "
+        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary from article a where 1=1 "
         var params = mutableListOf<Any?>()
         if (category != null) {
             sql += "and a.category = 3 "
@@ -121,7 +121,7 @@ class ArticleService {
      * 取得分类详情信息
      */
     fun getCategoryDetail(id: Int): Record {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.body from article a where a.id=? "
+        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary,a.body from article a where a.id=? "
         var notice = create!!.resultQuery(sql, id).fetchOne()
         return notice
     }

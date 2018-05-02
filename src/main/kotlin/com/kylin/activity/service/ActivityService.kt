@@ -103,6 +103,12 @@ class ActivityService {
         return items
     }
 
+   /* fun useGetPublicActivities(id: Int): Result<Record> {
+        //构建活动数据源
+        var sql = "select a.id,a.avatar,a.start_time,a.title from activity a left join community c on a.community_id=c.id"
+        return create!!.resultQuery(sql).fetch()
+    }*/
+
     /**
      * 取得活动信息、活动参与人数、活动收藏人数
      * 最新的前1000条记录
@@ -119,18 +125,14 @@ class ActivityService {
                 "order by t1.start_time desc " +
                 "limit 1000"
         var strCondition = ""
-        if (!tags.isNullOrBlank())
-        {
-            if (tags.contains('-'))
-            {
+        if (!tags.isNullOrBlank()) {
+            if (tags.contains('-')) {
                 var ss = ""
-                for (s in tags.split("-"))
-                {
+                for (s in tags.split("-")) {
                     ss = "$ss,'$s'"
                 }
                 strCondition = "and t1.tags in ({0})".replace("{0}", ss.substring(1))
-            }
-            else {
+            } else {
                 strCondition = "and t1.tags = '{0}'".replace("{0}", tags)
             }
         }
@@ -143,23 +145,23 @@ class ActivityService {
     /**
      *  获取活动信息、活动参与人数、活动收藏人数及用户选择的团队活动信息
      */
-    fun getTeamActivities(sid: Int,tag:String):Result<Record>{
+    fun getTeamActivities(sid: Int, tag: String): Result<Record> {
         //获取团队活动信息
-        var sql="select t1.*, "+
-                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count,"+
-                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count "+
-                "from activity t1"+
+        var sql = "select t1.*, " +
+                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count," +
+                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+                "from activity t1" +
                 " where 1=1 {0}{1}"
-        var sqlsid=""
-        if(sid !=0 ){
+        var sqlsid = ""
+        if (sid != 0) {
             sqlsid = "and community_id = sid"
         }
-        sql=sql.replace("{0}",sqlsid)
-        var sqltag=""
-        if(!tag.isNullOrBlank()&& !tag.equals("0")){
-            sqltag="and tags ='{0}'".replace("{0}",tag)
+        sql = sql.replace("{0}", sqlsid)
+        var sqltag = ""
+        if (!tag.isNullOrBlank() && !tag.equals("0")) {
+            sqltag = "and tags ='{0}'".replace("{0}", tag)
         }
-        sql = sql.replace("{1}",sqltag)
+        sql = sql.replace("{1}", sqltag)
         var items = create!!.resultQuery(sql).fetch()
         return items
     }
@@ -186,38 +188,28 @@ class ActivityService {
                 "order by t1.start_time desc " +
                 "limit {99}, {100}"
         var strTag = ""
-        if (!tag.isNullOrBlank() && !tag.equals("0"))
-        {
+        if (!tag.isNullOrBlank() && !tag.equals("0")) {
             strTag = "and t1.tags = '{0}'".replace("{0}", tag)
         }
         sql_count = sql_count.replace("{0}", strTag)
         sql = sql.replace("{0}", strTag)
 
         var strTime = ""
-        if (!time.isNullOrBlank() && !time.equals("0"))
-        {
+        if (!time.isNullOrBlank() && !time.equals("0")) {
 
-            if (time == "d")
-            {
+            if (time == "d") {
                 //今天
                 strTime = "and to_days(t1.start_time) = to_days(now())"
-            }
-            else if (time == "w")
-            {
+            } else if (time == "w") {
                 //近一周
                 strTime = "and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(t1.start_time)"
-            }
-            else if (time == "m")
-            {
+            } else if (time == "m") {
                 //近一月
                 strTime = "and DATE_SUB(CURDATE(), INTERVAL 1 MONTH) <= date(t1.start_time)"
-            }
-            else if (time == "z")
-            {
+            } else if (time == "z") {
                 //周末
                 strTime = "and (DATE_FORMAT(t1.start_time,'%w') = 6 or DATE_FORMAT(t1.start_time,'%w') = 7)"
-            }
-            else {
+            } else {
                 //指定日期
                 strTime = "and DATE_FORMAT(t1.start_time,'%Y%m%d') = " + time
             }
@@ -228,7 +220,7 @@ class ActivityService {
 
         sql = sql.replace("{1}", strTime)
         //分页条件
-        sql = sql.replace("{99}", (page*size).toString())
+        sql = sql.replace("{99}", (page * size).toString())
         sql = sql.replace("{100}", size.toString())
         var items = create!!.resultQuery(sql).fetch()
 
@@ -310,18 +302,13 @@ class ActivityService {
                 "order by t1.start_time desc " +
                 "limit 50"
         var strStatus = ""
-        if (status == 1)
-        {
+        if (status == 1) {
             //未开始的活动
             strStatus = "and t1.start_time > CURDATE()"
-        }
-        else if (status == 2)
-        {
+        } else if (status == 2) {
             //进行中的活动
             strStatus = "and t1.start_time <= CURDATE() and end_time > CURDATE()"
-        }
-        else if (status == 3)
-        {
+        } else if (status == 3) {
             //已结束的活动
             strStatus = "and t1.end_time <= CURDATE()"
         }
@@ -342,31 +329,24 @@ class ActivityService {
                 "where 1=1 {0} {1} {2}" +
                 "order by t1.start_time desc "
         var strCondition = ""
-        if (!title.isNullOrBlank())
-        {
+        if (!title.isNullOrBlank()) {
             strCondition = "and t1.title like '%{0}%'".replace("{0}", title!!)
         }
         sql = sql.replace("{0}", strCondition)
 
-        if (!tags.isNullOrBlank() && tags != "0")
-        {
+        if (!tags.isNullOrBlank() && tags != "0") {
             strCondition = "and t1.tags = '{0}'".replace("{0}", tags!!)
         }
         sql = sql.replace("{1}", strCondition)
 
 
-        if (status == "1")
-        {
+        if (status == "1") {
             //未开始的活动
             strCondition = "and t1.start_time > CURDATE()"
-        }
-        else if (status == "2")
-        {
+        } else if (status == "2") {
             //进行中的活动
             strCondition = "and t1.start_time <= CURDATE() and end_time > CURDATE()"
-        }
-        else if (status == "3")
-        {
+        } else if (status == "3") {
             //已结束的活动
             strCondition = "and t1.end_time <= CURDATE()"
         }
@@ -393,69 +373,60 @@ class ActivityService {
                 "order by t1.created desc " +
                 "{99}"
         var strCondition = ""
-        if (!mobile.isNullOrBlank())
-        {
+        if (!mobile.isNullOrBlank()) {
             strCondition = "and t1.mobile = '{0}'".replace("{0}", mobile!!)
         }
         sql = sql.replace("{0}", strCondition)
 
-        if (!title.isNullOrBlank())
-        {
+        if (!title.isNullOrBlank()) {
             strCondition = "and t3.title like '%{0}%'".replace("{0}", title!!)
         }
         sql = sql.replace("{1}", strCondition)
 
-        if (!real_name.isNullOrBlank())
-        {
+        if (!real_name.isNullOrBlank()) {
             strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
         }
         sql = sql.replace("{2}", strCondition)
 
-        if (!activityId.isNullOrBlank())
-        {
+        if (!activityId.isNullOrBlank()) {
             strCondition = "and t1.activity_id = {0}".replace("{0}", activityId!!)
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!checked.isNullOrBlank())
-        {
+        if (!checked.isNullOrBlank()) {
             strCondition = "and t1.check_in_time is not null"
         }
         sql = sql.replace("{4}", strCondition)
 
-        if (!ticket_title.isNullOrBlank())
-        {
+        if (!ticket_title.isNullOrBlank()) {
             strCondition = "and t4.title like '%{0}%'".replace("{0}", ticket_title!!)
         }
         sql = sql.replace("{5}", strCondition)
 
-        if (!start.isNullOrBlank())
-        {
+        if (!start.isNullOrBlank()) {
             strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
         }
         sql = sql.replace("{6}", strCondition)
 
-        if (!end.isNullOrBlank())
-        {
+        if (!end.isNullOrBlank()) {
             strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
         }
         sql = sql.replace("{7}", strCondition)
 
-        if(!status.isNullOrBlank()){
+        if (!status.isNullOrBlank()) {
             strCondition = " and t1.status = $status "
         } else {
             strCondition = " and (t1.status is null or t1.status = 0)  "
         }
         sql = sql.replace("{8}", strCondition)
 
-        if(!other_info.isNullOrBlank()){
+        if (!other_info.isNullOrBlank()) {
             strCondition = "and t1.other_info like '%{0}%'".replace("{0}", other_info!!)
         }
         sql = sql.replace("{9}", strCondition)
 
         var strLimit = ""
-        if (strCondition.isNullOrBlank())
-        {
+        if (strCondition.isNullOrBlank()) {
             //如果无条件，默认取得最近的100条记录
             //strLimit = "limit 100"
         }
@@ -468,7 +439,7 @@ class ActivityService {
     /**
      * 阳光杯活动报名信息
      */
-    fun getSunnyCupAttendUsers(start: String?, end: String?, activityId: String?, title: String?, mobile: String?, real_name: String?, ticket_title: String?, checked: String?, status:String?, other_info: String?): Result<Record> {
+    fun getSunnyCupAttendUsers(start: String?, end: String?, activityId: String?, title: String?, mobile: String?, real_name: String?, ticket_title: String?, checked: String?, status: String?, other_info: String?): Result<Record> {
         //构建数据源
         var sql = "select t1.id, t1.user_id, t1.activity_id, t1.activity_ticket_id, t1.created, t1.created_by " +
                 ", t1.attend_time, t1.check_in_time, t1.real_name, t1.mobile, t1.other_info, t1.price, t1.score, t1.status " +
@@ -482,69 +453,60 @@ class ActivityService {
                 "order by t1.created desc " +
                 "{99}"
         var strCondition = ""
-        if (!mobile.isNullOrBlank())
-        {
+        if (!mobile.isNullOrBlank()) {
             strCondition = "and t1.mobile = '{0}'".replace("{0}", mobile!!)
         }
         sql = sql.replace("{0}", strCondition)
 
-        if (!title.isNullOrBlank())
-        {
+        if (!title.isNullOrBlank()) {
             strCondition = "and t3.title like '%{0}%'".replace("{0}", title!!)
         }
         sql = sql.replace("{1}", strCondition)
 
-        if (!real_name.isNullOrBlank())
-        {
+        if (!real_name.isNullOrBlank()) {
             strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
         }
         sql = sql.replace("{2}", strCondition)
 
-        if (!activityId.isNullOrBlank())
-        {
+        if (!activityId.isNullOrBlank()) {
             strCondition = "and t1.activity_id = {0}".replace("{0}", activityId!!)
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!checked.isNullOrBlank())
-        {
+        if (!checked.isNullOrBlank()) {
             strCondition = "and t1.check_in_time is not null"
         }
         sql = sql.replace("{4}", strCondition)
 
-        if (!ticket_title.isNullOrBlank())
-        {
+        if (!ticket_title.isNullOrBlank()) {
             strCondition = "and t4.title like '%{0}%'".replace("{0}", ticket_title!!)
         }
         sql = sql.replace("{5}", strCondition)
 
-        if (!start.isNullOrBlank())
-        {
+        if (!start.isNullOrBlank()) {
             strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
         }
         sql = sql.replace("{6}", strCondition)
 
-        if (!end.isNullOrBlank())
-        {
+        if (!end.isNullOrBlank()) {
             strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
         }
         sql = sql.replace("{7}", strCondition)
 
-        if(!status.isNullOrBlank()){
+        if (!status.isNullOrBlank()) {
             strCondition = " and t1.status = $status "
         } else {
             strCondition = " and (t1.status is null or t1.status = 0)  "
         }
         sql = sql.replace("{8}", strCondition)
 
-        if(!other_info.isNullOrBlank()){
+        if (!other_info.isNullOrBlank()) {
             strCondition = "and t1.other_info like '%{0}%'".replace("{0}", other_info!!)
         }
         sql = sql.replace("{9}", strCondition)
 
         var strLimit = ""
-        if (strCondition.isNullOrBlank())
-        {
+        if (strCondition.isNullOrBlank()) {
             strLimit = ""
         }
         sql = sql.replace("{99}", strLimit)
@@ -556,7 +518,7 @@ class ActivityService {
     /**
      * 删除活动
      */
-    fun  deleteById(id: Int) {
+    fun deleteById(id: Int) {
         activityDao!!.deleteById(id)
     }
 
@@ -590,7 +552,7 @@ class ActivityService {
     /**
      * 活动统计
      */
-    fun  getActivityStatisticsByTicket(activityId: String?): Result<Record> {
+    fun getActivityStatisticsByTicket(activityId: String?): Result<Record> {
         //构建数据源
         var sql = "select t1.activity_ticket_id, t2.title ticket_title, t1.attendcount, t1.checkcount " +
                 "from (select activity_ticket_id, count(attend_time) as attendcount, count(check_in_time) as checkcount from activity_user where activity_id = ? group by activity_ticket_id) t1 " +
@@ -603,7 +565,7 @@ class ActivityService {
     /**
      * 活动签到人数
      */
-    fun  getActivityCheckCount(activityId: String?): Any? {
+    fun getActivityCheckCount(activityId: String?): Any? {
         var sql = "select count(*) from activity_user where activity_id = ? and check_in_time is not null"
         var count = create!!.resultQuery(sql, activityId).single()[0]
         return count
@@ -612,7 +574,7 @@ class ActivityService {
     /**
      * 活动报名人数
      */
-    fun  getActivityAttendCount(activityId: String?): Any {
+    fun getActivityAttendCount(activityId: String?): Any {
         var sql = "select count(*) from activity_user where activity_id = ?"
         var count = create!!.resultQuery(sql, activityId).single()[0]
         return count
@@ -621,7 +583,7 @@ class ActivityService {
     /**
      * 更新活动报名状态
      */
-    fun  updateActivityUserStatus(id: Int, status: Int?): Any {
+    fun updateActivityUserStatus(id: Int, status: Int?): Any {
         val sql = "update activity_user set status = ? where id = ?"
         var rs = create!!.execute(sql, status, id)
         return rs

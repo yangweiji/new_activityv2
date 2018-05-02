@@ -1,7 +1,8 @@
 new Vue({
     el: '#app',
-    data: function() {
-        return {
+    data:function(){
+        return{
+
         }
     },
     methods: {

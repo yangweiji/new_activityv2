@@ -13,10 +13,14 @@
 
             <h1 class="article_nr_title" th:text="${article.get('title')}"></h1>
             <div class="article_nr_content">
-                <p>发布时间:
-                    <span th:text="${#dates.format(article.get('publish_time'), 'yyyy-MM-dd HH:mm')}"></span></p>
+                <p>发布时间：
+                    <span th:text="${#dates.format(article.get('publish_time'), 'yyyy-MM-dd HH:mm:ss')}"
+                          th:text="${#kylin.fromNow(article.get('publish_time'))}"
+                    ></span></p>
 
-                <p>发布单位: <span th:text="${article.get('unit')}"></span></p>
+                <p>发布单位： <span th:text="${article.get('unit')}"></span></p>
+                <p>摘&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    要：<span th:text="${article.get('summary')}"></span></p>
                 <p><img th:src="${article.get('avatar')}"></p>
                 <div th:utext="${article.get('body')}"></div>
 

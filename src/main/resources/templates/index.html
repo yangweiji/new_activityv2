@@ -37,8 +37,8 @@
         </div>
     </div>
 
-    <div class="c_orange">
-        <div class="orange_1">
+    <div class="c_orange" style="position:relative">
+        <div class="orange_1 am-fl">
             <button type="button"
                     class="am-btn am-btn-warning am-round" id="o_notice">公告通知
             </button>
@@ -48,16 +48,19 @@
                         <a th:href="@{/pub/article/noticeList/{id} (id=${item.get('id')}) }"><i
                                 class="am-icon-book am-icon-fw"></i>
                             <span class="o_min" th:text="${item.get('title')}"></span>
+                            <span class="fal fa-angle-right"></span>
                             <span class="o_time"
-                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"></span>
-                            <i class="fal fa-angle-right"></i>
+                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                  th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                            >
+                            </span>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="orange_2">
+        <div class="orange_2 am-fl">
             <button type="button" class="am-btn am-btn-warning am-round" id="o_news">赛事新闻</button>
             <div class="">
                 <ul class="am-list am-list-border">
@@ -65,16 +68,18 @@
                         <a th:href="@{/pub/article/newsList/{id} (id=${item.get('id')}) }" class="am-list-a"><i
                                 class="am-icon-book am-icon-fw"></i>
                             <span class="o_min" th:text="${item.get('title')}"></span>
+                            <span class="fal fa-angle-right"></span>
                             <span class="o_time"
-                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"></span>
-                            <i class="fal fa-angle-right"></i>
+                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                  th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                            ></span>
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
 
-        <div class="orange_3">
+        <div class="orange_3 am-fl">
             <button type="button" class="am-btn am-btn-warning am-round" id="o_exercise">运动指南</button>
             <div class="">
                 <ul class="am-list am-list-border">
@@ -82,16 +87,19 @@
                         <a th:href="@{/pub/article/exerciseList/{id} (id=${item.get('id')}) }"><i
                                 class="am-icon-book am-icon-fw"></i>
                             <span class="o_min" th:text="${item.get('title')}"></span>
+                            <span class="fal fa-angle-right"></span>
                             <span class="o_time"
-                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"></span>
-                            <i class="fal fa-angle-right"></i>
+                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                  th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                            ></span>
+
                         </a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
-    <div class="banner_navbg">
+    <div class="banner_navbg am-nbfc">
         <div class="am-g">
             <div class="banner_nav">
                 <a th:class="${s == 1 ? 'banner_hover': ''}" th:href="@{/?s=1}">最新活动</a>
@@ -152,43 +160,34 @@
         width: 242px;
     }
 
-    .c_orange .am-btn {
-        width: 110px;
-        height: 28px;
-        line-height: 12px;
-        font-size: 14px;
-    }
-
     .c_orange .am-list {
-        margin-top: 30px;
         font-size: 14px;
-        margin-bottom: 30px;
-        width: 300px;
-    }
-
-    .c_orange .o_time {
-        padding-left: 30px;
+        width: 280px;
+        margin-top: 30px;
     }
 
     .orange_1, .orange_2, .orange_3 {
-        margin: 30px 0 0 212px;
-        float: left;
-        position: relative;
+        margin: 30px 0px 35px 157px;
     }
 
-    .o_min, .o_time, .am-icon-book {
-        color: black;
+    .orange_1 {
+        margin-left: 212px;
+    }
+
+    .c_orange .am-btn {
+        font-size: 14px;
+    }
+
+    .o_time {
+        float: right;
     }
 
     .fal {
-        color: gray;
+        font-size: 30px;
+        padding-left: 20px;
+        line-height: 17px;
+        float: right;
     }
-
-    .banner_navbg {
-        overflow: hidden;
-    }
-
-
 </style>
 
 </body>
