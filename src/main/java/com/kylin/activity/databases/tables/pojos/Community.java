@@ -5,6 +5,7 @@ package com.kylin.activity.databases.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 
@@ -22,22 +23,22 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community implements Serializable {
 
-    private static final long serialVersionUID = 1724706272;
+    private static final long serialVersionUID = -1135519100;
 
-    private Integer id;
-    private String  name;
-    private String  description;
-    private String  background;
-    private Integer status;
-    private Boolean usingScore;
-    private String  avatar;
-    private Double  vipAmount;
-    private Integer createdBy;
-    private Integer created;
-    private String  address;
-    private String  contact;
-    private String  company;
-    private String  about;
+    private Integer   id;
+    private String    name;
+    private String    description;
+    private String    background;
+    private Integer   status;
+    private Boolean   usingScore;
+    private String    avatar;
+    private Double    vipAmount;
+    private Integer   createdBy;
+    private Timestamp created;
+    private String    address;
+    private String    contact;
+    private String    company;
+    private String    about;
 
     public Community() {}
 
@@ -59,20 +60,20 @@ public class Community implements Serializable {
     }
 
     public Community(
-        Integer id,
-        String  name,
-        String  description,
-        String  background,
-        Integer status,
-        Boolean usingScore,
-        String  avatar,
-        Double  vipAmount,
-        Integer createdBy,
-        Integer created,
-        String  address,
-        String  contact,
-        String  company,
-        String  about
+        Integer   id,
+        String    name,
+        String    description,
+        String    background,
+        Integer   status,
+        Boolean   usingScore,
+        String    avatar,
+        Double    vipAmount,
+        Integer   createdBy,
+        Timestamp created,
+        String    address,
+        String    contact,
+        String    company,
+        String    about
     ) {
         this.id = id;
         this.name = name;
@@ -162,11 +163,11 @@ public class Community implements Serializable {
         this.createdBy = createdBy;
     }
 
-    public Integer getCreated() {
+    public Timestamp getCreated() {
         return this.created;
     }
 
-    public void setCreated(Integer created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
     }
 

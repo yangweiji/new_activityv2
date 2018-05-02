@@ -7,6 +7,7 @@ package com.kylin.activity.databases.tables.daos;
 import com.kylin.activity.databases.tables.Community;
 import com.kylin.activity.databases.tables.records.CommunityRecord;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -127,7 +128,7 @@ public class CommunityDao extends DAOImpl<CommunityRecord, com.kylin.activity.da
     /**
      * Fetch records that have <code>created IN (values)</code>
      */
-    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByCreated(Integer... values) {
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByCreated(Timestamp... values) {
         return fetch(Community.COMMUNITY.CREATED, values);
     }
 

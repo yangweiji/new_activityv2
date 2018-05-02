@@ -9,6 +9,7 @@ import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityRecord;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = -846264156;
+    private static final long serialVersionUID = 1713987786;
 
     /**
      * The reference instance of <code>activityv2.community</code>
@@ -80,9 +81,9 @@ public class Community extends TableImpl<CommunityRecord> {
     public final TableField<CommunityRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过");
 
     /**
-     * The column <code>activityv2.community.using_score</code>. 是否开启积分功能
+     * The column <code>activityv2.community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
      */
-    public final TableField<CommunityRecord, Boolean> USING_SCORE = createField("using_score", org.jooq.impl.SQLDataType.BIT, this, "是否开启积分功能");
+    public final TableField<CommunityRecord, Boolean> USING_SCORE = createField("using_score", org.jooq.impl.SQLDataType.BIT, this, "是否开启积分功能(0:（false）关闭，>0(true)开启)");
 
     /**
      * The column <code>activityv2.community.avatar</code>. 社团小图标
@@ -102,7 +103,7 @@ public class Community extends TableImpl<CommunityRecord> {
     /**
      * The column <code>activityv2.community.created</code>. 创建时间
      */
-    public final TableField<CommunityRecord, Integer> CREATED = createField("created", org.jooq.impl.SQLDataType.INTEGER, this, "创建时间");
+    public final TableField<CommunityRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
      * The column <code>activityv2.community.address</code>. 社团地址

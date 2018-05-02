@@ -1,4 +1,7 @@
 $(function () {
+    // 动态计算主要区域宽度
+    $("div.manage-r").width(window.screen.width - 100);
+
     $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
