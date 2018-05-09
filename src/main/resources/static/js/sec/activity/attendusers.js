@@ -92,7 +92,12 @@ $(function () {
             },
             {
                 extend: 'check',
-                text: '检查退款是否成功',
+                text: '检查退款',
+                enabled: false,
+            },
+            {
+                extend: 'delete',
+                text: '删除',
                 enabled: false,
             },
             {
@@ -378,6 +383,58 @@ $(function () {
                     console.info("error: " + data.responseText);
                 }
             });
+        }
+    };
+
+    /***
+     * 删除报名记录
+     * @type {{className: string, action: $.fn.dataTable.ext.buttons.approve.action}}
+     */
+    $.fn.dataTable.ext.buttons.delete = {
+        className: '',
+        action: function (e, dt, node, config) {
+            // this.text( '<i class="fa fa-spinner fa-pulse"></i>' );
+            // this.enable(false);
+            var d = [];
+            $('.childcheck:checked').each(function(){
+                d.push($(this).val());
+            });
+
+            if (d.length == 0)
+            {
+                alert("至少选择一项记录！");
+                return;
+            }
+
+            if (window.confirm("请确认删除？")) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: '/sec/activity/deleteAttendUsers',
+                    data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
+                    contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
+                    dataType: "json",
+                    async: false,
+                    beforeSend: function () {
+                        // 禁用按钮防止重复提交
+                        t.button(4).enable(false);
+                        Util.loading(true);
+                    },
+                    success: function (data) {
+                        if (data) {
+                            t.ajax.reload();
+                        }
+                    },
+                    complete: function () {
+                        $("#all_checked").prop("checked", false);
+                        t.button(4).enable(true);
+                        Util.loading(false);
+                    },
+                    error: function (data) {
+                        console.info("error: " + data.responseText);
+                    }
+                });
+            }
         }
     };
 

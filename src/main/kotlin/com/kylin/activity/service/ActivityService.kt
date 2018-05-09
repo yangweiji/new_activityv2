@@ -220,7 +220,12 @@ class ActivityService {
 
         sql = sql.replace("{1}", strTime)
         //分页条件
-        sql = sql.replace("{99}", (page * size).toString())
+        if (page*size < 0) {
+            sql = sql.replace("{99}", "0")
+        }
+        else {
+            sql = sql.replace("{99}", (page * size).toString())
+        }
         sql = sql.replace("{100}", size.toString())
         var items = create!!.resultQuery(sql).fetch()
 

@@ -616,6 +616,43 @@ class ActivityController : BaseController() {
         return list
     }
 
+
+    /**
+     * 删除报名记录
+     */
+    @RequestMapping(value = "/deleteAttendUsers", method = arrayOf(RequestMethod.POST))
+    @ResponseBody
+    fun deleteAttendUsers(@RequestBody ids: Array<Int>): Int {
+        return ids.count { innerDelete(it) }
+    }
+
+    @Transactional
+    fun innerDelete(id: Int): Boolean {
+        var start = DateUtil.date()
+        var order = create!!.fetchOne("select t2.* from activity_user t1 inner join pay_order t2 on t1.user_id = t2.user_id and t1.activity_id = t2.activity_id and t1.activity_ticket_id = t2.activity_ticket_id\n" +
+                "and t2.status = 2 and t1.id=? order by created desc  limit 1", id)
+        //如果有对应的报名订单，则先退费处理
+        if (order != null) {
+            var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order["id"])
+            var refundRequest = WxPayRefundRequest()
+            refundRequest.outTradeNo = order["extenal_id"].toString()
+            refundRequest.outRefundNo = refundOutTradeNo
+            var price = ((order.get("price", Double::class.java)) * 100).toInt()
+            refundRequest.totalFee = price
+            refundRequest.refundFee = price
+            var result = wxService!!.refund(refundRequest)
+            if (result.resultCode == "SUCCESS") {
+                activityService!!.updateActivityUserStatus(id, 3)
+                create!!.execute("update pay_order set refund_trade_no=? , refund_time = ?, refund_status = ? where id = ?",
+                        refundOutTradeNo, start.toTimestamp(), 1, order["id"])
+            }
+        }
+
+        //删除报名记录
+        activityUserDao!!.deleteById(id)
+        return true
+    }
+
     /**
      * 取得活动信息集合
      */

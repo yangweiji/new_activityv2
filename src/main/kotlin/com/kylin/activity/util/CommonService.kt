@@ -4,12 +4,11 @@ import com.aliyun.oss.OSSClient
 import com.aliyun.oss.common.utils.BinaryUtil
 import com.aliyun.oss.model.MatchMode
 import com.aliyun.oss.model.PolicyConditions
-import com.aliyuncs.AcsResponse
-import com.aliyuncs.DefaultAcsClient;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest;
-import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
-import com.aliyuncs.exceptions.ClientException;
-import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.DefaultAcsClient
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsRequest
+import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse
+import com.aliyuncs.exceptions.ClientException
+import com.aliyuncs.profile.DefaultProfile
 import org.springframework.stereotype.Service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
