@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+</head>
+<body>
+<link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
+<link rel="stylesheet" href="/asset/quill/quill.snow.css"/>
+<script type="text/javascript" src="/asset/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+<script type="text/javascript" src="/asset/datetimepicker/js/locales/amazeui.datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/asset/quill/quill.min.js" charset="UTF-8"></script>
+<div th:replace="fragments/header :: default"></div>
+<div id="c_sec_activityphoto_publish_app">
+    <div class="amz-container">
+        <form id="c-activityphoto-create-form" method="post" class="am-form am-form-horizontal">
+            <fieldset>
+                <legend><span>相册管理</span></legend>
+                <div class="am-form-group">
+                    <label for="activityphoto_description" class="am-u-sm-2 am-form-label"><span>相册标题</span></label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="activityphoto_description" name="description"
+                               th:placeholder="请输入相册标题" v-model="cacheData.activityphoto.description"/>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label class="am-u-sm-2 am-form-label"><span>活动相册</span></label>
+                    <div class="am-u-sm-10">
+                        <input type="hidden" name="picture" v-model="cacheData.activityphoto.picture"/>
+                        <div class="c-picture">
+                            <img v-bind:src="getActivityPicture()"/>
+                            <span>
+                                <button id="c-upload-activityphoto-picture"
+                                        class="am-btn am-btn-primary am-btn-xs">更新相册</button>
+                                <br/>
+                                <span class="c-picture-tip">温馨提示：图片尺寸建议为：900*525，图片小于4M</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="activityphotos_created" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" class="c-datetimepicker created" type="text" id="created"
+                               name="created"  placeholder="请输入发布时间"/>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="activityphoto_axtenalUrl" class="am-u-sm-2 am-form-label"><span>上传相册</span></label>
+                    <div class="am-u-sm-10">
+                        <div id="c-upload-activityphoto-axtenalUrl-editor"></div>
+                        <input v-model="cacheData.activityphoto.axtenalUrl" required="required" style="display: none;"
+                               type="text"
+                               id="c-activityphoto-axtenalUrl-text"
+                               name="axtenalUrl"/>
+                        <div id="c-activityphoto-axtenalUrl-editor">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <div class="am-u-sm-10 am-u-sm-offset-2">
+                        <button type="submit" class="am-btn am-btn-primary">发布</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #c_sec_activityphoto_publish_app {
+        margin-top: 30px;
+    }
+
+    #c_sec_activityphoto_publish_app .c-picture img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #c_sec_activityphoto_publish_app .c-picture .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #c_sec_activityphoto_publish_app .c-datetimepicker {
+        display: inline-block;
+        width: 200px;
+    }
+
+    #c-activityphoto-axtenalUrl-editor {
+        background-color: white;
+        min-height: 400px;
+    }
+
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data =[[${photosData}]]
+    /*]]>*/
+</script>
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/thirdphotos/publishphotos.js"></script>
+</body>
+</html>

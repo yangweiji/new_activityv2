@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div id="app">
+    <div class="amz-container">
+        <div class="am-g am-imglist">
+            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
+                <li th:each="item : ${activityphoto}">
+                    <div class="am-gallery-item am_list_block">
+                        <a th:href="@{/pub/activityphoto/detail/{id}(id=${item.get('id')}) }" target="_blank"
+                           class="am_img_bg">
+                            <img class="am_img animated c-img"
+                                 alt=""
+                                 th:src="${item.get('picture')}"/>
+                        </a>
+
+                      <!--  <div class="am_listimg_info">
+                            <span class="am_imglist_time"
+                                  th:text="${#dates.format(item.get('created'),'yyyy-MM-dd HH:mm')}"></span>
+                        </div>-->
+                        <br/>
+                        <div class="am_listimg_info">
+                            <span class="am_imglist_user_font" th:text="${item.get('description')}"></span>
+                        </div>
+                    </div>
+                </li>
+
+
+            </ul>
+        </div>
+
+        <!--<ul class="am-pagination am-pagination-centered" th:if="${#lists.size(photopages)} > 0">
+            <li class="" th:classappend="${first}?'am-disabled'">
+                <a th:href="${'page='+(pageImpl.number-1)}">&laquo;</a>
+            </li>
+            <li class="" th:classappend="${(pageImpl.number+1)==i}?'am-active'" th:each="i:${#numbers.sequence(1, pageImpl.totalPages)}">
+                <a th:href="${'page='+(i-1)}" th:text="${i}"></a>
+            </li>
+            <li class="" th:classappend="${last}?'am-disabled'">
+                <a th:href="${'page='+(pageImpl.number+1)}">&raquo;</a>
+            </li>
+        </ul>-->
+    </div>
+</div>
+<style type="text/css">
+    .am_img.animated.c-img {
+        height: 130px;
+        width: 242px;
+    }
+</style>
+<div th:replace="fragments/footer :: default"></div>
+<script type="text/javascript" th:src="@{/js/petshow.js}"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" th:src="@{/js/pub/activityphoto/activityphoto.js}"></script>
+</body>
+</html>

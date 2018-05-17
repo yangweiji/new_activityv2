@@ -8,7 +8,7 @@
 
 <div id="app">
     <div class="get">
-        <div class="c-bg"></div>
+        <div class="c-bg" th:style="'background:url('+${#httpSession.getAttribute('COMMUNITY_BACKGROUND')}+')no-repeat;background-size: cover;'"></div>
         <div class="">
             <div class="am-u-lg-12">
                 <div class="get-title">
@@ -24,8 +24,9 @@
                 </div>
 
                 <div class="font_line">
-                    <!--<img src="/img/font_line.png" alt="" />-->
-                    <span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>
+                    <!--<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>-->
+                    <span style="color:white;font-size: 30px;white-space:nowrap"
+                          th:text="${community.description}"></span>
                 </div>
                 <p>
                     <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
@@ -143,6 +144,12 @@
         </div>
     </div>
 </div>
+
+<!--<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = [[${community}]]
+    /*]]>*/
+</script>-->
 
 <div th:replace="fragments/footer :: default"></div>
 <script type="text/javascript" th:src="@{/js/petshow.js}"></script>

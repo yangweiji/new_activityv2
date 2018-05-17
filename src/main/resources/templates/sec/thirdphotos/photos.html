@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div id="app">
+    <div class="manage-l">
+        <div th:replace="thirdparty/leftnav :: default"></div>
+    </div>
+
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>相册管理</strong><span>共 <span id="totalCount"></span> 条记录</span></div>
+            <div class="vip_adv"></div>
+
+        </div>
+
+        <div class="am-tabs-bd am_bdfw">
+
+            <div class="am-g">
+                <form class="am-form-inline" method="post">
+                    <div class="am-form-group">
+                        <input type="text" id="description" name="description" th:value="${#httpServletRequest.getParameter('description')}"
+                               placeholder="请输入相册标题" class="am-form-field am-radius"/>
+                    </div>
+                    <button id="btnSearch" type="button" class="am-btn am-btn-default am-radius">
+                        <i class="am-icon-search"></i> 查询
+                    </button>
+
+                </form>
+            </div>
+
+            <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+
+
+            <div class="am-tab-panel am-fade am-in am-active">
+
+                <div class="am-g dis_line">
+                    <table class="am-table" id="bmTable" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>编号</th>
+                            <th class="hd_table">相册标题</th>
+                            <th>创建时间</th>
+                            <th>图片</th>
+                            <th>活动编号</th>
+                            <th>创建人</th>
+                            <th>外部相册路径</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/thirdphotos/photos.js"></script>
+</body>
+</html>

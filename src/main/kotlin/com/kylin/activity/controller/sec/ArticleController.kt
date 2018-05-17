@@ -30,15 +30,6 @@ class ArticleController {
     @Autowired
     private val commonService: CommonService? = null
 
-    //包含表格的一些信息，需要不变的传回去
-    private val  sEcho:String?=null
-
-    //当你点击下一页或者页数的时候会传到后台的值
-    private val iDisplayStart:String?=null
-
-    //默认是传10
-    private val iDisplayLength:String?=null
-
 
 
 

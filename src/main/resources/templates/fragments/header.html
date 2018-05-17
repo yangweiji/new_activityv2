@@ -6,7 +6,7 @@
         <div class="amz-container">
             <h1 class="am-topbar-brand">
                 <a th:href="@{/}" class="am-topbar-logo">
-                    <img src="http://bjmlsxh.oss-cn-beijing.aliyuncs.com/home/logo-text.png" alt=""/>
+                    <img th:src="${#httpSession.getAttribute('COMMUNITY_AVATAR')}">
                 </a>
             </h1>
             <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -34,7 +34,17 @@
                             找活动
                         </a>
                     </li>
-                    <li class="am-dropdown" data-am-dropdown style="margin-left:400px;top:12px;">
+                    <li>
+                        <a th:href="@{/pub/activityphoto/photo}">
+                            活动相册
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/sec/thirdmanage/home/0}" style="font-size:16px;color: #ff7532;font-weight: 900">
+                            我是组织方
+                        </a>
+                    </li>
+                    <li class="am-dropdown" data-am-dropdown style="margin-left:130px;top:12px;">
                         <span class="btn1">
                             <button type="button" style="font-size: 14px;"
                                     class="am-btn am-btn-default am-btn-secondary am-radius am-dropdown-toggle">申请团体
@@ -54,7 +64,8 @@
                         <span class="btn1">
                             <button type="button" style="font-size: 14px;"
                                     class="am-btn am-btn-default am-btn-secondary
-                                     am-radius am-dropdown-toggle">切换团体
+                                     am-radius am-dropdown-toggle">
+                                <span th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>
                             <span class="am-icon-caret-down"></span>
                             </button>
                         </span>
@@ -62,7 +73,8 @@
                             <li class="am-dropdown-header">团体名称</li>
                             <li class="am-divider"></li>
                             <li th:each="item:${names}">
-                                <a th:href="@{/indexes/{id} (id=${item.get('id')})}" th:text="${item.get('name')}"></a>
+                                <a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.get('id')}+ ')'"
+                                   th:text="${item.get('name')}"></a>
                             </li>
                         </ul>
                     </li>
@@ -108,6 +120,20 @@
             </div>
         </div>
     </header>
+    <script type="text/javascript">
+        function _communityChange(id) {
+            Util.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/changecommunity?id='+id,
+                success: function (data) {
+                    if(data){
+                        location.reload()
+                    }
+                },
+            });
+        }
+    </script>
 </div>
 </body>
 </html>

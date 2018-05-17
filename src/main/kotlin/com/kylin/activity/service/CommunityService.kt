@@ -60,15 +60,16 @@ class CommunityService {
             sql += "and c.name = ? "
             params.add(name)
         }
-        sql += "order by c.created desc limit 5"
+        sql += "order by c.created desc limit 10"
         return create!!.resultQuery(sql, params.toTypedArray()).fetch()
     }
 
-    fun changeCommunities(id: Int): Record {
-        var sql = "select * from  community c  where c.id=? "
-        var notice = create!!.resultQuery(sql, id).fetchOne()
-        return notice
+    /**
+     * 获取社团的id
+     */
+    fun getCommunityId(id: Int): Community {
+        var items = communityDao!!.findById(id)
+        return items
     }
-
 
 }
