@@ -6,78 +6,74 @@ import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.service.CommunityService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
+data class CommunitiesData(
+        var community: Community?=null
+)
+
+
 @Controller
 @RequestMapping("sec/community")
-@SessionAttributes("communities")
 class CommunityController : BaseController() {
     @Autowired
     private val communityService: CommunityService? = null
 
     @Autowired
     private val communityDao: CommunityDao? = null
+
     /**
-     * 获取团体信息
+     * 查询团体信息
      */
     @CrossOrigin
     @RequestMapping(value = "/communities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun afterCommunity(model: Model, request: HttpServletRequest): String {
-        var name = request.getParameter("name")
-        model.addAttribute("communities", communityService!!.queryCommunity(name))
+    fun afterCommunity(): String {
         return "sec/community/communities"
     }
 
 
-
     /**
-     * 添加团体信息
-     */
-    @GetMapping("/addcommunity")
-    fun addCommunity(model: Model): String {
-        var addCommunity = Community()
-        model.addAttribute("communities", addCommunity)
-        return "sec/community/addcommunity"
-    }
-
-    /**
-     * 保存团体信息
-     */
-    @PostMapping("/saveCommunity")
-    @Throws(Exception::class)
-    fun saveCommunity(@ModelAttribute("community") community: Community): String {
-        communityService!!.createCommunity(community)
-        return "redirect:/sec/community/communities"
-    }
-
-    /**
-     * 删除团体信息
+     * 异步查询团体信息
      */
     @CrossOrigin
-    @GetMapping("/deleteCommunity/{id}")
-    fun deleteCommunity(@PathVariable id: Int): String {
-        communityService!!.deleteCommunity(id)
-        return "redirect:/sec/community/communities"
+    @RequestMapping(value = "/getCommunities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @ResponseBody
+    fun getCommunities(@RequestBody(required = false)map:Map<String,String>): List<Any> {
+         var name=map["name"]
+         var items=communityService!!.queryCommunity(name)
+         var list=items.intoMaps()
+         return list
     }
 
     /**
-     * 编辑团体信息
+     * 编辑或添加团体信息
      */
-    @GetMapping("/updatecommunity/{id}")
-    fun editCommunity(@PathVariable("id")id:Int,model: Model):String{
-       var community=communityService!!.editCommunity(id)
-        model.addAttribute("communities",community)
-       return "sec/community/updatecommunity"
-    }
-    /**
-     * 修改团体信息
-     */
-    @PostMapping("/updatecommunity")
-    fun updateCommunity(community: Community):String{
-      communityDao!!.update(community)
-        return "redirect:/sec/community/communities"
+    @GetMapping("/updateOraddcommunity")
+    fun updateOraddcommunity(@RequestParam(required = false)id:Int?,model: Model): String {
+        var communitiesData=CommunitiesData()
+        if(id!=null&&id>0){
+            communitiesData.community=communityService!!.getCommunityId(id)
+        }else{
+            communitiesData.community= Community()
+        }
+        model.addAttribute("communitiesData",communitiesData)
+        return "sec/community/updateOraddcommunity"
     }
 
+    /**
+     * 保存编辑或添加团体信息
+     */
+    @PostMapping("/updateOraddcommunity")
+    @Transactional
+    fun saveCommunity(@ModelAttribute("community") community: Community): String {
+        if(community.id!=null&&community.id>0){
+            communityDao!!.update(community)
+        }else{
+            communityDao!!.insert(community)
+        }
+        return "redirect:/sec/community/communities"
+    }
 }

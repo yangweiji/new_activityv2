@@ -13,16 +13,14 @@
 <div th:replace="fragments/header :: default"></div>
 <div id="c_sec_community_add_app">
     <div class="amz-container">
-        <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
-              action="/sec/community/saveCommunity">
-            <input type="hidden" name="json_data"/>
+        <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal">
             <fieldset>
-                <legend>添加团体</legend>
+                <legend>团体管理</legend>
                 <div class="am-form-group">
                     <label for="community_name" class="am-u-sm-2 am-form-label">社团名称</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_name"
-                               name="name" th:placeholder="请输入社团名称" th:value="${communities.name}"/>
+                               name="name" th:placeholder="请输入社团名称" v-model="cacheData.community.name"/>
                     </div>
                 </div>
 
@@ -30,35 +28,35 @@
                     <label for="community_description" class="am-u-sm-2 am-form-label">社团标语</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_description"
-                               name="description" th:placeholder="请输入社团标语" th:value="${communities.description}"/>
+                               name="description" th:placeholder="请输入社团标语" v-model="cacheData.community.description"/>
                     </div>
                 </div>
                 <div class="am-form-group">
                     <label for="community_address" class="am-u-sm-2 am-form-label">社团地址</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_address"
-                               name="address" th:placeholder="请输入社团地址" th:value="${communities.address}"/>
+                               name="address" th:placeholder="请输入社团地址" v-model="cacheData.community.address"/>
                     </div>
                 </div>
                 <div class="am-form-group">
                     <label for="community_contact" class="am-u-sm-2 am-form-label">联系电话</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_contact"
-                               name="contact" th:placeholder="请输入联系电话" th:value="${communities.contact}"/>
+                               name="contact" th:placeholder="请输入联系电话" v-model="cacheData.community.contact" />
                     </div>
                 </div>
                 <div class="am-form-group">
                     <label for="community_company" class="am-u-sm-2 am-form-label">公司名称</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_company"
-                               name="company" th:placeholder="请输入社团公司名称" th:value="${communities.company}"/>
+                               name="company" th:placeholder="请输入社团公司名称" v-model="cacheData.community.company"/>
                     </div>
                 </div>
                 <div class="am-form-group">
                     <label class="am-u-sm-2 am-form-label">社团图片</label>
                     <div class="am-u-sm-10">
                         <input type="hidden" name="background"
-                               v-model="communities.background" th:value="${communities.background}"/>
+                              v-model="cacheData.community.background"/>
                         <div class="c-background">
                             <img v-bind:src="getCommunityBackground()">
                             <span>
@@ -75,7 +73,7 @@
                     <label class="am-u-sm-2 am-form-label">社团图标</label>
                     <div class="am-u-sm-10">
                         <input type="hidden" name="avatar"
-                             v-model="communities.avatar"  th:value="${communities.avatar}"/>
+                              v-model="cacheData.community.avatar"/>
                         <div class="c-avatar">
                             <img v-bind:src="getCommunityAvatar()">
                             <span>
@@ -92,18 +90,17 @@
                     <label for="community_created" class="am-u-sm-2 am-form-label">创建时间</label>
                     <div class="am-u-sm-10 am-datepicker-date">
                         <input required="required" class="c-datetimepicker created" type="text" id="community_created"
-                               name="created" placeholder="请输入创建时间"  th:value="${communities.created}"/>
+                               name="created" placeholder="请输入创建时间" />
                     </div>
                 </div>
 
                 <div class="am-form-group">
                     <label for="community_about" class="am-u-sm-2 am-form-label">社团详情</label>
                     <div class="am-u-sm-10">
-                        <div id="c-upload-community-about-editor" th:value="${communities.about}"></div>
+                        <div id="c-upload-community-about-editor"></div>
                         <input id="c-community-about-text" required="required"
-                               style="display: none;" type="text" name="about" v-model="communities.about" th:value="${communities.about}"/>
-                        <div id="c-community-about-editor" th:value="${communities.about}">
-
+                               style="display: none;" type="text" name="about" v-model="cacheData.community.about" />
+                        <div id="c-community-about-editor">
                         </div>
                     </div>
                 </div>
@@ -111,12 +108,11 @@
                     <label for="community_usingScore" class="am-u-sm-2 am-form-label">启动积分功能</label>
                     <div class="am-u-sm-10">
                         <label class="am-radio-inline">
-                            <input type="radio" name="usingScore" th:checked="${communities.usingScore ==true}"
-                                   th:value="1"> 是
+                            <input type="radio" name="usingScore" th:checked="${communitiesData.community.usingScore==true}"
+                                   th:value="true"> 是
                         </label>
                         <label class="am-radio-inline">
-                            <input type="radio" name="usingScore" th:checked="${communities.usingScore==false}"
-                                   th:value="0">
+                            <input type="radio" name="usingScore" th:checked="${communitiesData.community.usingScore==false}" th:value="false">
                             否
                         </label>
                     </div>
@@ -125,11 +121,11 @@
                     <label for="community_vipAmount" class="am-u-sm-2 am-form-label">启动会员功能</label>
                     <div class="am-u-sm-10">
                         <label class="am-radio-inline">
-                            <input type="radio" name="vipAmount" th:checked="${communities.vipAmount ==1}"
+                            <input type="radio" name="vipAmount" th:checked="${communitiesData.community.vipAmount ==1}"
                                    th:value="1"> 是
                         </label>
                         <label class="am-radio-inline">
-                            <input type="radio" name="vipAmount" th:checked="${communities.vipAmount==0}" th:value="0">
+                            <input type="radio" name="vipAmount" th:checked="${communitiesData.community.vipAmount==0}" th:value="0">
                             否
                         </label>
                     </div>
@@ -140,13 +136,13 @@
                         <select required="required" id="community_status" name="status" placeholder="请选择社团状态"
                                 data-am-selected="">
                             <option value="">--</option>
-                            <option th:selected="${communities.status==0}"
+                            <option th:selected="${communitiesData.community.status==0}"
                                     th:value="0" th:text="草稿"></option>
-                            <option th:selected="${communities.status==1}"
+                            <option th:selected="${communitiesData.community.status==1}"
                                     th:value="1" th:text="待审核"></option>
-                            <option th:selected="${communities.status==2}"
+                            <option th:selected="${communitiesData.community.status==2}"
                                     th:value="2" th:text="拒绝"></option>
-                            <option th:selected="${communities.status==9}"
+                            <option th:selected="${communitiesData.community.status==9}"
                                     th:value="9" th:text="审核通过">
                             </option>
                         </select>
@@ -154,7 +150,7 @@
                 </div>
                 <div class="am-form-group">
                     <div class="am-u-sm-10 am-u-sm-offset-2">
-                        <button type="submit" class="am-btn am-btn-primary">添加</button>
+                        <button type="submit" class="am-btn am-btn-primary">修改</button>
                         <a class="am-btn am-btn-default" type="button" th:href="@{/sec/community/communities}">返回</a>
                     </div>
                 </div>
@@ -204,17 +200,12 @@
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var _global_data = {
-        avatar: [[${communities.avatar}]],
-        background: [[${communities.background}]],
-        created: [[${communities.created}]],
-        about: [[${communities.about}]]
-    }
+    var _global_data =[[${communitiesData}]]
     /*]]>*/
 </script>
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/sec/community/addcommunity.js"></script>
+<script type="text/javascript" src="/js/sec/community/updateOraddcommunity.js"></script>
 </body>
 </html>

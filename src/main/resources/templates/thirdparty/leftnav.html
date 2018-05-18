@@ -3,7 +3,7 @@
 <body>
 <div th:fragment="default">
     <ul class="am-nav">
-        <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'sec/thirdmanage/home')}?'am-nav-header'"><a class="zxhd" th:href="@{/sec/thirdmanage/home/0}"><b></b>最新活动</a></li>
+        <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/thirdmanage/home')}?'am-nav-header'"><a class="zxhd" th:href="@{/sec/thirdmanage/home/0}"><b></b>最新活动</a></li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/thirdactivity/activities'?'am-nav-header'"><a class="hdgl" th:href="@{/sec/thirdactivity/activities}"><b></b>活动管理</a></li>
         <!--相册管理-->
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/thirdphotos/photos'?'am-nav-header'"><a class="nrgl" th:href="@{/sec/thirdphotos/photos}"><b></b>相册管理</a></li>

@@ -1,10 +1,8 @@
 new Vue({
     el: "#c_sec_article_publish_app",
-    data: {
-        article: {
-            avatar: _global_data.avatar,
-            body:_global_data.body,
-            publishTime:_global_data.publishTime
+    data: function () {
+        return {
+            cacheData: _global_data
         }
     },
     mounted: function () {
@@ -14,7 +12,7 @@ new Vue({
             randomName: true,
             selectId: 'c-upload-article-avatar',
             success: function (file) {
-                that.article.avatar = file.randomName
+                that.cacheData.article.avatar = file.randomName
             }
         })
 
@@ -24,11 +22,11 @@ new Vue({
             language: 'zh-CN'
         }).on('changeDate', function (ev) {
             if (ev.date.valueOf()) {
-                that.article.publishTime = ev.date
+                that.cacheData.article.publishTime = ev.date
             }
         });
-        if (that.article.publishTime) {
-            $('.c-datetimepicker.publish-time').datetimepicker('update', new Date(that.article.publishTime))
+        if (that.cacheData.article.publishTime) {
+            $('.c-datetimepicker.publish-time').datetimepicker('update', new Date(that.cacheData.article.publishTime))
         }
 
         //富文本控件
@@ -88,8 +86,8 @@ new Vue({
         })
 
 
-        if (that.article.body) {
-            quill.clipboard.dangerouslyPasteHTML(that.article.body)
+        if (that.cacheData.article.body) {
+            quill.clipboard.dangerouslyPasteHTML(that.cacheData.article.body)
         }
 
         quill.on('editor-change', function (eventName) {
@@ -103,27 +101,26 @@ new Vue({
             var bodyInput = $('#c-article-body-text')
             bodyInput.val(quill.getText())
 
-            that.article.body = quill.getHtml()
+            that.cacheData.article.body = quill.getHtml()
 
             bodyInput.trigger('change')
         })
         $('#c-article-create-form').validator({}).submit(function () {
-            $('input[name=json_data]').val(JSON.stringify(that.article.body))
+            $('input[name=json_data]').val(JSON.stringify(that.cacheData.article.body))
             return true;
         });
         $(window).on("upload", function () {
-            var body = that.article.body
+            var body = that.cacheData.article.body
             that.article.body = null
-            Util.storageGet(JSON.stringify(that.article.body))
+            Util.storageGet(JSON.stringify(that.cacheData.article.body))
         })
     },
     methods: {
         getArticleAvatar: function () {
-            if (this.article.avatar)
-                return Util.file.downloadUrl(this.article.avatar)
+            if (this.cacheData.article.avatar)
+                return Util.file.downloadUrl(this.cacheData.article.avatar)
             else
                 return "/img/article/activity-avatar.png"
         }
     }
-})
-;
+});

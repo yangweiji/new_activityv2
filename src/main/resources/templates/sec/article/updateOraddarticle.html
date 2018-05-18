@@ -13,31 +13,29 @@
 <div th:replace="fragments/header :: default"></div>
 <div id="c_sec_article_publish_app">
     <div class="amz-container">
-        <form id="c-article-create-form" method="post" class="am-form am-form-horizontal"
-              action="/sec/article/article_update">
-            <input type="hidden" id="id" name="id" th:value="${article.id}" />
+        <form id="c-article-create-form" method="post" class="am-form am-form-horizontal">
             <fieldset>
-                <legend>发布内容</legend>
+                <legend>内容管理</legend>
                 <div class="am-form-group">
                     <label for="article_title" class="am-u-sm-2 am-form-label">内容标题</label>
                     <div class="am-u-sm-10">
-                        <input type="text" id="article_title" name="title" th:value="${article.title}"
-                               placeholder="请输入标题"/>
+                        <input type="text" id="article_title" name="title"
+                               placeholder="请输入标题" v-model="cacheData.article.title"/>
                     </div>
                 </div>
 
                 <div class="am-form-group">
                     <label for="article_summary" class="am-u-sm-2 am-form-label">内容摘要</label>
                     <div class="am-u-sm-10">
-                        <input type="text" id="article_summary" name="summary" th:value="${article.summary}"
-                               placeholder="请输入摘要"/>
+                        <input type="text" id="article_summary" name="summary"
+                               placeholder="请输入摘要" v-model="cacheData.article.summary"/>
                     </div>
                 </div>
 
                 <div class="am-form-group">
                     <label class="am-u-sm-2 am-form-label">内容图片</label>
                     <div class="am-u-sm-10">
-                        <input type="hidden" name="avatar" v-model="article.avatar" th:value="${article.avatar}"/>
+                        <input type="hidden" name="avatar" v-model="cacheData.article.avatar"/>
                         <div class="c-avatar">
                             <img v-bind:src="getArticleAvatar()"/>
                             <span>
@@ -53,20 +51,20 @@
                     <label for="article_publishTime" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
                     <div class="am-u-sm-10">
                         <input required="required" class="c-datetimepicker publish-time" type="text" id="publish_Time"
-                               name="publishTime"  th:value="${article.publishTime}" placeholder="请输入发布时间"/>
+                               name="publishTime" placeholder="请输入发布时间"/>
                     </div>
                 </div>
                 <div class="am-form-group">
                     <label for="article_category" class="am-u-sm-2 am-form-label">内容类型</label>
                     <div class="am-u-sm-10">
-                        <select required="required" id="article_category" name="category" placeholder="请选择类型"
+                        <select required="required" id="article_category" name="category" placeholder="请选择内容类型"
                                 data-am-selected="">
                             <option value="">--</option>
-                            <option th:selected="${article.category==1}"
+                            <option th:selected="${articlesData.article.category==1}"
                                     th:value="1" th:text="公告通知"></option>
-                            <option th:selected="${article.category==2}"
+                            <option th:selected="${articlesData.article.category==2}"
                                     th:value="2" th:text="赛事新闻"></option>
-                            <option th:selected="${article.category==3}"
+                            <option th:selected="${articlesData.article.category==3}"
                                     th:value="3" th:text="运动指南"></option>
                         </select>
                     </div>
@@ -76,8 +74,8 @@
                     <div class="am-u-sm-10">
                         <div id="c-upload-article-body-editor"></div>
                         <input id="c-article-body-text" required="required" style="display: none;" type="text"
-                               v-model="article.body"
-                               name="body" th:value="${article.body}"/>
+                               v-model="cacheData.article.body"
+                               name="body"/>
                         <div id="c-article-body-editor">
                         </div>
                     </div>
@@ -88,11 +86,11 @@
                         <select required="required" id="article_status" name="status" placeholder="请选择发布状态"
                                 data-am-selected="">
                             <option value="">--</option>
-                            <option th:selected="${article.status==-1}"
+                            <option th:selected="${articlesData.article.status== -1}"
                                     th:value="-1" th:text="禁用"></option>
-                            <option th:selected="${article.status==0}"
+                            <option th:selected="${articlesData.article.status==0}"
                                     th:value="0" th:text="草稿"></option>
-                            <option th:selected="${article.status==1}"
+                            <option th:selected="${articlesData.article.status==1}"
                                     th:value="1" th:text="发布"></option>
                         </select>
                     </div>
@@ -100,7 +98,8 @@
                 <div class="am-form-group">
                     <label for="article_unit" class="am-u-sm-2 am-form-label">发布单位</label>
                     <div class="am-u-sm-10">
-                        <input required="required" type="text" id="article_unit" name="unit" th:value="${article.unit}"
+                        <input required="required" type="text" id="article_unit" name="unit"
+                               v-model="cacheData.article.unit"
                                placeholder="请输入发布单位名称"/>
                     </div>
                 </div>
@@ -145,11 +144,7 @@
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var _global_data = {
-        avatar: [[${article.avatar}]],
-        body:[[${article.body}]],
-        publishTime:[[${article.publishTime}]]
-    }
+    var _global_data = [[${articlesData}]]
     /*]]>*/
 </script>
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>

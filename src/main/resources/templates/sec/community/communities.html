@@ -13,7 +13,7 @@
 
     <div class="manage-r">
         <div class="hd_list_right_tt">
-            <div class="l"><strong>团体管理</strong><span>共<span th:text="${#lists.size(communities)}"></span>条记录</span>
+            <div class="l"><strong>团体管理</strong><span>共<span id="communityCount"></span>条记录</span>
             </div>
             <div class="vip_adv"></div>
 
@@ -28,7 +28,7 @@
                                placeholder="请输入社团名称" class="am-form-field am-radius"/>
                     </div>
 
-                    <button type="submit" class="am-btn am-btn-default am-radius">
+                    <button type="submit" class="am-btn am-btn-default am-radius" id="btnSearch">
                         <i class="am-icon-search"></i> 查询
                     </button>
                 </form>
@@ -46,33 +46,20 @@
                             <th>联系电话</th>
                             <th>公司名称</th>
                             <th>社团状态</th>
+                            <th>社团标语</th>
+                            <th>社团背景图片</th>
+                            <th>积分功能</th>
+                            <th>社团小图标</th>
+                            <th>会员功能</th>
+                            <th>社团创建人</th>
+                            <th>社团地址</th>
+                            <th>社团详情</th>
                             <th>操作</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <tr th:each="item:${communities}">
-                            <td></td>
-                            <td th:text="${item.get('id')}"></td>
-                            <td th:text="${item.get('name')}"></td>
-                            <td th:text="${#dates.format(item.get('created'),'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td th:text="${item.get('contact')}"></td>
-                            <td th:text="${item.get('company')}"></td>
-                            <td>
-                                <div th:switch="${item.get('status')}">
-                                    <span th:case="0">草稿</span>
-                                    <span th:case="1">待审核</span>
-                                    <span th:case="2">拒绝</span>
-                                    <span th:case="9">审核通过</span>
-                                </div>
-                            </td>
-                            <td>
-                                <button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button"
-                                        title="编辑社团"><i class="am-icon-edit"></i></button>
-                                <button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除社团"><i
-                                        class="am-icon-trash-o"></i></button>
-                            </td>
-                        </tr>
+
                         </tbody>
                     </table>
                 </div>

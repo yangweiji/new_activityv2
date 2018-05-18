@@ -41,9 +41,8 @@ class HomeController : BaseController() {
         model.addAttribute("articles_news", inapItems)
         model.addAttribute("articles_exercise", ieap)
 
-        //团体名称绑定
-        var name = request.getParameter("name")
-        var nameItems = communityService!!.getCommunity(name)
+        var name = request!!.getParameter("name")
+        var nameItems = communityService!!.getCommunities(name)
         model.addAttribute("names", nameItems)
 
         //点击团体切换按钮，选中团体

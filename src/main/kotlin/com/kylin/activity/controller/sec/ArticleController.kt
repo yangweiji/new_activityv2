@@ -14,9 +14,12 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
+data class ArticlesData(
+   var article:Article?=null
+)
+
 @Controller
 @RequestMapping("sec/article")
-@SessionAttributes("article")
 class ArticleController {
     @Autowired
     private val articleService: ArticleService? = null
@@ -33,40 +36,27 @@ class ArticleController {
 
 
 
-
     /**
-     * 新增内容
-     */
-    @RequestMapping(value = "/pubarticle", method = arrayOf(RequestMethod.GET))
-    fun createArticle(model: Model, request: HttpServletRequest): String {
-        var article = Article()
-        model.addAttribute("article", article)
-        return "sec/article/pubarticle"
-    }
-
-    /**
-     * 保存内容
-     */
-    @RequestMapping(value = "/saveArticle", method = arrayOf(RequestMethod.POST))
-    @Throws(Exception::class)
-    fun saveArticle(@ModelAttribute("article") article: Article): String {
-        var article = article
-        articleService!!.createArticle(article)
-        return "redirect:/sec/article/articles"
-    }
-
-
-    /**
-     * 文章内容
+     * 查询文章内容
      */
     @CrossOrigin
-    @RequestMapping(value = "/articles", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun allArticle(request: HttpServletRequest, model: Model): String {
-        var title = request.getParameter("title")
-        var category = request.getParameter("category")
-        var articleItems = articleService!!.getAllArticleUserItem(title, category)
-        model.addAttribute("article", articleItems)
+    @RequestMapping(value = "articles", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    fun allArticle(): String {
         return "sec/article/articles"
+    }
+
+    /**
+     * 异步查询文章内容
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getArticles", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @ResponseBody
+    fun getArticles(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var title = map["title"]
+        var category = map["category"]
+        var items = articleService!!.getAllArticleUserItem(title, category)
+        var list = items.intoMaps()
+        return list
     }
 
     /**
@@ -80,19 +70,30 @@ class ArticleController {
     }
 
     /**
-     * 更新内容
+     * 编辑或新增内容
      */
-    @RequestMapping(value = "/article_update/{id}", method = arrayOf(RequestMethod.GET))
-    fun articleUpdate(@PathVariable("id") id: Int, model: Model): String {
-        var article = articleService!!.getArticle(id)
-        model.addAttribute("article", article)
-        return "sec/article/article_update"
+    @RequestMapping(value="/updateOraddarticle",method = arrayOf(RequestMethod.GET))
+    fun updateOraddArticle(@RequestParam(required = false)id:Int?,model: Model):String{
+        var articlesData=ArticlesData()
+        if(id!=null&&id>0){
+            articlesData.article=articleService!!.getArticle(id)
+        }else{
+            articlesData.article= Article()
+        }
+        model.addAttribute("articlesData",articlesData)
+        return "sec/article/updateOraddarticle"
     }
 
-
-    @PostMapping("/article_update")
-    fun postArticle(article: Article): String {
-        articleDao!!.update(article)
+    /**
+     * 保存添加或编辑内容信息
+     */
+    @PostMapping("/updateOraddarticle")
+    fun saveArticle(@ModelAttribute("article")article: Article):String{
+         if(article.id!=null&&article.id>0){
+             articleDao!!.update(article)
+         }else{
+             articleDao!!.insert(article)
+         }
         return "redirect:/sec/article/articles"
     }
 }

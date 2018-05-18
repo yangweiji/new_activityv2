@@ -18,7 +18,7 @@ class CommunityService {
      * 获取团体信息
      */
     fun queryCommunity(name: String?): Result<Record> {
-        var sql = "select c.id,c.name,c.created,c.contact,c.company,c.status from community c where 1=1 "
+        var sql = "select c.* from community c where 1=1 "
         var params = mutableListOf<Any?>()
         if (!name.isNullOrBlank()) {
             sql += "and c.name like '%?%' ".replace("?", name!!)
@@ -53,7 +53,7 @@ class CommunityService {
     /**
      * 切换团体信息
      */
-    fun getCommunity(name: String?): Result<Record> {
+    fun getCommunities(name: String?): Result<Record> {
         var sql = "select * from community c where 1=1 "
         var params = mutableListOf<Any?>()
         if (!name.isNullOrBlank()) {
@@ -67,7 +67,7 @@ class CommunityService {
     /**
      * 获取社团的id
      */
-    fun getCommunityId(id: Int): Community {
+    fun getCommunityId(id: Int?): Community {
         var items = communityDao!!.findById(id)
         return items
     }

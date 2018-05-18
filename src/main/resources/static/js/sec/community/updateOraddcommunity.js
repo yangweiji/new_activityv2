@@ -1,11 +1,8 @@
 new Vue({
     el: "#c_sec_community_add_app",
-    data: {
-        communities: {
-            avatar: _global_data.avatar,
-            background: _global_data.background,
-            created: _global_data.created,
-            about: _global_data.about
+    data: function () {
+        return {
+            cacheData:_global_data
         }
     },
     mounted: function () {
@@ -15,7 +12,7 @@ new Vue({
             randomName: true,
             selectId: 'c-upload-community-background',
             success: function (file) {
-                that.communities.background = file.randomName
+                that.cacheData.community.background = file.randomName
             }
         })
         //社团小图标上传
@@ -23,7 +20,7 @@ new Vue({
             randomName: true,
             selectId: 'c-upload-community-avatar',
             success: function (file) {
-                that.communities.avatar = file.randomName
+                that.cacheData.community.avatar = file.randomName
             }
         })
 
@@ -34,11 +31,11 @@ new Vue({
             language: 'zh-CN'
         }).on('changeDate', function (ev) {
             if (ev.date.valueOf()) {
-                that.communities.created = ev.date
+                that.cacheData.community.created = ev.date
             }
         });
-        if (that.communities.created) {
-            $('.c-datetimepicker.created').datetimepicker('update', new Date(that.communities.created))
+        if (that.cacheData.community.created) {
+            $('.c-datetimepicker.created').datetimepicker('update', new Date(that.cacheData.community.created))
         }
 
         //富文本控件
@@ -98,8 +95,8 @@ new Vue({
         })
 
 
-        if (that.communities.about) {
-            quill.clipboard.dangerouslyPasteHTML(that.communities.about)
+        if (that.cacheData.community.about) {
+            quill.clipboard.dangerouslyPasteHTML(that.cacheData.community.about)
         }
 
         quill.on('editor-change', function (eventName) {
@@ -112,32 +109,32 @@ new Vue({
 
             var bodyInput = $('#c-community-about-text')
             bodyInput.val(quill.getText())
-            that.communities.about = quill.getHtml()
+            that.cacheData.community.about = quill.getHtml()
             bodyInput.trigger('change')
         })
 
 
         $('#c-community-add-form').validator({}).submit(function () {
-            $('input[name=json_data]').val(JSON.stringify(that.communities.about))
+            $('input[name=json_data]').val(JSON.stringify(that.cacheData.community.about))
             return true;
         });
 
         $(window).on("upload", function () {
-            var about = that.communities.about
-            that.communities.about = null
-            Util.storageGet(JSON.stringify(that.communities.about))
+            var about = that.cacheData.community.about
+            that.cacheData.community.about = null
+            Util.storageGet(JSON.stringify(that.cacheData.community.about))
         })
     },
     methods: {
         getCommunityBackground: function () {
-            if (this.communities.background)
-                return Util.file.downloadUrl(this.communities.background)
+            if (this.cacheData.community.background)
+                return Util.file.downloadUrl(this.cacheData.community.background)
             else
                 return "/img/community/activity-avatar.png"
         },
         getCommunityAvatar: function () {
-            if (this.communities.avatar)
-                return Util.file.downloadUrl(this.communities.avatar)
+            if (this.cacheData.community.avatar)
+                return Util.file.downloadUrl(this.cacheData.community.avatar)
             else
                 return "/img/community/activity-avatar.png"
         }

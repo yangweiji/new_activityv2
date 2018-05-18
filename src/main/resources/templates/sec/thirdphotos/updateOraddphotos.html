@@ -24,7 +24,7 @@
                 </div>
 
                 <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label"><span>活动相册</span></label>
+                    <label class="am-u-sm-2 am-form-label"><span>相册图片</span></label>
                     <div class="am-u-sm-10">
                         <input type="hidden" name="picture" v-model="cacheData.activityphoto.picture"/>
                         <div class="c-picture">
@@ -46,22 +46,20 @@
                     </div>
                 </div>
                 <div class="am-form-group">
-                    <label for="activityphoto_axtenalUrl" class="am-u-sm-2 am-form-label"><span>上传相册</span></label>
+                    <label for="activityphoto_axtenalUrl" class="am-u-sm-2 am-form-label"><span>相册地址</span></label>
                     <div class="am-u-sm-10">
-                        <div id="c-upload-activityphoto-axtenalUrl-editor"></div>
-                        <input v-model="cacheData.activityphoto.axtenalUrl" required="required" style="display: none;"
+                       <!-- <input v-model="cacheData.activityphoto.axtenalUrl" required="required" style="display: none;"
                                type="text"
                                id="c-activityphoto-axtenalUrl-text"
-                               name="axtenalUrl"/>
-                        <div id="c-activityphoto-axtenalUrl-editor">
-
-                        </div>
+                               name="axtenalUrl"/>-->
+                        <input type="text" name="axtenalUrl" v-model="cacheData.activityphoto.axtenalUrl">
                     </div>
                 </div>
 
                 <div class="am-form-group">
                     <div class="am-u-sm-10 am-u-sm-offset-2">
-                        <button type="submit" class="am-btn am-btn-primary">发布</button>
+                        <button type="submit" class="am-btn am-btn-primary">修改</button>
+                        <a th:href="@{/sec/thirdphotos/photos}" type="button" class="am-btn am-btn-default">返回</a>
                     </div>
                 </div>
             </fieldset>

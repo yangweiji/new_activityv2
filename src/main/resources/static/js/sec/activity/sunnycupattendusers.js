@@ -1,7 +1,7 @@
 Util.loading(true);
 $(function () {
     // 动态计算主要区域宽度
-    $("div.manage-r").width(window.screen.width - 100);
+   /* $("div.manage-r").width(window.screen.width - 100);*/
 
     //JQuery DataTables HTML (DOM) sourced data
     var t = $('#bmTable')

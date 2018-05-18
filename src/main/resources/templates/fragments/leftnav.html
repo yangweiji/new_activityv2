@@ -5,7 +5,7 @@
     <!--<div th:text="${#httpServletRequest.getRequestURI()}"></div>-->
 
     <ul class="am-nav">
-        <li style="display: none" th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header'"><a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a></li>
+        <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header'"><a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a></li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/activities'?'am-nav-header'"><a class="hdgl" th:href="@{/sec/activity/activities}"><b></b>活动管理</a></li>
         <!--内容管理-->
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/article/articles'?'am-nav-header'"><a class="nrgl" th:href="@{/sec/article/articles}"><b></b>内容管理</a></li>

@@ -27,17 +27,16 @@ class ArticleService {
      * 按内容的分类查询内容
      */
     fun getAllArticleUserItem(title: String?, category: String?): Result<Record> {
-        var sql = "select a.id,a.title,a.publish_time,a.category,a.status,a.community_id from article a where 1=1 "
+        var sql = "select a.* from article a where 1=1 "
         var params = mutableListOf<Any?>()
         if (!title.isNullOrBlank()) {
             sql += "and a.title like '%?%' ".replace("?", title!!)
             params.add(title)
         }
-        if (!category.isNullOrBlank()) {
+        if (!category.isNullOrBlank()&&category!="0") {
             sql += "and a.category = ? "
             params.add(category)
         }
-        /*sql += "order by a.publish_time"*/
         return create!!.resultQuery(sql, * params.toTypedArray()).fetch()
 
     }
@@ -45,7 +44,7 @@ class ArticleService {
     /**
      * 取得内容的信息
      */
-    fun getArticle(id: Int): Article {
+    fun getArticle(id: Int?): Article {
         var article = articleDao!!.findById(id)
         return article
     }
