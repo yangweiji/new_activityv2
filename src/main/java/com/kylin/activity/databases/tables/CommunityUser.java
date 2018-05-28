@@ -9,6 +9,7 @@ import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
 
+import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
 
@@ -39,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = 562127463;
+    private static final long serialVersionUID = 1124489019;
 
     /**
      * The reference instance of <code>activityv2.community_user</code>
@@ -77,7 +78,12 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
     /**
      * The column <code>activityv2.community_user.created</code>. 加入时间
      */
-    public final TableField<CommunityUserRecord, Integer> CREATED = createField("created", org.jooq.impl.SQLDataType.INTEGER, this, "加入时间");
+    public final TableField<CommunityUserRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "加入时间");
+
+    /**
+     * The column <code>activityv2.community_user.level</code>.
+     */
+    public final TableField<CommunityUserRecord, Integer> LEVEL = createField("level", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * Create a <code>activityv2.community_user</code> table reference

@@ -5,6 +5,7 @@ package com.kylin.activity.databases.tables.pojos;
 
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 
@@ -22,13 +23,14 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser implements Serializable {
 
-    private static final long serialVersionUID = 73890440;
+    private static final long serialVersionUID = 350704484;
 
-    private Integer id;
-    private Integer communityId;
-    private Integer userId;
-    private String  role;
-    private Integer created;
+    private Integer   id;
+    private Integer   communityId;
+    private Integer   userId;
+    private String    role;
+    private Timestamp created;
+    private Integer   level;
 
     public CommunityUser() {}
 
@@ -38,20 +40,23 @@ public class CommunityUser implements Serializable {
         this.userId = value.userId;
         this.role = value.role;
         this.created = value.created;
+        this.level = value.level;
     }
 
     public CommunityUser(
-        Integer id,
-        Integer communityId,
-        Integer userId,
-        String  role,
-        Integer created
+        Integer   id,
+        Integer   communityId,
+        Integer   userId,
+        String    role,
+        Timestamp created,
+        Integer   level
     ) {
         this.id = id;
         this.communityId = communityId;
         this.userId = userId;
         this.role = role;
         this.created = created;
+        this.level = level;
     }
 
     public Integer getId() {
@@ -86,12 +91,20 @@ public class CommunityUser implements Serializable {
         this.role = role;
     }
 
-    public Integer getCreated() {
+    public Timestamp getCreated() {
         return this.created;
     }
 
-    public void setCreated(Integer created) {
+    public void setCreated(Timestamp created) {
         this.created = created;
+    }
+
+    public Integer getLevel() {
+        return this.level;
+    }
+
+    public void setLevel(Integer level) {
+        this.level = level;
     }
 
     @Override
@@ -103,6 +116,7 @@ public class CommunityUser implements Serializable {
         sb.append(", ").append(userId);
         sb.append(", ").append(role);
         sb.append(", ").append(created);
+        sb.append(", ").append(level);
 
         sb.append(")");
         return sb.toString();

@@ -8,6 +8,7 @@ import com.kylin.activity.databases.tables.ActionHistory;
 import com.kylin.activity.databases.tables.Activity;
 import com.kylin.activity.databases.tables.ActivityFavorite;
 import com.kylin.activity.databases.tables.ActivityPhoto;
+import com.kylin.activity.databases.tables.ActivityPhotoPicture;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
 import com.kylin.activity.databases.tables.Article;
@@ -19,6 +20,7 @@ import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
 import com.kylin.activity.databases.tables.records.ActionHistoryRecord;
 import com.kylin.activity.databases.tables.records.ActivityFavoriteRecord;
+import com.kylin.activity.databases.tables.records.ActivityPhotoPictureRecord;
 import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
 import com.kylin.activity.databases.tables.records.ActivityRecord;
 import com.kylin.activity.databases.tables.records.ActivityTicketRecord;
@@ -60,6 +62,7 @@ public class Keys {
     public static final Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY = Identities0.IDENTITY_ACTIVITY;
     public static final Identity<ActivityFavoriteRecord, Integer> IDENTITY_ACTIVITY_FAVORITE = Identities0.IDENTITY_ACTIVITY_FAVORITE;
     public static final Identity<ActivityPhotoRecord, Integer> IDENTITY_ACTIVITY_PHOTO = Identities0.IDENTITY_ACTIVITY_PHOTO;
+    public static final Identity<ActivityPhotoPictureRecord, Integer> IDENTITY_ACTIVITY_PHOTO_PICTURE = Identities0.IDENTITY_ACTIVITY_PHOTO_PICTURE;
     public static final Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = Identities0.IDENTITY_ACTIVITY_TICKET;
     public static final Identity<ActivityUserRecord, Integer> IDENTITY_ACTIVITY_USER = Identities0.IDENTITY_ACTIVITY_USER;
     public static final Identity<ArticleRecord, Integer> IDENTITY_ARTICLE = Identities0.IDENTITY_ARTICLE;
@@ -78,6 +81,7 @@ public class Keys {
     public static final UniqueKey<ActivityRecord> KEY_ACTIVITY_PRIMARY = UniqueKeys0.KEY_ACTIVITY_PRIMARY;
     public static final UniqueKey<ActivityFavoriteRecord> KEY_ACTIVITY_FAVORITE_PRIMARY = UniqueKeys0.KEY_ACTIVITY_FAVORITE_PRIMARY;
     public static final UniqueKey<ActivityPhotoRecord> KEY_ACTIVITY_PHOTO_PRIMARY = UniqueKeys0.KEY_ACTIVITY_PHOTO_PRIMARY;
+    public static final UniqueKey<ActivityPhotoPictureRecord> KEY_ACTIVITY_PHOTO_PICTURE_PRIMARY = UniqueKeys0.KEY_ACTIVITY_PHOTO_PICTURE_PRIMARY;
     public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = UniqueKeys0.KEY_ACTIVITY_TICKET_PRIMARY;
     public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_PRIMARY;
     public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = UniqueKeys0.KEY_ARTICLE_PRIMARY;
@@ -103,6 +107,7 @@ public class Keys {
         public static Identity<ActivityRecord, Integer> IDENTITY_ACTIVITY = createIdentity(Activity.ACTIVITY, Activity.ACTIVITY.ID);
         public static Identity<ActivityFavoriteRecord, Integer> IDENTITY_ACTIVITY_FAVORITE = createIdentity(ActivityFavorite.ACTIVITY_FAVORITE, ActivityFavorite.ACTIVITY_FAVORITE.ID);
         public static Identity<ActivityPhotoRecord, Integer> IDENTITY_ACTIVITY_PHOTO = createIdentity(ActivityPhoto.ACTIVITY_PHOTO, ActivityPhoto.ACTIVITY_PHOTO.ID);
+        public static Identity<ActivityPhotoPictureRecord, Integer> IDENTITY_ACTIVITY_PHOTO_PICTURE = createIdentity(ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE, ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE.ID);
         public static Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = createIdentity(ActivityTicket.ACTIVITY_TICKET, ActivityTicket.ACTIVITY_TICKET.ID);
         public static Identity<ActivityUserRecord, Integer> IDENTITY_ACTIVITY_USER = createIdentity(ActivityUser.ACTIVITY_USER, ActivityUser.ACTIVITY_USER.ID);
         public static Identity<ArticleRecord, Integer> IDENTITY_ARTICLE = createIdentity(Article.ARTICLE, Article.ARTICLE.ID);
@@ -119,6 +124,7 @@ public class Keys {
         public static final UniqueKey<ActivityRecord> KEY_ACTIVITY_PRIMARY = createUniqueKey(Activity.ACTIVITY, "KEY_activity_PRIMARY", Activity.ACTIVITY.ID);
         public static final UniqueKey<ActivityFavoriteRecord> KEY_ACTIVITY_FAVORITE_PRIMARY = createUniqueKey(ActivityFavorite.ACTIVITY_FAVORITE, "KEY_activity_favorite_PRIMARY", ActivityFavorite.ACTIVITY_FAVORITE.ID);
         public static final UniqueKey<ActivityPhotoRecord> KEY_ACTIVITY_PHOTO_PRIMARY = createUniqueKey(ActivityPhoto.ACTIVITY_PHOTO, "KEY_activity_photo_PRIMARY", ActivityPhoto.ACTIVITY_PHOTO.ID);
+        public static final UniqueKey<ActivityPhotoPictureRecord> KEY_ACTIVITY_PHOTO_PICTURE_PRIMARY = createUniqueKey(ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE, "KEY_activity_photo_picture_PRIMARY", ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE.ID);
         public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = createUniqueKey(ActivityTicket.ACTIVITY_TICKET, "KEY_activity_ticket_PRIMARY", ActivityTicket.ACTIVITY_TICKET.ID);
         public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = createUniqueKey(ActivityUser.ACTIVITY_USER, "KEY_activity_user_PRIMARY", ActivityUser.ACTIVITY_USER.ID);
         public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = createUniqueKey(Article.ARTICLE, "KEY_article_PRIMARY", Article.ARTICLE.ID);

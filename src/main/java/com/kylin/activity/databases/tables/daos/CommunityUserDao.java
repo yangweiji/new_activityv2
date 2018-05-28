@@ -7,6 +7,7 @@ package com.kylin.activity.databases.tables.daos;
 import com.kylin.activity.databases.tables.CommunityUser;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.Generated;
@@ -92,7 +93,14 @@ public class CommunityUserDao extends DAOImpl<CommunityUserRecord, com.kylin.act
     /**
      * Fetch records that have <code>created IN (values)</code>
      */
-    public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByCreated(Integer... values) {
+    public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByCreated(Timestamp... values) {
         return fetch(CommunityUser.COMMUNITY_USER.CREATED, values);
+    }
+
+    /**
+     * Fetch records that have <code>level IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByLevel(Integer... values) {
+        return fetch(CommunityUser.COMMUNITY_USER.LEVEL, values);
     }
 }
