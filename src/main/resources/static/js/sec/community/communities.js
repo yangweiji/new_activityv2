@@ -163,7 +163,7 @@ $(function () {
                           return "待审核"
                       }else if(data==2){
                           return "拒绝"
-                      }else if(data==2){
+                      }else if(data==9){
                           return "审核通过"
                       }
                   }

@@ -53,21 +53,15 @@ class CommunityService {
     /**
      * 切换团体信息
      */
-    fun getCommunities(name: String?): Result<Record> {
-        var sql = "select * from community c where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (!name.isNullOrBlank()) {
-            sql += "and c.name = ? "
-            params.add(name)
-        }
-        sql += "order by c.created desc limit 10"
-        return create!!.resultQuery(sql, params.toTypedArray()).fetch()
+    fun getCommunities(): Result<Record> {
+        var sql = "select c.* from community c order by c.created desc"
+        return create!!.resultQuery(sql).fetch()
     }
 
     /**
      * 获取社团的id
      */
-    fun getCommunityId(id: Int?): Community {
+    fun getCommunityId(id: Int): Community {
         var items = communityDao!!.findById(id)
         return items
     }

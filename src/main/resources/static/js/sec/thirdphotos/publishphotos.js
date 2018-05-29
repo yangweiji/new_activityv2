@@ -30,7 +30,7 @@ new Vue({
         }
 
         //富文本控件
-        var imageHandleCallback;
+       /* var imageHandleCallback;
         var toolbarOptions = {
             container: [
                 ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -113,7 +113,7 @@ new Vue({
             var axtenalUrl = that.cacheData.activityphoto.axtenalUrl
             that.cacheData.activityphoto.axtenalUrl = null
             Util.storageGet(JSON.stringify(that.cacheData.activityphoto.axtenalUrl))
-        })
+        })*/
     },
     methods: {
         getActivityPicture: function () {

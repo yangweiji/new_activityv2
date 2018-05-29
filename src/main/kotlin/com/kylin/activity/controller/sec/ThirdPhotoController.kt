@@ -18,7 +18,6 @@ data class ActivityPhotoData(
 
 @Controller
 @RequestMapping("sec/thirdphotos")
-@SessionAttributes("activityphotos")
 class ThirdPhotoController : BaseController() {
 
     @Autowired

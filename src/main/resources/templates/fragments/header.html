@@ -44,23 +44,13 @@
                             我是组织方
                         </a>
                     </li>
-                    <li class="am-dropdown" data-am-dropdown style="margin-left:130px;top:12px;">
+                   <!-- <li class="am-dropdown" data-am-dropdown style="margin-left:130px;top:12px;">
                         <span class="btn1">
-                            <button type="button" style="font-size: 14px;"
-                                    class="am-btn am-btn-default am-btn-secondary am-radius am-dropdown-toggle">申请团体
-                            <span class="am-icon-caret-down"></span>
-                            </button>
+                            <a type="button" style="font-size: 14px;" class="am-btn am-btn-default am-btn-secondary am-radius "
+                               th:href="@{/pub/applyforcommunity/applyforcommunities}">申请团体</a>
                         </span>
-                        <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">团体名称</li>
-                            <li class="am-divider"></li>
-                            <li><a href="#">1. 一行代码，简单快捷</a></li>
-                            <li><a href="#">1. 一行代码，简单快捷</a></li>
-                            <li><a href="#">1. 一行代码，简单快捷</a></li>
-                            <li><a href="#">1. 一行代码，简单快捷</a></li>
-                        </ul>
-                    </li>
-                    <li class="am-dropdown" data-am-dropdown style="margin-left: 20px;top:12px;">
+                    </li>-->
+                    <li class="am-dropdown" data-am-dropdown style="margin-left: 250px;top:12px;">
                         <span class="btn1">
                             <button type="button" style="font-size: 14px;"
                                     class="am-btn am-btn-default am-btn-secondary
@@ -72,7 +62,7 @@
                         <ul class="am-dropdown-content">
                             <li class="am-dropdown-header">团体名称</li>
                             <li class="am-divider"></li>
-                            <li th:each="item:${names}">
+                            <li th:each="item:${handlerCommunities}">
                                 <a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.get('id')}+ ')'"
                                    th:text="${item.get('name')}"></a>
                             </li>

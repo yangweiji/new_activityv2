@@ -8,63 +8,75 @@
 <div th:replace="fragments/header :: default"></div>
 <div id="app">
     <div class="amz-container">
-        <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default article_nr"
-                 data-am-paragraph="{ tableScrollable: true, pureview: true }">
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <ul class="am-tabs-nav am-cf am_cf">
+                <li class="" th:classappend="${status}==0?'am-active'">
+                    <a href="/sec/thirdmanage/home/0">详情</a>
+                </li>
+                <li class="" th:classappend="${status}==1?'am-active'">
+                    <a href="/sec/thirdmanage/home/1">相册</a>
+                </li>
+            </ul>
 
-            <h1 class="article_nr_title" th:text="${activity.get('title')}"></h1>
-            <div class="am_list_author">
-                <a href="javascript:void(0)">
-                    <span class="am_list_author_ico" th:style="'background-image: url(' + ${activity.get('user_avatar')} + ');'"></span>
-                    <span class="name" th:text="${activity.get('displayname')}"></span>
-                </a>
-                <span class="am_news_time">
+            <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default article_nr"
+                     data-am-paragraph="{ tableScrollable: true, pureview: true }">
+                <h1 class="article_nr_title" th:text="${activity.get('title')}"></h1>
+                <div class="am_list_author">
+                    <a href="javascript:void(0)">
+                        <span class="am_list_author_ico"
+                              th:style="'background-image: url(' + ${activity.get('user_avatar')} + ');'"></span>
+                        <span class="name" th:text="${activity.get('displayname')}"></span>
+                    </a>
+                    <span class="am_news_time">
                 &nbsp;•&nbsp;
                     <span class="timeago"
                           th:title="${#dates.format(activity.get('created'), 'yyyy-MM-dd HH:mm')}"
                           th:text="${#kylin.fromNow(activity.get('created'))}"></span>
                 </span>
 
-            </div>
-            <!--<div class="article_nr_content" th:text='${activity.get("body")}'>
-            </div>-->
-            <div class="article_nr_content">
-                <p>活动时间:
-                    <span th:text="${#dates.format(activity.get('start_time'), 'yyyy-MM-dd HH:mm')}"></span>
-                    ~
-                    <span th:text="${#dates.format(activity.get('end_time'), 'yyyy-MM-dd HH:mm')}"></span></p>
-                <p>活动地点: <span th:text="${activity.get('address')}"></span></p>
-                <p><img th:src="${activity.get('avatar')}"></p>
-                <p>摘要: <span th:text="${activity.get('summary')}"></span></p>
-                <div th:utext="${activity.get('body')}"></div>
-            </div>
-
-            <div class="article_nr_more">
-                <div class="article_nr_l">
-                    <a href="javascript:void(0);" v-on:click="favorite()"><i class="am-icon-btn am-icon-thumbs-o-up"></i></a>
-                    <span id="favorite_count">{{favorite_count}}</span>
                 </div>
-                <div class="article_nr_more_r">
-                    <span>分享 </span>
-                    <span class="article_nr_more_ico ">
+                <!--<div class="article_nr_content" th:text='${activity.get("body")}'>
+                </div>-->
+                <div class="article_nr_content">
+                    <p>活动时间:
+                        <span th:text="${#dates.format(activity.get('start_time'), 'yyyy-MM-dd HH:mm')}"></span>
+                        ~
+                        <span th:text="${#dates.format(activity.get('end_time'), 'yyyy-MM-dd HH:mm')}"></span></p>
+                    <p>活动地点: <span th:text="${activity.get('address')}"></span></p>
+                    <p><img th:src="${activity.get('avatar')}"></p>
+                    <p>摘要: <span th:text="${activity.get('summary')}"></span></p>
+                    <div th:utext="${activity.get('body')}"></div>
+                </div>
+
+                <div class="article_nr_more">
+                    <div class="article_nr_l">
+                        <a href="javascript:void(0);" v-on:click="favorite()"><i
+                                class="am-icon-btn am-icon-thumbs-o-up"></i></a>
+                        <span id="favorite_count">{{favorite_count}}</span>
+                    </div>
+                    <div class="article_nr_more_r">
+                        <span>分享 </span>
+                        <span class="article_nr_more_ico ">
                       <a href="###" class="am-icon-btn am-secondary am-icon-qq"></a>
                       <a href="###" class="am-icon-btn am-success am-icon-weixin"></a>
                       <a href="###" class="am-icon-btn am-danger am-icon-weibo"></a>
                     </span>
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
 
-        <p style="text-align:center;">
-            <a th:href="@{/sec/thirdactivity/attend/{activityId}(activityId=${activity.get('id')})}"
-               class="am-btn am-btn-lg get-btn am-radius banner_ios ">我要报名</a>
-        </p>
+            <p style="text-align:center;">
+                <a th:href="@{/sec/thirdactivity/attend/{activityId}(activityId=${activity.get('id')})}"
+                   class="am-btn am-btn-lg get-btn am-radius banner_ios ">我要报名</a>
+            </p>
 
-        <!--<div th:inline="text">[[${activity}]]</div>-->
+            <!--<div th:inline="text">[[${activity}]]</div>-->
+        </div>
     </div>
 </div>
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-    #app{
+    #app {
         margin: 50px;
         min-height: 500px;
     }

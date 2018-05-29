@@ -7,7 +7,7 @@
 <body>
 <div th:replace="fragments/header :: default"></div>
 <div class="get">
-    <div class="c-bg"></div>
+    <div class="c-bg" th:style="'background:url('+${#httpSession.getAttribute('COMMUNITY_BACKGROUND')}+')no-repeat;background-size: cover;'"></div>
     <div class="c-publish">
         <div class="am-u-lg-12">
             <div class="get-title">

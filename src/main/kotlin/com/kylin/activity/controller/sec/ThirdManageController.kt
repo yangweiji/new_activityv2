@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest
 
 @Controller
 @RequestMapping("sec/thirdmanage")
+@SessionAttributes("user")
 class ThirdManageController : BaseController() {
     /**
      * 订单服务
@@ -45,6 +46,8 @@ class ThirdManageController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/home/{status}", method = arrayOf(RequestMethod.GET))
     private fun home(@PathVariable status: Int?, model: Model): String {
+        var user = this.sessionUser
+        model.addAttribute("user", user)
         //取得最新的活动记录
         var activityItems = activityService!!.getAllActivityUserItemsAndCommunity(status!!, this.sessionCommunity.id)
         for (r in activityItems) {

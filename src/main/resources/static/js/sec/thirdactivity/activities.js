@@ -7,10 +7,10 @@ $(function () {
         .on('init.dt', function () {
             // $('#bmBody').show();
         })
-        .on('preXhr.dt', function ( e, settings, data ) {
+        .on('preXhr.dt', function (e, settings, data) {
             Util.loading(true);
         })
-        .on('xhr.dt', function ( e, settings, json, xhr ) {
+        .on('xhr.dt', function (e, settings, json, xhr) {
             // for ( var i=0, ien=json.aaData.length ; i<ien ; i++ ) {
             //     json.aaData[i].sum = json.aaData[i].one + json.aaData[i].two;
             // }
@@ -46,7 +46,7 @@ $(function () {
                             search: 'none'
                         },
                         format: {
-                            body: function ( data, row, column, node ) {
+                            body: function (data, row, column, node) {
                                 //身份证号的处理
                                 return ("\u200C" + data);
                             }
@@ -86,7 +86,8 @@ $(function () {
                 {"data": "end_time"},
                 {"data": "attend_user_count"},
                 {"data": "check_user_count"},
-                {"data": "status", defaultContent: "",
+                {
+                    "data": "status", defaultContent: "",
                     render: function (data, type, row) {
                         if (data == 1) {
                             return "发布";
@@ -94,10 +95,12 @@ $(function () {
                         else {
                             return "草稿";
                         }
-                    }},
+                    }
+                },
                 {"data": "created"},
                 {"data": "displayname"},
-                {"data": "public", defaultContent: "",
+                {
+                    "data": "public", defaultContent: "",
                     render: function (data, type, row) {
                         if (data == true) {
                             return "公开";
@@ -105,15 +108,19 @@ $(function () {
                         else {
                             return "非公开";
                         }
-                    }},
+                    }
+                },
                 {"data": "unit"},
-                {"data": "action", "width": "160px", defaultContent: "",
+                {
+                    "data": "action", "width": "160px", defaultContent: "",
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
                             + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
                             + '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
                             + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
-                    }},
+                            + '<button id="picturerow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="相册管理"><i class="am-icon-shield"></i></button>'
+                    }
+                },
             ],
 
             //栏定义
@@ -123,8 +130,8 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                { targets: [0,1,2,3,4,5,6,-1], visible: true},
-                { targets: '_all', visible: false }
+                {targets: [0, 1, 2, 3, 4, 5, 6, -1], visible: true},
+                {targets: '_all', visible: false}
             ],
             //默认排序
             order: [[3, 'desc']],
@@ -161,7 +168,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: '',
 
-        action: function ( e, dt, node, config ) {
+        action: function (e, dt, node, config) {
             // alert( this.text() );
             location.href = "/sec/thirdactivity/publish?type=1";
         }
@@ -171,18 +178,17 @@ $(function () {
      * 编辑活动
      */
     $('#bmTable tbody').on('click', 'button#editrow', function () {
-        var data = t.row( $(this).parents('tr') ).data();
-        location.href = "/sec/thirdactivity/publish?id="+data.id;
+        var data = t.row($(this).parents('tr')).data();
+        location.href = "/sec/thirdactivity/publish?id=" + data.id;
     });
 
     /**
      * 删除活动
      */
     $('#bmTable tbody').on('click', 'button#delrow', function () {
-        var data = t.row( $(this).parents('tr') ).data();
-        if (window.confirm("请确认删除？"))
-        {
-            location.href = "/sec/thirdactivity/deleteActivity/"+data.id;
+        var data = t.row($(this).parents('tr')).data();
+        if (window.confirm("请确认删除？")) {
+            location.href = "/sec/thirdactivity/deleteActivity/" + data.id;
         }
     });
 
@@ -190,26 +196,32 @@ $(function () {
      * 查看活动二维码
      */
     $('#bmTable tbody').on('click', 'button#qrcoderow', function () {
-        var data = t.row( $(this).parents('tr') ).data();
-        window.open("/sec/thirdactivity/qrcode?id="+data.id);
+        var data = t.row($(this).parents('tr')).data();
+        window.open("/sec/thirdactivity/qrcode?id=" + data.id);
     });
 
     /**
      * 活动报名签到情况
      */
     $('#bmTable tbody').on('click', 'button#attendrow', function () {
-        var data = t.row( $(this).parents('tr') ).data();
-        window.open("/sec/thirdactivity/attendusers?activityId="+data.id+"&title="+data.title+"&start=2018-01-01&end=");
+        var data = t.row($(this).parents('tr')).data();
+        window.open("/sec/thirdactivity/attendusers?activityId=" + data.id + "&title=" + data.title + "&start=2018-01-01&end=");
     });
+
+    /**
+     * 相册管理
+     */
+    $('#bmTable tbody').on('click', 'button#picturerow', function () {
+        var data = t.row($(this).parents('tr')).data();
+        location.href = "/sec/thirdactivity/activityphotos?activityId=" + data.id;
+    })
 });
 
 new Vue({
     el: '#app',
-    data: {
-    },
+    data: {},
     mounted: function () {
         var that = this;
     },
-    methods: {
-    },
+    methods: {},
 });

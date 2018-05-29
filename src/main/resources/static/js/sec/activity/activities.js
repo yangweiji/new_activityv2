@@ -113,6 +113,7 @@ $(function () {
                         + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
                         + '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
                         + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
+                        + '<button id="picturerow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="上传图片"><i class="am-icon-shield"></i></button>'
                 }},
         ],
 
@@ -201,6 +202,14 @@ $(function () {
         var data = t.row( $(this).parents('tr') ).data();
         window.open("/sec/activity/attendusers?activityId="+data.id+"&title="+data.title+"&start=2018-01-01&end=");
     });
+
+    /**
+     * 上传图片
+     */
+    $('#bmTable tbody').on('click','button#picturerow',function () {
+        var data=t.row($(this).parents('tr')).data();
+        window.open("/sec/activity/uploadpicture")
+    })
 });
 
 new Vue({

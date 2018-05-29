@@ -1,22 +1,19 @@
 package com.kylin.activity
 
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.config.annotation.PathMatchConfigurer
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.util.UrlPathHelper
-import com.alibaba.fastjson.serializer.SerializerFeature
-import com.alibaba.fastjson.support.config.FastJsonConfig
-import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter
+import com.kylin.activity.service.CommunityService
 import com.kylin.activity.util.LogUtil
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.autoconfigure.web.HttpMessageConverters
 import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.web.servlet.config.annotation.*
 
 
 @Configuration
 class MvcConfig : WebMvcConfigurerAdapter() {
+
+    @Autowired
+    private var communityService: CommunityService? = null
 
     override fun addViewControllers(registry: ViewControllerRegistry?) {
         registry!!.addViewController("/login").setViewName("login")
@@ -54,6 +51,16 @@ class MvcConfig : WebMvcConfigurerAdapter() {
         for (converter in converters!!) {
             LogUtil.printLog(converter.javaClass.name)
         }
+    }
+
+    /**
+     * 编写一个类，继承WebMvcConfigurerAdapter抽象类，将其放入Spring容器中，
+     * 然后重写addInterceptors()方法，并调用给的参数InterceptorRegistry.addInterceptor()
+     * 把自己编写的那个拦截器（MyHandlerInterceptor()）作为参数加进去。
+     * 解决首页团体切换在不同页面中不显示的问题
+     */
+    override fun addInterceptors(registry: InterceptorRegistry?) {
+        registry!!.addInterceptor(MyHandlerInterceptor(communityService))
     }
 
 }

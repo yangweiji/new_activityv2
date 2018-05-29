@@ -8,6 +8,7 @@ import com.kylin.activity.databases.tables.ActionHistory;
 import com.kylin.activity.databases.tables.Activity;
 import com.kylin.activity.databases.tables.ActivityFavorite;
 import com.kylin.activity.databases.tables.ActivityPhoto;
+import com.kylin.activity.databases.tables.ActivityPhotoPicture;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
 import com.kylin.activity.databases.tables.Article;
@@ -53,6 +54,11 @@ public class Tables {
      * 活动相册
      */
     public static final ActivityPhoto ACTIVITY_PHOTO = com.kylin.activity.databases.tables.ActivityPhoto.ACTIVITY_PHOTO;
+
+    /**
+     * 图片集
+     */
+    public static final ActivityPhotoPicture ACTIVITY_PHOTO_PICTURE = com.kylin.activity.databases.tables.ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE;
 
     /**
      * 活动门票

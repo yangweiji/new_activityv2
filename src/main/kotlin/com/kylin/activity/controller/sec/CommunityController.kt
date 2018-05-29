@@ -76,4 +76,12 @@ class CommunityController : BaseController() {
         }
         return "redirect:/sec/community/communities"
     }
+
+
+    @RequestMapping(value="/deleteCommunity/{id}",method = arrayOf(RequestMethod.GET,RequestMethod.POST))
+    fun deleteCommunity(@PathVariable("id")id:Int):String{
+          communityService!!.deleteCommunity(id)
+          return "redirect:/sec/community/communities"
+    }
+
 }

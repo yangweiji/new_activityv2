@@ -5,13 +5,19 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivityDao
+import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
+import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
 import com.kylin.activity.databases.tables.daos.ActivityTicketDao
 import com.kylin.activity.databases.tables.pojos.Activity
+import com.kylin.activity.databases.tables.pojos.ActivityPhoto
+import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import com.kylin.activity.databases.tables.pojos.ActivityTicket
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
+import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.ThirdActivityService
 import com.kylin.activity.service.UserService
+import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
@@ -33,6 +39,10 @@ data class ThirdActivityPublishData(
         var scoreInfos: ActivityScoreInfo? = null
 )
 
+data class PhotosData(
+        var activityPhoto: ActivityPhoto? = null
+)
+
 @Controller
 @RequestMapping("sec/thirdactivity")
 class ThirdActivityController : BaseController() {
@@ -50,6 +60,20 @@ class ThirdActivityController : BaseController() {
 
     @Autowired
     private val create: DSLContext? = null
+
+    @Autowired
+    private val activityPhotoDao: ActivityPhotoDao? = null
+
+    @Autowired
+    private val activityPhotoService: ActivityPhotoService? = null
+
+    @Autowired
+    private val commonService: CommonService? = null
+
+    @Autowired
+    private val activityPhotoPictureDao: ActivityPhotoPictureDao? = null
+
+
 
     /**
      * 第三方活动管理之
@@ -300,7 +324,7 @@ class ThirdActivityController : BaseController() {
      * 删除活动信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/deleteActivity/{id}")
+    @RequestMapping(value = "/deleteActivity/{id}", method = arrayOf(RequestMethod.POST))
     fun deleteActivity(@PathVariable id: Int, model: Model): String {
         activityService!!.deleteById(id)
         return "redirect:/sec/thirdactivity/activities"
@@ -319,4 +343,5 @@ class ThirdActivityController : BaseController() {
         model.addAttribute("activity", activity)
         return "sec/thirdactivity/attend"
     }
+
 }
