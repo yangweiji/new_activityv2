@@ -59,7 +59,12 @@ public class ActivityPhotoPicture implements Serializable {
         this.order = order;
     }
 
+<<<<<<< HEAD
     public Integer getId() { return this.id;
+=======
+    public Integer getId() {
+        return this.id;
+>>>>>>> origin/master
     }
 
     public void setId(Integer id) {

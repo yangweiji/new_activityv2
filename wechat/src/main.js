@@ -12,16 +12,16 @@ export default {
   // 这个字段走 app.json
   config: {
     pages: [
-      '^pages/index/index',
+      'pages/index/index',
       'pages/tool/tool',
       'pages/oneself/oneself',
-      'pages/details/details'
+      // 'pages/details/details'
       
     ], // Will be filled in webpack
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
-      navigationBarTitleText: 'weui for mpvue',
+      navigationBarTitleText: '活动平台V2',
       navigationBarTextStyle: 'black'
     },
     tabBar:{

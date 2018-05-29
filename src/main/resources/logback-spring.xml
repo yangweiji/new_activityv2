@@ -84,6 +84,7 @@
     <!-- 生产环境下的日志配置 -->
     <springProfile name="prod">
         <root level="INFO">
+            <appender-ref ref="CONSOLE" />
             <appender-ref ref="SYSTEM_FILE" />
         </root>
     </springProfile>
