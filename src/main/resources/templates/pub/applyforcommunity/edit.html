@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+</head>
+<body>
+<link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
+<link rel="stylesheet" href="/asset/quill/quill.snow.css"/>
+<script type="text/javascript" src="/asset/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+<script type="text/javascript" src="/asset/datetimepicker/js/locales/amazeui.datetimepicker.zh-CN.js"
+        charset="UTF-8"></script>
+<script type="text/javascript" src="/asset/quill/quill.min.js" charset="UTF-8"></script>
+<div th:replace="fragments/header :: default"></div>
+<div id="c_sec_community_add_app">
+    <div class="amz-container">
+        <form id="c-community-add-form"  method="post" class="am-form am-form-horizontal">
+            <fieldset>
+                <legend>申请团体</legend>
+                <div class="am-form-group">
+                    <label for="community_name" class="am-u-sm-2 am-form-label">社团名称</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_name"
+                               name="name" th:placeholder="请输入社团名称" th:value="${editcommunities.name}"/>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="community_description" class="am-u-sm-2 am-form-label">社团标语</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_description"
+                               name="description" th:placeholder="请输入社团标语"
+                               th:value="${editcommunities.description}"/>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="community_address" class="am-u-sm-2 am-form-label">社团地址</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_address"
+                               name="address" th:placeholder="请输入社团地址" th:value="${editcommunities.address}"/>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="community_contact" class="am-u-sm-2 am-form-label">联系电话</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_contact"
+                               name="contact" th:placeholder="请输入联系电话" th:value="${editcommunities.contact}"/>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="community_company" class="am-u-sm-2 am-form-label">公司名称</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_company"
+                               name="company" th:placeholder="请输入社团公司名称" th:value="${editcommunities.company}"/>
+                    </div>
+                </div>
+
+
+                <div class="am-form-group">
+                    <label for="community_created" class="am-u-sm-2 am-form-label">加入时间</label>
+                    <div class="am-u-sm-10 am-datepicker-date">
+                        <input required="required" class="c-datetimepicker created" type="text"
+                               id="community_created"
+                               name="created" placeholder="请输入加入社团时间" th:value="${editcommunities.created}"/>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="community_status" class="am-u-sm-2 am-form-label">社团状态</label>
+                    <div class="am-u-sm-10">
+                        <select required="required" id="community_status" name="status" placeholder="请选择社团状态"
+                                data-am-selected="">
+                            <option value="">--</option>
+                            <option th:selected="${editcommunities.status==0}"
+                                    th:value="0" th:text="草稿"></option>
+                            <option th:selected="${editcommunities.status==1}"
+                                    th:value="1" th:text="待审核"></option>
+                            <!--<option th:selected="${communitiesData.community.status==2}"
+                                    th:value="2" th:text="拒绝" disabled="disabled"></option>
+                            <option th:selected="${communitiesData.community.status==9}"
+                                    th:value="9" th:text="审核通过" disabled="disabled">
+                            </option>-->
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="am-form-group">
+                    <div class="am-u-sm-10 am-u-sm-offset-2">
+                        <button type="submit" class="am-btn am-btn-primary">申请</button>
+                        <a class="am-btn am-btn-default" type="button" th:href="@{/}">返回</a>
+                    </div>
+                </div>
+            </fieldset>
+
+        </form>
+    </div>
+
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #c_sec_community_add_app {
+        margin-top: 30px;
+    }
+
+    #c_sec_community_add_app .c-background img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #c_sec_community_add_app .c-avatar img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #c_sec_community_add_app .c-datetimepicker {
+        display: inline-block;
+        width: 200px;
+    }
+
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = {
+        created:[[${editcommunities.created}]]
+    }
+    /*]]>*/
+</script>
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/pub/applyforcommunity/editcommunities.js"></script>
+</body>
+</html>

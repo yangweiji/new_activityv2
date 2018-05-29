@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+</head>
+<body>
+<link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
+<link rel="stylesheet" href="/asset/quill/quill.snow.css"/>
+<script type="text/javascript" src="/asset/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+<script type="text/javascript" src="/asset/datetimepicker/js/locales/amazeui.datetimepicker.zh-CN.js"
+        charset="UTF-8"></script>
+<script type="text/javascript" src="/asset/quill/quill.min.js" charset="UTF-8"></script>
+<div th:replace="fragments/header :: default"></div>
+<div id="c_sec_activity_picture_app">
+    <div class="amz-container">
+        <form id="c-activity-picture-create-form" method="post" class="am-form am-form-horizontal">
+            <fieldset>
+                <legend>图片管理</legend>
+                <div class="am-form-group">
+                    <label for="activity-picture" class="am-u-sm-2 am-form-label">上传图片</label>
+                    <div class="am-u-sm-10">
+                        <div id="c-upload-activity-picture-editor"></div>
+                        <input id="c-activity-picture-text" required="required" style="display: none;" type="text"
+                               name="picture" v-model="pictures.picture"/>
+                        <div id="c-activity-picture-editor">
+                        </div>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="activity-created" class="am-u-sm-2 am-form-label"><span></span>上传时间</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" class="c-datetimepicker created" type="text" id="created"
+                               name="created" placeholder="请输入上传时间"/>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="activity-created_by" class="am-u-sm-2 am-form-label">上传作者</label>
+                    <div class="am-u-sm-10">
+                        <input type="text" id="created_by" name="created_by"
+                               placeholder="请输入上传作者" th:value="${pictures.createdBy}" />
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <div class="am-u-sm-10 am-u-sm-offset-2">
+                        <button class="am-btn am-btn-secondary" type="submit">上传</button>
+                        <a class="am-btn am-btn-default" type="button" th:href="@{/sec/activity/activities}">返回</a>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #c_sec_activity_picture_app {
+        margin-top: 30px;
+    }
+
+    #c_sec_activity_picture_app .c-avatar img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #c_sec_activity_picture_app .c-datetimepicker {
+        display: inline-block;
+        width: 200px;
+    }
+
+    #c-activity-picture-editor {
+        background-color: white;
+        min-height: 400px;
+    }
+
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = {
+        picture: [[${pictures.picture}]],
+        created: [[${pictures.created}]]
+    }
+    /*]]>*/
+</script>
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/activity/uploadpicture.js"></script>
+</body>
+</html>
