@@ -64,7 +64,7 @@
 
 .hd_list_right_tt .l {
     display: block;
-    width: 180px;
+    /*width: 180px;*/
     height: 42px;
     float: left;
 }
@@ -397,4 +397,9 @@
 .am-list-news-bd.am_news_list_all.qr_code .am_news_list_img
 {
     height: 140px;
+}
+
+.am-nav-divider
+{
+    border-top: 2px solid #ddd;
 }

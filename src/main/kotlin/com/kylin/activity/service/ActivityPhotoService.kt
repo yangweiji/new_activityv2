@@ -29,17 +29,17 @@ class ActivityPhotoService {
     /**
      * 定义分页索引起始位置
      */
-    public var page: Int = 0
+    var page: Int = 0
 
     /**
      * 定义每页记录数
      */
-    public var size: Int = 12
+    var size: Int = 12
 
     /**
      * 取得活动相册总数
      */
-    public var activityphotoCount: Long = 0
+    var activityphotoCount: Long = 0
 
     fun getActivityPhoto(id: Int): Result<Record> {
         var sql = "select a.* from activity_photo a where ?=a.activity_id "
@@ -71,15 +71,6 @@ class ActivityPhotoService {
         return create!!.resultQuery(sql).fetch()
     }
 
-
-    /**
-     * 查询相册信息
-     */
-    /*fun getActivityPhotos(id: Int?): Result<Record> {
-        var photoCountSql = "select count(*) from activity_photo where activity_id=? "
-        return create!!.resultQuery(photoCountSql, id).fetch()
-    }*/
-
     /**
      * 添加相册信息
      */
@@ -93,18 +84,16 @@ class ActivityPhotoService {
     /**
      * 获取所有的图片信息
      */
-    fun getPhotoPicture(activityPhotoId: Int?): List<ActivityPhotoPicture> {
+    fun getPhotoPictureList(activityPhotoId: Int?): List<ActivityPhotoPicture> {
         return activityPhotoPictureDao!!.fetchByActivityPhotoId(activityPhotoId)
-//        var pictureSql = "select * from activity_photo_picture where activity_photo_id=? "
-//        return create!!.resultQuery(pictureSql, activityPhotoId).fetch()
     }
 
     /**
      * 取得活动对应的唯一相册
      */
-    fun getOnlyOneActivityPhoto(activityId: Int?): ActivityPhoto {
+    fun getFirstActivityPhoto(activityId: Int?): ActivityPhoto? {
         var list = activityPhotoDao!!.fetchByActivityId(activityId)
-        return list[0]
+        return if (list != null && list.size > 0) list.first() else null
     }
 
 

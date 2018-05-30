@@ -112,7 +112,7 @@ $(function () {
                 },
                 {"data": "unit"},
                 {
-                    "data": "action", "width": "160px", defaultContent: "",
+                    "data": "action", "width": "200px", defaultContent: "",
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
                             + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'

@@ -23,7 +23,7 @@
       <div class="weui-tab">
         <div class="weui-navbar" style="top:auto;">
             <block v-for="(item,index) in choice" :key="index">
-              <div :id="index" :class="{'weui-bar__item_on' :activeIndex ==index}" class="weui-navbar__item"  
+              <div :id="index" :class="{'weui-bar__item_on': activeIndex==item.id}" class="weui-navbar__item"  
                 @click="tabClick(item.id)">
                 
                 <div class="weui-navbar__title" v-if="item.id!='0'">{{item.matter}}</div>
@@ -282,6 +282,7 @@ export default {
   },
   //页面创建完成，获取活动信息
   created() {
+    console.log("index created");
     this.getData();
     //设置默认的其他活动标签分类值
     this.ces = this.ranges[this.index];

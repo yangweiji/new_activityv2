@@ -29,7 +29,6 @@ new Vue({
             randomName: true,
             selectId: 'c-upload-activity-pictures',
             success: function (file) {
-                /* that.cacheData.activityPhotoPicture.picture = file.randomName*/
                 that.cacheData.activityPhotoPicture.picture = file.randomName
             }
         })

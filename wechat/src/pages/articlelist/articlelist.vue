@@ -5,7 +5,7 @@
         <div class="weui-tab">
         <div class="weui-navbar" style="top:auto;">
             <block v-for="(item,index) in categories" :key="index">
-              <div :id="index" :class="{'weui-bar__item_on' :activeIndex==index}" class="weui-navbar__item"  
+              <div :id="index" :class="{'weui-bar__item_on' :activeIndex==item.id}" class="weui-navbar__item"  
                 @click="tabClick(item.id)">
                 <div class="weui-navbar__title">{{item.title}}</div>
               </div>
