@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.Activity
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
@@ -69,14 +70,24 @@ class WxActivityController {
 
     /**
      * 显示活动详情内容
-     * @param detailId: 活动ID
+     * @param activityId: 活动ID
      * @return 单个活动信息
      */
-    @GetMapping("/detail/{id}")
-    fun detail(@RequestParam(required = false) detailId: Int?): Any {
-        var activity = activityService!!.getActivityDetail(detailId)
+    @GetMapping("/details")
+    fun details(@RequestParam(required = false) activityId: Int?): Any {
+        //活动详情信息
+        var activity = activityService!!.getActivityDetail(activityId)
+        var avatar: String?
+        if (activity["avatar"] != null) {
+            avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java))
+            activity.setValue(Activity.ACTIVITY.AVATAR, avatar)
+        }
 
+        var map = activity.intoMap()
+        if (map["created"] != null) {
+            map["created"] = util!!.fromNow(activity.get("start_time"))
+        }
 
-        return activity
+        return map
     }
 }

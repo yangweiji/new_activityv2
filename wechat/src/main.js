@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
 import './css/app.css'
+
 Vue.config.productionTip = false
 App.mpType = 'app'
 
@@ -9,15 +10,17 @@ const app = new Vue(App)
 app.$mount()
 
 export default {
-  // 这个字段走 app.json
   config: {
     pages: [
-      'pages/index/index',
+      '^pages/index/index',
       'pages/tool/tool',
       'pages/oneself/oneself',
-      // 'pages/details/details'
-      
-    ], // Will be filled in webpack
+      'pages/details/details',
+      'pages/articlelist/articlelist',
+      'pages/article/article',
+    ], 
+
+    // Will be filled in webpack
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',

@@ -49,6 +49,33 @@ class ArticleService {
         return article
     }
 
+    /***
+     * 依据文章分类取得文章列表信息
+     * @param category: 文章分类
+     * @return 文章列表信息
+     */
+    fun getArticleListByCategory(category: Int?): Result<Record> {
+        var sql = "select t1.*, t2.displayname \n" +
+                "from article t1 \n" +
+                "inner join `user` t2 on t1.created_by = t2.id\n" +
+                "where t1.category = ?"
+        return create!!.resultQuery(sql, category).fetch()
+    }
+
+    /**
+     * 依据文章ID取得单个文章信息
+     * @param id: 文章ID
+     * @return 单个文章信息
+     */
+    fun getArticleExt(id: Int?): Record {
+        var sql = "select t1.*, t2.displayname \n" +
+                "from article t1 \n" +
+                "inner join `user` t2 on t1.created_by = t2.id\n" +
+                "where t1.id = ?"
+        return create!!.resultQuery(sql, id).fetchOne()
+    }
+
+
     /**
      * 删除内容
      */

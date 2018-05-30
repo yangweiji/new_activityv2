@@ -113,46 +113,44 @@
 </template>
 
 <script>
- import base64 from '../../../static/images/base64';
+import base64 from "../../../static/images/base64";
 export default {
   data() {
     return {
       icon20: base64.icon20,
-      xs:1,
-
-    }
+      xs: 1
+    };
   },
 
-  components: {
-  },
+  components: {},
 
   methods: {
-    getData(){
+    getData() {
       wx.request({
-        url: 'https://a.9kylin.cn', //仅为示例，并非真实的接口地址
+        url: "https://a.9kylin.cn", //仅为示例，并非真实的接口地址
         data: {
-          x: '' ,
-          y: ''
+          x: "",
+          y: ""
         },
         header: {
-            'content-type': 'application/json' // 默认值
+          "content-type": "application/json" // 默认值
         },
         success: function(res) {
-          console.log(res.data)
-        },fail:function(error){
-          console.log(error)
+        },
+        fail: function(error) {
+          console.log(error);
         }
-      })
+      });
     },
-    qh(cs){
-      this.xs=cs;
+    qh(cs) {
+      this.xs = cs;
     }
   },
 
   created() {
-    this.getData()
+    // this.getData();
   }
-}
+};
 </script>
 
 <style scoped>
@@ -227,8 +225,8 @@ export default {
   height: auto;
 }
 
-.p-text__xx{
-  width:100%;
-  text-align:center;
+.p-text__xx {
+  width: 100%;
+  text-align: center;
 }
 </style>

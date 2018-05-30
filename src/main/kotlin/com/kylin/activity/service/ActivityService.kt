@@ -265,8 +265,7 @@ class ActivityService {
                 " select activity_id, count(user_id) favorite_count from activity_favorite where activity_id=? " +
                 ") as tf on t1.id = tf.activity_id " +
                 "where t1.id = ? "
-        var activity = create!!.resultQuery(sql, id, id, id).fetchOne()
-        return activity
+        return create!!.resultQuery(sql, id, id, id).fetchOne()
     }
 
 
