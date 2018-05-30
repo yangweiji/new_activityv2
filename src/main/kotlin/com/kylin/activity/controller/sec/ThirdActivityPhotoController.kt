@@ -1,9 +1,6 @@
 package com.kylin.activity.controller.sec
 
 import com.kylin.activity.controller.BaseController
-import com.kylin.activity.databases.tables.daos.ActivityDao
-import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
-import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
 import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import com.kylin.activity.databases.tables.pojos.User
@@ -17,6 +14,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import javax.servlet.http.HttpServletRequest
 
 /**
  * 图片数据类
@@ -42,30 +40,11 @@ class ThirdActivityPhotoController : BaseController() {
     @Autowired
     private val activityService: ActivityService? = null
 
-
     /**
      * 活动相册服务
      */
     @Autowired
     private val activityPhotoService: ActivityPhotoService? = null
-
-    /**
-     * 活动数据访问
-     */
-    @Autowired
-    private val activityDao: ActivityDao? = null
-
-    /**
-     * 活动相册图片数据访问
-     */
-    @Autowired
-    private val activityPhotoPictureDao: ActivityPhotoPictureDao? = null
-
-    /**
-     * 活动相册数据访问
-     */
-    @Autowired
-    private val activityPhotoDao: ActivityPhotoDao? = null
 
     /**
      * 相册管理，根据活动相册查询图片信息
@@ -96,12 +75,9 @@ class ThirdActivityPhotoController : BaseController() {
                     , user!!.id
                     , axtenalUrl)
             //添加到数据库
-            var rs = activityPhotoService!!.insertActivityPhoto(activityPhoto)
-            LogUtil.printLog("rs: $rs")
-            if (rs > 0) {
-                //获取活动对应的相册
-                activityPhoto = activityPhotoService!!.getFirstActivityPhoto(activityId)
-                LogUtil.printLog("创建相册信息OK, 相册ID: ${activityPhoto!!.id}")
+            activityPhotoService!!.insert(activityPhoto)
+            if (activityPhoto.id > 0) {
+                LogUtil.printLog("创建相册信息OK, 相册ID: ${activityPhoto.id}")
             }
         } else {
             activityPhoto.picture = activity!!.avatar
@@ -110,7 +86,7 @@ class ThirdActivityPhotoController : BaseController() {
             activityPhoto.createdBy = user!!.id
             activityPhoto.axtenalUrl = commonService!!.getDownloadUrl(activityPhoto.picture)
             //更新相册信息
-            activityPhotoDao!!.update(activityPhoto)
+            activityPhotoService!!.update(activityPhoto)
             LogUtil.printLog("更新相册信息OK, 相册ID: ${activityPhoto.id}")
         }
 
@@ -158,24 +134,39 @@ class ThirdActivityPhotoController : BaseController() {
         activityPhotoPicture.createdBy = user!!.id
         activityPhotoPicture.order = null
 
-        var rs = activityPhotoPictureDao!!.insert(activityPhotoPicture)
+        activityPhotoService!!.insertPicture(activityPhotoPicture)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        LogUtil.printLog("添加图片OK")
+        LogUtil.printLog("添加图片OK, 图片ID: ${activityPhotoPicture.id}")
 
         return "redirect:/sec/thirdactivity/activityphotos?activityId=${activityId}"
+    }
+
+    /**
+     * 删除相册
+     * @param request: 参数
+     */
+    @RequestMapping(value = "/delete", method = arrayOf(RequestMethod.POST))
+    @ResponseBody
+    fun delete(request: HttpServletRequest): Any? {
+
+        var activityPhotoId = if (request.getParameter("activityPhotoId") != null) request.getParameter("activityPhotoId").toInt() else 0
+        activityPhotoService!!.delete(activityPhotoId)
+
+        return true
     }
 
 
     /**
      * 删除图片
-     * @param pictureId 图片id
-     * @param activityId 活动相册外键：活动id
+     * @param request: 参数
      */
-    @RequestMapping(value = "/deletePictures", method = arrayOf(RequestMethod.POST))
-    fun deletePictures(model: Model,
-                       @RequestParam(required = false) pictureId: Int,
-                       @RequestParam(required = false) activityId: Int?): Any? {
-        activityPhotoPictureDao!!.deleteById(pictureId)
-        return "redirect:/sec/thirdactivity/activityphotos?activityId=" + activityId
+    @RequestMapping(value = "/deletePicture", method = arrayOf(RequestMethod.POST))
+    @ResponseBody
+    fun deletePicture(request: HttpServletRequest): Any? {
+
+        var pictureId = if (request.getParameter("pictureId") != null) request.getParameter("pictureId").toInt() else 0
+        activityPhotoService!!.deletePicture(pictureId)
+
+        return true
     }
 }

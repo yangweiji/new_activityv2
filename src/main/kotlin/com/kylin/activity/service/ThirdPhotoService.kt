@@ -19,17 +19,20 @@ class ThirdPhotoService {
 
     /**
      * 按相册标题查询相册信息
+     * @param description: 相册描述
+     * @param cid: 组织ID
      */
-    fun getAllPhotosItems(description: String?, id: Int): Result<Record> {
+    fun getAllPhotosItems(description: String?, cid: Int): Result<Record> {
         var sql = "select a.* from activity_photo a " +
-                 "left join activity a2 on a.activity_id=a2.id " +
-                 "where 1=1 and ?=a.activity_id "
+                "left join activity a2 on a.activity_id=a2.id " +
+                "where 1=1 and ?=a2.community_id "
         var params = mutableListOf<Any?>()
         if (!description.isNullOrBlank()) {
             sql += "and a.description like '%?%' ".replace("?", description!!)
             params.add(description)
         }
-        return create!!.resultQuery(sql,id, params.toTypedArray()).fetch()
+
+        return create!!.resultQuery(sql, cid, params.toTypedArray()).fetch()
     }
 
     /**

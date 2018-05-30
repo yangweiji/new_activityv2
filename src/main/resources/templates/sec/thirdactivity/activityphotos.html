@@ -79,7 +79,7 @@
                             <li th:each="item:${photoPictureItems}">
                                 <div class="am-gallery-item am_list_block">
                                     <a target="_blank" th:href="${item.picture}" title="点击查看大图"><img class="am_img animated c-img" th:src="${item.picture}" alt=""/></a>
-                                    <a th:onclick="'_deletePicture('+${item.id}+')'"
+                                    <a th:onclick="'deletePicture('+${item.id}+')'"
                                        class="am-btn am-btn-sm am-btn-danger del-btn" type="button" href="#">删除</a>
                                 </div>
 

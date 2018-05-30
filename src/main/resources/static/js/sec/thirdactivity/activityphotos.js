@@ -1,19 +1,30 @@
-function _deletePicture(id) {
+$(function () {
+
+})
+
+/***
+ * 删除相册图片
+ * @param id
+ */
+function deletePicture(id) {
     var del = window.confirm("确定删除吗？");
     if (del) {
-        Util.ajax({
+        $.ajax({
             type: 'post',
             dataType: 'json',
-            url: '/sec/thirdactivity/deletePictures?pictureId=' + id,
+            url: '/sec/thirdactivity/deletePicture',
+            data: {
+                pictureId: id,
+            },
             success: function (data) {
                 if (data) {
+                    alert("操作成功！");
                     location.reload()
                 }
             },
         })
     }
-}
-
+};
 
 new Vue({
     el: '#app',

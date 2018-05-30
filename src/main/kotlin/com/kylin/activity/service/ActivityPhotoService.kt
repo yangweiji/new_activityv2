@@ -11,6 +11,7 @@ import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ActivityPhotoService {
@@ -73,16 +74,71 @@ class ActivityPhotoService {
 
     /**
      * 添加相册信息
+     * @param activityPhoto: 相册信息
+     * @return 相册ID
      */
-    fun insertActivityPhoto(activityPhoto: ActivityPhoto): Int {
-        var sql = "insert into activity_photo(activity_id, picture, description, created, created_by, axtenal_url) " +
-                "values(?,?,?,?,?,?)"
-        return create!!.execute(sql, activityPhoto.activityId, activityPhoto.picture, activityPhoto.description, activityPhoto.created, activityPhoto.createdBy, activityPhoto.axtenalUrl)
+    fun insert(activityPhoto: ActivityPhoto): Int {
+        activityPhotoDao!!.insert(activityPhoto)
+        return activityPhoto.id
+    }
+
+
+    /**
+     * 更新相册信息
+     * @param activityPhoto: 相册信息
+     * @return 相册ID
+     */
+    fun update(activityPhoto: ActivityPhoto): Int {
+        activityPhotoDao!!.update(activityPhoto)
+        return activityPhoto.id
+    }
+
+    /***
+     * 删除相册
+     * @param activityPhotoId: 相册ID
+     */
+    @Transactional
+    fun delete(activityPhotoId: Int?) {
+        //删除相册下的所有图片
+        create!!.execute("delete from activity_photo_picture where activity_photo_id = ?", activityPhotoId)
+        //删除相册
+        activityPhotoDao!!.deleteById(activityPhotoId)
+    }
+
+    /**
+     * 添加相册图片
+     * @param activityPhotoPicture: 图片信息
+     * @return 图片ID
+     */
+    fun insertPicture(activityPhotoPicture: ActivityPhotoPicture): Int {
+        activityPhotoPictureDao!!.insert(activityPhotoPicture)
+        return activityPhotoPicture.id
+    }
+
+    /**
+     * 更新相册图片信息
+     * @param activityPhotoPicture: 图片信息
+     * @return 图片ID
+     */
+    fun updatePicture(activityPhotoPicture: ActivityPhotoPicture): Int {
+        activityPhotoPictureDao!!.update(activityPhotoPicture)
+        return activityPhotoPicture.id
+    }
+
+
+    /***
+     * 删除相册图片
+     * @param pictureId: 相册图片ID
+     */
+    fun deletePicture(pictureId: Int) {
+        activityPhotoPictureDao!!.deleteById(pictureId)
     }
 
 
     /**
      * 获取所有的图片信息
+     * @param activityPhotoId： 相册ID
+     * @return 相册下的图片集合
      */
     fun getPhotoPictureList(activityPhotoId: Int?): List<ActivityPhotoPicture> {
         return activityPhotoPictureDao!!.fetchByActivityPhotoId(activityPhotoId)
@@ -90,6 +146,8 @@ class ActivityPhotoService {
 
     /**
      * 取得活动对应的唯一相册
+     * @param activityId: 活动ID
+     * @return 活动对应的首个相册
      */
     fun getFirstActivityPhoto(activityId: Int?): ActivityPhoto? {
         var list = activityPhotoDao!!.fetchByActivityId(activityId)

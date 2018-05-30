@@ -73,7 +73,7 @@ $(function () {
             columns: [
                 {"data": "id", "width": "50px"},
                 {"data": "id", "width": "80px"},
-                {"data": "description","width": "160px"},
+                {"data": "description","width": "200px"},
                 {"data": "created"},
                 {"data": "picture"},
                 {"data": "activity_id"},
