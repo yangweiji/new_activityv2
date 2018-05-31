@@ -1,6 +1,5 @@
 package com.kylin.activity.service
 
-import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
 import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import org.jooq.DSLContext
@@ -36,9 +35,11 @@ class ThirdPhotoService {
     }
 
     /**
-     * 编辑活动相册
+     * 取得相册信息
+     * @param id: 相册ID
+     * @return 相册信息
      */
-    fun getAllPhotoId(id: Int?): ActivityPhoto? {
+    fun getActivityPhoto(id: Int?): ActivityPhoto {
         return activityPhotoDao!!.findById(id)
     }
 }

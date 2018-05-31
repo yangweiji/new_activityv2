@@ -8,15 +8,17 @@
 <div th:replace="fragments/header :: default"></div>
 <div id="app">
     <div class="amz-container">
+
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
-                <li class="" th:classappend="${status}==0?'am-active'">
-                    <a href="/sec/thirdmanage/home/0">详情</a>
+                <li class="am-active">
+                    <a href="#">活动详情</a>
                 </li>
-                <li class="" th:classappend="${status}==1?'am-active'">
-                    <a href="/sec/thirdmanage/home/1">相册</a>
+                <li class="">
+                    <a href="#">活动相册</a>
                 </li>
             </ul>
+
 
             <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default article_nr"
                      data-am-paragraph="{ tableScrollable: true, pureview: true }">
@@ -79,6 +81,10 @@
     #app {
         margin: 50px;
         min-height: 500px;
+    }
+
+    ul.am-tabs-nav.am-cf.am_cf {
+        max-width: 810px;
     }
 </style>
 <script th:inline="javascript">

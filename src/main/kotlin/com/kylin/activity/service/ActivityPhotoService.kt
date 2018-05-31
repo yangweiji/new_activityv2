@@ -24,9 +24,6 @@ class ActivityPhotoService {
     @Autowired
     private val activityPhotoPictureDao: ActivityPhotoPictureDao? = null
 
-    @Autowired
-    private val activityDao: ActivityDao? = null
-
     /**
      * 定义分页索引起始位置
      */
@@ -38,29 +35,69 @@ class ActivityPhotoService {
     var size: Int = 12
 
     /**
-     * 取得活动相册总数
+     * 记录总数
      */
-    var activityphotoCount: Long = 0
+    var totalCount: Long = 0
 
-    fun getActivityPhoto(id: Int): Result<Record> {
-        var sql = "select a.* from activity_photo a where ?=a.activity_id "
-        return create!!.resultQuery(sql, id).fetch()
+    /**
+     * 依据组织ID取得活动对应的相册信息集合
+     * @param communityId: 组织ID
+     * @return 相册信息记录集
+     */
+    fun getActivityPhotoItemsByCommunity(communityId: Int): Result<Record> {
+        var sql = "select t1.* from activity_photo t1 inner join activity t2 on t1.activity_id = t2.id " +
+                "where t2.community_id = ? " +
+                "order by t1.id desc"
+        return create!!.resultQuery(sql, communityId).fetch()
     }
 
-    fun getActivityPhotoDetail(id: Int): Result<Record> {
-        var sql = "select a.* from activity_photo a where 1=1 and a.id=? "
-        return create!!.resultQuery(sql, id).fetch()
+    /**
+     * 依据相册ID取得唯一的相册信息
+     * @param id：相册ID
+     * @return 单个相册信息
+     */
+    fun getActivityPhoto(id: Int): Record {
+        var sql = "select a.* from activity_photo a where a.id=? "
+        return create!!.resultQuery(sql, id).fetchOne()
+    }
+
+    /**
+     * 依据相册ID取得唯一的相册信息
+     * @param activityId: 相册ID
+     * @return 单个相册信息
+     */
+    fun getActivityPhotoItem(activityId: Int?): ActivityPhoto {
+        return activityPhotoDao!!.findById(activityId)
+    }
+
+    /**
+     * 取得活动对应的唯一相册
+     * @param activityId: 活动ID
+     * @return 活动对应的首个相册
+     */
+    fun getFirstActivityPhoto(activityId: Int?): ActivityPhoto? {
+        var list = activityPhotoDao!!.fetchByActivityId(activityId)
+        return if (list != null && list.size > 0) list.first() else null
+    }
+
+    /**
+     * 依据活动ID取得相册
+     * @param activityId: 活动ID
+     * @return 活动相册集合
+     */
+    fun getActivityPhotos(activityId: Int?): List<ActivityPhoto> {
+        return activityPhotoDao!!.fetchById(activityId)
     }
 
     /**
      * 相册分页
      */
-    fun getPhotoPage(): Result<Record> {
+    fun getActivityPhotosByPage(): Result<Record> {
         var sql_count = "select count(*) count from activity_photo where 1=1 {0} {1} "
         var sql = "select a.* from activity_photo a where 1=1 " +
                 "order by a.created desc limit {99},{100} "
 
-        activityphotoCount = create!!.resultQuery(sql_count).fetch("count")[0] as Long
+        totalCount = create!!.resultQuery(sql_count).fetch("count")[0] as Long
 
         //分页条件
         if (page * size < 0) {
@@ -69,6 +106,7 @@ class ActivityPhotoService {
             sql = sql.replace("{99}", (page * size).toString())
         }
         sql = sql.replace("{100}", size.toString())
+
         return create!!.resultQuery(sql).fetch()
     }
 
@@ -144,15 +182,6 @@ class ActivityPhotoService {
         return activityPhotoPictureDao!!.fetchByActivityPhotoId(activityPhotoId)
     }
 
-    /**
-     * 取得活动对应的唯一相册
-     * @param activityId: 活动ID
-     * @return 活动对应的首个相册
-     */
-    fun getFirstActivityPhoto(activityId: Int?): ActivityPhoto? {
-        var list = activityPhotoDao!!.fetchByActivityId(activityId)
-        return if (list != null && list.size > 0) list.first() else null
-    }
 
 
 }

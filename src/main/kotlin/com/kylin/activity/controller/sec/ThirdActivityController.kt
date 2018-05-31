@@ -61,20 +61,6 @@ class ThirdActivityController : BaseController() {
     @Autowired
     private val create: DSLContext? = null
 
-    @Autowired
-    private val activityPhotoDao: ActivityPhotoDao? = null
-
-    @Autowired
-    private val activityPhotoService: ActivityPhotoService? = null
-
-    @Autowired
-    private val commonService: CommonService? = null
-
-    @Autowired
-    private val activityPhotoPictureDao: ActivityPhotoPictureDao? = null
-
-
-
     /**
      * 第三方活动管理之
      * 查询活动信息
@@ -324,7 +310,7 @@ class ThirdActivityController : BaseController() {
      * 删除活动信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/deleteActivity/{id}", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/deleteActivity/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     fun deleteActivity(@PathVariable id: Int, model: Model): String {
         activityService!!.deleteById(id)
         return "redirect:/sec/thirdactivity/activities"

@@ -8,16 +8,18 @@
 <div id="app">
     <div class="amz-container">
 
-        <h1>活动相册</h1>-<span th:text="${activityPhoto.description}"></span>
-
         <div class="am-g am-imglist">
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
-                <li th:each="item : ${activityPhotoPictureItems}">
+                <li th:each="item : ${activityPhotoItems}">
                     <div class="am-gallery-item am_list_block">
-                        <a target="_blank" th:href="${item.picture}" title="点击查看大图" class="am_img_bg">
+                        <a th:href="@{/pub/activityphoto/detail/{id}(id=${item.get('id')}) }" target="_blank"
+                           class="am_img_bg">
                             <img class="am_img animated c-img"
                                  alt=""
-                                 th:src="${item.picture}"/>
+                                 th:src="${item.get('axtenal_url')}"/>
+                            <div class="am_listimg_info">
+                                <span class="am_imglist_user_font" th:text="${item.get('description')}"></span>
+                            </div>
                         </a>
                     </div>
                 </li>
@@ -27,24 +29,16 @@
         </div>
 
     </div>
-
-
-
 </div>
-<div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-    #app{
-        margin: 50px;
-        min-height: 500px;
-    }
-
     .am_img.animated.c-img {
-        height: 153px;
-        width: 245px;
+        height: 130px;
+        width: 242px;
     }
 </style>
+<div th:replace="fragments/footer :: default"></div>
 <script type="text/javascript" th:src="@{/js/petshow.js}"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/pub/activityphoto/detail.js"></script>
+<script type="text/javascript" th:src="@{/js/pub/activityphoto/photos.js}"></script>
 </body>
 </html>

@@ -73,13 +73,13 @@ $(function () {
             columns: [
                 {"data": "id", "width": "50px"},
                 {"data": "id", "width": "80px"},
-                {"data": "description","width": "200px"},
+                {"data": "description","width": "300px"},
+                {"data": "activity_id"},
                 {"data": "created"},
                 {"data": "picture"},
-                {"data": "activity_id"},
                 {"data": "created_by"},
                 {"data": "axtenal_url"},
-                {"data": "action", "width": "160px", defaultContent: "",
+                {"data": "action", "width": "80px", defaultContent: "",
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
                             + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
@@ -93,11 +93,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                { targets: [0,1,2,3,-1], visible: true},
+                { targets: [0,1,2,3,4,-1], visible: true},
                 { targets: '_all', visible: false }
             ],
             //默认排序
-            order: [[3, 'desc']],
+            order: [[1, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',
@@ -125,7 +125,7 @@ $(function () {
     });
 
     /**
-     * 添加活动
+     * 添加相册
      * @type {{className: string, action: $.fn.dataTable.ext.buttons.create.action}}
      */
     $.fn.dataTable.ext.buttons.create = {
@@ -133,24 +133,25 @@ $(function () {
 
         action: function ( e, dt, node, config ) {
             // alert( this.text() );
-            location.href = "/sec/thirdphotos/updateOraddphotos";
+            location.href = "/sec/thirdphotos/createActivityPhoto";
         }
     };
 
     /**
-     * 编辑活动
+     * 编辑相册
      */
     $('#bmTable tbody').on('click', 'button#editrow', function () {
         var data = t.row( $(this).parents('tr') ).data();
-        location.href = "/sec/thirdphotos/updateOraddphotos?id="+data.id;
+        //->活动相册信息页面
+        location.href = "/sec/thirdactivity/activityphotos?activityId="+data.activity_id;
     });
 
     /**
-     * 删除活动
+     * 删除相册
      */
     $('#bmTable tbody').on('click', 'button#delrow', function () {
         var data = t.row( $(this).parents('tr') ).data();
-        if (window.confirm("请确认删除？"))
+        if (window.confirm("删除相册，相册下的图片也将被清除，请确认删除？"))
         {
             location.href = "/sec/thirdphotos/deleteActivityPhoto/"+data.id;
         }

@@ -24,7 +24,7 @@ import com.kylin.activity.service.CommunityService
  * Created by 9kylin on 2017-12-04.
  */
 @Controller
-open class BaseController {
+class BaseController {
 
     @Autowired
     private var communityDao: CommunityDao? = null
@@ -32,9 +32,12 @@ open class BaseController {
     @Autowired
     private var commonService: CommonService? = null
 
-    @Autowired
-    private var communityService: CommunityService? = null
+    val PAGE_SIZE: Int = 12
+    val USER_CONTEXT: String = "USER_CONTEXT"
 
+    /**
+     * 用户Session
+     */
     protected var sessionUser: User
         get() {
             val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
@@ -46,12 +49,16 @@ open class BaseController {
             request.session.setAttribute("USER_CONTEXT", user)
         }
 
+    /***
+     * 团体组织Session
+     */
     protected var sessionCommunity: Community
         get() {
             val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
             val session = request.session
             var result = session.getAttribute("COMMUNITY_CONTEXT") as Community?
             if (result == null) {
+
                 result = communityDao!!.fetchOneById(1)
                 sessionCommunity = result
             }
@@ -76,7 +83,5 @@ open class BaseController {
         return request.contextPath + url
     }
 
-    val PAGE_SIZE: Int = 12
-    val USER_CONTEXT: String = "USER_CONTEXT"
 
 }
