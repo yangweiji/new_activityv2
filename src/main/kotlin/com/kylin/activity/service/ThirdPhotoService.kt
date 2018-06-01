@@ -8,11 +8,21 @@ import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
+/**
+ * 第三方团体组织相册服务
+ * @author Richard C. Hu
+ */
 @Service
 class ThirdPhotoService {
+    /**
+     * 数据访问
+     */
     @Autowired
     private val create: DSLContext? = null
 
+    /**
+     * 活动相册DAO
+     */
     @Autowired
     private val activityPhotoDao: ActivityPhotoDao? = null
 

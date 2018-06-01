@@ -22,7 +22,8 @@ data class ActivityPhotoData(
 )
 
 /**
- * 相册管理
+ * 安全控制访问
+ * 第三方团体组织相册管理
  */
 @Controller
 @RequestMapping("sec/thirdphotos")

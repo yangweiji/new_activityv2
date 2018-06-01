@@ -1,9 +1,7 @@
 package com.kylin.activity.service
 
-import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
 import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
-import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import org.jooq.DSLContext
@@ -13,14 +11,27 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
+/**
+ * 活动相册服务
+ * @author Richard C. Hu
+ */
 @Service
 class ActivityPhotoService {
+    /**
+     * 数据访问
+     */
     @Autowired
     private val create: DSLContext? = null
 
+    /**
+     * 活动相册DAO
+     */
     @Autowired
     private val activityPhotoDao: ActivityPhotoDao? = null
 
+    /**
+     * 活动相册图片DAO
+     */
     @Autowired
     private val activityPhotoPictureDao: ActivityPhotoPictureDao? = null
 

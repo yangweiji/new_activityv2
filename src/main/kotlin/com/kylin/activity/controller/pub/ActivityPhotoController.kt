@@ -9,6 +9,11 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 
+/**
+ * 公共访问
+ * 活动相册控制器
+ * @author Richard C. Hu
+ */
 @Controller
 @RequestMapping("pub/activityphoto")
 @SessionAttributes("activityphoto")
