@@ -5,23 +5,25 @@
     <!--<div th:text="${#httpServletRequest.getRequestURI()}"></div>-->
 
     <ul class="am-nav">
-        <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header'"><a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/activities'?'am-nav-header'"><a class="hdgl" th:href="@{/sec/activity/activities}"><b></b>活动管理</a></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/attendusers'?'am-nav-header'"><a class="bmgl" th:href="@{/sec/activity/attendusers}"><b></b>报名管理</a></li>
-        <li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/sunnycup'?'am-nav-header'"><a class="bmgl" th:href="@{/sec/activity/sunnycup}"><b></b>阳光杯</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/communities'?'am-nav-header':''"><a class="ttgl" th:href="@{/sec/community/communities}"><b></b>团体管理</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/article/articles'?'am-nav-header':''"><a class="nrgl" th:href="@{/sec/article/articles}"><b></b>内容管理</a></li>
         <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/users'?'am-nav-header'" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="yhgl" th:href="@{/sec/user/users}"><b></b>用户管理</a></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/members'?'am-nav-header'" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="hygl" th:href="@{/sec/user/members}"><b></b>会员管理</a></li>
+
+        <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header':''"><a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/activities'?'am-nav-header':''"><a class="hdgl" th:href="@{/sec/activity/activities}"><b></b>活动管理</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/attendusers'?'am-nav-header':''"><a class="bmgl" th:href="@{/sec/activity/attendusers}"><b></b>报名管理</a></li>
         <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/scores'?'am-nav-header'" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="jfgl" th:href="@{/sec/manage/scores}"><b></b>积分管理</a></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/payments'?'am-nav-header'" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="ddgl" th:href="@{/sec/manage/payments}"><b></b>订单管理</a></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/ordersstatistics'?'am-nav-header'" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="ddtj" th:href="@{/sec/manage/ordersstatistics}"><b></b>订单统计</a></li>
+
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/users'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="yhgl" th:href="@{/sec/user/users}"><b></b>用户管理</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/members'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="hygl" th:href="@{/sec/user/members}"><b></b>会员管理</a></li>
         <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
-        <!--内容管理-->
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/article/articles'?'am-nav-header'"><a class="nrgl" th:href="@{/sec/article/articles}"><b></b>内容管理</a></li>
         <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
-        <!--团体管理-->
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/communities'?'am-nav-header'"><a class="ttgl" th:href="@{/sec/community/communities}"><b></b>团体管理</a></li>
+
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/scores'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="jfgl" th:href="@{/sec/manage/scores}"><b></b>积分管理</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/payments'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="ddgl" th:href="@{/sec/manage/payments}"><b></b>订单管理</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/ordersstatistics'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'"><a class="ddtj" th:href="@{/sec/manage/ordersstatistics}"><b></b>订单统计</a></li>
+        <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
+
     </ul>
 </div>
 </body>
