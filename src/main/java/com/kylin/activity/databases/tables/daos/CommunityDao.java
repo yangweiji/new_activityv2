@@ -159,4 +159,32 @@ public class CommunityDao extends DAOImpl<CommunityRecord, com.kylin.activity.da
     public List<com.kylin.activity.databases.tables.pojos.Community> fetchByAbout(String... values) {
         return fetch(Community.COMMUNITY.ABOUT, values);
     }
+
+    /**
+     * Fetch records that have <code>control_name IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByControlName(String... values) {
+        return fetch(Community.COMMUNITY.CONTROL_NAME, values);
+    }
+
+    /**
+     * Fetch records that have <code>business_license IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByBusinessLicense(String... values) {
+        return fetch(Community.COMMUNITY.BUSINESS_LICENSE, values);
+    }
+
+    /**
+     * Fetch records that have <code>manager_phone_number IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByManagerPhoneNumber(String... values) {
+        return fetch(Community.COMMUNITY.MANAGER_PHONE_NUMBER, values);
+    }
+
+    /**
+     * Fetch records that have <code>count_people IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByCountPeople(Integer... values) {
+        return fetch(Community.COMMUNITY.COUNT_PEOPLE, values);
+    }
 }

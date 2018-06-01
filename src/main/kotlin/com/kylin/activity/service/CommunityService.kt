@@ -1,7 +1,10 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.tables.daos.CommunityDao
+import com.kylin.activity.databases.tables.daos.UserDao
+import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import com.kylin.activity.databases.tables.pojos.Community
+import com.kylin.activity.databases.tables.pojos.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.jooq.*
@@ -13,6 +16,9 @@ class CommunityService {
 
     @Autowired
     private val create: DSLContext? = null
+
+    @Autowired
+    private val userDao: UserDao? = null
 
     /**
      * 获取团体信息
@@ -65,5 +71,43 @@ class CommunityService {
         var items = communityDao!!.findById(id)
         return items
     }
+
+    /**
+     * 更新社团
+     * @param community 社团
+     */
+    fun updateCommunity(community: Community) {
+        communityDao!!.update(community)
+    }
+
+
+    /**
+     * 添加社团
+     * @param community 社团
+     */
+    fun addCommunity(community: Community) {
+        communityDao!!.insert(community)
+    }
+
+
+    /**
+     * 添加负责人联系方式
+     * @param community 团体信息
+     * @return 团体负责人联系方式
+     */
+    fun insertCommunity(community: Community): String {
+        communityDao!!.insert(community)
+        return community.managerPhoneNumber
+    }
+
+
+    /**
+     *
+     */
+    fun updateUser(user: User): String {
+        userDao!!.update(user)
+        return user.username
+    }
+
 
 }

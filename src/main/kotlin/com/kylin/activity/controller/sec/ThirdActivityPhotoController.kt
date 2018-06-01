@@ -92,7 +92,7 @@ class ThirdActivityPhotoController : BaseController() {
 
         //添加活动相册到模型数据中
         model.addAttribute("activityPhoto", activityPhoto)
-        //获取相册对应的所有图片集合信息
+        //获取相册对应的所有图片集合信息,sortedByDescending { it.id }场景如：添加时根据id添加的数据摆放在第一的位置，而不是末端位置
         var photoPictureItems = activityPhotoService!!.getPhotoPictureList(activityPhoto.id).sortedByDescending { it.id }
 
         for (r in photoPictureItems) {
@@ -124,6 +124,7 @@ class ThirdActivityPhotoController : BaseController() {
     /**
      * 保存图片信息
      * @param activityPhotoPicture 图片信息
+     * @param activityId 活动id(活动相册的外键)
      */
     @PostMapping("/savePictures")
     fun savePictures(@ModelAttribute user: User

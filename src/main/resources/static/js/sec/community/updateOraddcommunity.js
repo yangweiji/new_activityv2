@@ -2,7 +2,7 @@ new Vue({
     el: "#c_sec_community_add_app",
     data: function () {
         return {
-            cacheData:_global_data
+            cacheData: _global_data
         }
     },
     mounted: function () {
@@ -21,6 +21,15 @@ new Vue({
             selectId: 'c-upload-community-avatar',
             success: function (file) {
                 that.cacheData.community.avatar = file.randomName
+            }
+        })
+
+        //营业执照上传
+        this.uploader = Util.file.uploader({
+            randomName: true,
+            selectId: 'c-upload-community-businessLicense',
+            success: function (file) {
+                that.cacheData.community.businessLicense = file.randomName
             }
         })
 
@@ -135,6 +144,12 @@ new Vue({
         getCommunityAvatar: function () {
             if (this.cacheData.community.avatar)
                 return Util.file.downloadUrl(this.cacheData.community.avatar)
+            else
+                return "/img/community/activity-avatar.png"
+        },
+        getCommunityBusinessLicense: function () {
+            if (this.cacheData.community.businessLicense)
+                return Util.file.downloadUrl(this.cacheData.community.businessLicense)
             else
                 return "/img/community/activity-avatar.png"
         }

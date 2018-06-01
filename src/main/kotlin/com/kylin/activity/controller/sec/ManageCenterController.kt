@@ -28,6 +28,7 @@ import java.util.Calendar
  */
 @Controller
 @RequestMapping("sec/manage")
+@SessionAttributes("user")
 class ManageCenterController : BaseController() {
 
     /**
@@ -70,6 +71,8 @@ class ManageCenterController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/home/{status}", method = arrayOf(RequestMethod.GET))
     private fun home(@PathVariable status: Int?, model: Model): String {
+        var user=this.sessionUser
+        model.addAttribute("user",user)
         //取得最新的活动记录
         var activityItems = activityService!!.getAllActivityUserItems(status!!)
         for (r in activityItems) {
