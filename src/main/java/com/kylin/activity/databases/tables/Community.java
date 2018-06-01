@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = 1713987786;
+    private static final long serialVersionUID = -700266451;
 
     /**
      * The reference instance of <code>activityv2.community</code>
@@ -124,6 +124,26 @@ public class Community extends TableImpl<CommunityRecord> {
      * The column <code>activityv2.community.about</code>. 关于社团富文本
      */
     public final TableField<CommunityRecord, String> ABOUT = createField("about", org.jooq.impl.SQLDataType.CLOB, this, "关于社团富文本");
+
+    /**
+     * The column <code>activityv2.community.control_name</code>. 负责人信息
+     */
+    public final TableField<CommunityRecord, String> CONTROL_NAME = createField("control_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "负责人信息");
+
+    /**
+     * The column <code>activityv2.community.business_license</code>. 营业执照（图片）
+     */
+    public final TableField<CommunityRecord, String> BUSINESS_LICENSE = createField("business_license", org.jooq.impl.SQLDataType.VARCHAR(255), this, "营业执照（图片）");
+
+    /**
+     * The column <code>activityv2.community.manager_phone_number</code>. 团体管理员手机号码
+     */
+    public final TableField<CommunityRecord, String> MANAGER_PHONE_NUMBER = createField("manager_phone_number", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "团体管理员手机号码");
+
+    /**
+     * The column <code>activityv2.community.count_people</code>. 团体规模人数
+     */
+    public final TableField<CommunityRecord, Integer> COUNT_PEOPLE = createField("count_people", org.jooq.impl.SQLDataType.INTEGER, this, "团体规模人数");
 
     /**
      * Create a <code>activityv2.community</code> table reference

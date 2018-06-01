@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community implements Serializable {
 
-    private static final long serialVersionUID = -1135519100;
+    private static final long serialVersionUID = 1165204179;
 
     private Integer   id;
     private String    name;
@@ -39,6 +39,10 @@ public class Community implements Serializable {
     private String    contact;
     private String    company;
     private String    about;
+    private String    controlName;
+    private String    businessLicense;
+    private String    managerPhoneNumber;
+    private Integer   countPeople;
 
     public Community() {}
 
@@ -57,6 +61,10 @@ public class Community implements Serializable {
         this.contact = value.contact;
         this.company = value.company;
         this.about = value.about;
+        this.controlName = value.controlName;
+        this.businessLicense = value.businessLicense;
+        this.managerPhoneNumber = value.managerPhoneNumber;
+        this.countPeople = value.countPeople;
     }
 
     public Community(
@@ -73,7 +81,11 @@ public class Community implements Serializable {
         String    address,
         String    contact,
         String    company,
-        String    about
+        String    about,
+        String    controlName,
+        String    businessLicense,
+        String    managerPhoneNumber,
+        Integer   countPeople
     ) {
         this.id = id;
         this.name = name;
@@ -89,6 +101,10 @@ public class Community implements Serializable {
         this.contact = contact;
         this.company = company;
         this.about = about;
+        this.controlName = controlName;
+        this.businessLicense = businessLicense;
+        this.managerPhoneNumber = managerPhoneNumber;
+        this.countPeople = countPeople;
     }
 
     public Integer getId() {
@@ -203,6 +219,38 @@ public class Community implements Serializable {
         this.about = about;
     }
 
+    public String getControlName() {
+        return this.controlName;
+    }
+
+    public void setControlName(String controlName) {
+        this.controlName = controlName;
+    }
+
+    public String getBusinessLicense() {
+        return this.businessLicense;
+    }
+
+    public void setBusinessLicense(String businessLicense) {
+        this.businessLicense = businessLicense;
+    }
+
+    public String getManagerPhoneNumber() {
+        return this.managerPhoneNumber;
+    }
+
+    public void setManagerPhoneNumber(String managerPhoneNumber) {
+        this.managerPhoneNumber = managerPhoneNumber;
+    }
+
+    public Integer getCountPeople() {
+        return this.countPeople;
+    }
+
+    public void setCountPeople(Integer countPeople) {
+        this.countPeople = countPeople;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Community (");
@@ -221,6 +269,10 @@ public class Community implements Serializable {
         sb.append(", ").append(contact);
         sb.append(", ").append(company);
         sb.append(", ").append(about);
+        sb.append(", ").append(controlName);
+        sb.append(", ").append(businessLicense);
+        sb.append(", ").append(managerPhoneNumber);
+        sb.append(", ").append(countPeople);
 
         sb.append(")");
         return sb.toString();

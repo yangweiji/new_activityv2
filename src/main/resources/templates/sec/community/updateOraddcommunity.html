@@ -42,7 +42,7 @@
                     <label for="community_contact" class="am-u-sm-2 am-form-label">联系电话</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_contact"
-                               name="contact" th:placeholder="请输入联系电话" v-model="cacheData.community.contact" />
+                               name="contact" th:placeholder="请输入联系电话" v-model="cacheData.community.contact"/>
                     </div>
                 </div>
                 <div class="am-form-group">
@@ -52,11 +52,57 @@
                                name="company" th:placeholder="请输入社团公司名称" v-model="cacheData.community.company"/>
                     </div>
                 </div>
+
+                <!--负责人名称-->
+                <div class="am-form-group">
+                    <label for="community_controlName" class="am-u-sm-2 am-form-label">负责人名称</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_controlName"
+                               name="controlName" th:placeholder="请输入负责人名称" v-model="cacheData.community.controlName"/>
+                    </div>
+                </div>
+
+
+                <!--管理员联系电话-->
+                <div class="am-form-group">
+                        <label for="community_managerPhoneNumber" class="am-u-sm-2 am-form-label">管理员联系电话</label>
+                        <div class="am-u-sm-10">
+                            <input required="required" type="text" id="community_managerPhoneNumber"
+                                   name="managerPhoneNumber" th:placeholder="请输入管理员联系电话"
+                                   v-model="cacheData.community.managerPhoneNumber"/>
+                        </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="community_countPeople" class="am-u-sm-2 am-form-label">规模人数</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_countPeople"
+                               name="countPeople" th:placeholder="请输入团体规模人数" v-model="cacheData.community.countPeople"/>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label class="am-u-sm-2 am-form-label">营业执照</label>
+                    <div class="am-u-sm-10">
+                        <input type="hidden" name="businessLicense"
+                               v-model="cacheData.community.businessLicense"/>
+                        <div class="c-businessLicense">
+                            <img v-bind:src="getCommunityBusinessLicense()">
+                            <span>
+                                <button id="c-upload-community-businessLicense"
+                                        class="am-btn am-btn-primary am-btn-xs">更新营业执照</button>
+                                <br/>
+                                <span class="c-businessLicense-tip">温馨提示：营业执照尺寸建议为：900*525，营业执照小于4M</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="am-form-group">
                     <label class="am-u-sm-2 am-form-label">社团图片</label>
                     <div class="am-u-sm-10">
                         <input type="hidden" name="background"
-                              v-model="cacheData.community.background"/>
+                               v-model="cacheData.community.background"/>
                         <div class="c-background">
                             <img v-bind:src="getCommunityBackground()">
                             <span>
@@ -73,7 +119,7 @@
                     <label class="am-u-sm-2 am-form-label">社团图标</label>
                     <div class="am-u-sm-10">
                         <input type="hidden" name="avatar"
-                              v-model="cacheData.community.avatar"/>
+                               v-model="cacheData.community.avatar"/>
                         <div class="c-avatar">
                             <img v-bind:src="getCommunityAvatar()">
                             <span>
@@ -86,20 +132,21 @@
                     </div>
                 </div>
 
-                <div class="am-form-group">
+                <!--创建时间-->
+              <!--  <div class="am-form-group">
                     <label for="community_created" class="am-u-sm-2 am-form-label">创建时间</label>
                     <div class="am-u-sm-10 am-datepicker-date">
                         <input required="required" class="c-datetimepicker created" type="text" id="community_created"
-                               name="created" placeholder="请输入创建时间" />
+                               name="created" placeholder="请输入创建时间"/>
                     </div>
-                </div>
+                </div>-->
 
                 <div class="am-form-group">
                     <label for="community_about" class="am-u-sm-2 am-form-label">社团详情</label>
                     <div class="am-u-sm-10">
                         <div id="c-upload-community-about-editor"></div>
                         <input id="c-community-about-text" required="required"
-                               style="display: none;" type="text" name="about" v-model="cacheData.community.about" />
+                               style="display: none;" type="text" name="about" v-model="cacheData.community.about"/>
                         <div id="c-community-about-editor">
                         </div>
                     </div>
@@ -108,11 +155,13 @@
                     <label for="community_usingScore" class="am-u-sm-2 am-form-label">启动积分功能</label>
                     <div class="am-u-sm-10">
                         <label class="am-radio-inline">
-                            <input type="radio" name="usingScore" th:checked="${communitiesData.community.usingScore==true}"
+                            <input type="radio" name="usingScore"
+                                   th:checked="${communitiesData.community.usingScore==true}"
                                    th:value="true"> 是
                         </label>
                         <label class="am-radio-inline">
-                            <input type="radio" name="usingScore" th:checked="${communitiesData.community.usingScore==false}" th:value="false">
+                            <input type="radio" name="usingScore"
+                                   th:checked="${communitiesData.community.usingScore==false}" th:value="false">
                             否
                         </label>
                     </div>
@@ -125,17 +174,20 @@
                                    th:value="1"> 是
                         </label>
                         <label class="am-radio-inline">
-                            <input type="radio" name="vipAmount" th:checked="${communitiesData.community.vipAmount==0}" th:value="0">
+                            <input type="radio" name="vipAmount" th:checked="${communitiesData.community.vipAmount==0}"
+                                   th:value="0">
                             否
                         </label>
                     </div>
                 </div>
-                <div class="am-form-group">
+
+                <!--社团状态-->
+                <!--<div class="am-form-group">
                     <label for="community_status" class="am-u-sm-2 am-form-label">社团状态</label>
                     <div class="am-u-sm-10">
                         <select required="required" id="community_status" name="status" placeholder="请选择社团状态"
                                 data-am-selected="">
-                            <option value="">--</option>
+                            <option value="">&#45;&#45;</option>
                             <option th:selected="${communitiesData.community.status==0}"
                                     th:value="0" th:text="草稿"></option>
                             <option th:selected="${communitiesData.community.status==1}"
@@ -147,7 +199,7 @@
                             </option>
                         </select>
                     </div>
-                </div>
+                </div>-->
                 <div class="am-form-group">
                     <div class="am-u-sm-10 am-u-sm-offset-2">
                         <button type="submit" class="am-btn am-btn-primary">修改</button>
@@ -164,28 +216,23 @@
         margin-top: 30px;
     }
 
-    #c_sec_community_add_app .c-background img {
+    .c-background-tip, .c-businessLicense-tip, .c-avatar-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #c_sec_community_add_app .c-businessLicense, .c-background img {
         display: inline-block;
         height: 123px;
         min-width: 50px;
         max-width: 500px;
-    }
-
-    .c-background-tip {
-        font-size: 12px;
-        color: gray;
     }
 
     #c_sec_community_add_app .c-avatar img {
-        display: inline-block;
+        isplay: inline-block;
         height: 123px;
         min-width: 50px;
         max-width: 500px;
-    }
-
-    .c-avatar-tip {
-        font-size: 12px;
-        color: gray;
     }
 
     #c_sec_community_add_app .c-datetimepicker {
@@ -200,7 +247,7 @@
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var _global_data =[[${communitiesData}]]
+    var _global_data = [[${communitiesData}]]
     /*]]>*/
 </script>
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
