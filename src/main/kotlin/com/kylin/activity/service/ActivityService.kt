@@ -6,6 +6,7 @@ import com.kylin.activity.databases.tables.daos.ActivityFavoriteDao
 import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityFavorite
 import com.kylin.activity.util.CommonService
+import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -652,5 +653,41 @@ class ActivityService {
         val sql = "update activity_user set status = ? where id = ?"
         var rs = create!!.execute(sql, status, id)
         return rs
+    }
+
+    /**
+     * 取得团体组织下的活动
+     * @param id: 活动ID
+     * @param communityId: 团体组织ID
+     * @return 活动信息
+     */
+    fun getCommunityActivity(id: Int, communityId: Int): Record? {
+        val sql = "select * from activity where id = ? and community_id = ?"
+        return create!!.resultQuery(sql, id, communityId).fetchOne()
+    }
+
+    /**
+     * 取得活动报名用户的手机号合并字符串
+     * @param activityId: 活动ID
+     * @return 合并后的手机号字符串
+     */
+    fun getAttendUserMobiles(activityId: Int): String {
+        val sql = "select mobile from activity_user t1 " +
+                "inner join activity t2 on t1.activity_id = t2.id " +
+                "where t2.id = ? "
+        var items = create!!.resultQuery(sql, activityId).fetch()
+
+        var strResult: String = ""
+        for (item in items) {
+            strResult = strResult + "," + item["mobile"]
+        }
+
+        if (strResult.isNotEmpty())
+        {
+            strResult = strResult.substring(1)
+        }
+
+
+        return strResult
     }
 }

@@ -9,6 +9,7 @@ import com.kylin.activity.databases.tables.Activity;
 import com.kylin.activity.databases.tables.ActivityFavorite;
 import com.kylin.activity.databases.tables.ActivityPhoto;
 import com.kylin.activity.databases.tables.ActivityPhotoPicture;
+import com.kylin.activity.databases.tables.ActivitySms;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
 import com.kylin.activity.databases.tables.Article;
@@ -43,7 +44,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activityv2 extends SchemaImpl {
 
-    private static final long serialVersionUID = -1458048307;
+    private static final long serialVersionUID = -597707627;
 
     /**
      * The reference instance of <code>activityv2</code>
@@ -74,6 +75,11 @@ public class Activityv2 extends SchemaImpl {
      * 图片集
      */
     public final ActivityPhotoPicture ACTIVITY_PHOTO_PICTURE = com.kylin.activity.databases.tables.ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE;
+
+    /**
+     * The table <code>activityv2.activity_sms</code>.
+     */
+    public final ActivitySms ACTIVITY_SMS = com.kylin.activity.databases.tables.ActivitySms.ACTIVITY_SMS;
 
     /**
      * 活动门票
@@ -150,6 +156,7 @@ public class Activityv2 extends SchemaImpl {
             ActivityFavorite.ACTIVITY_FAVORITE,
             ActivityPhoto.ACTIVITY_PHOTO,
             ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE,
+            ActivitySms.ACTIVITY_SMS,
             ActivityTicket.ACTIVITY_TICKET,
             ActivityUser.ACTIVITY_USER,
             Article.ARTICLE,

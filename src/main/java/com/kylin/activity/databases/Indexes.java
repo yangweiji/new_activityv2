@@ -9,6 +9,7 @@ import com.kylin.activity.databases.tables.Activity;
 import com.kylin.activity.databases.tables.ActivityFavorite;
 import com.kylin.activity.databases.tables.ActivityPhoto;
 import com.kylin.activity.databases.tables.ActivityPhotoPicture;
+import com.kylin.activity.databases.tables.ActivitySms;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
 import com.kylin.activity.databases.tables.Article;
@@ -48,6 +49,7 @@ public class Indexes {
     public static final Index ACTIVITY_FAVORITE_PRIMARY = Indexes0.ACTIVITY_FAVORITE_PRIMARY;
     public static final Index ACTIVITY_PHOTO_PRIMARY = Indexes0.ACTIVITY_PHOTO_PRIMARY;
     public static final Index ACTIVITY_PHOTO_PICTURE_PRIMARY = Indexes0.ACTIVITY_PHOTO_PICTURE_PRIMARY;
+    public static final Index ACTIVITY_SMS_PRIMARY = Indexes0.ACTIVITY_SMS_PRIMARY;
     public static final Index ACTIVITY_TICKET_PRIMARY = Indexes0.ACTIVITY_TICKET_PRIMARY;
     public static final Index ACTIVITY_USER_PRIMARY = Indexes0.ACTIVITY_USER_PRIMARY;
     public static final Index ARTICLE_PRIMARY = Indexes0.ARTICLE_PRIMARY;
@@ -69,6 +71,7 @@ public class Indexes {
         public static Index ACTIVITY_FAVORITE_PRIMARY = createIndex("PRIMARY", ActivityFavorite.ACTIVITY_FAVORITE, new OrderField[] { ActivityFavorite.ACTIVITY_FAVORITE.ID }, true);
         public static Index ACTIVITY_PHOTO_PRIMARY = createIndex("PRIMARY", ActivityPhoto.ACTIVITY_PHOTO, new OrderField[] { ActivityPhoto.ACTIVITY_PHOTO.ID }, true);
         public static Index ACTIVITY_PHOTO_PICTURE_PRIMARY = createIndex("PRIMARY", ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE, new OrderField[] { ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE.ID }, true);
+        public static Index ACTIVITY_SMS_PRIMARY = createIndex("PRIMARY", ActivitySms.ACTIVITY_SMS, new OrderField[] { ActivitySms.ACTIVITY_SMS.ID }, true);
         public static Index ACTIVITY_TICKET_PRIMARY = createIndex("PRIMARY", ActivityTicket.ACTIVITY_TICKET, new OrderField[] { ActivityTicket.ACTIVITY_TICKET.ID }, true);
         public static Index ACTIVITY_USER_PRIMARY = createIndex("PRIMARY", ActivityUser.ACTIVITY_USER, new OrderField[] { ActivityUser.ACTIVITY_USER.ID }, true);
         public static Index ARTICLE_PRIMARY = createIndex("PRIMARY", Article.ARTICLE, new OrderField[] { Article.ARTICLE.ID }, true);

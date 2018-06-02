@@ -9,6 +9,7 @@ import com.kylin.activity.databases.tables.Activity;
 import com.kylin.activity.databases.tables.ActivityFavorite;
 import com.kylin.activity.databases.tables.ActivityPhoto;
 import com.kylin.activity.databases.tables.ActivityPhotoPicture;
+import com.kylin.activity.databases.tables.ActivitySms;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
 import com.kylin.activity.databases.tables.Article;
@@ -59,6 +60,11 @@ public class Tables {
      * 图片集
      */
     public static final ActivityPhotoPicture ACTIVITY_PHOTO_PICTURE = com.kylin.activity.databases.tables.ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE;
+
+    /**
+     * The table <code>activityv2.activity_sms</code>.
+     */
+    public static final ActivitySms ACTIVITY_SMS = com.kylin.activity.databases.tables.ActivitySms.ACTIVITY_SMS;
 
     /**
      * 活动门票
