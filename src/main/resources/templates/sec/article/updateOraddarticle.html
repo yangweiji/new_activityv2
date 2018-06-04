@@ -48,11 +48,21 @@
                     </div>
                 </div>
                 <div class="am-form-group">
-                    <label for="article_publishTime" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" class="c-datetimepicker publish-time" type="text" id="publish_Time"
-                               name="publishTime" placeholder="请输入发布时间"/>
+                    <div class="time" th:if="${articlesData.article.id !=null }">
+                        <label for="article_publishTime" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
+                        <div class="am-u-sm-10">
+                            <input required="required" class="c-datetimepicker publish-time" type="text"
+                                   id="publish_Time"
+                                   name="publishTime" placeholder="请输入发布时间"/>
+                        </div>
                     </div>
+                    <!--<div class="time2" th:if="${articlesData.article.id ==null }">
+                        <div class="am-u-sm-10" style="display: none">
+                        <input required="required" class="c-datetimepicker publish-time" type="text"
+                                   id="publish_Time"
+                                   name="publishTime" placeholder="请输入发布时间"/>
+                        </div>
+                    </div>-->
                 </div>
                 <div class="am-form-group">
                     <label for="article_category" class="am-u-sm-2 am-form-label">内容类型</label>
@@ -80,18 +90,25 @@
                         </div>
                     </div>
                 </div>
+                <!--发布状态 -->
                 <div class="am-form-group">
                     <label for="article_status" class="am-u-sm-2 am-form-label"></span>发布状态</label>
-                    <div class="am-u-sm-10">
+                    <div class="am-u-sm-10" th:if="${articlesData.article.id !=null }">
                         <select required="required" id="article_status" name="status" placeholder="请选择发布状态"
                                 data-am-selected="">
                             <option value="">--</option>
                             <option th:selected="${articlesData.article.status== -1}"
                                     th:value="-1" th:text="禁用"></option>
-                            <option th:selected="${articlesData.article.status==0}"
-                                    th:value="0" th:text="草稿"></option>
                             <option th:selected="${articlesData.article.status==1}"
                                     th:value="1" th:text="发布"></option>
+                        </select>
+                    </div>
+
+                    <div class="am-u-sm-10" th:if="${articlesData.article.id ==null }">
+                        <select required="required" id="article_status" name="status" placeholder="请选择发布状态"
+                                data-am-selected="" style="display:none;">
+                            <option th:selected="${articlesData.article.status==0}"
+                                    th:value="0" th:text="草稿"></option>
                         </select>
                     </div>
                 </div>

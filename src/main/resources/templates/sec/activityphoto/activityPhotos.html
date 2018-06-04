@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
+<link rel="stylesheet" href="/asset/quill/quill.snow.css"/>
+<script type="text/javascript" src="/asset/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+<script type="text/javascript" src="/asset/datetimepicker/js/locales/amazeui.datetimepicker.zh-CN.js"
+        charset="UTF-8"></script>
+<script type="text/javascript" src="/asset/quill/quill.min.js" charset="UTF-8"></script>
+<div th:replace="fragments/header :: default"></div>
+<div id="app">
+    <div class="manage-l">
+        <div th:replace="fragments/leftnav :: default"></div>
+    </div>
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>活动相册-<span th:text="${activity.title}"></span></strong></div>
+        </div>
+
+        <div class="am-tabs-bd am_bdfw">
+            <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
+                <p>
+                    <span class="am-icon-lg am-success am-icon-check"></span>
+                    <span th:text="${globalMessage}">Some Success message</span>
+                </p>
+            </div>
+
+            <div class="am-g">
+                <div class="am-u-lg-8">
+                    <form id="c-activity-picture-create-form" method="post" class="am-form am-form-horizontal"
+                          action="/sec/activityphoto/savePictures">
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label"><span>添加图片</span></label>
+                            <input type="hidden" id="activityId" name="activityId" th:value="${activityId}"/>
+                            <input type="hidden" id="activityPhotoId" name="activityPhotoId"
+                                   th:value="${activityPhotoPicture.activityPhotoId}"/>
+                            <input type="hidden" id="picture" name="picture"
+                                   v-model="cacheData.activityPhotoPicture.picture"/>
+
+                            <div class="c-picture">
+                                <img v-bind:src="getActivityPhotoPicture()">
+                                <span>
+                            <button id="c-upload-activity-pictures"
+                                    class="am-btn am-btn-primary am-btn-xs">上传图片</button>
+                                <br/>
+                                <span class="c-picture-tip"
+                                      style="margin-left: 100px;">温馨提示：相册尺寸建议为：900*525，相册小于4M</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-12 am-u-sm-offset-2">
+                                <button type="submit" class="am-btn am-btn-primary">保存</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>相册图片</strong></div>
+        </div>
+
+        <div class="am-tabs-bd am_bdfw">
+            <div class="am-tab-panel am-fade am-in am-active">
+                <div class="am-g dis_line">
+                    <div class="am-g am-imglist">
+                        <!--<label class="am-u-sm-2 am-form-label"><span>相册图片</span></label>-->
+                        <ul data-am-widget="gallery"
+                            class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
+                            <li th:each="item:${photoPictureItems}">
+                                <div class="am-gallery-item am_list_block">
+                                    <a target="_blank" th:href="${item.picture}" title="点击查看大图"><img class="am_img animated c-img" th:src="${item.picture}" alt=""/></a>
+                                    <a th:onclick="'deletePicture('+${item.id}+')'"
+                                       class="am-btn am-btn-sm am-btn-danger del-btn" type="button" href="#">删除</a>
+                                </div>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #app .c-picture img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #app .c-picture .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #app img {
+        width: 200px;
+        height: 120px;
+    }
+
+    #app .del-btn {
+        display: inline-block;
+        top: -31px;
+        position: relative;
+        float: right;
+        right: -6px;
+        background-color: rgba(249,248,247,0.1);
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = [[${picturesData}]]
+    /*]]>*/
+</script>
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/activityphoto/activityPhotos.js"></script>
+</body>
+</html>

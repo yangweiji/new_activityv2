@@ -27,15 +27,15 @@ $(function () {
                 {
                     extend: 'excel',
                     text: '导出Excel',
-                    title: '内容记录',
+                    title: '团体记录',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
                     },
                     modifier: {
                         search: 'none'
                     },
                     format: {},
-                    filename: '内容记录'
+                    filename: '团体记录'
                 },
                 {
                     extend: 'colvis',
@@ -63,6 +63,10 @@ $(function () {
                 {"data": "created"},
                 {"data": "contact"},
                 {"data": "company", "width": "120px"},
+                {"data": "control_name"},
+                {"data": "business_license"},
+                {"data": "manager_phone_number"},
+                {"data": "count_people"},
                 {
                     "data": "status", defaultContent: "",
                     render: function (data, type, row) {

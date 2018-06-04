@@ -100,7 +100,7 @@ class CommunityController : BaseController() {
                       @ModelAttribute("user") user: User): String {
         if (community.id != null && community.id > 0) {
             var users = userService!!.getUser(community.managerPhoneNumber)
-            if(users!!.username==null){
+            if(users!!.username!=null){
                    throw Exception("当前管理员联系电话不能修改")
             }
             users!!.displayname=community.controlName

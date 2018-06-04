@@ -39,14 +39,14 @@
                     </div>
                 </div>
                 <div class="am-form-group">
-                    <label for="community_contact" class="am-u-sm-2 am-form-label">联系电话</label>
+                    <label for="community_contact" class="am-u-sm-2 am-form-label">社团联系电话</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_contact"
-                               name="contact" th:placeholder="请输入联系电话" v-model="cacheData.community.contact"/>
+                               name="contact" th:placeholder="请输入社团联系电话" v-model="cacheData.community.contact"/>
                     </div>
                 </div>
                 <div class="am-form-group">
-                    <label for="community_company" class="am-u-sm-2 am-form-label">公司名称</label>
+                    <label for="community_company" class="am-u-sm-2 am-form-label">社团公司名称</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_company"
                                name="company" th:placeholder="请输入社团公司名称" v-model="cacheData.community.company"/>
@@ -55,29 +55,30 @@
 
                 <!--负责人名称-->
                 <div class="am-form-group">
-                    <label for="community_controlName" class="am-u-sm-2 am-form-label">负责人名称</label>
+                    <label for="community_controlName" class="am-u-sm-2 am-form-label">社团负责人名称</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_controlName"
-                               name="controlName" th:placeholder="请输入负责人名称" v-model="cacheData.community.controlName"/>
+                               name="controlName" th:placeholder="请输入社团负责人名称"
+                               v-model="cacheData.community.controlName"/>
                     </div>
                 </div>
 
 
                 <!--管理员联系电话-->
                 <div class="am-form-group">
-                        <label for="community_managerPhoneNumber" class="am-u-sm-2 am-form-label">管理员联系电话</label>
-                        <div class="am-u-sm-10">
-                            <input required="required" type="text" id="community_managerPhoneNumber"
-                                   name="managerPhoneNumber" th:placeholder="请输入管理员联系电话"
-                                   v-model="cacheData.community.managerPhoneNumber"/>
-                        </div>
+                    <label for="community_managerPhoneNumber" class="am-u-sm-2 am-form-label">管理员手机号码</label>
+                    <div class="am-u-sm-10">
+                        <input required="required" type="text" id="community_managerPhoneNumber"
+                               name="managerPhoneNumber" th:placeholder="请输入管理员手机号码"
+                               v-model="cacheData.community.managerPhoneNumber"/>
+                    </div>
                 </div>
 
                 <div class="am-form-group">
-                    <label for="community_countPeople" class="am-u-sm-2 am-form-label">规模人数</label>
+                    <label for="community_countPeople" class="am-u-sm-2 am-form-label">社团规模人数</label>
                     <div class="am-u-sm-10">
                         <input required="required" type="text" id="community_countPeople"
-                               name="countPeople" th:placeholder="请输入团体规模人数" v-model="cacheData.community.countPeople"/>
+                               name="countPeople" th:placeholder="请输入社团规模人数" v-model="cacheData.community.countPeople"/>
                     </div>
                 </div>
 
@@ -133,13 +134,13 @@
                 </div>
 
                 <!--创建时间-->
-              <!--  <div class="am-form-group">
-                    <label for="community_created" class="am-u-sm-2 am-form-label">创建时间</label>
-                    <div class="am-u-sm-10 am-datepicker-date">
-                        <input required="required" class="c-datetimepicker created" type="text" id="community_created"
-                               name="created" placeholder="请输入创建时间"/>
-                    </div>
-                </div>-->
+                <!--  <div class="am-form-group">
+                      <label for="community_created" class="am-u-sm-2 am-form-label">创建时间</label>
+                      <div class="am-u-sm-10 am-datepicker-date">
+                          <input required="required" class="c-datetimepicker created" type="text" id="community_created"
+                                 name="created" placeholder="请输入创建时间"/>
+                      </div>
+                  </div>-->
 
                 <div class="am-form-group">
                     <label for="community_about" class="am-u-sm-2 am-form-label">社团详情</label>
@@ -221,14 +222,21 @@
         color: gray;
     }
 
-    #c_sec_community_add_app .c-businessLicense, .c-background img {
+    .c-background img {
         display: inline-block;
         height: 123px;
         min-width: 50px;
         max-width: 500px;
     }
 
-    #c_sec_community_add_app .c-avatar img {
+    .c-businessLicense img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    .c-avatar img {
         isplay: inline-block;
         height: 123px;
         min-width: 50px;

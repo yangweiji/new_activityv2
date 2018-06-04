@@ -1,9 +1,12 @@
 package com.kylin.activity.controller.sec
 
+import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.daos.ArticleDao
 import com.kylin.activity.databases.tables.pojos.Article
+import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.util.CommonService
+import com.xiaoleilu.hutool.date.DateUtil
 
 import org.jooq.DSLContext
 import org.json.JSONArray
@@ -15,26 +18,17 @@ import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
 data class ArticlesData(
-   var article:Article?=null
+        var article: Article? = null
 )
 
 @Controller
 @RequestMapping("sec/article")
-class ArticleController {
+class ArticleController : BaseController() {
+    /**
+     * 内容服务
+     */
     @Autowired
     private val articleService: ArticleService? = null
-
-    @Autowired
-    private val articleDao: ArticleDao? = null
-
-    @Autowired
-    private val create: DSLContext? = null
-
-    @Autowired
-    private val commonService: CommonService? = null
-
-
-
 
     /**
      * 查询文章内容
@@ -47,6 +41,7 @@ class ArticleController {
 
     /**
      * 异步查询文章内容
+     * @param map 文章内容集合
      */
     @CrossOrigin
     @RequestMapping(value = "/getArticles", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
@@ -61,6 +56,8 @@ class ArticleController {
 
     /**
      * 删除内容的信息
+     * @param id 内容编号
+     * @param model 存放内容信息数据模型
      */
     @CrossOrigin
     @RequestMapping(value = "/deleteArticle/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
@@ -71,29 +68,62 @@ class ArticleController {
 
     /**
      * 编辑或新增内容
+     * @param id 内容编号
+     * @param model 存放内容信息数据模型
      */
-    @RequestMapping(value="/updateOraddarticle",method = arrayOf(RequestMethod.GET))
-    fun updateOraddArticle(@RequestParam(required = false)id:Int?,model: Model):String{
-        var articlesData=ArticlesData()
-        if(id!=null&&id>0){
-            articlesData.article=articleService!!.getArticle(id)
-        }else{
-            articlesData.article= Article()
+    @RequestMapping(value = "/updateOraddarticle", method = arrayOf(RequestMethod.GET))
+    fun updateOraddArticle(@RequestParam(required = false) id: Int?, model: Model): String {
+        var articlesData = ArticlesData()
+        if (id != null && id > 0) {
+            articlesData.article = articleService!!.getArticle(id)
+        } else {
+            articlesData.article = Article()
         }
-        model.addAttribute("articlesData",articlesData)
+        model.addAttribute("articlesData", articlesData)
         return "sec/article/updateOraddarticle"
     }
 
     /**
      * 保存添加或编辑内容信息
+     * @param article 内容
      */
     @PostMapping("/updateOraddarticle")
-    fun saveArticle(@ModelAttribute("article")article: Article):String{
-         if(article.id!=null&&article.id>0){
-             articleDao!!.update(article)
-         }else{
-             articleDao!!.insert(article)
-         }
+    fun saveArticle(@ModelAttribute("article") article: Article?,@RequestParam("status")status:Int): String {
+        var user = this.sessionUser
+        if (article!!.id != null && article.id > 0) {
+            article!!.modified = DateUtil.date().toTimestamp()
+            article!!.modifiedBy = user!!.id
+            article!!.createdBy=user!!.id
+            article!!.status=articleService!!.getStatus(article)
+
+            //禁止状态
+            if(article.status==-1){
+
+            }
+
+            //发布状态
+            if(article.status==1){
+                return "redirect:/"
+            }
+
+            articleService!!.updateArticle(article)
+        } else {
+            var article=article
+            article=articleService!!.getArticleTitle(article.title)
+            if(article!!.title!=null){
+                throw Exception("内容已存在!")
+            }else{
+                article!!.createdBy = user!!.id
+                article!!.created = DateUtil.date().toTimestamp()
+                article!!.modifiedBy=user!!.id
+                article!!.status=articleService!!.getStatus(article)
+                //草稿状态
+                /* if(article.status==0){
+                    return " "
+                 }*/
+                articleService!!.insertArticle(article)
+            }
+        }
         return "redirect:/sec/article/articles"
     }
 }

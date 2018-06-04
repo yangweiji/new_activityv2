@@ -704,14 +704,4 @@ class ActivityController : BaseController() {
         model.addAttribute("activity", activity)
         return "sec/activity/qrcode"
     }
-
-    /**
-     * 上传图片
-     */
-    @RequestMapping(value = "/uploadpicture", method = arrayOf(RequestMethod.GET))
-    fun uploadPicture(model: Model): String {
-        var pictures = ActivityPhotoPicture()
-        model.addAttribute("pictures", pictures)
-        return "sec/activity/uploadpicture"
-    }
 }

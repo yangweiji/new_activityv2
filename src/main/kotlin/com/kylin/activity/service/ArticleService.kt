@@ -1,5 +1,6 @@
 package com.kylin.activity.service
 
+import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ArticleDao
 import com.kylin.activity.databases.tables.pojos.Article
 import com.kylin.activity.util.CommonService
@@ -12,9 +13,6 @@ import java.sql.*
 
 @Service
 class ArticleService {
-    @Autowired
-    private val commonService: CommonService? = null
-
     @Autowired
     private val articleDao: ArticleDao? = null
 
@@ -33,7 +31,7 @@ class ArticleService {
             sql += "and a.title like '%?%' ".replace("?", title!!)
             params.add(title)
         }
-        if (!category.isNullOrBlank()&&category!="0") {
+        if (!category.isNullOrBlank() && category != "0") {
             sql += "and a.category = ? "
             params.add(category)
         }
@@ -78,24 +76,10 @@ class ArticleService {
 
     /**
      * 删除内容
+     * @param id  内容编号
      */
     fun deleteArticleById(id: Int) {
         articleDao!!.deleteById(id)
-    }
-
-    /**
-     * 添加内容
-     */
-    fun createArticle(articleItem: Article): Article {
-        articleDao!!.insert(articleItem)
-        return articleItem
-    }
-
-    /**
-     * 更新内容
-     */
-    fun articleUpdate(article: Article) {
-        articleDao!!.update(article)
     }
 
     /**
@@ -193,4 +177,38 @@ class ArticleService {
         sql += "order by a.publish_time desc limit 3"
         return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
     }
+
+    /**
+     * 添加内容
+     * @param article 文章
+     */
+    fun insertArticle(article: Article) {
+        articleDao!!.insert(article)
+    }
+
+    /**
+     * 更新内容
+     * @param article 文章
+     */
+    fun updateArticle(article: Article) {
+        articleDao!!.update(article)
+    }
+
+    fun getStatus(article: Article): Int {
+        articleDao!!.fetchByStatus(article.status)
+        return article.status
+    }
+
+
+     /**
+     * 取得用户信息
+     */
+    fun getArticleTitle(title:String):Article?{
+         var title=articleDao!!.fetchOne(Tables.ARTICLE.TITLE,title)
+         return title
+     }
+   /* fun getUser(username: String): User? {
+        var user = userDao!!.fetchOne(Tables.USER.USERNAME, username)
+        return user
+    }*/
 }
