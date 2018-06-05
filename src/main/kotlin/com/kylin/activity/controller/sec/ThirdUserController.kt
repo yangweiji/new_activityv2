@@ -17,21 +17,25 @@ import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
+/**
+ * 第三方团体组织用户管理控制器
+ * @author Richard C. Hu
+ */
 @Controller
 @RequestMapping("sec/thirduser")
 @SessionAttributes("user")
 class ThirdUserController : BaseController() {
 
+    /**
+     * 团体组织用户服务
+     */
     @Autowired
     private val userService: ThirdUserService? = null
-
-    @Autowired
-    private val userDao: UserDao? = null
 
     /**
      * 取得用户信息
      * @param id
-     * @return
+     * @return 用户信息
      */
     @RequestMapping("/get")
     @ResponseBody
@@ -40,8 +44,8 @@ class ThirdUserController : BaseController() {
     }
 
     /**
-     * 取得用户信息集合
-     * @return
+     * 取得全部用户信息集合
+     * @return 用户列表信息
      */
     @RequestMapping(value = "/getUsers")
     @ResponseBody
@@ -51,6 +55,7 @@ class ThirdUserController : BaseController() {
 
     /**
      * 取得会员信息集合
+     * @return 会员用户列表信息
      */
     @RequestMapping(value = "/getMembers")
     @ResponseBody
@@ -60,10 +65,13 @@ class ThirdUserController : BaseController() {
 
     /**
      * 第三方查询用户信息
+     * @param request: 请求参数
+     * @param model: 模型
+     * @return 用户查询页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/users", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
-    fun allUsers(request: HttpServletRequest, model: Model): String {
+    @RequestMapping(value = "/users", method = [RequestMethod.POST, RequestMethod.GET])
+    fun users(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
@@ -80,22 +88,19 @@ class ThirdUserController : BaseController() {
             end = sdf.format(calendar.time)
         }
 
-//        var username = request.getParameter("username")
-//        //所有用户
-//        var users = userService!!.getAllUsersAndScores(start, end, username)
-
         model.addAttribute("start", start)
         model.addAttribute("end", end)
-//        model.addAttribute("users", users)
         return "sec/thirduser/users"
     }
 
     /**
      * 第三方异步查询
      * 用户信息
+     * @param map: 查询参数
+     * @return 用户列表信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/searchUsers", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/searchUsers", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
     fun searchUsers(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var start = map["start"]
@@ -108,16 +113,18 @@ class ThirdUserController : BaseController() {
         var isMember = map["isMember"]
 
         //查询用户
-        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember)
-        var list = items.intoMaps()
-        return list
+        var items = userService!!.getCommunityUsersAndScores(this.sessionCommunity.id, start, end, username, displayname, real_name, id_card, level, isMember)
+        return items.intoMaps()
     }
 
 
     /**
      * 第三方添加用户信息
+     * @param user: 用户信息
+     * @param model: 模型
+     * @return 添加用户页面
      */
-    @RequestMapping(value = "/create", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/create", method =[RequestMethod.GET])
     fun createUser(user: User, model: Model): String {
         var user = User()
         model.addAttribute("user", user)
@@ -128,8 +135,11 @@ class ThirdUserController : BaseController() {
 
     /**
      * 保存添加用户信息
+     * @param user: 用户信息
+     * @param redirectAttributes：重定向属性
+     * @return 保存用户页面
      */
-    @RequestMapping(value = "/saveUser", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/saveUser", method = [RequestMethod.POST])
     @Throws(Exception::class)
     fun saveUser(@ModelAttribute("user") user: User, redirectAttributes: RedirectAttributes): String {
         var u = userService!!.getUser(user!!.username)
@@ -151,8 +161,11 @@ class ThirdUserController : BaseController() {
 
     /**
      * 第三方编辑用户信息
+     * @param id: 用户ID
+     * @param model: 模型
+     * @return 编辑用户页面
      */
-    @RequestMapping(value = "/update/{id}", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/update/{id}", method = [RequestMethod.GET])
     fun getUpdate(@PathVariable("id") id: Int, model: Model): String {
         val user = userService!!.getUser(id)
         model.addAttribute("user", user)
@@ -162,33 +175,41 @@ class ThirdUserController : BaseController() {
 
     /**
      * 保存编辑用户信息
+     * @param user: 用户对象
+     * @param redirectAttributes: 重定向属性
      */
     @PostMapping(value = "/update")
     fun postUpdate(model: Model, user: User, redirectAttributes: RedirectAttributes): String {
         model.addAttribute("title", "个人信息")
-        userDao!!.update(user)
+        userService!!.update(user)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/thirduser/users"
     }
 
     /**
      * 第三方删除用户信息
+     * @param id: 用户ID
+     * @param model: 模型
+     * @param redirectAttributes: 重定向属性
+     * @return 删除用户页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/delete/{id}", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/delete/{id}", method = [RequestMethod.POST, RequestMethod.GET])
     fun delete(@PathVariable("id") id: Int, model: Model, redirectAttributes: RedirectAttributes): String {
         userService!!.deleteById(id)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/thirduser/users"
     }
 
-
     /**
      * 查询会员信息
+     * @param request: 请求参数
+     * @param model: 模型
+     * @return 查询会员页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/members", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun member(request: HttpServletRequest, model: Model): String {
+    @RequestMapping(value = "/members", method = [RequestMethod.GET, RequestMethod.POST])
+    fun members(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
@@ -213,6 +234,9 @@ class ThirdUserController : BaseController() {
 
     /**
      * 注册会员信息
+     * @param request: 请求参数
+     * @param model: 模型
+     * @return 注册会员页面
      */
     @GetMapping("/registermember")
     fun registerMember(request: HttpServletRequest, model: Model): String {
@@ -225,6 +249,11 @@ class ThirdUserController : BaseController() {
 
     /**
      * 保存会员认证信息
+     * @param user: 用户信息
+     * @param request: 请求参数
+     * @param current_url: 当前URL
+     * @param model: 模型
+     * @return 注册会员页面
      */
     @PostMapping("/registermember")
     @Transactional
@@ -249,7 +278,7 @@ class ThirdUserController : BaseController() {
 
         model.addAttribute("user", member)
         redirectAttributes.addFlashAttribute("globalMessage", "注册会员成功！")
-        return "redirect:" + current_url
+        return "redirect:$current_url"
     }
 
 }

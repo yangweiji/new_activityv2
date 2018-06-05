@@ -1,11 +1,7 @@
 $(function () {
-    // 动态计算主要区域宽度
-    /*$("div.manage-r").width(window.screen.width - 100);*/
-
     $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
-            // alert( this.text() );
             location.href = "/sec/thirduser/create";
         }
     };
@@ -49,7 +45,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
                         ],
                         modifier: {
                             search: 'none'
@@ -119,6 +115,7 @@ $(function () {
                         }
                     }},
                 {"data": "real_time"},
+                {"data": "level"},
                 {"data": "email"},
                 {"data": "work_company"},
                 {"data": "is_party", "defaultContent": "",
@@ -149,7 +146,6 @@ $(function () {
                             +  '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
                     }},
             ],
-
             //栏定义
             columnDefs: [
                 {
@@ -157,14 +153,9 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                // {
-                //     targets:[8],//身份证号的导出处理
-                //     render: function(data){
-                //         return "\u200C" + data ;
-                //     }
-                // },
                 {
-                    targets: [7,8,9,10,11,12,13,14,15,16,17,18,19,20], visible: false
+                    targets: [1, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
+                    visible: false
                 },
             ],
             //默认排序

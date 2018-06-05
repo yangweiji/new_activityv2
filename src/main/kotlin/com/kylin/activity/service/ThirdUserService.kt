@@ -11,11 +11,22 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
+/**
+ * 第三方团体组织用户服务
+ * @author Richard C. Hu
+ */
 @Service
 class ThirdUserService {
+
+    /**
+     * 数据访问上下文
+     */
     @Autowired
     private val create: DSLContext? = null
 
+    /**
+     * 用户数据访问
+     */
     @Autowired
     private val userDao: UserDao? = null
 
@@ -24,9 +35,7 @@ class ThirdUserService {
      */
     fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?): Result<Record> {
         var sql = "select t1.*, t2.total_score from user t1 " +
-                "left join (select user_id, sum(score) total_score " +
-                "from score_history " +
-                "group by user_id) t2 " +
+                "left join (select user_id, sum(score) total_score from score_history group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
                 "where 1=1 {0} {1} {2} {3} {4} {5} {6} {7} "
         var strCondition = ""
@@ -72,6 +81,69 @@ class ThirdUserService {
 
         var items = create!!.resultQuery(sql).fetch()
         return items
+    }
+
+    /**
+     * 查询全部用户与积分
+     * @param communityId: 团体组织ID
+     * @param start: 创建起始日期
+     * @param end: 创建结束日期
+     * @param username: 登录账号
+     * @param displayname: 显示名称
+     * @param real_name: 真实姓名
+     * @param id_card: 身份证号
+     * @param level: 会员年度
+     * @param isMember: 是否会员
+     * @return 用户列表信息
+     */
+    fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?): Result<Record> {
+        var sql = "select t1.*, t2.total_score from user t1 " +
+                "inner join community_user t3 on t1.id = t3.user_id " +
+                "left join (select user_id, sum(score) total_score from score_history group by user_id) t2 " +
+                "on t1.id = t2.user_id " +
+                "where t3.community_id = ? {0} {1} {2} {3} {4} {5} {6} {7} "
+        var strCondition = ""
+        if (!username.isNullOrBlank()) {
+            strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
+        }
+        sql = sql.replace("{0}", strCondition)
+
+        if (!displayname.isNullOrBlank()) {
+            strCondition = "and t1.displayname like '%{0}%'".replace("{0}", displayname!!)
+        }
+        sql = sql.replace("{1}", strCondition)
+
+        if (!real_name.isNullOrBlank()) {
+            strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
+        }
+        sql = sql.replace("{2}", strCondition)
+
+        if (!id_card.isNullOrBlank()) {
+            strCondition = "and t1.id_card like '%{0}%'".replace("{0}", id_card!!)
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        if (!level.isNullOrBlank()) {
+            strCondition = "and t1.level = {0}".replace("{0}", level!!)
+        }
+        sql = sql.replace("{4}", strCondition)
+
+        if (!start.isNullOrBlank()) {
+            strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
+        }
+        sql = sql.replace("{5}", strCondition)
+
+        if (!end.isNullOrBlank()) {
+            strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
+        }
+        sql = sql.replace("{6}", strCondition)
+
+        if (!isMember.isNullOrBlank()) {
+            strCondition = "and t1.level > 0"
+        }
+        sql = sql.replace("{7}", strCondition)
+
+        return create!!.resultQuery(sql, communityId).fetch()
     }
 
     /**

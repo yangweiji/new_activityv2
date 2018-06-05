@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 @RequestMapping("sec/activityphoto")
 @SessionAttributes("user")
-class activityPhotosController {
+class ActivityPhotosController {
     /**
      * 通用服务
      */
