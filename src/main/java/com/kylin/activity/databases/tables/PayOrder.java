@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrder extends TableImpl<PayOrderRecord> {
 
-    private static final long serialVersionUID = -359686288;
+    private static final long serialVersionUID = -1838902321;
 
     /**
      * The reference instance of <code>activityv2.pay_order</code>
@@ -120,6 +120,21 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
      * The column <code>activityv2.pay_order.other_info</code>. 活动报名时的报名json信息
      */
     public final TableField<PayOrderRecord, String> OTHER_INFO = createField("other_info", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "活动报名时的报名json信息");
+
+    /**
+     * The column <code>activityv2.pay_order.refund_trade_no</code>.
+     */
+    public final TableField<PayOrderRecord, String> REFUND_TRADE_NO = createField("refund_trade_no", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>activityv2.pay_order.refund_time</code>.
+     */
+    public final TableField<PayOrderRecord, Timestamp> REFUND_TIME = createField("refund_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+
+    /**
+     * The column <code>activityv2.pay_order.refund_status</code>.
+     */
+    public final TableField<PayOrderRecord, Integer> REFUND_STATUS = createField("refund_status", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
      * The column <code>activityv2.pay_order.community_id</code>.

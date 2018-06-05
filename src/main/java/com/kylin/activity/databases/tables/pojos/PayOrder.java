@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrder implements Serializable {
 
-    private static final long serialVersionUID = -1351960091;
+    private static final long serialVersionUID = 989990977;
 
     private Integer    id;
     private Integer    userId;
@@ -39,6 +39,9 @@ public class PayOrder implements Serializable {
     private String     extenalId;
     private Timestamp  created;
     private String     otherInfo;
+    private String     refundTradeNo;
+    private Timestamp  refundTime;
+    private Integer    refundStatus;
     private Integer    communityId;
 
     public PayOrder() {}
@@ -57,6 +60,9 @@ public class PayOrder implements Serializable {
         this.extenalId = value.extenalId;
         this.created = value.created;
         this.otherInfo = value.otherInfo;
+        this.refundTradeNo = value.refundTradeNo;
+        this.refundTime = value.refundTime;
+        this.refundStatus = value.refundStatus;
         this.communityId = value.communityId;
     }
 
@@ -74,6 +80,9 @@ public class PayOrder implements Serializable {
         String     extenalId,
         Timestamp  created,
         String     otherInfo,
+        String     refundTradeNo,
+        Timestamp  refundTime,
+        Integer    refundStatus,
         Integer    communityId
     ) {
         this.id = id;
@@ -89,6 +98,9 @@ public class PayOrder implements Serializable {
         this.extenalId = extenalId;
         this.created = created;
         this.otherInfo = otherInfo;
+        this.refundTradeNo = refundTradeNo;
+        this.refundTime = refundTime;
+        this.refundStatus = refundStatus;
         this.communityId = communityId;
     }
 
@@ -196,6 +208,30 @@ public class PayOrder implements Serializable {
         this.otherInfo = otherInfo;
     }
 
+    public String getRefundTradeNo() {
+        return this.refundTradeNo;
+    }
+
+    public void setRefundTradeNo(String refundTradeNo) {
+        this.refundTradeNo = refundTradeNo;
+    }
+
+    public Timestamp getRefundTime() {
+        return this.refundTime;
+    }
+
+    public void setRefundTime(Timestamp refundTime) {
+        this.refundTime = refundTime;
+    }
+
+    public Integer getRefundStatus() {
+        return this.refundStatus;
+    }
+
+    public void setRefundStatus(Integer refundStatus) {
+        this.refundStatus = refundStatus;
+    }
+
     public Integer getCommunityId() {
         return this.communityId;
     }
@@ -221,6 +257,9 @@ public class PayOrder implements Serializable {
         sb.append(", ").append(extenalId);
         sb.append(", ").append(created);
         sb.append(", ").append(otherInfo);
+        sb.append(", ").append(refundTradeNo);
+        sb.append(", ").append(refundTime);
+        sb.append(", ").append(refundStatus);
         sb.append(", ").append(communityId);
 
         sb.append(")");

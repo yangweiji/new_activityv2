@@ -155,6 +155,27 @@ public class PayOrderDao extends DAOImpl<PayOrderRecord, com.kylin.activity.data
     }
 
     /**
+     * Fetch records that have <code>refund_trade_no IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.PayOrder> fetchByRefundTradeNo(String... values) {
+        return fetch(PayOrder.PAY_ORDER.REFUND_TRADE_NO, values);
+    }
+
+    /**
+     * Fetch records that have <code>refund_time IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.PayOrder> fetchByRefundTime(Timestamp... values) {
+        return fetch(PayOrder.PAY_ORDER.REFUND_TIME, values);
+    }
+
+    /**
+     * Fetch records that have <code>refund_status IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.PayOrder> fetchByRefundStatus(Integer... values) {
+        return fetch(PayOrder.PAY_ORDER.REFUND_STATUS, values);
+    }
+
+    /**
      * Fetch records that have <code>community_id IN (values)</code>
      */
     public List<com.kylin.activity.databases.tables.pojos.PayOrder> fetchByCommunityId(Integer... values) {

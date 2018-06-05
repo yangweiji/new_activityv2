@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = -700266451;
+    private static final long serialVersionUID = 835663986;
 
     /**
      * The reference instance of <code>activityv2.community</code>
@@ -113,12 +113,12 @@ public class Community extends TableImpl<CommunityRecord> {
     /**
      * The column <code>activityv2.community.contact</code>. 社团联系电话
      */
-    public final TableField<CommunityRecord, String> CONTACT = createField("contact", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "社团联系电话");
+    public final TableField<CommunityRecord, String> CONTACT = createField("contact", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团联系电话");
 
     /**
      * The column <code>activityv2.community.company</code>. 社团公司名称
      */
-    public final TableField<CommunityRecord, String> COMPANY = createField("company", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "社团公司名称");
+    public final TableField<CommunityRecord, String> COMPANY = createField("company", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团公司名称");
 
     /**
      * The column <code>activityv2.community.about</code>. 关于社团富文本
@@ -138,7 +138,7 @@ public class Community extends TableImpl<CommunityRecord> {
     /**
      * The column <code>activityv2.community.manager_phone_number</code>. 团体管理员手机号码
      */
-    public final TableField<CommunityRecord, String> MANAGER_PHONE_NUMBER = createField("manager_phone_number", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "团体管理员手机号码");
+    public final TableField<CommunityRecord, String> MANAGER_PHONE_NUMBER = createField("manager_phone_number", org.jooq.impl.SQLDataType.VARCHAR(50), this, "团体管理员手机号码");
 
     /**
      * The column <code>activityv2.community.count_people</code>. 团体规模人数

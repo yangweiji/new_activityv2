@@ -2,22 +2,25 @@ package com.kylin.activity.controller.sec
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest
+import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult
+import com.github.binarywang.wxpay.exception.WxPayException
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
 import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
 import com.kylin.activity.databases.tables.daos.ActivityTicketDao
-import com.kylin.activity.databases.tables.pojos.Activity
-import com.kylin.activity.databases.tables.pojos.ActivityPhoto
-import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
-import com.kylin.activity.databases.tables.pojos.ActivityTicket
+import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
 import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.ThirdActivityService
 import com.kylin.activity.service.UserService
+import com.kylin.activity.service.WxService
 import com.kylin.activity.util.CommonService
+import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateTime
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
@@ -26,6 +29,8 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
+import java.math.BigDecimal
+import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -39,34 +44,38 @@ data class ThirdActivityPublishData(
         var scoreInfos: ActivityScoreInfo? = null
 )
 
-data class PhotosData(
-        var activityPhoto: ActivityPhoto? = null
-)
-
+/**
+ * 第三方团体组织活动管理控制器
+ * @author Richard C. Hu
+ */
 @Controller
 @RequestMapping("sec/thirdactivity")
 class ThirdActivityController : BaseController() {
-    @Autowired
-    private val activityService: ThirdActivityService? = null
 
+    /**
+     * 用户服务
+     */
     @Autowired
     private val userService: UserService? = null
 
+    /**
+     * 第三方团体组织活动服务
+     */
     @Autowired
-    private val activityDao: ActivityDao? = null
+    private val thirdActivityService: ThirdActivityService? = null
 
+    /**
+     * 微信接口服务
+     */
     @Autowired
-    private val activityTicketDao: ActivityTicketDao? = null
-
-    @Autowired
-    private val create: DSLContext? = null
+    private val wxService: WxService? = null
 
     /**
      * 第三方活动管理之
      * 查询活动信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/activities", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/activities", method = [RequestMethod.POST, RequestMethod.GET])
     fun activities(): String {
         return "sec/thirdactivity/activities"
     }
@@ -75,23 +84,28 @@ class ThirdActivityController : BaseController() {
      *
      * 第三方活动管理之
      * 异步查询活动信息
+     * @param map: 查询条件参数
+     * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/getActivities", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/getActivities", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
     fun activities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
-        var items = activityService!!.getAllActivityUserItemsAndCommunity(title, tags, status, this.sessionCommunity.id)
-        var list = items.intoMaps()
-        return list
+        var items = thirdActivityService!!.getAllActivityUserItemsAndCommunity(title, tags, status, this.sessionCommunity.id)
+        return items.intoMaps()
     }
 
 
     /**
      * 第三方最新活动
      * 之编辑（id:Int）和添加(type:Int)活动信息
+     * @param id: 活动ID
+     * @param type: 活动类型
+     * @param model: 模型数据
+     * @return 发布或编辑活动视图页面
      */
     @GetMapping("/publish")
     fun getPublish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
@@ -102,8 +116,8 @@ class ThirdActivityController : BaseController() {
 
         var data = ThirdActivityPublishData()
         if (id != null && id > 0) {
-            data.activity = activityDao!!.fetchOneById(id)
-            data.tickets = activityTicketDao!!.fetchByActivityId(id)
+            data.activity = thirdActivityService!!.getActivity(id)
+            data.tickets = thirdActivityService!!.getActivtyTickets(id)
             val mapper = jacksonObjectMapper()
             data.attendInfos = mapper.readValue<List<ActivityAttendInfo>>(data.activity!!.attendInfos)
             data.canAttend = data.activity!!.endTime == data.activity!!.attendDueTime
@@ -126,12 +140,13 @@ class ThirdActivityController : BaseController() {
         }
         model.addAttribute("typeName", if (data.activityType == 2) "赛事" else "活动")
         model.addAttribute("data", data)
+
         return "sec/thirdactivity/publish"
     }
 
     /**
      * 第三方最新活动
-     * 之编辑（id:Int）和添加(type:Int)活动信息发布成功
+     * 保存活动信息
      */
     @RequestMapping("/publish")
     @Transactional
@@ -155,17 +170,21 @@ class ThirdActivityController : BaseController() {
         data.activity!!.createdBy = user!!.id
 
         if (data.activity!!.id == null || data.activity!!.id == 0) {
-            activityDao!!.insert(data.activity)
+            //添加活动
+            thirdActivityService!!.insert(data.activity)
             data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
-            activityTicketDao!!.insert(data.tickets!!.toList())
+            //添加活动票种
+            thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
         } else {
-            activityDao!!.update(data.activity)
+            //更新活动
+            thirdActivityService!!.update(data.activity)
             data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
-            create!!.deleteFrom(Tables.ACTIVITY_TICKET)
-                    .where(Tables.ACTIVITY_TICKET.ACTIVITY_ID.eq(data.activity!!.id))
-                    .execute()
-            activityTicketDao!!.insert(data.tickets!!.toList())
+            //删除活动票种
+            thirdActivityService!!.deleteActivityTickets(data.activity!!.id)
+            //重新添加票种
+            thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
         }
+
         return "redirect:/sec/thirdactivity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"
     }
 
@@ -179,24 +198,28 @@ class ThirdActivityController : BaseController() {
 
     /**
      * 第三方最新活动签到二维码
-     * @param model
-     * *
-     * @return
+     * @param id: 活动ID
+     * @param model: 模型数据
+     * @return 活动签到二维码视图页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/qrcode", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/qrcode", method = [RequestMethod.POST, RequestMethod.GET])
     fun qrCode(@RequestParam id: Int, model: Model): String {
-        val activity = activityService!!.getActivityAndOthers(id)
+        val activity = thirdActivityService!!.getActivityAndOthers(id)
         model.addAttribute("activity", activity)
+
         return "sec/thirdactivity/qrcode"
     }
 
     /**
      * 第三方最新活动
      * 报名签到信息
+     * @param request: 请求参数
+     * @param model: 模型数据
+     * @return 报名用户列表视图页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/attendusers", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/attendusers", method = [RequestMethod.POST, RequestMethod.GET])
     fun attendusers(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -225,31 +248,32 @@ class ThirdActivityController : BaseController() {
         var other_info = request.getParameter("other_info")
 
         //取得活动报名信息
-        val items = activityService!!.getAttendUsers(start, end, activityId, title, mobile, real_name, ticket_title, checked, status, other_info)
+        val items = thirdActivityService!!.getAttendUsers(this.sessionCommunity.id, start, end, activityId, title, mobile, real_name, ticket_title, checked, status, other_info)
 
         var listItems = mutableListOf<Any>()
         var attendColumns = mutableListOf<String>()
         val mapper = jacksonObjectMapper()
         for (item in items) {
             var map = item.intoMap()
-            var otherInfo = mapper.readValue<Map<String, String>>(map.get("other_info").toString())
-            for (info in otherInfo) {
-                var key = "报名：" + info.key
-                if (!attendColumns.contains(key)) {
-                    attendColumns.add(key)
+            if (map["other_info"] != null) {
+                var otherInfo = mapper.readValue<Map<String, String>>(map["other_info"].toString())
+                for (info in otherInfo) {
+                    var key = "报名：" + info.key
+                    if (!attendColumns.contains(key)) {
+                        attendColumns.add(key)
+                    }
+                    map[key] = info.value
                 }
-                map.put(key, info.value)
             }
-
             listItems.add(map)
         }
 
         //取得统计统计信息
-        val activityStatistics = activityService!!.getActivityStatisticsByTicket(activityId)
+        val activityStatistics = thirdActivityService!!.getActivityStatisticsByTicket(activityId)
         //取得活动报名人数
-        var attendcount = activityService!!.getActivityAttendCount(activityId)
+        var attendCount = thirdActivityService!!.getActivityAttendCount(activityId)
         //取得活动签到人数
-        var checkcount = activityService!!.getActivityCheckCount(activityId)
+        var checkCount = thirdActivityService!!.getActivityCheckCount(activityId)
 
         model.addAttribute("start", start)
         model.addAttribute("end", end)
@@ -259,19 +283,22 @@ class ThirdActivityController : BaseController() {
 
         //将活动统计信息添加至数据模型
         model.addAttribute("activityStatistics", activityStatistics)
-        model.addAttribute("attendcount", attendcount)
-        model.addAttribute("checkcount", checkcount)
+        model.addAttribute("attendCount", attendCount)
+        model.addAttribute("checkCount", checkCount)
+
         return "sec/thirdactivity/attendusers"
     }
 
     /**
      * 第三方最新活动报名签到信息
      * 之取得用户信息集合
+     * @param map: 请求参数
+     * @return 活动报名用户列表信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/getAttendUsers", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/getAttendUsers", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
-    fun attendusers(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+    fun getAttendUsers(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         val start = map["start"]
         var end = map["end"]
         var activityId = map["activityId"]
@@ -284,49 +311,327 @@ class ThirdActivityController : BaseController() {
         var other_info = map["other_info"]
 
         //取得活动报名信息
-        val items = activityService!!.getAttendUsers(start, end, activityId, title, mobile, real_name, ticket_title, checked, status, other_info)
+        val items = thirdActivityService!!.getAttendUsers(this.sessionCommunity.id, start, end, activityId, title, mobile, real_name, ticket_title, checked, status, other_info)
 
         var listItems = mutableListOf<Any>()
         var attendColumns = mutableListOf<String>()
         val mapper = jacksonObjectMapper()
         for (item in items) {
             var map = item.intoMap()
-            var otherInfo = mapper.readValue<Map<String, String>>(map.get("other_info").toString())
-            for (info in otherInfo) {
-                var key = "报名：" + info.key
-                if (!attendColumns.contains(key)) {
-                    attendColumns.add(key)
+            if (map["other_info"] != null) {
+                var otherInfo = mapper.readValue<Map<String, String>>(map["other_info"].toString())
+                for (info in otherInfo) {
+                    var key = "报名：" + info.key
+                    if (!attendColumns.contains(key)) {
+                        attendColumns.add(key)
+                    }
+                    map[key] = info.value
                 }
-                map.put(key, info.value)
             }
-
             listItems.add(map)
         }
+
         return listItems
     }
 
     /**
+     * 中签处理
+     * @param ids: 报名ID数组
+     * @return 报名记录集合信息
+     */
+    @RequestMapping(value = "/approve", method = [RequestMethod.POST])
+    @ResponseBody
+    fun approveAttendUser(@RequestBody ids: Array<Int>): List<ActivityUser> {
+        var list = mutableListOf<ActivityUser>()
+        for (id in ids) {
+            //更新报名状态值
+            thirdActivityService!!.updateActivityUserStatus(id, 2)
+            list.add(thirdActivityService!!.getActivityUser(id))
+        }
+
+        return list
+    }
+
+    /**
+     * 退款处理
+     * @param ids: 报名ID数组
+     * @return 处理成功记录数
+     */
+    @RequestMapping(value = "/refund", method = [RequestMethod.POST])
+    @ResponseBody
+    fun refundAttendUser(@RequestBody ids: Array<Int>): Int {
+
+        return ids.count { innerRefund(it) }
+    }
+
+    /**
+     * 检查退款是否成功
+     * @param ids: 报名ID数组
+     * @return 处理成功记录数
+     */
+    @RequestMapping(value = "/checkrefund", method = [RequestMethod.POST])
+    @ResponseBody
+    fun checkRefundAttendUser(@RequestBody ids: Array<Int>): Int {
+
+        return ids.count { innerCheckRefund(it) }
+    }
+
+    /**
+     * 单个活动报名记录退款处理
+     * @param id: 报名ID
+     * @return true/false
+     */
+    @Transactional
+    fun innerRefund(id: Int): Boolean {
+        var start = DateUtil.date()
+        var order = thirdActivityService!!.getActivityUserOrder(id)
+        //更新报名状态值
+        if (order != null) {
+            var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)
+
+            var refundRequest = WxPayRefundRequest()
+            refundRequest.outTradeNo = order.extenalId
+            refundRequest.outRefundNo = refundOutTradeNo
+
+            var price = (order.price.toDouble() * 100).toInt()
+            refundRequest.totalFee = price
+            refundRequest.refundFee = price
+
+            var result = wxService!!.refund(refundRequest)
+            if (result.resultCode == "SUCCESS") {
+                thirdActivityService!!.updateActivityUserStatus(id, 3)
+
+                order.refundTradeNo = refundOutTradeNo
+                order.refundTime = start.toTimestamp()
+                order.status = 1
+                thirdActivityService!!.updateActivityUserOrder(order)
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * 单个活动报名记录检查退款处理
+     * @param id: 报名ID
+     * @return true/false
+     */
+    @Transactional
+    fun innerCheckRefund(id: Int): Boolean {
+
+        var order = thirdActivityService!!.getActivityUserOrder(id, 2, 1)
+        if (order != null) {
+            var refundOutTradeNo = order.refundTradeNo
+            //var tradeNo = order.extenalId
+            var result = wxService!!.payService!!.refundQuery(null, null, refundOutTradeNo, null)
+            if (result.resultCode == "SUCCESS") {
+                thirdActivityService!!.updateActivityUserStatus(id, 4)
+                order.status = 2
+                thirdActivityService!!.updateActivityUserOrder(order)
+
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * 检查是否已付款成功
+     * @param ids: 报名ID数组
+     * @return 处理成功记录数
+     */
+    @RequestMapping(value = "/checkOrder", method = [RequestMethod.POST])
+    @ResponseBody
+    fun checkOrder(@RequestBody ids: Array<Int>): Int {
+
+        return ids.count { innerCheckOrder(it) }
+    }
+
+    /**
+     * 查询微信订单
+     * @param id: 订单ID
+     */
+    @Transactional
+    fun innerCheckOrder(id: Int): Boolean {
+
+        //查询未支付的订单
+        var order = thirdActivityService!!.getPayOrder(id, 1)
+        if (order != null) {
+            var tradeNo = order.extenalId
+            var otherInfo = order.otherInfo
+            var activityId = order.activityId
+
+            LogUtil.printLog("验证订单：$tradeNo 活动编号: $activityId 报名信息: $otherInfo")
+            var rs: WxPayOrderQueryResult?
+            try {
+                rs = wxService!!.payService!!.queryOrder(null, tradeNo)
+            }
+            catch (e: WxPayException)
+            {
+                LogUtil.printLog("查询订单异常: $e")
+                return false
+            }
+
+            val tradeState = rs!!.tradeState
+            LogUtil.printLog("$tradeNo tradeState: $tradeState")
+            //如果用户订单交易状态成功
+            if (tradeState == "SUCCESS") {
+
+                if (activityId != null) {
+
+                    //活动缴费
+                    val mapper = jacksonObjectMapper()
+                    var map = mapper.readValue<Map<String, String>>(otherInfo)
+                    var count = thirdActivityService!!.getActivityUserCount(order.activityId, order.userId)
+                    if (count == 0) {
+                        //补充用户报名记录
+                        var activityUser = ActivityUser()
+                        activityUser.userId = order.userId
+                        activityUser.activityId = order.activityId
+                        activityUser.activityTicketId = order.activityTicketId
+                        activityUser.created = order.created
+                        activityUser.createdBy = order.userId
+                        activityUser.attendTime = order.created
+                        activityUser.realName = map["realName"]
+                        activityUser.mobile = map["mobile"]
+                        activityUser.otherInfo = map["otherInfo"]
+                        activityUser.price =  map["price"] as BigDecimal
+                        activityUser.score = map["score"] as Int
+                        thirdActivityService!!.insertActivityUser(activityUser)
+                        LogUtil.printLog("补充用户报名记录：$otherInfo")
+
+
+                        //更新订单付款状态和付款时间
+                        order.status = 2
+                        order.payTime = order.created
+                        thirdActivityService!!.updateActivityUserOrder(order)
+                        LogUtil.printLog("更新订单付款状态->2：$tradeNo")
+                        return true
+                    } else {
+                        LogUtil.printLog("用户报名记录已存在：$otherInfo")
+                    }
+                }
+                else {
+
+                    //升级成员马协会员
+                    var user = userService!!.getUser(order.userId)
+                    user.level = DateUtil.thisYear()
+                    userService!!.update(user)
+                    LogUtil.printLog("更新用户会员年度->${user.level}: $tradeNo")
+
+                    order.status = 2
+                    order.payTime = order.created
+                    thirdActivityService!!.updateActivityUserOrder(order)
+                    LogUtil.printLog("更新订单付款状态->2: $tradeNo")
+                }
+            }
+        }
+        return false
+    }
+
+    /**
+     * 取消中签处理
+     * @param ids: 报名ID数组
+     * @return 报名列表信息
+     */
+    @RequestMapping(value = "/cancel", method = [RequestMethod.POST])
+    @ResponseBody
+    fun cancelAttendUser(@RequestBody ids: Array<Int>): List<ActivityUser> {
+        var list = mutableListOf<ActivityUser>()
+        for (id in ids) {
+            //更新报名状态值
+            thirdActivityService!!.updateActivityUserStatus(id, null)
+            list.add(thirdActivityService!!.getActivityUser(id))
+        }
+
+        return list
+    }
+
+    /**
+     * 删除报名记录
+     * @param ids: 报名ID数组
+     * @return 成功处理记录数
+     */
+    @RequestMapping(value = "/deleteAttendUsers", method = [RequestMethod.POST])
+    @ResponseBody
+    fun deleteAttendUsers(@RequestBody ids: Array<Int>): Int {
+        return ids.count { innerDelete(it) }
+    }
+
+    /**
+     * 删除报名记录
+     * @param id: 报名ID
+     */
+    @Transactional
+    fun innerDelete(id: Int): Boolean {
+        var start = DateUtil.date()
+        var order = thirdActivityService!!.getActivityUserOrder(id, 2, null)
+        //如果有对应的报名订单，则先退费处理
+        if (order != null) {
+            var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)
+            var refundRequest = WxPayRefundRequest()
+            refundRequest.outTradeNo = order.extenalId
+            refundRequest.outRefundNo = refundOutTradeNo
+            var price = (order.price.toDouble() * 100).toInt()
+            refundRequest.totalFee = price
+            refundRequest.refundFee = price
+            var result = wxService!!.refund(refundRequest)
+            if (result.resultCode == "SUCCESS") {
+                thirdActivityService!!.updateActivityUserStatus(id, 3)
+
+                order.refundTradeNo = refundOutTradeNo
+                order.refundTime = start.toTimestamp()
+                order.refundStatus = 1
+                thirdActivityService!!.updateActivityUserOrder(order)
+            }
+        }
+
+        //删除报名记录
+        thirdActivityService!!.deleteActivityUser(id)
+        return true
+    }
+
+    /**
+     * 取得活动信息集合
+     */
+    private val getActivities: List<Activity>
+        @RequestMapping(value = "/getActivities")
+        @ResponseBody
+        get() {
+            return thirdActivityService!!.getAllActivities()
+        }
+
+
+    /**
      * 第三方活动管理之
      * 删除活动信息
+     * @param id: 活动ID
+     * @return 活动列表视图页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/deleteActivity/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/deleteActivity/{id}", method = [RequestMethod.GET, RequestMethod.POST])
     fun deleteActivity(@PathVariable id: Int, model: Model): String {
-        activityService!!.deleteById(id)
+        thirdActivityService!!.deleteById(id)
+
         return "redirect:/sec/thirdactivity/activities"
     }
 
     /**
      * 第三方活动
      * 之报名信息
+     * @param activityId: 活动ID
+     * @param model: 模型数据
+     * @return 活动报名二维码视图页面
      */
     @CrossOrigin
     @RequestMapping(value = "/attend/{activityId}")
     fun attend(@PathVariable activityId: Int, model: Model): String {
         var user = this.sessionUser
         model.addAttribute("user", user)
-        var activity = activityService!!.getActivityAndOthers(activityId)
+
+        var activity = thirdActivityService!!.getActivityAndOthers(activityId)
         model.addAttribute("activity", activity)
+
         return "sec/thirdactivity/attend"
     }
 

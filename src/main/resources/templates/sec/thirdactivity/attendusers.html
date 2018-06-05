@@ -5,10 +5,12 @@
 </head>
 <body>
 <div th:replace="fragments/header :: default"></div>
+
 <div id="app">
     <div class="manage-l">
         <div th:replace="thirdparty/leftnav :: default"></div>
     </div>
+
     <div class="manage-r">
         <div class="hd_list_right_tt">
             <div class="l"><strong>报名管理</strong><span> 共 <span id="totalCount"></span> 条记录</span></div>
@@ -89,23 +91,19 @@
                         <i class="am-icon-search"></i> 查询
                     </button>
 
-                    <!--<button id="btnSearch" type="button" class="am-btn am-btn-default am-radius">-->
-                    <!--<i class="am-icon-search"></i> 查询-->
-                    <!--</button>-->
-
                 </form>
             </div>
 
             <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
 
-            <div class="am-g" th:if="${#httpServletRequest.getParameter('activityId')}">
+            <div class="am-g" th:if="${#httpServletRequest.getParameter('activityId') != '' && #httpServletRequest.getParameter('activityId') != null}">
                 <h3>
                     <a type="button" class="am-btn am-btn-danger"
                        data-am-modal="{target: '#stat-modal', closeViaDimmer: 0, width: 600, height: 600}">
                         <i class="fa fa-table"></i> 活动统计
                     </a>
-                    活动报名共 <span class="am-badge am-badge-primary am-round " th:text="${attendcount}"></span> 人，
-                    活动签到共 <span class="am-badge am-badge-success am-round " th:text="${checkcount}"></span> 人
+                    活动报名共 <span class="am-badge am-badge-primary am-round " th:text="${attendCount}"></span> 人，
+                    活动签到共 <span class="am-badge am-badge-success am-round " th:text="${checkCount}"></span> 人
                 </h3>
                 <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
             </div>
@@ -142,6 +140,7 @@
         </div>
     </div>
 </div>
+
 <div class="am-modal am-modal-no-btn" tabindex="-1" id="stat-modal">
     <div class="am-modal-dialog">
         <div class="am-modal-hd"><span th:text="${#httpServletRequest.getParameter('title')}"></span> <br/>票种统计
@@ -179,6 +178,7 @@
         </div>
     </div>
 </div>
+
 <div th:replace="fragments/footer :: default"></div>
 <script th:inline="javascript">
     var g_attendColumns = [[${attendColumns}]];
@@ -188,3 +188,5 @@
 <script type="text/javascript" src="/js/sec/thirdactivity/attendusers.js"></script>
 </body>
 </html>
+
+

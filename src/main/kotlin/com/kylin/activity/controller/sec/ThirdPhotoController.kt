@@ -128,7 +128,8 @@ class ThirdPhotoController : BaseController() {
                           , @ModelAttribute("activityPhoto") activityPhoto: ActivityPhoto
                           , redirectAttributes: RedirectAttributes, model: Model): String {
         //验证活动编号是否有效
-        if (activityService!!.getActivity(activityPhoto.activityId) == null)
+        var activity = activityService!!.getCommunityActivity(activityPhoto.activityId, this.sessionCommunity.id)
+        if (activity == null)
         {
             model.addAttribute("errorMessage", "活动编号: ${activityPhoto.activityId} 无效！")
             return "sec/thirdphotos/createActivityPhoto"
