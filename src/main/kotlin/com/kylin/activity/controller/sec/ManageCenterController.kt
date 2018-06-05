@@ -21,8 +21,6 @@ import java.util.GregorianCalendar
 import java.util.Calendar
 
 
-
-
 /**
  * Created by 9kylin on 2017-11-22.
  */
@@ -71,8 +69,8 @@ class ManageCenterController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/home/{status}", method = arrayOf(RequestMethod.GET))
     private fun home(@PathVariable status: Int?, model: Model): String {
-        var user=this.sessionUser
-        model.addAttribute("user",user)
+        var user = this.sessionUser
+        model.addAttribute("user", user)
         //取得最新的活动记录
         var activityItems = activityService!!.getAllActivityUserItems(status!!)
         for (r in activityItems) {
@@ -103,16 +101,14 @@ class ManageCenterController : BaseController() {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
-        if (start.isNullOrBlank())
-        {
+        if (start.isNullOrBlank()) {
             //设置为月初
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
 
         var end = request.getParameter("end")
-        if (end.isNullOrBlank())
-        {
+        if (end.isNullOrBlank()) {
             //当日
             calendar = GregorianCalendar()
             end = sdf.format(calendar.time)
@@ -217,7 +213,7 @@ class ManageCenterController : BaseController() {
             throw Exception("活动编号不存在！")
         }
 
-        if(score.id == null || score.id == 0) {
+        if (score.id == null || score.id == 0) {
             var existScore = scoreService!!.getScoreHistories(user.id, score.activityId)
             if (existScore != null) {
                 throw Exception("一个用户在同一个活动中只允许添加一次积分！")
@@ -257,16 +253,14 @@ class ManageCenterController : BaseController() {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
-        if (start.isNullOrBlank())
-        {
+        if (start.isNullOrBlank()) {
             //设置为月初
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
 
         var end = request.getParameter("end")
-        if (end.isNullOrBlank())
-        {
+        if (end.isNullOrBlank()) {
             //当日
             calendar = GregorianCalendar()
             end = sdf.format(calendar.time)
@@ -312,20 +306,18 @@ class ManageCenterController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/ordersstatistics", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     private fun ordersstatistics(request: HttpServletRequest,
-                         model: Model): String {
+                                 model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
-        if (start.isNullOrBlank())
-        {
+        if (start.isNullOrBlank()) {
             //设置为月初
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
 
         var end = request.getParameter("end")
-        if (end.isNullOrBlank())
-        {
+        if (end.isNullOrBlank()) {
             //当日
             calendar = GregorianCalendar()
             end = sdf.format(calendar.time)

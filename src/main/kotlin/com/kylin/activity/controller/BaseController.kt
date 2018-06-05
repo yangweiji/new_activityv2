@@ -1,27 +1,20 @@
 package com.kylin.activity.controller
 
-import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.CommunityDao
-import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.util.CommonService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.util.Assert
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
 
 import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpSession
 import com.kylin.activity.databases.tables.pojos.Community
-import com.kylin.activity.service.CommunityService
 
 /**
  * Created by 9kylin on 2017-12-04.
+ * @author Richard C. Hu
  */
 @Controller
 class BaseController {
@@ -29,10 +22,19 @@ class BaseController {
     @Autowired
     private var communityDao: CommunityDao? = null
 
+    /**
+     * 通用服务
+     */
     @Autowired
     private var commonService: CommonService? = null
 
+    /**
+     * 分页每页记录数
+     */
     val PAGE_SIZE: Int = 12
+    /**
+     * 用户上下文
+     */
     val USER_CONTEXT: String = "USER_CONTEXT"
 
     /**

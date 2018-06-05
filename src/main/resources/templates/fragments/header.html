@@ -64,8 +64,8 @@
                             <li class="am-dropdown-header">团体名称</li>
                             <li class="am-divider"></li>
                             <li th:each="item:${handlerCommunities}">
-                                <a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.get('id')}+ ')'"
-                                   th:text="${item.get('name')}"></a>
+                                <a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.id}+ ')'"
+                                   th:text="${item.name}"></a>
                             </li>
                         </ul>
                     </li>
@@ -96,12 +96,14 @@
                                             个人信息
                                         </a>
                                     </li>
-                                    <li th:if="${session.USER_CONTEXT.role}=='发布者' or ${session.USER_CONTEXT.role}=='管理员'">
+                                    <!-- 团体组织用户角色：管理员/发布员，可以查看团体中心 -->
+                                    <li th:if="${canViewCommunity}">
                                         <a th:href="@{/sec/thirdmanage/home/0}">
                                             团体中心
                                         </a>
                                     </li>
-                                    <li th:if="${session.USER_CONTEXT.role}=='发布者' or ${session.USER_CONTEXT.role}=='管理员'">
+                                    <!-- 平台角色：管理员/发布员，可以查看管理中心 -->
+                                    <li th:if="${canViewManagementCenter}">
                                         <a th:href="@{/sec/community/communities}">
                                             管理中心
                                         </a>

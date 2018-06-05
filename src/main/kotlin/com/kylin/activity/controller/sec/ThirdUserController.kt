@@ -196,8 +196,8 @@ class ThirdUserController : BaseController() {
         var communityUser = userService!!.getCommunityUser(this.sessionCommunity.id, id)
 
         //取得用户在当前团体组织中的角色和会员年度信息
-        user.role = communityUser.role
-        user.level = communityUser.level
+        user.role = communityUser!!.role
+        user.level = communityUser!!.level
 
         model.addAttribute("user", user)
         model.addAttribute("roles", userService!!.getRoles().values)
@@ -227,8 +227,8 @@ class ThirdUserController : BaseController() {
             LogUtil.printLog("添加团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
         }
         else {
-            communityUser.role = user.role
-            communityUser.level = user.level
+            communityUser!!.role = user.role
+            communityUser!!.level = user.level
             userService!!.updateCommunityUser(communityUser)
             LogUtil.printLog("更新团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
         }

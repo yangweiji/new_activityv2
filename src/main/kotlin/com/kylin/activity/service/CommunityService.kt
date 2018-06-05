@@ -1,9 +1,11 @@
 package com.kylin.activity.service
 
+import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.CommunityDao
 import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import com.kylin.activity.databases.tables.pojos.Community
+import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -59,9 +61,8 @@ class CommunityService {
     /**
      * 切换团体信息
      */
-    fun getCommunities(): Result<Record> {
-        var sql = "select c.* from community c order by c.created desc"
-        return create!!.resultQuery(sql).fetch()
+    fun getCommunities(): List<Community> {
+        return communityDao!!.findAll()
     }
 
     /**
@@ -109,5 +110,17 @@ class CommunityService {
         return user.username
     }
 
+    /**
+     * 取得团体组织关联用户
+     * @param communityId: 团体组织ID
+     * @param userId: 用户ID
+     * @param
+     */
+    fun getCommunityUser(communityId: Int?, userId: Int?): CommunityUser? {
+        return create!!.selectFrom(Tables.COMMUNITY_USER)
+                .where(Tables.COMMUNITY_USER.COMMUNITY_ID.eq(communityId))
+                .and(Tables.COMMUNITY_USER.USER_ID.eq(userId))
+                .fetchOneInto(CommunityUser::class.java)
+    }
 
 }

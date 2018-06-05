@@ -240,7 +240,7 @@ class ThirdUserService {
      * @param userId: 用户ID
      * @return 单个团体组织用户
      */
-    fun getCommunityUser(communityId: Int?, userId: Int?): CommunityUser {
+    fun getCommunityUser(communityId: Int?, userId: Int?): CommunityUser? {
         var item = create!!.selectFrom(Tables.COMMUNITY_USER)
                 .where(Tables.COMMUNITY_USER.COMMUNITY_ID.eq(communityId))
                 .and(Tables.COMMUNITY_USER.USER_ID.eq(userId))
@@ -252,7 +252,7 @@ class ThirdUserService {
      * 更新团体组织用户
      * @param communityUser: 团体组织用户信息
      */
-    fun updateCommunityUser(communityUser: CommunityUser) {
+    fun updateCommunityUser(communityUser: CommunityUser?) {
         communityUserDao!!.update(communityUser)
     }
 

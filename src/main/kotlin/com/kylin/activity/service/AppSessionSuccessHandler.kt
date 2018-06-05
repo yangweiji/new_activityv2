@@ -9,17 +9,16 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import javax.servlet.http.HttpSession
 import java.io.IOException
 
 /**
  * Created by 9kylin on 2017-12-04.
+ * @author Richard C. Hu
  */
 class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler() {
 
     /**
      * 认证成功
-     *
      * @param request
      * @param response
      * @param authentication
@@ -32,10 +31,17 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
         val userDetails = authentication.principal as UserDetails
         //将登录用户信息存入session中
         session.setAttribute("USER_CONTEXT", (userDetails as AuthUser).user)
-        LogUtil.printLog("IP :" + getIpAddress(request))
+        //将用户所在团体组织信息存入session中
+
+        LogUtil.printLog("登录系统IP :" + getIpAddress(request))
+
         super.onAuthenticationSuccess(request, response, authentication)
     }
 
+    /**
+     * 获取IP地址
+     * @param request: 请求参数
+     */
     fun getIpAddress(request: HttpServletRequest): String? {
         var ip: String? = request.getHeader("x-forwarded-for")
         if (ip == null || ip.length == 0 || "unknown".equals(ip, ignoreCase = true)) {
@@ -53,6 +59,7 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
         if (ip == null || ip.length == 0 || "unknown".equals(ip, ignoreCase = true)) {
             ip = request.remoteAddr
         }
+
         return ip
     }
 }
