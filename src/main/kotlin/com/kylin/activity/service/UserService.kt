@@ -1,7 +1,9 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.Tables
+import com.kylin.activity.databases.tables.daos.CommunityUserDao
 import com.kylin.activity.databases.tables.daos.UserDao
+import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.databases.tables.pojos.Vercode
 import com.kylin.activity.model.AuthUser
@@ -27,6 +29,9 @@ class UserService {
 
     @Autowired
     private val userDao: UserDao? = null
+
+    @Autowired
+    private val communityUserDao: CommunityUserDao? = null
 
     @Autowired
     private val create: DSLContext? = null
@@ -284,4 +289,31 @@ class UserService {
     fun deleteById(id: Int) {
         userDao!!.deleteById(id)
     }
+
+    /**
+     * 取得团体组织的管理员，唯一的管理员用户
+     * @param id: 团体组织ID
+     * @return 团体组织管理员
+     */
+    fun getCommunityUser(id: Int?): User? {
+        var sql = "select t1.* from user t1 " +
+                "inner join community_user t2 on t1.id = t2.user_id " +
+                "where t2.role = '管理员' and t2.community_id = ?"
+        var items = create!!.resultQuery(sql, id).fetch()
+        if (items.size > 0)
+            return items.first().into(User::class.java)
+        return null
+    }
+
+    /**
+     * 添加团体组织用户关联对象信息
+     * @param communityUser: 团体组织用户关联对象
+     * @return 团体组织用户关联对象ID
+     */
+    fun insertCommunityUser(communityUser: CommunityUser): Int {
+        communityUserDao!!.insert(communityUser)
+        return communityUser.id
+    }
+
+
 }

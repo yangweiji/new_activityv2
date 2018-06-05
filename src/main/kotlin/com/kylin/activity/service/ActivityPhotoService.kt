@@ -2,6 +2,7 @@ package com.kylin.activity.service
 
 import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
 import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
+import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import org.jooq.DSLContext
@@ -70,6 +71,19 @@ class ActivityPhotoService {
     fun getActivityPhoto(id: Int): Record {
         var sql = "select a.* from activity_photo a where a.id=? "
         return create!!.resultQuery(sql, id).fetchOne()
+    }
+
+    /**
+     * 依据活动相册获取活动id
+     * @param activityId 活动id
+     */
+    fun getActivityphoto(activityId: Int?):ActivityPhoto?{
+        var sql="select * from activity_photo where activity_id=? "
+        var item=create!!.resultQuery(sql,activityId).fetch()
+        if(item.size>0){
+            return item.first().into(ActivityPhoto::class.java)
+        }
+        return null
     }
 
     /**

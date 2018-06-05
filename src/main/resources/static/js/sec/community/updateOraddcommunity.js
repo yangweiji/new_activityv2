@@ -35,7 +35,7 @@ new Vue({
 
         //社团创建时间控件
 
-        $('.c-datetimepicker.created').datetimepicker({
+      /*  $('.c-datetimepicker.created').datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss',
             language: 'zh-CN'
         }).on('changeDate', function (ev) {
@@ -45,7 +45,7 @@ new Vue({
         });
         if (that.cacheData.community.created) {
             $('.c-datetimepicker.created').datetimepicker('update', new Date(that.cacheData.community.created))
-        }
+        }*/
 
         //富文本控件
         var imageHandleCallback;

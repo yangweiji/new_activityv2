@@ -5,6 +5,7 @@ import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityFavoriteDao
 import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityFavorite
+import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
@@ -66,6 +67,19 @@ class ActivityService {
         return activityDao!!.fetchOne(Tables.ACTIVITY.ID, id)
     }
 
+
+    /**
+     * 获取活动团体id
+     * @param communityId 团体id
+     */
+    fun getActivityCommunity(communityId: Int?): Activity? {
+        var sql = "select * from activity where community_id=? "
+        var items = create!!.resultQuery(sql, communityId).fetch()
+        if (items.size > 0)
+            return items.first().into(Activity::class.java)
+        return null
+    }
+
     /**
      * 取得活动
      * @param title: 活动标题
@@ -101,11 +115,11 @@ class ActivityService {
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by = t2.id " +
-                "where ?=t1.community_id "+
+                "where ?=t1.community_id " +
                 "order by t1.start_time desc " +
                 "limit 1000"
 
-        var items = create!!.resultQuery(sql,id).fetch()
+        var items = create!!.resultQuery(sql, id).fetch()
         return items
     }
 
@@ -236,10 +250,9 @@ class ActivityService {
 
         sql = sql.replace("{1}", strTime)
         //分页条件
-        if (page*size < 0) {
+        if (page * size < 0) {
             sql = sql.replace("{99}", "0")
-        }
-        else {
+        } else {
             sql = sql.replace("{99}", (page * size).toString())
         }
         sql = sql.replace("{100}", size.toString())
@@ -682,8 +695,7 @@ class ActivityService {
             strResult = strResult + "," + item["mobile"]
         }
 
-        if (strResult.isNotEmpty())
-        {
+        if (strResult.isNotEmpty()) {
             strResult = strResult.substring(1)
         }
 
