@@ -1,7 +1,9 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.Tables
+import com.kylin.activity.databases.tables.daos.CommunityUserDao
 import com.kylin.activity.databases.tables.daos.UserDao
+import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.AuthUser
 import org.jooq.DSLContext
@@ -29,6 +31,12 @@ class ThirdUserService {
      */
     @Autowired
     private val userDao: UserDao? = null
+
+    /**
+     * 团体组织用户关联数据访问
+     */
+    @Autowired
+    private val communityUserDao: CommunityUserDao? = null
 
     /**
      * 查询全部用户与积分
@@ -97,7 +105,7 @@ class ThirdUserService {
      * @return 用户列表信息
      */
     fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?): Result<Record> {
-        var sql = "select t1.*, t2.total_score from user t1 " +
+        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name from user t1 " +
                 "inner join community_user t3 on t1.id = t3.user_id " +
                 "left join (select user_id, sum(score) total_score from score_history group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
@@ -124,7 +132,7 @@ class ThirdUserService {
         sql = sql.replace("{3}", strCondition)
 
         if (!level.isNullOrBlank()) {
-            strCondition = "and t1.level = {0}".replace("{0}", level!!)
+            strCondition = "and t3.level = {0}".replace("{0}", level!!)
         }
         sql = sql.replace("{4}", strCondition)
 
@@ -139,7 +147,7 @@ class ThirdUserService {
         sql = sql.replace("{6}", strCondition)
 
         if (!isMember.isNullOrBlank()) {
-            strCondition = "and t1.level > 0"
+            strCondition = "and t3.level > 0"
         }
         sql = sql.replace("{7}", strCondition)
 
@@ -216,6 +224,45 @@ class ThirdUserService {
      */
     fun deleteById(id: Int) {
         userDao!!.deleteById(id)
+    }
+
+    /**
+     * 添加团体组织用户关联数据
+     * @param communityUser: 关联数据
+     */
+    fun insertCommunityUser(communityUser: CommunityUser) {
+        communityUserDao!!.insert(communityUser)
+    }
+
+    /**
+     * 取得团体组织用户
+     * @param communityId: 团体组织ID
+     * @param userId: 用户ID
+     * @return 单个团体组织用户
+     */
+    fun getCommunityUser(communityId: Int?, userId: Int?): CommunityUser {
+        var item = create!!.selectFrom(Tables.COMMUNITY_USER)
+                .where(Tables.COMMUNITY_USER.COMMUNITY_ID.eq(communityId))
+                .and(Tables.COMMUNITY_USER.USER_ID.eq(userId))
+                .fetchOneInto(CommunityUser::class.java)
+        return item
+    }
+
+    /**
+     * 更新团体组织用户
+     * @param communityUser: 团体组织用户信息
+     */
+    fun updateCommunityUser(communityUser: CommunityUser) {
+        communityUserDao!!.update(communityUser)
+    }
+
+    /**
+     * 删除团体组织用户
+     * @param communityId: 团体组织ID
+     * @param userId: 用户ID
+     */
+    fun deleteCommunityUser(communityId: Int?, userId: Int) {
+        create!!.execute("delete from community_user where community_id = ? and user_id = ?", communityId, userId)
     }
 
 }

@@ -79,6 +79,7 @@ $(function () {
                         displayname: $("#displayname").val().trim(),
                         real_name: $("#real_name").val().trim(),
                         id_card: $("#id_card").val().trim(),
+                        level: $("#level").val().trim(),
                     };
                     return JSON.stringify(param);
                 },
@@ -89,7 +90,6 @@ $(function () {
                 {"data": "id", "width": "50px"},
                 {"data": "username"},
                 {"data": "displayname"},
-                {"data": "created"},
                 {"data": "real_name", "width": "80px"},
                 {"data": "total_score", "width": "30px"},
                 {"data": "gender", "defaultContent": "",
@@ -115,7 +115,8 @@ $(function () {
                         }
                     }},
                 {"data": "real_time"},
-                {"data": "level"},
+                {"data": "level_name"}, //会员年度
+                {"data": "created"},
                 {"data": "email"},
                 {"data": "work_company"},
                 {"data": "is_party", "defaultContent": "",
@@ -140,6 +141,7 @@ $(function () {
                 {"data": "emergency_contact_name"},
                 {"data": "emergency_contact_mobile"},
                 {"data": "wechat_id"},
+                {"data": "role_name"},  //角色
                 {"data": "action", "width": "100px", "defaultContent": "",
                     render: function (data, type, row) {
                         return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
@@ -154,12 +156,12 @@ $(function () {
                     targets: 0,
                 },
                 {
-                    targets: [1, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
+                    targets: [1, 5, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
                     visible: false
                 },
             ],
             //默认排序
-            "order": [[4, 'desc']],
+            "order": [[11, 'desc']],
             "autoWidth": false,
             "scrollX": true,
             // "scrollY": '50vh',
@@ -196,7 +198,21 @@ $(function () {
     $('#bmTable tbody').on('click', 'button#btnDelete', function () {
         var data = t.row($(this).parents('tr')).data();
         if (window.confirm("请确认删除？")) {
-            location.href = "/sec/thirduser/delete/" + data.id;
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/thirduser/delete',
+                data: {
+                    id: data.id,
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("操作成功！");
+                        location.reload()
+                    }
+                },
+            })
+            // location.href = "/sec/thirduser/delete/" + data.id;
         }
     });
 });

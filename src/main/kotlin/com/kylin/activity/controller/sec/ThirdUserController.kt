@@ -2,9 +2,11 @@ package com.kylin.activity.controller.sec
 
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.daos.UserDao
+import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ThirdUserService
 import com.kylin.activity.service.UserService
+import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
@@ -77,7 +79,7 @@ class ThirdUserController : BaseController() {
         var start = request.getParameter("start")
         if (start.isNullOrBlank()) {
             //设置为月初
-            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            calendar.set(Calendar.DAY_OF_YEAR, 1)
             start = sdf.format(calendar.time)
         }
 
@@ -140,13 +142,17 @@ class ThirdUserController : BaseController() {
      * @return 保存用户页面
      */
     @RequestMapping(value = "/saveUser", method = [RequestMethod.POST])
+    @Transactional
     @Throws(Exception::class)
-    fun saveUser(@ModelAttribute("user") user: User, redirectAttributes: RedirectAttributes): String {
+    fun saveUser(@ModelAttribute("user") user: User, redirectAttributes: RedirectAttributes
+                    , model: Model): String {
         var u = userService!!.getUser(user!!.username)
         if (u != null) {
-            throw Exception("用户账号已存在!")
+            model.addAttribute("errorMessage", "用户账号: ${user!!.username} 已存在！")
+            return "sec/thirduser/create"
         }
 
+        //添加用户
         var coder = BCryptPasswordEncoder()
         user.password = coder.encode("123456")
         user.enabled = true
@@ -154,7 +160,26 @@ class ThirdUserController : BaseController() {
         if (user.isReal) {
             user.realTime = DateUtil.date().toTimestamp()
         }
+
         userService!!.insert(user)
+        LogUtil.printLog("添加用户成功, 用户ID: ${user.id}")
+
+        //将用户关联到当前团体组织
+        var communityUser = CommunityUser()
+        communityUser.communityId = this.sessionCommunity.id
+        communityUser.userId = user.id
+        communityUser.role = user.role
+        communityUser.level = user.level
+        communityUser.created = DateUtil.date().toTimestamp()
+        userService!!.insertCommunityUser(communityUser)
+        LogUtil.printLog("添加团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
+
+        //用户角色设置为NULL
+        user.role = null
+        //用户会员年度设置为NULL
+        user.level = null
+        userService!!.update(user)
+
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/thirduser/users"
     }
@@ -168,6 +193,12 @@ class ThirdUserController : BaseController() {
     @RequestMapping(value = "/update/{id}", method = [RequestMethod.GET])
     fun getUpdate(@PathVariable("id") id: Int, model: Model): String {
         val user = userService!!.getUser(id)
+        var communityUser = userService!!.getCommunityUser(this.sessionCommunity.id, id)
+
+        //取得用户在当前团体组织中的角色和会员年度信息
+        user.role = communityUser.role
+        user.level = communityUser.level
+
         model.addAttribute("user", user)
         model.addAttribute("roles", userService!!.getRoles().values)
         return "sec/thirduser/update"
@@ -179,9 +210,36 @@ class ThirdUserController : BaseController() {
      * @param redirectAttributes: 重定向属性
      */
     @PostMapping(value = "/update")
+    @Transactional
     fun postUpdate(model: Model, user: User, redirectAttributes: RedirectAttributes): String {
-        model.addAttribute("title", "个人信息")
+        //用户的角色、会员年度
+        var communityUser = userService!!.getCommunityUser(this.sessionCommunity.id, user.id)
+        if (user == null)
+        {
+            //将用户关联到当前团体组织
+            communityUser = CommunityUser()
+            communityUser.communityId = this.sessionCommunity.id
+            communityUser.userId = user.id
+            communityUser.role = user.role
+            communityUser.level = user.level
+            communityUser.created = DateUtil.date().toTimestamp()
+            userService!!.insertCommunityUser(communityUser)
+            LogUtil.printLog("添加团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
+        }
+        else {
+            communityUser.role = user.role
+            communityUser.level = user.level
+            userService!!.updateCommunityUser(communityUser)
+            LogUtil.printLog("更新团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
+        }
+
+        //用户角色设置为NULL
+        user.role = null
+        //用户会员年度设置为NULL
+        user.level = null
         userService!!.update(user)
+        LogUtil.printLog("更新用户信息成功, 用户ID: ${user.id}")
+
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/thirduser/users"
     }
@@ -190,15 +248,19 @@ class ThirdUserController : BaseController() {
      * 第三方删除用户信息
      * @param id: 用户ID
      * @param model: 模型
-     * @param redirectAttributes: 重定向属性
      * @return 删除用户页面
      */
     @CrossOrigin
-    @RequestMapping(value = "/delete/{id}", method = [RequestMethod.POST, RequestMethod.GET])
-    fun delete(@PathVariable("id") id: Int, model: Model, redirectAttributes: RedirectAttributes): String {
+    @RequestMapping(value = "/delete", method = [RequestMethod.POST])
+    @ResponseBody
+    @Transactional
+    fun delete(@RequestParam("id") id: Int, model: Model): Any {
+        //删除团体组织用户关联信息
+        userService!!.deleteCommunityUser(this.sessionCommunity.id, id)
+        //删除用户信息
         userService!!.deleteById(id)
-        redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        return "redirect:/sec/thirduser/users"
+
+        return true
     }
 
     /**
