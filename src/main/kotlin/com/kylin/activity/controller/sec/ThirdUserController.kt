@@ -39,7 +39,7 @@ class ThirdUserController : BaseController() {
      * @param id
      * @return 用户信息
      */
-    @RequestMapping("/get")
+    @RequestMapping("/getUser")
     @ResponseBody
     private fun getUser(@RequestParam("id") id: Int): User {
         return userService!!.getUser(id)
@@ -61,7 +61,7 @@ class ThirdUserController : BaseController() {
      */
     @RequestMapping(value = "/getMembers")
     @ResponseBody
-    fun members(): List<User> {
+    fun getMembers(): List<User> {
         return userService!!.getMembers()
     }
 
@@ -126,7 +126,7 @@ class ThirdUserController : BaseController() {
      * @param model: 模型
      * @return 添加用户页面
      */
-    @RequestMapping(value = "/create", method =[RequestMethod.GET])
+    @RequestMapping(value = "/createUser", method =[RequestMethod.GET])
     fun createUser(user: User, model: Model): String {
         var user = User()
         model.addAttribute("user", user)
@@ -191,7 +191,7 @@ class ThirdUserController : BaseController() {
      * @return 编辑用户页面
      */
     @RequestMapping(value = "/update/{id}", method = [RequestMethod.GET])
-    fun getUpdate(@PathVariable("id") id: Int, model: Model): String {
+    fun update(@PathVariable("id") id: Int, model: Model): String {
         val user = userService!!.getUser(id)
         var communityUser = userService!!.getCommunityUser(this.sessionCommunity.id, id)
 
@@ -209,9 +209,9 @@ class ThirdUserController : BaseController() {
      * @param user: 用户对象
      * @param redirectAttributes: 重定向属性
      */
-    @PostMapping(value = "/update")
+    @PostMapping(value = "/updateUser")
     @Transactional
-    fun postUpdate(model: Model, user: User, redirectAttributes: RedirectAttributes): String {
+    fun updateUser(model: Model, user: User, redirectAttributes: RedirectAttributes): String {
         //用户的角色、会员年度
         var communityUser = userService!!.getCommunityUser(this.sessionCommunity.id, user.id)
         if (user == null)
@@ -300,12 +300,13 @@ class ThirdUserController : BaseController() {
      * @param model: 模型
      * @return 注册会员页面
      */
-    @GetMapping("/registermember")
+    @GetMapping("/registerMember")
     fun registerMember(request: HttpServletRequest, model: Model): String {
         var user = userService!!.getCurrentUserInfo()
         model.addAttribute("user", user)
         //将前页面URL添加至模型数据中
         model.addAttribute("current_url", request.getAttribute("current_url"))
+
         return "sec/thirduser/registermember"
     }
 
@@ -317,7 +318,7 @@ class ThirdUserController : BaseController() {
      * @param model: 模型
      * @return 注册会员页面
      */
-    @PostMapping("/registermember")
+    @PostMapping("/registerMember")
     @Transactional
     fun registerMember(@ModelAttribute("user") user: User,
                        request: HttpServletRequest,
@@ -340,6 +341,7 @@ class ThirdUserController : BaseController() {
 
         model.addAttribute("user", member)
         redirectAttributes.addFlashAttribute("globalMessage", "注册会员成功！")
+
         return "redirect:$current_url"
     }
 

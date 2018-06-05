@@ -2,7 +2,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
-            location.href = "/sec/thirduser/create";
+            location.href = "/sec/thirduser/createUser";
         }
     };
 

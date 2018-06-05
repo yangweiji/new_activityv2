@@ -127,8 +127,7 @@ class UserService {
      * 取得用户信息
      */
     fun getUser(username: String): User? {
-        var user = userDao!!.fetchOne(Tables.USER.USERNAME, username)
-        return user
+        return userDao!!.fetchOne(Tables.USER.USERNAME, username)
     }
 
     /**

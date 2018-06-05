@@ -133,14 +133,14 @@ $(function () {
         className: '',
         action: function ( e, dt, node, config ) {
             // alert( this.text() );
-            location.href = "/sec/thirdmanage/score";
+            location.href = "/sec/thirdmanage/createActivityScore";
         }
     };
 
     //编辑
     $('#bmTable tbody').on('click', 'button#btnEdit', function () {
         var data = t.row( $(this).parents('tr') ).data();
-        location.href = "/sec/thirdmanage/score/"+data.id;
+        location.href = "/sec/thirdmanage/editActivityScore/"+data.id;
     });
 
     //删除
@@ -148,7 +148,21 @@ $(function () {
         var data = t.row( $(this).parents('tr') ).data();
         if (window.confirm("请确认删除？"))
         {
-            location.href = "/sec/thirdmanage/deleteScore/"+data.id;
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/thirdmanage/deleteActivityScore',
+                data: {
+                    id: data.id,
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("操作成功！");
+                        location.reload()
+                    }
+                },
+            })
+            // location.href = "/sec/thirdmanage/deleteActivityScore/"+data.id;
         }
     });
 });
