@@ -142,12 +142,14 @@ class UserService {
     /**
      * 查询全部用户与积分
      */
-    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?,real_name: String?,id_card: String?,level: String?,isMember: String?): Result<Record> {
-        var sql = "select t1.*, t2.total_score from user t1 " +
+    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?,real_name: String?,id_card: String?,level: String?,isMember: String?,name:String?): Result<Record> {
+        var sql = "select t1.*, t2.total_score,t4.name from user t1 " +
                 "left join (select user_id, sum(score) total_score " +
                 "from score_history " +
                 "group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
+                "left join community_user t3 on t1.id=t3.user_id "+
+                "left join community t4 on t3.community_id=t4.id "+
                 "where 1=1 {0} {1} {2} {3} {4} {5} {6} {7} "
         var strCondition = ""
         if (!username.isNullOrBlank())
@@ -197,6 +199,12 @@ class UserService {
             strCondition = "and t1.level > 0"
         }
         sql = sql.replace("{7}", strCondition)
+
+        //团体名称
+        if(!name.isNullOrBlank()){
+            strCondition="and t4.name like '?' "
+        }
+        sql =sql.replace("?",strCondition)
 
         var items = create!!.resultQuery(sql).fetch()
         return items

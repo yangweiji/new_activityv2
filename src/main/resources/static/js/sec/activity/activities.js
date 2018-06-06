@@ -27,10 +27,10 @@ $(function () {
             // dom: 'Blfrtip',
             dom: '<"top">Bfrt<"bottom">lip<"clear">',
             buttons: [
-                {
-                    extend: 'create',
-                    text: '添加'
-                },
+                /* {
+                     extend: 'create',
+                     text: '添加'
+                 },*/
                 {
                     extend: 'excel',
                     text: '导出Excel',
@@ -72,7 +72,7 @@ $(function () {
                     var param = {
                         status: $("#status").val().trim(),
                         tags: $("#tags").val().trim(),
-                        title: $("#title").val().trim(),
+                        title: $("#title").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -82,6 +82,7 @@ $(function () {
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "title", "width": "200px"},
+                {"data": "name"},
                 {"data": "start_time"},
                 {"data": "end_time"},
                 {"data": "attend_user_count"},
@@ -110,8 +111,8 @@ $(function () {
                         }
                     }
                 },
-                {"data": "unit"},
-                {
+                {"data": "unit"}
+              /*  {
                     "data": "action", "width": "200px", defaultContent: "",
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
@@ -120,7 +121,7 @@ $(function () {
                             + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
                             + '<button id="picturerow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="相册管理"><i class="am-icon-shield"></i></button>'
                     }
-                },
+                },*/
             ],
 
             //栏定义
@@ -130,7 +131,7 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6,7], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序

@@ -367,11 +367,12 @@ class ActivityService {
      * @param status: 活动进行状态
      * @return 活动信息集合
      */
-    fun getAllActivityUserItems(title: String?, tags: String?, status: String?): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+    fun getAllActivityUserItems(title: String?, tags: String?, status: String?,name:String?): Result<Record> {
+        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar,t3.name, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
+                "left join community t3 on t1.community_id=t3.id " +
                 "where 1=1 {0} {1} {2} " +
                 "order by t1.start_time desc "
         var strCondition = ""
@@ -398,9 +399,19 @@ class ActivityService {
         }
         sql = sql.replace("{2}", strCondition)
 
+
+        //团体名称
+        if (!name.isNullOrBlank()) {
+            strCondition="and t3.name like '?'  "
+        }
+       sql=sql.replace("?",strCondition)
+
+
         var items = create!!.resultQuery(sql).fetch()
         return items
     }
+
+
 
     /**
      * 活动报名信息

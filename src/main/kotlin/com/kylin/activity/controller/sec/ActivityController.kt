@@ -178,15 +178,15 @@ class ActivityController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/activities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     fun activities(request: HttpServletRequest, model: Model): String {
-//        //标题
-//        var title = request.getParameter("title")
-//        //活动分类
-//        var tags = request.getParameter("tags")
-//        //时间状态
-//        var status = request.getParameter("status"
-//        var activityItems = activityService!!.getAllActivityUserItems(title, tags, status)
-//        model.addAttribute("activities", activityItems)
-
+        /*//标题
+         var title = request.getParameter("title")
+         //活动分类
+         var tags = request.getParameter("tags")
+         //时间状态
+         var status = request.getParameter("status"
+                 var activityItems = activityService !!. getAllActivityUserItems (title, tags, status)
+         model.addAttribute("activities", activityItems)
+        */
         return "sec/activity/activities"
     }
 
@@ -200,7 +200,10 @@ class ActivityController : BaseController() {
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
-        var items = activityService!!.getAllActivityUserItems(title, tags, status)
+
+        //团体名称
+        var name = map["name"]
+        var items = activityService!!.getAllActivityUserItems(title, tags, status, name)
         var list = items.intoMaps()
         return list
     }
