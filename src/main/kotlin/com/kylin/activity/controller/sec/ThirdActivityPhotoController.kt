@@ -53,8 +53,8 @@ class ThirdActivityPhotoController : BaseController() {
      * @param model 模型数据
      * @return 图片信息集合
      */
-    @RequestMapping(value = "/activityphotos", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun getActivityPhotos(@ModelAttribute user: User, @RequestParam(required = false) activityId: Int?, model: Model): String {
+    @RequestMapping(value = "/activityphotos", method = [RequestMethod.GET, RequestMethod.POST])
+    fun activityPhotos(@ModelAttribute user: User, @RequestParam(required = false) activityId: Int?, model: Model): String {
 
         //取得活动详情信息
         var activity = activityService!!.getActivity(activityId!!)
@@ -146,7 +146,7 @@ class ThirdActivityPhotoController : BaseController() {
      * 删除相册
      * @param request: 参数
      */
-    @RequestMapping(value = "/delete", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/delete", method = [RequestMethod.POST])
     @ResponseBody
     fun delete(request: HttpServletRequest): Any? {
 
@@ -161,7 +161,7 @@ class ThirdActivityPhotoController : BaseController() {
      * 删除图片
      * @param request: 参数
      */
-    @RequestMapping(value = "/deletePicture", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/deletePicture", method = [RequestMethod.POST])
     @ResponseBody
     fun deletePicture(request: HttpServletRequest): Any? {
 

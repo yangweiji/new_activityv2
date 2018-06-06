@@ -4,10 +4,7 @@ import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
-import com.kylin.activity.service.ActivityPhotoService
-import com.kylin.activity.service.ActivityService
-import com.kylin.activity.service.CommunityService
-import com.kylin.activity.service.UserService
+import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
@@ -17,7 +14,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import java.util.*
+import javax.servlet.http.HttpServletRequest
 
 /**
  * 团体数据类
@@ -64,11 +61,17 @@ class CommunityController : BaseController() {
     private val activityPhotoService: ActivityPhotoService? = null
 
     /**
+     * 用户服务
+     */
+    @Autowired
+    private val thirdUserService: ThirdUserService? = null
+
+    /**
      * 查询团体信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/communities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun afterCommunity(model: Model): String {
+    @RequestMapping(value = "/communities", method = [RequestMethod.GET, RequestMethod.POST])
+    fun afterCommunity(model: Model, request: HttpServletRequest): String {
         var user = this.sessionUser
         model.addAttribute("user", user)
 

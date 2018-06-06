@@ -3,6 +3,7 @@ package com.kylin.activity
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.util.UrlPathHelper
 import com.kylin.activity.service.CommunityService
+import com.kylin.activity.service.ThirdUserService
 import com.kylin.activity.util.LogUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.converter.HttpMessageConverter

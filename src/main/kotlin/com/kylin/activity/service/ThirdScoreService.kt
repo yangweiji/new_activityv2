@@ -23,13 +23,13 @@ class ThirdScoreService {
      * 用户活动积分明细
      * @return
      */
-    fun getUserActivityScores(start: String?, end: String?, title: String?, username: String?, real_name: String?,id:Int): Result<Record> {
+    fun getUserActivityScores(start: String?, end: String?, title: String?, username: String?, real_name: String?, id: Int): Result<Record> {
         var sql = "select t1.*, t2.username, t2.displayname, t2.avatar user_avatar, t2.real_name, t3.title " +
                 "from score_history t1 " +
                 "left join user t2 on t1.user_id = t2.id " +
                 "left join activity t3 on t1.activity_id = t3.id " +
                 "where 1=1 {0} {1} {2} {3} {4} " +
-                "and ?=t1.community_id "+
+                "and ?=t1.community_id " +
                 "order by t1.created desc "
         var strCondition = ""
         if (title != null && !title.isEmpty()) {
@@ -47,19 +47,17 @@ class ThirdScoreService {
         }
         sql = sql.replace("{2}", strCondition)
 
-        if (!start.isNullOrBlank())
-        {
+        if (!start.isNullOrBlank()) {
             strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!end.isNullOrBlank())
-        {
+        if (!end.isNullOrBlank()) {
             strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
         }
         sql = sql.replace("{4}", strCondition)
 
-        return dslContext!!.resultQuery(sql,id).fetch()
+        return dslContext!!.resultQuery(sql, id).fetch()
     }
 
     /**
@@ -73,8 +71,8 @@ class ThirdScoreService {
     /**
      * 获取用户在一个活动上的积分
      */
-    fun getScoreHistories(userId:Int, activityId:Int):Any?{
-        var result = dslContext!!.resultQuery("select * from score_history where user_id=? and activity_id=?", userId, activityId)
+    fun getScoreHistories(userId: Int, activityId: Int, communityId: Int): Any? {
+        var result = dslContext!!.resultQuery("select * from score_history where user_id=? and activity_id=? and community_id=?", userId, activityId, communityId)
                 .fetchOne()
 
         return result

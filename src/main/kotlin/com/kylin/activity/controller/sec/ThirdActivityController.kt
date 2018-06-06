@@ -90,7 +90,7 @@ class ThirdActivityController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/getActivities", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
-    fun activities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+    fun getActivities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
@@ -108,7 +108,7 @@ class ThirdActivityController : BaseController() {
      * @return 发布或编辑活动视图页面
      */
     @GetMapping("/publish")
-    fun getPublish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
+    fun publish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
         //检查用户权限
         if (!userService!!.checkPermission("PUBLISH")) {
             return "pub/error/20"
@@ -220,7 +220,7 @@ class ThirdActivityController : BaseController() {
      */
     @CrossOrigin
     @RequestMapping(value = "/attendusers", method = [RequestMethod.POST, RequestMethod.GET])
-    fun attendusers(request: HttpServletRequest, model: Model): String {
+    fun attendUsers(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
@@ -341,7 +341,7 @@ class ThirdActivityController : BaseController() {
      */
     @RequestMapping(value = "/approve", method = [RequestMethod.POST])
     @ResponseBody
-    fun approveAttendUser(@RequestBody ids: Array<Int>): List<ActivityUser> {
+    fun approve(@RequestBody ids: Array<Int>): List<ActivityUser> {
         var list = mutableListOf<ActivityUser>()
         for (id in ids) {
             //更新报名状态值
@@ -359,7 +359,7 @@ class ThirdActivityController : BaseController() {
      */
     @RequestMapping(value = "/refund", method = [RequestMethod.POST])
     @ResponseBody
-    fun refundAttendUser(@RequestBody ids: Array<Int>): Int {
+    fun refund(@RequestBody ids: Array<Int>): Int {
 
         return ids.count { innerRefund(it) }
     }
@@ -371,7 +371,7 @@ class ThirdActivityController : BaseController() {
      */
     @RequestMapping(value = "/checkrefund", method = [RequestMethod.POST])
     @ResponseBody
-    fun checkRefundAttendUser(@RequestBody ids: Array<Int>): Int {
+    fun checkRefund(@RequestBody ids: Array<Int>): Int {
 
         return ids.count { innerCheckRefund(it) }
     }
@@ -515,9 +515,9 @@ class ThirdActivityController : BaseController() {
 
                     //升级成员马协会员
                     var user = userService!!.getUser(order.userId)
-                    user.level = DateUtil.thisYear()
+                    user.level = otherInfo.toInt()
                     userService!!.update(user)
-                    LogUtil.printLog("更新用户会员年度->${user.level}: $tradeNo")
+                    LogUtil.printLog("更新用户会员年度->$otherInfo: $tradeNo")
 
                     order.status = 2
                     order.payTime = order.created
@@ -536,7 +536,7 @@ class ThirdActivityController : BaseController() {
      */
     @RequestMapping(value = "/cancel", method = [RequestMethod.POST])
     @ResponseBody
-    fun cancelAttendUser(@RequestBody ids: Array<Int>): List<ActivityUser> {
+    fun cancel(@RequestBody ids: Array<Int>): List<ActivityUser> {
         var list = mutableListOf<ActivityUser>()
         for (id in ids) {
             //更新报名状态值

@@ -59,8 +59,8 @@ class ThirdPhotoController : BaseController() {
      * 查询第三方活动相册
      */
     @CrossOrigin
-    @RequestMapping(value = "/photos", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun search(): String {
+    @RequestMapping(value = "/photos", method = [RequestMethod.GET, RequestMethod.POST])
+    fun photos(): String {
         return "sec/thirdphotos/photos"
     }
 
@@ -70,7 +70,7 @@ class ThirdPhotoController : BaseController() {
      * @return 活动相册结果集合
      */
     @CrossOrigin
-    @RequestMapping(value = "/getActivityPhotos", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/getActivityPhotos", method = [RequestMethod.GET, RequestMethod.POST])
     @ResponseBody
     fun getActivityPhotos(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var description = map["description"]
@@ -122,7 +122,7 @@ class ThirdPhotoController : BaseController() {
      * @param model: 模型
      * @return 视图页面
      */
-    @RequestMapping(value = "/saveActivityPhoto", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/saveActivityPhoto", method = [RequestMethod.POST])
     @Transactional
     fun saveActivityPhoto(@ModelAttribute user: User
                           , @ModelAttribute("activityPhoto") activityPhoto: ActivityPhoto
