@@ -5,15 +5,15 @@ import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.ActivitySms
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
-import com.kylin.activity.service.SmsService
-import com.kylin.activity.sms.SmsTemplateListProperties
+import com.kylin.activity.service.ActivitySmsService
+import com.kylin.activity.service.UserService
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
-import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -37,22 +37,44 @@ class SmsController : BaseController() {
     @Autowired
     private val commonService: CommonService? = null
 
+
     /**
      * 短信服务
      */
     @Autowired
-    private val smsService: SmsService? = null
+    private val activitySmsService: ActivitySmsService? = null
 
-    @Autowired
-    private val smsTemplateList: SmsTemplateListProperties? = null
+    /**
+     * 查询短信信息
+     */
+    @RequestMapping(value = "/smsHistory", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    fun getActivitySms(): String {
+        return "sec/sms/smsHistory"
+    }
+
+    /**
+     * 异步查询短信信息
+     * templateName 短信名称
+     * displayname 用户名
+     * title 活动标题
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getActivitySms", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @ResponseBody
+    fun getActivitySmsItem(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var templateName = map["templateName"]
+        var displayname = map["displayname"]
+        var title = map["title"]
+        var items = activitySmsService!!.getActivitySmsItem(templateName, displayname, title, this.sessionCommunity.id)
+        var list = items.intoMaps()
+        return list
+    }
 
     /**
      * 发送短信页面
      */
     @GetMapping("/sendSms")
     fun sendSms(model: Model): String {
-
-
         var sms = ActivitySms()
         sms.templateCode = "SMS_136391188"
         model.addAttribute("sms", sms)
@@ -69,8 +91,7 @@ class SmsController : BaseController() {
 
         //检查团体组织下的活动是否有效
         var activity = activityService!!.getCommunityActivity(sms.activityId, this.sessionCommunity.id)
-        if (activity == null)
-        {
+        if (activity == null) {
             model.addAttribute("errorMessage", "活动编号: ${sms.activityId} 无效！")
             return "sec/sms/sendSms"
         }
@@ -105,10 +126,10 @@ class SmsController : BaseController() {
         }
 
         //模板变量实际内容：<=20字符，不支持传入链接；验证码模板变量实际内容仅支持数字和英文字母格式
-        templateParamData.time = if (time.length > 20) time.substring(0,19) else time
-        templateParamData.title = if (title.length > 20) title.substring(0,19) else title
-        templateParamData.address = if (address.length > 20) address.substring(0,19) else address
-        templateParamData.reason = if (reason.length > 20) reason.substring(0,19) else reason
+        templateParamData.time = if (time.length > 20) time.substring(0, 19) else time
+        templateParamData.title = if (title.length > 20) title.substring(0, 19) else title
+        templateParamData.address = if (address.length > 20) address.substring(0, 19) else address
+        templateParamData.reason = if (reason.length > 20) reason.substring(0, 19) else reason
 
         var om = ObjectMapper()
         //消息模板变量Json
@@ -116,26 +137,10 @@ class SmsController : BaseController() {
         LogUtil.printLog(templateParam)
 
         //发送短信
-        var response = commonService!!.sendBatchSms(mobiles, smsTemplateList!!.sign, sms.templateCode, templateParam)
+        var response = commonService!!.sendBatchSms(mobiles, commonService!!.activitySmsSign, sms.templateCode, templateParam)
         if (response.code == "OK") {
-            //取得配置文件中的短信模板字典
-            var map = smsTemplateList!!.templateMap
-
-            var activitySms = ActivitySms()
-            activitySms.activityId = activity.get("id", Int::class.java)
-            activitySms.templateCode = sms.templateCode
-            activitySms.templateName = map!![sms.templateCode]!!.name
-            activitySms.messageContent = sms.messageContent
-            activitySms.sendTime = DateUtil.date().toTimestamp()
-            activitySms.sendUserId = user.id
-            activitySms.sendResultCode = response.code
-            activitySms.sendResultDesc = response.message
-            smsService!!.insert(activitySms)
-            LogUtil.printLog("添加短信信息成功, 短信ID: ${activitySms.id}")
-
             model.addAttribute("globalMessage", "短信已发送成功！")
-        }
-        else {
+        } else {
             model.addAttribute("errorMessage", "短信发送失败: ${response.code}(${response.message})")
         }
 
@@ -146,9 +151,9 @@ class SmsController : BaseController() {
 /**
  * 活动短信消息模板变量数据类
  */
-data class ActivitySmsTemplateParamData (
-    var title: String? = null,
-    var time: String? = null,
-    var address: String? = null,
-    var reason: String? = null
+data class ActivitySmsTemplateParamData(
+        var title: String? = null,
+        var time: String? = null,
+        var address: String? = null,
+        var reason: String? = null
 )

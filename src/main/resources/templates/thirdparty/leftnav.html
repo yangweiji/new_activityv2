@@ -22,7 +22,7 @@
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/sms/sendSms'?'am-nav-header':''" th:if="${true}"><a class="dxgl" th:href="@{/sec/sms/sendSms}"><b></b>短信管理</a></li>
         <li class="am-nav-divider"></li>
-
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/sms/smsHistory'?'am-nav-header':''" th:if="${true}"><a class="dxcx" th:href="@{/sec/sms/smsHistory}"><b></b>短信查询</a></li>
     </ul>
 </div>
 </body>

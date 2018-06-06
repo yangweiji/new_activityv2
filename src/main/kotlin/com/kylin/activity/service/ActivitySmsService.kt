@@ -38,8 +38,7 @@ class ActivitySmsService {
      */
     fun send(mobiles: String, smsSign: String = "九麒活动吧", templateCode: String, templateParam: String?): Any {
         var response = commonService!!.sendBatchSms(mobiles, smsSign, templateCode, templateParam!!)
-        if (response.code == "OK")
-        {
+        if (response.code == "OK") {
             return true
         }
 
@@ -82,5 +81,35 @@ class ActivitySmsService {
     fun save(activitySms: ActivitySms): Int {
         activitySmsDao!!.insert(activitySms)
         return activitySms.id
+    }
+
+    /**
+     * 查询短信信息
+     * @param templateName 短信名称
+     * @param displayname 用户名
+     * @param title 活动名称
+     * @param communityId 团体id
+     */
+    fun getActivitySmsItem(templateName: String?, displayname: String?, title: String?, communityId: Int): Result<Record> {
+        var sql = "select t1.*,t2.displayname,t3.title from activity_sms t1 " +
+                "inner join user t2 on t1.send_user_id=t2.id " +
+                "inner join activity t3 on t1.activity_id=t3.id "+
+                "inner join activity_user t4 on t2.id=t4.user_id and t3.id=t4.activity_id "+
+                "where 1=1 and t3.community_id=? "
+
+        var params = mutableListOf<Any?>()
+        if (!templateName.isNullOrBlank()) {
+            sql += "and t1.template_name like '%?%' ".replace("?", templateName!!)
+            params.add(templateName)
+        }
+        if (!displayname.isNullOrBlank()) {
+            sql += "and t2.displayname like '?' "
+            params.add(displayname)
+        }
+        if (!title.isNullOrBlank()) {
+            sql += "and t4.title like '?' "
+            params.add(title)
+        }
+        return create!!.resultQuery(sql, communityId, *params.toTypedArray()).fetch()
     }
 }

@@ -2,13 +2,14 @@ $(function () {
     // 动态计算主要区域宽度
     /*$("div.manage-r").width(window.screen.width - 100);*/
 
-   /* $.fn.dataTable.ext.buttons.create = {
+    //自定义添加按钮事件
+    $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
             // alert( this.text() );
             location.href = "/sec/user/create";
         }
-    };*/
+    };
 
     //This event is emitted by DataTables when a table is being initialised and is about to request data.
     // At the point of being fired the table will have its columns and features initialised,
@@ -38,10 +39,11 @@ $(function () {
             // dom: 'Blfrtip',
             dom: '<"top">Bfrt<"bottom">lip<"clear">',
             buttons: [
-                /* {
-                     extend: 'create',
-                     text: '添加'
-                 },*/
+                //显示添加按钮
+                  {
+                      extend: 'create',
+                      text: '添加'
+                  },
                 {
                     extend: 'excel',
                     text: '导出Excel',
@@ -153,24 +155,24 @@ $(function () {
                 {"data": "occupation"},
                 {"data": "emergency_contact_name"},
                 {"data": "emergency_contact_mobile"},
-                {"data": "wechat_id"}
-               /* {
+                {"data": "wechat_id"},
+                {
                     "data": "action", "width": "100px", "defaultContent": "",
                     render: function (data, type, row) {
                         return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
                             + '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
                     }
-                },*/
+                },
             ],
 
             //栏定义
             columnDefs: [
                 {
                     searchable: false,
-                    orderable: false,
+                    orderable:false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6,7,-1], visible: true},
                 {targets: '_all', visible: false}
                 // {
                 //     targets:[8],//身份证号的导出处理
@@ -183,7 +185,7 @@ $(function () {
                  },*/
             ],
             //默认排序
-            "order": [[4, 'desc']],
+            "order": [[5, 'desc']],
             "autoWidth": false,
             "scrollX": true,
             // "scrollY": '50vh',
