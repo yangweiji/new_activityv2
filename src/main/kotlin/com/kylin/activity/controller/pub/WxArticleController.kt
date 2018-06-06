@@ -74,7 +74,7 @@ class WxArticleController {
         //文章详情信息
         var item = articleService!!.getArticleExt(articleId)
         var avatar: String?
-        if (item["avatar"] != null) {
+        if (item!!["avatar"] != null) {
             avatar = commonService!!.getDownloadUrl(item.get("avatar", String::class.java))
             item.setValue(Activity.ACTIVITY.AVATAR, avatar)
         }

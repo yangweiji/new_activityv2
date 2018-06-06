@@ -35,28 +35,29 @@ class MyHandlerInterceptor : HandlerInterceptor {
             modelAndView!!.addObject("handlerCommunities", nameItems)
         }
 
-        if (request!!.session.getAttribute("USER_CONTEXT") != null) {
-            var user = request!!.session.getAttribute("USER_CONTEXT") as User
-            //平台管理员
-            if (user.role == "管理员" || user.role == "发布员") {
-                if (modelAndView != null) {
-                    modelAndView!!.addObject("canViewManagementCenter", true)
-                    modelAndView!!.addObject("canViewCommunity", true)
-                }
-            }
-
-            if (request!!.session.getAttribute("COMMUNITY_CONTEXT") != null)
-            {
-                var community = request!!.session.getAttribute("COMMUNITY_CONTEXT") as Community
-                var communityUser = communityService!!.getCommunityUser(community.id, user.id)
-                //团体组织管理员或发布员
-                if (communityUser != null && (communityUser.role == "管理员" || communityUser.role == "发布员")) {
-                    if (modelAndView != null) {
-                        modelAndView!!.addObject("canViewCommunity", true)
-                    }
-                }
-            }
-        }
+//        if (!request!!.servletPath.startsWith("/pub/wx", true)) {
+//            if (request!!.session.getAttribute("USER_CONTEXT") != null) {
+//                var user = request!!.session.getAttribute("USER_CONTEXT") as User
+//                //平台管理员
+//                if (user.role == "管理员" || user.role == "发布员") {
+//                    if (modelAndView != null) {
+//                        modelAndView!!.addObject("canViewManagementCenter", true)
+//                        modelAndView!!.addObject("canViewCommunity", true)
+//                    }
+//                }
+//
+//                if (request!!.session.getAttribute("COMMUNITY_CONTEXT") != null) {
+//                    var community = request!!.session.getAttribute("COMMUNITY_CONTEXT") as Community
+//                    var communityUser = communityService!!.getCommunityUser(community.id, user.id)
+//                    //团体组织管理员或发布员
+//                    if (communityUser != null && (communityUser.role == "管理员" || communityUser.role == "发布员")) {
+//                        if (modelAndView != null) {
+//                            modelAndView!!.addObject("canViewCommunity", true)
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
     //页面渲染之后调用，一般用于资源清理操作

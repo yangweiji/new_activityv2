@@ -1,6 +1,6 @@
 package com.kylin.activity.controller.pub
 
-import com.kylin.activity.config.WechatMpProperties
+import com.kylin.activity.config.WxMaProperties
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.service.ActivityService
@@ -23,7 +23,7 @@ class ActivityDetailController : BaseController() {
 
 
     @Autowired
-    private val wechatProperties: WechatMpProperties? = null
+    private val wechatProperties: WxMaProperties? = null
 
 
     @Autowired
