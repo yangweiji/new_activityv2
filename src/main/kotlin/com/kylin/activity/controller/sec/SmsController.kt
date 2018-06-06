@@ -5,14 +5,15 @@ import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.ActivitySms
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
-import com.kylin.activity.service.UserService
+import com.kylin.activity.service.SmsService
+import com.kylin.activity.sms.SmsTemplateListProperties
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -37,10 +38,21 @@ class SmsController : BaseController() {
     private val commonService: CommonService? = null
 
     /**
+     * 短信服务
+     */
+    @Autowired
+    private val smsService: SmsService? = null
+
+    @Autowired
+    private val smsTemplateList: SmsTemplateListProperties? = null
+
+    /**
      * 发送短信页面
      */
     @GetMapping("/sendSms")
     fun sendSms(model: Model): String {
+
+
         var sms = ActivitySms()
         sms.templateCode = "SMS_136391188"
         model.addAttribute("sms", sms)
@@ -104,8 +116,23 @@ class SmsController : BaseController() {
         LogUtil.printLog(templateParam)
 
         //发送短信
-        var response = commonService!!.sendBatchSms(mobiles, commonService!!.activitySmsSign, sms.templateCode, templateParam)
+        var response = commonService!!.sendBatchSms(mobiles, smsTemplateList!!.sign, sms.templateCode, templateParam)
         if (response.code == "OK") {
+            //取得配置文件中的短信模板字典
+            var map = smsTemplateList!!.templateMap
+
+            var activitySms = ActivitySms()
+            activitySms.activityId = activity.get("id", Int::class.java)
+            activitySms.templateCode = sms.templateCode
+            activitySms.templateName = map!![sms.templateCode]!!.name
+            activitySms.messageContent = sms.messageContent
+            activitySms.sendTime = DateUtil.date().toTimestamp()
+            activitySms.sendUserId = user.id
+            activitySms.sendResultCode = response.code
+            activitySms.sendResultDesc = response.message
+            smsService!!.insert(activitySms)
+            LogUtil.printLog("添加短信信息成功, 短信ID: ${activitySms.id}")
+
             model.addAttribute("globalMessage", "短信已发送成功！")
         }
         else {

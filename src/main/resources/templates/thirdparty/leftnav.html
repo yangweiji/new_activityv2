@@ -14,6 +14,8 @@
         <li class="am-nav-divider"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/thirdmanage/scores'?'am-nav-header':''" th:if="${true}"><a class="jfgl" th:href="@{/sec/thirdmanage/scores}"><b></b>积分管理</a></li>
+        <li class="am-nav-divider"></li>
+
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/thirdmanage/payments'?'am-nav-header':''" th:if="${true}"><a class="ddgl" th:href="@{/sec/thirdmanage/payments}"><b></b>订单管理</a></li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/thirdmanage/ordersstatistics'?'am-nav-header':''" th:if="${true}"><a class="ddtj" th:href="@{/sec/thirdmanage/ordersstatistics}"><b></b>订单统计</a></li>
         <li class="am-nav-divider"></li>
