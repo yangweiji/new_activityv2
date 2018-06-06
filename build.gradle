@@ -37,6 +37,7 @@ repositories {
 
 
 dependencies {
+
     compile('org.slf4j:slf4j-api:1.7.21')
     compile group: 'ch.qos.logback', name: 'logback-core', version: '1.2.3'
     testCompile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
@@ -57,8 +58,8 @@ dependencies {
 	compile('com.aliyun:aliyun-java-sdk-core:3.3.1')
     compile('com.aliyun:aliyun-java-sdk-sts:3.0.0')
     compile('com.aliyun.oss:aliyun-sdk-oss:2.8.1')
-    compile('com.github.binarywang:weixin-java-mp:2.9.0')
-    compile('com.github.binarywang:weixin-java-pay:2.9.0')
+    compile('com.github.binarywang:weixin-java-miniapp:3.0.0')
+    compile('com.github.binarywang:weixin-java-pay:3.0.0')
     compile('net.glxn:qrgen:1.4')
 	compile files('lib/aliyun-java-sdk-dysmsapi-1.0.0.jar')
 	runtime('org.springframework.boot:spring-boot-devtools')
@@ -80,6 +81,7 @@ new groovy.xml.MarkupBuilder(writer).configuration('xmlns': 'http://www.jooq.org
     jdbc() {
         driver('com.mysql.jdbc.Driver')
         url('jdbc:mysql://47.92.92.242:3306/activityv2?serverTimezone=GMT%2b8')
+//        url('jdbc:mysql://localhost:3306/activityv2?serverTimezone=GMT%2b8')
         user('root')
         password("123456")
     }
