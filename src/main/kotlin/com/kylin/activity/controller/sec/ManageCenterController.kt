@@ -141,8 +141,11 @@ class ManageCenterController : BaseController() {
         var username = map["username"]
         var real_name = map["real_name"]
 
+        //用户所属团体
+        var community_user=map["community_user"]
+
         //取得活动积分明细
-        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name)
+        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name,community_user)
         var list = items.intoMaps()
         return list
     }
@@ -292,8 +295,11 @@ class ManageCenterController : BaseController() {
         var username = map["username"]
         var real_name = map["real_name"]
 
+        //用户所属团体
+        var community_user=map["community_user"]
+
         //取得活动积分明细
-        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name)
+        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name,community_user)
         var list = items.intoMaps()
         return list
     }

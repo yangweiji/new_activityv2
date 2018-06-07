@@ -200,10 +200,15 @@ class ActivityController : BaseController() {
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
-
         //团体名称
-        var name = map["name"]
-        var items = activityService!!.getAllActivityUserItems(title, tags, status, name)
+        var communityname = map["communityname"]
+        //活动创建人
+        var displayname=map["displayname"]
+
+        //报名活动用户
+        var signUpActivities=map["signUpActivities"]
+
+        var items = activityService!!.getAllActivityUserItems(title, tags, status, communityname,displayname,signUpActivities)
         var list = items.intoMaps()
         return list
     }

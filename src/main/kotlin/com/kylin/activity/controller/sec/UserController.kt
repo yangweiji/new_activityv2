@@ -213,10 +213,13 @@ class UserController : BaseController() {
         var level = map["level"]
         var isMember = map["isMember"]
         //团体名称
-        var name=map["name"]
+        var communityname=map["communityname"]
+
+        //用户报名的活动
+        var activityuser=map["activityuser"]
 
         //查询用户
-        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember,name)
+        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember,communityname,activityuser)
         var list = items.intoMaps()
         return list
     }

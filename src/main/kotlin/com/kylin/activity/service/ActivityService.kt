@@ -367,13 +367,15 @@ class ActivityService {
      * @param status: 活动进行状态
      * @return 活动信息集合
      */
-    fun getAllActivityUserItems(title: String?, tags: String?, status: String?,name:String?): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar,t3.name, " +
+    fun getAllActivityUserItems(title: String?, tags: String?, status: String?, communityname: String?,displayname:String?,signUpActivities:String?): Result<Record> {
+        var sql = "select t1.*,t2.displayname, t5.username, t2.avatar user_avatar,t3.name, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
                 "left join community t3 on t1.community_id=t3.id " +
-                "where 1=1 {0} {1} {2} " +
+                "left join activity_user t4 on t1.id=t4.activity_id " +
+                "left join user t5 on t4.user_id=t5.id "+
+                "where 1=1 {0} {1} {2}  ?  {3} " +
                 "order by t1.start_time desc "
         var strCondition = ""
         if (!title.isNullOrBlank()) {
@@ -385,6 +387,7 @@ class ActivityService {
             strCondition = "and t1.tags = '{0}'".replace("{0}", tags!!)
         }
         sql = sql.replace("{1}", strCondition)
+
 
 
         if (status == "1") {
@@ -401,16 +404,20 @@ class ActivityService {
 
 
         //团体名称
-        if (!name.isNullOrBlank()) {
-            strCondition="and t3.name like '?'  "
+        if (!communityname.isNullOrBlank()) {
+            strCondition += "and t3.name like '%?%' ".replace("?", communityname!!)
         }
-       sql=sql.replace("?",strCondition)
+        sql = sql.replace("?", strCondition)
 
 
+        //报名活动用户
+        if (!signUpActivities.isNullOrBlank()) {
+            strCondition += "and t5.username like '%{3}%' ".replace("{3}", signUpActivities!!)
+        }
+        sql = sql.replace("{3}", strCondition)
         var items = create!!.resultQuery(sql).fetch()
         return items
     }
-
 
 
     /**

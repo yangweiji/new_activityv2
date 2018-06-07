@@ -10,7 +10,6 @@ $(function () {
             location.href = "/sec/user/create";
         }
     };
-
     //This event is emitted by DataTables when a table is being initialised and is about to request data.
     // At the point of being fired the table will have its columns and features initialised,
     // but no data will have been loaded (either by Ajax, or reading from the DOM).
@@ -40,10 +39,10 @@ $(function () {
             dom: '<"top">Bfrt<"bottom">lip<"clear">',
             buttons: [
                 //显示添加按钮
-                  {
-                      extend: 'create',
-                      text: '添加'
-                  },
+                {
+                    extend: 'create',
+                    text: '添加'
+                },
                 {
                     extend: 'excel',
                     text: '导出Excel',
@@ -85,6 +84,8 @@ $(function () {
                         displayname: $("#displayname").val().trim(),
                         real_name: $("#real_name").val().trim(),
                         id_card: $("#id_card").val().trim(),
+                        communityname: $("#communityname").val().trim(),
+                        activityuser: $("#activityuser").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -99,6 +100,7 @@ $(function () {
                 {"data": "created"},
                 {"data": "real_name", "width": "80px"},
                 {"data": "total_score", "width": "30px"},
+                {"data": "title"},
                 {
                     "data": "gender", "defaultContent": "",
                     render: function (data, type, row) {
@@ -169,10 +171,10 @@ $(function () {
             columnDefs: [
                 {
                     searchable: false,
-                    orderable:false,
+                    orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6,7,-1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7,8, -1], visible: true},
                 {targets: '_all', visible: false}
                 // {
                 //     targets:[8],//身份证号的导出处理
