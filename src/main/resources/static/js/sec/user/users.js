@@ -84,7 +84,6 @@ $(function () {
                         displayname: $("#displayname").val().trim(),
                         real_name: $("#real_name").val().trim(),
                         id_card: $("#id_card").val().trim(),
-                        communityname: $("#communityname").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -95,7 +94,6 @@ $(function () {
                 {"data": "id", "width": "50px"},
                 {"data": "username"},
                 {"data": "displayname"},
-                {"data": "name"},
                 {"data": "created"},
                 {"data": "real_name", "width": "80px"},
                 {"data": "total_score", "width": "30px"},
@@ -172,7 +170,7 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7,8, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, -1], visible: true},
                 {targets: '_all', visible: false}
                 // {
                 //     targets:[8],//身份证号的导出处理
