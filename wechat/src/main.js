@@ -46,11 +46,6 @@ export default {
           pagePath:'pages/oneself/oneself',
           iconPath: 'static/images/icon_nav_toast.png',
           text:'我'
-        },
-        {
-          pagePath:'pages/register/register',
-          iconPath: 'static/images/icon_nav_toast.png',
-          text:'注册'
         }
       ]
     }

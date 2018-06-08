@@ -35,7 +35,7 @@ function HttpRequest(loading, url, sessionChoose, sessionId, params, method, ask
             }  
             if (res.data.code == 5000) {  
                 console.log("需要登录")
-                wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, callBack);  
+                // wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, callBack);  
             }  
             callBack(res.data);  
         },  
@@ -107,33 +107,33 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, cal
 
 //小程序登录
 function Login() {
-    if (wx.getStorageSync("sessionInfo")) return;
-    //登录
-    wx.login({
-        success: res => {
-            // 发送 res.code 到后台换取 openId, sessionKey, unionId  
-            var errMsg = res.errMsg;  
-            if (errMsg != "login:ok") {  
-                console.log("错误提示","出错了，请稍后再试试...")  
-            } else {  
-                var code = res.code;
-                wx.getUserInfo({
-                    success: function (res) {
-                      console.log(7, res);
-                    },
-                    fail: function (res) {
-                      console.log(8, res);
+    //检查session_key
+    wx.checkSession({
+        success: function(){
+          //session_key 未过期，并且在本生命周期一直有效
+          console.log("session_key 未过期，并且在本生命周期一直有效");
+          //if (wx.getStorageSync("sessionInfo")) return;
+        },
+        fail: function() {
+            // session_key 已经失效，需要重新执行登录流程
+            wx.login({
+                success: res => {
+                    // 发送 res.code 到后台换取 openId, sessionKey, unionId  
+                    var errMsg = res.errMsg;  
+                    if (errMsg != "login:ok") {  
+                        console.log("错误提示","出错了，请稍后再试试...")  
+                    } else {  
+                        var code = res.code;
+                        HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
+                            console.log("global data: ", res)
+                            wx.setStorageSync("sessionInfo", res)
+                        });
                     }
-                })
-                  
-                HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
-                    data.sessionInfo = res;
-                    console.log("global data: ", data)
-                    wx.setStorageSync("sessionInfo", data.sessionInfo)
-                });
-            }
+                }
+            });
         }
-    });
+    })
+    
 }
 
 //验证用户身份，小程序页面创建时调用此方法

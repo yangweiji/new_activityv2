@@ -8,6 +8,7 @@ import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.databases.tables.pojos.Vercode
 import com.kylin.activity.model.AuthUser
 import com.kylin.activity.util.CommonService
+import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.jooq.Record
@@ -74,7 +75,47 @@ class UserService {
                 return "success" // 用户注册成功
             }
         } else {
-            return "vercode" // 验证吗错误或过期
+            return "vercode" // 验证码错误或过期
+        }
+    }
+
+    /**
+     * 微信小程序注册用户
+     */
+    fun register(username: String
+                 , password: String
+                 , openId: String
+                 , code: String
+                 , nickName: String
+                 , avatarUrl: String): String {
+        var vercode = create!!.selectFrom(Tables.VERCODE)
+                .where(Tables.VERCODE.MOBILE.eq(username).and(Tables.VERCODE.CODE.eq(code)))
+                .orderBy(Tables.VERCODE.CREATED.desc())
+                .fetchInto(Vercode::class.java).firstOrNull()
+
+        //注册，短信有效期10分钟
+        return if (vercode != null && DateUtil.betweenMs(DateUtil.date(), vercode.created) <= 1000 * 60 * 10) {
+            var users = userDao!!.fetchByUsername(username)
+
+            if (users != null && users.count() > 0) {
+                "exist"  //用户已经存在
+            } else {
+                var user = User()
+                user.username = username
+                var coder = BCryptPasswordEncoder()
+                user.password = coder.encode(password)
+                user.enabled = true
+                user.created = DateUtil.date().toTimestamp()
+                user.displayname = nickName
+                user.avatar = avatarUrl
+                user.openId = openId
+
+                userDao!!.insert(user)
+                LogUtil.printLog("用户注册成功, ID: ${user.id}")
+                "success" // 用户注册成功
+            }
+        } else {
+            "vercode" // 验证码错误或过期
         }
     }
 

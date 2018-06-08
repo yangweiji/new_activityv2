@@ -19,9 +19,12 @@
         </div>
       </div> -->
 
-      <div class="weui-toptips weui-toptips_warn" v-if="showTopTips">{{errorInfo}}</div>
+      <div class="weui-toptips" :class="{'weui-toptips_warn': isError, 'weui-toptips_primary': !isError}" 
+            v-if="showTopTips">{{infoMessage}}</div>
 
-      <div class="weui-cells__title">用户登录</div>
+      <div class="weui-cells__title">用户登录，
+        <navigator url="../../pages/register/register" hover-class="navigator-hover" class="weui-agree__link">新用户注册</navigator>
+      </div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
           <div class="weui-cell__hd">
@@ -63,11 +66,11 @@
 
       <!-- <div class="weui-cells__tips">底部说明文字底部说明文字</div> -->
       <div class="weui-btn-area">
-        <button class="weui-btn" type="primary" @click="bindLogin" :disabled="disabled">确定</button>
+        <!-- <button class="weui-btn" type="primary" @click="bindLogin" :disabled="disabled">确定</button> -->
         <!-- 需要使用 button 来授权登录 -->
         <button class="weui-btn" type="primary" open-type="getUserInfo" @getuserinfo="bindGetUserInfo" v-if="canIUse" :disabled="disabled">授权登录</button>
-        <view wx:else>请升级微信版本</view>
-        <button class="weui-btn" type="warnning" @click="bindregister">注册新用户</button>
+        <view v-else>请升级微信版本</view>
+        <!-- <button class="weui-btn" type="warn" @click="register">注册新用户</button> -->
       </div>
     </div>
   </div>
@@ -78,8 +81,9 @@ import global from '../../global/index'
 export default {
   data() {
     return {
+      isError: true,
       showTopTips: false,
-      errorInfo: null,
+      infoMessage: null,
 
       username: "",
       password: "",
@@ -122,11 +126,17 @@ export default {
       var that = this;
       if (that.canGetVerCode) {
         global.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
-          if (!res) {
+          if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
           }
+          
+          that.isError = false;
+          that.infoMessage = "短信验证码已发送，10分钟内有效！";
+          that.showTopTipsFun();
 
+          //测试环境下，直接显示出验证码
+          that.vercode = res.message;
           that.canGetVerCode = false;
           that.count = 10;
           var i = setInterval(() => {
@@ -142,48 +152,33 @@ export default {
         console.log("请等待..");
       }
     },
-    bindLogin (e) {
-      //验证用户名和密码
-      var that = this;
-      var param = {
-        username: that.username,
-        password: that.password,
-        vercode: that.vercode,
-        openId: wx.getStorageSync("sessionInfo").openid,
-      };
+    // bindLogin (e) {
+    //   //验证用户名和密码
+    //   var that = this;
+    //   var param = {
+    //     username: that.username,
+    //     password: that.password,
+    //     vercode: that.vercode,
+    //     openId: wx.getStorageSync("sessionInfo").openid,
+    //   };
 
-      // wx.redirectTo({
-      //   url: "../../pages/register/register"
-      // });
-
-      // wx.navigateTo({
-      //   url: "../../pages/register/register"
-      // });
-
-      global.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
-        if (res.code == 200) {
-          wx.navigateTo({
-            // url: "../../pages/register/register"
-            url: "../../pages/index/index"
-          });
-        }
-        else {
-          that.errorInfo = res.message;
-          that.showTopTipsFun();
-        }
-      })
-    },
+    //   global.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
+    //     if (res.code == 200) {
+    //       wx.navigateBack({
+    //         delta: 1
+    //       })
+    //     }
+    //     else {
+    //       that.infoMessage = res.message;
+    //       that.showTopTipsFun();
+    //     }
+    //   })
+    // },
     bindGetUserInfo: function(e) {
       console.log("bindGetUserInfo: ", e)
       //验证用户名和密码
-      var that = this
-      var param = {
-        username: that.username,
-        password: that.password,
-        vercode: that.vercode,
-        openId: wx.getStorageSync("sessionInfo").openid,
-      }
-
+      var that = this;
+      var param = {};
       if (e.mp.detail.userInfo) {
         //允许授权
         param = {
@@ -203,12 +198,13 @@ export default {
             global.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                wx.navigateTo({
-                  url: "/pages/oneself/oneself"
-                });
+                wx.navigateBack({
+                  delta: 1
+                })
               }
               else {
-                that.errorInfo = res.message;
+                that.isError = true;
+                that.infoMessage = res.message;
                 that.showTopTipsFun();
               }
             })
@@ -217,12 +213,11 @@ export default {
         
       }
       else {
-        //拒绝授权
         console.log("拒绝授权")
       }
 
     },
-    bindregister (e) {
+    register (e) {
       wx.navigateTo({
         url: "../../pages/register/register"
       });
@@ -284,5 +279,11 @@ export default {
   height: 2.3em;
   line-height: 2.3em;
   color: #cfcfcf;
+}
+.navigator-hover {
+    color:blue;
+}
+.other-navigator-hover {
+    color:red;
 }
 </style>

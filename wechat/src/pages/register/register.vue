@@ -10,9 +10,12 @@
     </div>
 
     <div class="page__bd">
-      <div class="weui-toptips weui-toptips_warn" v-if="showTopTips">错误提示</div>
+      <div class="weui-toptips" :class="{'weui-toptips_warn': isError, 'weui-toptips_primary': !isError}" 
+            v-if="showTopTips">{{infoMessage}}</div>
       
-      <div class="weui-cells__title">新用户注册</div>
+      <div class="weui-cells__title">新用户注册，已有账号可
+        <navigator url="../../pages/login/login" hover-class="navigator-hover" class="weui-agree__link">直接登录</navigator>
+      </div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
           <div class="weui-cell__hd">
@@ -77,19 +80,24 @@
       </checkbox-group>
 
       <div class="weui-btn-area">
-        <button class="weui-btn" type="primary" @click="register" :disabled="disabled">确定</button>
+        <!-- <button class="weui-btn" type="primary" @click="bindRegister" :disabled="disabled">确定</button> -->
+         <!-- 需要使用 button 来授权登录 -->
+        <button class="weui-btn" type="primary" open-type="getUserInfo" @getuserinfo="bindGetUserInfo" v-if="canIUse" :disabled="disabled">授权注册</button>
+        <view v-else>请升级微信版本</view>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import global from '../../global/index'
 export default {
   data() {
     return {
+      isError: true,
       showTopTips: false,
       isAgree: false,
-      errorInfo: null,
+      infoMessage: null,
 
       username: "",
       password: "",
@@ -139,13 +147,19 @@ export default {
       var that = this;
       if (that.canGetVerCode) {
         global.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
-          if (!res) {
+          if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
           }
 
+          that.isError = false;
+          that.infoMessage = "短信验证码已发送，10分钟内有效！";
+          that.showTopTipsFun();
+
+          //测试环境下，直接显示出验证码
+          that.vercode = res.message;
           that.canGetVerCode = false;
-          that.count = 10;
+          that.count = 60;
           var i = setInterval(() => {
             that.count --;
             if (that.count <= 0) {
@@ -159,10 +173,61 @@ export default {
         console.log("请等待..");
       }
     },
-    register (e) {
-      //新用户注册
+    bindRegister (e) {
+      //用户注册
     },
+    bindGetUserInfo: function(e) {
+      //授权注册
+      console.log("bindGetUserInfo: ", e)
+      //验证用户名和密码
+      var that = this;
+      var param = {};
+      var userInfo = e.mp.detail.userInfo
+      console.log("userInfo: ", userInfo);
+      if (userInfo) {
+        //允许授权
+        param = {
+          sessionKey: wx.getStorageSync("sessionInfo").sessionKey,
+          encryptedData: e.mp.detail.encryptedData,
+          ivStr: e.mp.detail.iv,
+        }
+        global.HttpRequest(false, "/pub/wx/auth/getUserInfo", false, "", param, "GET", false, function(res) {
+          console.log("getUserInfo: ", res);
+          if (res.code == 200) {
+            param = {
+              username: that.username,
+              password: that.password,
+              vercode: that.vercode,
+              openId: res.openid,
+              nickName: res.nickName,
+              avatarUrl: res.avatarUrl,
+            }
+            global.HttpRequest(false, "/pub/wx/auth/register", 2, "", param, "POST", false, function(res) {
+              console.log("userLogin: " + res)
+              if (res.code == 200) {
+                //注册成功，转向首页
+                wx.switchTab({
+                  url: "../../pages/index/index",
+                  success: function (e) {
+                    console.log("注册成功，转向首页")
+                  }
+                })
+              }
+              else {
+                that.isError = true;
+                that.infoMessage = res.message;
+                that.showTopTipsFun();
+              }
+            })
+          }
+        })
+        
+      }
+      else {
+        console.log("拒绝授权")
+      }
 
+    },
   }
 }
 </script>

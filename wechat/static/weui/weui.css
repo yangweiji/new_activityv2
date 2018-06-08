@@ -215,6 +215,10 @@ icon {
   background-color: #e64340;
 }
 
+.weui-toptips_primary {
+  background-color: #1AAD19;
+}
+
 .weui-textarea {
   display: block;
   width: 100%;

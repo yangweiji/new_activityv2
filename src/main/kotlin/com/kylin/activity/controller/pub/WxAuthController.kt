@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*
 import me.chanjar.weixin.common.exception.WxErrorException
 import com.kylin.activity.util.JsonUtils
 import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import org.apache.commons.lang3.StringUtils
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.GetMapping
@@ -143,7 +144,7 @@ class WxAuthController {
 
 
     /**
-     * 用户登录（手机号+密码）
+     * 用户登录（手机号+密码+短信验证码）
      */
     @RequestMapping(value = "/userLogin", method = [RequestMethod.POST])
     fun userLogin(@RequestBody(required = false) map: Map<String, String>): Any {
@@ -153,13 +154,10 @@ class WxAuthController {
         var openId = map["openId"]
 
         var messageResult = MessageResult()
-        var code = verCodeService!!.getVerCode(username.toString())
-        LogUtil.printLog("验证码: $code")
-        if (code != verCode) {
-            messageResult.code = -1
-            messageResult.message = "短信验证码无效！"
-        }
-        else {
+        var verCodeInfo = verCodeService!!.getVerCode(username.toString(), verCode.toString())
+
+        //登录，短信有效期10分钟
+        if (verCodeInfo != null && DateUtil.betweenMs(DateUtil.date(), verCodeInfo!!.created) <= 1000 * 60 * 10) {
             var user = userService!!.getUser(username.toString())
             if (user == null) {
                 messageResult.code = -2
@@ -180,6 +178,44 @@ class WxAuthController {
             else {
                 messageResult.code = -3
                 messageResult.message = "密码无效！"
+            }
+        }
+        else {
+            messageResult.code = -1
+            messageResult.message = "短信验证码无效或已过期！"
+        }
+
+        return JsonUtils.toJson(messageResult)
+    }
+
+
+    /**
+     * 用户注册（手机号+密码+短信验证码）
+     */
+    @RequestMapping(value = "/register", method = [RequestMethod.POST])
+    fun register(@RequestBody(required = false) map: Map<String, String>): Any {
+        var username = map["username"].toString()
+        var password = map["password"].toString()
+        var verCode = map["vercode"].toString()
+        var openId = map["openId"].toString()
+        var nickName = map["nickName"].toString()
+        var avatarUrl = map["avatarUrl"].toString()
+
+        var messageResult = MessageResult()
+        var result = userService!!.register(username, password, openId, verCode, nickName, avatarUrl)
+
+        when (result) {
+            "success" -> {
+                messageResult.code = 200
+                messageResult.message = "SUCCESS"
+            }
+            "vercode" -> {
+                messageResult.code = -1
+                messageResult.message = "短信验证码无效或已过期！"
+            }
+            "exist" -> {
+                messageResult.code = -2
+                messageResult.message = "该手机号已注册！"
             }
         }
 

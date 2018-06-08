@@ -1,6 +1,7 @@
 package com.kylin.activity.service
 
 
+import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivitySmsDao
 import com.kylin.activity.databases.tables.daos.VercodeDao
 import com.kylin.activity.databases.tables.pojos.ActivitySms
@@ -29,14 +30,16 @@ class VerCodeService {
     private val create: DSLContext? = null
 
     /**
-     * 获取用户当前的短信验证码
+     * 获取用户当前的短信验证码信息
      * @param mobile: 手机号码
+     * @param code: 验证码
      */
-    fun getVerCode(mobile: String): String? {
-        var sql = "select code from vercode order by created desc limit 1"
-        var code = create!!.fetchValue(sql)
-
-        return if (code != null) code.toString() else null
+    fun getVerCode(mobile: String, code: String): Vercode? {
+        var vercode = create!!.selectFrom(Tables.VERCODE)
+                .where(Tables.VERCODE.MOBILE.eq(mobile).and(Tables.VERCODE.CODE.eq(code)))
+                .orderBy(Tables.VERCODE.CREATED.desc())
+                .fetchInto(Vercode::class.java).firstOrNull()
+        return vercode
     }
 
     /**
