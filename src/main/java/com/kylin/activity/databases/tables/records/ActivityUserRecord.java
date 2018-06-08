@@ -31,7 +31,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> implements Record16<Integer, Integer, Integer, Integer, Timestamp, Integer, Timestamp, Timestamp, String, String, String, BigDecimal, Integer, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = 1919420516;
+    private static final long serialVersionUID = 404577600;
 
     /**
      * Setter for <code>activityv2.activity_user.id</code>. 编号
@@ -244,14 +244,14 @@ public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> 
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.status</code>.
+     * Setter for <code>activityv2.activity_user.status</code>. 中签状态（待审，中签，已申请退费，已完成退费）
      */
     public void setStatus(Integer value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.status</code>.
+     * Getter for <code>activityv2.activity_user.status</code>. 中签状态（待审，中签，已申请退费，已完成退费）
      */
     public Integer getStatus() {
         return (Integer) get(15);

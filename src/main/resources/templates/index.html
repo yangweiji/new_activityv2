@@ -8,7 +8,8 @@
 
 <div id="app">
     <div class="get">
-        <div class="c-bg" th:style="'background:url('+${#httpSession.getAttribute('COMMUNITY_BACKGROUND')}+')no-repeat;background-size: cover;'"></div>
+        <div class="c-bg"
+             th:style="'background:url('+${#httpSession.getAttribute('COMMUNITY_BACKGROUND')}+')no-repeat;background-size: cover;'"></div>
         <div class="">
             <div class="am-u-lg-12">
                 <div class="get-title">
@@ -31,70 +32,75 @@
                 <p>
                     <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
                         <i class="fa fa-weixin"></i>
-                        微信公众号</a>
+                        微信小程序</a>
                     <!--<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>-->
                 </p>
             </div>
         </div>
     </div>
-
-    <div class="c_orange" style="position:relative">
-        <div class="orange_1 am-fl">
-            <div class="">
-                <button type="button"
-                        class="am-btn am-btn-warning am-round" id="o_notice">公告通知
-                </button>
-                <ul class="am-list am-list-border">
-                    <li th:each="item:${articles}">
-                        <a th:href="@{/pub/article/noticeList/{id} (id=${item.get('id')}) }" class="am-list-a" target="_blank">
-                            <span class="o_min" th:text="${item.get('title')}"></span>
-                            <span class="fal fa-angle-right"></span>
-                            <span class="o_time"
-                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
-                                  th:text="${#kylin.fromNow(item.get('publish_time'))}"
-                            >
+    <div class="c_orange_container">
+        <div class="c_orange">
+            <div class="orange_1 am-fl">
+                <div class="orange_list">
+                    <button type="button"
+                            class="am-btn am-btn-warning am-round" id="o_notice" >公告通知
+                    </button>
+                    <ul class="am-list am-list-border">
+                        <li th:each="item:${articles}">
+                            <a th:href="@{/pub/article/noticeList/{id} (id=${item.get('id')}) }" class="am-list-a"
+                               target="_blank">
+                                <span class="o_min" th:text="${item.get('title')}"></span>
+                                <span class="fal fa-angle-right"></span>
+                                <span class="o_time"
+                                      th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                      th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                                >
                             </span>
-                        </a>
-                    </li>
-                </ul>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="orange_2 am-fl">
-            <button type="button" class="am-btn am-btn-warning am-round" id="o_news">赛事新闻</button>
-            <div class="">
-                <ul class="am-list am-list-border">
-                    <li th:each="item:${articles_news}" class="myOrange">
-                        <a th:href="@{/pub/article/newsList/{id} (id=${item.get('id')}) }" class="am-list-a" target="_blank">
-                            <span class="o_min" th:text="${item.get('title')}"></span>
-                            <span class="fal fa-angle-right"></span>
-                            <span class="o_time"
-                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
-                                  th:text="${#kylin.fromNow(item.get('publish_time'))}"
-                            ></span>
-                        </a>
-                    </li>
-                </ul>
+            <div class="orange_2 am-fl">
+                <div class="orange_list">
+                    <button type="button" class="am-btn am-btn-warning am-round" id="o_news">赛事新闻</button>
+                    <ul class="am-list am-list-border">
+                        <li th:each="item:${articles_news}" class="myOrange">
+                            <a th:href="@{/pub/article/newsList/{id} (id=${item.get('id')}) }" class="am-list-a"
+                               target="_blank">
+                                <span class="o_min" th:text="${item.get('title')}"></span>
+                                <span class="fal fa-angle-right"></span>
+                                <span class="o_time"
+                                      th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                      th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                                ></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
 
-        <div class="orange_3 am-fl">
-            <button type="button" class="am-btn am-btn-warning am-round" id="o_exercise">运动指南</button>
-            <div class="">
-                <ul class="am-list am-list-border">
-                    <li th:each="item:${articles_exercise}">
-                        <a th:href="@{/pub/article/exerciseList/{id} (id=${item.get('id')}) }" class="am-list-a" target="_blank">
-                            <span class="o_min" th:text="${item.get('title')}"></span>
-                            <span class="fal fa-angle-right"></span>
-                            <span class="o_time"
-                                  th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
-                                  th:text="${#kylin.fromNow(item.get('publish_time'))}"
-                            ></span>
+            <div class="orange_3 am-fl">
+                <div class="orange_list">
+                    <button type="button" class="am-btn am-btn-warning am-round" id="o_exercise">运动指南</button>
+                    <ul class="am-list am-list-border">
+                        <li th:each="item:${articles_exercise}">
+                            <a th:href="@{/pub/article/exerciseList/{id} (id=${item.get('id')}) }" class="am-list-a"
+                               target="_blank">
+                                <span class="o_min" th:text="${item.get('title')}"></span>
+                                <span class="fal fa-angle-right"></span>
+                                <span class="o_time"
+                                      th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                      th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                                ></span>
 
-                        </a>
-                    </li>
-                </ul>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+            <div style="clear: both;"></div>
         </div>
     </div>
     <div class="banner_navbg am-nbfc">
@@ -164,12 +170,12 @@
         width: 242px;
     }
 
-    .am-list>li>a {
+    .am-list > li > a {
         color: #3d464d;
     }
-    
+
     .c_orange {
-        max-width:1190px;
+        max-width: 1190px;
         margin: auto;
         /*border: 10px solid red;*/
     }
@@ -220,6 +226,22 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+    .orange_list {
+        margin-top: 20px;
+    }
+
+    .c_orange_container {
+    background-color: rgba(61, 48, 63, 0.04);
+    }
+
+    #o_notice,#o_news,#o_exercise{
+        margin:0 auto;
+
+        border-radius:8px;
+
+        text-align: center;
+    }
+
 </style>
 
 </body>

@@ -44,7 +44,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activityv2 extends SchemaImpl {
 
-    private static final long serialVersionUID = -597707627;
+    private static final long serialVersionUID = 13685336;
 
     /**
      * The reference instance of <code>activityv2</code>
@@ -77,7 +77,7 @@ public class Activityv2 extends SchemaImpl {
     public final ActivityPhotoPicture ACTIVITY_PHOTO_PICTURE = com.kylin.activity.databases.tables.ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE;
 
     /**
-     * The table <code>activityv2.activity_sms</code>.
+     * 短信
      */
     public final ActivitySms ACTIVITY_SMS = com.kylin.activity.databases.tables.ActivitySms.ACTIVITY_SMS;
 
@@ -107,7 +107,7 @@ public class Activityv2 extends SchemaImpl {
     public final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
-     * The table <code>activityv2.pay_order</code>.
+     * 付款订单
      */
     public final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
 
