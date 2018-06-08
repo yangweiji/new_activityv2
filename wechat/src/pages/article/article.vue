@@ -29,6 +29,7 @@
 
 <script>
 import base64 from "../../../static/images/base64";
+import global from '../../global/index'
 import wxParse from 'mpvue-wxparse';
 export default {
   data() {
@@ -48,22 +49,29 @@ export default {
     //取得文章信息
     getData() {
       var that = this;
-      wx.request({
-        url: "https://a.9kylin.cn/pub/wx/article/getArticleExt", //仅为示例，并非真实的接口地址
-        data: {
-          articleId: that.articleId
-        },
-        header: {
-          "content-type": "application/json" // 默认值
-        },
-        success: function(res) {
-          console.log(res.data);
-          that.item = res.data;
-        },
-        fail: function(error) {
-          console.log(error);
-        }
+      var param = {
+        articleId: that.articleId
+      };
+      global.HttpRequest(true, "/pub/wx/article/getArticleExt", false, "", param, "GET", false, function (res) {
+        that.item = res;
       });
+      
+      // wx.request({
+      //   url: "https://a.9kylin.cn/pub/wx/article/getArticleExt", //仅为示例，并非真实的接口地址
+      //   data: {
+      //     articleId: that.articleId
+      //   },
+      //   header: {
+      //     "content-type": "application/json" // 默认值
+      //   },
+      //   success: function(res) {
+      //     console.log(res.data);
+      //     that.item = res.data;
+      //   },
+      //   fail: function(error) {
+      //     console.log(error);
+      //   }
+      // });
     },
   },
   created() {

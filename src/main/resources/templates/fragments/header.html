@@ -39,11 +39,12 @@
                             活动相册
                         </a>
                     </li>
-                    <!--<li>-->
-                        <!--<a th:href="@{/sec/thirdmanage/home/0}">-->
-                            <!--我是组织方-->
-                        <!--</a>-->
-                    <!--</li>-->
+                    <li>
+                        <a th:href="@{/sec/thirdmanage/home/0}">
+                            团体中心
+                        </a>
+                    </li>
+
 
                    <!-- <li class="am-dropdown" data-am-dropdown style="margin-left:130px;top:12px;">
                         <span class="btn1">
@@ -97,13 +98,13 @@
                                         </a>
                                     </li>
                                     <!-- 团体组织用户角色：管理员/发布员，可以查看团体中心 -->
-                                    <li th:if="${canViewCommunity}">
+                                    <li>
                                         <a th:href="@{/sec/thirdmanage/home/0}">
                                             团体中心
                                         </a>
                                     </li>
                                     <!-- 平台角色：管理员/发布员，可以查看管理中心 -->
-                                    <li th:if="${canViewManagementCenter}">
+                                    <li>
                                         <a th:href="@{/sec/community/communities}">
                                             管理中心
                                         </a>

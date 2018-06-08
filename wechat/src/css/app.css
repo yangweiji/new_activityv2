@@ -35,3 +35,10 @@ page {
     text-align: left;
     font-size: 14px;
 }
+
+.weui-panel {
+    background-color: #fff;
+    margin-top: 0;
+    position: relative;
+    overflow: hidden;
+}

@@ -1,4 +1,10 @@
 <script>
+//引用vuex store
+import store from './store'
+import global from './global/index'
+// console.log("store: ", store)
+// console.log("global: ", global)
+
 export default {
   data(){
     return {
@@ -10,45 +16,19 @@ export default {
     const logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-
     console.log('app created and cache logs by setStorageSync')
-    this.login()
+    
+    //用户登录小程序
+    global.Login()
   },
+  onLaunch: function(options) {
+    console.log("Do something initial when launch.")
+  },
+  onShow: function(options) {
+    console.log("Do something when show.")
+  },
+
   methods: {
-    login() {
-      var that = this
-
-      if (wx.getStorageSync("LoginSessionKey")) return;
-
-      wx.login({
-        success: res => {
-          // 发送 res.code 到后台换取 openId, sessionKey, unionId  
-          var errMsg = res.errMsg;  
-          if (errMsg != "login:ok") {  
-            that.showHint("错误提示","出错了，请稍后再试试...")  
-          } else {  
-            var code = res.code;
-            wx.request({
-              url: 'https://a.9kylin.cn/pub/wx/auth/getSessionInfo',
-              data: {  
-                code: code
-              },  
-              header: {  
-                'content-type': 'application/json' // 默认值  
-              },  
-              success: function(res) {
-                console.log(res)
-                that.sessionInfo = res.data;
-                wx.setStorageSync("sessionInfo", that.sessionInfo)
-              },
-              fail: function(error) {
-                console.log(error);
-              }
-            })
-          }
-        }
-      });
-    }
   }
 }
 </script>

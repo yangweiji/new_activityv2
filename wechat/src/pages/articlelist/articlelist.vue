@@ -88,7 +88,7 @@
 
 <script>
 import base64 from "../../../static/images/base64";
-
+import global from '../../global/index'
 export default {
   data() {
     return {
@@ -131,22 +131,28 @@ export default {
     //获取指定类别下的文章列表，参数从OnShow事件中获取
     getData() {
       var that = this;
-      wx.request({
-        url: "https://a.9kylin.cn/pub/wx/article/getArticleListByCategory", //仅为示例，并非真实的接口地址
-        data: {
-          category: that.articleCategory
-        },
-        header: {
-          "content-type": "application/json" // 默认值
-        },
-        success: function(res) {
-          console.log(res.data);
-          that.items = res.data;
-        },
-        fail: function(error) {
-          console.log(error);
-        }
+      var param = {
+        category: that.articleCategory
+      };
+      global.HttpRequest(true, "/pub/wx/article/getArticleListByCategory", false, "", param, "GET", false, function (res) {
+        that.items = res;
       });
+      // wx.request({
+      //   url: "https://a.9kylin.cn/pub/wx/article/getArticleListByCategory", //仅为示例，并非真实的接口地址
+      //   data: {
+      //     category: that.articleCategory
+      //   },
+      //   header: {
+      //     "content-type": "application/json" // 默认值
+      //   },
+      //   success: function(res) {
+      //     console.log(res.data);
+      //     that.items = res.data;
+      //   },
+      //   fail: function(error) {
+      //     console.log(error);
+      //   }
+      // });
     },
     //点击文章分类后触发事件，重新获取相应的信息
     tabClick(e) {
@@ -201,5 +207,11 @@ export default {
 .weui-navbar__slider_4 {
   left: 35rpx;
   transform: translateX(600rpx);
+}
+.weui-panel {
+  background-color: #fff;
+  margin-top: 0;
+  position: relative;
+  overflow: hidden;
 }
 </style>

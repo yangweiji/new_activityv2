@@ -10,7 +10,7 @@
             <p class="p-text__xx">用户信息【参与者】</p>
             <p class="p-text__xx">用户加入的团体信息</p>
           </div>
-          <image style="height:200px; width:100%;"></image>
+          <image style="height:200px; width:100%;" />
        </div>
        <div>
             <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -63,8 +63,9 @@
                 <div class="weui-cell__ft weui-cell__ft_in-access"></div>
             </navigator> 
        </div>
-</div>
- <div v-if="xs==2">
+  </div>
+
+  <div v-if="xs==2">
           <div>
           <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(1)">
              切换到参与者 >>
@@ -114,6 +115,7 @@
 
 <script>
 import base64 from "../../../static/images/base64";
+import global from '../../global/index'
 export default {
   data() {
     return {
@@ -121,34 +123,20 @@ export default {
       xs: 1
     };
   },
-
   components: {},
-
   methods: {
     getData() {
-      wx.request({
-        url: "https://a.9kylin.cn", //仅为示例，并非真实的接口地址
-        data: {
-          x: "",
-          y: ""
-        },
-        header: {
-          "content-type": "application/json" // 默认值
-        },
-        success: function(res) {
-        },
-        fail: function(error) {
-          console.log(error);
-        }
-      });
+      
     },
     qh(cs) {
       this.xs = cs;
     }
   },
-
   created() {
-    // this.getData();
+    console.log("oneself created");
+  },
+  onShow () {
+    global.CheckUserValidation();
   }
 };
 </script>

@@ -5,7 +5,7 @@
       <!-- banner -->
       <div>
         <span style="position:absolute;right:0;margin-top:10px;margin-right:25px;">切换团体</span>
-        <image src="../../static/images/banner_bg.png" style="height:200px; width:100%;" />
+        <image src="../../static/images/banner_bg.png" style="height:100px;" model="top" />
       </div>
 
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
@@ -72,7 +72,6 @@
                 </div>
               </div>
             </div>
-
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b12'">
               <div class="weui-panel__bd">
@@ -134,6 +133,8 @@
 
 <script>
 import base64 from "../../../static/images/base64";
+import global from '../../global/index'
+
 export default {
   data() {
     return {
@@ -208,22 +209,30 @@ export default {
     //获取活动信息
     getData() {
       var that = this;
-      wx.request({
-        url: "https://a.9kylin.cn/pub/wx/activity/search", 
-        data: {
-          s: 1, //默认community_id=1
-          t: that.activeIndex
-        },
-        header: {
-          "content-type": "application/json" // 默认值
-        },
-        success: function(res) {
-          that.items = res.data;
-        },
-        fail: function(error) {
-          console.log(error);
-        }
+      var param = {
+        s: 1, //默认community_id=1
+        t: that.activeIndex
+      }
+      global.HttpRequest(true, "/pub/wx/activity/search", false, "", param, "GET", false, function (res) {
+        that.items = res;
       });
+
+      // wx.request({
+      //   url: "https://a.9kylin.cn/pub/wx/activity/search", 
+      //   data: {
+      //     s: 1, //默认community_id=1
+      //     t: that.activeIndex
+      //   },
+      //   header: {
+      //     "content-type": "application/json" // 默认值
+      //   },
+      //   success: function(res) {
+      //     that.items = res.data;
+      //   },
+      //   fail: function(error) {
+      //     console.log(error);
+      //   }
+      // });
     },
     //主要活动标签分类触发事件，重新获取相应的数据
     tabClick(e) {
@@ -402,5 +411,11 @@ export default {
   font-size: 15px;
   line-height: normal;
   border: none;
+}
+.weui-panel {
+  background-color: #fff;
+  margin-top: 0;
+  position: relative;
+  overflow: hidden;
 }
 </style>

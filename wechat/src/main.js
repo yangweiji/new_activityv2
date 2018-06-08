@@ -13,6 +13,9 @@ export default {
   config: {
     pages: [
       '^pages/index/index',
+      'pages/login/login',
+      'pages/register/register',
+      'pages/error/error',
       'pages/tool/tool',
       'pages/oneself/oneself',
       'pages/details/details',
@@ -31,15 +34,23 @@ export default {
       list:[
         {
           pagePath:'pages/index/index',
+          iconPath: 'static/images/icon_nav_toast.png',
           text:'首页'
         },
         {
           pagePath:'pages/tool/tool',
+          iconPath: 'static/images/icon_nav_toast.png',
           text:'小工具'
         },
         {
           pagePath:'pages/oneself/oneself',
+          iconPath: 'static/images/icon_nav_toast.png',
           text:'我'
+        },
+        {
+          pagePath:'pages/register/register',
+          iconPath: 'static/images/icon_nav_toast.png',
+          text:'注册'
         }
       ]
     }

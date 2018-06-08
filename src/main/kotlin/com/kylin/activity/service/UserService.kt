@@ -131,6 +131,19 @@ class UserService {
     }
 
     /**
+     * 依据用户名和密码取得用户信息
+     * @param username: 手机号
+     * @param password: 加密密码
+     * @return 用户信息
+     */
+    fun getUser(username: String, password: String): User? {
+        return create!!.selectFrom(Tables.USER)
+                .where(Tables.USER.USERNAME.eq(username))
+                .and(Tables.USER.PASSWORD.eq(password))
+                .fetchOneInto(User::class.java)
+    }
+
+    /**
      * 全部用户
      */
     fun getAllUsers(): List<User> {
@@ -329,5 +342,11 @@ class UserService {
         return communityUser.id
     }
 
-
+    /**
+     * 依据openId取得唯一的用户
+     * @return 用户信息
+     */
+    fun getUserByOpenId(openId: String): User? {
+        return userDao!!.fetchByOpenId(openId).firstOrNull()
+    }
 }
