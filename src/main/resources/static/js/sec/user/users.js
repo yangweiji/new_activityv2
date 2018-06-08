@@ -84,8 +84,7 @@ $(function () {
                         displayname: $("#displayname").val().trim(),
                         real_name: $("#real_name").val().trim(),
                         id_card: $("#id_card").val().trim(),
-                        communityname: $("#communityname").val().trim(),
-                        activityuser: $("#activityuser").val().trim()
+                        communityname: $("#communityname").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -100,7 +99,6 @@ $(function () {
                 {"data": "created"},
                 {"data": "real_name", "width": "80px"},
                 {"data": "total_score", "width": "30px"},
-                {"data": "title"},
                 {
                     "data": "gender", "defaultContent": "",
                     render: function (data, type, row) {

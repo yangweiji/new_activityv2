@@ -71,7 +71,7 @@ $(function () {
                         title: $("#title").val().trim(),
                         username: $("#username").val().trim(),
                         real_name: $("#real_name").val().trim(),
-                        community_user: $("#community_user").val().trim()
+                        communityname: $("#communityname").val().trim()
                     };
                     return JSON.stringify(param);
                 },

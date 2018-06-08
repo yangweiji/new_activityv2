@@ -65,8 +65,8 @@
                                placeholder="请输入真实姓名" class="am-form-field am-radius"/>
                     </div>
                     <div class="am-form-group">
-                        <input type="text" id="community_user" name="community_user" th:value="${#httpServletRequest.getParameter('community_user')}"
-                               placeholder="请输入用户所属团体" class="am-form-field am-radius"/>
+                        <input type="text" id="communityname" name="communityname" th:value="${#httpServletRequest.getParameter('communityname')}"
+                               placeholder="请输入团体名称" class="am-form-field am-radius"/>
                     </div>
                     <!--<button type="submit" class="am-btn am-btn-default am-radius">-->
                         <!--<i class="am-icon-search"></i> 查询-->
@@ -100,7 +100,7 @@
                             <th>ID</th>
                             <th class="hd_table" style="width:180px;">活动标题</th>
                             <th>账号</th>
-                            <th>所属团体</th>
+                            <th>归属团体</th>
                             <th>姓名</th>
                             <th>积分</th>
                             <th>时间</th>

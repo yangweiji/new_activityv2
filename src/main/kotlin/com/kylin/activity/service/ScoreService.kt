@@ -71,13 +71,12 @@ class ScoreService {
      * 用户活动积分明细
      * @return
      */
-    fun getUserActivityScores(start: String?, end: String?, title: String?, username: String?, real_name: String?,community_user:String?): Result<Record> {
+    fun getUserActivityScores(start: String?, end: String?, title: String?, username: String?, real_name: String?,communityname:String?): Result<Record> {
         var sql = "select t1.*, t2.username, t2.displayname, t2.avatar user_avatar, t2.real_name, t3.title,t4.name " +
                 "from score_history t1 " +
                 "left join user t2 on t1.user_id = t2.id " +
                 "left join activity t3 on t1.activity_id = t3.id " +
                 "left join community t4 on t1.community_id=t4.id " +
-                "left join community_user t5 on t4.id=t5.community_id "+
                 "where 1=1 {0} {1} {2} {3} {4} ? " +
                 "order by t1.created desc "
         var strCondition = ""
@@ -108,9 +107,9 @@ class ScoreService {
         }
         sql = sql.replace("{4}", strCondition)
 
-        //用户所属团体
-        if(!community_user.isNullOrBlank()){
-            strCondition="and t4.name like '%?%' ".replace("?",community_user!!)
+        //团体名称
+        if(!communityname.isNullOrBlank()){
+            strCondition="and t4.name like '%?%' ".replace("?",communityname!!)
         }
         sql=sql.replace("?",strCondition)
 

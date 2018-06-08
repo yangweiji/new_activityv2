@@ -74,8 +74,6 @@ $(function () {
                         tags: $("#tags").val().trim(),
                         title: $("#title").val().trim(),
                         communityname: $("#communityname").val().trim(),
-                       /* displayname: $("#displayname").val().trim(),*/
-                        signUpActivities: $("#signUpActivities").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -90,7 +88,6 @@ $(function () {
                 {"data": "end_time"},
                 {"data": "attend_user_count"},
                 {"data": "check_user_count"},
-                {"data": "username"},
                 {"data": "displayname"},
                 {
                     "data": "status", defaultContent: "",

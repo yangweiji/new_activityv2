@@ -50,7 +50,6 @@ class OrderService {
                 "left join activity t3 on t1.activity_id = t3.id " +
                 "left join activity_ticket t4 on t1.activity_ticket_id = t4.id " +
                 "left join community t5 on t1.community_id=t5.id " +
-                "left join community_user t6 on t5.id=t6.community_id "+
                 "where 1=1 and t1.status = 2 {0} {1} {2} {3} {4} ? " +
                 "order by t1.created desc "
         var strCondition = ""
