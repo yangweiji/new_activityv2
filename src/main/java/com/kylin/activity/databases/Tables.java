@@ -62,7 +62,7 @@ public class Tables {
     public static final ActivityPhotoPicture ACTIVITY_PHOTO_PICTURE = com.kylin.activity.databases.tables.ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE;
 
     /**
-     * The table <code>activityv2.activity_sms</code>.
+     * 短信
      */
     public static final ActivitySms ACTIVITY_SMS = com.kylin.activity.databases.tables.ActivitySms.ACTIVITY_SMS;
 
@@ -92,7 +92,7 @@ public class Tables {
     public static final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
-     * The table <code>activityv2.pay_order</code>.
+     * 付款订单
      */
     public static final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
 
