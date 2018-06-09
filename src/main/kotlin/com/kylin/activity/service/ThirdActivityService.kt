@@ -14,6 +14,8 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CacheEvict
 import org.springframework.stereotype.Service
 
 /**
@@ -21,6 +23,7 @@ import org.springframework.stereotype.Service
  * @author Richard C. Hu
  */
 @Service
+@CacheConfig(cacheNames = ["activities"])
 class ThirdActivityService {
 
     /**
@@ -277,6 +280,7 @@ class ThirdActivityService {
      * 删除活动
      * @param id: 活动ID
      */
+    @CacheEvict(allEntries = true)
     fun deleteById(id: Int) {
         activityDao!!.deleteById(id)
     }
@@ -291,25 +295,11 @@ class ThirdActivityService {
     }
 
     /**
-     * 获取用户在一个活动上的积分
-     * @param userId: 用户ID
-     * @param activityId: 活动ID
-     * @return 历史积分信息
-     */
-    fun getScoreHistories(userId: Int, activityId: Int): Any? {
-
-        var item = create!!.resultQuery("select * from score_history where user_id=? and activity_id=?", userId, activityId)
-                .fetchOne()
-        return item
-
-    }
-
-    /**
      * 取得活动对应的票种集合
      * @param id: 活动ID
      * @return 活动票种列表信息
      */
-    fun getActivtyTickets(id: Int): List<ActivityTicket>? {
+    fun getActivityTickets(id: Int): List<ActivityTicket>? {
         return activityTicketDao!!.fetchByActivityId(id)
     }
 
@@ -317,6 +307,7 @@ class ThirdActivityService {
      * 添加活动
      * @param activity: 活动信息
      */
+    @CacheEvict(allEntries = true)
     fun insert(activity: Activity?) {
         activityDao!!.insert(activity)
     }
@@ -333,6 +324,7 @@ class ThirdActivityService {
      * 编辑活动
      * @param activity: 活动信息
      */
+    @CacheEvict(allEntries = true)
     fun update(activity: Activity?) {
         activityDao!!.update(activity)
     }
@@ -424,28 +416,6 @@ class ThirdActivityService {
             return order.into(PayOrder::class.java)
         }
         return null
-    }
-
-    /**
-     * 更新报名用户缴费订单信息
-     * @param refundOutTradeNo：付款单号
-     * @param refund_time: 退款时间
-     * @param refund_status: 退款状态
-     * @param id: 订单ID
-     */
-    fun updateActivityUserOrder(refundOutTradeNo: String, refund_time: DateTime, refund_status: Int, id: Any) {
-        create!!.execute("update pay_order set refund_trade_no=? , refund_time = ?, refund_status = ? where id = ?",
-                refundOutTradeNo, refund_time.toTimestamp(), refund_status, id)
-    }
-
-    /**
-     * 更新报名用户缴费订单信息: 退款状态
-     * @param refund_status: 退款状态
-     * @param id: 订单ID
-     */
-    fun updateActivityUserOrder(refund_status: Int, id: Any) {
-        create!!.execute("update pay_order set refund_status = ? where id = ?",
-                refund_status, id)
     }
 
     /**

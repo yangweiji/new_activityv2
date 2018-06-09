@@ -3,28 +3,32 @@ package com.kylin.activity.service
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityFavoriteDao
+import com.kylin.activity.databases.tables.daos.ActivityTicketDao
 import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityFavorite
-import com.kylin.activity.databases.tables.pojos.User
-import com.kylin.activity.util.CommonService
-import com.kylin.activity.util.LogUtil
+import com.kylin.activity.databases.tables.pojos.ActivityTicket
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.*
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * 活动服务
  * @author Richard C. Hu
  */
 @Service
+@CacheConfig(cacheNames = ["activities"])
 class ActivityService {
 
     /**
-     * 通用服务
+     * 用户服务
      */
     @Autowired
-    private var commonService: CommonService? = null
+    private val userService: UserService? = null
 
     /**
      * 活动DAO
@@ -37,6 +41,13 @@ class ActivityService {
      */
     @Autowired
     private val activityFavoriteDao: ActivityFavoriteDao? = null
+
+    /**
+     * 活动票种DAO
+     */
+    @Autowired
+    private val activityTicketDao: ActivityTicketDao? = null
+
 
     /**
      * 数据操作上下文
@@ -57,6 +68,65 @@ class ActivityService {
      * 取得活动总数
      */
     var activityCount: Long = 0
+
+
+    /**
+     * 创建活动
+     * @param activity: 活动信息
+     * @return 活动信息
+     */
+    @CacheEvict(allEntries = true)
+    fun save(activity: Activity): Activity {
+        if (activity.id != null && activity.id > 0) {
+            activityDao!!.update(activity)
+        }
+        else {
+            activityDao!!.insert(activity)
+        }
+
+        return activity
+    }
+
+
+    /**
+     * 添加活动票种
+     * @param tickets: 活动票种集合信息
+     */
+    fun insertActivityTickets(tickets: List<ActivityTicket>) {
+        activityTicketDao!!.insert(tickets)
+    }
+
+    /**
+     * 批量更新活动票种
+     * @param activityId: 活动ID
+     * @param tickets: 活动票种集合信息
+     */
+    @Transactional
+    fun updateActivityTickets(activityId: Int, tickets: List<ActivityTicket>) {
+        create!!.deleteFrom(Tables.ACTIVITY_TICKET)
+                .where(Tables.ACTIVITY_TICKET.ACTIVITY_ID.eq(activityId))
+                .execute()
+        activityTicketDao!!.insert(tickets)
+    }
+
+    /**
+     * 检查活动下是否已有报名记录
+     * @param activityId: 活动ID
+     * @return 是否有报名记录
+     */
+    fun hasAttendUser(activityId: Int): Boolean {
+        var sql = "select count(*) from activity_user where activity_id = ?"
+        return (create!!.fetchValue(sql, activityId) as Long) > 0
+    }
+
+    /**
+     * 取得活动票种信息
+     * @param activityId: 活动ID
+     * @return 活动票种信息
+     */
+    fun getActivityTickets(activityId: Int): List<ActivityTicket> {
+        return activityTicketDao!!.fetchByActivityId(activityId)
+    }
 
     /**
      * 取得活动
@@ -81,16 +151,6 @@ class ActivityService {
     }
 
     /**
-     * 取得活动
-     * @param title: 活动标题
-     * @return 单个活动信息
-     */
-    fun getAtivity(title: String): Activity? {
-        var activity = activityDao!!.fetchOne(Tables.ACTIVITY.TITLE, title)
-        return activity
-    }
-
-    /**
      * 取得活动信息
      * @param id: 活动ID
      * @return 单个活动信息
@@ -107,6 +167,7 @@ class ActivityService {
      * @param id: 团体组织标识
      * @return 活动信息集合
      */
+    @Cacheable()
     fun getPublicActivities(id: Int): Result<Record> {
 
         //构建活动数据源
@@ -595,6 +656,7 @@ class ActivityService {
      * 删除活动
      * @param id: 活动ID
      */
+    @CacheEvict(allEntries = true)
     fun deleteById(id: Int) {
         activityDao!!.deleteById(id)
     }

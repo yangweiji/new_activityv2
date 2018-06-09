@@ -117,7 +117,7 @@ class ThirdActivityController : BaseController() {
         var data = ThirdActivityPublishData()
         if (id != null && id > 0) {
             data.activity = thirdActivityService!!.getActivity(id)
-            data.tickets = thirdActivityService!!.getActivtyTickets(id)
+            data.tickets = thirdActivityService!!.getActivityTickets(id)
             val mapper = jacksonObjectMapper()
             data.attendInfos = mapper.readValue<List<ActivityAttendInfo>>(data.activity!!.attendInfos)
             data.canAttend = data.activity!!.endTime == data.activity!!.attendDueTime
@@ -158,6 +158,8 @@ class ThirdActivityController : BaseController() {
 
         //设置活动为公开状态
         data.activity!!.public = true
+        //设置活动归属组织团体
+        data.activity!!.communityId = this.sessionCommunity.id
 
         if (data.canAttend) {
             data.activity!!.attendDueTime = data.activity!!.endTime

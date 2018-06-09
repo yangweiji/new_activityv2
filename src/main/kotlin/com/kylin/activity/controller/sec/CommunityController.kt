@@ -102,7 +102,7 @@ class CommunityController : BaseController() {
         //community中管理员电话=usr中的displayname/username
         var communitiesData = CommunitiesData()
         if (id != null && id > 0) {
-            communitiesData.community = communityService!!.getCommunityId(id)
+            communitiesData.community = communityService!!.getCommunity(id)
         } else {
             communitiesData.community = Community()
         }
@@ -162,7 +162,7 @@ class CommunityController : BaseController() {
             //更新团体组织信息
             community.created = DateUtil.date().toTimestamp()
             community.createdBy = user!!.id
-            communityService!!.updateCommunity(community)
+            communityService!!.update(community)
             LogUtil.printLog("更新成功,团体组织ID：${community.id}")
         } else {
             //取得用户信息
@@ -198,7 +198,7 @@ class CommunityController : BaseController() {
             LogUtil.printLog("添加成功,团体组织用户关联ID：${communityUser.id}")
 
             community.created = DateUtil.date().toTimestamp()
-            communityService!!.insertCommunity(community)
+            communityService!!.insert(community)
             LogUtil.printLog("添加成功,团体组织ID：${community.id}")
         }
         return "redirect:/sec/community/communities"

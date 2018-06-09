@@ -50,9 +50,6 @@ class ActivityController : BaseController() {
     private val activityUserDao: ActivityUserDao? = null
 
     @Autowired
-    private val payOrderDao: PayOrderDao? = null
-
-    @Autowired
     private val wxService: WxService? = null
     /**
      * 活动服务
@@ -61,11 +58,11 @@ class ActivityController : BaseController() {
     private val activityService: ActivityService? = null
 
     @Autowired
-    private val activityTicketDao: ActivityTicketDao? = null
-
-    @Autowired
     private val create: DSLContext? = null
 
+    /**
+     * 活动发布
+     */
     @GetMapping("/publish")
     fun getPublish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
 
@@ -77,7 +74,8 @@ class ActivityController : BaseController() {
         var data = ActivityPublishData()
         if (id != null && id > 0) {
             data.activity = activityDao!!.fetchOneById(id)
-            data.tickets = activityTicketDao!!.fetchByActivityId(id)
+            data.tickets = activityService!!.getActivityTickets(id)
+
             val mapper = jacksonObjectMapper()
             data.attendInfos = mapper.readValue<List<ActivityAttendInfo>>(data.activity!!.attendInfos)
             data.canAttend = data.activity!!.endTime == data.activity!!.attendDueTime
@@ -98,11 +96,15 @@ class ActivityController : BaseController() {
             )
             data.canAttend = true
         }
+
         model.addAttribute("typeName", if (data.activityType == 2) "赛事" else "活动")
         model.addAttribute("data", data)
         return "sec/activity/publish"
     }
 
+    /**
+     * 保存活动发布信息
+     */
     @PostMapping("/publish")
     @Transactional
     fun postPublish(@RequestBody formData: MultiValueMap<String, String>, model: Model): String {
@@ -124,17 +126,20 @@ class ActivityController : BaseController() {
         data.activity!!.created = DateUtil.date().toTimestamp()
         data.activity!!.createdBy = user!!.id
 
+        //保存活动信息
+        activityService!!.save(data.activity!!)
+        data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
+
         if (data.activity!!.id == null || data.activity!!.id == 0) {
-            activityDao!!.insert(data.activity)
-            data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
-            activityTicketDao!!.insert(data.tickets!!.toList())
+            activityService!!.insertActivityTickets(data.tickets!!.toList())
         } else {
-            activityDao!!.update(data.activity)
-            data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
-            create!!.deleteFrom(Tables.ACTIVITY_TICKET)
-                    .where(Tables.ACTIVITY_TICKET.ACTIVITY_ID.eq(data.activity!!.id))
-                    .execute()
-            activityTicketDao!!.insert(data.tickets!!.toList())
+
+            //检查是否已有报名信息，如果有则不可更新活动
+            if (activityService!!.hasAttendUser(data.activity!!.id)) {
+                throw Exception("该活动下已有报名记录，不可再进行更新处理！")
+            }
+
+            activityService!!.updateActivityTickets(data.activity!!.id, data.tickets!!.toList())
         }
 
         return "redirect:/sec/activity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"

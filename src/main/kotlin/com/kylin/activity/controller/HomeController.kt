@@ -46,13 +46,13 @@ class HomeController : BaseController() {
      */
     @GetMapping("/")
     fun index(@RequestParam(required = false) s: Int?, model: Model, request: HttpServletRequest): String {
-        var article = Article()
-        //公告通知发布时间
-        var inap = articleService!!.indexNoticeAndPublishTime(article.CATEGORY.toString())
-        //赛事新闻发布时间
-        var inapItems = articleService!!.indexNewsAndPublishTime(article.CATEGORY.toString())
-        //运动指南发布时间
-        var ieap = articleService!!.indexExerciseAndPublishTime(article.CATEGORY.toString())
+
+        //公告通知
+        var inap = articleService!!.getArticlesLimited(1).sortDesc("publish_time")
+        //赛事新闻
+        var inapItems = articleService!!.getArticlesLimited(2).sortDesc("publish_time")
+        //运动指南
+        var ieap = articleService!!.getArticlesLimited(3).sortDesc("publish_time")
 
         model.addAttribute("articles", inap)
         model.addAttribute("articles_news", inapItems)
@@ -86,7 +86,7 @@ class HomeController : BaseController() {
     @RequestMapping(value = "/changecommunity", method = [RequestMethod.POST])
     @ResponseBody
     fun changeCommunity(@RequestParam(required = false) id: Int, model: Model, request: HttpServletRequest): Boolean {
-        var community = communityService!!.getCommunityId(id)
+        var community = communityService!!.getCommunity(id)
         this.sessionCommunity = community
 
         return true

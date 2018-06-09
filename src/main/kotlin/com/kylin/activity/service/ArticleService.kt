@@ -20,6 +20,11 @@ class ArticleService {
     private val create: DSLContext? = null
 
     /**
+     * 分类文章在首页显示的限制数
+     */
+    val articleLimit: Int = 3
+
+    /**
      * 如不按指定的条件查询，则显示全部内容
      * 按内容的标题分类查询内容
      * 按内容的分类查询内容
@@ -28,14 +33,14 @@ class ArticleService {
         var sql = "select a.* from article a where 1=1 "
         var params = mutableListOf<Any?>()
         if (!title.isNullOrBlank()) {
-            sql += "and a.title like '%?%' ".replace("?", title!!)
-            params.add(title)
+            sql += "and a.title like ? "
+            params.add("%$title%")
         }
         if (!category.isNullOrBlank() && category != "0") {
             sql += "and a.category = ? "
             params.add(category)
         }
-        return create!!.resultQuery(sql, * params.toTypedArray()).fetch()
+        return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
 
     }
 
@@ -43,8 +48,7 @@ class ArticleService {
      * 取得内容的信息
      */
     fun getArticle(id: Int?): Article {
-        var article = articleDao!!.findById(id)
-        return article
+        return articleDao!!.findById(id)
     }
 
     /***
@@ -137,45 +141,25 @@ class ArticleService {
     }
 
     /**
-     * 公告通知列表信息
+     * 取得文章列表信息,限制记录数
+     * @param category: 分类
+     * @return 文章列表信息
      */
-    fun indexNoticeAndPublishTime(category: String?): Result<Record> {
-        var sql = "select a.id, a.category, a.title , a.publish_time from article a where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (!category.isNullOrBlank()) {
-            sql += "and a.category = 1 "
-            params.add(category)
-        }
-        sql += "order by a.publish_time desc limit 3"
-        return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
+    fun getArticlesLimited(category: Int): Result<Record> {
+        var sql = "select a.id, a.category, a.title , a.publish_time from article a where category = ? " +
+                "order by a.publish_time desc limit ?"
+        return create!!.resultQuery(sql, category, articleLimit).fetch()
     }
 
     /**
-     * 赛事新闻列表信息
+     * 取得文章列表信息
+     * @param category: 分类
+     * @return 文章列表信息
      */
-    fun indexNewsAndPublishTime(category: String?): Result<Record> {
-        var sql = "select a.id, a.category, a.title , a.publish_time from article a where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (!category.isNullOrBlank()) {
-            sql += "and a.category = 2 "
-            params.add(category)
-        }
-        sql += "order by a.publish_time desc limit 3"
-        return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
-    }
-
-    /**
-     * 运动指南列表信息
-     */
-    fun indexExerciseAndPublishTime(category: String?): Result<Record> {
-        var sql = "select a.id, a.category, a.title , a.publish_time from article a where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (!category.isNullOrBlank()) {
-            sql += "and a.category =3 "
-            params.add(category)
-        }
-        sql += "order by a.publish_time desc limit 3"
-        return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
+    fun getArticles(category: Int): Result<Record> {
+        var sql = "select a.* from article a where category = ? " +
+                "order by a.publish_time desc"
+        return create!!.resultQuery(sql, category).fetch()
     }
 
     /**
@@ -199,7 +183,6 @@ class ArticleService {
         return article.status
     }
 
-
      /**
      * 取得用户信息
      */
@@ -207,8 +190,5 @@ class ArticleService {
          var title=articleDao!!.fetchOne(Tables.ARTICLE.TITLE,title)
          return title
      }
-   /* fun getUser(username: String): User? {
-        var user = userDao!!.fetchOne(Tables.USER.USERNAME, username)
-        return user
-    }*/
+
 }

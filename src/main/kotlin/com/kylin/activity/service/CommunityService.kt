@@ -1,26 +1,23 @@
 package com.kylin.activity.service
 
-import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.CommunityDao
-import com.kylin.activity.databases.tables.daos.UserDao
-import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import com.kylin.activity.databases.tables.pojos.Community
-import com.kylin.activity.databases.tables.pojos.CommunityUser
-import com.kylin.activity.databases.tables.pojos.User
+import com.kylin.activity.util.LogUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import org.jooq.*
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 
 @Service
+@CacheConfig(cacheNames = ["community"])
 class CommunityService {
     @Autowired
     private val communityDao: CommunityDao? = null
 
     @Autowired
     private val create: DSLContext? = null
-
-    @Autowired
-    private val userDao: UserDao? = null
 
     /**
      * 获取团体信息
@@ -38,89 +35,43 @@ class CommunityService {
     /**
      * 根据id,删除团体信息
      */
+    @CacheEvict(allEntries=true)
     fun deleteCommunity(id: Int) {
         communityDao!!.deleteById(id)
     }
 
     /**
-     * 添加团体信息
-     */
-    fun createCommunity(community: Community): Community {
-        communityDao!!.insert(community)
-        return community
-    }
-
-    /**
-     * 根据id,编辑团体信息
-     */
-    fun editCommunity(id: Int): Community {
-        var community = communityDao!!.findById(id)
-        return community
-    }
-
-    /**
      * 切换团体信息
      */
+    @Cacheable()
     fun getCommunities(): List<Community> {
         return communityDao!!.findAll()
     }
 
     /**
-     * 获取社团的id
+     * 获取社团
      */
-    fun getCommunityId(id: Int): Community {
-        var items = communityDao!!.findById(id)
-        return items
+    fun getCommunity(id: Int): Community {
+        return communityDao!!.findById(id)
     }
 
     /**
      * 更新社团
      * @param community 社团
      */
-    fun updateCommunity(community: Community) {
+    @CacheEvict(allEntries=true)
+    fun update(community: Community) {
         communityDao!!.update(community)
     }
 
-
     /**
-     * 添加社团
-     * @param community 社团
-     */
-    fun addCommunity(community: Community) {
-        communityDao!!.insert(community)
-    }
-
-
-    /**
-     * 添加负责人联系方式
+     * 添加团体
      * @param community 团体信息
-     * @return 团体负责人联系方式
      */
-    fun insertCommunity(community: Community): String {
+    @CacheEvict(allEntries=true)
+    fun insert(community: Community) {
         communityDao!!.insert(community)
-        return community.managerPhoneNumber
-    }
-
-
-    /**
-     *
-     */
-    fun updateUser(user: User): String {
-        userDao!!.update(user)
-        return user.username
-    }
-
-    /**
-     * 取得团体组织关联用户
-     * @param communityId: 团体组织ID
-     * @param userId: 用户ID
-     * @param
-     */
-    fun getCommunityUser(communityId: Int?, userId: Int?): CommunityUser? {
-        return create!!.selectFrom(Tables.COMMUNITY_USER)
-                .where(Tables.COMMUNITY_USER.COMMUNITY_ID.eq(communityId))
-                .and(Tables.COMMUNITY_USER.USER_ID.eq(userId))
-                .fetchOneInto(CommunityUser::class.java)
+        LogUtil.printLog("添加缓存, 团体组织ID: ${community.id}")
     }
 
 }

@@ -27,9 +27,9 @@ class IndexCategoryController {
      * 公告通知查询界面
      */
     @CrossOrigin
-    @RequestMapping(value = "/indexNotice/{category}", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/indexNotice/{category}", method = [RequestMethod.GET])
     fun noticeSearch(@PathVariable category: Int?, model: Model): String {
-        var noticeItems = articleService!!.noticeItems(category!!)
+        var noticeItems = articleService!!.getArticles(category!!)
         for (r in noticeItems) {
             if (r.get("avatar") != null) {
                 r.setValue(r.fieldsRow().field("avatar", String::class.java), commonService!!.getDownloadUrl(r.get("avatar").toString()))
@@ -57,9 +57,9 @@ class IndexCategoryController {
      * 赛事新闻查询界面
      */
     @CrossOrigin
-    @RequestMapping(value = "/indexNews/{category}", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/indexNews/{category}", method = [RequestMethod.GET])
     fun newsSearch(@PathVariable category: Int?, model: Model): String {
-        var newsItems = articleService!!.newsItems(category!!)
+        var newsItems = articleService!!.getArticles(category!!)
         for(r in newsItems){
             if(r.get("avatar")!=null){
                 r.setValue(r.fieldsRow().field("avatar",String::class.java),commonService!!.getDownloadUrl(r.get("avatar").toString()))
@@ -87,9 +87,9 @@ class IndexCategoryController {
      * 运动指南查询界面
      */
     @CrossOrigin
-    @RequestMapping(value = "/indexExercise/{category}", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/indexExercise/{category}", method = [RequestMethod.GET])
     fun exerciseSearch(@PathVariable category: Int?, model: Model): String {
-        var newsItems = articleService!!.exerciseItems(category!!)
+        var newsItems = articleService!!.getArticles(category!!)
         for (r in newsItems){
             r.setValue(r.fieldsRow().field("avatar",String::class.java),commonService!!.getDownloadUrl(r.get("avatar").toString()))
         }

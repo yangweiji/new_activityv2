@@ -88,42 +88,41 @@ class ArticleController : BaseController() {
      * @param article 内容
      */
     @PostMapping("/updateOraddarticle")
-    fun saveArticle(@ModelAttribute("article") article: Article?,@RequestParam("status")status:Int): String {
+    fun saveArticle(@ModelAttribute("article") article: Article?, @RequestParam("status") status: Int): String {
         var user = this.sessionUser
+
         if (article!!.id != null && article.id > 0) {
             article!!.modified = DateUtil.date().toTimestamp()
             article!!.modifiedBy = user!!.id
-            article!!.createdBy=user!!.id
-            article!!.status=articleService!!.getStatus(article)
+            article!!.createdBy = user!!.id
+            article!!.status = articleService!!.getStatus(article)
 
             //禁止状态
-            if(article.status==-1){
+            if (article.status == -1) {
 
             }
 
             //发布状态
-            if(article.status==1){
+            if (article.status == 1) {
                 return "redirect:/"
             }
 
             articleService!!.updateArticle(article)
         } else {
-            var article=article
-            article=articleService!!.getArticleTitle(article.title)
-            if(article!!.title!=null){
+            var article = article
+            article = articleService!!.getArticleTitle(article.title)
+            if (article!!.title != null) {
                 throw Exception("内容已存在!")
-            }else{
+            } else {
                 article!!.createdBy = user!!.id
                 article!!.created = DateUtil.date().toTimestamp()
-                article!!.modifiedBy=user!!.id
-                article!!.status=articleService!!.getStatus(article)
-                //草稿状态
-                /* if(article.status==0){
-                    return " "
-                 }*/
+                article!!.modifiedBy = user!!.id
+                article!!.status = articleService!!.getStatus(article)
+
                 articleService!!.insertArticle(article)
             }
         }
+
         return "redirect:/sec/article/articles"
     }
 }
