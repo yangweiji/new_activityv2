@@ -115,8 +115,12 @@ $(function () {
                     },
                     format: {
                         body: function ( data, row, column, node ) {
-                            //身份证号的处理
-                            return ("\u200C" + data);
+                            if (data && data.length >= 15) {
+                                return ("\u200C" + data);
+                            }
+                            else {
+                                return data;
+                            }
                         }
                     }
                 },
