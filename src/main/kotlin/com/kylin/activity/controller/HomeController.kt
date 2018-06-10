@@ -45,8 +45,8 @@ class HomeController : BaseController() {
         var user = this.sessionUser
         if (user != null) {
             model.addAttribute("user", user)
-            var communityUser = communityService!!.getCommunityAdminUser(user.id)
-            request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
+//            var communityUser = communityService!!.getCommunityAdminUser(user.id)
+//            request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
         }
 
         //公告通知
