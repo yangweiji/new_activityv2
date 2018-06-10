@@ -152,5 +152,18 @@ class CommunityService {
         return (activityService!!.getCommunityActivityCount(communityId) > 0)
     }
 
+    /**
+     * 依据当前用户获取其管理的团体组织，如有多个，只获取其中一个
+     * @param userId: 用户ID
+     * @return 团体组织用户关联信息
+     */
+    fun getCommunityAdminUser(userId: Int): CommunityUser? {
+        var item = create!!.selectFrom(Tables.COMMUNITY_USER)
+                .where(Tables.COMMUNITY_USER.ROLE.eq("管理员").or(Tables.COMMUNITY_USER.ROLE.eq("发布者")))
+                .and(Tables.COMMUNITY_USER.USER_ID.eq(userId))
+                .firstOrNull()
+        return if (item != null) item.into(CommunityUser::class.java) else null
+    }
+
 
 }

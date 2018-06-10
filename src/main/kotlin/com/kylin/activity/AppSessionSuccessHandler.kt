@@ -1,10 +1,14 @@
-package com.kylin.activity.service
+package com.kylin.activity
 
 import com.kylin.activity.model.AuthUser
+import com.kylin.activity.service.CommunityService
+import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
+import org.springframework.stereotype.Service
 
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -33,7 +37,6 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
         session.setAttribute("USER_CONTEXT", (userDetails as AuthUser).user)
 
         LogUtil.printLog("登录系统IP :" + getIpAddress(request))
-
         super.onAuthenticationSuccess(request, response, authentication)
     }
 

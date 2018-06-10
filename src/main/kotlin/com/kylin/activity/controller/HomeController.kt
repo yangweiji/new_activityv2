@@ -1,8 +1,5 @@
 package com.kylin.activity.controller
 
-
-
-import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.service.CommunityService
@@ -17,6 +14,7 @@ import javax.servlet.http.HttpServletRequest
  * @author Richard C. Hu
  */
 @Controller
+@SessionAttributes("user")
 class HomeController : BaseController() {
     /**
      * 活动服务
@@ -47,6 +45,8 @@ class HomeController : BaseController() {
         var user = this.sessionUser
         if (user != null) {
             model.addAttribute("user", user)
+            var communityUser = communityService!!.getCommunityAdminUser(user.id)
+            request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
         }
 
         //公告通知

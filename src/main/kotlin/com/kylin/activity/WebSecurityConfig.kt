@@ -1,6 +1,5 @@
 package com.kylin.activity
 
-import com.kylin.activity.service.AppSessionSuccessHandler
 import org.springframework.context.annotation.Configuration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
