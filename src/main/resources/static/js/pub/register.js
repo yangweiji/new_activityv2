@@ -21,7 +21,7 @@ new Vue({
             }
             Util.ajax({
                 type: 'get',
-                url: '/pub/vercode/register/' + this.username,
+                url: '/pub/vercode/getVerCode/' + this.username,
                 dataType: "json",
                 success: function (data) {
                     var fun = function () {

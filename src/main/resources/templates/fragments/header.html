@@ -130,12 +130,16 @@
     </header>
     <script type="text/javascript">
         function _communityChange(id) {
-            Util.ajax({
+            $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/changeCommunity?id='+id,
+                url: '/changeCommunity',
+                data: {
+                    id: id,
+                },
                 success: function (data) {
-                    if(data){
+                    if (data) {
+                        //alert("操作成功！");
                         location.reload()
                     }
                 },

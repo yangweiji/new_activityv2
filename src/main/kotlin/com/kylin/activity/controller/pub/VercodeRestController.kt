@@ -43,7 +43,7 @@ class VercodeRestController {
         val random = Random()
         var code = (random.nextInt(900000) + 100000).toString()
         LogUtil.printLog("短信验证码: $code")
-        //commonService!!.sendSms(mobile, code)
+        commonService!!.sendSms(mobile, code)
 
         var verCode = Vercode()
         verCode.mobile = mobile

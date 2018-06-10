@@ -93,6 +93,8 @@ class HomeController : BaseController() {
         //取得当前用户登录后的角色
         var user = sessionUser
         if (user != null) {
+            //删除COMMUNITY_USER_CONTEXT
+            request.session.removeAttribute("COMMUNITY_USER_CONTEXT")
             var communityUser = communityService!!.getCommunityUser(user!!.id, this.sessionCommunity.id)
             if (communityUser != null) {
                 request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
@@ -101,5 +103,4 @@ class HomeController : BaseController() {
 
         return true
     }
-
 }
