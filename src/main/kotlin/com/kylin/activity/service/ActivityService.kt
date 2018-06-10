@@ -151,6 +151,17 @@ class ActivityService {
     }
 
     /**
+     * 取得团体组织下的活动数量
+     * @param communityId: 团体组织ID
+     * @return 活动数量
+     */
+    fun getCommunityActivityCount(communityId: Int): Int {
+        var sql = "select count(*) from activity where community_id = ?"
+        return create!!.fetchValue(sql) as Int
+    }
+
+
+    /**
      * 取得活动信息
      * @param id: 活动ID
      * @return 单个活动信息

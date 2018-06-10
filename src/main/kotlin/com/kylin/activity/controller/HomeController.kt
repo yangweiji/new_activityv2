@@ -1,14 +1,11 @@
 package com.kylin.activity.controller
 
 
-import com.kylin.activity.databases.tables.Article
-import com.kylin.activity.databases.tables.pojos.Community
+
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.service.CommunityService
-import com.kylin.activity.service.ThirdUserService
-import com.kylin.activity.util.CommonService
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.beans.factory.annotation.Autowired
@@ -47,6 +44,11 @@ class HomeController : BaseController() {
     @GetMapping("/")
     fun index(@RequestParam(required = false) s: Int?, model: Model, request: HttpServletRequest): String {
 
+        var user = this.sessionUser
+        if (user != null) {
+            model.addAttribute("user", user)
+        }
+
         //公告通知
         var inap = articleService!!.getArticlesLimited(1).sortDesc("publish_time")
         //赛事新闻
@@ -80,14 +82,22 @@ class HomeController : BaseController() {
     /**
      * 异步刷新首页Community部分数据
      * @param id: 团体组织ID
-     * @param model: 模型
-     * @param request: 请求参数
      */
-    @RequestMapping(value = "/changecommunity", method = [RequestMethod.POST])
+    @RequestMapping(value = "/changeCommunity", method = [RequestMethod.POST])
     @ResponseBody
-    fun changeCommunity(@RequestParam(required = false) id: Int, model: Model, request: HttpServletRequest): Boolean {
+    fun changeCommunity(@RequestParam(required = false) id: Int
+                        , request: HttpServletRequest): Boolean {
         var community = communityService!!.getCommunity(id)
         this.sessionCommunity = community
+
+        //取得当前用户登录后的角色
+        var user = sessionUser
+        if (user != null) {
+            var communityUser = communityService!!.getCommunityUser(user!!.id, this.sessionCommunity.id)
+            if (communityUser != null) {
+                request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
+            }
+        }
 
         return true
     }

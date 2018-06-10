@@ -74,19 +74,6 @@ class ActivityPhotoService {
     }
 
     /**
-     * 依据活动相册获取活动id
-     * @param activityId 活动id
-     */
-    fun getActivityphoto(activityId: Int?):ActivityPhoto?{
-        var sql="select * from activity_photo where activity_id=? "
-        var item=create!!.resultQuery(sql,activityId).fetch()
-        if(item.size>0){
-            return item.first().into(ActivityPhoto::class.java)
-        }
-        return null
-    }
-
-    /**
      * 依据相册ID取得唯一的相册信息
      * @param activityId: 相册ID
      * @return 单个相册信息
@@ -206,7 +193,5 @@ class ActivityPhotoService {
     fun getPhotoPictureList(activityPhotoId: Int?): List<ActivityPhotoPicture> {
         return activityPhotoPictureDao!!.fetchByActivityPhotoId(activityPhotoId)
     }
-
-
 
 }

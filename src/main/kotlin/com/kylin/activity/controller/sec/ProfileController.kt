@@ -70,7 +70,7 @@ class ProfileController : BaseController() {
         create!!.update(Tables.USER)
                 .set(DSL.field(property.property, Tables.USER), property.value)
                 .where(Tables.USER.USERNAME.eq(name)).execute()
-        var user = userService!!.getUser(this.sessionUser.id)
+        var user = userService!!.getUser(this.sessionUser!!.id)
         this.sessionUser = user
 
     }

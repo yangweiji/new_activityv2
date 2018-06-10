@@ -31,7 +31,6 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
         val userDetails = authentication.principal as UserDetails
         //将登录用户信息存入session中
         session.setAttribute("USER_CONTEXT", (userDetails as AuthUser).user)
-        //将用户所在团体组织信息存入session中
 
         LogUtil.printLog("登录系统IP :" + getIpAddress(request))
 

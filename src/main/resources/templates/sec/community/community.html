@@ -13,7 +13,10 @@
 <div th:replace="fragments/header :: default"></div>
 <div id="c_sec_community_add_app">
     <div class="amz-container">
-        <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal">
+        <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
+            action="/sec/community/saveCommunity">
+            <input type="hidden" id="id"
+                   name="id" th:placeholder="请输入社团名称" v-model="cacheData.community.id"/>
             <fieldset>
 
                 <legend>团体管理</legend>
@@ -271,6 +274,6 @@
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/sec/community/updateOraddcommunity.js"></script>
+<script type="text/javascript" src="/js/sec/community/community.js"></script>
 </body>
 </html>

@@ -153,7 +153,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: "",
         action: function (e, dt, node, config) {
-            location.href = "/sec/community/updateOraddcommunity";
+            location.href = "/sec/community/community";
         }
     }
 
@@ -162,7 +162,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href = "/sec/community/updateOraddcommunity?id=" + data.id;
+        location.href = "/sec/community/community?id=" + data.id;
     });
 
     /**

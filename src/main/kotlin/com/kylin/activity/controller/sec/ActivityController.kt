@@ -4,11 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest
 import com.kylin.activity.controller.BaseController
-import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ActivityDao
-import com.kylin.activity.databases.tables.daos.ActivityTicketDao
 import com.kylin.activity.databases.tables.daos.ActivityUserDao
-import com.kylin.activity.databases.tables.daos.PayOrderDao
 import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
@@ -159,14 +156,9 @@ class ActivityController : BaseController() {
                model: Model): String {
         //从session中当前用户信息
         var user = this.sessionUser
-        model.addAttribute("user", user)
-
-//        if (user!!.isReal == null || !user!!.isReal) {
-//            //设置当前请求路径至Request中，转发处理后重新定向回来
-//            request.setAttribute("current_url", request.requestURI)
-//            //如果用户不是会员，则需要注册成为会员
-//            return "forward:/sec/user/registermember"
-//        }
+        if (user != null) {
+            model.addAttribute("user", user)
+        }
 
         //取得活动详情信息
         var activity = activityService!!.getActivityAndOthers(activityId)
@@ -690,7 +682,7 @@ class ActivityController : BaseController() {
     fun favorite(@RequestParam id: Int): Int {
         var activityFavorite = ActivityFavorite()
         activityFavorite.activityId = id
-        activityFavorite.userId = this.sessionUser.id
+        activityFavorite.userId = this.sessionUser!!.id
         //创建活动收藏
         activityService!!.createActivityFavorite(activityFavorite)
 

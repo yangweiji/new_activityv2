@@ -25,15 +25,14 @@ data class CommunitiesData(
 )
 
 
+/**
+ * 团体组织控制器
+ * @author weiji.yang
+ */
 @Controller
 @RequestMapping("sec/community")
 @SessionAttributes("user")
 class CommunityController : BaseController() {
-    /**
-     * 通用服务
-     */
-    @Autowired
-    private val commonService: CommonService? = null
 
     /**
      * 团体服务
@@ -46,25 +45,6 @@ class CommunityController : BaseController() {
      */
     @Autowired
     private val userService: UserService? = null
-
-    /**
-     * 活动服务
-     */
-    @Autowired
-    private val activityService: ActivityService? = null
-
-
-    /**
-     * 活动相册服务
-     */
-    @Autowired
-    private val activityPhotoService: ActivityPhotoService? = null
-
-    /**
-     * 用户服务
-     */
-    @Autowired
-    private val thirdUserService: ThirdUserService? = null
 
     /**
      * 查询团体信息
@@ -83,7 +63,7 @@ class CommunityController : BaseController() {
      * 异步查询团体信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/getCommunities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/getCommunities", method = [RequestMethod.GET, RequestMethod.POST])
     @ResponseBody
     fun getCommunities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var name = map["name"]
@@ -95,9 +75,12 @@ class CommunityController : BaseController() {
     /**
      * 编辑或添加团体信息
      * @param id 团体编号
+     * @return 编辑或添加页面
      */
-    @GetMapping("/updateOraddcommunity")
-    fun updateOraddcommunity(@RequestParam(required = false) id: Int?, model: Model, @ModelAttribute("community") community: Community): String {
+    @GetMapping("/community")
+    fun community(@RequestParam(required = false) id: Int?
+                      , model: Model
+                      , @ModelAttribute("community") community: Community): String {
         //user用户表，community 团体表，add时，分配给管理员role,password
         //community中管理员电话=usr中的displayname/username
         var communitiesData = CommunitiesData()
@@ -107,7 +90,8 @@ class CommunityController : BaseController() {
             communitiesData.community = Community()
         }
         model.addAttribute("communitiesData", communitiesData)
-        return "sec/community/updateOraddcommunity"
+
+        return "sec/community/community"
     }
 
     /**
@@ -115,7 +99,7 @@ class CommunityController : BaseController() {
      * @param community 团体
      * @param user 用户信息
      */
-    @PostMapping("/updateOraddcommunity")
+    @PostMapping("/saveCommunity")
     @Transactional
     fun saveCommunity(@ModelAttribute("community") community: Community,
                       @ModelAttribute("user") user: User
@@ -172,7 +156,7 @@ class CommunityController : BaseController() {
                 communitiesData.community = community
                 model.addAttribute("communitiesData", communitiesData)
                 model.addAttribute("errorMessage", "用户: ${community.managerPhoneNumber} 已存在！")
-                return "/sec/community/updateOraddcommunity"
+                return "/sec/community/community"
             }
             //构建一个新的User对象
             u = User()
@@ -201,6 +185,7 @@ class CommunityController : BaseController() {
             communityService!!.insert(community)
             LogUtil.printLog("添加成功,团体组织ID：${community.id}")
         }
+
         return "redirect:/sec/community/communities"
     }
 
@@ -210,19 +195,16 @@ class CommunityController : BaseController() {
      * 先判断活动，活动相册是否存在
      * @param id 团体编号,
      */
-    @RequestMapping(value = "/deleteCommunity/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun deleteCommunity(@PathVariable("id")id:Int,model: Model): String {
+    @RequestMapping(value = "/deleteCommunity/{id}", method = [RequestMethod.GET, RequestMethod.POST])
+    fun deleteCommunity(@PathVariable("id") id: Int, model: Model): String {
 
-        //关联团体id
-        var activity = activityService!!.getActivityCommunity(id)
-        //关联活动id
-        var activityPhoto=activityPhotoService!!.getActivityphoto(id)
-        if (activity != null || activityPhoto!=null) {
-            model.addAttribute("errorMessage", "当前团体有关联活动或相册，不能删除！")
+        if (communityService!!.checkCommunity(id)) {
+            model.addAttribute("errorMessage", "当前团体有关联活动，不能删除！")
             return "/sec/community/communities"
-        }else{
+        } else {
             communityService!!.deleteCommunity(id)
         }
+
         return "redirect:/sec/community/communities"
     }
 

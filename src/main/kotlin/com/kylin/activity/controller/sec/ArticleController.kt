@@ -50,8 +50,7 @@ class ArticleController : BaseController() {
         var title = map["title"]
         var category = map["category"]
         var items = articleService!!.getAllArticleUserItem(title, category)
-        var list = items.intoMaps()
-        return list
+        return items.intoMaps()
     }
 
     /**
