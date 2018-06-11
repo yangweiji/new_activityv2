@@ -42,12 +42,12 @@
         <div class="c_orange">
             <div class="orange_1 am-fl">
                 <div class="orange_list">
-                    <button type="button"
-                            class="am-btn am-btn-warning am-round" id="o_notice" >公告通知
-                    </button>
+                    <a class="am-btn am-btn-warning am-round" id="o_notice"
+                       th:href="@{/pub/article/indexArticleCategory/1}"
+                       type="button">公告通知</a>
                     <ul class="am-list am-list-border">
                         <li th:each="item:${articles}">
-                            <a th:href="@{/pub/article/noticeList/{id} (id=${item.get('id')}) }" class="am-list-a"
+                            <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"
                                target="_blank">
                                 <span class="o_min" th:text="${item.get('title')}"></span>
                                 <span class="fal fa-angle-right"></span>
@@ -64,10 +64,12 @@
 
             <div class="orange_2 am-fl">
                 <div class="orange_list">
-                    <button type="button" class="am-btn am-btn-warning am-round" id="o_news">赛事新闻</button>
+                    <a class="am-btn am-btn-warning am-round" id="o_news"
+                       th:href="@{/pub/article/indexArticleCategory/2}"
+                       type="button">赛事新闻</a>
                     <ul class="am-list am-list-border">
                         <li th:each="item:${articles_news}" class="myOrange">
-                            <a th:href="@{/pub/article/newsList/{id} (id=${item.get('id')}) }" class="am-list-a"
+                            <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"
                                target="_blank">
                                 <span class="o_min" th:text="${item.get('title')}"></span>
                                 <span class="fal fa-angle-right"></span>
@@ -83,10 +85,12 @@
 
             <div class="orange_3 am-fl">
                 <div class="orange_list">
-                    <button type="button" class="am-btn am-btn-warning am-round" id="o_exercise">运动指南</button>
+                    <a class="am-btn am-btn-warning am-round" id="o_exercise"
+                       th:href="@{/pub/article/indexArticleCategory/3}"
+                       type="button">运动指南</a>
                     <ul class="am-list am-list-border">
                         <li th:each="item:${articles_exercise}">
-                            <a th:href="@{/pub/article/exerciseList/{id} (id=${item.get('id')}) }" class="am-list-a"
+                            <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"
                                target="_blank">
                                 <span class="o_min" th:text="${item.get('title')}"></span>
                                 <span class="fal fa-angle-right"></span>
@@ -159,10 +163,6 @@
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
 <script type="text/javascript" th:src="@{/js/directive/directive.js}"></script>
 <script type="text/javascript" th:src="@{/js/pub/index.js}"></script>
-<script type="text/javascript" th:src="@{/js/pub/index_news.js}"></script>
-<script type="text/javascript" th:src="@{/js/pub/index_exercise.js}"></script>
-<script type="text/javascript" th:src="@{/js/pub/index_notice.js}"></script>
-
 
 <style type="text/css">
     .am_img.animated.c-img {
@@ -226,18 +226,19 @@
         overflow: hidden;
         text-overflow: ellipsis;
     }
+
     .orange_list {
         margin-top: 20px;
     }
 
     .c_orange_container {
-    background-color: rgba(61, 48, 63, 0.04);
+        background-color: rgba(61, 48, 63, 0.04);
     }
 
-    #o_notice,#o_news,#o_exercise{
-        margin:0 auto;
+    #o_notice, #o_news, #o_exercise {
+        margin: 0 auto;
 
-        border-radius:8px;
+        border-radius: 8px;
 
         text-align: center;
     }

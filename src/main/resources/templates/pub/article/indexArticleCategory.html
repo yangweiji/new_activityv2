@@ -17,13 +17,13 @@
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
                 <li class="" th:classappend="${category}==1?'am-active'">
-                    <a href="/pub/article/indexNotice/1">公告通知</a>
+                    <a href="/pub/article/indexArticleCategory/1">公告通知</a>
                 </li>
                 <li class="" th:classappend="${category}==2?'am-active'">
-                    <a href="/pub/article/indexNews/2">赛事新闻</a>
+                    <a href="/pub/article/indexArticleCategory/2">赛事新闻</a>
                 </li>
                 <li class="" th:classappend="${category}==3?'am-active'">
-                    <a href="/pub/article/indexExercise/3">运动指南</a>
+                    <a href="/pub/article/indexArticleCategory/3">运动指南</a>
                 </li>
             </ul>
 
@@ -34,15 +34,15 @@
                             th:each="item:${article}">
                             <div class="am-u-sm-3 am-list-thumb am_list_thumb">
                                 <a target="_blank" class=""
-                                   th:href="@{/pub/article/noticeDetail/{id} (id=${item.get('id')})}">
+                                   th:href="@{/pub/article/indexArticleDetail/{id} (id=${item.get('id')})}">
                                     <img class="am_news_list_img" alt="图片加载中..."
-                                           th:src="${item.get('avatar')}"/>
+                                         th:src="${item.get('avatar')}"/>
                                 </a>
                             </div>
                             <div class=" am-u-sm-9 am-list-main am_list_main">
                                 <h3 class="am-list-item-hd am_list_title">
                                     <a target="_blank" class=""
-                                       th:href="@{/pub/article/noticeDetail/{id} (id=${item.get('id')})}"
+                                       th:href="@{/pub/article/indexArticleDetail/{id} (id=${item.get('id')})}"
                                        th:text="${item.get('title')}"></a>
                                 </h3>
                                 <div class="am_list_author">

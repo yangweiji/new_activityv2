@@ -93,8 +93,7 @@ class ActivitySmsService {
     fun getActivitySmsItem(templateName: String?, displayname: String?, title: String?, communityId: Int): Result<Record> {
         var sql = "select t1.*,t2.displayname,t3.title from activity_sms t1 " +
                 "inner join user t2 on t1.send_user_id=t2.id " +
-                "inner join activity t3 on t1.activity_id=t3.id "+
-                "inner join activity_user t4 on t2.id=t4.user_id and t3.id=t4.activity_id "+
+                "left join activity t3 on t1.activity_id=t3.id "+
                 "where 1=1 and t3.community_id=? "
 
         var params = mutableListOf<Any?>()

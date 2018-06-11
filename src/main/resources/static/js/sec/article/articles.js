@@ -150,7 +150,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
-            location.href = "/sec/article/updateOraddarticle";
+            location.href = "/sec/article/article";
         }
     }
 
@@ -159,7 +159,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href="/sec/article/updateOraddarticle?id="+data.id;
+        location.href="/sec/article/article?id="+data.id;
     })
 
     /**
@@ -167,8 +167,21 @@ $(function () {
      */
     $("#bmTable tbody").on('click','button#delrow',function () {
         var data=t.row($(this).parents('tr')).data()
-        if(window.confirm("请确定删除？")){
-            location.href="/sec/article/deleteArticle/"+data.id;
+        if(window.confirm("确定删除吗？")){
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:'/sec/article/deleteArticle',
+                data:{
+                    articleId:data.id
+                },
+                success:function (data) {
+                    if(data) {
+                        alert("操作成功！")
+                        location.reload()
+                    }
+                }
+            })
         }
     })
 })

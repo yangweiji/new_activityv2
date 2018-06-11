@@ -5,7 +5,6 @@ import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
-import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
@@ -40,6 +39,7 @@ class CommunityController : BaseController() {
     @Autowired
     private val communityService: CommunityService? = null
 
+
     /**
      * 用户服务
      */
@@ -68,8 +68,7 @@ class CommunityController : BaseController() {
     fun getCommunities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var name = map["name"]
         var items = communityService!!.queryCommunity(name)
-        var list = items.intoMaps()
-        return list
+        return items.intoMaps()
     }
 
     /**
@@ -79,10 +78,8 @@ class CommunityController : BaseController() {
      */
     @GetMapping("/community")
     fun community(@RequestParam(required = false) id: Int?
-                      , model: Model
-                      , @ModelAttribute("community") community: Community): String {
-        //user用户表，community 团体表，add时，分配给管理员role,password
-        //community中管理员电话=usr中的displayname/username
+                  , model: Model
+                  , @ModelAttribute("community") community: Community): String {
         var communitiesData = CommunitiesData()
         if (id != null && id > 0) {
             communitiesData.community = communityService!!.getCommunity(id)
@@ -191,21 +188,25 @@ class CommunityController : BaseController() {
 
 
     /**
-     * 删除团体信息前
-     * 先判断活动，活动相册是否存在
-     * @param id 团体编号,
+     * 删除团体信息
+     * @return 检查团体组织下是否有关联的活动
+     * 有返回-1，无返回0
      */
-    @RequestMapping(value = "/deleteCommunity/{id}", method = [RequestMethod.GET, RequestMethod.POST])
-    fun deleteCommunity(@PathVariable("id") id: Int, model: Model): String {
+    @RequestMapping(value = "/deleteCommunity", method = [RequestMethod.POST])
+    @ResponseBody
+    fun deleteCommunity(request: HttpServletRequest, model: Model): Any? {
 
-        if (communityService!!.checkCommunity(id)) {
-            model.addAttribute("errorMessage", "当前团体有关联活动，不能删除！")
-            return "/sec/community/communities"
+        var communityId = if (request.getParameter("communityId") != null)
+            request.getParameter("communityId").toInt() else 0
+
+        if (communityService!!.checkCommunity(communityId)) {
+            return -1
         } else {
-            communityService!!.deleteCommunity(id)
+            communityService!!.deleteCommunity(communityId)
         }
 
-        return "redirect:/sec/community/communities"
+        return 0
+
     }
 
 }

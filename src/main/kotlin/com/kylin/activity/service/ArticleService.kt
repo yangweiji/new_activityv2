@@ -86,58 +86,15 @@ class ArticleService {
         articleDao!!.deleteById(id)
     }
 
-    /**
-     * 公告通知查询界面
-     */
-    fun noticeItems(category: Int): Result<Record> {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary from article a where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (category != null) {
-            sql += "and a.category = 1 "
-            params.add(category)
-        }
-        sql += "order by a.publish_time desc"
-        return create!!.resultQuery(sql, params.toTypedArray()).fetch()
-
-    }
-
-    /**
-     * 赛事新闻查询界面
-     */
-    fun newsItems(category: Int): Result<Record> {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary from article a where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (category != null) {
-            sql += "and a.category = 2 "
-            params.add(category)
-        }
-        sql += "order by a.publish_time desc"
-        return create!!.resultQuery(sql, * params.toTypedArray()).fetch()
-
-    }
-
-    /**
-     * 运动指南查询界面
-     */
-    fun exerciseItems(category: Int): Result<Record> {
-        var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary from article a where 1=1 "
-        var params = mutableListOf<Any?>()
-        if (category != null) {
-            sql += "and a.category = 3 "
-            params.add(category)
-        }
-        sql += "order by a.publish_time desc"
-        return create!!.resultQuery(sql, * params.toTypedArray()).fetch()
-
-    }
 
     /**
      * 取得分类详情信息
+     * @param id 内容编号
+     * @return 文章详情信息
      */
     fun getCategoryDetail(id: Int): Record {
         var sql = "select a.id,a.category,a.avatar,a.title,a.publish_time,a.unit,a.summary,a.body from article a where a.id=? "
-        var notice = create!!.resultQuery(sql, id).fetchOne()
-        return notice
+        return create!!.resultQuery(sql, id).fetchOne()
     }
 
     /**
@@ -178,17 +135,13 @@ class ArticleService {
         articleDao!!.update(article)
     }
 
+    /**
+     * 发布状态
+     * @param article 文章
+     */
     fun getStatus(article: Article): Int {
         articleDao!!.fetchByStatus(article.status)
         return article.status
     }
-
-     /**
-     * 取得用户信息
-     */
-    fun getArticleTitle(title:String):Article?{
-         var title=articleDao!!.fetchOne(Tables.ARTICLE.TITLE,title)
-         return title
-     }
 
 }

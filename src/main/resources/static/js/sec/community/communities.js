@@ -170,8 +170,25 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#delrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        if (window.confirm('请确定删除')) {
-            location.href = "/sec/community/deleteCommunity/" + data.id;
+        if(window.confirm('确定删除吗？')){
+            $.ajax({
+                type:'post',
+                dataType:'json',
+                url:'/sec/community/deleteCommunity',
+                data:{
+                    communityId:data.id
+                },
+                success:function (data) {
+                    if(data==0) {
+                        alert("操作成功！")
+                        location.reload()
+                    }
+                    else if (data == -1) {
+                        alert("当前团体有关联活动，不能删除！")
+                    }
+                }
+            })
+
         }
     })
 })

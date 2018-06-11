@@ -155,9 +155,9 @@ class ActivityService {
      * @param communityId: 团体组织ID
      * @return 活动数量
      */
-    fun getCommunityActivityCount(communityId: Int): Int {
-        var sql = "select count(*) from activity where community_id = ?"
-        return create!!.fetchValue(sql) as Int
+    fun getCommunityActivityCount(communityId: Int): Long {
+        var sql = "select count(*) from activity where community_id = ? "
+        return create!!.fetchValue(sql,communityId) as Long
     }
 
 

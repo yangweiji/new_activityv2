@@ -13,7 +13,10 @@
 <div th:replace="fragments/header :: default"></div>
 <div id="c_sec_article_publish_app">
     <div class="amz-container">
-        <form id="c-article-create-form" method="post" class="am-form am-form-horizontal">
+        <form id="c-article-create-form" method="post" class="am-form am-form-horizontal"
+              action="/sec/article/saveArticle">
+            <input type="hidden" id="id" name="id"
+                    v-model="cacheData.article.id"/>
             <fieldset>
                 <legend>内容管理</legend>
                 <div class="am-form-group">
@@ -21,6 +24,14 @@
                     <div class="am-u-sm-10">
                         <input type="text" id="article_title" name="title"
                                placeholder="请输入标题" v-model="cacheData.article.title"/>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label for="article_title" class="am-u-sm-2 am-form-label"></label>
+                    <div class="am-u-sm-10">
+                        <input type="hidden" id="createdBy" name="createdBy"
+                               placeholder="" v-model="cacheData.article.createdBy"/>
                     </div>
                 </div>
 
@@ -56,13 +67,6 @@
                                    name="publishTime" placeholder="请输入发布时间"/>
                         </div>
                     </div>
-                    <!--<div class="time2" th:if="${articlesData.article.id ==null }">
-                        <div class="am-u-sm-10" style="display: none">
-                        <input required="required" class="c-datetimepicker publish-time" type="text"
-                                   id="publish_Time"
-                                   name="publishTime" placeholder="请输入发布时间"/>
-                        </div>
-                    </div>-->
                 </div>
                 <div class="am-form-group">
                     <label for="article_category" class="am-u-sm-2 am-form-label">内容类型</label>

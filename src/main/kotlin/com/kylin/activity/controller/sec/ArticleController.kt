@@ -34,7 +34,7 @@ class ArticleController : BaseController() {
      * 查询文章内容
      */
     @CrossOrigin
-    @RequestMapping(value = "articles", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "articles", method = [RequestMethod.GET, RequestMethod.POST])
     fun allArticle(): String {
         return "sec/article/articles"
     }
@@ -44,7 +44,7 @@ class ArticleController : BaseController() {
      * @param map 文章内容集合
      */
     @CrossOrigin
-    @RequestMapping(value = "/getArticles", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/getArticles", method = [RequestMethod.GET, RequestMethod.POST])
     @ResponseBody
     fun getArticles(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var title = map["title"]
@@ -55,14 +55,17 @@ class ArticleController : BaseController() {
 
     /**
      * 删除内容的信息
-     * @param id 内容编号
-     * @param model 存放内容信息数据模型
+     * articleId 内容编号
+     * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/deleteArticle/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
-    fun deleteArticle(@PathVariable id: Int, model: Model): String {
-        articleService!!.deleteArticleById(id)
-        return "redirect:/sec/article/articles"
+    @RequestMapping(value = "/deleteArticle", method = [RequestMethod.POST])
+    @ResponseBody
+    fun deleteArticle(request: HttpServletRequest): Any? {
+        var articleId = if (request.getParameter("articleId") != null)
+            request.getParameter("articleId").toInt() else 0
+        articleService!!.deleteArticleById(articleId)
+        return true
     }
 
     /**
@@ -70,8 +73,8 @@ class ArticleController : BaseController() {
      * @param id 内容编号
      * @param model 存放内容信息数据模型
      */
-    @RequestMapping(value = "/updateOraddarticle", method = arrayOf(RequestMethod.GET))
-    fun updateOraddArticle(@RequestParam(required = false) id: Int?, model: Model): String {
+    @RequestMapping(value = "/article", method = [RequestMethod.GET])
+    fun article(@RequestParam(required = false) id: Int?, model: Model): String {
         var articlesData = ArticlesData()
         if (id != null && id > 0) {
             articlesData.article = articleService!!.getArticle(id)
@@ -79,49 +82,50 @@ class ArticleController : BaseController() {
             articlesData.article = Article()
         }
         model.addAttribute("articlesData", articlesData)
-        return "sec/article/updateOraddarticle"
+        return "sec/article/article"
     }
 
     /**
      * 保存添加或编辑内容信息
      * @param article 内容
      */
-    @PostMapping("/updateOraddarticle")
-    fun saveArticle(@ModelAttribute("article") article: Article?, @RequestParam("status") status: Int): String {
+    @PostMapping("/saveArticle")
+    fun saveArticle(@ModelAttribute("article") article: Article?,
+                    @RequestParam("status") status: Int,
+                    model: Model): String {
         var user = this.sessionUser
 
         if (article!!.id != null && article.id > 0) {
-            article!!.modified = DateUtil.date().toTimestamp()
-            article!!.modifiedBy = user!!.id
-            article!!.createdBy = user!!.id
-            article!!.status = articleService!!.getStatus(article)
+            article.modifiedBy = user!!.id
+            article.modified = DateUtil.date().toTimestamp()
+            article.publishTime = DateUtil.date().toTimestamp()
+            /*
+          //禁止状态
+          if (article.status == -1) {
 
-            //禁止状态
-            if (article.status == -1) {
+          }
 
-            }
-
-            //发布状态
-            if (article.status == 1) {
-                return "redirect:/"
-            }
-
+          //发布状态
+          if (article.status == 1) {
+              return "redirect:/"
+          }
+          */
             articleService!!.updateArticle(article)
         } else {
-            var article = article
-            article = articleService!!.getArticleTitle(article.title)
-            if (article!!.title != null) {
-                throw Exception("内容已存在!")
-            } else {
-                article!!.createdBy = user!!.id
-                article!!.created = DateUtil.date().toTimestamp()
-                article!!.modifiedBy = user!!.id
-                article!!.status = articleService!!.getStatus(article)
-
-                articleService!!.insertArticle(article)
-            }
+            var articles = Article()
+            articles.title = article.title
+            articles.createdBy = user!!.id
+            articles.created = DateUtil.date().toTimestamp()
+            articles.publishTime = article.publishTime
+            articles.status = article.status
+            articles.category = article.category
+            articles.avatar = article.avatar
+            articles.body = article.body
+            articles.communityId = article.communityId
+            articles.summary = article.summary
+            articles.unit = article.unit
+            articleService!!.insertArticle(articles)
         }
-
         return "redirect:/sec/article/articles"
     }
 }
