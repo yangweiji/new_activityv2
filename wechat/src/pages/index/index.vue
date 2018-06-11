@@ -5,7 +5,7 @@
       <!-- banner -->
       <div>
         <span style="position:absolute;right:0;margin-top:10px;margin-right:25px;">切换团体</span>
-        <image src="../../static/images/banner_bg.png" style="height:100px;" model="top" />
+        <image src="../../static/images/banner_bg.png" style="height:100px;width:100%;" model="aspectFit" />
       </div>
 
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->

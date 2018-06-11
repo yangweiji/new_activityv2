@@ -34,8 +34,19 @@ class WxMaProperties {
     var msgDataFormat: String? = null
 
     var baseUrl:String? = null
+    /**
+     * 微信小程序报名Page
+     */
+    var attendPage: String? = null
+
+    /**
+     * 微信小程序报名签到Page
+     */
+    var checkInPage: String? = null
 
     override fun toString(): String {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE)
     }
+
+
 }

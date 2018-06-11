@@ -107,32 +107,48 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, cal
 
 //小程序登录
 function Login() {
-    //检查session_key
-    wx.checkSession({
-        success: function(){
-          //session_key 未过期，并且在本生命周期一直有效
-          console.log("session_key 未过期，并且在本生命周期一直有效");
-          //if (wx.getStorageSync("sessionInfo")) return;
-        },
-        fail: function() {
-            // session_key 已经失效，需要重新执行登录流程
-            wx.login({
-                success: res => {
-                    // 发送 res.code 到后台换取 openId, sessionKey, unionId  
-                    var errMsg = res.errMsg;  
-                    if (errMsg != "login:ok") {  
-                        console.log("错误提示","出错了，请稍后再试试...")  
-                    } else {  
-                        var code = res.code;
-                        HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
-                            console.log("global data: ", res)
-                            wx.setStorageSync("sessionInfo", res)
-                        });
-                    }
-                }
-            });
+    wx.login({
+        success: res => {
+            // 发送 res.code 到后台换取 openId, sessionKey, unionId  
+            var errMsg = res.errMsg;  
+            if (errMsg != "login:ok") {  
+                console.log("错误提示","出错了，请稍后再试试...")  
+            } else {  
+                var code = res.code;
+                HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
+                    console.log("global data: ", res)
+                    wx.setStorageSync("sessionInfo", res)
+                });
+            }
         }
-    })
+    });
+
+    //检查session_key
+    // wx.checkSession({
+    //     success: function(){
+    //       //session_key 未过期，并且在本生命周期一直有效
+    //       console.log("session_key 未过期，并且在本生命周期一直有效");
+    //       //if (wx.getStorageSync("sessionInfo")) return;
+    //     },
+    //     fail: function() {
+    //         // session_key 已经失效，需要重新执行登录流程
+    //         wx.login({
+    //             success: res => {
+    //                 // 发送 res.code 到后台换取 openId, sessionKey, unionId  
+    //                 var errMsg = res.errMsg;  
+    //                 if (errMsg != "login:ok") {  
+    //                     console.log("错误提示","出错了，请稍后再试试...")  
+    //                 } else {  
+    //                     var code = res.code;
+    //                     HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
+    //                         console.log("global data: ", res)
+    //                         wx.setStorageSync("sessionInfo", res)
+    //                     });
+    //                 }
+    //             }
+    //         });
+    //     }
+    // })
     
 }
 
@@ -146,7 +162,10 @@ function CheckUserValidation() {
     HttpRequest(true, "/pub/wx/auth/validate", 4, "", param, "POST", false, function (res) {
         if (!res) {
             //跳转至登录界面验证身份
-            wx.navigateTo({
+            // wx.navigateTo({
+            //     url: "/pages/login/login"
+            // });
+            wx.redirectTo({
                 url: "/pages/login/login"
             });
         }        

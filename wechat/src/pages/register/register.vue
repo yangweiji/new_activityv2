@@ -14,7 +14,7 @@
             v-if="showTopTips">{{infoMessage}}</div>
       
       <div class="weui-cells__title">新用户注册，已有账号可
-        <navigator url="../../pages/login/login" hover-class="navigator-hover" class="weui-agree__link">直接登录</navigator>
+        <navigator url="../../pages/login/login" open-type="redirect" hover-class="navigator-hover" class="weui-agree__link">直接登录</navigator>
       </div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
@@ -205,13 +205,22 @@ export default {
             global.HttpRequest(false, "/pub/wx/auth/register", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                //注册成功，转向首页
-                wx.switchTab({
-                  url: "../../pages/index/index",
+                // wx.navigateBack({
+                //   delta: 1
+                // });
+                wx.showToast({
+                  title: '注册成功，跳转中...',
+                  icon: 'success',
+                  duration: 3000,
                   success: function (e) {
-                    console.log("注册成功，转向首页")
+                    wx.switchTab({
+                      url:"../../pages/index/index",
+                      success: function (e) {
+                        console.log("登录成功，转向首页")
+                      }
+                    });      
                   }
-                })
+                });
               }
               else {
                 that.isError = true;

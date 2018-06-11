@@ -92,28 +92,32 @@ class ThirdActivityService {
     /**
      * 团体切换传参id，绑定status,tags,title
      * 按活动标题、分类、状态查询活动
+     * @param activityId: 活动ID
      * @param title: 活动标题
      * @param tags: 活动标签分类
      * @param status: 活动按照周期查询的标识分类, 1:未开始的活动 2:进行中的活动 3:已结束的活动
      * @param id: 团体组织ID
      * @return 活动列表信息
      */
-    fun getAllActivityUserItemsAndCommunity(title: String?, tags: String?, status: String?, id: Int): Result<Record> {
+    fun getAllActivityUserItemsAndCommunity(activityId: String?, title: String?, tags: String?, status: String?, id: Int): Result<Record> {
         var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
-                "where 1=1 {0} {1} {2} " +
+                "where 1=1 {0} {1} {2} {3} " +
                 "and ?=t1.community_id " +
                 "order by t1.start_time desc "
+        var params = mutableListOf<Any>()
         var strCondition = ""
         if (!title.isNullOrBlank()) {
-            strCondition = "and t1.title like '%{0}%'".replace("{0}", title!!)
+            strCondition = "and t1.title like ?"
+            params.add("%$title%")
         }
         sql = sql.replace("{0}", strCondition)
 
         if (!tags.isNullOrBlank() && tags != "0") {
-            strCondition = "and t1.tags = '{0}'".replace("{0}", tags!!)
+            strCondition = "and t1.tags = ?"
+            params.add(tags!!)
         }
         sql = sql.replace("{1}", strCondition)
 
@@ -130,8 +134,14 @@ class ThirdActivityService {
         }
         sql = sql.replace("{2}", strCondition)
 
-        var items = create!!.resultQuery(sql, id).fetch()
-        return items
+        if (activityId!!.isNotEmpty()) {
+            strCondition = "and t1.id = ?"
+            params.add(activityId!!)
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        params.add(id)
+        return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
     }
 
     /**

@@ -8,6 +8,7 @@ import com.github.binarywang.wxpay.exception.WxPayException
 import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest
 import org.springframework.web.bind.annotation.RequestBody
 import com.github.binarywang.wxpay.bean.result.WxPayRefundResult
+import java.io.File
 
 @Service
 class WxService {
@@ -23,4 +24,14 @@ class WxService {
         return payService!!.refund(request)
     }
 
+
+    /**
+     * 取得二维码
+     * @param scene: 场景值
+     * @param page: 小程序页面
+     * @return 二维码文件
+     */
+    fun getQrCode(scene: String, page: String): File {
+        return maService!!.qrcodeService!!.createWxCodeLimit(scene, page)
+    }
 }

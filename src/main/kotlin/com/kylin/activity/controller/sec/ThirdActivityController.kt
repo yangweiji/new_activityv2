@@ -94,7 +94,8 @@ class ThirdActivityController : BaseController() {
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
-        var items = thirdActivityService!!.getAllActivityUserItemsAndCommunity(title, tags, status, this.sessionCommunity.id)
+        var activityId = map["id"]
+        var items = thirdActivityService!!.getAllActivityUserItemsAndCommunity(activityId, title, tags, status, this.sessionCommunity.id)
         return items.intoMaps()
     }
 

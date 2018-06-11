@@ -73,6 +73,7 @@ $(function () {
                         status: $("#status").val().trim(),
                         tags: $("#tags").val().trim(),
                         title: $("#title").val().trim(),
+                        id: $("#id").val().trim()
                     };
                     return JSON.stringify(param);
                 },
