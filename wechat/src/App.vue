@@ -9,11 +9,11 @@ export default {
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     console.log('app created and cache logs by setStorageSync')
-    //用户登录小程序
-    this.$kyutil.Login()
   },
   onLaunch: function(options) {
     console.log("Do something initial when launch.")
+    //用户登录小程序
+    this.$kyutil.Login()
   },
   onShow: function(options) {
     console.log("Do something when show.")

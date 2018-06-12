@@ -41,9 +41,9 @@
                     <kyimage :src="item.avatar"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                    <div class="weui-media-box__title weui-media-box__title-l">{{item.name}}</div>
+                    <div class="weui-media-box__title">{{item.name}}</div>
                     <div class="weui-media-box__title weui-media-box__title-r">{{item.countPeople}}人</div>
-                    <div class="weui-media-box__desc weui-media-box__title-l">{{item.description}}</div>
+                    <div class="weui-media-box__desc">{{item.description}}</div>
                     <!-- <div class="weui-media-box__desc">
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
@@ -65,9 +65,9 @@
                     <kyimage :src="item.avatar"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                    <div class="weui-media-box__title weui-media-box__title-l">{{item.name}}</div>
+                    <div class="weui-media-box__title">{{item.name}}</div>
                     <div class="weui-media-box__title weui-media-box__title-r">{{item.countPeople}}人</div>
-                    <div class="weui-media-box__desc weui-media-box__title-l">{{item.description}}</div>
+                    <div class="weui-media-box__desc">{{item.description}}</div>
                     <!-- <div class="weui-media-box__desc">
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
@@ -87,9 +87,9 @@
                     <kyimage :src="item.avatar"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                    <div class="weui-media-box__title weui-media-box__title-l">{{item.name}}</div>
+                    <div class="weui-media-box__title">{{item.name}}</div>
                     <div class="weui-media-box__title weui-media-box__title-r">{{item.countPeople}}人</div>
-                    <div class="weui-media-box__desc weui-media-box__title-l">{{item.description}}</div>
+                    <div class="weui-media-box__desc">{{item.description}}</div>
                     <!-- <div class="weui-media-box__desc">
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
@@ -159,15 +159,18 @@ export default {
   },
   created() {
     console.log("community created");
-    this.$kyutil.CheckUserValidation()
   },
   onLoad() {
-    this.getData();
+    this.$kyutil.CheckUserValidation();
+    if (wx.getStorageSync("user")) {
+      this.getData();
+    }
   },
   onShow() {
     wx.setNavigationBarTitle({
       title: '团体组织'
     });
+    
   }
 }
 </script>
@@ -221,7 +224,8 @@ page,
   float: right;
   color: #999;
   font-size: 14px;
-  
+  top: -22px;
+  position: relative;
 }
 .weui-badge-label {
   display: inline-block;

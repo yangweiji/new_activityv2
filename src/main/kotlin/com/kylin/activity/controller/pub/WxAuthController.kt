@@ -105,9 +105,11 @@ class WxAuthController {
      * @return 返回用户信息
      */
     @GetMapping("/getUserInfo")
-    fun getUserInfo(openid: String): User {
+    fun getUserInfo(openid: String): User? {
         var user = userService!!.getUserByOpenId(openid)
-        user!!.password = null
+        if (user != null) {
+            user!!.password = null
+        }
 
         return user
     }

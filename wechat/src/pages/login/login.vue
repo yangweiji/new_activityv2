@@ -185,7 +185,7 @@ export default {
           encryptedData: e.mp.detail.encryptedData,
           ivStr: e.mp.detail.iv,
         }
-        this.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
+        that.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
           console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
             param = {
@@ -194,25 +194,32 @@ export default {
               vercode: that.vercode,
               openId: wx.getStorageSync("sessionInfo").openid,
             }
-            this.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
+            that.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                // wx.navigateBack({
-                //   delta: 1
-                // });
-                wx.showToast({
-                  title: '登录成功，跳转中...',
-                  icon: 'success',
-                  duration: 3000,
-                  success: function (e) {
-                    wx.switchTab({
-                      url:"../../pages/index/index",
-                      success: function (e) {
-                        console.log("登录成功，转向首页")
-                      }
-                    });      
-                  }
+                that.$kyutil.HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": wx.getStorageSync("sessionInfo").openid }, "GET", false, function (res) {
+                    console.log("user: ", res)
+                    if (res) {
+                        wx.setStorageSync("user", res)
+                        // wx.navigateBack({
+                        //   delta: 1
+                        // });
+                        wx.showToast({
+                          title: '登录成功，跳转中...',
+                          icon: 'success',
+                          duration: 3000,
+                          success: function (e) {
+                            wx.switchTab({
+                              url:"../../pages/index/index",
+                              success: function (e) {
+                                console.log("登录成功，转向首页")
+                              }
+                            });      
+                          }
+                        });
+                    }
                 });
+                
               }
               else {
                 that.isError = true;
@@ -239,19 +246,6 @@ export default {
     console.log("login created");
   },
   onLoad: function() {
-    // // 查看是否授权
-    // wx.getSetting({
-    //   success: function(res){
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-    //       wx.getUserInfo({
-    //         success: function(res) {
-    //           // console.log(res.userInfo)
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
   },
 }
 </script>

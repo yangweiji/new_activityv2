@@ -376,7 +376,7 @@ export default {
 }
 
 .weui-navbar__slider_0 {
-  left: 0;
+  left: 5rpx;
   transform: translateX(0);
 }
 .weui-navbar__slider_1 {

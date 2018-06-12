@@ -63,7 +63,7 @@ class WxCommunityController {
             }
             //我加入的
             1 -> {
-                return communityService!!.getUserCommunities(userId)
+                return communityService!!.getCommunitiesByUser(userId)
             }
             //排行榜
             2 -> {

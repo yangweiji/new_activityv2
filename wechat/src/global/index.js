@@ -105,7 +105,10 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, cal
 
 //小程序登录
 function Login() {
-    if (wx.getStorageSync("sessionInfo")) return;
+    wx.clearStorageSync()
+    // console.log("sessionInfo: ", wx.getStorageSync("sessionInfo"))
+    // console.log("user: ", wx.getStorageSync("user"))
+    // if (wx.getStorageSync("sessionInfo")) return;
     
     wx.login({
         success: res => {
@@ -116,7 +119,7 @@ function Login() {
             } else {  
                 var code = res.code;
                 HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
-                    console.log("global data: ", res)
+                    console.log("sessionInfo: ", res)
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
                         HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid }, "GET", false, function (res) {
@@ -186,6 +189,8 @@ function CheckUserValidation() {
         wx.redirectTo({
             url: "/pages/login/login"
         });
+
+        return;
     }
 }
 

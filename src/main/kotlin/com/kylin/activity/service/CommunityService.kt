@@ -33,12 +33,6 @@ class CommunityService {
     private val activityService: ActivityService? = null
 
     /**
-     * 相册服务
-     */
-    @Autowired
-    private val activityPhotoService: ActivityPhotoService? = null
-
-    /**
      * 获取团体信息
      * @param name: 团体标题名称
      * @return 团体列表信息
@@ -133,8 +127,6 @@ class CommunityService {
      * @return 用户团体关联信息
      */
     fun getCommunityUser(userId: Int?, communityId: Int?): CommunityUser? {
-        //var sql = "select * from community_user where user_id = ? and community_id = ?"
-        //return create!!.resultQuery(sql).fetchOneInto(CommunityUser::class.java)
 
         return create!!.selectFrom(Tables.COMMUNITY_USER)
                 .where(Tables.COMMUNITY_USER.USER_ID.eq(userId))
@@ -172,5 +164,15 @@ class CommunityService {
         return communityDao!!.findAll()
     }
 
-
+    /**
+     * 取得用户所在的团体列表信息
+     * @param userId: 用户ID
+     * @return 团体列表信息
+     */
+    fun getCommunitiesByUser(userId: Int): List<Community> {
+        var sql = "select t1.* from community t1 " +
+                "inner join community_user t2 on t1.id = t2.community_id " +
+                "where t2.user_id = ?"
+        return create!!.fetch(sql, userId).into(Community::class.java)
+    }
 }

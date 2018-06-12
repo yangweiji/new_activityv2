@@ -125,7 +125,6 @@ export default {
   components: {},
   methods: {
     getData() {
-      
     },
     qh(cs) {
       this.xs = cs;
@@ -133,10 +132,14 @@ export default {
   },
   created() {
     console.log("oneself created");
+  },
+  onLoad() {
     this.$kyutil.CheckUserValidation();
+    if (wx.getStorageSync("user")) {
+      this.getData();
+    }
   },
   onShow () {
-    
   }
 };
 </script>
