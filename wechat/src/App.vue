@@ -1,10 +1,4 @@
 <script>
-//引用vuex store
-import store from './store'
-import global from './global/index'
-// console.log("store: ", store)
-// console.log("global: ", global)
-
 export default {
   data(){
     return {
@@ -17,9 +11,8 @@ export default {
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     console.log('app created and cache logs by setStorageSync')
-    
     //用户登录小程序
-    global.Login()
+    this.$kyutil.Login()
   },
   onLaunch: function(options) {
     console.log("Do something initial when launch.")

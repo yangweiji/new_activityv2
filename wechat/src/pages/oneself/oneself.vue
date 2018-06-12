@@ -115,7 +115,6 @@
 
 <script>
 import base64 from "../../../static/images/base64";
-import global from '../../global/index'
 export default {
   data() {
     return {
@@ -134,9 +133,10 @@ export default {
   },
   created() {
     console.log("oneself created");
+    this.$kyutil.CheckUserValidation();
   },
   onShow () {
-    global.CheckUserValidation();
+    
   }
 };
 </script>

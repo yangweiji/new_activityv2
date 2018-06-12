@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import App from './App'
 import './css/app.css'
+import store from './store';
+import kyutil from './global';
+import kyimage from '@/components/kyimage'
 
+Vue.component('kyimage', kyimage)
 Vue.config.productionTip = false
 App.mpType = 'app'
-
+Vue.prototype.$store = store;
+Vue.prototype.$kyutil = kyutil;
 import '../static/weui/weui.css'
 const app = new Vue(App)
 app.$mount()
@@ -21,6 +26,7 @@ export default {
       'pages/details/details',
       'pages/articlelist/articlelist',
       'pages/article/article',
+      'pages/community/community',
     ], 
 
     // Will be filled in webpack

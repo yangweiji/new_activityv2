@@ -3,7 +3,7 @@ const data = {
     sessionInfo: null,
     userInfo: null,
     serverUrl: "https://a.9kylin.cn/",
-    imageServer: "http://"
+    imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/"
 }
   
 //sessionChoose 1是带sessionID的GET方法  2是不带sessionID的GET方法, 3是带sessionID的Post方法, 4是不带sessionID的Post方法  
@@ -107,6 +107,8 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, cal
 
 //小程序登录
 function Login() {
+    if (wx.getStorageSync("sessionInfo")) return;
+    
     wx.login({
         success: res => {
             // 发送 res.code 到后台换取 openId, sessionKey, unionId  
@@ -117,7 +119,15 @@ function Login() {
                 var code = res.code;
                 HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
                     console.log("global data: ", res)
-                    wx.setStorageSync("sessionInfo", res)
+                    if (res.code == 200) {
+                        wx.setStorageSync("sessionInfo", res)
+                        HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid }, "GET", false, function (res) {
+                            console.log("user: ", res)
+                            if (res) {
+                                wx.setStorageSync("user", res)
+                            }
+                        });
+                    }
                 });
             }
         }
@@ -154,22 +164,31 @@ function Login() {
 
 //验证用户身份，小程序页面创建时调用此方法
 function CheckUserValidation() {
-    console.log("openid: ", wx.getStorageSync("sessionInfo").openid)
-    var param = {
-        openId: wx.getStorageSync("sessionInfo").openid
+    // console.log("openid: ", wx.getStorageSync("sessionInfo").openid)
+
+    // var param = {
+    //     openId: wx.getStorageSync("sessionInfo").openid
+    // }
+    // //验证用户身份
+    // HttpRequest(true, "/pub/wx/auth/validate", 4, "", param, "POST", false, function (res) {
+    //     if (!res) {
+    //         //跳转至登录界面验证身份
+    //         // wx.navigateTo({
+    //         //     url: "/pages/login/login"
+    //         // });
+    //         wx.redirectTo({
+    //             url: "/pages/login/login"
+    //         });
+    //     }        
+    // });
+
+    console.log("user: ", wx.getStorageSync("user"));
+    if (!wx.getStorageSync("user")) {
+        // 跳转至登录界面验证身份
+        wx.redirectTo({
+            url: "/pages/login/login"
+        });
     }
-    //验证用户身份
-    HttpRequest(true, "/pub/wx/auth/validate", 4, "", param, "POST", false, function (res) {
-        if (!res) {
-            //跳转至登录界面验证身份
-            // wx.navigateTo({
-            //     url: "/pages/login/login"
-            // });
-            wx.redirectTo({
-                url: "/pages/login/login"
-            });
-        }        
-    });
 }
 
 module.exports = {  

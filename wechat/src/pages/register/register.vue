@@ -90,7 +90,6 @@
 </template>
 
 <script>
-import global from '../../global/index'
 export default {
   data() {
     return {
@@ -146,7 +145,7 @@ export default {
       //获取短信验证码
       var that = this;
       if (that.canGetVerCode) {
-        global.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
+        this.$kyutil.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
           if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
@@ -191,8 +190,8 @@ export default {
           encryptedData: e.mp.detail.encryptedData,
           ivStr: e.mp.detail.iv,
         }
-        global.HttpRequest(false, "/pub/wx/auth/getUserInfo", false, "", param, "GET", false, function(res) {
-          console.log("getUserInfo: ", res);
+        this.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
+          console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
             param = {
               username: that.username,
@@ -202,7 +201,7 @@ export default {
               nickName: res.nickName,
               avatarUrl: res.avatarUrl,
             }
-            global.HttpRequest(false, "/pub/wx/auth/register", 2, "", param, "POST", false, function(res) {
+            this.$kyutil.HttpRequest(false, "/pub/wx/auth/register", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
               if (res.code == 200) {
                 // wx.navigateBack({

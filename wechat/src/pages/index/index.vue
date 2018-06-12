@@ -4,8 +4,13 @@
     <div class="page__bd">
       <!-- banner -->
       <div>
-        <span style="position:absolute;right:0;margin-top:10px;margin-right:25px;">切换团体</span>
-        <image src="../../static/images/banner_bg.png" style="height:100px;width:100%;" model="aspectFit" />
+        <navigator url="../../pages/community/community" hover-class="navigator-hover">
+          <span class="community-select">
+            切换团体
+          </span>
+        </navigator>  
+        <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" />
+        <div class="c-bg"></div>
       </div>
 
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
@@ -133,7 +138,6 @@
 
 <script>
 import base64 from "../../../static/images/base64";
-import global from '../../global/index'
 
 export default {
   data() {
@@ -213,26 +217,9 @@ export default {
         s: 1, //默认community_id=1
         t: that.activeIndex
       }
-      global.HttpRequest(true, "/pub/wx/activity/search", false, "", param, "GET", false, function (res) {
+      this.$kyutil.HttpRequest(true, "/pub/wx/activity/search", false, "", param, "GET", false, function (res) {
         that.items = res;
       });
-
-      // wx.request({
-      //   url: "https://a.9kylin.cn/pub/wx/activity/search", 
-      //   data: {
-      //     s: 1, //默认community_id=1
-      //     t: that.activeIndex
-      //   },
-      //   header: {
-      //     "content-type": "application/json" // 默认值
-      //   },
-      //   success: function(res) {
-      //     that.items = res.data;
-      //   },
-      //   fail: function(error) {
-      //     console.log(error);
-      //   }
-      // });
     },
     //主要活动标签分类触发事件，重新获取相应的数据
     tabClick(e) {
@@ -291,6 +278,7 @@ export default {
   },
   //页面创建完成，获取活动信息
   created() {
+    console.log("global:", global);
     console.log("index created");
     this.getData();
     //设置默认的其他活动标签分类值
@@ -418,4 +406,5 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 </style>

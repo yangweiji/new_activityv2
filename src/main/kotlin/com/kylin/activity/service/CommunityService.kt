@@ -165,5 +165,12 @@ class CommunityService {
         return if (item != null) item.into(CommunityUser::class.java) else null
     }
 
+    /**
+     * 团体组织排行榜
+     */
+    fun getCommunityTop(): Any? {
+        return communityDao!!.findAll()
+    }
+
 
 }

@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.MessageResult
 import com.kylin.activity.service.UserService
 import com.kylin.activity.service.VerCodeService
@@ -99,14 +100,27 @@ class WxAuthController {
     }
 
     /**
+     * 取得用户信息
+     * @param openid： 小程序用户openid
+     * @return 返回用户信息
+     */
+    @GetMapping("/getUserInfo")
+    fun getUserInfo(openid: String): User {
+        var user = userService!!.getUserByOpenId(openid)
+        user!!.password = null
+
+        return user
+    }
+
+    /**
      * 登录
      * @param sessionKey: 会话密钥
      * @param encryptedData: 消息密文
      * @param ivStr: 加密算法的初始向量
      * @return WxAuthResult
      */
-    @GetMapping("/getUserInfo")
-    fun getUserInfo(@RequestParam(required = true) sessionKey: String
+    @GetMapping("/getMiniAppUserInfo")
+    fun getMiniAppUserInfo(@RequestParam(required = true) sessionKey: String
                     ,@RequestParam(required = true) encryptedData: String
                     ,@RequestParam(required = true) ivStr: String): Any {
 
