@@ -1,9 +1,7 @@
 <script>
 export default {
   data(){
-    return {
-      sessionInfo : null
-    };
+
   },
   created() {
     // 调用API从本地缓存中获取数据
@@ -20,7 +18,6 @@ export default {
   onShow: function(options) {
     console.log("Do something when show.")
   },
-
   methods: {
   }
 }

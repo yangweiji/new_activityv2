@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App'
 import './css/app.css'
+import '../static/weui/weui.css'
+
 import store from './store';
 import kyutil from './global';
 import kyimage from '@/components/kyimage'
@@ -10,7 +12,7 @@ Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.prototype.$store = store;
 Vue.prototype.$kyutil = kyutil;
-import '../static/weui/weui.css'
+
 const app = new Vue(App)
 app.$mount()
 

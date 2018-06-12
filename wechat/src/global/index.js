@@ -1,7 +1,5 @@
 //全局变量
 const data = {
-    sessionInfo: null,
-    userInfo: null,
     serverUrl: "https://a.9kylin.cn/",
     imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/"
 }

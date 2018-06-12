@@ -42,3 +42,42 @@ page {
     position: relative;
     overflow: hidden;
 }
+
+
+
+
+/*custom style*/
+.banner {
+height:300rpx;
+width:100%;
+}
+.banner-community {
+height:300rpx;
+width:100%;
+}
+.c-bg {
+position:absolute;
+top: 0;
+height:300rpx;
+width:100%;
+background-color:rgba(0,0,0,0.5);
+}
+.community-select {
+position:absolute;
+right:0;
+margin-top:10px;
+margin-right:20px;
+color:#fff;
+z-index: 9999;
+}
+.community-search {
+display: block;
+position: absolute;
+top:0;
+text-align: center;
+margin-top:10px;
+/* margin-right:20px; */
+color:#fff;
+z-index: 9999;
+width: 100%;
+}
