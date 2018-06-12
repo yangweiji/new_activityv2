@@ -29,7 +29,7 @@ class ThirdScoreService {
                 "left join user t2 on t1.user_id = t2.id " +
                 "left join activity t3 on t1.activity_id = t3.id " +
                 "where 1=1 {0} {1} {2} {3} {4} " +
-                "and ?=t1.community_id " +
+                "and t1.community_id=? " +
                 "order by t1.created desc "
         var strCondition = ""
         if (title != null && !title.isEmpty()) {

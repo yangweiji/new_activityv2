@@ -17,6 +17,16 @@
               action="/sec/article/saveArticle">
             <input type="hidden" id="id" name="id"
                     v-model="cacheData.article.id"/>
+            <input type="hidden" id="communityId" name="communityId"
+            v-model="cacheData.article.communityId">
+            <input type="hidden" id="createdBy" name="createdBy"
+                   v-model="cacheData.article.createdBy">
+
+           <!-- th:text="${#dates.format(activity.get('start_time'), 'yyyy-MM-dd HH:mm')}"-->
+
+           <!-- <input type="hidden" id="created" name="created" v-model="cacheData.article.created"
+                   th:text="${#dates.format(articlesData.article.created,'yyyy-MM-dd HH:mm:ss')}" >-->
+
             <fieldset>
                 <legend>内容管理</legend>
                 <div class="am-form-group">
@@ -27,13 +37,6 @@
                     </div>
                 </div>
 
-                <div class="am-form-group">
-                    <label for="article_title" class="am-u-sm-2 am-form-label"></label>
-                    <div class="am-u-sm-10">
-                        <input type="hidden" id="createdBy" name="createdBy"
-                               placeholder="" v-model="cacheData.article.createdBy"/>
-                    </div>
-                </div>
 
                 <div class="am-form-group">
                     <label for="article_summary" class="am-u-sm-2 am-form-label">内容摘要</label>
