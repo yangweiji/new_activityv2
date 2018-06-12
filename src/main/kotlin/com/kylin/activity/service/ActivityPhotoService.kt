@@ -195,4 +195,14 @@ class ActivityPhotoService {
     }
 
 
+    /**
+     * 获取相应相册所有的图片信息
+     * @param photoId 相册id
+     * @return 指定相册图片集
+     */
+    fun getActivityPhotoPictureItems(photoId:Int?):Result<Record>{
+        var sql="select t1.* from activity_photo_picture t1 inner join activity_photo t2 on t1.activity_photo_id=t2.id " +
+                "where t1.activity_photo_id=? "
+        return create!!.resultQuery(sql,photoId).fetch()
+    }
 }
