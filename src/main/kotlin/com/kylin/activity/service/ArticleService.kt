@@ -131,8 +131,12 @@ class ArticleService {
      * 更新内容
      * @param article 文章
      */
-    fun updateArticle(article: Article) {
-        articleDao!!.update(article)
+    fun updateArticle(title: String,summary:String,avatar:String,unit:String,body:String,status:Int,
+                      modified:Timestamp,modified_by:Int,pulishTime:Timestamp,id:Int?):Any {
+        var sql="update article set title=?,summary=?,avatar=?,unit=?, " +
+                "body=?,status=?,modified=?,modified_by=?,publish_time=? " +
+                "where id=?  "
+        return create!!.execute(sql,title,summary,avatar,unit,body,status,modified,modified_by,pulishTime,id)
     }
 
     /**
@@ -144,4 +148,12 @@ class ArticleService {
         return article.status
     }
 
+
+    /**
+     * 获取单个内容信息
+     * @param title 内容标题
+     */
+    fun getArticleTitle(title: String): Article? {
+        return articleDao!!.fetchOne(Tables.ARTICLE.TITLE, title)
+    }
 }
