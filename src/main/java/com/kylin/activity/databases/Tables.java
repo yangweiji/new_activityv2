@@ -16,6 +16,7 @@ import com.kylin.activity.databases.tables.Article;
 import com.kylin.activity.databases.tables.Community;
 import com.kylin.activity.databases.tables.CommunityUser;
 import com.kylin.activity.databases.tables.PayOrder;
+import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
@@ -95,6 +96,11 @@ public class Tables {
      * 付款订单
      */
     public static final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
+
+    /**
+     * The table <code>activityv2.poster</code>.
+     */
+    public static final Poster POSTER = com.kylin.activity.databases.tables.Poster.POSTER;
 
     /**
      * 积分历史

@@ -210,7 +210,7 @@ export default {
 }
 .weui-panel {
   background-color: #fff;
-  margin-top: 0;
+  margin-top: -2px;
   position: relative;
   overflow: hidden;
 }

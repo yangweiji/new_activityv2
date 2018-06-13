@@ -1,26 +1,28 @@
 <script>
 export default {
-  data(){
-
+  data() {
+    return {
+      serverUrl: "https://a.9kylin.cn/",
+      imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/"
+    };
   },
   created() {
     // 调用API从本地缓存中获取数据
-    const logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-    console.log('app created and cache logs by setStorageSync')
+    const logs = wx.getStorageSync("logs") || [];
+    logs.unshift(Date.now());
+    wx.setStorageSync("logs", logs);
+    console.log("app created and cache logs by setStorageSync");
+    //用户登录小程序
+    this.$kyutil.Login();
   },
   onLaunch: function(options) {
-    console.log("Do something initial when launch.")
-    //用户登录小程序
-    this.$kyutil.Login()
+    console.log("Do something initial when launch.");
   },
   onShow: function(options) {
-    console.log("Do something when show.")
+    console.log("Do something when show.");
   },
-  methods: {
-  }
-}
+  methods: {}
+};
 </script>
 
 <style>

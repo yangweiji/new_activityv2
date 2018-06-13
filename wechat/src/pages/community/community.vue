@@ -109,7 +109,7 @@
 </template>
 
 <script>
-import base64 from '../../../static/images/base64';
+import base64 from "../../../static/images/base64";
 
 export default {
   data() {
@@ -123,21 +123,20 @@ export default {
       tabs: ["最新热门", "我加入的", "排行榜"],
       activeIndex: 0,
       fontSize: 30
-    }
+    };
   },
   computed: {
     navbarSliderClass() {
       if (this.activeIndex == 0) {
-        return 'weui-navbar__slider_0'
+        return "weui-navbar__slider_0";
       }
       if (this.activeIndex == 1) {
-        return 'weui-navbar__slider_1'
+        return "weui-navbar__slider_1";
       }
       if (this.activeIndex == 2) {
-        return 'weui-navbar__slider_2'
+        return "weui-navbar__slider_2";
       }
-    },
-    
+    }
   },
   methods: {
     //获取活动信息
@@ -146,10 +145,19 @@ export default {
       var param = {
         userId: wx.getStorageSync("user").id,
         status: that.activeIndex
-      }
-      this.$kyutil.HttpRequest(true, "/pub/wx/community/search", false, "", param, "GET", false, function (res) {
-        that.items = res;
-      });
+      };
+      this.$kyutil.HttpRequest(
+        true,
+        "/pub/wx/community/search",
+        false,
+        "",
+        param,
+        "GET",
+        false,
+        function(res) {
+          that.items = res;
+        }
+      );
     },
     tabClick(e) {
       console.log(e);
@@ -168,11 +176,10 @@ export default {
   },
   onShow() {
     wx.setNavigationBarTitle({
-      title: '团体组织'
+      title: "团体组织"
     });
-    
   }
-}
+};
 </script>
 
 <style>
@@ -202,7 +209,7 @@ page,
 }
 .weui-panel {
   background-color: #fff;
-  margin-top: 0;
+  margin-top: -2px;
   position: relative;
   overflow: hidden;
 }
@@ -232,8 +239,8 @@ page,
   padding: 0.4em 0.4em;
   min-width: 40px;
   border-radius: 18px;
-  border: 1px solid #00C000;
-  color: #00C000;
+  border: 1px solid #00c000;
+  color: #00c000;
   line-height: 1.2;
   text-align: center;
   font-size: 12px;
