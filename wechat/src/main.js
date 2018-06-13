@@ -17,7 +17,6 @@ const app = new Vue(App)
 app.$mount()
 
 export default {
-<<<<<<< HEAD
     config: {
         pages: [
             '^pages/index/index',
@@ -27,25 +26,11 @@ export default {
             'pages/tool/tool',
             'pages/oneself/oneself',
             'pages/details/details',
-            'pages/attend/attend',
             'pages/articlelist/articlelist',
             'pages/article/article',
+            'pages/community/community',
+            'pages/attend/attend'
         ],
-=======
-  config: {
-    pages: [
-      '^pages/index/index',
-      'pages/login/login',
-      'pages/register/register',
-      'pages/error/error',
-      'pages/tool/tool',
-      'pages/oneself/oneself',
-      'pages/details/details',
-      'pages/articlelist/articlelist',
-      'pages/article/article',
-      'pages/community/community',
-    ], 
->>>>>>> 2f3413e1e4ab64baa7f1a834c719b243e62602c4
 
         // Will be filled in webpack
         window: {
