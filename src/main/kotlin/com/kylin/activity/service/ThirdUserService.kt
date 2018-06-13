@@ -265,4 +265,13 @@ class ThirdUserService {
         create!!.execute("delete from community_user where community_id = ? and user_id = ?", communityId, userId)
     }
 
+    /**
+     * 检查当前用户是否是团体的会员
+     */
+    fun isVip(communityId: Int?, userId: Int?, year: Int): Boolean {
+        val sql = "select count(*) counts from community_user where user_id = ? and community_id = ? and level = ?"
+        val counts = create!!.fetchOne(sql, userId, communityId, year)
+        return counts != null && counts.get("counts", Int::class.java) > 0
+    }
+
 }

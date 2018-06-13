@@ -80,6 +80,15 @@ class ThirdScoreService {
     }
 
     /**
+     * 获取用户在指定团体上的可用积分
+     */
+    fun getUseableScore(userId: Int, communityId: Int): Int{
+        var sql = "select ifnull(sum(score), 0) counts from score_history where user_id= ? and community_id=?"
+        var result = dslContext!!.resultQuery(sql, userId, communityId).fetchOne()
+        return result.get("counts", Int::class.java)
+    }
+
+    /**
      * 保存更新活动积分
      * @param item
      * @return

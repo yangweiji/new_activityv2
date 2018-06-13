@@ -33,8 +33,10 @@
                 </div> -->
             </div>
         </div>
+        <div class="page__bd_spacing">
+          <button class="weui-btn" @click="gotoAttend()" type="primary">报名</button>
+        </div>
     </div>
-
   </div>
 </template>
 
@@ -63,24 +65,12 @@ export default {
       global.HttpRequest(true, "/pub/wx/activity/details", false, "", param, "GET", false, function (res) {
         that.item = res;
       });
-      
-      // wx.request({
-      //   url: "https://a.9kylin.cn/pub/wx/activity/details", //仅为示例，并非真实的接口地址
-      //   data: {
-      //     activityId: that.activityId
-      //   },
-      //   header: {
-      //     "content-type": "application/json" // 默认值
-      //   },
-      //   success: function(res) {
-      //     console.log(res.data);
-      //     that.item = res.data;
-      //   },
-      //   fail: function(error) {
-      //     console.log(error);
-      //   }
-      // });
     },
+    gotoAttend(){
+      wx.navigateTo({
+        url: "../../pages/attend/attend?activityId=" + this.activityId
+      });
+    }
   },
   created() {
     console.log("details created");
@@ -102,4 +92,10 @@ export default {
  * Licensed under the MIT license
  */
  .pet_zlnr_user_l { width: 40px; height: 40px; overflow: hidden; border-radius: 50%; float: left; position: relative;}
+ .button-footer{
+   position: absolute;
+   width: 100%;
+   bottom: 0px;
+   height: 40px;
+ }
 </style>
