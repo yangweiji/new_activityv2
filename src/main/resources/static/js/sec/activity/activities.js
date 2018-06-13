@@ -112,17 +112,14 @@ $(function () {
                         }
                     }
                 },
-                {"data": "unit"}
-                /*  {
-                      "data": "action", "width": "200px", defaultContent: "",
+                {"data": "unit"},
+                  {
+                      "data": "action", "width": "80px", defaultContent: "",
                       render: function (data, type, row) {
-                          return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
-                              + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
-                              + '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
+                          return '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
                               + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
-                              + '<button id="picturerow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="相册管理"><i class="am-icon-shield"></i></button>'
                       }
-                  },*/
+                  },
             ],
 
             //栏定义
@@ -132,7 +129,7 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8,-1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序

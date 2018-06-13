@@ -15,6 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.sql.Date
+import java.sql.Timestamp
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 data class ArticlesData(
@@ -74,7 +79,7 @@ class ArticleController : BaseController() {
      * @param model 存放内容信息数据模型
      */
     @RequestMapping(value = "/article", method = [RequestMethod.GET])
-    fun article(@RequestParam(required = false) id: Int?, model: Model): String {
+    fun article(@RequestParam(required = false) id: Int?, model: Model, request: HttpServletRequest): String {
         var articlesData = ArticlesData()
         if (id != null && id > 0) {
             articlesData.article = articleService!!.getArticle(id)
@@ -88,30 +93,40 @@ class ArticleController : BaseController() {
     /**
      * 保存添加或编辑内容信息
      * @param article 内容
+     * @return
      */
     @PostMapping("/saveArticle")
     fun saveArticle(@ModelAttribute("article") article: Article?,
-                    @RequestParam("status") status: Int,
                     model: Model): String {
         var user = this.sessionUser
-
         if (article!!.id != null && article.id > 0) {
-            article.modifiedBy = user!!.id
+            var title = article.title
+            var summary = article.summary
+            var avatar = article.avatar
+            var unit = article.unit
+            var body = article.body
+            var status = article.status
+            var publishTime = article.publishTime
             article.modified = DateUtil.date().toTimestamp()
-            article.publishTime = DateUtil.date().toTimestamp()
-            /*
-          //禁止状态
-          if (article.status == -1) {
-
-          }
-
-          //发布状态
-          if (article.status == 1) {
-              return "redirect:/"
-          }
-          */
-            articleService!!.updateArticle(article)
+            article.modifiedBy = user!!.id
+            //禁止状态，发布时间改成：1970-01-01
+            if (article.status == -1) {
+                var year = 1970
+                var month = 1
+                var vardayOfMonth = 1
+                var hour = 0
+                var minute = 0
+                var second = 0
+                var nanoOfSecond = 0
+                publishTime = Timestamp.valueOf(LocalDateTime.of(year, month, vardayOfMonth, hour, minute, second, nanoOfSecond))
+            }
+            articleService!!.updateArticle(title, summary, avatar, unit, body, status,
+                    article.modified, article.modifiedBy, publishTime, article.id)
         } else {
+            var articleTitle= articleService!!.getArticleTitle(article.title)
+            if (articleTitle != null) {
+                 return "文章【${article.title}】已存在"
+            }
             var articles = Article()
             articles.title = article.title
             articles.createdBy = user!!.id
