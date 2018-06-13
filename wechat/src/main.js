@@ -43,16 +43,19 @@ export default {
             list: [{
                     pagePath: 'pages/index/index',
                     iconPath: 'static/images/icon_nav_toast.png',
+                    selectedIconPath: 'static/images/icon_nav_toast.png',
                     text: '首页'
                 },
                 {
                     pagePath: 'pages/tool/tool',
                     iconPath: 'static/images/icon_nav_toast.png',
+                    selectedIconPath: 'static/images/icon_nav_toast.png',
                     text: '小工具'
                 },
                 {
                     pagePath: 'pages/oneself/oneself',
                     iconPath: 'static/images/icon_nav_toast.png',
+                    selectedIconPath: 'static/images/icon_nav_toast.png',
                     text: '我'
                 }
             ]

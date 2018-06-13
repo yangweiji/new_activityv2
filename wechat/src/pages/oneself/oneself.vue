@@ -6,7 +6,7 @@
              切换到管理者 >>
           </div>
           <div style="position:absolute;margin-top:15%;width:100%;">
-           <image :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></image>
+           <images :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></images>
             <p class="p-text__xx">用户信息【参与者】</p>
             <p class="p-text__xx">用户加入的团体信息</p>
           </div>
@@ -71,11 +71,11 @@
              切换到参与者 >>
           </div>
           <div style="position:absolute;margin-top:15%;width:100%;">
-           <image :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></image>
+           <images :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></images>
             <p class="p-text__xx">用户信息【管理者】</p>
             <p class="p-text__xx">用户加入的团体信息</p>
           </div>
-          <image style="height:200px; width:100%;"></image>
+          <images style="height:200px; width:100%;"></images>
        </div>
        <div>
             <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
