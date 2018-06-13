@@ -1,17 +1,14 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import state from './state';
+import mutations from './mutations';
+import * as getters from './getters';
+import * as actions from './actions';
 
-Vue.use(Vuex)
-
-const store = new Vuex.Store({
-    state: {
-        count: 0
-    },
-    mutations: {
-        increment (state) {
-            state.count++
-        }
-    }
-})
-
-export default store  
+Vue.use(Vuex);
+export default new Vuex.Store({ // eslint-disable-line
+  state,
+  mutations,
+  actions,
+  getters
+});

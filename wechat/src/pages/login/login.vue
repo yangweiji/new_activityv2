@@ -77,7 +77,6 @@
 </template>
 
 <script>
-import global from '../../global/index'
 export default {
   data() {
     return {
@@ -125,7 +124,7 @@ export default {
       //获取短信验证码
       var that = this;
       if (that.canGetVerCode) {
-        global.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
+        this.$kyutil.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
           if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
@@ -138,7 +137,7 @@ export default {
           //测试环境下，直接显示出验证码
           that.vercode = res.message;
           that.canGetVerCode = false;
-          that.count = 10;
+          that.count = 60;
           var i = setInterval(() => {
             that.count --;
             if (that.count <= 0) {
@@ -162,7 +161,7 @@ export default {
     //     openId: wx.getStorageSync("sessionInfo").openid,
     //   };
 
-    //   global.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
+    //   this.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
     //     if (res.code == 200) {
     //       wx.navigateBack({
     //         delta: 1
@@ -186,8 +185,8 @@ export default {
           encryptedData: e.mp.detail.encryptedData,
           ivStr: e.mp.detail.iv,
         }
-        global.HttpRequest(false, "/pub/wx/auth/getUserInfo", false, "", param, "GET", false, function(res) {
-          console.log("getUserInfo: ", res);
+        that.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
+          console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
             param = {
               username: that.username,
@@ -195,25 +194,32 @@ export default {
               vercode: that.vercode,
               openId: wx.getStorageSync("sessionInfo").openid,
             }
-            global.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
+            that.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                // wx.navigateBack({
-                //   delta: 1
-                // });
-                wx.showToast({
-                  title: '登录成功，跳转中...',
-                  icon: 'success',
-                  duration: 3000,
-                  success: function (e) {
-                    wx.switchTab({
-                      url:"../../pages/index/index",
-                      success: function (e) {
-                        console.log("登录成功，转向首页")
-                      }
-                    });      
-                  }
+                that.$kyutil.HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": wx.getStorageSync("sessionInfo").openid }, "GET", false, function (res) {
+                    console.log("user: ", res)
+                    if (res) {
+                        wx.setStorageSync("user", res)
+                        // wx.navigateBack({
+                        //   delta: 1
+                        // });
+                        wx.showToast({
+                          title: '登录成功，跳转中...',
+                          icon: 'success',
+                          duration: 3000,
+                          success: function (e) {
+                            wx.switchTab({
+                              url:"../../pages/index/index",
+                              success: function (e) {
+                                console.log("登录成功，转向首页")
+                              }
+                            });      
+                          }
+                        });
+                    }
                 });
+                
               }
               else {
                 that.isError = true;
@@ -240,19 +246,6 @@ export default {
     console.log("login created");
   },
   onLoad: function() {
-    // // 查看是否授权
-    // wx.getSetting({
-    //   success: function(res){
-    //     if (res.authSetting['scope.userInfo']) {
-    //       // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-    //       wx.getUserInfo({
-    //         success: function(res) {
-    //           // console.log(res.userInfo)
-    //         }
-    //       })
-    //     }
-    //   }
-    // })
   },
 }
 </script>

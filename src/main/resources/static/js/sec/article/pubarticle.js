@@ -16,6 +16,8 @@ new Vue({
             }
         })
 
+
+
         //发布时间控件
         $('.c-datetimepicker.publish-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss ',

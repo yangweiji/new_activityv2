@@ -115,7 +115,6 @@
 
 <script>
 import base64 from "../../../static/images/base64";
-import global from '../../global/index'
 export default {
   data() {
     return {
@@ -126,7 +125,6 @@ export default {
   components: {},
   methods: {
     getData() {
-      
     },
     qh(cs) {
       this.xs = cs;
@@ -135,8 +133,13 @@ export default {
   created() {
     console.log("oneself created");
   },
+  onLoad() {
+    this.$kyutil.CheckUserValidation();
+    if (wx.getStorageSync("user")) {
+      this.getData();
+    }
+  },
   onShow () {
-    global.CheckUserValidation();
   }
 };
 </script>

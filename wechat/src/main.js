@@ -1,15 +1,23 @@
 import Vue from 'vue'
 import App from './App'
 import './css/app.css'
+import '../static/weui/weui.css'
 
+import store from './store';
+import kyutil from './global';
+import kyimage from '@/components/kyimage'
+
+Vue.component('kyimage', kyimage)
 Vue.config.productionTip = false
 App.mpType = 'app'
+Vue.prototype.$store = store;
+Vue.prototype.$kyutil = kyutil;
 
-import '../static/weui/weui.css'
 const app = new Vue(App)
 app.$mount()
 
 export default {
+<<<<<<< HEAD
     config: {
         pages: [
             '^pages/index/index',
@@ -23,6 +31,21 @@ export default {
             'pages/articlelist/articlelist',
             'pages/article/article',
         ],
+=======
+  config: {
+    pages: [
+      '^pages/index/index',
+      'pages/login/login',
+      'pages/register/register',
+      'pages/error/error',
+      'pages/tool/tool',
+      'pages/oneself/oneself',
+      'pages/details/details',
+      'pages/articlelist/articlelist',
+      'pages/article/article',
+      'pages/community/community',
+    ], 
+>>>>>>> 2f3413e1e4ab64baa7f1a834c719b243e62602c4
 
         // Will be filled in webpack
         window: {

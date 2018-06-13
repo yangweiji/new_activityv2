@@ -1,15 +1,7 @@
 <script>
-//引用vuex store
-import store from './store'
-import global from './global/index'
-// console.log("store: ", store)
-// console.log("global: ", global)
-
 export default {
   data(){
-    return {
-      sessionInfo : null
-    };
+
   },
   created() {
     // 调用API从本地缓存中获取数据
@@ -17,17 +9,15 @@ export default {
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
     console.log('app created and cache logs by setStorageSync')
-    
-    //用户登录小程序
-    global.Login()
   },
   onLaunch: function(options) {
     console.log("Do something initial when launch.")
+    //用户登录小程序
+    this.$kyutil.Login()
   },
   onShow: function(options) {
     console.log("Do something when show.")
   },
-
   methods: {
   }
 }

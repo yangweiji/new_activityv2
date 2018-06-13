@@ -121,7 +121,8 @@ class ArticleController : BaseController() {
             articles.category = article.category
             articles.avatar = article.avatar
             articles.body = article.body
-            articles.communityId = article.communityId
+            //0：默认为平台发布
+            articles.communityId = 0
             articles.summary = article.summary
             articles.unit = article.unit
             articleService!!.insertArticle(articles)
