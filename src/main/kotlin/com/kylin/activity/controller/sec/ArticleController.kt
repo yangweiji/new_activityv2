@@ -98,7 +98,7 @@ class ArticleController : BaseController() {
      */
     @PostMapping("/saveArticle")
     fun saveArticle(@ModelAttribute("article") article: Article?,
-                    model: Model,redirectAttributes: RedirectAttributes): String {
+                    model: Model, redirectAttributes: RedirectAttributes): String {
         var user = this.sessionUser
         if (article!!.id != null && article.id > 0) {
             var title = article.title
@@ -108,10 +108,12 @@ class ArticleController : BaseController() {
             var body = article.body
             var status = article.status
             var publishTime = article.publishTime
+            var category = article.category
             article.modified = DateUtil.date().toTimestamp()
             article.modifiedBy = user!!.id
             //禁止状态，发布时间改成：1970-01-01
             if (article.status == -1) {
+                category = 4
                 var year = 1970
                 var month = 1
                 var vardayOfMonth = 1
@@ -120,18 +122,22 @@ class ArticleController : BaseController() {
                 var second = 0
                 var nanoOfSecond = 0
                 publishTime = Timestamp.valueOf(LocalDateTime.of(year, month, vardayOfMonth, hour, minute, second, nanoOfSecond))
+                redirectAttributes.addFlashAttribute("errorMessage", "文章【${title}】已被禁用！")
+                articleService!!.updateArticle(title, summary, avatar, unit, body, status,
+                        article.modified, article.modifiedBy, publishTime, category, article.id)
+                return "redirect:/sec/article/articles"
             }
             //发布状态，获得系统当前时间
-            if(article.status==1){
+            if (article.status == 1) {
                 publishTime = DateUtil.date().toTimestamp()
                 redirectAttributes.addFlashAttribute("globalMessage", "文章【${title}】发布成功！")
             }
             articleService!!.updateArticle(title, summary, avatar, unit, body, status,
-                    article.modified, article.modifiedBy, publishTime, article.id)
+                    article.modified, article.modifiedBy, publishTime, category, article.id)
         } else {
-            var articleTitle= articleService!!.getArticleTitle(article.title)
+            var articleTitle = articleService!!.getArticleTitle(article.title)
             if (articleTitle != null) {
-                 return "文章【${article.title}】已存在"
+                return "文章【${article.title}】已存在"
             }
             var articles = Article()
             articles.title = article.title
@@ -146,7 +152,12 @@ class ArticleController : BaseController() {
             articles.communityId = 0
             articles.summary = article.summary
             articles.unit = article.unit
-            articleService!!.insertArticle(articles)
+            //草稿状态
+            if (article.status == 0) {
+                redirectAttributes.addFlashAttribute("globalMessage", "文章【${article.title}】添加成功！")
+                articleService!!.insertArticle(articles)
+                return "redirect:/sec/article/articles"
+            }
         }
         return "redirect:/sec/article/articles"
     }

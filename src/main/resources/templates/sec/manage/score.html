@@ -24,6 +24,7 @@
                     <!--<div th:text="${score}"></div>-->
                     <form class="am-form am-form-horizontal" data-am-validator method="post" action="/sec/manage/saveScore">
                         <input type="hidden" id="id" name="id" th:value="${score.id}" />
+                        <input type="hidden" id="communityId" name="communityId" th:value="${score.communityId}">
                         <div class="am-form-group">
                             <label for="username" class="am-u-sm-2 am-form-label">用户名：</label>
                             <div class="am-u-sm-10">

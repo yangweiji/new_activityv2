@@ -132,12 +132,13 @@ class ArticleService {
      * @param article 文章
      */
     fun updateArticle(title: String,summary:String,avatar:String,unit:String,body:String,status:Int,
-                      modified:Timestamp,modified_by:Int,pulishTime:Timestamp,id:Int?):Any {
+                      modified:Timestamp,modified_by:Int,pulishTime:Timestamp,category: Int,id:Int?):Any {
         var sql="update article set title=?,summary=?,avatar=?,unit=?, " +
-                "body=?,status=?,modified=?,modified_by=?,publish_time=? " +
+                "body=?,status=?,modified=?,modified_by=?,publish_time=?,category=? " +
                 "where id=?  "
-        return create!!.execute(sql,title,summary,avatar,unit,body,status,modified,modified_by,pulishTime,id)
+        return create!!.execute(sql,title,summary,avatar,unit,body,status,modified,modified_by,pulishTime,category,id)
     }
+
 
     /**
      * 发布状态
