@@ -50,7 +50,7 @@
               <div class="weui-panel__bd">
                 <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">    
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
                     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -82,7 +82,7 @@
               <div class="weui-panel__bd">
                 <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">    
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
                     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -98,7 +98,7 @@
               <div class="weui-panel__bd">
                 <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">    
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
                     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -114,7 +114,7 @@
               <div class="weui-panel__bd">
                 <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">    
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
                     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -402,7 +402,7 @@ export default {
 }
 .weui-panel {
   background-color: #fff;
-  margin-top: 0;
+  margin-top: -2px;
   position: relative;
   overflow: hidden;
 }

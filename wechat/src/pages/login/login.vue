@@ -188,18 +188,20 @@ export default {
         that.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
           console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
+            //获取openid
             param = {
               username: that.username,
               password: that.password,
               vercode: that.vercode,
-              openId: wx.getStorageSync("sessionInfo").openid,
+              openId: res.openid,
             }
             that.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                that.$kyutil.HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": wx.getStorageSync("sessionInfo").openid }, "GET", false, function (res) {
+                that.$kyutil.HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": param.openId }, "GET", false, function (res) {
                     console.log("user: ", res)
                     if (res) {
+                        //将user存储于storage
                         wx.setStorageSync("user", res)
                         // wx.navigateBack({
                         //   delta: 1

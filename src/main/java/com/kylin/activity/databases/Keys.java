@@ -16,6 +16,7 @@ import com.kylin.activity.databases.tables.Article;
 import com.kylin.activity.databases.tables.Community;
 import com.kylin.activity.databases.tables.CommunityUser;
 import com.kylin.activity.databases.tables.PayOrder;
+import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
@@ -31,6 +32,7 @@ import com.kylin.activity.databases.tables.records.ArticleRecord;
 import com.kylin.activity.databases.tables.records.CommunityRecord;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
 import com.kylin.activity.databases.tables.records.PayOrderRecord;
+import com.kylin.activity.databases.tables.records.PosterRecord;
 import com.kylin.activity.databases.tables.records.ScoreHistoryRecord;
 import com.kylin.activity.databases.tables.records.UserRecord;
 import com.kylin.activity.databases.tables.records.VercodeRecord;
@@ -72,6 +74,7 @@ public class Keys {
     public static final Identity<CommunityRecord, Integer> IDENTITY_COMMUNITY = Identities0.IDENTITY_COMMUNITY;
     public static final Identity<CommunityUserRecord, Integer> IDENTITY_COMMUNITY_USER = Identities0.IDENTITY_COMMUNITY_USER;
     public static final Identity<PayOrderRecord, Integer> IDENTITY_PAY_ORDER = Identities0.IDENTITY_PAY_ORDER;
+    public static final Identity<PosterRecord, Integer> IDENTITY_POSTER = Identities0.IDENTITY_POSTER;
     public static final Identity<ScoreHistoryRecord, Integer> IDENTITY_SCORE_HISTORY = Identities0.IDENTITY_SCORE_HISTORY;
     public static final Identity<UserRecord, Integer> IDENTITY_USER = Identities0.IDENTITY_USER;
     public static final Identity<VercodeRecord, Integer> IDENTITY_VERCODE = Identities0.IDENTITY_VERCODE;
@@ -92,6 +95,7 @@ public class Keys {
     public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = UniqueKeys0.KEY_COMMUNITY_PRIMARY;
     public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = UniqueKeys0.KEY_COMMUNITY_USER_PRIMARY;
     public static final UniqueKey<PayOrderRecord> KEY_PAY_ORDER_PRIMARY = UniqueKeys0.KEY_PAY_ORDER_PRIMARY;
+    public static final UniqueKey<PosterRecord> KEY_POSTER_PRIMARY = UniqueKeys0.KEY_POSTER_PRIMARY;
     public static final UniqueKey<ScoreHistoryRecord> KEY_SCORE_HISTORY_PRIMARY = UniqueKeys0.KEY_SCORE_HISTORY_PRIMARY;
     public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = UniqueKeys0.KEY_USER_PRIMARY;
     public static final UniqueKey<UserRecord> KEY_USER_UK_USERNAME = UniqueKeys0.KEY_USER_UK_USERNAME;
@@ -119,6 +123,7 @@ public class Keys {
         public static Identity<CommunityRecord, Integer> IDENTITY_COMMUNITY = createIdentity(Community.COMMUNITY, Community.COMMUNITY.ID);
         public static Identity<CommunityUserRecord, Integer> IDENTITY_COMMUNITY_USER = createIdentity(CommunityUser.COMMUNITY_USER, CommunityUser.COMMUNITY_USER.ID);
         public static Identity<PayOrderRecord, Integer> IDENTITY_PAY_ORDER = createIdentity(PayOrder.PAY_ORDER, PayOrder.PAY_ORDER.ID);
+        public static Identity<PosterRecord, Integer> IDENTITY_POSTER = createIdentity(Poster.POSTER, Poster.POSTER.ID);
         public static Identity<ScoreHistoryRecord, Integer> IDENTITY_SCORE_HISTORY = createIdentity(ScoreHistory.SCORE_HISTORY, ScoreHistory.SCORE_HISTORY.ID);
         public static Identity<UserRecord, Integer> IDENTITY_USER = createIdentity(User.USER, User.USER.ID);
         public static Identity<VercodeRecord, Integer> IDENTITY_VERCODE = createIdentity(Vercode.VERCODE, Vercode.VERCODE.ID);
@@ -137,6 +142,7 @@ public class Keys {
         public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = createUniqueKey(Community.COMMUNITY, "KEY_community_PRIMARY", Community.COMMUNITY.ID);
         public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_PRIMARY", CommunityUser.COMMUNITY_USER.ID);
         public static final UniqueKey<PayOrderRecord> KEY_PAY_ORDER_PRIMARY = createUniqueKey(PayOrder.PAY_ORDER, "KEY_pay_order_PRIMARY", PayOrder.PAY_ORDER.ID);
+        public static final UniqueKey<PosterRecord> KEY_POSTER_PRIMARY = createUniqueKey(Poster.POSTER, "KEY_poster_PRIMARY", Poster.POSTER.ID);
         public static final UniqueKey<ScoreHistoryRecord> KEY_SCORE_HISTORY_PRIMARY = createUniqueKey(ScoreHistory.SCORE_HISTORY, "KEY_score_history_PRIMARY", ScoreHistory.SCORE_HISTORY.ID);
         public static final UniqueKey<UserRecord> KEY_USER_PRIMARY = createUniqueKey(User.USER, "KEY_user_PRIMARY", User.USER.ID);
         public static final UniqueKey<UserRecord> KEY_USER_UK_USERNAME = createUniqueKey(User.USER, "KEY_user_uk_username", User.USER.USERNAME);

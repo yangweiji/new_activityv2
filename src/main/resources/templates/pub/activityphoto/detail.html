@@ -10,7 +10,8 @@
 
         <h1>活动相册</h1>-<span th:text="${activityPhoto.description}"></span>
 
-        <div class="am-g am-imglist">
+        <div class="am-g am-imglist" data-am-widget="paragraph"
+             data-am-paragraph="{ tableScrollable: true, pureview: true }" >
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
                 <li th:each="item : ${activityPhotoPictureItems}">
                     <div class="am-gallery-item am_list_block">
