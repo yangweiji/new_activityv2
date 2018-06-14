@@ -17,7 +17,14 @@
             <div class="vip_adv"></div>
 
         </div>
-
+        <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+            <button type="button" class="am-close">&times;</button>
+            <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
+            <p>
+                <span class="am-icon-lg am-success am-icon-check"></span>
+                <span th:text="${globalMessage}">Some Success message</span>
+            </p>
+        </div>
         <div class="am-tabs-bd am_bdfw">
             <div class="am-g">
                 <form class="am-form-inline" method="post">

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.sql.Date
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
@@ -97,7 +98,7 @@ class ArticleController : BaseController() {
      */
     @PostMapping("/saveArticle")
     fun saveArticle(@ModelAttribute("article") article: Article?,
-                    model: Model): String {
+                    model: Model,redirectAttributes: RedirectAttributes): String {
         var user = this.sessionUser
         if (article!!.id != null && article.id > 0) {
             var title = article.title
@@ -119,6 +120,11 @@ class ArticleController : BaseController() {
                 var second = 0
                 var nanoOfSecond = 0
                 publishTime = Timestamp.valueOf(LocalDateTime.of(year, month, vardayOfMonth, hour, minute, second, nanoOfSecond))
+            }
+            //发布状态，获得系统当前时间
+            if(article.status==1){
+                publishTime = DateUtil.date().toTimestamp()
+                redirectAttributes.addFlashAttribute("globalMessage", "文章【${title}】发布成功！")
             }
             articleService!!.updateArticle(title, summary, avatar, unit, body, status,
                     article.modified, article.modifiedBy, publishTime, article.id)

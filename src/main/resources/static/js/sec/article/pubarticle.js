@@ -19,7 +19,7 @@ new Vue({
 
 
         //发布时间控件
-        $('.c-datetimepicker.publish-time').datetimepicker({
+      /*  $('.c-datetimepicker.publish-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii:ss ',
             language: 'zh-CN'
         }).on('changeDate', function (ev) {
@@ -29,7 +29,7 @@ new Vue({
         });
         if (that.cacheData.article.publishTime) {
             $('.c-datetimepicker.publish-time').datetimepicker('update', new Date(that.cacheData.article.publishTime))
-        }
+        }*/
 
         //富文本控件
         var imageHandleCallback;
