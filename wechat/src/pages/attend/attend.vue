@@ -1,6 +1,7 @@
 <template>
   <div class="page">
     <div v-if="loaded" class="page__bd">
+      <div class="weui-toptips weui-toptips_warn" v-if="errorMessage">{{errorMessage}}</div>
       <div>
         <div class="weui-cells__title" v-if="overDue">
           <h1 class="c-title-text">
@@ -13,7 +14,7 @@
             <h1 class="am-article-title">
               您已报名
               <span style="color:#F37B1D;font-size:25px;font-weight: bold;">
-                            【<span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{activityStatusText()}}</span>】
+                              【<span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{activityStatusText}}</span>】
               </span>
             </h1>
           </div>
@@ -42,19 +43,22 @@
           <div class="weui-cells weui-cells_after-title">
             <radio-group id="ticketInfos" @change="ticketRadioChange">
               <label class="weui-cell weui-check__label" v-for="opt in item.ticketInfos" :key="opt.id">
-                    <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
-                    <div class="weui-cell__bd">{{opt.title}}</div>
-                    <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
-                      <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                    </div>
-                  </label>
+                      <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
+                      <div class="weui-cell__bd">{{opt.title}}</div>
+                      <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
+                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                      </div>
+                    </label>
             </radio-group>
           </div>
           <div class="weui-cells__title" v-if="!item.hasTickets">活动票已售完</div>
           <div v-for="(attItem, index) in item.attendInfos" :key="attItem.title">
-            <div class="weui-cells__title">{{attItem.title}}</div>
+            <div class="weui-cells__title">
+              {{attItem.title}}
+              <span v-if="attItem.required" style="color:red;font-size:10px;">(必填)</span>
+            </div>
             <div class="weui-cells weui-cells_after-title">
-              <div v-if="attItem.type == 'text'"  class="weui-cell weui-cell_input">
+              <div v-if="attItem.type == 'text'" class="weui-cell weui-cell_input">
                 <div class="weui-cell__bd">
                   <input class="weui-input" v-model="attItem.value" placeholder="请输入..." />
                 </div>
@@ -67,38 +71,44 @@
               </div>
               <radio-group :id="index" v-if="attItem.type == 'select' && !attItem.multiple" @change="attendInfoRadioChange">
                 <label class="weui-cell weui-check__label" v-for="(singleOpt, singleIndex) in attItem.options" :key="singleOpt.title">
-                        <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
-                        <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
-                        <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
-                          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                        </div>
-                      </label>
+                          <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
+                          <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
+                          <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
+                            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                          </div>
+                        </label>
               </radio-group>
               <checkbox-group :id="index" v-if="attItem.type == 'select' && attItem.multiple" @change="attendInfoCheckboxChange">
                 <label class="weui-cell weui-check__label" v-for="(multipleOpt, multipleIndex) in attItem.options" :key="multipleOpt.title">
-                        <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
-                        <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
-                          <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
-                          <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
-                        </div>
-                        <div class="weui-cell__bd">{{multipleOpt.title}}</div>
-                      </label>
+                          <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
+                          <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
+                            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
+                            <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
+                          </div>
+                          <div class="weui-cell__bd">{{multipleOpt.title}}</div>
+                        </label>
               </checkbox-group>
             </div>
-            
           </div>
           <div v-if="item.checkInScore > 0" lass="weui-cells__title">
             <label>活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
           </div>
-          <div v-if="price > 0 && score > 0" class="c-form-group">
-            <label class="am-checkbox-inline c-score-checkbox">
-                      <input type="checkbox" v-model="isUsingScore">
-                      本次可用积分：{{maxScore != null && score > maxScore ? maxScore : score}}<span v-if="isUsingScore">, 抵扣积分：<span class="c-money">{{realScore()}}</span></span>
-                  </label>
+          <div v-if="ticket && ticket.price > 0 && score > 0" class="c-form-group">
+            <checkbox-group @change="usingScoreChange">
+              <label class="weui-cell weui-check__label">
+                          <checkbox  class="weui-check" :value="isUsingScore" :checked="isUsingScore" />
+                          <div class="weui-cell__hd weui-check__hd_in-checkbox">
+                            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!isUsingScore"></icon>
+                            <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="isUsingScore"></icon>
+                          </div>
+                          <div class="weui-cell__bd">
+                            本次可用积分：{{ticket.score != null && score > ticket.score ? ticket.score : score}}<span v-if="isUsingScore">, 抵扣积分：<span class="c-money">{{realScore}}</span></span>
+                          </div>
+                        </label>
+            </checkbox-group>
             <br/>
-            <label>应付金额：<span class="c-money">¥ {{realPrice()}}</span></label>
+            <label>应付金额：<span class="c-money">¥ {{realPrice}}</span></label>
           </div>
-
         </div>
       </div>
       <div class="page__bd_spacing">
@@ -109,19 +119,66 @@
 </template>
 
 <script>
+  import {
+    Decimal
+  } from 'decimal.js'
   export default {
     data() {
       return {
         activityId: 0,
         userId: 2128,
-        loaded:false, //是否加载完成
-        isAttend:false, //是否已经报名
-        overDue:false,
-        item: {
-        }
+        loaded: false, //是否加载完成
+        isAttend: false, //是否已经报名
+        overDue: false,
+        ticket:null,
+        isUsingScore: false,
+        score: 0,
+        scoreRate: 0,
+        item: {},
+        errorMessage:null
       };
     },
-    computed: {},
+    computed: {
+      activityStatusText() {
+        if (this.item && this.item.attendUser) {
+          var item = this.item;
+          if (item.attendUser.status == 2) {
+            return "中签";
+          } else if (item.attendUser.status == 1) {
+            return "未中签";
+          } else if (item.attendUser.status == 3) {
+            return "未中签，退款中";
+          } else if (item.attendUser.status == 4) {
+            return "未中签，已完成退款";
+          }
+          return "抽签中";
+        }
+        return ''
+      },
+      realPrice() {
+        if (this.isUsingScore && this.ticket) {
+          var subPrice = new Decimal(this.realScore).div(this.scoreRate)
+          if (subPrice.toNumber() < this.ticket.price) {
+            return new Decimal(this.ticket.price).sub(subPrice).toNumber()
+          }
+          return 0
+        }
+        return 0
+      },
+      realScore() {
+        if (this.ticket) {
+          var result = new Decimal(this.ticket.price).mul(this.scoreRate).ceil().toNumber()
+          if (result > this.score) {
+            result = this.score
+          }
+          if (this.ticket.score != null && this.ticket.score < result) {
+            result = this.ticket.score
+          }
+          return result
+        }
+        return 0
+      }
+    },
     methods: {
       getData() {
         var that = this;
@@ -140,27 +197,26 @@
           function(res) {
             that.isAttend = !!res.attendUser
             that.overDue = !res.attendUser && res.is_over_due
-
-            if(res.ticketInfos){
-              for(var i = 0; i < res.ticketInfos.length; i++) { 
+            that.score = res.userScore
+            that.scoreRate = res.scoreRate
+            if (res.ticketInfos) {
+              for (var i = 0; i < res.ticketInfos.length; i++) {
                 res.ticketInfos[i].checked = false
               }
             }
-
-            if(res.attendInfos){
-              for(var i = 0; i < res.attendInfos.length; i++) { 
+            if (res.attendInfos) {
+              for (var i = 0; i < res.attendInfos.length; i++) {
                 var attendInfo = res.attendInfos[i]
-                if(attendInfo.type == 'select'){
-                  for(var j = 0; j < attendInfo.options.length; j++) { 
+                if (attendInfo.type == 'select') {
+                  for (var j = 0; j < attendInfo.options.length; j++) {
                     attendInfo.options[j].checked = false
                   }
                 }
               }
             }
-
             that.item = res
             that.loaded = true;
-            console.log("attend get data:",res)
+            console.log("attend get data:", res)
           }
         );
       },
@@ -208,67 +264,69 @@
           });
         }
       },
-      activityStatusText() {
-        var item = this.item;
-        if (item.attendUser.status == 2) {
-          return "中签";
-        } else if (item.attendUser.status == 1) {
-          return "未中签";
-        } else if (item.attendUser.status == 3) {
-          return "未中签，退款中";
-        } else if (item.attendUser.status == 4) {
-          return "未中签，已完成退款";
+      ticketRadioChange(e) {
+        let ticketInfos = this.item.ticketInfos
+        for (let i = 0; i < ticketInfos.length; ++i) {
+          var ticket = ticketInfos[i]
+          ticket.checked = ticket.id == e.mp.detail.value;
+          if(ticket.checked){
+            this.ticket = ticket
+          }
         }
-        return "抽签中";
+        this.item.ticketInfos = ticketInfos
       },
-      checkboxChange(e) {
-        console.log('checkbox发生change事件，携带value值为：' + e.mp.detail.value);
-        var checkboxItems = this.checkboxItems,
-          values = e.mp.detail.value;
-        for (var i = 0, lenI = checkboxItems.length; i < lenI; ++i) {
-          checkboxItems[i].checked = false;
+      attendInfoRadioChange(e) {
+        let attendInfo = this.item.attendInfos[e.mp.target.id]
+        attendInfo.value = e.mp.detail.value
+        for (let i = 0; i < attendInfo.options.length; ++i) {
+          var opt = attendInfo.options[i]
+          opt.checked = opt.title == e.mp.detail.value
+        }
+      },
+      attendInfoCheckboxChange(e) {
+        let attendInfo = this.item.attendInfos[e.mp.target.id]
+        let values = e.mp.detail.value;
+        attendInfo.value = e.mp.detail.value.join()
+        for (var i = 0, lenI = attendInfo.options.length; i < lenI; ++i) {
+          let opt = attendInfo.options[i]
+          opt.checked = false;
           for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-            if (checkboxItems[i].value == values[j]) {
-              checkboxItems[i].checked = true;
+            if (opt.title == values[j]) {
+              opt.checked = true;
               break;
             }
           }
         }
-        this.checkboxItems = checkboxItems;
       },
-      ticketRadioChange(e){
-        console.log(e.mp.detail.value)
-        let ticketInfos = this.item.ticketInfos
-        for (let i = 0; i < ticketInfos.length; ++i) {
-          ticketInfos[i].checked = ticketInfos[i].id == e.mp.detail.value;
-        }
-        this.item.ticketInfos  = ticketInfos
-        console.log(this.item.ticketInfos)
-
+      usingScoreChange() {
+        this.isUsingScore = !this.isUsingScore
       },
-      attendInfoRadioChange(e){
-        e.mp.target.id
-        let attendInfo = this.item.attendInfos[e.mp.target.id]
-        for (let i = 0; i < attendInfo.options.length; ++i) {
-          var opt = attendInfo.options[i]
-          opt.checked = opt.id == e.mp.detail.value
-        }
+      resetError(){
+        var that = this
+        setTimeout(() => {
+          that.errorMessage = null
+      }, 2000)
       },
-      attendInfoCheckboxChange(e){},
-      radioChange(e, radioItems) {
-        for (let i = 0; i < radioItems.length; ++i) {
-          radioItems[i].checked = radioItems[i].id == e.mp.detail.value;
-        }
-        return radioItems
-      },
-      realScore(){},
-      realPrice(){},
       submitAttend() {
+        var  that = this
+        that.errorMessage = null
+        if(!this.ticket){
+          that.errorMessage = '请选择一张活动票'
+          that.resetError()
+          return
+        }
+        for(var i = 0; i < that.item.attendInfos.length; i++){
+          var attendInfo = that.item.attendInfos[i]
+          if(attendInfo.required && !attendInfo.value){
+            that.errorMessage = '请选择填写' + attendInfo.title
+            that.resetError()
+            return
+          }
+        }
+        
       }
     },
     created() {
-      
-      
     },
     onShow() {
       console.log(this.$root.$mp.query);
@@ -278,20 +336,19 @@
       this.$kyutil.CheckUserValidation();
       this.getData()
     },
-    mounted(){
-      
+    mounted() {
     }
   };
 </script>
 
 <style scoped>
   /*!
-     * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
-     * Copyright 2017 Tencent, Inc.
-     * Licensed under the MIT license
-     */
-     .c-title-text{
-       text-align: center;
-       font-size: 18px;
-     }
+       * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
+       * Copyright 2017 Tencent, Inc.
+       * Licensed under the MIT license
+       */
+  .c-title-text {
+    text-align: center;
+    font-size: 18px;
+  }
 </style>
