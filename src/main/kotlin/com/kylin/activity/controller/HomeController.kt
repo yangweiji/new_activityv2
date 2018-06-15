@@ -1,8 +1,14 @@
 package com.kylin.activity.controller
 
+import com.kylin.activity.databases.Tables
+import com.kylin.activity.databases.tables.pojos.Poster
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.service.CommunityService
+import com.kylin.activity.service.PosterService
+import com.kylin.activity.util.CommonService
+import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +22,12 @@ import javax.servlet.http.HttpServletRequest
 @Controller
 @SessionAttributes("user")
 class HomeController : BaseController() {
+    /**
+     * 通用服务
+     */
+    @Autowired
+    private val commonService: CommonService? = null
+
     /**
      * 活动服务
      */
@@ -35,12 +47,19 @@ class HomeController : BaseController() {
     private val communityService: CommunityService? = null
 
     /**
+     * 海报服务
+     */
+    @Autowired
+    private val posterService: PosterService? = null
+
+    /**
      * 首页
      * @param s: 排序分类条件
      * @param request: 请求参数
      */
     @GetMapping("/")
-    fun index(@RequestParam(required = false) s: Int?, model: Model, request: HttpServletRequest): String {
+    fun index(@RequestParam(required = false) s: Int?,
+              model: Model, request: HttpServletRequest): String {
 
         var user = this.sessionUser
         if (user != null) {
@@ -72,6 +91,26 @@ class HomeController : BaseController() {
         //最新活动
             else -> activities.sortDesc("start_time")
         }
+
+
+        /*//取得活动信息
+        var activity=activityService!!.getActivity(activityId)
+*/
+        var posterItems=posterService!!.getPosterItems(this.sessionCommunity.id)
+      /*  if(posterItems==null){
+            var poster=Poster()
+            *//**
+             * id title avatar mobile_avatar link activity_id created poster_type  show sequence
+             *//*
+
+            poster.title=activity!!.title
+            poster.avatar=activity!!.avatar
+            poster.mobileAvatar=activity!!.avatar
+            poster.link=commonService!!.getDownloadUrl(poster.avatar)
+            poster.activityId=activity!!.id
+            poster
+        }*/
+        model.addAttribute("posterItems",posterItems)
 
         model.addAttribute("s", if (s == 2) 2 else 1)
         model.addAttribute("activities", activities)

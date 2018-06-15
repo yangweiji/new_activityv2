@@ -8,24 +8,37 @@
 
 <div id="app">
     <div class="get">
-        <div class="c-bg"
-             th:style="'background:url('+${#httpSession.getAttribute('COMMUNITY_BACKGROUND')}+')no-repeat;background-size: cover;'"></div>
-        <div class="">
+
+        <div class="c-bg">
+            <div  data-am-widget="slider" class="am-slider am-slider-c3"
+                 data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
+                <ul class="am-slides" >
+                    <li th:each="item:${posterItems}">
+                        <img th:src="${item.get('link')}">
+                        <div class="am-slider-desc">
+                            <div th:text="${item.get('title')}"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+       <!-- <div class="">
             <div class="am-u-lg-12">
                 <div class="get-title">
                     <div class="get_font_left">
-                        <!--<img src="/img/font_yjy.png" alt="" />-->
+                        &lt;!&ndash;<img src="/img/font_yjy.png" alt="" />&ndash;&gt;
                         <span style="color:white;font-size: 35px;white-space:nowrap">已经有</span>
                     </div>
                     <div class="get_font_center" th:attr="count=${#lists.size(activities)}" id="banner_num"></div>
                     <div class="get_font_rigth">
-                        <!--<img src="/img/font_zty.png" alt="" />-->
+                        &lt;!&ndash;<img src="/img/font_zty.png" alt="" />&ndash;&gt;
                         <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
                     </div>
                 </div>
 
                 <div class="font_line">
-                    <!--<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>-->
+                    &lt;!&ndash;<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>&ndash;&gt;
                     <span style="color:white;font-size: 30px;white-space:nowrap"
                           th:text="${community.description}"></span>
                 </div>
@@ -33,10 +46,10 @@
                     <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
                         <i class="fa fa-weixin"></i>
                         微信小程序</a>
-                    <!--<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>-->
+                    &lt;!&ndash;<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>&ndash;&gt;
                 </p>
             </div>
-        </div>
+        </div>-->
     </div>
     <div class="c_orange_container">
         <div class="c_orange">
@@ -242,7 +255,10 @@
 
         text-align: center;
     }
-
+    .am-slides img{
+        height: 600px;
+       /* width: 1080px;*/
+    }
 </style>
 
 </body>

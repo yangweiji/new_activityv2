@@ -23,10 +23,10 @@ $(function () {
             // dom: 'Blfrtip',
             dom: '<"top">Bfrt<"bottom">lip<"clear">',
             buttons: [
-                {
+                /*{
                     extend: 'create',
                     text: '添加'
-                },
+                },*/
                 {
                     extend: 'excel',
                     text: '导出Excel',
@@ -89,10 +89,10 @@ $(function () {
                 {"data": "memo"},
                 {
                     "data": "action", "width": "80px", "defaultContent": "",
-                    render: function (data, type, row) {
+                   /* render: function (data, type, row) {
                         return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
                             + '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
-                    }
+                    }*/
                 },
             ],
 
@@ -133,27 +133,27 @@ $(function () {
      * 添加积分
      * @type {{className: string, action: $.fn.dataTable.ext.buttons.create.action}}
      */
-    $.fn.dataTable.ext.buttons.create = {
+  /*  $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
             // alert( this.text() );
             location.href = "/sec/manage/score";
         }
-    };
+    };*/
 
     //编辑
-    $('#bmTable tbody').on('click', 'button#btnEdit', function () {
+  /*  $('#bmTable tbody').on('click', 'button#btnEdit', function () {
         var data = t.row($(this).parents('tr')).data();
         location.href = "/sec/manage/score/" + data.id;
-    });
+    });*/
 
     //删除
-    $('#bmTable tbody').on('click', 'button#btnDelete', function () {
+  /*  $('#bmTable tbody').on('click', 'button#btnDelete', function () {
         var data = t.row($(this).parents('tr')).data();
         if (window.confirm("请确认删除？")) {
             location.href = "/sec/manage/deleteScore/" + data.id;
         }
-    });
+    });*/
 });
 
 new Vue({
