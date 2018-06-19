@@ -93,23 +93,8 @@ class HomeController : BaseController() {
         }
 
 
-        /*//取得活动信息
-        var activity=activityService!!.getActivity(activityId)
-*/
-        var posterItems=posterService!!.getPosterItems(this.sessionCommunity.id)
-      /*  if(posterItems==null){
-            var poster=Poster()
-            *//**
-             * id title avatar mobile_avatar link activity_id created poster_type  show sequence
-             *//*
 
-            poster.title=activity!!.title
-            poster.avatar=activity!!.avatar
-            poster.mobileAvatar=activity!!.avatar
-            poster.link=commonService!!.getDownloadUrl(poster.avatar)
-            poster.activityId=activity!!.id
-            poster
-        }*/
+        var posterItems=posterService!!.getPosterItems()
         model.addAttribute("posterItems",posterItems)
 
         model.addAttribute("s", if (s == 2) 2 else 1)

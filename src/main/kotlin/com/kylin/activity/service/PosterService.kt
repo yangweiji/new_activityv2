@@ -1,10 +1,13 @@
 package com.kylin.activity.service
 
+import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.PosterDao
 import com.kylin.activity.databases.tables.pojos.Poster
+import com.sun.org.apache.xpath.internal.operations.Bool
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
+import org.jooq.Table
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 
@@ -39,32 +42,73 @@ class PosterService {
     /**
      * 添加海报信息
      * @param poster: 海报信息
-     * @return 活动id
      */
-    fun insert(poster: Poster): Int {
-        posterDao!!.insert(poster)
-        return poster.activityId
+    fun insertPoster(poster: Poster){
+       posterDao!!.insert(poster)
     }
 
     /**
      * 更新海报信息
-     * @param poster: 海报信息
-     * @return 活动id
+     * @param title: 海报信息
      */
-    fun update(poster: Poster): Int {
-        posterDao!!.update(poster)
-        return poster.activityId
+    fun updatePoster(title: String,avatar:String,mobileAvatar:String,link:String,
+                     activityId:Int,posterType:String,show:Boolean,sequence:Int,id:Int):Any {
+        var sql="update poster SET title=?,avatar=?,mobile_avatar=?,link=?,activity_id=?, " +
+                "poster_type=?,`show`=?,sequence=? WHERE id=? "
+        return create!!.execute(sql,title,avatar,mobileAvatar,link,activityId,posterType,show,sequence,id)
     }
 
-   /* fun getActivityPhotoPictureItems(photoId:Int?):Result<Record>{
-        var sql="select t1.* from activity_photo_picture t1 inner join activity_photo t2 on t1.activity_photo_id=t2.id " +
-                "where t1.activity_photo_id=? "
-        return create!!.resultQuery(sql,photoId).fetch()
-    }*/
 
-    fun getPosterItems(communityId:Int?):Result<Record>{
-        var sql="select t1.* from poster t1 left join activity t2 on t1.activity_id=t2.id where 1=1  " +
-                "and t2.community_id=? "
-        return create!!.resultQuery(sql,communityId).fetch()
+    fun getPosterItems():Result<Record>{
+        var sql="select t1.* from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1 " +
+                "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
+        return create!!.resultQuery(sql).fetch()
+    }
+
+    /**
+     * 获取海报信息集合
+     * @param title 海报标题
+     * @param posterType 海报类型
+     * @return 海报信息集合
+     */
+    fun queryPosterItems(title:String?,posterType:String?):Result<Record>{
+       var sql="select t1.*,t2.title as activityTitle from poster t1 " +
+               "left join activity t2 on t1.activity_id=t2.id where 1=1 "
+        var params = mutableListOf<Any?>()
+        if(!title.isNullOrBlank()){
+            sql+="and t1.title like ? "
+            params.add("%$title%")
+        }
+        if(!posterType.isNullOrBlank() && posterType!="0"){
+            sql+="and t1.poster_type = ? "
+            params.add(posterType)
+        }
+
+        sql+="order by t1.sequence asc,t1.created desc "
+        return create!!.resultQuery(sql,*params.toTypedArray()).fetch()
+    }
+
+    /**
+     * 根据id,取得海报信息
+     * @param id 海报id
+     * @return 海报信息
+     */
+    fun getPoster(id:Int?):Poster{
+        return posterDao!!.findById(id)
+    }
+
+    /**
+     * 获取单个海报信息
+     * @param title 海报标题
+     */
+    fun getPosterTitle(title: String): Poster? {
+        return posterDao!!.fetchOne(Tables.POSTER.TITLE,title)
+    }
+
+    /**
+     * 删除海报信息
+     */
+    fun deletePoster(id:Int) {
+        posterDao!!.deleteById(id)
     }
 }
