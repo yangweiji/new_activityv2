@@ -1,5 +1,6 @@
 package com.kylin.activity.service
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.*
 import com.kylin.activity.databases.tables.pojos.*
@@ -68,6 +69,12 @@ class ActivityService {
      */
     @Autowired
     private val create: DSLContext? = null
+
+    /**
+     * 操作历史记录DAO
+     */
+    @Autowired
+    private val actionHistoryDao: ActionHistoryDao? = null
 
     /**
      * 定义分页索引起始位置
@@ -845,6 +852,53 @@ class ActivityService {
             throw Exception("您已经报名，不能重复报名")
         }
     }
+
+
+    /**
+     * 取消报名
+     */
+    fun cancelAttend(id: Int?):Boolean{
+        var activityUser = activityUserDao!!.fetchOneById(id)
+
+        var actionHistory = ActionHistory()
+        actionHistory.action = 2
+        actionHistory.axtenalId = id
+        actionHistory.created = DateUtil.date().toTimestamp()
+        actionHistory.createdBy = activityUser.userId
+        val mapper = jacksonObjectMapper()
+        var memo = mapper.writeValueAsString(activityUser)
+        actionHistory.memo = memo
+        actionHistoryDao!!.insert(actionHistory)
+
+        activityUserDao!!.deleteById(id)
+        return true
+    }
+
+    /*
+    *  免费票直接报名
+    * */
+    fun updateAttend(activityUser:ActivityUser){
+        var preActivityUser = activityUserDao!!.fetchOneById(activityUser.id)
+        preActivityUser.activityTicketId = activityUser.activityTicketId
+        preActivityUser.otherInfo = activityUser.otherInfo
+        preActivityUser.modified = DateUtil.date().toTimestamp()
+        preActivityUser.modifiedBy = activityUser.userId
+        activityUserDao!!.update(preActivityUser)
+
+        var actionHistory = ActionHistory()
+        actionHistory.action = 1
+        actionHistory.axtenalId = preActivityUser.id
+        actionHistory.created = preActivityUser.modified
+        actionHistory.createdBy = preActivityUser.modifiedBy
+        val mapper = jacksonObjectMapper()
+        var memo = mapper.writeValueAsString(activityUser)
+        actionHistory.memo = memo
+        actionHistoryDao!!.insert(actionHistory)
+
+    }
+
+
+
 
 
 }

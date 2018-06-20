@@ -14,7 +14,7 @@
             <h1 class="am-article-title">
               您已报名
               <span style="color:#F37B1D;font-size:25px;font-weight: bold;">
-                              【<span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{activityStatusText}}</span>】
+                                【<span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{activityStatusText}}</span>】
               </span>
             </h1>
           </div>
@@ -26,13 +26,13 @@
               </div>
             </div>
             <div class="weui-form-preview__bd">
-              <div class="weui-form-preview__item" v-for="attendInfoItem in otherInfo" :key="attendInfoItem.key">
-                <div class="weui-form-preview__label">{{attendInfoItem.key}}</div>
-                <div class="weui-form-preview__value">{{attendInfoItem.value}}</div>
+              <div class="weui-form-preview__item" v-for="attendInfoItem in item.attendInfos" :key="attendInfoItem.key">
+                <div class="weui-form-preview__label">{{attendInfoItem.title}}</div>
+                <div class="weui-form-preview__value">{{item.otherInfo[attendInfoItem.title]}}</div>
               </div>
             </div>
             <div class="weui-form-preview__ft">
-              <navigator class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" @click="changeAttendInfo()">修改报名信息</navigator>
+              <div class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" @click="changeAttendInfo()">修改报名信息</div>
               <div class="weui-form-preview__btn weui-form-preview__btn_danger" hover-class="weui-form-preview__btn_active" @click="cancelAttend()">取消报名</div>
             </div>
           </div>
@@ -43,12 +43,12 @@
           <div class="weui-cells weui-cells_after-title">
             <radio-group id="ticketInfos" @change="ticketRadioChange">
               <label class="weui-cell weui-check__label" v-for="opt in item.ticketInfos" :key="opt.id">
-                      <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
-                      <div class="weui-cell__bd">{{opt.title}}</div>
-                      <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
-                        <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                      </div>
-                    </label>
+                        <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
+                        <div class="weui-cell__bd">{{opt.title}}</div>
+                        <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
+                          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                        </div>
+                      </label>
             </radio-group>
           </div>
           <div class="weui-cells__title" v-if="!item.hasTickets">活动票已售完</div>
@@ -71,22 +71,22 @@
               </div>
               <radio-group :id="index" v-if="attItem.type == 'select' && !attItem.multiple" @change="attendInfoRadioChange">
                 <label class="weui-cell weui-check__label" v-for="(singleOpt, singleIndex) in attItem.options" :key="singleOpt.title">
-                          <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
-                          <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
-                          <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
-                            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                          </div>
-                        </label>
+                            <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
+                            <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
+                            <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
+                              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                            </div>
+                          </label>
               </radio-group>
               <checkbox-group :id="index" v-if="attItem.type == 'select' && attItem.multiple" @change="attendInfoCheckboxChange">
                 <label class="weui-cell weui-check__label" v-for="(multipleOpt, multipleIndex) in attItem.options" :key="multipleOpt.title">
-                          <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
-                          <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
-                            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
-                            <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
-                          </div>
-                          <div class="weui-cell__bd">{{multipleOpt.title}}</div>
-                        </label>
+                            <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
+                            <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
+                              <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
+                              <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
+                            </div>
+                            <div class="weui-cell__bd">{{multipleOpt.title}}</div>
+                          </label>
               </checkbox-group>
             </div>
           </div>
@@ -96,15 +96,15 @@
           <div v-if="ticket && ticket.price > 0 && score > 0" class="c-form-group">
             <checkbox-group @change="usingScoreChange">
               <label class="weui-cell weui-check__label">
-                          <checkbox  class="weui-check" :value="isUsingScore" :checked="isUsingScore" />
-                          <div class="weui-cell__hd weui-check__hd_in-checkbox">
-                            <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!isUsingScore"></icon>
-                            <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="isUsingScore"></icon>
-                          </div>
-                          <div class="weui-cell__bd">
-                            本次可用积分：{{ticket.score != null && score > ticket.score ? ticket.score : score}}<span v-if="isUsingScore">, 抵扣积分：<span class="c-money">{{realScore}}</span></span>
-                          </div>
-                        </label>
+                            <checkbox  class="weui-check" :value="isUsingScore" :checked="isUsingScore" />
+                            <div class="weui-cell__hd weui-check__hd_in-checkbox">
+                              <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!isUsingScore"></icon>
+                              <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="isUsingScore"></icon>
+                            </div>
+                            <div class="weui-cell__bd">
+                              本次可用积分：{{ticket.score != null && score > ticket.score ? ticket.score : score}}<span v-if="isUsingScore">, 抵扣积分：<span class="c-money">{{realScore}}</span></span>
+                            </div>
+                          </label>
             </checkbox-group>
             <br/>
             <label>应付金额：<span class="c-money">¥ {{realPrice}}</span></label>
@@ -130,12 +130,13 @@
         loaded: false, //是否加载完成
         isAttend: false, //是否已经报名
         overDue: false,
-        ticket:null,
+        ticket: null,
         isUsingScore: false,
         score: 0,
         scoreRate: 0,
         item: {},
-        errorMessage:null
+        errorMessage: null,
+        processing: false
       };
     },
     computed: {
@@ -163,6 +164,9 @@
           }
           return 0
         }
+        if (this.ticket) {
+          return this.ticket.price
+        }
         return 0
       },
       realScore() {
@@ -181,7 +185,8 @@
     },
     methods: {
       getData() {
-        var that = this;
+        var that = this
+        that.processing = false
         var param = {
           activityId: that.activityId,
           userId: that.userId
@@ -236,10 +241,7 @@
             success: function(res) {}
           });
         } else {
-          var param = {
-            activityId: that.activityId,
-            userId: that.userId
-          };
+          var param = that.item.attendUser.id
           wx.showModal({
             title: "操作提示",
             content: "您正在进行取消报名操作，请确定是否继续？",
@@ -247,7 +249,7 @@
             cancelText: "取消",
             success: function(res) {
               if (res.confirm) {
-                global.HttpRequest(
+                that.$kyutil.HttpRequest(
                   true,
                   "/pub/wx/activity/cancelattend",
                   false,
@@ -256,7 +258,9 @@
                   "POST",
                   false,
                   function(res) {
-                    that.item = res;
+                    wx.redirectTo({
+                      url: "../../pages/details/details?activityId=" + that.activityId
+                    })
                   }
                 );
               }
@@ -269,7 +273,7 @@
         for (let i = 0; i < ticketInfos.length; ++i) {
           var ticket = ticketInfos[i]
           ticket.checked = ticket.id == e.mp.detail.value;
-          if(ticket.checked){
+          if (ticket.checked) {
             this.ticket = ticket
           }
         }
@@ -301,33 +305,106 @@
       usingScoreChange() {
         this.isUsingScore = !this.isUsingScore
       },
-      resetError(){
+      resetError() {
         var that = this
         setTimeout(() => {
           that.errorMessage = null
-      }, 2000)
+        }, 2000)
       },
       submitAttend() {
-        var  that = this
+        var that = this
         that.errorMessage = null
-        if(!this.ticket){
+        if (!this.ticket) {
           that.errorMessage = '请选择一张活动票'
           that.resetError()
           return
         }
-        for(var i = 0; i < that.item.attendInfos.length; i++){
+        var activityUser = {
+          otherInfo: {},
+          userId: that.userId,
+          activityId: that.activityId,
+          activityTicketId: that.ticket.id
+        }
+        for (var i = 0; i < that.item.attendInfos.length; i++) {
           var attendInfo = that.item.attendInfos[i]
-          if(attendInfo.required && !attendInfo.value){
+          if (attendInfo.required && !attendInfo.value) {
             that.errorMessage = '请选择填写' + attendInfo.title
             that.resetError()
             return
           }
+          if (i == 0) {
+            activityUser.realName = attendInfo.value
+          } else if (i == 2) {
+            activityUser.mobile = attendInfo.value
+          }
+          activityUser.otherInfo[attendInfo.title] = attendInfo.value
         }
-        
+        activityUser.otherInfo = JSON.stringify(activityUser.otherInfo)
+        activityUser.price = that.realPrice // 抵扣后金额
+        if (that.isUsingScore) {
+          activityUser.score = that.realScore
+        } else {
+          activityUser.score = 0
+        }
+        that.processing = true
+        if (activityUser.price > 0) {
+          //创建订单
+          var order = {
+            activityTicketId: activityUser.activityTicketId,
+            price: activityUser.price,
+            body: '活动报名',
+            userId:that.userId,
+            otherInfo: JSON.stringify(activityUser)
+          }
+          that.payOrder(order)
+        } else {
+          that.$kyutil.HttpRequest(
+            true,
+            "/pub/wx/activity/attend",
+            false,
+            "",
+            activityUser,
+            "POST",
+            false,
+            function(res) {
+              that.getData()
+            }
+          )
+        }
+      },
+      payOrder(order){
+        var that = this
+        that.$kyutil.HttpRequest(
+            true,
+            "/pub/wx/pay/create",
+            false,
+            "",
+            order,
+            "POST",
+            false,
+            (res)=> {
+              var payOpt = {
+                timeStamp:res[0].timeStamp,
+                nonceStr:res[0].nonceStr,
+                package:res[0].packageValue,
+                signType:res[0].signType,
+                paySign:res[0].paySign,
+              }
+              payOpt.success = function () {
+                  wx.navigateTo({
+                    url: "../../pages/payresult/payresult?orderid=" + res[1]
+                  })
+              }
+
+              wx.requestPayment(payOpt)
+            },
+            ()=>{
+              that.processing = false
+            }
+          )
       }
     },
-    created() {
-    },
+    created() {},
     onShow() {
       console.log(this.$root.$mp.query);
       var that = this;
@@ -336,17 +413,16 @@
       this.$kyutil.CheckUserValidation();
       this.getData()
     },
-    mounted() {
-    }
+    mounted() {}
   };
 </script>
 
 <style scoped>
   /*!
-       * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
-       * Copyright 2017 Tencent, Inc.
-       * Licensed under the MIT license
-       */
+         * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
+         * Copyright 2017 Tencent, Inc.
+         * Licensed under the MIT license
+         */
   .c-title-text {
     text-align: center;
     font-size: 18px;
