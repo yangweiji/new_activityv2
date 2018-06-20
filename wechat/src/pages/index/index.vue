@@ -10,7 +10,7 @@
           </span>
         </navigator>  
         <!-- <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" /> -->
-        <kyimage :src="background" model="aspectFit" type="banner" />
+        <kyimage :src="community.background" model="aspectFit" type="banner" />
         <div class="c-bg"></div>
       </div>
 
@@ -203,8 +203,12 @@ export default {
       ],
       //索引
       index: 0,
-      communityId: 1, //默认的组织团体ID
-      communityName: "北京市马拉松协会"
+     
+      community: {
+        id: 1, //默认的组织团体ID
+        communityName: "北京市马拉松协会",
+        background: "NzrSDNSBEP.png",
+      }
     };
   },
   computed: {
@@ -232,7 +236,7 @@ export default {
     getData() {
       var that = this;
       var param = {
-        communityId: that.communityId, //默认community_id=1
+        communityId: that.community.id,
         t: that.activeIndex
       };
       //团体组织下的活动
@@ -248,26 +252,30 @@ export default {
           that.items = res;
         }
       );
-      //团体信息
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/community/get",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-          that.communityId = res.id;
-          that.communityName = res.name;
-          that.background = res.background;
-          //设置标题
-          wx.setNavigationBarTitle({
-            title: that.communityName
-          });
-        }
-      );
     },
+    // getCommunity() {
+    //   var that = this;
+    //   var param = {
+    //     communityId: that.community.id,
+    //   };
+    //   //团体信息
+    //   this.$kyutil.HttpRequest(
+    //     true,
+    //     "/pub/wx/community/get",
+    //     false,
+    //     "",
+    //     param,
+    //     "GET",
+    //     false,
+    //     function(res) {
+    //       that.community = res;
+    //       //设置标题
+    //       wx.setNavigationBarTitle({
+    //         title: that.community.name
+    //       });
+    //     }
+    //   );
+    // },
     //主要活动标签分类触发事件，重新获取相应的数据
     tabClick(e) {
       this.activeIndex = e;
@@ -332,12 +340,18 @@ export default {
     console.log("kyutil:", this.$kyutil);
     console.log("index created");
   },
-  onLoad() {},
+  onLoad() {
+    
+  },
   onShow() {
     console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
     //接受参数
-    if (this.$store.state.communityId) {
-      this.communityId = this.$store.state.communityId;
+    if (this.$store.state.community) {
+      this.community = this.$store.state.community;
+      //设置标题
+      wx.setNavigationBarTitle({
+        title: this.community.name
+      });
     }
     this.getData();
     //设置默认的其他活动标签分类值

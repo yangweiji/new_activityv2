@@ -34,7 +34,7 @@
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 0">
               <div class="weui-panel__bd">
-                <div @click="bindSwitchCommunity(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+                <div @click="bindSwitchCommunity(item)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
@@ -58,7 +58,7 @@
           <!-- <div class="weui-tab__content" :hidden="activeIndex != 1"> -->
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 1">
-              <div @click="bindSwitchCommunity(item.id)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+              <div @click="bindSwitchCommunity(item)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
@@ -80,7 +80,7 @@
           <!-- <div class="weui-tab__content" :hidden="activeIndex != 2"> -->
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 2">
-              <div @click="bindSwitchCommunity(item.id)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+              <div @click="bindSwitchCommunity(item)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
@@ -164,9 +164,10 @@ export default {
       this.activeIndex = e.currentTarget.id;
       this.getData();
     },
-    bindSwitchCommunity(communityId) {
+    bindSwitchCommunity(community) {
       //设置团体组织
-      this.$store.state.communityId = communityId;
+      // this.$store.state.communityId = communityId;
+      this.$store.state.community = community
       wx.switchTab({
         url: "../../pages/index/index",
         success: function(e) {
