@@ -1,8 +1,19 @@
 <template>
   <div class="page">
-  <div v-if="xs==1">
-       <div>
-          <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;"  @click="qh(2)">
+    <div v-if="xs==1">
+      <!-- banner -->
+      <div>
+        <navigator url="../../pages/community/community" hover-class="navigator-hover">
+          <span class="community-select">
+            切换团体 >>
+          </span>
+        </navigator>  
+        <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" />
+        <div class="c-bg"></div>
+      </div>
+
+      <!-- <div>
+          <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(2)">
              切换到管理者 >>
           </div>
           <div style="position:absolute;margin-top:15%;width:100%;">
@@ -11,62 +22,68 @@
             <p class="p-text__xx">用户加入的团体信息</p>
           </div>
           <image style="height:200px; width:100%;" />
-       </div>
-       <div>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>我的活动</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-              </navigator> 
+      </div> -->
+       
+      <div>
+        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>我的活动</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+          </navigator> 
 
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>积分</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
+        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>积分</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+        </navigator> 
 
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>实名认证</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
+        
 
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>会员</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
+        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>会员</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+        </navigator> 
 
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>我加入的团体</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
-       </div>
+        <!-- 如下为全局功能 -->
+        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>实名认证</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+        </navigator> 
+
+        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>我加入的团体</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+        </navigator> 
+
+      </div>
   </div>
 
-  <div v-if="xs==2">
-          <div>
+  <div v-if="xs==2" :hidden=true>
+      
+      <div>
           <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(1)">
              切换到参与者 >>
           </div>
@@ -76,8 +93,8 @@
             <p class="p-text__xx">用户加入的团体信息</p>
           </div>
           <images style="height:200px; width:100%;"></images>
-       </div>
-       <div>
+      </div>
+      <div>
             <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
                 <div class="weui-cell__hd">
                   <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
@@ -108,7 +125,7 @@
                 <div class="weui-cell__ft weui-cell__ft_in-access"></div>
             </navigator> 
 
-       </div>
+      </div>
    </div>
   </div>
 </template>
@@ -124,8 +141,7 @@ export default {
   },
   components: {},
   methods: {
-    getData() {
-    },
+    getData() {},
     qh(cs) {
       this.xs = cs;
     }
@@ -139,7 +155,10 @@ export default {
       this.getData();
     }
   },
-  onShow () {
+  onShow() {
+    wx.setNavigationBarTitle({
+      title: "个人中心"
+    });
   }
 };
 </script>

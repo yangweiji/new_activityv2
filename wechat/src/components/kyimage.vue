@@ -1,5 +1,6 @@
 <template>
-  <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+src"  />
+  <image :class="{'weui-media-box__thumb': type=='thumb','banner': type=='banner'}" 
+    :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+src"  />
 </template>
 
 <script>
@@ -7,6 +8,11 @@ export default {
   name: '',
   props: {
     src: {
+      type: String,
+      default: ''
+    },
+
+    type: {
       type: String,
       default: ''
     },

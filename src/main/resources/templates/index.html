@@ -10,21 +10,23 @@
     <div class="get">
 
         <div class="c-bg">
-            <div  data-am-widget="slider" class="am-slider am-slider-c3"
-                 data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
+            <div  data-am-widget="slider" class="am-slider am-slider-c2"
+                 data-am-slider='{&quot;controlNav&quot;:true;&quot;directionNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
                 <ul class="am-slides" >
                     <li th:each="item:${posterItems}">
                         <a href="/pub/article/indexArticleList/7"><img th:src="${item.get('link')}"></a>
-                        <div class="am-slider-desc">
+                        <div class="am-slider-desc" style="width:100%;">
                             <div th:text="${item.get('title')}"></div>
                         </div>
-                        <div class="am-slider-desc"><a href="/pub/activityphoto/detail/20" style="margin-left:1070px">更多</a></div>
+                        <!--<div class="am-slider-desc" style="width: 100%;">-->
+                            <!--<a href="/pub/activityphoto/detail/20" style="float:right;margin-right:20px">更多</a>-->
+                        <!--</div>-->
                     </li>
                 </ul>
             </div>
         </div>
 
-       <!-- <div class="">
+       <div style="display: none;">
             <div class="am-u-lg-12">
                 <div class="get-title">
                     <div class="get_font_left">
@@ -50,7 +52,7 @@
                     &lt;!&ndash;<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>&ndash;&gt;
                 </p>
             </div>
-        </div>-->
+        </div>
     </div>
     <div class="c_orange_container">
         <div class="c_orange">

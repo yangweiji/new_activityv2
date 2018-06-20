@@ -91,18 +91,16 @@ class WxActivityController {
 
     /**
      * 查询指定团体组织的活动信息
-     * @param s: 团体组织标识
+     * @param communityId: 团体组织标识
      * @param t: 活动标签分类
      * @return 团体组织活动信息集合
      */
     @GetMapping("/search")
-    fun search(@RequestParam(required = false) s: Int?, @RequestParam(required = false) t: String?): Any {
+    fun search(@RequestParam(required = false) communityId: Int, @RequestParam(required = false) t: String?): Any {
         //活动标签分类:默认为【训练】
         var tag = if (t.isNullOrBlank()) "b5" else t!!
-        //团体组织标识
-        var sid = if (s == null) 0 else s!!
         //获取团体组织活动信息
-        var teamActivities = activityService!!.getTeamActivities(sid, tag)
+        var teamActivities = activityService!!.getTeamActivities(communityId, tag)
         //团体组织活动信息
         var teamActivityItems = mutableListOf<MutableMap<String, Any?>>()
         for (activity in teamActivities) {
