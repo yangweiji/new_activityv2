@@ -143,9 +143,9 @@ class PosterService {
     /**
      * 微信端根据活动编号获取海报信息
      */
-    fun getPosterByActivityId(activityId: Int):Result<Record>{
-      var sql="select t1.* from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1 and t1.activity_id=? " +
+    fun getPosterByActivityId():Result<Record>{
+      var sql="select t1.* from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1  " +
               "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
-        return create!!.resultQuery(sql,activityId).fetch()
+        return create!!.resultQuery(sql).fetch()
     }
 }

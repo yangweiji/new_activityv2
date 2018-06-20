@@ -45,10 +45,9 @@ class WxPosterController {
      */
     @CrossOrigin
     @RequestMapping(value="/getPosters",method = [RequestMethod.GET,RequestMethod.POST])
-    fun getPosters(@RequestParam(required = false)activityId:Int?):Any{
-          var activityId=if(activityId==null) 0 else activityId!!
+    fun getPosters():Any{
         //根据活动id获取海报信息
-        var posters=posterService!!.getPosterByActivityId(activityId)
+        var posters=posterService!!.getPosterByActivityId()
         var posterItems = mutableListOf<MutableMap<String, Any?>>()
         for (poster in posters) {
             var map = mutableMapOf<String, Any?>()
