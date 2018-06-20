@@ -14,7 +14,7 @@
                  data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
                 <ul class="am-slides" >
                     <li th:each="item:${posterItems}">
-                        <a href="/pub/article/indexArticleList/7"><img th:src="${item.get('link')}"></a>
+                        <a th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }"><img th:src="${item.get('link')}"></a>
                         <div class="am-slider-desc">
                             <div th:text="${item.get('title')}"></div>
                         </div>

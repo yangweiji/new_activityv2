@@ -21,6 +21,15 @@ class WxCommunityController {
     val communityService: CommunityService? = null
 
     /**
+     * 取得唯一的团体组织信息
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/get", method = [RequestMethod.POST, RequestMethod.GET])
+    fun get(communityId: Int): Any {
+        return communityService!!.getCommunity(communityId)
+    }
+
+    /**
      * 取得最新团体组织信息
      */
     @CrossOrigin

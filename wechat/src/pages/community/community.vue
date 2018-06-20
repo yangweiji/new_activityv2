@@ -34,11 +34,11 @@
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 0">
               <div class="weui-panel__bd">
-                <navigator url="../../pages/index/index" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+                <div @click="bindSwitchCommunity(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
-                    <kyimage :src="item.avatar"/>
+                    <kyimage :src="item.avatar" type="thumb"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <div class="weui-media-box__title">{{item.name}}</div>
@@ -48,7 +48,7 @@
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
                   </div>
-                </navigator>
+                </div>
                
               </div>
             </div>
@@ -58,11 +58,11 @@
           <!-- <div class="weui-tab__content" :hidden="activeIndex != 1"> -->
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 1">
-              <navigator url="../../pages/index/index" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+              <div @click="bindSwitchCommunity(item.id)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
-                    <kyimage :src="item.avatar"/>
+                    <kyimage :src="item.avatar" type="thumb"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <div class="weui-media-box__title">{{item.name}}</div>
@@ -72,7 +72,7 @@
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
                   </div>
-                </navigator>
+              </div>
             </div>
 
           <!-- </div> -->
@@ -80,11 +80,11 @@
           <!-- <div class="weui-tab__content" :hidden="activeIndex != 2"> -->
             
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 2">
-              <navigator url="../../pages/index/index" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+              <div @click="bindSwitchCommunity(item.id)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
                     <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
-                    <kyimage :src="item.avatar"/>
+                    <kyimage :src="item.avatar" type="thumb"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <div class="weui-media-box__title">{{item.name}}</div>
@@ -94,7 +94,7 @@
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
                   </div>
-                </navigator>
+              </div>
             </div>
 
           <!-- </div> -->
@@ -163,6 +163,16 @@ export default {
       console.log(e);
       this.activeIndex = e.currentTarget.id;
       this.getData();
+    },
+    bindSwitchCommunity(communityId) {
+      //设置团体组织
+      this.$store.state.communityId = communityId;
+      wx.switchTab({
+        url: "../../pages/index/index",
+        success: function(e) {
+          console.log("-> index");
+        }
+      });
     }
   },
   created() {

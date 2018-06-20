@@ -91,6 +91,8 @@ $(function () {
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
                             + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
+                            + '<button id="showPoster" class="am-btn am-btn-sm am-btn-danger" type="button" title="隐藏海报"><i class="am-icon-edit"></i></button>'
+                        +'<button id="displayPoster" class="am-btn am-btn-sm am-btn-secondary" type="button" title="显示海报"><i class="am-icon-edit"></i></button>'
                     }
                 }
             ],
@@ -105,7 +107,7 @@ $(function () {
                 {targets: "_all", visible: false}
             ],
             //默认排序
-             order: [[6, ]],
+             order: [[6,'asc']],
             autoWidth: false,
             scrollX: true,
             //推迟渲染
@@ -142,6 +144,47 @@ $(function () {
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
         location.href = "/sec/poster/poster?id=" + data.id;
+    })
+
+
+    /**
+     * 隐藏海报
+     */
+    $("#bmTable tbody").on('click', 'button#showPoster', function () {
+        var data = t.row($(this).parents('tr')).data();
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: '/sec/poster/showPoster',
+            data: {
+                posterId: data.id
+            },
+            success: function (data) {
+                if (data) {
+                    location.reload()
+                }
+            }
+        })
+    })
+
+    /**
+     * 显示海报
+     */
+    $("#bmTable tbody").on('click', 'button#displayPoster', function () {
+        var data = t.row($(this).parents('tr')).data();
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: '/sec/poster/displayPoster',
+            data: {
+                posterId: data.id
+            },
+            success: function (data) {
+                if (data) {
+                    location.reload()
+                }
+            }
+        })
     })
 
     /**

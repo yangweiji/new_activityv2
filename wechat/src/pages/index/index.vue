@@ -8,7 +8,7 @@
           <span class="community-select">
             切换团体
           </span>
-        </navigator>  
+        </navigator>
         <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" />
         <div class="c-bg"></div>
       </div>
@@ -16,7 +16,7 @@
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
       <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
         <block v-for="(item,index) in grids" :key='index'>
-          <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" 
+          <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active"
             style="width:25%;border-right:0px;border-bottom:0px">
             <image class="weui-grid__icon" :src='icon60'/>
             <div class="weui-grid_label">{{item.name}}</div>
@@ -28,9 +28,9 @@
       <div class="weui-tab">
         <div class="weui-navbar" style="top:auto;">
             <block v-for="(item,index) in choice" :key="index">
-              <div :id="index" :class="{'weui-bar__item_on': activeIndex==item.id}" class="weui-navbar__item"  
+              <div :id="index" :class="{'weui-bar__item_on': activeIndex==item.id}" class="weui-navbar__item"
                 @click="tabClick(item.id)">
-                
+
                 <div class="weui-navbar__title" v-if="item.id!='0'">{{item.matter}}</div>
                 <div class="weui-navbar__title" v-if="item.id=='0'">
                   <picker @change="bindPickerChange" :value="index" :range="ranges">
@@ -45,11 +45,11 @@
         </div>
 
         <div class="weui-tab__panel">
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b5'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -61,11 +61,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b13'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -77,11 +77,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b12'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -93,11 +93,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b10,b11'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -109,11 +109,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != '0'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -127,10 +127,10 @@
           </div>
 
         </div>
-        
+
       </div>
 
-      
+
 
     </div>
   </div>

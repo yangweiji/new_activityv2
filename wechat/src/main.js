@@ -5,9 +5,10 @@ import '../static/weui/weui.css'
 
 import store from './store';
 import kyutil from './global';
+//导入自定义组件
 import kyimage from '@/components/kyimage'
-
 Vue.component('kyimage', kyimage)
+
 Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.prototype.$store = store;
