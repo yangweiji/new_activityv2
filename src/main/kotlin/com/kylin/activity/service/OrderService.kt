@@ -1,6 +1,7 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.tables.daos.PayOrderDao
+import com.kylin.activity.databases.tables.pojos.PayOrder
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
@@ -128,6 +129,13 @@ class OrderService {
         sql = sql.replace("{1}", strTime)
 
         return dslContext!!.resultQuery(sql).fetch()
+    }
+
+    /**
+     * 获取订单明细
+     */
+    fun getOrder(id:Int) : PayOrder {
+        return payOrderDao!!.fetchOneById(id)
     }
 
 }

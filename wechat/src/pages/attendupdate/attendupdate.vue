@@ -8,47 +8,18 @@
             报名截止时间已过
           </h1>
         </div>
-        <!--已经报名-->
-        <div v-if="item && item.attendUser">
-          <div class="weui-cells__title">
-            <h1 class="am-article-title">
-              您已报名
-              <span style="color:#F37B1D;font-size:25px;font-weight: bold;">
-                                【<span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{activityStatusText}}</span>】
-              </span>
-            </h1>
-          </div>
-          <div class="weui-form-preview">
-            <div class="weui-form-preview__hd">
-              <div class="weui-form-preview__item">
-                <div class="weui-form-preview__label">活动票：</div>
-                <div class="weui-form-preview__value_in-hd">{{item.ticket_title}}</div>
-              </div>
-            </div>
-            <div class="weui-form-preview__bd">
-              <div class="weui-form-preview__item" v-for="attendInfoItem in item.attendInfos" :key="attendInfoItem.key">
-                <div class="weui-form-preview__label">{{attendInfoItem.title}}</div>
-                <div class="weui-form-preview__value">{{item.otherInfo[attendInfoItem.title]}}</div>
-              </div>
-            </div>
-            <div class="weui-form-preview__ft">
-              <div class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" @click="changeAttendInfo()">修改报名信息</div>
-              <div class="weui-form-preview__btn weui-form-preview__btn_danger" hover-class="weui-form-preview__btn_active" @click="cancelAttend()">取消报名</div>
-            </div>
-          </div>
-        </div>
-        <!--未报名-->
-        <div v-if="!isAttend && !overDue">
+        <!--修改报名信息-->
+        <div v-if="!overDue">
           <div class="weui-cells__title">选择活动票</div>
           <div class="weui-cells weui-cells_after-title">
             <radio-group id="ticketInfos" @change="ticketRadioChange">
               <label class="weui-cell weui-check__label" v-for="opt in item.ticketInfos" :key="opt.id">
-                        <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
-                        <div class="weui-cell__bd">{{opt.title}}</div>
-                        <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
-                          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                        </div>
-                      </label>
+                          <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
+                          <div class="weui-cell__bd">{{opt.title}}</div>
+                          <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
+                            <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                          </div>
+                        </label>
             </radio-group>
           </div>
           <div class="weui-cells__title" v-if="!item.hasTickets">活动票已售完</div>
@@ -71,22 +42,22 @@
               </div>
               <radio-group :id="index" v-if="attItem.type == 'select' && !attItem.multiple" @change="attendInfoRadioChange">
                 <label class="weui-cell weui-check__label" v-for="(singleOpt, singleIndex) in attItem.options" :key="singleOpt.title">
-                            <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
-                            <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
-                            <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
-                              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                            </div>
-                          </label>
+                              <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
+                              <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
+                              <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
+                                <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                              </div>
+                            </label>
               </radio-group>
               <checkbox-group :id="index" v-if="attItem.type == 'select' && attItem.multiple" @change="attendInfoCheckboxChange">
                 <label class="weui-cell weui-check__label" v-for="(multipleOpt, multipleIndex) in attItem.options" :key="multipleOpt.title">
-                            <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
-                            <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
-                              <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
-                              <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
-                            </div>
-                            <div class="weui-cell__bd">{{multipleOpt.title}}</div>
-                          </label>
+                              <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
+                              <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
+                                <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
+                                <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
+                              </div>
+                              <div class="weui-cell__bd">{{multipleOpt.title}}</div>
+                            </label>
               </checkbox-group>
             </div>
           </div>
@@ -96,15 +67,15 @@
           <div v-if="ticket && ticket.price > 0 && score > 0" class="c-form-group">
             <checkbox-group @change="usingScoreChange">
               <label class="weui-cell weui-check__label">
-                            <checkbox  class="weui-check" :value="isUsingScore" :checked="isUsingScore" />
-                            <div class="weui-cell__hd weui-check__hd_in-checkbox">
-                              <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!isUsingScore"></icon>
-                              <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="isUsingScore"></icon>
-                            </div>
-                            <div class="weui-cell__bd">
-                              本次可用积分：{{ticket.score != null && score > ticket.score ? ticket.score : score}}<span v-if="isUsingScore">, 抵扣积分：<span class="c-money">{{realScore}}</span></span>
-                            </div>
-                          </label>
+                              <checkbox  class="weui-check" :value="isUsingScore" :checked="isUsingScore" />
+                              <div class="weui-cell__hd weui-check__hd_in-checkbox">
+                                <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!isUsingScore"></icon>
+                                <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="isUsingScore"></icon>
+                              </div>
+                              <div class="weui-cell__bd">
+                                本次可用积分：{{ticket.score != null && score > ticket.score ? ticket.score : score}}<span v-if="isUsingScore">, 抵扣积分：<span class="c-money">{{realScore}}</span></span>
+                              </div>
+                            </label>
             </checkbox-group>
             <br/>
             <label>应付金额：<span class="c-money">¥ {{realPrice}}</span></label>
@@ -112,7 +83,7 @@
         </div>
       </div>
       <div class="page__bd_spacing">
-        <button :disabled="processing" v-if="item && !item.attendUser && !item.is_over_due && item.hasTickets" @click="submitAttend()" class="weui-btn" type="primary">提交报名信息</button>
+        <button :disabled="processing" v-if="item && !item.is_over_due && item.hasTickets" @click="submitAttend()" class="weui-btn" type="primary">提交修改信息</button>
       </div>
     </div>
   </div>
@@ -193,7 +164,7 @@
         };
         this.$kyutil.HttpRequest(
           true,
-          "/pub/wx/activity/attend",
+          "/pub/wx/activity/attendupdate",
           false,
           "",
           param,
@@ -206,15 +177,24 @@
             that.scoreRate = res.scoreRate
             if (res.ticketInfos) {
               for (var i = 0; i < res.ticketInfos.length; i++) {
-                res.ticketInfos[i].checked = false
+                var ticket = res.ticketInfos[i]
+                if (ticket.checked) {
+                  that.ticket = ticket
+                }
               }
             }
             if (res.attendInfos) {
               for (var i = 0; i < res.attendInfos.length; i++) {
                 var attendInfo = res.attendInfos[i]
+                attendInfo.value = res.otherInfo[attendInfo.title]
                 if (attendInfo.type == 'select') {
+                  var selectValues = []
+                  if (attendInfo.value) {
+                    selectValues = attendInfo.value.split(',')
+                  }
                   for (var j = 0; j < attendInfo.options.length; j++) {
-                    attendInfo.options[j].checked = false
+                    var opt = attendInfo.options[j]
+                    opt.checked = selectValues.indexOf(opt.title) >= 0
                   }
                 }
               }
@@ -323,7 +303,8 @@
           otherInfo: {},
           userId: that.userId,
           activityId: that.activityId,
-          activityTicketId: that.ticket.id
+          activityTicketId: that.ticket.id,
+          id: that.item.attendUser.id
         }
         for (var i = 0; i < that.item.attendInfos.length; i++) {
           var attendInfo = that.item.attendInfos[i]
@@ -353,55 +334,25 @@
             activityTicketId: activityUser.activityTicketId,
             price: activityUser.price,
             body: '活动报名',
-            userId:that.userId,
             otherInfo: JSON.stringify(activityUser)
           }
-          that.payOrder(order)
+          Wechat.pay(order)
         } else {
-          that.$kyutil.HttpRequest(
+          this.$kyutil.HttpRequest(
             true,
-            "/pub/wx/activity/attend",
+            "/pub/wx/activity/attendupdate",
             false,
             "",
             activityUser,
             "POST",
             false,
             function(res) {
-              that.getData()
+              wx.redirectTo({
+                url: "../../pages/attend/attend?activityId=" + that.activityId
+              })
             }
-          )
+          );
         }
-      },
-      payOrder(order){
-        var that = this
-        that.$kyutil.HttpRequest(
-            true,
-            "/pub/wx/pay/create",
-            false,
-            "",
-            order,
-            "POST",
-            false,
-            (res)=> {
-              var payOpt = {
-                timeStamp:res[0].timeStamp,
-                nonceStr:res[0].nonceStr,
-                package:res[0].packageValue,
-                signType:res[0].signType,
-                paySign:res[0].paySign,
-              }
-              payOpt.success = function () {
-                  wx.navigateTo({
-                    url: "../../pages/payresult/payresult?orderid=" + res[1]
-                  })
-              }
-
-              wx.requestPayment(payOpt)
-            },
-            ()=>{
-              that.processing = false
-            }
-          )
       }
     },
     created() {},
@@ -419,10 +370,10 @@
 
 <style scoped>
   /*!
-         * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
-         * Copyright 2017 Tencent, Inc.
-         * Licensed under the MIT license
-         */
+           * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
+           * Copyright 2017 Tencent, Inc.
+           * Licensed under the MIT license
+           */
   .c-title-text {
     text-align: center;
     font-size: 18px;

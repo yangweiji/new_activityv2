@@ -30,7 +30,8 @@ export default {
             'pages/articlelist/articlelist',
             'pages/article/article',
             'pages/community/community',
-            'pages/attend/attend'
+            'pages/attend/attend',
+            'pages/attendupdate/attendupdate'
         ],
 
         // Will be filled in webpack

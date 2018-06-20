@@ -5,6 +5,8 @@ import com.xiaoleilu.hutool.date.DateTime
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.security.web.savedrequest.HttpSessionRequestCache
 import org.springframework.stereotype.Service
+import java.lang.Double
+import java.math.BigDecimal
 import java.sql.Timestamp
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -79,5 +81,9 @@ class KylinUtil {
         else
             request.scheme + "://" +
                     request.serverName + ":" + request.serverPort
+    }
+
+    fun feeToYuan(fee: Int?): String {
+        return BigDecimal(Double.valueOf(fee!!.toDouble()) / 100).setScale(2, BigDecimal.ROUND_HALF_UP).toPlainString()
     }
 }
