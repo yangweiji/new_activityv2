@@ -58,6 +58,8 @@ class PosterController {
 
     /**
      * 添加海报或编辑海报信息
+     * @param id 海报id
+     * @param model 存放海报信息的数据模型
      */
     @RequestMapping(value = "/poster", method = [RequestMethod.GET])
     fun poster(@RequestParam(required = false)id:Int?,model: Model): String {
@@ -73,6 +75,8 @@ class PosterController {
 
     /**
      * 保存海报信息
+     * @param poster 海报信息
+     * @return 重定向至海报信息界面
      */
     @RequestMapping(value="/savePoster",method = [RequestMethod.POST])
     fun savePoster(@ModelAttribute("poster") poster: Poster?,
@@ -82,6 +86,10 @@ class PosterController {
             var title=poster.title
             var avatar=poster.avatar
             var mobileAvatar=poster.mobileAvatar
+            //mobileAvatar为空时，使用avatar的值
+            if(mobileAvatar==null){
+                mobileAvatar=avatar
+            }
             var link=poster.link
             var activityId=poster.activityId
             var posterType=poster.posterType
@@ -104,9 +112,6 @@ class PosterController {
             posters.created=DateUtil.date().toTimestamp()
             posters.posterType=poster.posterType
             posters.show=poster.show
-            if(posters.show==false){
-                posters.link=null
-            }
             posters.sequence=poster.sequence
             posterService!!.insertPoster(posters)
         }
@@ -124,6 +129,34 @@ class PosterController {
         var posterId=if(request.getParameter("posterId")!=null)
             request.getParameter("posterId").toInt() else 0
         posterService!!.deletePoster(posterId)
+        return true
+    }
+
+    /**
+     * 平台中心海报管理
+     * 隐藏海报
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/showPoster",method = [RequestMethod.POST])
+    @ResponseBody
+    fun showPoster(request:HttpServletRequest):Any?{
+        var posterId=if(request.getParameter("posterId")!=null)
+            request.getParameter("posterId").toInt() else 0
+        posterService!!.showPoster(posterId)
+        return true
+    }
+
+    /**
+     * 平台中心海报管理
+     * 显示海报
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/displayPoster",method = [RequestMethod.POST])
+    @ResponseBody
+    fun displayPoster(request:HttpServletRequest):Any?{
+        var posterId=if(request.getParameter("posterId")!=null)
+            request.getParameter("posterId").toInt() else 0
+        posterService!!.displayPoster(posterId)
         return true
     }
 }
