@@ -72,7 +72,7 @@ class PosterService {
      * @return 海报信息集合
      */
     fun queryPosterItems(title:String?,posterType:String?):Result<Record>{
-       var sql="select t1.*,t2.title as activityTitle from poster t1 " +
+       var sql="select t1.*,t2.tags from poster t1 " +
                "left join activity t2 on t1.activity_id=t2.id where 1=1 "
         var params = mutableListOf<Any?>()
         if(!title.isNullOrBlank()){
@@ -80,7 +80,7 @@ class PosterService {
             params.add("%$title%")
         }
         if(!posterType.isNullOrBlank() && posterType!="0"){
-            sql+="and t1.poster_type = ? "
+            sql+="and t1.poster_type=? "
             params.add(posterType)
         }
 
@@ -141,11 +141,21 @@ class PosterService {
 
 
     /**
-     * 微信端根据活动编号获取海报信息
+     * 微信端获取海报信息
      */
     fun getPosterByActivityId():Result<Record>{
       var sql="select t1.* from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1  " +
               "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
         return create!!.resultQuery(sql).fetch()
+    }
+
+    /**
+     * 获取全部海报信息
+     */
+     fun getAllPoster(posterType:String):Result<Record>{
+        var sql="select t1.*,t2.summary,t2.unit from poster t1 left join activity t2 " +
+                "on t1.activity_id=t2.id where poster_type=? "+
+                "order by t1.sequence asc,t1.created desc limit 50 "
+        return create!!.resultQuery(sql,posterType).fetch()
     }
 }

@@ -1,14 +1,10 @@
 package com.kylin.activity.controller
 
-import com.kylin.activity.databases.Tables
-import com.kylin.activity.databases.tables.pojos.Poster
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.service.CommunityService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
-import com.kylin.activity.util.LogUtil
-import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.beans.factory.annotation.Autowired
@@ -92,10 +88,13 @@ class HomeController : BaseController() {
             else -> activities.sortDesc("start_time")
         }
 
-
-
-        var posterItems=posterService!!.getPosterItems()
-        model.addAttribute("posterItems",posterItems)
+        var posterItems = posterService!!.getPosterItems()
+        for (r in posterItems) {
+            if (r.get("avatar") != null) {
+                r.setValue(r.fieldsRow().field("avatar", String::class.java), commonService!!.getDownloadUrl(r.get("avatar").toString()))
+            }
+        }
+        model.addAttribute("posterItems", posterItems)
 
         model.addAttribute("s", if (s == 2) 2 else 1)
         model.addAttribute("activities", activities)

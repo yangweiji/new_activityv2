@@ -15,12 +15,6 @@ import org.springframework.web.bind.annotation.*
 class WxPosterController {
 
     /**
-     * 活动相册服务
-     */
-    @Autowired
-    private var activityPhotoService: ActivityPhotoService? = null
-
-    /**
      * 通用服务
      */
     @Autowired
@@ -41,12 +35,11 @@ class WxPosterController {
 
 
     /**
-     * 根据活动id获取海报信息
+     * 获取海报信息
      */
     @CrossOrigin
     @RequestMapping(value="/getPosters",method = [RequestMethod.GET,RequestMethod.POST])
     fun getPosters():Any{
-        //根据活动id获取海报信息
         var posters=posterService!!.getPosterByActivityId()
         var posterItems = mutableListOf<MutableMap<String, Any?>>()
         for (poster in posters) {

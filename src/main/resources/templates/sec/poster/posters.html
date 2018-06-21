@@ -23,8 +23,19 @@
                     <div class="am-form-group">
                         <select id="posterType" name="posterType" placeholder="" data-am-selected="">
                             <option value="0" th:selected="${#httpServletRequest.getParameter('posterType')=='0'}">请选择海报类型</option>
-                            <option value="1" th:selected="${#httpServletRequest.getParameter('posterType')=='1'}">活动海报</option>
-                            <option value="2" th:selected="${#httpServletRequest.getParameter('posterType')=='2'}">新闻海报</option>
+                            <option value="b5" th:selected="${#httpServletRequest.getParameter('posterType')=='b5'} ">跑步训练</option>
+                            <option value="b13" th:selected="${#httpServletRequest.getParameter('posterType')=='b13'}">运动装备</option>
+                            <option value="b12" th:selected="${#httpServletRequest.getParameter('posterType')=='b12'}">会员福利</option>
+                            <option value="b10" th:selected="${#httpServletRequest.getParameter('posterType')=='b10'}">国内赛事</option>
+                            <option value="b11" th:selected="${#httpServletRequest.getParameter('posterType')=='b11'}">国际赛事</option>
+                            <option value="b1" th:selected="${#httpServletRequest.getParameter('posterType')=='b1'}">徒步</option>
+                            <option value="b2" th:selected="${#httpServletRequest.getParameter('posterType')=='b2'}">越野</option>
+                            <option value="b3" th:selected="${#httpServletRequest.getParameter('posterType')=='b3'}">聚餐</option>
+                            <option value="b4" th:selected="${#httpServletRequest.getParameter('posterType')=='b4'}">骑行</option>
+                            <option value="b6" th:selected="${#httpServletRequest.getParameter('posterType')=='b6'}">会议</option>
+                            <option value="b7" th:selected="${#httpServletRequest.getParameter('posterType')=='b7'}">招募</option>
+                            <option value="b8" th:selected="${#httpServletRequest.getParameter('posterType')=='b8'}">讲座</option>
+                            <option value="n1" th:selected="${#httpServletRequest.getParameter('posterType')=='n1'}">赛事新闻</option>
                         </select>
                     </div>
                     <div class="am-form-group">
@@ -57,7 +68,6 @@
                             <th>关联内容</th>
                             <th>背景图</th>
                             <th>手机海报图</th>
-                            <th>外部链接</th>
                             <th>操作</th>
                         </tr>
                         </thead>
