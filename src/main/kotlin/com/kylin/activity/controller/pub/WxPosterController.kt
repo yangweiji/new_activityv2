@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.Poster
 import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
@@ -13,12 +14,6 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("pub/wx/poster")
 class WxPosterController {
-
-    /**
-     * 活动相册服务
-     */
-    @Autowired
-    private var activityPhotoService: ActivityPhotoService? = null
 
     /**
      * 通用服务
@@ -41,12 +36,11 @@ class WxPosterController {
 
 
     /**
-     * 根据活动id获取海报信息
+     * 获取海报信息
      */
     @CrossOrigin
     @RequestMapping(value="/getPosters",method = [RequestMethod.GET,RequestMethod.POST])
     fun getPosters():Any{
-        //根据活动id获取海报信息
         var posters=posterService!!.getPosterByActivityId()
         var posterItems = mutableListOf<MutableMap<String, Any?>>()
         for (poster in posters) {
@@ -75,5 +69,32 @@ class WxPosterController {
             posterItems.add(map)
         }
         return posterItems
+    }
+
+    /**
+     * 获取海报详情信息
+     * @param activityId 活动id
+     */
+    @CrossOrigin
+    @RequestMapping("/getPosterDetail")
+    fun getPosterDetail(@RequestParam(required = false)activityId:Int?):Any{
+       var item=posterService!!.getPosterDetail(activityId)
+        var avatar:String?
+        if (item["avatar"] != null) {
+            avatar = commonService!!.getDownloadUrl(item.get("avatar", String::class.java), "middle")
+            item.setValue(Poster.POSTER.AVATAR,avatar)
+        }
+        var mobileAvatar:String?
+        if (item["mobile_avatar"] != null) {
+            mobileAvatar = commonService!!.getDownloadUrl(item.get("mobile_avatar", String::class.java), "middle")
+            item.setValue(Poster.POSTER.MOBILE_AVATAR,mobileAvatar)
+        }
+
+        var map=item.intoMap()
+        if(item["created"]!=null){
+            map["created"]=util!!.fromNow(item.get("created"))
+        }
+        return map
+
     }
 }

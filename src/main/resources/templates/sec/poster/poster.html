@@ -79,10 +79,32 @@
                         <select required="required" id="posterType" name="posterType" placeholder="请选择海报类型"
                                 data-am-selected="">
                             <option value="">--</option>
-                            <option th:selected="${postersData.poster.posterType=='1'}"
-                                    th:value="1" th:text="活动海报"></option>
-                            <option th:selected="${postersData.poster.posterType=='2'}"
-                                    th:value="2" th:text="新闻海报"></option>
+                            <option th:selected="${postersData.poster.posterType=='b5'}"
+                                    th:value="b5" th:text="跑步训练"></option>
+                            <option th:selected="${postersData.poster.posterType=='b13'}"
+                                    th:value="b13" th:text="运动装备"></option>
+                            <option th:selected="${postersData.poster.posterType=='b12'}"
+                                    th:value="b12" th:text="会员福利"></option>
+                            <option th:selected="${postersData.poster.posterType=='b10'}"
+                                    th:value="b10" th:text="国内赛事"></option>
+                            <option th:selected="${postersData.poster.posterType=='b11'}"
+                                    th:value="b11" th:text="国际赛事"></option>
+                            <option th:selected="${postersData.poster.posterType=='b1'}"
+                                    th:value="b1" th:text="徒步"></option>
+                            <option th:selected="${postersData.poster.posterType=='b2'}"
+                                    th:value="b2" th:text="越野"></option>
+                            <option th:selected="${postersData.poster.posterType=='b3'}"
+                                    th:value="b3" th:text="聚餐"></option>
+                            <option th:selected="${postersData.poster.posterType=='b4'}"
+                                    th:value="b4" th:text="骑行"></option>
+                            <option th:selected="${postersData.poster.posterType=='b6'}"
+                                    th:value="b6" th:text="会议"></option>
+                            <option th:selected="${postersData.poster.posterType=='b7'}"
+                                    th:value="b7" th:text="招募"></option>
+                            <option th:selected="${postersData.poster.posterType=='b8'}"
+                                    th:value="b8" th:text="讲座"></option>
+                            <option th:selected="${postersData.poster.posterType=='n1'}"
+                                    th:value="n1" th:text="赛事新闻"></option>
                         </select>
                     </div>
                 </div>

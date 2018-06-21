@@ -5,10 +5,11 @@
       <div>
         <navigator url="../../pages/community/community" hover-class="navigator-hover">
           <span class="community-select">
-            切换团体 >>
+            切换 >>
           </span>
         </navigator>  
-        <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" />
+        <!-- <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" /> -->
+        <kyimage :src="community.background" model="aspectFit" type="banner" />
         <div class="c-bg"></div>
       </div>
 
@@ -136,12 +137,40 @@ export default {
   data() {
     return {
       icon20: base64.icon20,
-      xs: 1
+      xs: 1,
+      
+      community: {
+        id: 1, //默认的组织团体ID
+        communityName: "北京市马拉松协会",
+        background: "NzrSDNSBEP.png",
+      }
     };
   },
   components: {},
   methods: {
-    getData() {},
+    getData() {
+      // var that = this;
+      // var param = {
+      //   communityId: that.community.id, //默认community_id=1
+      // }
+      // //团体信息
+      // this.$kyutil.HttpRequest(
+      //   true,
+      //   "/pub/wx/community/get",
+      //   false,
+      //   "",
+      //   param,
+      //   "GET",
+      //   false,
+      //   function(res) {
+      //     that.community = res;
+      //     //设置标题
+      //     wx.setNavigationBarTitle({
+      //       title: that.community.name
+      //     });
+      //   }
+      // );
+    },
     qh(cs) {
       this.xs = cs;
     }
@@ -156,9 +185,20 @@ export default {
     }
   },
   onShow() {
-    wx.setNavigationBarTitle({
-      title: "个人中心"
-    });
+    console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
+    //接受参数
+    if (this.$store.state.community) {
+      this.community = this.$store.state.community;
+      //设置标题
+      wx.setNavigationBarTitle({
+        title: this.community.name
+      });
+    }
+    this.getData();
+
+    // wx.setNavigationBarTitle({
+    //   title: "个人中心"
+    // });
   }
 };
 </script>

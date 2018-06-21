@@ -66,8 +66,32 @@ $(function () {
                 {
                     "data": "poster_type", defaultContent: "",
                     render: function (data, type, row) {
-                        if (data == 1) {
-                            return "活动海报"
+                        if (data=='b1') {
+                            return "徒步"
+                        }else if(data=='b2'){
+                            return "越野"
+                        }else if(data=='b3'){
+                            return "聚餐"
+                        }else if(data=='b4'){
+                            return "骑行"
+                        }else if(data=="b5"){
+                            return "跑步训练"
+                        }else if(data=='b6'){
+                            return "会议"
+                        }else if(data=='b7'){
+                            return "招募"
+                        }else if(data=='b8'){
+                            return "讲座"
+                        }else if(data=='b10'){
+                            return "国内赛事"
+                        }else if(data=='b11'){
+                            return "国际赛事"
+                        }else if(data=='b12'){
+                            return "会员福利"
+                        }else if(data=='b13'){
+                            return "运动装备"
+                        }else if(data=='n1'){
+                            return "赛事新闻"
                         }
                     }
                 },
@@ -82,17 +106,16 @@ $(function () {
                     }
                 },
                 {"data": "sequence"},
-                {"data": "activityTitle"},
+                {"data": "link"},
                 {"data": "avatar"},
                 {"data": "mobile_avatar"},
-                {"data": "link"},
                 {
-                    "data": "action", "width": "80px", defaultContent: "",
+                    "data": "action", "width": "200px", defaultContent: "",
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
                             + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
-                            + '<button id="showPoster" class="am-btn am-btn-sm am-btn-danger" type="button" title="隐藏海报"><i class="am-icon-edit"></i></button>'
-                        +'<button id="displayPoster" class="am-btn am-btn-sm am-btn-secondary" type="button" title="显示海报"><i class="am-icon-edit"></i></button>'
+                            + '<button id="showPoster" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
+                        +'<button id="displayPoster" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
                     }
                 }
             ],
@@ -152,19 +175,21 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#showPoster', function () {
         var data = t.row($(this).parents('tr')).data();
-        $.ajax({
-            type: 'post',
-            dataType: 'json',
-            url: '/sec/poster/showPoster',
-            data: {
-                posterId: data.id
-            },
-            success: function (data) {
-                if (data) {
-                    location.reload()
+        if(window.confirm('确定隐藏吗？')) {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/poster/showPoster',
+                data: {
+                    posterId: data.id
+                },
+                success: function (data) {
+                    if (data) {
+                        location.reload()
+                    }
                 }
-            }
-        })
+            })
+        }
     })
 
     /**
@@ -172,19 +197,21 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#displayPoster', function () {
         var data = t.row($(this).parents('tr')).data();
-        $.ajax({
-            type: 'post',
-            dataType: 'json',
-            url: '/sec/poster/displayPoster',
-            data: {
-                posterId: data.id
-            },
-            success: function (data) {
-                if (data) {
-                    location.reload()
+        if(window.confirm('确定显示吗？')) {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/poster/displayPoster',
+                data: {
+                    posterId: data.id
+                },
+                success: function (data) {
+                    if (data) {
+                        location.reload()
+                    }
                 }
-            }
-        })
+            })
+        }
     })
 
     /**

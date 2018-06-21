@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app">
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l">
+                <span th:if="${posterType}=='b5'">
+                    <strong th:classappend="${posterType}=='b5'">跑步训练</strong>
+                </span>
+                <span th:if="${posterType}=='n1'">
+                    <strong th:classappend="${posterType}=='n1'">赛事新闻</strong>
+                </span>
+                <span th:if="${posterType}=='b13'">
+                    <strong th:classappend="${posterType}=='b13'">运动装备</strong>
+                </span>
+                <span th:if="${posterType}=='b12'">
+                    <strong th:classappend="${posterType}=='b12'">会员福利</strong>
+                </span>
+                <span th:if="${posterType}=='b10'">
+                    <strong th:classappend="${posterType}=='b10'">国内赛事</strong>
+                </span>
+                <span th:if="${posterType}=='b11'">
+                    <strong th:classappend="${posterType}=='b11'">国际赛事</strong>
+                </span>
+                <span th:if="${posterType}=='b1'">
+                    <strong th:classappend="${posterType}=='b1'">徒步</strong>
+                </span>
+                <span th:if="${posterType}=='b2'">
+                    <strong th:classappend="${posterType}=='b2'">越野</strong>
+                </span>
+                <span th:if="${posterType}=='b3'">
+                    <strong th:classappend="${posterType}=='b3'">聚餐</strong>
+                </span>
+                <span th:if="${posterType}=='b4'">
+                    <strong th:classappend="${posterType}=='b4'">骑行</strong>
+                </span>
+                <span th:if="${posterType}=='b6'">
+                    <strong th:classappend="${posterType}=='b6'">会议</strong>
+                </span>
+                <span th:if="${posterType}=='b7'">
+                    <strong th:classappend="${posterType}=='b7'">招募</strong>
+                </span>
+                <span th:if="${posterType}=='b8'">
+                    <strong th:classappend="${posterType}=='b8'">讲座</strong>
+                </span>
+                共<span th:text="${#lists.size(posters)}"></span>条记录
+            </div>
+        </div>
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <ul class="am-tabs-nav am-cf am_cf">
+                <li class="" th:classappend="${posterType}=='b5'?'am-active'">
+                    <a href="/pub/poster/allposter/b5">跑步训练</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b13'?'am-active'">
+                    <a href="/pub/poster/allposter/b13">运动装备</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b12'?'am-active'">
+                    <a href="/pub/poster/allposter/b12">会员福利</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b10'?'am-active'">
+                    <a href="/pub/poster/allposter/b10">国内赛事</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b11'?'am-active'">
+                    <a href="/pub/poster/allposter/b11">国际赛事</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b1'?'am-active'">
+                    <a href="/pub/poster/allposter/b1">徒步</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b2'?'am-active'">
+                    <a href="/pub/poster/allposter/b2">越野</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b3'?'am-active'">
+                    <a href="/pub/poster/allposter/b3">聚餐</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b4'?'am-active'">
+                    <a href="/pub/poster/allposter/b4">骑行</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b6'?'am-active'">
+                    <a href="/pub/poster/allposter/b6">会议</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b7'?'am-active'">
+                    <a href="/pub/poster/allposter/b7">招募</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='b8'?'am-active'">
+                    <a href="/pub/poster/allposter/b8">讲座</a>
+                </li>
+                <li class="" th:classappend="${posterType}=='n1'?'am-active'">
+                    <a href="/pub/poster/allposter/n1">赛事新闻</a>
+                </li>
+            </ul>
+
+            <div class="am-tabs-bd">
+                <div class="am-list-news-bd am_news_list_all">
+                    <ul class="am-list">
+                        <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left am_list_li"
+                            th:each="item:${posters}">
+                            <div th:if="${item.get('activity_id')>0}">
+                                <div class="am-u-sm-3 am-list-thumb am_list_thumb">
+                                    <a target="_blank" class=""
+                                       th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }">
+                                        <img class="am_news_list_img" alt="图片加载中..."
+                                             th:src="${item.get('avatar')}"/>
+                                    </a>
+                                </div>
+                                <div class=" am-u-sm-9 am-list-main am_list_main">
+                                    <h3 class="am-list-item-hd am_list_title">
+                                        <a target="_blank" class=""
+                                           th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }"
+                                           th:text="${item.get('title')}"></a>
+                                    </h3>
+                                    <div class="am_list_author">
+                                             <span th:text="${#dates.format(item.get('created'),'yyyy-MM-dd HH:mm:ss')}"
+                                                   th:text="${#kylin.fromNow(item.get('created'))}"></span>
+                                        &nbsp;&nbsp;
+                                        <span th:text="${'发布单位：'+item.get('unit')}"></span><br/>
+                                        <span th:text="${'摘要：'+item.get('summary')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div th:if="${item.get('activity_id')<=0}">
+                                <div class="am-u-sm-3 am-list-thumb am_list_thumb">
+                                    <a target="_blank" class=""
+                                       th:href="${item.get('link')}">
+                                        <img class="am_news_list_img" alt="图片加载中..."
+                                             th:src="${item.get('posterAvatar')}"/>
+                                    </a>
+                                </div>
+                                <div class=" am-u-sm-9 am-list-main am_list_main">
+                                    <h3 class="am-list-item-hd am_list_title">
+                                        <a target="_blank" class=""
+                                           th:href="${item.get('link')}"
+                                           th:text="${item.get('title')}"></a>
+                                    </h3>
+                                    <div class="am_list_author">
+                                    <span th:text="${#dates.format(item.get('posterCreated'),'yyyy-MM-dd HH:mm:ss')}"
+                                          th:text="${#kylin.fromNow(item.get('posterCreated'))}"
+                                    ></span>
+                                        &nbsp;&nbsp;
+                                        <span th:text="${'发布单位：'+item.get('unit')}"></span><br/>
+                                        <span th:text="${'摘要：'+item.get('summary')}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
+</body>
+</html>

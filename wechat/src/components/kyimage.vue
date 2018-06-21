@@ -9,7 +9,7 @@ export default {
   props: {
     src: {
       type: String,
-      default: ''
+      default: 'NzrSDNSBEP.png'
     },
 
     type: {
