@@ -15,7 +15,7 @@
                 <ul class="am-slides">
                     <li th:each="item:${posterItems}">
                         <div th:if="${item.get('activity_id')>0}">
-                            <a th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }">
+                            <a th:href="@{/pub/activity/detail/{id} (id=${item.get('activity_id')}) }">
                                 <img th:src="${item.get('avatar')}"></a>
                             <div class="am-slider-desc">
                                 <div th:text="${item.get('title')}"></div>

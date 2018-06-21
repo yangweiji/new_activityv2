@@ -88,6 +88,7 @@ class HomeController : BaseController() {
             else -> activities.sortDesc("start_time")
         }
 
+        //获取海报信息集合
         var posterItems = posterService!!.getPosterItems()
         for (r in posterItems) {
             if (r.get("avatar") != null) {

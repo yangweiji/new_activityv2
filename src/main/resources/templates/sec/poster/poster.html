@@ -79,6 +79,8 @@
                         <select required="required" id="posterType" name="posterType" placeholder="请选择海报类型"
                                 data-am-selected="">
                             <option value="">--</option>
+                            <option th:selected="${postersData.poster.posterType=='n1'}"
+                                    th:value="n1" th:text="赛事新闻"></option>
                             <option th:selected="${postersData.poster.posterType=='b5'}"
                                     th:value="b5" th:text="跑步训练"></option>
                             <option th:selected="${postersData.poster.posterType=='b13'}"
@@ -103,8 +105,6 @@
                                     th:value="b7" th:text="招募"></option>
                             <option th:selected="${postersData.poster.posterType=='b8'}"
                                     th:value="b8" th:text="讲座"></option>
-                            <option th:selected="${postersData.poster.posterType=='n1'}"
-                                    th:value="n1" th:text="赛事新闻"></option>
                         </select>
                     </div>
                 </div>
