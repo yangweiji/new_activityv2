@@ -150,8 +150,8 @@ class PosterService {
      * @param posterType 海报类型
      */
     fun getAllPoster(posterType: String): Result<Record> {
-        var sql = "select from poster t1 left join " +
-                "activity t2 on t1.activity_id=t2.id where poster_type=? " +
+        var sql = "select t1.* from poster t1 left join " +
+                "activity t2 on t1.activity_id=t2.id where t1.poster_type=? " +
                 "order by t1.sequence asc,t1.created desc limit 50 "
         return create!!.resultQuery(sql, posterType).fetch()
     }

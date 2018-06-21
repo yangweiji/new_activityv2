@@ -110,12 +110,12 @@ $(function () {
                 {"data": "avatar"},
                 {"data": "mobile_avatar"},
                 {
-                    "data": "action", "width": "200px", defaultContent: "",
+                    "data": "action", "width": "180px", defaultContent: "",
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
-                            + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
-                            + '<button id="showPoster" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
-                        +'<button id="displayPoster" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
+                            + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
+                            + '<button id="showPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
+                        +'<button id="displayPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
                     }
                 }
             ],

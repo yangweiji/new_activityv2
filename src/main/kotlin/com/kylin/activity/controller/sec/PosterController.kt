@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpServletRequest
 
 data class PostersData(
@@ -80,21 +81,18 @@ class PosterController {
      */
     @RequestMapping(value="/savePoster",method = [RequestMethod.POST])
     fun savePoster(@ModelAttribute("poster") poster: Poster?,
-                   model: Model):String{
+                   model: Model,redirectAttributes: RedirectAttributes):String{
 
         if(poster!!.id!=null&&poster!!.id>0){
             var title=poster.title
             var avatar=poster.avatar
             var mobileAvatar=poster.mobileAvatar
-            //mobileAvatar为空时，使用avatar的值
-            if(mobileAvatar==null){
-                mobileAvatar=avatar
-            }
             var link=poster.link
             var activityId=poster.activityId
             var posterType=poster.posterType
             var show=poster.show
             var sequence=poster.sequence
+            redirectAttributes.addFlashAttribute("globalMessage","海报：【${title}】编辑成功！")
             posterService!!.updatePoster(title,avatar,mobileAvatar,link,activityId,posterType,show,sequence,poster.id)
         }else{
             //检验海报是否已存在
@@ -113,6 +111,7 @@ class PosterController {
             posters.posterType=poster.posterType
             posters.show=poster.show
             posters.sequence=poster.sequence
+            redirectAttributes.addFlashAttribute("globalMessage","海报：【${posters.title}】添加成功！")
             posterService!!.insertPoster(posters)
         }
         return "redirect:/sec/poster/posters"
