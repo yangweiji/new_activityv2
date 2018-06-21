@@ -10,17 +10,19 @@
     <div class="get">
 
         <div class="c-bg">
-            <div  data-am-widget="slider" class="am-slider am-slider-c3"
+            <div data-am-widget="slider" class="am-slider am-slider-c3"
                  data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
-                <ul class="am-slides" >
+                <ul class="am-slides">
                     <li th:each="item:${posterItems}">
                         <div th:if="${item.get('activity_id')>0}">
-                        <a th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }">
-                            <img th:src="${item.get('avatar')}"></a>
-                        <div class="am-slider-desc">
-                            <div th:text="${item.get('title')}"></div>
-                        </div>
-                        <div class="am-slider-desc"><a th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }" style="margin-left:1070px">更多</a></div>
+                            <a th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }">
+                                <img th:src="${item.get('avatar')}"></a>
+                            <div class="am-slider-desc">
+                                <div th:text="${item.get('title')}"></div>
+                            </div>
+                            <div class="am-slider-desc"><a
+                                    th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }"
+                                    style="margin-left:1070px">更多</a></div>
                         </div>
                         <div th:if="${item.get('activity_id')<=0}">
                             <a th:href="${item.get('link')}">
@@ -28,40 +30,42 @@
                             <div class="am-slider-desc">
                                 <div th:text="${item.get('title')}"></div>
                             </div>
-                            <div class="am-slider-desc"><a th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }" style="margin-left:1070px">更多</a></div>
+                            <div class="am-slider-desc"><a
+                                    th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }"
+                                    style="margin-left:1070px">更多</a></div>
                         </div>
                     </li>
                 </ul>
             </div>
         </div>
 
-       <!-- <div class="">
-            <div class="am-u-lg-12">
-                <div class="get-title">
-                    <div class="get_font_left">
-                        &lt;!&ndash;<img src="/img/font_yjy.png" alt="" />&ndash;&gt;
-                        <span style="color:white;font-size: 35px;white-space:nowrap">已经有</span>
-                    </div>
-                    <div class="get_font_center" th:attr="count=${#lists.size(activities)}" id="banner_num"></div>
-                    <div class="get_font_rigth">
-                        &lt;!&ndash;<img src="/img/font_zty.png" alt="" />&ndash;&gt;
-                        <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
-                    </div>
-                </div>
+        <!-- <div class="">
+             <div class="am-u-lg-12">
+                 <div class="get-title">
+                     <div class="get_font_left">
+                         &lt;!&ndash;<img src="/img/font_yjy.png" alt="" />&ndash;&gt;
+                         <span style="color:white;font-size: 35px;white-space:nowrap">已经有</span>
+                     </div>
+                     <div class="get_font_center" th:attr="count=${#lists.size(activities)}" id="banner_num"></div>
+                     <div class="get_font_rigth">
+                         &lt;!&ndash;<img src="/img/font_zty.png" alt="" />&ndash;&gt;
+                         <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
+                     </div>
+                 </div>
 
-                <div class="font_line">
-                    &lt;!&ndash;<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>&ndash;&gt;
-                    <span style="color:white;font-size: 30px;white-space:nowrap"
-                          th:text="${community.description}"></span>
-                </div>
-                <p>
-                    <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
-                        <i class="fa fa-weixin"></i>
-                        微信小程序</a>
-                    &lt;!&ndash;<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>&ndash;&gt;
-                </p>
-            </div>
-        </div>-->
+                 <div class="font_line">
+                     &lt;!&ndash;<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>&ndash;&gt;
+                     <span style="color:white;font-size: 30px;white-space:nowrap"
+                           th:text="${community.description}"></span>
+                 </div>
+                 <p>
+                     <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
+                         <i class="fa fa-weixin"></i>
+                         微信小程序</a>
+                     &lt;!&ndash;<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>&ndash;&gt;
+                 </p>
+             </div>
+         </div>-->
     </div>
     <div class="c_orange_container">
         <div class="c_orange">
@@ -267,9 +271,10 @@
 
         text-align: center;
     }
-    .am-slides img{
+
+    .am-slides img {
         height: 600px;
-       /* width: 1080px;*/
+        /* width: 1080px;*/
     }
 </style>
 

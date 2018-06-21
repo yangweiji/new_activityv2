@@ -45,6 +45,7 @@ class PostersController {
     /**
      * 首页点击‘更多’标签
      * 显示全部海报信息
+     * @param posterType 海报类型
      */
     @GetMapping("/allposter/{posterType}")
     fun getAllPoster(@PathVariable("posterType")posterType:String, model: Model):String{

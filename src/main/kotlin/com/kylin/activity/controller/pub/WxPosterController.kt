@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.Poster
 import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
@@ -68,5 +69,32 @@ class WxPosterController {
             posterItems.add(map)
         }
         return posterItems
+    }
+
+    /**
+     * 获取海报详情信息
+     * @param activityId 活动id
+     */
+    @CrossOrigin
+    @RequestMapping("/getPosterDetail")
+    fun getPosterDetail(@RequestParam(required = false)activityId:Int?):Any{
+       var item=posterService!!.getPosterDetail(activityId)
+        var avatar:String?
+        if (item["avatar"] != null) {
+            avatar = commonService!!.getDownloadUrl(item.get("avatar", String::class.java), "middle")
+            item.setValue(Poster.POSTER.AVATAR,avatar)
+        }
+        var mobileAvatar:String?
+        if (item["mobile_avatar"] != null) {
+            mobileAvatar = commonService!!.getDownloadUrl(item.get("mobile_avatar", String::class.java), "middle")
+            item.setValue(Poster.POSTER.MOBILE_AVATAR,mobileAvatar)
+        }
+
+        var map=item.intoMap()
+        if(item["created"]!=null){
+            map["created"]=util!!.fromNow(item.get("created"))
+        }
+        return map
+
     }
 }
