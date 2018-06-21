@@ -214,7 +214,7 @@ export default {
     getData() {
       var that = this;
       var param = {
-        s: 1, //默认community_id=1
+        communityId: 1, //默认community_id=1
         t: that.activeIndex
       }
       this.$kyutil.HttpRequest(true, "/pub/wx/activity/search", false, "", param, "GET", false, function (res) {

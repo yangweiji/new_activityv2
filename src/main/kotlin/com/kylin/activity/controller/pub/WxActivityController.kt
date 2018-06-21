@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.kylin.activity.databases.tables.Activity
 import com.kylin.activity.databases.tables.pojos.ActionHistory
 import com.kylin.activity.databases.tables.pojos.ActivityUser
+import com.kylin.activity.databases.tables.pojos.ScoreHistory
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
 import com.kylin.activity.service.*
@@ -74,10 +75,10 @@ class WxActivityController {
     private val thirdUserService: ThirdUserService? = null
 
     /**
-     * 订单服务
+     * 积分服务
      */
     @Autowired
-    private val orderService: OrderService? = null
+    private val scoreService: ScoreService? = null
 
     /**
      * 上下文环境信息，可读取配置文件
@@ -480,5 +481,84 @@ class WxActivityController {
 
         activityService!!.updateAttend(activityUser)
         return true
+    }
+
+    @GetMapping("/checkin")
+    @Transactional
+    fun getCheckIn(request: HttpServletRequest, @RequestParam(required = true) activityId: Int, @RequestParam(required = true) userId: Int): Any {
+
+        val result = mutableMapOf<String, Any?>()
+
+
+        var activitySql = "select t1.*, t2.user_id , t2.check_in_time, ifnull(t3.score, 0) check_in_score from activity t1 left join activity_user t2 on t1.id = t2.activity_id and t2.user_id = ? left join score_history t3 on t3.activity_id = t1.id and t3.user_id =?  where t1.id=?"
+
+
+        var checkInUser = create!!.resultQuery(activitySql, userId, userId, activityId).fetchOne()
+
+        var communityId =checkInUser.get("community_id") as Int
+
+        //是否为本年的VIP
+        val isVip = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+
+        var activity = activityService!!.getActivityDetail(activityId)
+
+        var realCheckInScore = checkInUser.get("check_in_score", Int::class.java)
+
+        var checkInScore = 0
+        //积分初始化
+        var activityScoreInfos = activity.get("score_infos", String::class.java)
+        if(!activityScoreInfos.isNullOrBlank()){
+            val mapper = jacksonObjectMapper()
+            var scoreInfo = mapper.readValue<ActivityScoreInfo>(activityScoreInfos)
+            checkInScore = if(isVip){ scoreInfo.vipUserScore } else { scoreInfo.generalUserScore }
+        }
+
+        var checkInTime = checkInUser.get("check_in_time")
+        var checkInUserId = checkInUser.get("user_id")
+        if(checkInUserId != null && checkInTime == null){
+            checkInTime = DateUtil.date().toTimestamp()
+            create!!.execute("update activity_user set check_in_time=? where activity_id=? and user_id=?", checkInTime, activityId, userId)
+
+            if(checkInScore > 0 && realCheckInScore == 0){
+                realCheckInScore = checkInScore
+                var scoreHistory = ScoreHistory()
+                scoreHistory.score =realCheckInScore
+                scoreHistory.activityId = activityId
+                scoreHistory.userId = userId
+                scoreHistory.memo = "活动签到获取积分"
+                scoreHistory.created = checkInTime
+                scoreHistory.communityId = communityId
+                scoreService!!.save(scoreHistory)
+            }
+        }
+
+        result["checkInTime"] = checkInTime
+        result["checkInScore"] = checkInScore
+
+
+        var map = mutableMapOf<String, Any?>()
+        var avatar:String? = null
+        if(activity["avatar"] != null){
+            avatar =  commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+        }
+        map["id"] = activity.get("id", Int::class.java)
+        map["activity_type"] = activity.get("activity_type", Int::class.java)
+        map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+        map["attend_count"] = activity.get("attend_count", Int::class.java)
+        map["avatar"] = avatar
+        map["start_time"] = util!!.fromNow(activity.get("start_time"))
+
+        map["title"] =activity.get("title").toString()
+
+        result["activity"] = map
+
+        var checkInCountSql = "select count(user_id) check_in_count from activity_user where activity_id =? and check_in_time is not null"
+
+        var checkInCount = create!!.resultQuery(checkInCountSql, activityId).fetchOne().get("check_in_count")
+
+        result["checkInCount"] = checkInCount
+
+
+        return result
     }
 }

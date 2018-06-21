@@ -198,9 +198,19 @@ function CheckUserValidation() {
     }
 }
 
+function getUser() {
+    return wx.getStorageSync("user")
+}
+
+function getCommunityId() {
+    return wx.getStorageSync("community_id") || 1
+}
+
 module.exports = {
     data: data,
     HttpRequest: HttpRequest,
     Login: Login,
-    CheckUserValidation: CheckUserValidation
+    CheckUserValidation: CheckUserValidation,
+    GetUser: getUser,
+    getCommunityId: getCommunityId
 }

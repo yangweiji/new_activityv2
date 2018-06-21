@@ -27,22 +27,25 @@ class WxPayController {
     @Autowired
     private var payService: PayService? = null
 
-    @Autowired
-    private var orderService: OrderService? = null
-
     @RequestMapping("/create")
     @Transactional
     fun createOrder(request: HttpServletRequest, @RequestBody order: PayOrder): Any {
         return payService!!.createOrder(request, order)
     }
 
-    @RequestMapping("/check/{id}")
-    fun checkOrder(@PathVariable id:Int):PayOrder {
-        var order = orderService!!.getOrder(id)
-        return order
+    /**
+     * 付款订单支付成功后，调用该api查询付款的订单，并生成报名信息后会员记录
+     */
+    @RequestMapping("/check")
+    @Transactional
+    fun checkOrder(@RequestParam(required = true) id:Int):Int {
+        return payService!!.checkOrder(id)
     }
 
 
+    /**
+     * 支付成功回调接口，小程序暂不使用
+     */
     @RequestMapping("/notify")
     @Transactional
     fun notify(request:HttpServletRequest,  response: HttpServletResponse): Any {

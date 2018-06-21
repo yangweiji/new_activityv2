@@ -50,6 +50,7 @@ class PayService {
     private val userDao: UserDao? = null
 
 
+
     /**
      * 创建付款订单
      */
@@ -85,13 +86,57 @@ class PayService {
         unifiedOrder.spbillCreateIp = util!!.getClientIpAddress(request)
         unifiedOrder.timeStart = start.toString("yyyyMMddHHmmss")
         unifiedOrder.timeExpire = DateUtil.offsetDay(start, 1).toString("yyyyMMddHHmmss")
-        unifiedOrder.notifyUrl = util!!.getBaseUrl(request) + "/pub/pay/notify/"
+        unifiedOrder.notifyUrl = util!!.getBaseUrl(request) + "/pub/wx/pay/notify/"
         unifiedOrder.tradeType = "JSAPI"
         var payInfo: Any =  wxService!!.payService!!.createOrder(unifiedOrder)
         return arrayOf(payInfo, order.id)
     }
 
+    /**
+     * 检查订单的状态，如果订单为未完成时，将从微信查询订单，并更新订单状态
+     */
+    fun checkOrder(id:Int):Int {
+        synchronized(id) {
+            var order = payOrderDao!!.fetchOneById(id)
+            if (order.status != 2) {
+                updateOrder(order)
+            }
+            return order.status
+        }
+    }
 
+    /**
+     * 从微信查询订单，并更新订单状态， 活动订单会生成报名记录， 会员订单会更新会员信息
+     */
+    fun updateOrder(order: PayOrder) {
+        var wxOrder = wxService!!.payService!!.queryOrder(null, order.extenalId)
+        if (wxOrder.returnCode == "SUCCESS" && wxOrder.tradeState == "SUCCESS") {
+            if (order.status == 1) {
+                order.status = 2
+                order.payTime = DateUtil.parse(wxOrder.timeEnd, "yyyyMMddHHmmss").toTimestamp()
+                payOrderDao!!.update(order)
+
+                if (order.activityId != null && order.activityId > 0) { //活动报名
+                    val mapper = jacksonObjectMapper()
+                    var activityUser = mapper.readValue(order.otherInfo, ActivityUser::class.java)
+                    activityService!!.saveAttend(activityUser)
+                } else {
+                    //升级VIP
+                    var year = order.otherInfo.toInt()
+                    var user = userDao!!.fetchOneById(order.userId)
+                    if (user.level != year) {
+                        user.level = year
+                        userDao!!.update(user)
+                    }
+                }
+            }
+        }
+
+    }
+
+    /**
+     * 支付成功回调接口调用服务
+     */
     fun notify(request:HttpServletRequest,  response: HttpServletResponse): Any {
         return try {
             val xmlResult = IOUtils.toString(request.inputStream, request.characterEncoding)
@@ -101,33 +146,17 @@ class PayService {
             val tradeNo = result.transactionId
             var attach = result.attach
             val totalFee = util!!.feeToYuan(result.totalFee!!)
-            var order = payOrderDao!!.fetchOneById(attach.toInt())
-            if(order.status == 1){
-                order.status = 2
-                order.payTime = DateUtil.date().toTimestamp()
+
+            var status = checkOrder(attach.toInt())
+
+            if(status == 2){
+                //自己处理订单的业务逻辑，需要判断订单是否已经支付过，否则可能会重复调用
+                WxPayNotifyResponse.success("处理成功")
             } else {
-                throw Exception("订单已经完成，不能重复支付")
+                WxPayNotifyResponse.fail("订单状态未完成")
             }
 
-            if(order.activityId != null && order.activityId > 0) { //活动报名
-                val mapper = jacksonObjectMapper()
-                var activityUser = mapper.readValue(order.otherInfo, ActivityUser::class.java)
-                activityService!!.saveAttend(activityUser)
-            } else {
-                //升级VIP
-                var year = order.otherInfo.toInt()
-                var user = userDao!!.fetchOneById(order.userId)
-                if(user.level == year){
-                    throw Exception("用户已经是马协会员，不能重复支付")
-                } else {
-                    user.level = year
-                    userDao!!.update(user)
-                }
-            }
 
-            payOrderDao!!.update(order)
-            //自己处理订单的业务逻辑，需要判断订单是否已经支付过，否则可能会重复调用
-            WxPayNotifyResponse.success("处理成功")
         } catch (e:Exception){
             WxPayNotifyResponse.fail(e.message)
         }
