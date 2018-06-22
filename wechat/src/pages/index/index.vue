@@ -9,20 +9,18 @@
             切换团体
           </span>
         </navigator>     
-           <div>
-      <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
-        <div v-for="item in poster" :key="index">        
-          <swiper-item >               
-              <image :src="item.mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
-                   <span class="poster_title" >
-              {{item.title}}
-            </span>   
-                 
-          </swiper-item>
-            
+        <div>
+          <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
+            <div v-for="item in poster" :key="index">        
+              <swiper-item >               
+                  <image :src="item.mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
+                      <span class="poster_title" >
+                  {{item.title}}
+                </span>   
+              </swiper-item>
+            </div>
+          </swiper>
         </div>
-      </swiper>
-    </div>
       
       </div>
 
@@ -30,7 +28,7 @@
       <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
         <block v-for="(item,index) in grids" :key='index'>
           <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
-            <image  :src='item.src' style="width:75px;height:75px"/>
+            <image  :src='item.src' style="width:50px;height:50px"/>
             <div class="weui-grid_label">{{item.name}}</div>
           </navigator>
         </block>
@@ -157,7 +155,7 @@ export default {
       //Banner
       url: "../../../static/images/banner_bg.png",
       //ICON
-  
+
       //活动信息
       items: [],
       //活动ID
@@ -170,25 +168,21 @@ export default {
           src: "/static/images/activity_notices.png",
           name: "通知公告",
           url: "/pages/articlelist/articlelist?articleCategory=1"
-        
         },
         {
           src: "/static/images/images_news.png",
           name: "赛事新闻",
           url: "/pages/articlelist/articlelist?articleCategory=2"
-          
         },
         {
           src: "/static/images/images_sport.png",
           name: "运动指南",
           url: "/pages/articlelist/articlelist?articleCategory=3"
-         
         },
         {
           src: "/static/images/pictures.jpg",
           name: "活动相册",
           url: "/pages/photos/photos"
-         
         }
       ],
       //文章分类
@@ -218,6 +212,12 @@ export default {
       ],
       //索引
       index: 0,
+      //默认的团体组织
+      community: {
+        id: 1, //默认的组织团体ID
+        communityName: "北京市马拉松协会",
+        background: "NzrSDNSBEP.png",
+      },
       //是否显示面板指示点
       indicatorDots: true,
       //是否自动切换
@@ -229,19 +229,16 @@ export default {
       //是否采用衔接滑动
       circular: true,
       //图片的url地址
-      imgUrls: [
-    
+      imgUrls: [],
 
-      ],
-      
-      poster:[
+      poster: [
         {
-          title:"",
-          mobile_avatar:""
+          title: "",
+          mobile_avatar: ""
         }
       ],
       //活动ID
-      activity_id:0
+      activity_id: 0
     };
   },
   computed: {
@@ -269,7 +266,7 @@ export default {
     getData() {
       var that = this;
       var param = {
-        communityId: 1, //默认community_id=1
+        communityId: that.community.id,
         t: that.activeIndex
       };
       this.$kyutil.HttpRequest(
@@ -285,7 +282,7 @@ export default {
         }
       );
       this.$kyutil.HttpRequest(
-       true,
+        true,
         "/pub/wx/poster/getPosters",
         false,
         "",
@@ -293,7 +290,7 @@ export default {
         "GET",
         false,
         function(res) {
-          that.poster=res;
+          that.poster = res;
           console.log(that.poster);
           //  for(var i=0;i<res.length;i++)
           // {
@@ -302,11 +299,9 @@ export default {
           // }
           // that.imgUrls=that.mobile_avatar;
         }
-
-      )
+      );
     },
 
-    
     //主要活动标签分类触发事件，重新获取相应的数据
     tabClick(e) {
       this.activeIndex = e;
@@ -343,10 +338,10 @@ export default {
     checkdetails(activityId) {
       var that = this;
       that.activityId = activityId;
-      if(that.activityId)
-      wx.navigateTo({
-        url: "../../pages/details/details?activityId=" + that.activityId
-      });
+      if (that.activityId)
+        wx.navigateTo({
+          url: "../../pages/details/details?activityId=" + that.activityId
+        });
       success: {
         console.log("-> details: activityId=" + activityId);
       }
@@ -369,6 +364,15 @@ export default {
   created() {
     console.log("global:", global);
     console.log("index created");
+    
+    //接受参数
+    if (this.$store.state.community) {
+      this.community = this.$store.state.community;
+      //设置标题
+      wx.setNavigationBarTitle({
+        title: this.community.name
+      });
+    }
     this.getData();
     //设置默认的其他活动标签分类值
     this.ces = this.ranges[this.index];
@@ -489,19 +493,13 @@ export default {
   line-height: normal;
   border: none;
 }
-.weui-panel {
-  background-color: #fff;
-  margin-top: -2px;
-  position: relative;
-  overflow: hidden;
-}
 .slide-image {
   width: 100%;
   height: 100%;
 }
-.poster_title{
+.poster_title {
   font-size: 12px;
-  color:#fff;
-  background-color: #fff
+  color: #fff;
+  background-color: #fff;
 }
 </style>

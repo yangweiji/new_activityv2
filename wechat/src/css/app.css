@@ -38,9 +38,13 @@ page {
 
 .weui-panel {
     background-color: #fff;
-    margin-top: -2px;
+    top: -20rpx;
     position: relative;
     overflow: hidden;
+}
+
+.weui-panel:first-child {
+    margin-top: 20rpx;
 }
 
 

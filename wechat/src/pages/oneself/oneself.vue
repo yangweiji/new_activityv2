@@ -150,27 +150,7 @@ export default {
   components: {},
   methods: {
     getData() {
-      // var that = this;
-      // var param = {
-      //   communityId: that.community.id, //默认community_id=1
-      // }
-      // //团体信息
-      // this.$kyutil.HttpRequest(
-      //   true,
-      //   "/pub/wx/community/get",
-      //   false,
-      //   "",
-      //   param,
-      //   "GET",
-      //   false,
-      //   function(res) {
-      //     that.community = res;
-      //     //设置标题
-      //     wx.setNavigationBarTitle({
-      //       title: that.community.name
-      //     });
-      //   }
-      // );
+
     },
     qh(cs) {
       this.xs = cs;
