@@ -32,7 +32,8 @@ export default {
             'pages/community/community',
             'pages/attend/attend',
             'pages/attendupdate/attendupdate',
-            'pages/checkin/checkin'
+            'pages/photos/photos',
+            'pages/photosdetails/photosdetails'
         ],
 
         // Will be filled in webpack

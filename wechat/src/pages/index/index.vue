@@ -6,18 +6,32 @@
       <div>
         <navigator url="../../pages/community/community" hover-class="navigator-hover">
           <span class="community-select">
-            切换 >>
+            切换团体
           </span>
-        </navigator>  
-        <!-- <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" /> -->
-        <kyimage :src="community.background" model="aspectFit" type="banner" />
-        <div class="c-bg"></div>
+        </navigator>     
+           <div class="page__bd page__bd_spacing">
+      <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
+        <div v-for="item in poster" :key="index">
+          
+          <swiper-item >    
+             
+              <image :src="item. mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
+                   <span class="poster_title" >
+              {{item.title}}
+            </span>   
+                 
+          </swiper-item>
+            
+        </div>
+      </swiper>
+    </div>
+      
       </div>
 
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
       <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
         <block v-for="(item,index) in grids" :key='index'>
-          <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" 
+          <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active"
             style="width:25%;border-right:0px;border-bottom:0px">
             <image class="weui-grid__icon" :src='icon60'/>
             <div class="weui-grid_label">{{item.name}}</div>
@@ -29,9 +43,9 @@
       <div class="weui-tab">
         <div class="weui-navbar" style="top:auto;">
             <block v-for="(item,index) in choice" :key="index">
-              <div :id="index" :class="{'weui-bar__item_on': activeIndex==item.id}" class="weui-navbar__item"  
+              <div :id="index" :class="{'weui-bar__item_on': activeIndex==item.id}" class="weui-navbar__item"
                 @click="tabClick(item.id)">
-                
+
                 <div class="weui-navbar__title" v-if="item.id!='0'">{{item.matter}}</div>
                 <div class="weui-navbar__title" v-if="item.id=='0'">
                   <picker @change="bindPickerChange" :value="index" :range="ranges">
@@ -46,11 +60,11 @@
         </div>
 
         <div class="weui-tab__panel">
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b5'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -62,11 +76,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b13'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -78,11 +92,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b12'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -94,11 +108,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b10,b11'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -110,11 +124,11 @@
                 </div>
               </div>
             </div>
-            
+
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != '0'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
+                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
+                  v-for="item in items" :key="item.id">
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
@@ -128,10 +142,10 @@
           </div>
 
         </div>
-        
+
       </div>
 
-      
+
 
     </div>
   </div>
@@ -173,7 +187,7 @@ export default {
         {
           src: "",
           name: "活动相册",
-          url: "/pages/articlelist/articlelist?articleCategory=4"
+          url: "/pages/photos/photos"
         }
       ],
       //文章分类
@@ -203,12 +217,30 @@ export default {
       ],
       //索引
       index: 0,
-     
-      community: {
-        id: 1, //默认的组织团体ID
-        communityName: "北京市马拉松协会",
-        background: "NzrSDNSBEP.png",
-      }
+      //是否显示面板指示点
+      indicatorDots: true,
+      //是否自动切换
+      autoplay: true,
+      //自动切换时间间隔
+      interval: 5000,
+      //滑动动画时长
+      duration: 900,
+      //是否采用衔接滑动
+      circular: true,
+      //图片的url地址
+      imgUrls: [
+    
+
+      ],
+      
+      poster:[
+        {
+          title:"",
+          mobile_avatar:""
+        }
+      ],
+      //活动ID
+      activity_id:0
     };
   },
   computed: {
@@ -236,10 +268,9 @@ export default {
     getData() {
       var that = this;
       var param = {
-        communityId: that.community.id,
+        communityId: 1, //默认community_id=1
         t: that.activeIndex
       };
-      //团体组织下的活动
       this.$kyutil.HttpRequest(
         true,
         "/pub/wx/activity/search",
@@ -252,30 +283,29 @@ export default {
           that.items = res;
         }
       );
+      this.$kyutil.HttpRequest(
+       true,
+        "/pub/wx/poster/getPosters",
+        false,
+        "",
+        param,
+        "GET",
+        false,
+        function(res) {
+          that.poster=res;
+          console.log(that.poster);
+          //  for(var i=0;i<res.length;i++)
+          // {
+          // that.title.push(res[i].title);
+          // that.mobile_avatar.push(res[i].mobile_avatar);
+          // }
+          // that.imgUrls=that.mobile_avatar;
+        }
+
+      )
     },
-    // getCommunity() {
-    //   var that = this;
-    //   var param = {
-    //     communityId: that.community.id,
-    //   };
-    //   //团体信息
-    //   this.$kyutil.HttpRequest(
-    //     true,
-    //     "/pub/wx/community/get",
-    //     false,
-    //     "",
-    //     param,
-    //     "GET",
-    //     false,
-    //     function(res) {
-    //       that.community = res;
-    //       //设置标题
-    //       wx.setNavigationBarTitle({
-    //         title: that.community.name
-    //       });
-    //     }
-    //   );
-    // },
+
+    
     //主要活动标签分类触发事件，重新获取相应的数据
     tabClick(e) {
       this.activeIndex = e;
@@ -308,57 +338,38 @@ export default {
       }
       this.getData();
     },
+    //查看活动详情
     checkdetails(activityId) {
-      //查看活动详情
       var that = this;
       that.activityId = activityId;
       wx.navigateTo({
-        url: "../../pages/details/details?activityId=" + that.activityId,
-        success: function(e) {
-          console.log("-> details: activityId=" + activityId);
-        }
+        url: "../../pages/details/details?activityId=" + that.activityId
       });
+      success: {
+        console.log("-> details: activityId=" + activityId);
+      }
     },
+    //查看文章分类列表
     articlelist(articleCategory) {
-      //查看文章分类列表
       var that = this;
       that.articleCategory = articleCategory;
       wx.navigateTo({
         url:
           "../../pages/articlelist/articlelist?articleCategory=" +
-          that.articleCategory,
-        success: function(e) {
-          console.log("-> articlelist: articleCategory=" + articleCategory);
-        }
+          that.articleCategory
       });
+      success: {
+        console.log("-> articlelist: articleCategory=" + articleCategory);
+      }
     }
   },
+  //页面创建完成，获取活动信息
   created() {
     console.log("global:", global);
-    //vuex store
-    console.log("store:", this.$store);
-    console.log("kyutil:", this.$kyutil);
     console.log("index created");
-  },
-  onLoad() {
-    
-  },
-  onShow() {
-    console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
-    //接受参数
-    if (this.$store.state.community) {
-      this.community = this.$store.state.community;
-      //设置标题
-      wx.setNavigationBarTitle({
-        title: this.community.name
-      });
-    }
     this.getData();
     //设置默认的其他活动标签分类值
     this.ces = this.ranges[this.index];
-
-    
-    
   }
 };
 </script>
@@ -481,5 +492,14 @@ export default {
   margin-top: -2px;
   position: relative;
   overflow: hidden;
+}
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+.poster_title{
+  font-size: 12px;
+  color:#fff;
+  background-color: #fff
 }
 </style>
