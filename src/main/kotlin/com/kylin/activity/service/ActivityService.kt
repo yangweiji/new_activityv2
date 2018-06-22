@@ -375,6 +375,23 @@ class ActivityService {
         return create!!.resultQuery(sql, id, id, id).fetchOne()
     }
 
+    /**
+     * 设置喜欢的活动，已经喜欢的活动不在重复添加
+     * @return 本活动当前的喜欢数
+     */
+    fun favorite(activityId: Int, userId:Int): Int{
+        var activityFavorites = create!!.resultQuery("select * from activity_favorite where activity_id=? and user_id=?"
+                , activityId, userId).fetch()
+        if(activityFavorites.count() == 0){
+            var activityFavorite = ActivityFavorite(0, activityId, userId, DateUtil.date().toTimestamp())
+            activityFavoriteDao!!.insert(activityFavorite)
+        }
+
+        var counts = create!!.resultQuery("select count(user_id) favorite_count from activity_favorite where activity_id=?", activityId).fetchOne().get("favorite_count") as Long
+
+        return counts.toInt()
+    }
+
 
     /**
      * 取得所有活动集合，返回记录集合Result

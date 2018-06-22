@@ -149,6 +149,16 @@ class WxActivityController {
     }
 
     /**
+     * 设置喜欢活动，已经喜欢的活动不在重复添加
+     * @param activityId: 活动ID userId: 用户Id
+     * @return 单个活动信息
+     */
+    @GetMapping("/favorite")
+    fun favorite(@RequestParam(required = true) activityId: Int, @RequestParam(required = true) userId: Int): Int {
+        return activityService!!.favorite(activityId, userId)
+    }
+
+    /**
      * 活动报名页面，检查当前用户是否报名，返回活动门票和报名相关信息
      */
     @GetMapping("/attend")

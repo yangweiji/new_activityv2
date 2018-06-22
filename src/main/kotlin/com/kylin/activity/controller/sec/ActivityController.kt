@@ -680,13 +680,7 @@ class ActivityController : BaseController() {
     @RequestMapping(value = "/favorite", method = arrayOf(RequestMethod.POST))
     @ResponseBody
     fun favorite(@RequestParam id: Int): Int {
-        var activityFavorite = ActivityFavorite()
-        activityFavorite.activityId = id
-        activityFavorite.userId = this.sessionUser!!.id
-        //创建活动收藏
-        activityService!!.createActivityFavorite(activityFavorite)
-
-        return activityService!!.getActivityFavoriteCount(id)
+        return activityService!!.favorite(id, this.sessionUser!!.id)
     }
 
     /**

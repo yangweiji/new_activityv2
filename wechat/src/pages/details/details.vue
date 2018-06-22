@@ -13,7 +13,7 @@
                   <image :src="item.avatar" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; float: left; position: relative;" />
                 </div>
                 <div class="weui-article__section">
-                    <div class="weui-article__h3">{{item.displayname}} {{item.created}}</div>
+                    <div class="weui-article__h3 c-display-text">{{item.displayname}} {{item.created}}</div>
                     <div class="weui-article__p">
                         <wxParse :content="item.body" />
                     </div>
@@ -33,26 +33,33 @@
                 </div> -->
             </div>
         </div>
-        <div class="page__bd_spacing">
-          <button class="weui-btn" @click="gotoAttend()" type="primary">报名</button>
-        </div>
+    </div>
+    <div class="c-footer-btns weui-flex c-border-top">
+      <div @click="addFavorite()" class="c-default-btn c-border-right">
+        喜欢<span class="weui-badge" >{{item.favorite_count}}</span>
+      </div>
+      <div @click="gotoAttendUsers()" class="c-default-btn">
+        参加<span class="weui-badge" >{{item.attend_count}}</span>
+      </div>
+      <div @click="gotoAttend()" class="weui-flex__item c-bg-primary">
+        立即报名
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import base64 from "../../../static/images/base64";
-import global from '../../global/index'
-import wxParse from 'mpvue-wxparse';
+import wxParse from "mpvue-wxparse";
 export default {
   data() {
     return {
       activityId: 0,
-      item:{},
+      ilike:false,
+      item: {}
     };
   },
-  computed: {
-  },
+  computed: {},
   components: {
     wxParse
   },
@@ -61,22 +68,51 @@ export default {
       var that = this;
       var param = {
         activityId: that.activityId
-      }
-      global.HttpRequest(true, "/pub/wx/activity/details", false, "", param, "GET", false, function (res) {
-        that.item = res;
-      });
+      };
+      that.$kyutil.HttpRequest(
+        true,
+        "/pub/wx/activity/details",
+        false,
+        "",
+        param,
+        "GET",
+        false,
+        function(res) {
+          that.item = res;
+        }
+      );
     },
-    gotoAttend(){
+    gotoAttend() {
       wx.navigateTo({
         url: "../../pages/attend/attend?activityId=" + this.activityId
       });
+    },
+    gotoAttendUsers(){
+
+    },
+    addFavorite() {
+      var that = this;
+      this.$kyutil.CheckUserValidation();
+      var user = this.$kyutil.GetUser();
+      if (user) {
+        this.$kyutil.HttpRequest(
+          true,
+          "/pub/wx/activity/favorite",
+          false,
+          "",
+          { activityId: that.activityId, userId: user.id },
+          "GET",
+          false,
+          res => that.item.favorite_count = res
+        );
+      }
     }
   },
   created() {
     console.log("details created");
   },
-  onShow () {
-    console.log('小程序触发的 onshow, 获取参数: '+ this.$root.$mp.query);
+  onShow() {
+    console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
     var that = this;
     that.activityId = this.$root.$mp.query.activityId;
     this.getData();
@@ -91,11 +127,27 @@ export default {
  * Copyright 2017 Tencent, Inc.
  * Licensed under the MIT license
  */
- .pet_zlnr_user_l { width: 40px; height: 40px; overflow: hidden; border-radius: 50%; float: left; position: relative;}
- .button-footer{
-   position: absolute;
-   width: 100%;
-   bottom: 0px;
-   height: 40px;
- }
+.c-display-text {
+  line-height: 40px;
+  color: grey;
+  margin-left: 50px;
+}
+
+.c-footer-btns {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px lightgray solid;
+  line-height: 48px;
+  text-align: center;
+  background-color: #f8f8f8;
+}
+.c-footer-btns .weui-badge {
+  margin-bottom: 3px;
+}
+.c-default-btn {
+  width: 25%;
+}
+.c-primary-btn {
+}
 </style>

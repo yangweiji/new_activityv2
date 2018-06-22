@@ -11,7 +11,7 @@
         </navigator>     
            <div class="page__bd page__bd_spacing">
       <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
-        <div v-for="item in poster" :key="index">
+        <div v-for="item in poster" :key="item.id">
           
           <swiper-item >    
              
