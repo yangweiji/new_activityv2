@@ -1,7 +1,9 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.Tables
+import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.PosterDao
+import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.Poster
 import org.jooq.DSLContext
 import org.jooq.Record
@@ -22,6 +24,9 @@ class PosterService {
      */
     @Autowired
     private val posterDao: PosterDao? = null
+
+    @Autowired
+    private val activityDao: ActivityDao? = null
 
     /**
      * 数据访问
@@ -58,6 +63,7 @@ class PosterService {
                 "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
         return create!!.resultQuery(sql).fetch()
     }
+
 
     /**
      * 获取海报信息集合
@@ -99,6 +105,15 @@ class PosterService {
         return posterDao!!.fetchOne(Tables.POSTER.TITLE, title)
     }
 
+
+    fun getPosterByActivityId(activityId: Int):Poster{
+       return posterDao!!.fetchOne(Tables.POSTER.ACTIVITY_ID,activityId)
+    }
+
+    fun getActivity(activityId: Int?): Activity {
+        return activityDao!!.findById(activityId)
+    }
+
     /**
      * 删除海报信息
      * @param id 海报id
@@ -135,7 +150,6 @@ class PosterService {
         return create!!.resultQuery(sql, activityId).fetchOne()
     }
 
-
     /**
      * 微信端获取海报信息
      */
@@ -155,4 +169,22 @@ class PosterService {
                 "order by t1.sequence asc,t1.created desc limit 50 "
         return create!!.resultQuery(sql, posterType).fetch()
     }
+
+    fun getPosterLinkDetail(activityId: Int?): Record {
+        var sql ="select t1.* from poster t1 left join activity t2 " +
+                "on t1.activity_id=t2.id where 1=1 and t1.activity_id=?  "
+        return create!!.resultQuery(sql,activityId).fetchOne()
+    }
+
+
+   /* fun getPosterActivityId(): Poster? {
+        var list=posterDao!!.fetchByActivityId()
+        return if (list != null && list.size > 0) list.first() else null
+    }
+*/
+    fun getPosterActivityId():Result<Record>{
+       var sql="select t1.* from poster t1 left join activity t2 on t1.activity_id=t2.id "
+       return create!!.resultQuery(sql).fetch()
+}
+
 }

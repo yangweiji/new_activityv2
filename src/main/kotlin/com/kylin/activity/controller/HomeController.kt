@@ -94,6 +94,9 @@ class HomeController : BaseController() {
             if (r.get("avatar") != null) {
                 r.setValue(r.fieldsRow().field("avatar", String::class.java), commonService!!.getDownloadUrl(r.get("avatar").toString()))
             }
+            if(r.get("activity_id") != null && r.get("activity_id") != 0 ){
+                r.setValue(r.fieldsRow().field("link",String::class.java), "/pub/activity/detail/"+r.get("activity_id"))
+            }
         }
         model.addAttribute("posterItems", posterItems)
 

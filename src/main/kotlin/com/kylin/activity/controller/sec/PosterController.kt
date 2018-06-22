@@ -1,6 +1,7 @@
 package com.kylin.activity.controller.sec
 
 import com.kylin.activity.databases.tables.pojos.Poster
+import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
@@ -31,6 +32,9 @@ class PosterController {
      */
     @Autowired
     private val posterService: PosterService? = null
+
+    @Autowired
+    private val activityService:ActivityService?=null
 
     /**
      * 跳转至海报管理界面
@@ -81,7 +85,7 @@ class PosterController {
      */
     @RequestMapping(value="/savePoster",method = [RequestMethod.POST])
     fun savePoster(@ModelAttribute("poster") poster: Poster?,
-                   model: Model,redirectAttributes: RedirectAttributes):String{
+                   model: Model,redirectAttributes: RedirectAttributes,@RequestParam(required = false)id:Int?):String{
 
         if(poster!!.id!=null&&poster!!.id>0){
             var title=poster.title
@@ -97,6 +101,7 @@ class PosterController {
         }else{
             //检验海报是否已存在
             var posterTitle=posterService!!.getPosterTitle(poster.title)
+
             if(posterTitle!=null){
                 return "海报：【${poster.title}】已存在！"
             }
@@ -111,6 +116,7 @@ class PosterController {
             posters.posterType=poster.posterType
             posters.show=poster.show
             posters.sequence=poster.sequence
+
             redirectAttributes.addFlashAttribute("globalMessage","海报：【${posters.title}】添加成功！")
             posterService!!.insertPoster(posters)
         }
