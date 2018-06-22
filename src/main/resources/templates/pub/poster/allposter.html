@@ -56,6 +56,9 @@
         </div>
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
+                <li class="" th:classappend="${posterType}=='n1'?'am-active'">
+                    <a href="/pub/poster/allposter/n1">赛事新闻</a>
+                </li>
                 <li class="" th:classappend="${posterType}=='b5'?'am-active'">
                     <a href="/pub/poster/allposter/b5">跑步训练</a>
                 </li>
@@ -92,9 +95,6 @@
                 <li class="" th:classappend="${posterType}=='b8'?'am-active'">
                     <a href="/pub/poster/allposter/b8">讲座</a>
                 </li>
-                <li class="" th:classappend="${posterType}=='n1'?'am-active'">
-                    <a href="/pub/poster/allposter/n1">赛事新闻</a>
-                </li>
             </ul>
 
             <div class="am-tabs-bd">
@@ -105,7 +105,7 @@
                             <div th:if="${item.get('activity_id')>0}">
                                 <div class="am-u-sm-3 am-list-thumb am_list_thumb">
                                     <a target="_blank" class=""
-                                       th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }">
+                                       th:href="@{/pub/activity/detail/{id} (id=${item.get('activity_id')}) }">
                                         <img class="am_news_list_img" alt="图片加载中..."
                                              th:src="${item.get('avatar')}"/>
                                     </a>
@@ -113,26 +113,21 @@
                                 <div class=" am-u-sm-9 am-list-main am_list_main">
                                     <h3 class="am-list-item-hd am_list_title">
                                         <a target="_blank" class=""
-                                           th:href="@{/pub/poster/posterdetail/{activityId} (activityId=${item.get('activity_id')}) }"
+                                           th:href="@{/pub/activity/detail/{id} (id=${item.get('activity_id')}) }"
                                            th:text="${item.get('title')}"></a>
                                     </h3>
                                     <div class="am_list_author">
                                              <span th:text="${#dates.format(item.get('created'),'yyyy-MM-dd HH:mm:ss')}"
                                                    th:text="${#kylin.fromNow(item.get('created'))}"></span>
-                                        &nbsp;&nbsp;
-                                        <span th:text="${'发布单位：'+item.get('unit')}"></span><br/>
-                                        <span th:text="${'摘要：'+item.get('summary')}"></span>
                                     </div>
                                 </div>
                             </div>
-
-
                             <div th:if="${item.get('activity_id')<=0}">
                                 <div class="am-u-sm-3 am-list-thumb am_list_thumb">
                                     <a target="_blank" class=""
                                        th:href="${item.get('link')}">
                                         <img class="am_news_list_img" alt="图片加载中..."
-                                             th:src="${item.get('posterAvatar')}"/>
+                                             th:src="${item.get('avatar')}"/>
                                     </a>
                                 </div>
                                 <div class=" am-u-sm-9 am-list-main am_list_main">
@@ -142,12 +137,8 @@
                                            th:text="${item.get('title')}"></a>
                                     </h3>
                                     <div class="am_list_author">
-                                    <span th:text="${#dates.format(item.get('posterCreated'),'yyyy-MM-dd HH:mm:ss')}"
-                                          th:text="${#kylin.fromNow(item.get('posterCreated'))}"
-                                    ></span>
-                                        &nbsp;&nbsp;
-                                        <span th:text="${'发布单位：'+item.get('unit')}"></span><br/>
-                                        <span th:text="${'摘要：'+item.get('summary')}"></span>
+                                             <span th:text="${#dates.format(item.get('created'),'yyyy-MM-dd HH:mm:ss')}"
+                                                   th:text="${#kylin.fromNow(item.get('created'))}"></span>
                                     </div>
                                 </div>
                             </div>

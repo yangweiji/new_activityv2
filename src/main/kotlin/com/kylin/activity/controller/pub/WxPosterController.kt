@@ -1,7 +1,6 @@
 package com.kylin.activity.controller.pub
 
 import com.kylin.activity.databases.tables.Poster
-import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
