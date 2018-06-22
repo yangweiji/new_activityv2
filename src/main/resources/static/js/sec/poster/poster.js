@@ -1,5 +1,5 @@
 new Vue({
-    el: "#c_sec_poster_app",
+    el: "#app",
     data: function () {
         return {
             cacheData: _global_data

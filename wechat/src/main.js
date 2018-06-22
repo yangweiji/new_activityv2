@@ -33,7 +33,9 @@ export default {
             'pages/attend/attend',
             'pages/attendupdate/attendupdate',
             'pages/photos/photos',
-            'pages/photosdetails/photosdetails'
+            'pages/photosdetails/photosdetails',
+            'pages/myactivitys/myactivitys',
+            'pages/integrals/integrals'
         ],
 
         // Will be filled in webpack

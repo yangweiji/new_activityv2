@@ -14,8 +14,8 @@
                  data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
                 <ul class="am-slides">
                     <li th:each="item:${posterItems}">
-                        <div th:if="${item.get('activity_id')>0}">
-                            <a th:href="@{/pub/activity/detail/{id} (id=${item.get('activity_id')}) }">
+                        <div>
+                            <a th:href="${item.get('link')}" target="_blank">
                                 <img th:src="${item.get('avatar')}"></a>
                             <div class="am-slider-desc">
                                 <div th:text="${item.get('title')}"></div>
@@ -24,16 +24,7 @@
                                     th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }"
                                     style="margin-left:1070px">更多</a></div>
                         </div>
-                        <div th:if="${item.get('activity_id')<=0}">
-                            <a th:href="${item.get('link')}">
-                                <img th:src="${item.get('avatar')}"></a>
-                            <div class="am-slider-desc">
-                                <div th:text="${item.get('title')}"></div>
-                            </div>
-                            <div class="am-slider-desc"><a
-                                    th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }"
-                                    style="margin-left:1070px">更多</a></div>
-                        </div>
+
                     </li>
                 </ul>
             </div>

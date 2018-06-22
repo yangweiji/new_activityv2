@@ -915,7 +915,10 @@ class ActivityService {
     }
 
 
-
+    fun getActivityId(): Activity? {
+        var list=activityDao!!.fetchById()
+        return if (list != null && list.size > 0) list.first() else null
+    }
 
 
 }

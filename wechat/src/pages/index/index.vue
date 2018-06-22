@@ -9,13 +9,11 @@
             切换团体
           </span>
         </navigator>     
-           <div class="page__bd page__bd_spacing">
+           <div>
       <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
-        <div v-for="item in poster" :key="item.id">
-          
-          <swiper-item >    
-             
-              <image :src="item. mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
+        <div v-for="item in poster" :key="index">        
+          <swiper-item >               
+              <image :src="item.mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
                    <span class="poster_title" >
               {{item.title}}
             </span>   
@@ -31,9 +29,8 @@
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
       <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
         <block v-for="(item,index) in grids" :key='index'>
-          <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active"
-            style="width:25%;border-right:0px;border-bottom:0px">
-            <image class="weui-grid__icon" :src='icon60'/>
+          <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
+            <image  :src='item.src' style="width:75px;height:75px"/>
             <div class="weui-grid_label">{{item.name}}</div>
           </navigator>
         </block>
@@ -160,7 +157,7 @@ export default {
       //Banner
       url: "../../../static/images/banner_bg.png",
       //ICON
-      icon60: base64.icon60,
+  
       //活动信息
       items: [],
       //活动ID
@@ -170,24 +167,28 @@ export default {
       //文章集合
       grids: [
         {
-          src: "",
+          src: "/static/images/activity_notices.png",
           name: "通知公告",
           url: "/pages/articlelist/articlelist?articleCategory=1"
+        
         },
         {
-          src: "",
+          src: "/static/images/images_news.png",
           name: "赛事新闻",
           url: "/pages/articlelist/articlelist?articleCategory=2"
+          
         },
         {
-          src: "",
+          src: "/static/images/images_sport.png",
           name: "运动指南",
           url: "/pages/articlelist/articlelist?articleCategory=3"
+         
         },
         {
-          src: "",
+          src: "/static/images/pictures.jpg",
           name: "活动相册",
           url: "/pages/photos/photos"
+         
         }
       ],
       //文章分类
@@ -342,6 +343,7 @@ export default {
     checkdetails(activityId) {
       var that = this;
       that.activityId = activityId;
+      if(that.activityId)
       wx.navigateTo({
         url: "../../pages/details/details?activityId=" + that.activityId
       });
