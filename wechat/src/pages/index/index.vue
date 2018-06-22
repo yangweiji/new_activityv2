@@ -364,7 +364,10 @@ export default {
   created() {
     console.log("global:", global);
     console.log("index created");
-    
+    //设置默认的其他活动标签分类值
+    this.ces = this.ranges[this.index];
+  },
+  onShow() {
     //接受参数
     if (this.$store.state.community) {
       this.community = this.$store.state.community;
@@ -374,8 +377,6 @@ export default {
       });
     }
     this.getData();
-    //设置默认的其他活动标签分类值
-    this.ces = this.ranges[this.index];
   }
 };
 </script>
