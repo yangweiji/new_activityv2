@@ -149,7 +149,7 @@ export default {
 
       community: {
         id: 1, //默认的组织团体ID
-        communityName: "北京市马拉松协会",
+        name: "北京市马拉松协会",
         background: "NzrSDNSBEP.png"
       }
     };

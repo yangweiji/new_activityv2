@@ -76,7 +76,7 @@
               <div class="weui-panel__bd">
                 <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
                   v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
                     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -215,7 +215,7 @@ export default {
       //默认的团体组织
       community: {
         id: 1, //默认的组织团体ID
-        communityName: "北京市马拉松协会",
+        name: "北京市马拉松协会",
         background: "NzrSDNSBEP.png",
       },
       //是否显示面板指示点
