@@ -4,13 +4,14 @@
       <!-- banner -->
       <div>
         <navigator url="../../pages/community/community" hover-class="navigator-hover">
-          <span class="community-select">
+          <span class="community-select" >
             切换 >>
           </span>
         </navigator>  
         <!-- <image src="../../static/images/banner_bg.png" class="banner" model="aspectFit" /> -->
-        <kyimage :src="community.background" model="aspectFit" type="banner" />
-        <div class="c-bg"></div>
+        <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+      <open-data class="userinfo-name" type="userNickName"></open-data> 
+     
       </div>
 
       <!-- <div>
@@ -26,7 +27,7 @@
       </div> -->
        
       <div>
-        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <navigator url="/pages/myactivitys/myactivitys" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
             </div>
@@ -36,7 +37,7 @@
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </navigator> 
 
-        <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+        <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
             </div>
@@ -239,7 +240,10 @@ export default {
 .weui-cell:before {
   right: 15px;
 }
-
+.community-select{
+  font-family:'微软雅黑' 12px ;
+  color: #000000;
+}
 .kind-list__item {
   margin: 10px 0;
   background-color: #fff;
@@ -278,5 +282,22 @@ export default {
 .p-text__xx {
   width: 100%;
   text-align: center;
+}
+.userinfo-avatar {
+  margin: 0 auto;  
+  margin-top: 50rpx;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 161rpx;
+  height: 161rpx;
+  border-radius: 50%;
+}
+.userinfo-name {
+  margin: 0 auto;  
+  margin-top: 20rpx;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
 }
 </style>
