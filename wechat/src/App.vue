@@ -11,13 +11,19 @@ export default {
     const logs = wx.getStorageSync("logs") || [];
     logs.unshift(Date.now());
     wx.setStorageSync("logs", logs);
-    console.log("app created and cache logs by setStorageSync");
+    var that = this;
+    wx.getSystemInfo({
+      success: function(res) {
+        let model = res.model.substring(0, res.model.indexOf("X")) + "X";
+        if (model == "iPhone X") {
+          that.$kyutil.data.isIpx = true;
+        }
+      }
+    });
     //用户登录小程序
     this.$kyutil.Login();
   },
-  onLaunch: function(options) {
-    console.log("Do something initial when launch.");
-  },
+  onLaunch: function(options) {},
   onShow: function(options) {
     console.log("Do something when show.");
   },
