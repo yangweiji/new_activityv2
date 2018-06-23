@@ -216,6 +216,29 @@ class ActivityService {
         return items
     }
 
+   /* if (!checked.isNullOrBlank()) {
+        strCondition = "and t1.check_in_time is not null"
+    }*/
+
+
+    fun getActivitiesByCommunityId(id: Int): Result<Record> {
+
+        //构建活动数据源
+        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
+                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) checked , "+
+                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is null) no_checked , "+
+                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+                "from activity t1 " +
+                "left join user t2 on t1.created_by = t2.id " +
+                "where ?=t1.community_id " +
+                "order by t1.start_time desc " +
+                "limit 1000"
+
+        var items = create!!.resultQuery(sql, id).fetch()
+        return items
+    }
+
     /**
      * 取得活动信息、活动参与人数、活动收藏人数
      * 最新的前1000条记录

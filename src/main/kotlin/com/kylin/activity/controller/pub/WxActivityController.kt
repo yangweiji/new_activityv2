@@ -571,4 +571,47 @@ class WxActivityController {
 
         return result
     }
+
+
+    /**
+     * 根据团体编号获取活动信息
+     * ，活动参与人数，活动收藏人数
+     * ，已签到人数，未签到人数
+     * @param communityId 团体id
+     */
+    @RequestMapping("/getActivityItems")
+    fun getActivityItems(@RequestParam(required = false)communityId: Int):Any{
+
+        var communityId = if (communityId == null) 0 else communityId!!
+        var activities=activityService!!.getActivitiesByCommunityId(communityId)
+        var activityItems=mutableListOf<MutableMap<String, Any?>>()
+        for(activity in activities){
+            var map = mutableMapOf<String, Any?>()
+            var avatar: String? = null
+            if (activity["avatar"] != null) {
+                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+            }
+            map["community_id"]=activity.get("community_id", Int::class.java)
+            map["title"]=activity.get("title").toString()
+            map["created"]=util!!.fromNow(activity.get("created"))
+            map["created"]=util!!.fromNow(activity.get("created"))
+            map["summary"]=activity.get("summary").toString()
+            map["body"]=activity.get("body").toString()
+            map["address"]=activity.get("address").toString()
+            map["unit"]=activity.get("unit").toString()
+            map["tags"]=activity.get("tags").toString()
+            map["activity_type"] = activity.get("activity_type", Int::class.java)
+            //收藏活动人数
+            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+            //已参加活动人数
+            map["attend_count"] = activity.get("attend_user_count", Int::class.java)
+            //已签到人数
+            map["checked"] = activity.get("checked", Int::class.java)
+            //需签到人数
+            map["no_checked"] = activity.get("no_checked", Int::class.java)
+            map["avatar"] = avatar
+            activityItems.add(map)
+        }
+        return activityItems
+    }
 }

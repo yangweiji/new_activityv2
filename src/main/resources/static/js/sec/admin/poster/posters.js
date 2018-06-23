@@ -45,7 +45,7 @@ $(function () {
 
             ],
             ajax: {
-                "url": "/sec/poster/getPosters",
+                "url": "/sec/admin/poster/getPosters",
                 "contentType": "application/json;charset=utf-8",
                 "type": "POST",
                 "data": function () {
@@ -157,7 +157,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
-            location.href = "/sec/poster/poster";
+            location.href = "/sec/admin/poster/poster";
         }
     }
 
@@ -166,7 +166,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href = "/sec/poster/poster?id=" + data.id;
+        location.href = "/sec/admin/poster/poster?id=" + data.id;
     })
 
 
@@ -179,7 +179,7 @@ $(function () {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/sec/poster/showPoster',
+                url: '/sec/admin/poster/showPoster',
                 data: {
                     posterId: data.id
                 },
@@ -201,7 +201,7 @@ $(function () {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/sec/poster/displayPoster',
+                url: '/sec/admin/poster/displayPoster',
                 data: {
                     posterId: data.id
                 },
@@ -223,7 +223,7 @@ $(function () {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/sec/poster/deletePoster',
+                url: '/sec/admin/poster/deletePoster',
                 data: {
                     posterId: data.id
                 },

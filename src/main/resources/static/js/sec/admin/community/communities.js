@@ -44,7 +44,7 @@ $(function () {
                 }
             ],
             ajax: {
-                "url": "/sec/community/getCommunities",
+                "url": "/sec/admin/community/getCommunities",
                 "contentType": "application/json;charset=utf-8",
                 "type": "POST",
                 "data": function () {
@@ -153,7 +153,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: "",
         action: function (e, dt, node, config) {
-            location.href = "/sec/community/community";
+            location.href = "/sec/admin/community/community";
         }
     }
 
@@ -162,7 +162,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href = "/sec/community/community?id=" + data.id;
+        location.href = "/sec/admin/community/community?id=" + data.id;
     });
 
     /**
@@ -174,7 +174,7 @@ $(function () {
             $.ajax({
                 type:'post',
                 dataType:'json',
-                url:'/sec/community/deleteCommunity',
+                url:'/sec/admin/community/deleteCommunity',
                 data:{
                     communityId:data.id
                 },

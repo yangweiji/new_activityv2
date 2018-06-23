@@ -28,7 +28,7 @@ data class ArticlesData(
 )
 
 @Controller
-@RequestMapping("sec/article")
+@RequestMapping("sec/admin/article")
 class ArticleController : BaseController() {
     /**
      * 内容服务
@@ -42,7 +42,7 @@ class ArticleController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "articles", method = [RequestMethod.GET, RequestMethod.POST])
     fun allArticle(): String {
-        return "sec/article/articles"
+        return "sec/admin/article/articles"
     }
 
     /**
@@ -88,7 +88,7 @@ class ArticleController : BaseController() {
             articlesData.article = Article()
         }
         model.addAttribute("articlesData", articlesData)
-        return "sec/article/article"
+        return "sec/admin/article/article"
     }
 
     /**
@@ -125,7 +125,7 @@ class ArticleController : BaseController() {
                 redirectAttributes.addFlashAttribute("errorMessage", "文章【${title}】已被禁用！")
                 articleService!!.updateArticle(title, summary, avatar, unit, body, status,
                         article.modified, article.modifiedBy, publishTime, category, article.id)
-                return "redirect:/sec/article/articles"
+                return "redirect:/sec/admin/article/articles"
             }
             //发布状态，获得系统当前时间
             if (article.status == 1) {
@@ -156,9 +156,9 @@ class ArticleController : BaseController() {
             if (article.status == 0) {
                 redirectAttributes.addFlashAttribute("globalMessage", "文章【${article.title}】添加成功！")
                 articleService!!.insertArticle(articles)
-                return "redirect:/sec/article/articles"
+                return "redirect:/sec/admin/article/articles"
             }
         }
-        return "redirect:/sec/article/articles"
+        return "redirect:/sec/admin/article/articles"
     }
 }

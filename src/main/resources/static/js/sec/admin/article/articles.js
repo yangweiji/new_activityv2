@@ -45,7 +45,7 @@ $(function () {
 
             ],
             ajax: {
-                "url": "/sec/article/getArticles",
+                "url": "/sec/admin/article/getArticles",
                 "contentType": "application/json;charset=utf-8",
                 "type": "POST",
                 "data": function () {
@@ -150,7 +150,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: '',
         action: function (e, dt, node, config) {
-            location.href = "/sec/article/article";
+            location.href = "/sec/admin/article/article";
         }
     }
 
@@ -159,7 +159,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href="/sec/article/article?id="+data.id;
+        location.href="/sec/admin/article/article?id="+data.id;
     })
 
     /**
@@ -171,7 +171,7 @@ $(function () {
             $.ajax({
                 type:'post',
                 dataType:'json',
-                url:'/sec/article/deleteArticle',
+                url:'/sec/admin/article/deleteArticle',
                 data:{
                     articleId:data.id
                 },

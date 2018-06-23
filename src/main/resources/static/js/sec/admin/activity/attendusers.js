@@ -137,7 +137,7 @@ $(function () {
         // processing: true,
         // serverSide: true,
         ajax: {
-            "url": "/sec/activity/getAttendUsers",
+            "url": "/sec/admin/activity/getAttendUsers",
             "contentType": "application/json;charset=utf-8",
             "type": "POST",
             "data": function () {
@@ -219,7 +219,7 @@ $(function () {
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: '/sec/activity/approve',
+                url: '/sec/admin/activity/approve',
                 data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
                 contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                 dataType: "json",
@@ -265,7 +265,7 @@ $(function () {
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: '/sec/activity/cancel',
+                url: '/sec/admin/activity/cancel',
                 data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
                 contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                 dataType: "json",
@@ -311,7 +311,7 @@ $(function () {
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: '/sec/activity/refund',
+                    url: '/sec/admin/activity/refund',
                     data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
                     contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                     dataType: "json",
@@ -358,7 +358,7 @@ $(function () {
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: '/sec/activity/checkrefund',
+                url: '/sec/admin/activity/checkrefund',
                 data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
                 contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                 dataType: "json",
@@ -414,7 +414,7 @@ $(function () {
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: '/sec/activity/deleteAttendUsers',
+                    url: '/sec/admin/ad/activity/deleteAttendUsers',
                     data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
                     contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                     dataType: "json",
