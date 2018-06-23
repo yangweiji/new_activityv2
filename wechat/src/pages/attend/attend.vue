@@ -121,7 +121,7 @@
       </div>
     </div>
     <button class="weui-btn" @click="getoCheckIn()">签到</button>
-    <div v-if="item && !item.attendUser && !item.is_over_due && item.hasTickets" class="c-footer-btns weui-flex c-border-top">
+    <div v-if="item && !item.attendUser && !item.is_over_due && item.hasTickets" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div @click="gotoAttendUsers()" class="weui-flex__item c-default-btn">
         应付<span class="c-text-primary" >{{realPriceText}}</span>
       </div>
@@ -137,6 +137,7 @@ import { Decimal } from "decimal.js";
 export default {
   data() {
     return {
+      isIpx:false,
       activityId: 0,
       userId: 2128,
       loaded: false, //是否加载完成
@@ -463,7 +464,9 @@ export default {
       });
     }
   },
-  created() {},
+  created() {
+    this.isIpx = this.$kyutil.data.isIpx
+  },
   onShow() {
     console.log(this.$root.$mp.query);
     var that = this;

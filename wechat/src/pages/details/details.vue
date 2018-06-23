@@ -34,8 +34,8 @@
             </div>
         </div>
     </div>
-    <div class="c-footer-btns weui-flex c-border-top">
-      <div @click="addFavorite()" class="c-default-btn c-border-right">
+    <div class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+      <div @click="addFavorite()" class="c-default-btn">
         喜欢<span class="weui-badge" >{{item.favorite_count}}</span>
       </div>
       <div @click="gotoAttendUsers()" class="c-default-btn">
@@ -54,6 +54,7 @@ import wxParse from "mpvue-wxparse";
 export default {
   data() {
     return {
+      isIpx:false,
       activityId: 0,
       ilike:false,
       item: {}
@@ -109,7 +110,7 @@ export default {
     }
   },
   created() {
-    console.log("details created");
+    this.isIpx = this.$kyutil.data.isIpx
   },
   onShow() {
     console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);

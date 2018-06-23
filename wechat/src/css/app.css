@@ -153,7 +153,6 @@ page {
     position: fixed;
     bottom: 0;
     width: 100%;
-    border-top: 1px lightgray solid;
     line-height: 48px;
     text-align: center;
     background-color: #f8f8f8;
@@ -166,9 +165,12 @@ page {
 
 .c-default-btn {
     width: 25%;
+    border-top: 1px lightgray solid;
 }
 
-.c-primary-btn {}
+.c-primary-btn {
+    border-top: 1px #F37B1D solid;
+}
 
 .c-block-text {
     border: 1px #F37B1D solid;
@@ -177,6 +179,19 @@ page {
     margin: 15px 10px 5px 10px;
     border-radius: 2px;
     background-color: white;
+}
+
+.fix-iphonex {
+    bottom: 68rpx!important;
+}
+
+.fix-iphonex::after {
+    content: ' ';
+    position: fixed;
+    bottom: 0!important;
+    height: 68rpx!important;
+    width: 100%;
+    background-color: #f8f8f8;
 }
 
 

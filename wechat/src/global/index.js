@@ -11,7 +11,8 @@ Vue2Filters.install(kyFilters)
 //全局变量
 const data = {
     serverUrl: "https://a.9kylin.cn/",
-    imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/"
+    imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/",
+    isIpx: false
 }
 
 //sessionChoose 1是带sessionID的GET方法  2是不带sessionID的GET方法, 3是带sessionID的Post方法, 4是不带sessionID的Post方法  
@@ -215,9 +216,6 @@ function getUser() {
 function getCommunityId() {
     return wx.getStorageSync("community_id") || 1
 }
-
-
-
 
 export default {
     data: data,

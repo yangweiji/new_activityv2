@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div v-if="item && !item.is_over_due && item.hasTickets" class="c-footer-btns weui-flex c-border-top">
+    <div v-if="item" class="c-footer-btns weui-flex c-border-top">
       <div :disabled="processing" @click="submitAttend()" class="weui-flex__item c-bg-primary">
         提交修改信息
       </div>
