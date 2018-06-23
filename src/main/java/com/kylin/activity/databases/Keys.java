@@ -28,6 +28,7 @@ import com.kylin.activity.databases.tables.records.ActivityRecord;
 import com.kylin.activity.databases.tables.records.ActivitySmsRecord;
 import com.kylin.activity.databases.tables.records.ActivityTicketRecord;
 import com.kylin.activity.databases.tables.records.ActivityUserRecord;
+import com.kylin.activity.databases.tables.records.ActivityUserRecordRecord;
 import com.kylin.activity.databases.tables.records.ArticleRecord;
 import com.kylin.activity.databases.tables.records.CommunityRecord;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
@@ -70,6 +71,7 @@ public class Keys {
     public static final Identity<ActivitySmsRecord, Integer> IDENTITY_ACTIVITY_SMS = Identities0.IDENTITY_ACTIVITY_SMS;
     public static final Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = Identities0.IDENTITY_ACTIVITY_TICKET;
     public static final Identity<ActivityUserRecord, Integer> IDENTITY_ACTIVITY_USER = Identities0.IDENTITY_ACTIVITY_USER;
+    public static final Identity<ActivityUserRecordRecord, Integer> IDENTITY_ACTIVITY_USER_RECORD = Identities0.IDENTITY_ACTIVITY_USER_RECORD;
     public static final Identity<ArticleRecord, Integer> IDENTITY_ARTICLE = Identities0.IDENTITY_ARTICLE;
     public static final Identity<CommunityRecord, Integer> IDENTITY_COMMUNITY = Identities0.IDENTITY_COMMUNITY;
     public static final Identity<CommunityUserRecord, Integer> IDENTITY_COMMUNITY_USER = Identities0.IDENTITY_COMMUNITY_USER;
@@ -91,6 +93,7 @@ public class Keys {
     public static final UniqueKey<ActivitySmsRecord> KEY_ACTIVITY_SMS_PRIMARY = UniqueKeys0.KEY_ACTIVITY_SMS_PRIMARY;
     public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = UniqueKeys0.KEY_ACTIVITY_TICKET_PRIMARY;
     public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_PRIMARY;
+    public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_RECORD_PRIMARY;
     public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = UniqueKeys0.KEY_ARTICLE_PRIMARY;
     public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = UniqueKeys0.KEY_COMMUNITY_PRIMARY;
     public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = UniqueKeys0.KEY_COMMUNITY_USER_PRIMARY;
@@ -119,6 +122,7 @@ public class Keys {
         public static Identity<ActivitySmsRecord, Integer> IDENTITY_ACTIVITY_SMS = createIdentity(ActivitySms.ACTIVITY_SMS, ActivitySms.ACTIVITY_SMS.ID);
         public static Identity<ActivityTicketRecord, Integer> IDENTITY_ACTIVITY_TICKET = createIdentity(ActivityTicket.ACTIVITY_TICKET, ActivityTicket.ACTIVITY_TICKET.ID);
         public static Identity<ActivityUserRecord, Integer> IDENTITY_ACTIVITY_USER = createIdentity(ActivityUser.ACTIVITY_USER, ActivityUser.ACTIVITY_USER.ID);
+        public static Identity<ActivityUserRecordRecord, Integer> IDENTITY_ACTIVITY_USER_RECORD = createIdentity(com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD, com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD.ID);
         public static Identity<ArticleRecord, Integer> IDENTITY_ARTICLE = createIdentity(Article.ARTICLE, Article.ARTICLE.ID);
         public static Identity<CommunityRecord, Integer> IDENTITY_COMMUNITY = createIdentity(Community.COMMUNITY, Community.COMMUNITY.ID);
         public static Identity<CommunityUserRecord, Integer> IDENTITY_COMMUNITY_USER = createIdentity(CommunityUser.COMMUNITY_USER, CommunityUser.COMMUNITY_USER.ID);
@@ -138,6 +142,7 @@ public class Keys {
         public static final UniqueKey<ActivitySmsRecord> KEY_ACTIVITY_SMS_PRIMARY = createUniqueKey(ActivitySms.ACTIVITY_SMS, "KEY_activity_sms_PRIMARY", ActivitySms.ACTIVITY_SMS.ID);
         public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = createUniqueKey(ActivityTicket.ACTIVITY_TICKET, "KEY_activity_ticket_PRIMARY", ActivityTicket.ACTIVITY_TICKET.ID);
         public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = createUniqueKey(ActivityUser.ACTIVITY_USER, "KEY_activity_user_PRIMARY", ActivityUser.ACTIVITY_USER.ID);
+        public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_PRIMARY = createUniqueKey(com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD, "KEY_activity_user_record_PRIMARY", com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD.ID);
         public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = createUniqueKey(Article.ARTICLE, "KEY_article_PRIMARY", Article.ARTICLE.ID);
         public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = createUniqueKey(Community.COMMUNITY, "KEY_community_PRIMARY", Community.COMMUNITY.ID);
         public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_PRIMARY", CommunityUser.COMMUNITY_USER.ID);

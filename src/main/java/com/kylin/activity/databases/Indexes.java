@@ -12,6 +12,7 @@ import com.kylin.activity.databases.tables.ActivityPhotoPicture;
 import com.kylin.activity.databases.tables.ActivitySms;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
+import com.kylin.activity.databases.tables.ActivityUserRecord;
 import com.kylin.activity.databases.tables.Article;
 import com.kylin.activity.databases.tables.Community;
 import com.kylin.activity.databases.tables.CommunityUser;
@@ -53,6 +54,7 @@ public class Indexes {
     public static final Index ACTIVITY_SMS_PRIMARY = Indexes0.ACTIVITY_SMS_PRIMARY;
     public static final Index ACTIVITY_TICKET_PRIMARY = Indexes0.ACTIVITY_TICKET_PRIMARY;
     public static final Index ACTIVITY_USER_PRIMARY = Indexes0.ACTIVITY_USER_PRIMARY;
+    public static final Index ACTIVITY_USER_RECORD_PRIMARY = Indexes0.ACTIVITY_USER_RECORD_PRIMARY;
     public static final Index ARTICLE_PRIMARY = Indexes0.ARTICLE_PRIMARY;
     public static final Index COMMUNITY_PRIMARY = Indexes0.COMMUNITY_PRIMARY;
     public static final Index COMMUNITY_USER_PRIMARY = Indexes0.COMMUNITY_USER_PRIMARY;
@@ -76,6 +78,7 @@ public class Indexes {
         public static Index ACTIVITY_SMS_PRIMARY = createIndex("PRIMARY", ActivitySms.ACTIVITY_SMS, new OrderField[] { ActivitySms.ACTIVITY_SMS.ID }, true);
         public static Index ACTIVITY_TICKET_PRIMARY = createIndex("PRIMARY", ActivityTicket.ACTIVITY_TICKET, new OrderField[] { ActivityTicket.ACTIVITY_TICKET.ID }, true);
         public static Index ACTIVITY_USER_PRIMARY = createIndex("PRIMARY", ActivityUser.ACTIVITY_USER, new OrderField[] { ActivityUser.ACTIVITY_USER.ID }, true);
+        public static Index ACTIVITY_USER_RECORD_PRIMARY = createIndex("PRIMARY", ActivityUserRecord.ACTIVITY_USER_RECORD, new OrderField[] { ActivityUserRecord.ACTIVITY_USER_RECORD.ID }, true);
         public static Index ARTICLE_PRIMARY = createIndex("PRIMARY", Article.ARTICLE, new OrderField[] { Article.ARTICLE.ID }, true);
         public static Index COMMUNITY_PRIMARY = createIndex("PRIMARY", Community.COMMUNITY, new OrderField[] { Community.COMMUNITY.ID }, true);
         public static Index COMMUNITY_USER_PRIMARY = createIndex("PRIMARY", CommunityUser.COMMUNITY_USER, new OrderField[] { CommunityUser.COMMUNITY_USER.ID }, true);

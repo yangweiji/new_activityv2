@@ -23,7 +23,9 @@
           <div class="weui-cells__title">
             <h1 class="am-article-title">
               您已报名
-              <span class="c-text-primary">
+
+              <!--抽签活动显示抽签状态-->
+              <span v-if="item.activity.activity_type == 3" class="c-text-primary">
                 【<span>{{activityStatusText}}</span>】
               </span>
             </h1>

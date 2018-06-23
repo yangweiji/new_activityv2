@@ -64,7 +64,7 @@ $(function () {
             // processing: true,
             // serverSide: true,
             ajax: {
-                "url": "/sec/community/thirdactivity/getActivities",
+                "url": "/sec/thirdactivity/getActivities",
                 "contentType": "application/json;charset=utf-8",
                 "type": "POST",
                 "data": function () {
@@ -171,7 +171,7 @@ $(function () {
 
         action: function (e, dt, node, config) {
             // alert( this.text() );
-            location.href = "/sec/community/thirdactivity/publish?type=1";
+            location.href = "/sec/thirdactivity/publish?type=1";
         }
     };
 
@@ -180,7 +180,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href = "/sec/community/thirdactivity/publish?id=" + data.id;
+        location.href = "/sec/thirdactivity/publish?id=" + data.id;
     });
 
     /**
@@ -189,7 +189,7 @@ $(function () {
     $('#bmTable tbody').on('click', 'button#delrow', function () {
         var data = t.row($(this).parents('tr')).data();
         if (window.confirm("请确认删除？")) {
-            location.href = "/sec/community/thirdactivity/deleteActivity/" + data.id;
+            location.href = "/sec/thirdactivity/deleteActivity/" + data.id;
         }
     });
 
@@ -198,7 +198,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#qrcoderow', function () {
         var data = t.row($(this).parents('tr')).data();
-        window.open("/sec/community/thirdactivity/qrcode?id=" + data.id);
+        window.open("/sec/thirdactivity/qrcode?id=" + data.id);
     });
 
     /**
@@ -206,7 +206,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#attendrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        window.open("/sec/community/thirdactivity/attendusers?activityId=" + data.id + "&title=" + data.title + "&start=2018-01-01&end=");
+        window.open("/sec/thirdactivity/attendusers?activityId=" + data.id + "&title=" + data.title + "&start=2018-01-01&end=");
     });
 
     /**
@@ -214,7 +214,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#picturerow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href = "/sec/community/thirdactivity/activityphotos?activityId=" + data.id;
+        location.href = "/sec/thirdactivity/activityphotos?activityId=" + data.id;
     })
 });
 

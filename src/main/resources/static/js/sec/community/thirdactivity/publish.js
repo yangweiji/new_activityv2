@@ -1,6 +1,6 @@
 var type = Util.getQueryStrings("type")
-var __c_activity_publish_cookie_key_activity = '__c_activity_publish_cookie_key_activity_' + type
-var __c_activity_publish_cookie_key_editor = '__c_activity_publish_cookie_key_editor_' + type
+var __c_activity_publish_cookie_key_activity = '__c2_activity_publish_cookie_key_activity_' + type
+var __c_activity_publish_cookie_key_editor = '__c2_activity_publish_cookie_key_editor_' + type
 new Vue({
     el: '#c_sec_thirdactivity_publish_app',
     data: function() {
