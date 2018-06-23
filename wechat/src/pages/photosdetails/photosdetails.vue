@@ -5,7 +5,7 @@
     </div>
     <div class="page__bd">
     <div class="weui-photosdetails__files" id="uploaderFiles">
-      <block v-for="item in details" :key="index">
+      <block v-for="item in details" :key="item.id">
 
         <image class="weui-photosdetails__img" @click="predivImage" :src="item.picture" mode="aspectFill" />
 
