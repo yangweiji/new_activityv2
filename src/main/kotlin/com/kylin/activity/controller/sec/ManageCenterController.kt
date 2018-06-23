@@ -25,7 +25,7 @@ import java.util.Calendar
  * Created by 9kylin on 2017-11-22.
  */
 @Controller
-@RequestMapping("sec/manage")
+@RequestMapping("sec/admin/manage")
 @SessionAttributes("user")
 class ManageCenterController : BaseController() {
 
@@ -124,7 +124,7 @@ class ManageCenterController : BaseController() {
         model.addAttribute("end", end)
 //        model.addAttribute("items", items)
         model.addAttribute("score", score)
-        return "sec/manage/scores"
+        return "sec/admin/manage/scores"
     }
 
     /**
@@ -278,7 +278,7 @@ class ManageCenterController : BaseController() {
         model.addAttribute("start", start)
         model.addAttribute("end", end)
 //        model.addAttribute("items", items)
-        return "sec/manage/payments"
+        return "sec/admin/manage/payments"
     }
 
     /**

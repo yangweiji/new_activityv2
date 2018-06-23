@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app">
+    <div class="manage-l">
+        <div th:replace="thirdparty/leftnav :: default"></div>
+    </div>
+
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>添加相册</strong></div>
+        </div>
+
+        <div class="am-tabs-bd am_bdfw">
+
+            <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
+                <p>
+                    <span class="am-icon-lg am-success am-icon-check"></span>
+                    <span th:text="${globalMessage}">Some Success message</span>
+                </p>
+            </div>
+
+            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-warning am-icon-warning"></span>
+                    <span th:text="${errorMessage}">Some Error message</span>
+                </p>
+            </div>
+
+            <div class="am-g">
+                <div class="am-u-lg-8">
+                    <form id="c-activity-picture-create-form" method="post" class="am-form am-form-horizontal"
+                          action="/sec/community/thirdphotos/saveActivityPhoto">
+
+                        <div class="am-form-group">
+                            <label for="activityId"
+                                   class="am-u-sm-2 am-form-label"><span>活动编号</span></label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="number" id="activityId" name="activityId" th:maxlength="10" th:min="1"
+                                       th:placeholder="请输入活动编号数字" v-model="activityPhoto.activityId"/>
+                                <span class="c-picture-tip">温馨提示：每个活动仅对应一个相册</span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="description"
+                                   class="am-u-sm-2 am-form-label"><span>相册标题</span></label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="description" name="description" th:maxlength="200"
+                                       th:placeholder="请输入相册标题" v-model="activityPhoto.description"/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label"><span>封面图片</span></label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="hidden" id="picture" name="picture" v-model="activityPhoto.picture"/>
+                                <div class="c-picture">
+                                    <img v-bind:src="getPictureUrl()"/>
+                                    <span>
+                                <button id="c-upload-activityphoto-picture"
+                                        class="am-btn am-btn-primary am-btn-xs">上传封面图片</button>
+                                <br/>
+                                <span class="c-picture-tip">温馨提示：图片尺寸建议为：900*525，图片小于4M</span>
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-2">
+                                <button type="submit" class="am-btn am-btn-primary">确定</button>
+                                <a th:href="@{/sec/thirdphotos/photos}" type="button"
+                                   class="am-btn am-btn-default">返回</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #app .c-picture img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #app .c-picture .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #app img {
+        width: 200px;
+        height: 120px;
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = [[${activityPhoto}]]
+    /*]]>*/
+</script>
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/community/thirdphotos/createActivityPhoto.js"></script>
+</body>
+</html>

@@ -22,7 +22,7 @@ import java.util.*
  * @author Richard C. Hu
  */
 @Controller
-@RequestMapping("sec/sms")
+@RequestMapping("sec/community/sms")
 @SessionAttributes("user")
 class SmsController : BaseController() {
     /**
@@ -49,7 +49,7 @@ class SmsController : BaseController() {
      */
     @RequestMapping(value = "/smsHistory", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
     fun getActivitySms(): String {
-        return "sec/sms/smsHistory"
+        return "sec/community/sms/smsHistory"
     }
 
     /**
@@ -79,7 +79,7 @@ class SmsController : BaseController() {
         sms.templateCode = "SMS_136391188"
         model.addAttribute("sms", sms)
 
-        return "sec/sms/sendSms"
+        return "sec/community/sms/sendSms"
     }
 
     /**
@@ -102,12 +102,12 @@ class SmsController : BaseController() {
 
         if (mobiles.isNullOrBlank()) {
             model.addAttribute("errorMessage", "活动编号: ${sms.activityId} 没有报名用户！")
-            return "sec/sms/sendSms"
+            return "sec/community/sms/sendSms"
         }
 
         if (mobiles.split(',').size > 1000) {
             model.addAttribute("errorMessage", "短信接收用户数已超出1000个！")
-            return "sec/sms/sendSms"
+            return "sec/community/sms/sendSms"
         }
 
         var templateParamData = ActivitySmsTemplateParamData()
@@ -144,7 +144,7 @@ class SmsController : BaseController() {
             model.addAttribute("errorMessage", "短信发送失败: ${response.code}(${response.message})")
         }
 
-        return "sec/sms/sendSms"
+        return "sec/community/sms/sendSms"
     }
 }
 

@@ -1,0 +1,93 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div id="app">
+    <div class="manage-l">
+        <div th:replace="thirdparty/leftnav :: default"></div>
+    </div>
+    <div class="manage-r">
+
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>用户活动积分</strong></div>
+            <div class="vip_adv"></div>
+        </div>
+
+        <div class="am-tabs-bd am_bdfw">
+            <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-success am-icon-check"></span>
+                    <span th:text="${globalMessage}">Some Success message</span>
+                </p>
+            </div>
+
+            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-warning am-icon-warning"></span>
+                    <span th:text="${errorMessage}">Some Error message</span>
+                </p>
+            </div>
+
+            <div class="am-g">
+                <div class="am-u-lg-12">
+
+                    <form class="am-form am-form-horizontal" data-am-validator method="post" action="/sec/community/thirdmanage/saveActivityScore">
+                        <input type="hidden" id="id" name="id" th:value="${score.id}" />
+                        <div class="am-form-group">
+                            <label for="username" class="am-u-sm-2 am-form-label">用户名：</label>
+                            <div class="am-u-sm-10">
+                                <!--<input type="text" id="userId" name="userId" th:value="${score.userId}"-->
+                                <!--placeholder="请输入用户名" class="am-form-field am-radius" required/>-->
+                                <input type="text" id="username" name="username" th:value="${user.username}"
+                                       placeholder="请输入用户名" class="am-form-field am-radius" required/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="activityId" class="am-u-sm-2 am-form-label">活动编号：</label>
+                            <div class="am-u-sm-10">
+                                <input type="text" id="activityId" name="activityId" th:value="${score.activityId}"
+                                       placeholder="请输入活动编号" class="am-form-field am-radius" required/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="score" class="am-u-sm-2 am-form-label">积分：</label>
+                            <div class="am-u-sm-10">
+                                <input type="number" id="score" name="score" th:value="${score.score}"
+                                       placeholder="请输入本次活动积分" class="am-form-field am-radius" required/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="memo" class="am-u-sm-2 am-form-label">备注：</label>
+                            <div class="am-u-sm-10">
+                                <textarea rows="3" id="memo" name="memo" th:field="${score.memo}" maxlength="100"
+                                          placeholder="输入备注" class="am-form-field am-radius"/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-2">
+                                <button class="am-btn am-btn-secondary" type="submit">提交</button>
+                                <a class="am-btn am-btn-default" type="button" href="/sec/community/thirdmanage/scores">返回</a>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+                <div class="am-u-lg-4"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/community/thirdmanage/scores.js"></script>
+</body>
+</html>

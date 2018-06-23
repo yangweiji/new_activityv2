@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest
  * @author Richard C. Hu
  */
 @Controller
-@RequestMapping("sec/thirdmanage")
+@RequestMapping("sec/community/thirdmanage")
 @SessionAttributes("user")
 class ThirdManageController : BaseController() {
     /**
@@ -85,7 +85,7 @@ class ThirdManageController : BaseController() {
         //活动记录存储到数据模型
         model.addAttribute("activities", activityItems)
 
-        return "sec/thirdmanage/home"
+        return "sec/community/thirdmanage/home"
     }
 
     /**
@@ -117,7 +117,7 @@ class ThirdManageController : BaseController() {
         model.addAttribute("end", end)
         model.addAttribute("score", score)
 
-        return "sec/thirdmanage/scores"
+        return "sec/community/thirdmanage/scores"
     }
 
     /**
@@ -167,7 +167,7 @@ class ThirdManageController : BaseController() {
         model.addAttribute("score", score)
         model.addAttribute("user", user)
 
-        return "sec/thirdmanage/score"
+        return "sec/community/thirdmanage/score"
     }
 
     /**
@@ -185,7 +185,7 @@ class ThirdManageController : BaseController() {
         model.addAttribute("user", user)
         model.addAttribute("score", score)
 
-        return "sec/thirdmanage/score"
+        return "sec/community/thirdmanage/score"
     }
 
     /**
@@ -209,20 +209,20 @@ class ThirdManageController : BaseController() {
         //验证用户账号
         if (u == null) {
             model.addAttribute("errorMessage", "用户账号: ${user!!.username} 无效！")
-            return "sec/thirdmanage/score"
+            return "sec/community/thirdmanage/score"
         }
 
         //验证活动编号
         if (activityService!!.getCommunityActivity(score.activityId!!, this.sessionCommunity.id) == null) {
             model.addAttribute("errorMessage", "活动编号: ${score.activityId} 无效！")
-            return "sec/thirdmanage/score"
+            return "sec/community/thirdmanage/score"
         }
 
         if (score.id == null || score.id == 0) {
             var existScore = scoreService!!.getScoreHistories(u.id, score.activityId, this.sessionCommunity.id)
             if (existScore != null) {
                 model.addAttribute("errorMessage", "一个用户在同一个活动中只允许添加一次积分！")
-                return "sec/thirdmanage/score"
+                return "sec/community/thirdmanage/score"
             }
         }
 
@@ -233,7 +233,7 @@ class ThirdManageController : BaseController() {
 
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
 
-        return "redirect:/sec/thirdmanage/scores"
+        return "redirect:/sec/community/thirdmanage/scores"
     }
 
     /**
@@ -263,7 +263,7 @@ class ThirdManageController : BaseController() {
         model.addAttribute("start", start)
         model.addAttribute("end", end)
 
-        return "sec/thirdmanage/payments"
+        return "sec/community/thirdmanage/payments"
     }
 
     /**
@@ -326,6 +326,6 @@ class ThirdManageController : BaseController() {
         model.addAttribute("totalAmount", totalAmount)
         model.addAttribute("items", items)
 
-        return "sec/thirdmanage/ordersstatistics"
+        return "sec/community/thirdmanage/ordersstatistics"
     }
 }

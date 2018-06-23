@@ -24,7 +24,7 @@ data class PicturesData(
 )
 
 @Controller
-@RequestMapping("sec/thirdactivity")
+@RequestMapping("sec/community/thirdactivity")
 @SessionAttributes("user")
 class ThirdActivityPhotoController : BaseController() {
 
@@ -118,7 +118,7 @@ class ThirdActivityPhotoController : BaseController() {
         model.addAttribute("picturesData", picturesData)
         model.addAttribute("activityPhotoPicture", activityPhotoPicture)
 
-        return "sec/thirdactivity/activityphotos"
+        return "sec/community/thirdactivity/activityphotos"
     }
 
     /**
@@ -139,7 +139,7 @@ class ThirdActivityPhotoController : BaseController() {
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         LogUtil.printLog("添加图片OK, 图片ID: ${activityPhotoPicture.id}")
 
-        return "redirect:/sec/thirdactivity/activityphotos?activityId=${activityId}"
+        return "redirect:/sec/community/thirdactivity/activityphotos?activityId=${activityId}"
     }
 
     /**

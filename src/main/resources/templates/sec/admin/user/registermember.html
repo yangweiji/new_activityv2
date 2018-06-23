@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/head :: default">
+</head>
+<body>
+<link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
+<link rel="stylesheet" href="/asset/quill/quill.snow.css"/>
+<script type="text/javascript" src="/asset/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
+<script type="text/javascript" src="/asset/datetimepicker/js/locales/amazeui.datetimepicker.zh-CN.js" charset="UTF-8"></script>
+<script type="text/javascript" src="/asset/quill/quill.min.js" charset="UTF-8"></script>
+<div th:replace="fragments/header :: default"></div>
+<div id="app">
+    <div class="amz-container">
+        <div class="am-g">
+            <div class="am-u-sm-8 am-u-lg-centered">
+
+                <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <p>
+                        <span class="am-icon-lg am-success am-icon-check"></span>
+                        <span th:text="${globalMessage}">Some Success message</span>
+                    </p>
+                </div>
+
+                <form id="c-member-reg-form"
+                      method="post"
+                      th:action="@{/sec/admin/user/registermember}"
+                      class="am-form am-form-horizontal" data-am-validator>
+                    <input type="hidden" id="current_url" name="current_url" th:value="${current_url}"/>
+                    <fieldset>
+                        <legend>注册成为会员</span></legend>
+
+                        <div class="am-form-group">
+                            <label for="displayname" class="am-u-sm-2 am-form-label">显示名称</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" th:value="${user.displayname}" id="displayname" name="displayname" placeholder="请输入您的显示名称" />
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="realName" class="am-u-sm-2 am-form-label">姓名</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" th:value="${user.realName}" id="realName" name="realName" placeholder="请输入您的真实中文姓名" />
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">性别</label>
+                            <div class="am-u-sm-10">
+                                <label class="am-radio-inline">
+                                    <input type="radio" th:checked="${user.gender==1}" value="1" name="gender"> 男
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" th:checked="${user.gender==2}" value="2" name="gender"> 女
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="idCard" class="am-u-sm-2 am-form-label">身份证号</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" th:value="${user.idCard}" id="idCard" name="idCard" placeholder="请输入您的有效身份证件号码" />
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="memberFee" class="am-u-sm-2 am-form-label">会员费用</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="number" v-model="memberFee" id="memberFee" name="memberFee" placeholder="认证会费￥100元/年" />
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-2">
+                                <button type="submit" class="am-btn am-btn-primary">提交</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #app{
+        margin-top: 30px;
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var user = [[${user}]];
+    var message = [[${message}]];
+    /*]]>*/
+</script>
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/admin/user/registermember.js"></script>
+</body>
+</html>

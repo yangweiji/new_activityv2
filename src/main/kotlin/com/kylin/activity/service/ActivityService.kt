@@ -980,4 +980,49 @@ class ActivityService {
     }
 
 
+    fun getActivityItems(communityId: Int,type:Int):Result<Record>{
+        var user = userService!!.getCurrentUserInfo()
+        var activitySql = "select \n" +
+                "  t1.id, \n" +
+                "  t1.title, \n" +
+                "  t1.start_time, \n" +
+                "  t1.end_time, \n" +
+                "  t1.avatar, \n" +
+                "  t1.activity_type, \n" +
+                "  t2.attend_count, \n" +
+                "  t3.favorite_count\n" +
+                "from activity.activity as t1\n" +
+                "  left outer join (\n" +
+                "    select \n" +
+                "      activity.activity_user.activity_id, \n" +
+                "      ifnull(count(activity.activity_user.id), 0) as attend_count\n" +
+                "    from activity.activity_user\n" +
+                "    group by activity.activity_user.activity_id\n" +
+                "  ) as t2\n" +
+                "  on t1.id = t2.activity_id\n" +
+                "  left outer join (\n" +
+                "    select \n" +
+                "      activity.activity_favorite.activity_id, \n" +
+                "      ifnull(count(activity.activity_favorite.id), 0) as favorite_count\n" +
+                "    from activity.activity_favorite\n" +
+                "    group by activity.activity_favorite.activity_id\n" +
+                "  ) as t3\n" +
+                "  on t1.id = t3.activity_id\n" +
+                "where t1.public = true  and t1.community_id=? \n" +
+                "order by t1.start_time desc"
+
+        var sql = if(type == 1){
+            "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id and t4.user_id = ?"
+        } else if(type == 2){ //我喜欢
+            "select t.* from ($activitySql) t inner join activity_favorite t4 on t.id=t4.activity_id and t4.user_id = ?"
+        } else if(type == 3){ //需签到
+            "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id and t4.user_id = ? and t4.check_in_time is null and t.end_time > now()"
+        } else {
+            "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id and t4.check_in_time is not null and t4.user_id = ?"
+        }
+
+        return  create!!.resultQuery(sql, user!!.id,communityId).fetch()
+
+    }
+
 }

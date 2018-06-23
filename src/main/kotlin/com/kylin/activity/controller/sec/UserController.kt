@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletRequest
  * Created by 9kylin on 2017-12-01.
  */
 @Controller
-@RequestMapping("sec/user")
+@RequestMapping("sec/admin/user")
 @SessionAttributes("user")
 class UserController : BaseController() {
     @Autowired
@@ -85,7 +85,7 @@ class UserController : BaseController() {
 
         //将前页面URL添加至模型数据中
         model.addAttribute("current_url", request.getAttribute("current_url"))
-        return "sec/user/registermember"
+        return "sec/admin/user/registermember"
     }
 
     /**
@@ -157,7 +157,7 @@ class UserController : BaseController() {
         model.addAttribute("end", end)
 //        model.addAttribute("members", members)
 
-        return "sec/user/members"
+        return "sec/admin/user/members"
     }
 
     /**
@@ -193,7 +193,7 @@ class UserController : BaseController() {
         model.addAttribute("start", start)
         model.addAttribute("end", end)
 //        model.addAttribute("users", users)
-        return "sec/user/users"
+        return "sec/admin/user/users"
     }
 
     /**
@@ -227,7 +227,7 @@ class UserController : BaseController() {
         val user = userService!!.getUser(id)
         model.addAttribute("user", user)
         model.addAttribute("roles", userService!!.getRoles().values)
-        return "sec/user/update"
+        return "sec/admin/user/update"
     }
 
 //    @PostMapping("/update")
@@ -261,7 +261,7 @@ class UserController : BaseController() {
         model.addAttribute("title", "个人信息")
         userDao!!.update(user)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        return "redirect:/sec/user/users"
+        return "redirect:/sec/admin/user/users"
     }
 
     /**
@@ -272,7 +272,7 @@ class UserController : BaseController() {
         var user = User()
         model.addAttribute("user", user)
         model.addAttribute("roles", userService!!.getRoles().values)
-        return "sec/user/create"
+        return "sec/admin/user/create"
     }
 
     /**
@@ -301,7 +301,7 @@ class UserController : BaseController() {
         }
         userService!!.insert(user)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        return "redirect:/sec/user/users"
+        return "redirect:/sec/admin/user/users"
     }
 
     /**
@@ -314,6 +314,6 @@ class UserController : BaseController() {
                redirectAttributes: RedirectAttributes): String {
         userService!!.deleteById(id)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        return "redirect:/sec/user/users"
+        return "redirect:/sec/admin/user/users"
     }
 }

@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest
  * @author Richard C. Hu
  */
 @Controller
-@RequestMapping("sec/thirduser")
+@RequestMapping("sec/community/thirduser")
 @SessionAttributes("user")
 class ThirdUserController : BaseController() {
 
@@ -92,7 +92,7 @@ class ThirdUserController : BaseController() {
 
         model.addAttribute("start", start)
         model.addAttribute("end", end)
-        return "sec/thirduser/users"
+        return "sec/community/thirduser/users"
     }
 
     /**
@@ -131,7 +131,7 @@ class ThirdUserController : BaseController() {
         var user = User()
         model.addAttribute("user", user)
         model.addAttribute("roles", userService!!.getRoles().values)
-        return "sec/thirduser/create"
+        return "sec/community/thirduser/create"
     }
 
 
@@ -149,7 +149,7 @@ class ThirdUserController : BaseController() {
         var u = userService!!.getUser(user!!.username)
         if (u != null) {
             model.addAttribute("errorMessage", "用户账号: ${user!!.username} 已存在！")
-            return "sec/thirduser/create"
+            return "sec/community/thirduser/create"
         }
 
         //添加用户
@@ -181,7 +181,7 @@ class ThirdUserController : BaseController() {
         userService!!.update(user)
 
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        return "redirect:/sec/thirduser/users"
+        return "redirect:/sec/community/thirduser/users"
     }
 
     /**
@@ -201,7 +201,7 @@ class ThirdUserController : BaseController() {
 
         model.addAttribute("user", user)
         model.addAttribute("roles", userService!!.getRoles().values)
-        return "sec/thirduser/update"
+        return "sec/community/thirduser/update"
     }
 
     /**
@@ -241,7 +241,7 @@ class ThirdUserController : BaseController() {
         LogUtil.printLog("更新用户信息成功, 用户ID: ${user.id}")
 
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
-        return "redirect:/sec/thirduser/users"
+        return "redirect:/sec/community/thirduser/users"
     }
 
     /**
@@ -291,7 +291,7 @@ class ThirdUserController : BaseController() {
         model.addAttribute("start", start)
         model.addAttribute("end", end)
 
-        return "sec/thirduser/members"
+        return "sec/community/thirduser/members"
     }
 
     /**
@@ -307,7 +307,7 @@ class ThirdUserController : BaseController() {
         //将前页面URL添加至模型数据中
         model.addAttribute("current_url", request.getAttribute("current_url"))
 
-        return "sec/thirduser/registermember"
+        return "sec/community/thirduser/registermember"
     }
 
     /**

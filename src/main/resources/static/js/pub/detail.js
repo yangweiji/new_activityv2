@@ -15,7 +15,7 @@ new Vue({
             {
                 $.ajax({
                     type: "POST",
-                    url: "/sec/activity/favorite",
+                    url: "/sec/admin/activity/favorite",
                     data: "id={0}".format(that.activityId),
                     dataType: 'text',
                     success: function(data){

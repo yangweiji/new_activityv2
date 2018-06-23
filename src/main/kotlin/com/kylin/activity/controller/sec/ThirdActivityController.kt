@@ -49,7 +49,7 @@ data class ThirdActivityPublishData(
  * @author Richard C. Hu
  */
 @Controller
-@RequestMapping("sec/thirdactivity")
+@RequestMapping("sec/community/thirdactivity")
 class ThirdActivityController : BaseController() {
 
     /**
@@ -77,7 +77,7 @@ class ThirdActivityController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/activities", method = [RequestMethod.POST, RequestMethod.GET])
     fun activities(): String {
-        return "sec/thirdactivity/activities"
+        return "sec/community/thirdactivity/activities"
     }
 
     /**
@@ -142,7 +142,7 @@ class ThirdActivityController : BaseController() {
         model.addAttribute("typeName", if (data.activityType == 2) "赛事" else "活动")
         model.addAttribute("data", data)
 
-        return "sec/thirdactivity/publish"
+        return "sec/community/thirdactivity/publish"
     }
 
     /**
@@ -188,7 +188,7 @@ class ThirdActivityController : BaseController() {
             thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
         }
 
-        return "redirect:/sec/thirdactivity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"
+        return "redirect:/sec/community/thirdactivity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"
     }
 
     /**
@@ -196,7 +196,7 @@ class ThirdActivityController : BaseController() {
      */
     @GetMapping("/result")
     fun result(): String {
-        return "sec/thirdactivity/result"
+        return "sec/community/thirdactivity/result"
     }
 
     /**
@@ -211,7 +211,7 @@ class ThirdActivityController : BaseController() {
         val activity = thirdActivityService!!.getActivityAndOthers(id)
         model.addAttribute("activity", activity)
 
-        return "sec/thirdactivity/qrcode"
+        return "sec/community/thirdactivity/qrcode"
     }
 
     /**
@@ -289,7 +289,7 @@ class ThirdActivityController : BaseController() {
         model.addAttribute("attendCount", attendCount)
         model.addAttribute("checkCount", checkCount)
 
-        return "sec/thirdactivity/attendusers"
+        return "sec/community/thirdactivity/attendusers"
     }
 
     /**
@@ -616,7 +616,7 @@ class ThirdActivityController : BaseController() {
     fun deleteActivity(@PathVariable id: Int, model: Model): String {
         thirdActivityService!!.deleteById(id)
 
-        return "redirect:/sec/thirdactivity/activities"
+        return "redirect:/sec/community/thirdactivity/activities"
     }
 
     /**
@@ -635,7 +635,7 @@ class ThirdActivityController : BaseController() {
         var activity = thirdActivityService!!.getActivityAndOthers(activityId)
         model.addAttribute("activity", activity)
 
-        return "sec/thirdactivity/attend"
+        return "sec/community/thirdactivity/attend"
     }
 
 }

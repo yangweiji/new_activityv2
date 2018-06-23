@@ -184,7 +184,7 @@ class WxActivityController {
 
         var attendUser = create!!.resultQuery(attendUserSql, activityId, user.id).fetchOne()
 
-        map["attendUser"] = if (attendUser == null ) null else attendUser.intoMap()
+        map["attendUser"] = if (attendUser == null) null else attendUser.intoMap()
 
         map["activity"] = activityService!!.getActivityItem(currentActivity)
 
@@ -201,17 +201,21 @@ class WxActivityController {
         var scoreInfos = currentActivity.get("score_infos", String::class.java)
 
         //积分初始化
-        if(!scoreInfos.isNullOrBlank()){
+        if (!scoreInfos.isNullOrBlank()) {
             var scoreInfo = mapper.readValue<ActivityScoreInfo>(scoreInfos)
-            checkInScore = if(isVip){ scoreInfo.vipUserScore } else { scoreInfo.generalUserScore }
+            checkInScore = if (isVip) {
+                scoreInfo.vipUserScore
+            } else {
+                scoreInfo.generalUserScore
+            }
         }
 
         map["checkInScore"] = checkInScore
 
-        var cancelMessage:String? = null
+        var cancelMessage: String? = null
 
         //还未报名
-        if(attendUser == null) {
+        if (attendUser == null) {
             var ticketSql = "select t1.*, ifnull(t2.attend_count, 0) attend_count from activity_ticket t1 left join \n" +
                     "( select activity_ticket_id, count(user_id) attend_count from activity_user where activity_id = ? group by activity_ticket_id ) t2\n" +
                     "  on t1.id = t2.activity_ticket_id\n" +
@@ -219,29 +223,29 @@ class WxActivityController {
             var tickets = create!!.resultQuery(ticketSql, activityId, activityId).fetch()
             var ticketInfos = mutableListOf<Any>()
             var hasTickets = false
-            for(ticket in tickets){
+            for (ticket in tickets) {
                 var ticketMap = mutableMapOf<String, Any>()
-                var userLevel = if(ticket.get("user_level") == null ) 0 else ticket.get("user_level", Int::class.java)
+                var userLevel = if (ticket.get("user_level") == null) 0 else ticket.get("user_level", Int::class.java)
                 var maxUsers = ticket.get("count", Int::class.java)
                 var attendCount = ticket.get("attend_count", Int::class.java)
 
 
                 var disabled = (userLevel > 0 && !isVip) || (maxUsers > 0 && attendCount >= maxUsers)
                 ticketMap["disabled"] = disabled
-                if(!hasTickets && !disabled){
+                if (!hasTickets && !disabled) {
                     hasTickets = true
                 }
                 var title = ""
-                if(userLevel > 0){
+                if (userLevel > 0) {
                     title += "【马协会员专享】"
                 }
-                if(maxUsers > 0 && attendCount >= maxUsers){
+                if (maxUsers > 0 && attendCount >= maxUsers) {
                     title += "【满员】"
                 }
                 title += ticket.get("title", String::class.java)
 
                 var price = ticket.get("price", Double::class.java)
-                title += if(price > 0){
+                title += if (price > 0) {
                     "【¥ %.2f】".format(price)
                 } else {
                     "【免费】"
@@ -252,7 +256,7 @@ class WxActivityController {
 
                 var score = ticket["score"]
 
-                if(score == null){
+                if (score == null) {
                     score = ""
                 }
                 ticketMap["score"] = score
@@ -268,31 +272,31 @@ class WxActivityController {
 
             var title = attendUser.get("ticket_title", String::class.java)
             var level = attendUser.get("ticket_user_level", Int::class.java)
-            if(level > 0){
+            if (level > 0) {
                 title += "【马协会员专享】"
             }
             var price = attendUser.get("ticket_price", Double::class.java)
 
-            title += if(price > 0){
+            title += if (price > 0) {
                 cancelMessage = "收费活动不能取消报名"
                 "【¥ %.2f】".format(price)
             } else {
                 "【免费】"
             }
 
-            var startTime =  currentActivity.get("start_time", Date::class.java)
+            var startTime = currentActivity.get("start_time", Date::class.java)
             var now = DateUtil.date().toTimestamp()
             var hours = DateUtil.between(now, startTime, DateUnit.HOUR)
-            if(startTime < now || hours < 2){
+            if (startTime < now || hours < 2) {
                 cancelMessage = "活动开始前2小时才能取消报名"
             }
 
             map["ticket_title"] = title
 
 
-            var otherInfoStr =  attendUser!!.get("other_info", String::class.java)
-            var otherInfo:Any? = null
-            if(otherInfoStr != null && otherInfoStr != ""){
+            var otherInfoStr = attendUser!!.get("other_info", String::class.java)
+            var otherInfo: Any? = null
+            if (otherInfoStr != null && otherInfoStr != "") {
                 otherInfo = mapper.readValue(otherInfoStr, Map::class.java)
 
                 map["otherInfo"] = otherInfo
@@ -302,7 +306,7 @@ class WxActivityController {
         }
 
         var dueTime = currentActivity.get("attend_due_time", Date::class.java)
-        map["cancelMessage"] = if(cancelMessage.isNullOrEmpty())  "" else cancelMessage!!
+        map["cancelMessage"] = if (cancelMessage.isNullOrEmpty()) "" else cancelMessage!!
         map["is_over_due"] = dueTime <= DateUtil.date().toTimestamp()
 
 
@@ -314,7 +318,7 @@ class WxActivityController {
      */
     @PostMapping("/attend")
     @Transactional
-    fun postAttend(@RequestBody activityUser: ActivityUser):Boolean{
+    fun postAttend(@RequestBody activityUser: ActivityUser): Boolean {
 
         activityService!!.saveAttend(activityUser)
         return true
@@ -326,7 +330,7 @@ class WxActivityController {
     * */
     @PostMapping("/cancelattend")
     @Transactional
-    fun cancelAttend(@RequestBody id: Int?):Boolean{
+    fun cancelAttend(@RequestBody id: Int?): Boolean {
         activityService!!.cancelAttend(id)
         return true
     }
@@ -353,7 +357,8 @@ class WxActivityController {
 
         var attendUserSql = "select t1.*, t2.title ticket_title, t2.memo ticket_memo, t2.price ticket_price, count ticket_count, user_level ticket_user_level from activity_user t1 inner join activity_ticket t2 on t1.activity_ticket_id = t2.id and t1.activity_id = ? and t1.user_id=?"
 
-        var attendUser: Record? = create!!.resultQuery(attendUserSql, activityId, user.id).fetchOne() ?: throw Exception("您还没有报名，不能修改报名信息")
+        var attendUser: Record? = create!!.resultQuery(attendUserSql, activityId, user.id).fetchOne()
+                ?: throw Exception("您还没有报名，不能修改报名信息")
 
         map["attendUser"] = attendUser!!.intoMap()
 
@@ -395,9 +400,9 @@ class WxActivityController {
         var tickets = create!!.resultQuery(ticketSql, activityId, activityId).fetch()
         var ticketInfos = mutableListOf<Any>()
         var hasTickets = false
-        for(ticket in tickets){
+        for (ticket in tickets) {
             var map = mutableMapOf<String, Any>()
-            var userLevel = if(ticket.get("user_level") == null ) 0 else ticket.get("user_level", Int::class.java)
+            var userLevel = if (ticket.get("user_level") == null) 0 else ticket.get("user_level", Int::class.java)
             var maxUsers = ticket.get("count", Int::class.java)
             var attendCount = ticket.get("attend_count", Int::class.java)
 
@@ -406,30 +411,30 @@ class WxActivityController {
             var disabled = (userLevel > 0 && !isVip) || (maxUsers > 0 && attendCount >= maxUsers)
 
             map["checked"] = false
-            if(buyTicketId == ticket.get("id", Int::class.java)) { // 自己买的票可选，默认选中
+            if (buyTicketId == ticket.get("id", Int::class.java)) { // 自己买的票可选，默认选中
                 disabled = false
                 map["checked"] = true
-            } else if(!disabled && price > 0){ // 修改活动票时有付费的不可选择
+            } else if (!disabled && price > 0) { // 修改活动票时有付费的不可选择
                 disabled = true
-            } else if(!disabled && buyTicketPrice > 0){ // 修改活动票时已经买过付费票的不可调整票
+            } else if (!disabled && buyTicketPrice > 0) { // 修改活动票时已经买过付费票的不可调整票
                 disabled = true
             }
 
             map["disabled"] = disabled
-            if(!hasTickets && !disabled){
+            if (!hasTickets && !disabled) {
                 hasTickets = true
             }
             var title = ""
-            if(userLevel > 0){
+            if (userLevel > 0) {
                 title += "【马协会员专享】"
             }
-            if(maxUsers > 0 && attendCount >= maxUsers){
+            if (maxUsers > 0 && attendCount >= maxUsers) {
                 title += "【满员】"
             }
             title += ticket.get("title", String::class.java)
 
 
-            title += if(price > 0){
+            title += if (price > 0) {
                 "【¥ %.2f】".format(price)
             } else {
                 "【免费】"
@@ -494,7 +499,7 @@ class WxActivityController {
      */
     @PostMapping("/attendupdate")
     @Transactional
-    fun postAttendUpdate(@RequestBody activityUser: ActivityUser):Boolean{
+    fun postAttendUpdate(@RequestBody activityUser: ActivityUser): Boolean {
 
         activityService!!.updateAttend(activityUser)
         return true
@@ -512,7 +517,7 @@ class WxActivityController {
 
         var checkInUser = create!!.resultQuery(activitySql, userId, userId, activityId).fetchOne()
 
-        var communityId =checkInUser.get("community_id") as Int
+        var communityId = checkInUser.get("community_id") as Int
 
         //是否为本年的VIP
         val isVip = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
@@ -524,22 +529,26 @@ class WxActivityController {
         var checkInScore = 0
         //积分初始化
         var activityScoreInfos = activity.get("score_infos", String::class.java)
-        if(!activityScoreInfos.isNullOrBlank()){
+        if (!activityScoreInfos.isNullOrBlank()) {
             val mapper = jacksonObjectMapper()
             var scoreInfo = mapper.readValue<ActivityScoreInfo>(activityScoreInfos)
-            checkInScore = if(isVip){ scoreInfo.vipUserScore } else { scoreInfo.generalUserScore }
+            checkInScore = if (isVip) {
+                scoreInfo.vipUserScore
+            } else {
+                scoreInfo.generalUserScore
+            }
         }
 
         var checkInTime = checkInUser.get("check_in_time")
         var checkInUserId = checkInUser.get("user_id")
-        if(checkInUserId != null && checkInTime == null){
+        if (checkInUserId != null && checkInTime == null) {
             checkInTime = DateUtil.date().toTimestamp()
             create!!.execute("update activity_user set check_in_time=? where activity_id=? and user_id=?", checkInTime, activityId, userId)
 
-            if(checkInScore > 0 && realCheckInScore == 0){
+            if (checkInScore > 0 && realCheckInScore == 0) {
                 realCheckInScore = checkInScore
                 var scoreHistory = ScoreHistory()
-                scoreHistory.score =realCheckInScore
+                scoreHistory.score = realCheckInScore
                 scoreHistory.activityId = activityId
                 scoreHistory.userId = userId
                 scoreHistory.memo = "活动签到获取积分"
@@ -575,38 +584,28 @@ class WxActivityController {
      * @param communityId 团体id
      */
     @RequestMapping("/getActivityItems")
-    fun getActivityItems(@RequestParam(required = false)communityId: Int):Any{
+    fun getActivityItems(@RequestParam(required = false) communityId: Int,
+                         @RequestParam(required = false) type: Int): Any {
+        var activities = activityService!!.getActivityItems(communityId, type)
+        var items = mutableListOf<MutableMap<String, Any?>>()
 
-        var communityId = if (communityId == null) 0 else communityId!!
-        var activities=activityService!!.getActivitiesByCommunityId(communityId)
-        var activityItems=mutableListOf<MutableMap<String, Any?>>()
-        for(activity in activities){
+        for (activity in activities) {
             var map = mutableMapOf<String, Any?>()
             var avatar: String? = null
             if (activity["avatar"] != null) {
                 avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
             }
-            map["community_id"]=activity.get("community_id", Int::class.java)
-            map["title"]=activity.get("title").toString()
-            map["created"]=util!!.fromNow(activity.get("created"))
-            map["created"]=util!!.fromNow(activity.get("created"))
-            map["summary"]=activity.get("summary").toString()
-            map["body"]=activity.get("body").toString()
-            map["address"]=activity.get("address").toString()
-            map["unit"]=activity.get("unit").toString()
-            map["tags"]=activity.get("tags").toString()
+            map["id"] = activity.get("id", Int::class.java)
             map["activity_type"] = activity.get("activity_type", Int::class.java)
-            //收藏活动人数
             map["favorite_count"] = activity.get("favorite_count", Int::class.java)
-            //已参加活动人数
-            map["attend_count"] = activity.get("attend_user_count", Int::class.java)
-            //已签到人数
-            map["checked"] = activity.get("checked", Int::class.java)
-            //需签到人数
-            map["no_checked"] = activity.get("no_checked", Int::class.java)
+            map["attend_count"] = activity.get("attend_count", Int::class.java)
             map["avatar"] = avatar
-            activityItems.add(map)
+            map["start_time"] = util!!.fromNow(activity.get("start_time"))
+
+            map["title"] = activity.get("title").toString()
+            items.add(map)
         }
-        return activityItems
+        return items
+
     }
 }

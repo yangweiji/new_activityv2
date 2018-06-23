@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*
  * 短信验证码
  */
 @RestController
-@RequestMapping("pub/vercode")
+@RequestMapping("pub/wx/vercode")
 class VercodeRestController {
 
     /**

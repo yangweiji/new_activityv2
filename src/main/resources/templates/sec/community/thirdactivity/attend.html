@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+</head>
+<style rel="stylesheet">
+    .am_news_list_img {
+        width: 420px;
+        height: 245px;
+    }
+
+    .am_list_title a {
+        font-size: 22px;
+        color: #000;
+        text-align: left;
+    }
+</style>
+<body>
+<div th:replace="fragments/header :: default"></div>
+<div id="app" class="am_user">
+    <div class="am-g amz-container">
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <div class="am-tabs-bd">
+
+                <div class="am-list-news-bd am_news_list_all">
+                    <ul class="am-list">
+                        <li class="am-g am-list-item-desced am-list-item-thumbed am-list-item-thumb-left am_list_li">
+                            <div class="am-u-sm-5 am-list-thumb am_list_thumb">
+                                <a class="" th:href="@{/pub/activity/detail/{id}(id=${activity.get('id')})}"
+                                   target="_blank">
+                                    <img class="am_news_list_img" alt="图片加载中..."
+                                         th:attr="data-url=${activity.get('avatar')}" v-translator
+                                    />
+                                </a>
+                            </div>
+                            <div class=" am-u-sm-7 am-list-main am_list_main">
+                                <h3 class="am-list-item-hd am_list_title">
+                                    <a th:href="@{/pub/activity/detail/{id}(id=${activity.get('id')})}" target="_blank"
+                                       class="" th:text="${activity.get('title')}"></a>
+                                </h3>
+
+                                <div class="am_list_author">
+                                    <i class="fa fa-clock-o"></i> <span
+                                        th:text="${#dates.format(activity.get('created'),'yyyy年MM月dd日')}"></span>
+                                </div>
+
+                                <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
+
+                                <div class="am_list_author">
+                                    地点: &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span th:text="${activity.get('address')}"></span>
+                                </div>
+                                <div class="am_list_author">
+                                    时间: &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <span th:text="${#dates.format(activity.get('start_time'),'yyyy-MM-dd HH:mm')}"></span>
+                                    ~ <span
+                                        th:text="${#dates.format(activity.get('end_time'),'yyyy-MM-dd HH:mm')}"></span>
+                                </div>
+
+                                <div class="am_list_author">
+                                    (使用微信扫右侧二维码码报名登记)
+                                </div>
+
+                                <div class="am_list_author share_qr">
+                                    <div class="share_qrcode">
+                                        <img th:src="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}"
+                                             alt="二维码"/>
+                                        <br>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+</div>
+<div th:replace="fragments/footer :: default"></div>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
+<script type="text/javascript" src="/js/sec/community/thirdactivity/attend.js"></script>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app">
+
+    <!--<select @change="selectVal">-->
+        <!--<option value="SMS_136386421">活动通知</option>-->
+        <!--<option value="SMS_136391188">活动取消</option>-->
+    <!--</select>-->
+    <!--<p>选择的项是：{{sms.templateCode}}</p>-->
+
+    <div class="manage-l">
+        <div th:replace="thirdparty/leftnav :: default"></div>
+    </div>
+
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>发送短信</strong></div>
+        </div>
+
+        <div class="am-tabs-bd am_bdfw">
+
+            <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
+                <p>
+                    <span class="am-icon-lg am-success am-icon-check"></span>
+                    <span th:text="${globalMessage}">Some Success message</span>
+                </p>
+            </div>
+
+            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-warning am-icon-warning"></span>
+                    <span th:text="${errorMessage}">Some Error message</span>
+                </p>
+            </div>
+
+            <div class="am-g">
+                <div class="am-u-lg-12">
+                    <form id="c-activity-picture-create-form" method="post" class="am-form am-form-horizontal"
+                          action="/sec/community/sms/send">
+                        <p>短信接收用户：已报名参加活动的用户！</p>
+
+                        <div class="am-form-group">
+                            <label for="activityId"
+                                   class="am-u-sm-2 am-form-label"><span>活动编号</span></label>
+                            <div class="am-u-sm-10">
+                                <input required type="number" id="activityId" name="activityId" th:maxlength="10" th:min="1"
+                                       th:placeholder="请输入有效的活动编号数字" th:value="${sms.activityId}" class="am-form-field am-radius"/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="templateCode"
+                                   class="am-u-sm-2 am-form-label"><span>消息模板</span></label>
+                            <div class="am-u-sm-10">
+                                <select @change="selectVal" id="templateCode" name="templateCode" v-model="sms.templateCode">
+                                    <option value="SMS_136386421">活动通知</option>
+                                    <option value="SMS_136391188">活动取消</option>
+                                </select>
+                                <!--<p>选择的项是：{{sms.templateCode}}</p>-->
+                                <p v-if="sms.templateCode==='SMS_136386421'"><span class="c-picture-tip">消息模板：您好，您已报名参加${title}活动，活动开始时间:${time}，地点:${address}，请准时参加！</span></p>
+                                <p v-if="sms.templateCode==='SMS_136391188'"><span class="c-picture-tip">消息模板：客户您好，十分抱歉，因${reason}原因，原定于${time}举办的${title}活动取消！</span></p>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group" v-if="sms.templateCode==='SMS_136391188'">
+                            <label for="messageContent" class="am-u-sm-2 am-form-label"><span>活动取消原因</span></label>
+                            <div class="am-u-sm-10">
+                                <input required type="text" id="messageContent" name="messageContent" th:maxlength="20"
+                                       th:placeholder="不超过20个中文字符" th:value="${sms.messageContent}" class="am-form-field am-radius"/>
+                            </div>
+                        </div>
+
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-2">
+                                <button type="submit" class="am-btn am-btn-primary">发送</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: default"></div>
+<style type="text/css">
+    #app .c-picture img {
+        display: inline-block;
+        height: 123px;
+        min-width: 50px;
+        max-width: 500px;
+    }
+
+    #app .c-picture .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    .c-picture-tip {
+        font-size: 12px;
+        color: gray;
+    }
+
+    #app img {
+        width: 200px;
+        height: 120px;
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = [[${sms}]]
+    /*]]>*/
+</script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/sec/community/sms/sendSms.js"></script>
+</body>
+</html>

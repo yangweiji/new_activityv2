@@ -26,7 +26,7 @@ data class ActivityPhotoData(
  * 第三方团体组织相册管理
  */
 @Controller
-@RequestMapping("sec/thirdphotos")
+@RequestMapping("sec/community/thirdphotos")
 @SessionAttributes("user")
 class ThirdPhotoController : BaseController() {
 
@@ -61,7 +61,7 @@ class ThirdPhotoController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/photos", method = [RequestMethod.GET, RequestMethod.POST])
     fun photos(): String {
-        return "sec/thirdphotos/photos"
+        return "sec/community/thirdphotos/photos"
     }
 
     /**
@@ -91,7 +91,7 @@ class ThirdPhotoController : BaseController() {
         activityPhotoService!!.delete(activityPhotoId)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
 
-        return "redirect:/sec/thirdphotos/photos"
+        return "redirect:/sec/community/thirdphotos/photos"
     }
 
     /**
@@ -112,7 +112,7 @@ class ThirdPhotoController : BaseController() {
 
         model.addAttribute("activityPhoto", activityPhoto)
 
-        return "sec/thirdphotos/createActivityPhoto"
+        return "sec/community/thirdphotos/createActivityPhoto"
     }
 
     /**
@@ -132,14 +132,14 @@ class ThirdPhotoController : BaseController() {
         if (activity == null)
         {
             model.addAttribute("errorMessage", "活动编号: ${activityPhoto.activityId} 无效！")
-            return "sec/thirdphotos/createActivityPhoto"
+            return "sec/community/thirdphotos/createActivityPhoto"
         }
 
         var activityPhotoItems = activityPhotoService!!.getActivityPhotos(activityPhoto.activityId)
         if (activityPhotoItems.isNotEmpty())
         {
             model.addAttribute("errorMessage", "活动编号: ${activityPhoto.activityId} 对应的相册已存在！")
-            return "sec/thirdphotos/createActivityPhoto"
+            return "sec/community/thirdphotos/createActivityPhoto"
         }
 
         activityPhoto.axtenalUrl = commonService!!.getDownloadUrl(activityPhoto.picture)
@@ -155,6 +155,6 @@ class ThirdPhotoController : BaseController() {
 
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
 
-        return "redirect:/sec/thirdphotos/photos"
+        return "redirect:/sec/community/thirdphotos/photos"
     }
 }
