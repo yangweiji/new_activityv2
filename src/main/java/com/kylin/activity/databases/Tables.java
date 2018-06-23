@@ -12,6 +12,7 @@ import com.kylin.activity.databases.tables.ActivityPhotoPicture;
 import com.kylin.activity.databases.tables.ActivitySms;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
+import com.kylin.activity.databases.tables.ActivityUserRecord;
 import com.kylin.activity.databases.tables.Article;
 import com.kylin.activity.databases.tables.Community;
 import com.kylin.activity.databases.tables.CommunityUser;
@@ -76,6 +77,11 @@ public class Tables {
      * 参与活动人
      */
     public static final ActivityUser ACTIVITY_USER = com.kylin.activity.databases.tables.ActivityUser.ACTIVITY_USER;
+
+    /**
+     * The table <code>activityv2.activity_user_record</code>.
+     */
+    public static final ActivityUserRecord ACTIVITY_USER_RECORD = com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD;
 
     /**
      * 文章 内容发布

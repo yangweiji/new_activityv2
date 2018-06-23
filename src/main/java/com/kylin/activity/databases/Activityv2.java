@@ -12,6 +12,7 @@ import com.kylin.activity.databases.tables.ActivityPhotoPicture;
 import com.kylin.activity.databases.tables.ActivitySms;
 import com.kylin.activity.databases.tables.ActivityTicket;
 import com.kylin.activity.databases.tables.ActivityUser;
+import com.kylin.activity.databases.tables.ActivityUserRecord;
 import com.kylin.activity.databases.tables.Article;
 import com.kylin.activity.databases.tables.Community;
 import com.kylin.activity.databases.tables.CommunityUser;
@@ -45,7 +46,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activityv2 extends SchemaImpl {
 
-    private static final long serialVersionUID = 903500200;
+    private static final long serialVersionUID = 2101538572;
 
     /**
      * The reference instance of <code>activityv2</code>
@@ -91,6 +92,11 @@ public class Activityv2 extends SchemaImpl {
      * 参与活动人
      */
     public final ActivityUser ACTIVITY_USER = com.kylin.activity.databases.tables.ActivityUser.ACTIVITY_USER;
+
+    /**
+     * The table <code>activityv2.activity_user_record</code>.
+     */
+    public final ActivityUserRecord ACTIVITY_USER_RECORD = com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD;
 
     /**
      * 文章 内容发布
@@ -165,6 +171,7 @@ public class Activityv2 extends SchemaImpl {
             ActivitySms.ACTIVITY_SMS,
             ActivityTicket.ACTIVITY_TICKET,
             ActivityUser.ACTIVITY_USER,
+            ActivityUserRecord.ACTIVITY_USER_RECORD,
             Article.ARTICLE,
             Community.COMMUNITY,
             CommunityUser.COMMUNITY_USER,
