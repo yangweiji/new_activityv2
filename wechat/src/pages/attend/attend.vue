@@ -113,8 +113,6 @@
       </div>
       <div class="page__bd_spacing">
         <button :disabled="processing" v-if="item && !item.attendUser && !item.is_over_due && item.hasTickets" @click="submitAttend()" class="weui-btn" type="primary">提交报名信息</button>
-
-        <button  @click="getoCheckIn()" class="weui-btn" type="primary">签到</button>
       </div>
     </div>
   </div>
