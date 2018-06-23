@@ -16,6 +16,48 @@
             <open-data class="userinfo-name" type="userNickName"></open-data> 
           </div>
         </div>
+       <div class="wx_group_count">
+       <div class="wx_attend_count" style="float:left;padding:22px">
+         <dl>
+           <dt>
+             3
+           </dt>
+           <dd>
+             已参与
+           </dd>
+         </dl>
+       </div>
+       <div class="wx_no_check_count" style="float:left;padding:22px">
+         <dl>
+           <dt>
+             2
+           </dt>
+           <dd>
+            需签到
+           </dd>
+         </dl>
+       </div>
+       <div class="wx_check_count" style="float:left;padding:22px">
+          <dl>
+           <dt>
+             1
+           </dt>
+           <dd>
+             已签到
+           </dd>
+         </dl>
+       </div>
+       <div class="wx_favorite_count" style="float:left;padding:22px"> 
+          <dl>
+           <dt>
+             2
+           </dt>
+           <dd>
+             我喜欢
+           </dd>
+         </dl>
+       </div>
+       </div>
 
         <!-- <div>
             <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(2)">
@@ -30,7 +72,7 @@
         </div> -->
        
         <div>
-          <navigator url="/pages/myactivitys/myactivitys" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          <!-- <navigator url="/pages/myactivitys/myactivitys" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
                 <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
               </div>
@@ -38,11 +80,11 @@
                 <div>我的活动</div>
               </div>
               <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
+            </navigator>  -->
 
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
-                <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+                <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
               </div>
               <div class="weui-cell__bd weui-cell_primary">
                 <div>积分</div>
@@ -50,11 +92,19 @@
               <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </navigator> 
 
-          
+          <navigator url="#" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+              <div class="weui-cell__hd">
+                <image src="/static/images/personal_information.png" style="width: 25px;height: 30px;margin-right: 5px" />
+              </div>
+              <div class="weui-cell__bd weui-cell_primary">
+                <div>个人信息完善</div>
+              </div>
+              <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+          </navigator>
 
           <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
-                <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+                <image src="/static/images/vip_image.png" style="width: 25px;height: 25px;margin-right: 5px" />
               </div>
               <div class="weui-cell__bd weui-cell_primary">
                 <div>会员</div>
@@ -65,7 +115,7 @@
           <!-- 如下为全局功能 -->
           <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
-                <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+                <image src="/static/images/real_name.png" style="width: 25px;height: 25px;margin-right: 5px" />
               </div>
               <div class="weui-cell__bd weui-cell_primary">
                 <div>实名认证</div>
@@ -75,7 +125,7 @@
 
           <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
-                <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
+                <image src="/static/images/group_image.png" style="width: 25px;height: 25px;margin-right: 5px" />
               </div>
               <div class="weui-cell__bd weui-cell_primary">
                 <div>我加入的团体</div>
@@ -281,5 +331,16 @@ export default {
   display: flex;
   justify-content: center;
   overflow: hidden;
+}
+.wx_counts{
+  width: 100%;
+  height:60px;
+}
+.wx_group_count dl dt{
+   text-align: center;
+   color:#F37B1D;
+}
+.wx_group_count dd{
+  color:#8a8a8a;
 }
 </style>
