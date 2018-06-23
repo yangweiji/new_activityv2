@@ -14,7 +14,7 @@
 <div id="c_sec_community_add_app">
     <div class="amz-container">
         <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
-            action="/sec/community/saveCommunity">
+            action="/sec/admin/community/saveCommunity">
             <input type="hidden" id="id"
                    name="id" th:placeholder="请输入社团名称" v-model="cacheData.community.id"/>
             <fieldset>
@@ -217,7 +217,7 @@
                 <div class="am-form-group">
                     <div class="am-u-sm-10 am-u-sm-offset-2">
                         <button type="submit" class="am-btn am-btn-primary">修改</button>
-                        <a class="am-btn am-btn-default" type="button" th:href="@{/sec/community/communities}">返回</a>
+                        <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/community/communities}">返回</a>
                     </div>
                 </div>
             </fieldset>
@@ -274,6 +274,6 @@
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/sec/community/community.js"></script>
+<script type="text/javascript" src="/js/sec/admin/community/community.js"></script>
 </body>
 </html>

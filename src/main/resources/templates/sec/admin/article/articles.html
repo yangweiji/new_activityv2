@@ -13,11 +13,19 @@
 
     <div class="manage-r">
         <div class="hd_list_right_tt">
-            <div class="l"><strong>海报管理</strong><span>共<span id="posterCount"></span>条记录</span></div>
+            <div class="l"><strong>内容管理</strong><span>共<span id="articleCount"></span>条记录</span></div>
             <div class="vip_adv"></div>
 
         </div>
         <div class="am-tabs-bd am_bdfw">
+            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-warning am-icon-warning"></span>
+                    <span th:text="${errorMessage}">Some Error message</span>
+                </p>
+            </div>
+
             <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
                 <button type="button" class="am-close">&times;</button>
                 <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
@@ -28,31 +36,21 @@
             </div>
             <div class="am-g">
                 <form class="am-form-inline" method="post">
-
-
                     <div class="am-form-group">
-                        <select id="posterType" name="posterType" placeholder="" data-am-selected="">
-                            <option value="0" th:selected="${#httpServletRequest.getParameter('posterType')=='0'}">请选择海报类型</option>
-                            <option value="n1" th:selected="${#httpServletRequest.getParameter('posterType')=='n1'}">赛事新闻</option>
-                            <option value="b5" th:selected="${#httpServletRequest.getParameter('posterType')=='b5'}">跑步训练</option>
-                            <option value="b13" th:selected="${#httpServletRequest.getParameter('posterType')=='b13'}">运动装备</option>
-                            <option value="b12" th:selected="${#httpServletRequest.getParameter('posterType')=='b12'}">会员福利</option>
-                            <option value="b10" th:selected="${#httpServletRequest.getParameter('posterType')=='b10'}">国内赛事</option>
-                            <option value="b11" th:selected="${#httpServletRequest.getParameter('posterType')=='b11'}">国际赛事</option>
-                            <option value="b1" th:selected="${#httpServletRequest.getParameter('posterType')=='b1'}">徒步</option>
-                            <option value="b2" th:selected="${#httpServletRequest.getParameter('posterType')=='b2'}">越野</option>
-                            <option value="b3" th:selected="${#httpServletRequest.getParameter('posterType')=='b3'}">聚餐</option>
-                            <option value="b4" th:selected="${#httpServletRequest.getParameter('posterType')=='b4'}">骑行</option>
-                            <option value="b6" th:selected="${#httpServletRequest.getParameter('posterType')=='b6'}">会议</option>
-                            <option value="b7" th:selected="${#httpServletRequest.getParameter('posterType')=='b7'}">招募</option>
-                            <option value="b8" th:selected="${#httpServletRequest.getParameter('posterType')=='b8'}">讲座</option>
+                        <select id="category" name="category" placeholder="" data-am-selected="">
+                            <option value="0" th:selected="${#httpServletRequest.getParameter('category')=='0'}">请选择内容类型</option>
+                            <option value="1" th:selected="${#httpServletRequest.getParameter('category')=='1'}">公告通知
+                            </option>
+                            <option value="2" th:selected="${#httpServletRequest.getParameter('category')=='2'}">赛事新闻
+                            </option>
+                            <option value="3" th:selected="${#httpServletRequest.getParameter('category')=='3'}">运动指南
+                            </option>
                         </select>
                     </div>
-
                     <div class="am-form-group">
                         <input type="text" id="title" name="title"
                                th:value="${#httpServletRequest.getParameter('title')}"
-                               placeholder="请输入海报标题" class="am-form-field am-radius"/>
+                               placeholder="请输入内容标题" class="am-form-field am-radius"/>
                     </div>
 
                     <button id="btnSearch" type="button" class="am-btn am-btn-default am-radius">
@@ -72,13 +70,18 @@
                             <th>序号</th>
                             <th>编号</th>
                             <th>标题</th>
-                            <th>创建时间</th>
+                            <th>发布时间</th>
+                            <th>状态</th>
+                            <th>发布单位</th>
                             <th>类型</th>
-                            <th>显示</th>
-                            <th>排序</th>
-                            <th>关联内容</th>
-                            <th>背景图</th>
-                            <th>手机海报图</th>
+                            <th>方式</th>
+                            <th>摘要</th>
+                            <th>详情</th>
+                            <th>图片</th>
+                            <th>创建时间</th>
+                            <th>创建人</th>
+                            <th>修改时间</th>
+                            <th>修改人</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -97,5 +100,5 @@
 
 <div th:replace="fragments/footer :: default"></div>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/sec/poster/posters.js"></script>
+<script type="text/javascript" src="/js/sec/admin/article/articles.js"></script>
 </body>

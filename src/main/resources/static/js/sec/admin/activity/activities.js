@@ -64,7 +64,7 @@ $(function () {
             // processing: true,
             // serverSide: true,
             ajax: {
-                "url": "/sec/activity/getActivities",
+                "url": "/sec/admin/activity/getActivities",
                 "contentType": "application/json;charset=utf-8",
                 "type": "POST",
                 "data": function () {
@@ -196,7 +196,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#qrcoderow', function () {
         var data = t.row($(this).parents('tr')).data();
-        window.open("/sec/activity/qrcode?id=" + data.id);
+        window.open("/sec/admin/activity/qrcode?id=" + data.id);
     });
 
     /**
@@ -204,7 +204,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#attendrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        window.open("/sec/activity/attendusers?activityId=" + data.id + "&title=" + data.title + "&start=2018-01-01&end=");
+        window.open("/sec/admin/activity/attendusers?activityId=" + data.id + "&title=" + data.title + "&start=2018-01-01&end=");
     });
 
     /**

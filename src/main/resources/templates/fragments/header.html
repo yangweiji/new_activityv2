@@ -117,7 +117,7 @@
                                     <!-- 平台角色：管理员/发布员，可以查看管理中心 -->
                                     <li th:if="${#httpServletRequest.remoteUser}
                                                 and (${session.USER_CONTEXT.role}=='发布者' or ${session.USER_CONTEXT.role}=='管理员')">
-                                        <a th:href="@{/sec/community/communities}">
+                                        <a th:href="@{/sec/admin/community/communities}">
                                             管理中心
                                         </a>
                                     </li>

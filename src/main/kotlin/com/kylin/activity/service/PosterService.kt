@@ -105,14 +105,17 @@ class PosterService {
         return posterDao!!.fetchOne(Tables.POSTER.TITLE, title)
     }
 
+    /*fun getFirstActivityPhoto(activityId: Int?): ActivityPhoto? {
+        var list = activityPhotoDao!!.fetchByActivityId(activityId)
+        return if (list != null && list.size > 0) list.first() else null
+    }*/
 
-    fun getPosterByActivityId(activityId: Int):Poster{
-       return posterDao!!.fetchOne(Tables.POSTER.ACTIVITY_ID,activityId)
+    fun getActivity(activityId: Int?): Activity?{
+        var list=activityDao!!.fetchById(activityId)
+        return if(list!=null&&list.size>0) list.first() else null
+
     }
 
-    fun getActivity(activityId: Int?): Activity {
-        return activityDao!!.findById(activityId)
-    }
 
     /**
      * 删除海报信息

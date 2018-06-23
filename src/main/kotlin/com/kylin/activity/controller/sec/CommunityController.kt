@@ -29,7 +29,7 @@ data class CommunitiesData(
  * @author weiji.yang
  */
 @Controller
-@RequestMapping("sec/community")
+@RequestMapping("sec/admin/community")
 @SessionAttributes("user")
 class CommunityController : BaseController() {
 
@@ -55,7 +55,7 @@ class CommunityController : BaseController() {
         var user = this.sessionUser
         model.addAttribute("user", user)
 
-        return "sec/community/communities"
+        return "sec/admin/community/communities"
     }
 
 
@@ -88,7 +88,7 @@ class CommunityController : BaseController() {
         }
         model.addAttribute("communitiesData", communitiesData)
 
-        return "sec/community/community"
+        return "sec/admin/community/community"
     }
 
     /**
@@ -153,7 +153,7 @@ class CommunityController : BaseController() {
                 communitiesData.community = community
                 model.addAttribute("communitiesData", communitiesData)
                 model.addAttribute("errorMessage", "用户: ${community.managerPhoneNumber} 已存在！")
-                return "/sec/community/community"
+                return "/sec/admin/community/community"
             }
             //构建一个新的User对象
             u = User()
@@ -183,7 +183,7 @@ class CommunityController : BaseController() {
             LogUtil.printLog("添加成功,团体组织ID：${community.id}")
         }
 
-        return "redirect:/sec/community/communities"
+        return "redirect:/sec/admin/community/communities"
     }
 
 

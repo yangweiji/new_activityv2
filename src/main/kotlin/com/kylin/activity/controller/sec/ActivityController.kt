@@ -34,7 +34,7 @@ data class ActivityPublishData(
 )
 
 @Controller
-@RequestMapping("sec/activity")
+@RequestMapping("sec/admin/activity")
 class ActivityController : BaseController() {
 
     @Autowired
@@ -184,7 +184,7 @@ class ActivityController : BaseController() {
                  var activityItems = activityService !!. getAllActivityUserItems (title, tags, status)
          model.addAttribute("activities", activityItems)
         */
-        return "sec/activity/activities"
+        return "sec/admin/activity/activities"
     }
 
     /**
@@ -276,7 +276,7 @@ class ActivityController : BaseController() {
         model.addAttribute("activityStatistics", activityStatistics)
         model.addAttribute("attendcount", attendcount)
         model.addAttribute("checkcount", checkcount)
-        return "sec/activity/attendusers"
+        return "sec/admin/activity/attendusers"
     }
 
     /**
@@ -695,6 +695,6 @@ class ActivityController : BaseController() {
         val activity = activityService!!.getActivityAndOthers(id)
 
         model.addAttribute("activity", activity)
-        return "sec/activity/qrcode"
+        return "sec/admin/activity/qrcode"
     }
 }

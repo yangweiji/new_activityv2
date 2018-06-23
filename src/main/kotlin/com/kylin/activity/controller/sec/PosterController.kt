@@ -17,7 +17,7 @@ data class PostersData(
 )
 
 @Controller
-@RequestMapping("sec/poster")
+@RequestMapping("sec/admin/poster")
 class PosterController {
 
 
@@ -41,7 +41,7 @@ class PosterController {
      */
     @RequestMapping(value = "/posters", method = [RequestMethod.POST, RequestMethod.GET])
     fun queryPoster(): String {
-        return "sec/poster/posters"
+        return "sec/admin/poster/posters"
     }
 
 
@@ -75,7 +75,7 @@ class PosterController {
             postersData.poster= Poster()
         }
         model.addAttribute("postersData",postersData)
-        return "sec/poster/poster"
+        return "sec/admin/poster/poster"
     }
 
     /**
@@ -105,6 +105,17 @@ class PosterController {
             if(posterTitle!=null){
                 return "海报：【${poster.title}】已存在！"
             }
+
+            //判读海报活动id是否有此信息
+            var activity=posterService!!.getActivity(poster.activityId)
+            if(activity==null){
+                var postersData = PostersData()
+                postersData.poster = poster
+                model.addAttribute("postersData", postersData)
+                model.addAttribute("errorMessage","活动编号：[${poster.activityId}] 不正确，请重新输入！")
+                return "/sec/admin/poster/poster"
+            }
+
             //新建海报信息
             var posters=Poster()
             posters.title=poster.title
@@ -120,7 +131,7 @@ class PosterController {
             redirectAttributes.addFlashAttribute("globalMessage","海报：【${posters.title}】添加成功！")
             posterService!!.insertPoster(posters)
         }
-        return "redirect:/sec/poster/posters"
+        return "redirect:/sec/admin/poster/posters"
     }
 
 

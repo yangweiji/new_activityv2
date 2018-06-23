@@ -28,7 +28,7 @@
             <div class="am-g">
                 <div class="am-u-lg-12">
                     <form class="am-form am-form-horizontal" data-am-validator method="post"
-                          action="/sec/article/saveArticle">
+                          action="/sec/admin/article/saveArticle">
                         <input type="hidden" id="id" name="id"
                                v-model="cacheData.article.id"/>
                         <div class="am-form-group">
@@ -132,7 +132,7 @@
                         <div class="am-form-group">
                             <div class="am-u-sm-10 am-u-sm-offset-2">
                                 <button class="am-btn am-btn-secondary" type="submit">发布</button>
-                                <a class="am-btn am-btn-default" type="button" th:href="@{/sec/article/articles}">返回</a>
+                                <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/article/articles}">返回</a>
                             </div>
                         </div>
 
@@ -178,7 +178,7 @@
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/sec/article/pubarticle.js"></script>
+<script type="text/javascript" src="/js/sec/admin/article/pubarticle.js"></script>
 </body>
 </html>
 
