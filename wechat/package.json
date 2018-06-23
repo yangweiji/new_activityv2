@@ -14,6 +14,7 @@
         "decimal.js": "^10.0.1",
         "mpvue": "^1.0.7",
         "mpvue-wxparse": "^0.6.1",
+        "vue2-filters": "^0.3.0",
         "vuex": "^2.3.1"
     },
     "devDependencies": {

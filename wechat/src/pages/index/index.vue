@@ -10,8 +10,8 @@
           </span>
         </navigator>     
         <div>
-          <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
-            <div v-for="item in poster" :key="index">        
+          <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" >
+            <div v-for="item in poster" :key="item.id">        
               <swiper-item >               
                   <image :src="item.mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
                       <span class="poster_title" >
@@ -76,7 +76,7 @@
               <div class="weui-panel__bd">
                 <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
                   v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
                       <image class="weui-media-box__thumb" :src="item.avatar" />
                     </div>
                     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -215,7 +215,7 @@ export default {
       //默认的团体组织
       community: {
         id: 1, //默认的组织团体ID
-        communityName: "北京市马拉松协会",
+        name: "北京市马拉松协会",
         background: "NzrSDNSBEP.png",
       },
       //是否显示面板指示点
@@ -364,7 +364,10 @@ export default {
   created() {
     console.log("global:", global);
     console.log("index created");
-    
+    //设置默认的其他活动标签分类值
+    this.ces = this.ranges[this.index];
+  },
+  onShow() {
     //接受参数
     if (this.$store.state.community) {
       this.community = this.$store.state.community;
@@ -374,8 +377,6 @@ export default {
       });
     }
     this.getData();
-    //设置默认的其他活动标签分类值
-    this.ces = this.ranges[this.index];
   }
 };
 </script>

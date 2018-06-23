@@ -2,6 +2,16 @@
   <div class="page">
     <div v-if="loaded" class="page__bd">
       <div class="weui-toptips weui-toptips_warn" v-if="errorMessage">{{errorMessage}}</div>
+      <div @click="checkdetails(item.activity.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
+                      <image class="weui-media-box__thumb" :src="item.activity.avatar" />
+                    </div>
+                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <div class="weui-media-box__title">{{item.activity.title}}</div>
+                        <div class="weui-media-box__desc" style="float:left">{{item.activity.start_time}}</div>
+                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.activity.favorite_count}} 报名：{{item.activity.attend_count}}</div>
+                    </div>
+                </div>
       <div>
         <div class="weui-cells__title" v-if="overDue">
           <h1 class="c-title-text">
@@ -13,8 +23,8 @@
           <div class="weui-cells__title">
             <h1 class="am-article-title">
               您已报名
-              <span style="color:#F37B1D;font-size:25px;font-weight: bold;">
-                                  【<span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{activityStatusText}}</span>】
+              <span class="c-text-primary">
+                【<span>{{activityStatusText}}</span>】
               </span>
             </h1>
           </div>
@@ -22,7 +32,7 @@
             <div class="weui-form-preview__hd">
               <div class="weui-form-preview__item">
                 <div class="weui-form-preview__label">活动票：</div>
-                <div class="weui-form-preview__value_in-hd">{{item.ticket_title}}</div>
+                <div class="weui-form-preview__value_in-hd" style="font-size:19px;">{{item.ticket_title}}</div>
               </div>
             </div>
             <div class="weui-form-preview__bd">
@@ -41,8 +51,8 @@
         <div v-if="!isAttend && !overDue">
           <div class="weui-cells__title">选择活动票</div>
           <div class="weui-cells weui-cells_after-title">
-            <radio-group id="ticketInfos" @change="ticketRadioChange">
-              <label class="weui-cell weui-check__label" v-for="opt in item.ticketInfos" :key="opt.id">
+            <radio-group class="c-check-group" id="ticketInfos" @change="ticketRadioChange">
+              <label class="weui-cell weui-check__label" :class="{'c-disabled' : opt.disabled, 'c-checked':opt.checked}" v-for="opt in item.ticketInfos" :key="opt.id">
                           <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
                           <div class="weui-cell__bd">{{opt.title}}</div>
                           <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
@@ -91,11 +101,11 @@
             </div>
           </div>
           <div v-if="item.checkInScore > 0" lass="weui-cells__title">
-            <label>活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
+            <label class="c-block-text">活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
           </div>
           <div v-if="ticket && ticket.price > 0 && score > 0" class="c-form-group">
             <checkbox-group @change="usingScoreChange">
-              <label class="weui-cell weui-check__label">
+              <label class="weui-cell weui-check__label c-block-text">
                               <checkbox  class="weui-check" :value="isUsingScore" :checked="isUsingScore" />
                               <div class="weui-cell__hd weui-check__hd_in-checkbox">
                                 <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!isUsingScore"></icon>
@@ -106,15 +116,17 @@
                               </div>
                             </label>
             </checkbox-group>
-            <br/>
-            <label>应付金额：<span class="c-money">¥ {{realPrice}}</span></label>
           </div>
         </div>
       </div>
-      <div class="page__bd_spacing">
-        <button :disabled="processing" v-if="item && !item.attendUser && !item.is_over_due && item.hasTickets" @click="submitAttend()" class="weui-btn" type="primary">提交报名信息</button>
-
-        <button  @click="getoCheckIn()" class="weui-btn" type="primary">签到</button>
+    </div>
+    <button class="weui-btn" @click="getoCheckIn()">签到</button>
+    <div v-if="item && !item.attendUser && !item.is_over_due && item.hasTickets" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+      <div @click="gotoAttendUsers()" class="weui-flex__item c-default-btn">
+        应付<span class="c-text-primary" >{{realPriceText}}</span>
+      </div>
+      <div :disabled="processing" @click="submitAttend()" class="weui-flex__item c-bg-primary">
+        提交报名信息
       </div>
     </div>
   </div>
@@ -125,6 +137,7 @@ import { Decimal } from "decimal.js";
 export default {
   data() {
     return {
+      isIpx:false,
       activityId: 0,
       userId: 2128,
       loaded: false, //是否加载完成
@@ -168,6 +181,9 @@ export default {
         return this.ticket.price;
       }
       return 0;
+    },
+    realPriceText() {
+      return this.$kyutil.filters.currency(this.realPrice, "¥");
     },
     realScore() {
       if (this.ticket) {
@@ -334,7 +350,7 @@ export default {
       for (var i = 0; i < that.item.attendInfos.length; i++) {
         var attendInfo = that.item.attendInfos[i];
         if (attendInfo.required && !attendInfo.value) {
-          that.errorMessage = "请选择填写" + attendInfo.title;
+          that.errorMessage = "请填写" + attendInfo.title;
           that.resetError();
           return;
         }
@@ -411,7 +427,7 @@ export default {
       );
     },
     checkOrder(id) {
-      var that = this
+      var that = this;
       that.$kyutil.HttpRequest(
         true,
         "/pub/wx/pay/check",
@@ -435,27 +451,42 @@ export default {
         }
       );
     },
-    getoCheckIn(){
+    getoCheckIn() {
       wx.navigateTo({
         url: "../../pages/checkin/checkin?activityId=" + this.activityId
-      })
+      });
+    },
+    checkdetails(activityId) {
+      var that = this;
+      that.activityId = activityId;
+      wx.navigateTo({
+        url: "../../pages/details/details?activityId=" + that.activityId
+      });
     }
-
   },
-  created() {},
+  created() {
+    this.isIpx = this.$kyutil.data.isIpx
+  },
   onShow() {
     console.log(this.$root.$mp.query);
     var that = this;
     that.loaded = false;
-    that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
+    that.activityId =
+      this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
     this.$kyutil.CheckUserValidation();
-    var user = this.$kyutil.GetUser()
-    if(user){
-      this.userId = user.id
+    var user = this.$kyutil.GetUser();
+    if (user) {
+      this.userId = user.id;
       this.getData();
     }
   },
-  mounted() {}
+  mounted() {},
+  onShareAppMessage(res){
+    return {
+      title: "[报名]" + this.item.activity.title,
+      path: '/page/attend/attend?activityId='+ this.activityId
+    }
+  }
 };
 </script>
 
@@ -469,5 +500,4 @@ export default {
   text-align: center;
   font-size: 18px;
 }
-
 </style>

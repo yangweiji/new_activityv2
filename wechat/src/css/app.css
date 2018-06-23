@@ -10,7 +10,7 @@ page {
 }
 
 .page__bd {
-    padding-bottom: 40px;
+    padding-bottom: 80px;
 }
 
 .page__bd_spacing {
@@ -34,17 +34,6 @@ page {
     color: #888888;
     text-align: left;
     font-size: 14px;
-}
-
-.weui-panel {
-    background-color: #fff;
-    top: -20rpx;
-    position: relative;
-    overflow: hidden;
-}
-
-.weui-panel:first-child {
-    margin-top: 20rpx;
 }
 
 
@@ -72,9 +61,14 @@ page {
     position: absolute;
     right: 0;
     margin-top: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
     color: #fff;
     z-index: 9999;
+    background-color: rgba(0, 0, 0, .6);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .community-search {
@@ -89,8 +83,17 @@ page {
     width: 100%;
 }
 
+.community-avatar {
+    position: relative;
+    top: 0;
+}
+
 
 /* custom color */
+
+.c-text-center {
+    text-align: center;
+}
 
 .c-bg-primary {
     background-color: #F37B1D;
@@ -121,6 +124,76 @@ page {
     border: 1px #d9d9d9 solid;
 }
 
+.c-disabled {
+    color: lightgray;
+}
+
+.c-check-group {
+    padding: 5px 10px;
+}
+
+.c-check-group .weui-check__label {
+    border: 2px #f1f1f1 solid;
+    border-radius: 2px;
+    margin: 6px 0px;
+    padding: 4px 5px 4px 10px;
+    background-color: #f1f1f1;
+    position: static;
+}
+
+.c-check-group .weui-check__label.c-checked {
+    border-color: #F37B1D;
+}
+
+.c-check-group .weui-check__label .weui-cell__ft {
+    float: right;
+}
+
+.c-footer-btns {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    line-height: 48px;
+    text-align: center;
+    background-color: #f8f8f8;
+    z-index: 100;
+}
+
+.c-footer-btns .weui-badge {
+    margin-bottom: 3px;
+}
+
+.c-default-btn {
+    width: 25%;
+    border-top: 1px lightgray solid;
+}
+
+.c-primary-btn {
+    border-top: 1px #F37B1D solid;
+}
+
+.c-block-text {
+    border: 1px #F37B1D solid;
+    display: -webkit-box;
+    padding: 5px 15px;
+    margin: 15px 10px 5px 10px;
+    border-radius: 2px;
+    background-color: white;
+}
+
+.fix-iphonex {
+    bottom: 68rpx!important;
+}
+
+.fix-iphonex::after {
+    content: ' ';
+    position: fixed;
+    bottom: 0!important;
+    height: 68rpx!important;
+    width: 100%;
+    background-color: #f8f8f8;
+}
+
 
 /* weui override */
 
@@ -130,4 +203,23 @@ page {
 
 .weui-form-preview__btn_danger {
     color: #F37B1D;
+}
+
+.weui-panel {
+    background-color: #fff;
+    top: -20rpx;
+    position: relative;
+    overflow: hidden;
+}
+
+.weui-panel:first-child {
+    margin-top: 20rpx;
+}
+
+.weui-navbar__item.weui-bar__item_on {
+    color: #F37B1D;
+}
+
+.weui-navbar__slider {
+    background-color: #F37B1D;
 }

@@ -1,7 +1,18 @@
+//引入filter
+import Vue2Filters from 'vue2-filters'
+var kyFilters = {
+    mixin() {}
+}
+kyFilters.filter = (key, value) => {
+    kyFilters[key] = value
+}
+Vue2Filters.install(kyFilters)
+
 //全局变量
 const data = {
     serverUrl: "https://a.9kylin.cn/",
-    imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/"
+    imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/",
+    isIpx: false
 }
 
 //sessionChoose 1是带sessionID的GET方法  2是不带sessionID的GET方法, 3是带sessionID的Post方法, 4是不带sessionID的Post方法  
@@ -206,11 +217,12 @@ function getCommunityId() {
     return wx.getStorageSync("community_id") || 1
 }
 
-module.exports = {
+export default {
     data: data,
     HttpRequest: HttpRequest,
     Login: Login,
     CheckUserValidation: CheckUserValidation,
     GetUser: getUser,
-    getCommunityId: getCommunityId
+    GetCommunityId: getCommunityId,
+    filters: kyFilters
 }

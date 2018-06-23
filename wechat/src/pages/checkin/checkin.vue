@@ -1,18 +1,29 @@
 <template>
   <div class="page">
     <div v-if="item" class="page__bd">
+      <div @click="checkdetails(item.activity.id)" class="weui-media-box weui-media-box_appmsg c-border-bottom" hover-class="weui-cell_active" >
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
+                      <image class="weui-media-box__thumb" :src="item.activity.avatar" />
+                    </div>
+                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <div class="weui-media-box__title">{{item.activity.title}}</div>
+                        <div class="weui-media-box__desc" style="float:left">{{item.activity.start_time}}</div>
+                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.activity.favorite_count}} 报名：{{item.activity.attend_count}}</div>
+                    </div>
+                </div>
+          
       <div class="weui-cells__title" v-if="!item.checkInTime">
           <h1 class="c-title-text">
             报名截止时间已过
           </h1>
         </div>
 
-        <div class="weui-cells__title">
-            <h1 class="am-article-title">
+        <div class="weui-cells__title c-text-center">
+            <h1>
               当前签到人数
-              <span style="color:#F37B1D;font-size:25px;font-weight: bold;">
-                <span style="color:#F37B1D;font-size:25px;font-weight: bold;" >{{item.checkInCount}}</span>
-              </span>
+              <div class="c-text-primary c-checkin-num">
+                <span >{{item.checkInCount}}</span>
+              </div>
             </h1>
           </div>
           <div class="weui-cells__title">
@@ -33,17 +44,7 @@
             </div>
         </div>
 
-        <div @click="checkdetails(item.activity.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.activity.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.activity.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.activity.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.activity.favorite_count}} 报名：{{item.activity.attend_count}}</div>
-                    </div>
-                </div>
-          
+        
     </div>
   </div>
 </template>
@@ -103,5 +104,10 @@ export default {
 </script>
 
 <style>
+.c-checkin-num{
+  font-weight:bold;
+font-size:35px;
+margin:30px;
 
+}
 </style>

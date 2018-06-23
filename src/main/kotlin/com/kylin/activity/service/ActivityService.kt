@@ -4,6 +4,8 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.*
 import com.kylin.activity.databases.tables.pojos.*
+import com.kylin.activity.util.CommonService
+import com.kylin.activity.util.KylinUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.*
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,6 +22,18 @@ import org.springframework.transaction.annotation.Transactional
 @Service
 @CacheConfig(cacheNames = ["activities"])
 class ActivityService {
+
+    /**
+     * 通用服务
+     */
+    @Autowired
+    private val commonService: CommonService? = null
+
+    /**
+     * 第三方工具
+     */
+    @Autowired
+    private val util: KylinUtil? = null
 
     /**
      * 用户服务
@@ -396,6 +410,28 @@ class ActivityService {
                 ") as tf on t1.id = tf.activity_id " +
                 "where t1.id = ? "
         return create!!.resultQuery(sql, id, id, id).fetchOne()
+    }
+
+    /**
+     * 取得活动基本信息
+     * @param id: 活动ID
+     * @return 活动详情记录
+     */
+    fun getActivityItem(activity:Record):MutableMap<String, Any?>{
+        var map = mutableMapOf<String, Any?>()
+        var avatar:String? = null
+        if(activity["avatar"] != null){
+            avatar =  commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+        }
+        map["id"] = activity.get("id", Int::class.java)
+        map["activity_type"] = activity.get("activity_type", Int::class.java)
+        map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+        map["attend_count"] = activity.get("attend_count", Int::class.java)
+        map["avatar"] = avatar
+        map["start_time"] = util!!.fromNow(activity.get("start_time"))
+
+        map["title"] =activity.get("title").toString()
+        return map
     }
 
     /**
