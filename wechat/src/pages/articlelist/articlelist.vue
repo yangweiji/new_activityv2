@@ -208,10 +208,4 @@ export default {
   left: 35rpx;
   transform: translateX(600rpx);
 }
-.weui-panel {
-  background-color: #fff;
-  margin-top: -2px;
-  position: relative;
-  overflow: hidden;
-}
 </style>

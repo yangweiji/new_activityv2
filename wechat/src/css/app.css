@@ -38,9 +38,13 @@ page {
 
 .weui-panel {
     background-color: #fff;
-    margin-top: -2px;
+    top: -20rpx;
     position: relative;
     overflow: hidden;
+}
+
+.weui-panel:first-child {
+    margin-top: 20rpx;
 }
 
 
@@ -68,9 +72,14 @@ page {
     position: absolute;
     right: 0;
     margin-top: 10px;
-    margin-right: 20px;
+    margin-right: 10px;
     color: #fff;
     z-index: 9999;
+    background-color: rgba(0, 0, 0, .6);
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 .community-search {
@@ -83,6 +92,11 @@ page {
     color: #fff;
     z-index: 9999;
     width: 100%;
+}
+
+.community-avatar {
+    position: relative;
+    top: 0;
 }
 
 

@@ -218,12 +218,6 @@ page,
   left: 29rpx;
   transform: translateX(500rpx);
 }
-.weui-panel {
-  background-color: #fff;
-  margin-top: -2px;
-  position: relative;
-  overflow: hidden;
-}
 .weui-media-box__desc {
   max-width: 230px;
   text-overflow: ellipsis;
