@@ -116,6 +116,12 @@ export default {
     var that = this;
     that.activityId = this.$root.$mp.query.activityId;
     this.getData();
+  },
+  onShareAppMessage(res){
+    return {
+      title: this.item.activity.title,
+      path: '/page/details/details?activityId='+ this.activityId
+    }
   }
 };
 </script>
@@ -133,21 +139,4 @@ export default {
   margin-left: 50px;
 }
 
-.c-footer-btns {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  border-top: 1px lightgray solid;
-  line-height: 48px;
-  text-align: center;
-  background-color: #f8f8f8;
-}
-.c-footer-btns .weui-badge {
-  margin-bottom: 3px;
-}
-.c-default-btn {
-  width: 25%;
-}
-.c-primary-btn {
-}
 </style>

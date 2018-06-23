@@ -2,6 +2,16 @@
   <div class="page">
     <div v-if="loaded" class="page__bd">
       <div class="weui-toptips weui-toptips_warn" v-if="errorMessage">{{errorMessage}}</div>
+      <div @click="checkdetails(item.activity.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
+                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
+                      <image class="weui-media-box__thumb" :src="item.activity.avatar" />
+                    </div>
+                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <div class="weui-media-box__title">{{item.activity.title}}</div>
+                        <div class="weui-media-box__desc" style="float:left">{{item.activity.start_time}}</div>
+                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.activity.favorite_count}} 报名：{{item.activity.attend_count}}</div>
+                    </div>
+                </div>
       <div>
         <div class="weui-cells__title" v-if="overDue">
           <h1 class="c-title-text">
@@ -12,10 +22,10 @@
         <div v-if="!overDue">
           <div class="weui-cells__title">选择活动票</div>
           <div class="weui-cells weui-cells_after-title">
-            <radio-group id="ticketInfos" @change="ticketRadioChange">
-              <label class="weui-cell weui-check__label" v-for="opt in item.ticketInfos" :key="opt.id">
+            <radio-group class="c-check-group" id="ticketInfos" @change="ticketRadioChange">
+              <label class="weui-cell weui-check__label" :class="{'c-disabled' : opt.disabled, 'c-checked':opt.checked}" v-for="opt in item.ticketInfos" :key="opt.id">
                           <radio :disabled="opt.disabled" class="weui-check" :value="opt.id" :checked="opt.checked" />
-                          <div class="weui-cell__bd">{{opt.title}}</div>
+                          <div class="weui-cell__bd">{{opt.title}}</div> 
                           <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="opt.checked">
                             <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
                           </div>
@@ -62,13 +72,15 @@
             </div>
           </div>
           <div v-if="item.checkInScore > 0" lass="weui-cells__title">
-            <label>活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
+            <label class="c-block-text">活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
           </div>
 
         </div>
       </div>
-      <div class="page__bd_spacing">
-        <button :disabled="processing" v-if="item && !item.is_over_due && item.hasTickets" @click="submitAttend()" class="weui-btn" type="primary">提交修改信息</button>
+    </div>
+    <div v-if="item && !item.is_over_due && item.hasTickets" class="c-footer-btns weui-flex c-border-top">
+      <div :disabled="processing" @click="submitAttend()" class="weui-flex__item c-bg-primary">
+        提交修改信息
       </div>
     </div>
   </div>
@@ -284,6 +296,13 @@ export default {
           });
         }
       );
+    },
+    checkdetails(activityId) {
+      var that = this;
+      that.activityId = activityId;
+      wx.navigateTo({
+        url: "../../pages/details/details?activityId=" + that.activityId
+      });
     }
   },
   created() {},
@@ -291,11 +310,12 @@ export default {
     console.log(this.$root.$mp.query);
     var that = this;
     that.loaded = false;
-    that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
+    that.activityId =
+      this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
     this.$kyutil.CheckUserValidation();
-    var user = this.$kyutil.GetUser()
-    if(user){
-      this.userId = user.id
+    var user = this.$kyutil.GetUser();
+    if (user) {
+      this.userId = user.id;
       this.getData();
     }
   },

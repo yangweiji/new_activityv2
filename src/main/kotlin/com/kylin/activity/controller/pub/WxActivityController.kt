@@ -21,6 +21,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import java.security.Timestamp
+import java.util.*
 import javax.servlet.http.HttpServletRequest
 
 /**
@@ -167,8 +169,8 @@ class WxActivityController {
         val map = mutableMapOf<String, Any?>()
 
         val user = userService!!.getUser(userId!!)
-        val currentActivity: com.kylin.activity.databases.tables.pojos.Activity? = activityService!!.getActivity(activityId!!)
-        var community = communityService!!.getCommunity(currentActivity!!.communityId)
+        val currentActivity = activityService!!.getActivityDetail(activityId)
+        var community = communityService!!.getCommunity(currentActivity!!.get("community_id", Int::class.java))
         map["user"] = user
         map["userScore"] = thirdScoreService!!.getUseableScore(userId, community!!.id)
         map["scoreRate"] = env!!.getProperty("activity.score.rate", Float::class.java)
@@ -184,20 +186,23 @@ class WxActivityController {
 
         map["attendUser"] = if (attendUser == null ) null else attendUser.intoMap()
 
-        map["activity"] = currentActivity
+        map["activity"] = activityService!!.getActivityItem(currentActivity)
 
         val mapper = jacksonObjectMapper()
 
-        var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.attendInfos)
+        var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.get("attend_infos", String::class.java))
         attendInfos[0].value = user.realName
         attendInfos[1].value = user.username
 
         map["attendInfos"] = attendInfos
 
         var checkInScore = 0
+
+        var scoreInfos = currentActivity.get("score_infos", String::class.java)
+
         //积分初始化
-        if(!currentActivity.scoreInfos.isNullOrBlank()){
-            var scoreInfo = mapper.readValue<ActivityScoreInfo>(currentActivity.scoreInfos)
+        if(!scoreInfos.isNullOrBlank()){
+            var scoreInfo = mapper.readValue<ActivityScoreInfo>(scoreInfos)
             checkInScore = if(isVip){ scoreInfo.vipUserScore } else { scoreInfo.generalUserScore }
         }
 
@@ -275,7 +280,7 @@ class WxActivityController {
                 "【免费】"
             }
 
-            var startTime = currentActivity.startTime
+            var startTime =  currentActivity.get("start_time", Date::class.java)
             var now = DateUtil.date().toTimestamp()
             var hours = DateUtil.between(now, startTime, DateUnit.HOUR)
             if(startTime < now || hours < 2){
@@ -296,7 +301,7 @@ class WxActivityController {
 
         }
 
-        var dueTime = currentActivity.attendDueTime
+        var dueTime = currentActivity.get("attend_due_time", Date::class.java)
         map["cancelMessage"] = if(cancelMessage.isNullOrEmpty())  "" else cancelMessage!!
         map["is_over_due"] = dueTime <= DateUtil.date().toTimestamp()
 
@@ -335,8 +340,8 @@ class WxActivityController {
         val map = mutableMapOf<String, Any?>()
 
         val user = userService!!.getUser(userId!!)
-        val currentActivity: com.kylin.activity.databases.tables.pojos.Activity? = activityService!!.getActivity(activityId!!)
-        var community = communityService!!.getCommunity(currentActivity!!.communityId)
+        val currentActivity = activityService!!.getActivityDetail(activityId)
+        var community = communityService!!.getCommunity(currentActivity!!.get("community_id", Int::class.java))
         map["user"] = user
         map["userScore"] = thirdScoreService!!.getUseableScore(userId, community!!.id)
         map["scoreRate"] = env!!.getProperty("activity.score.rate", Float::class.java)
@@ -355,20 +360,22 @@ class WxActivityController {
         var buyTicketPrice = attendUser!!.get("ticket_price", Double::class.java)
         var buyTicketId = attendUser!!.get("activity_ticket_id", Int::class.java)
 
-        map["activity"] = currentActivity
+        map["activity"] = activityService!!.getActivityItem(currentActivity)
 
         val mapper = jacksonObjectMapper()
 
-        var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.attendInfos)
+        var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.get("attend_infos", String::class.java))
         attendInfos[0].value = user.realName
         attendInfos[1].value = user.username
 
         map["attendInfos"] = attendInfos
 
         var checkInScore = 0
+
         //积分初始化
-        if (!currentActivity.scoreInfos.isNullOrBlank()) {
-            var scoreInfo = mapper.readValue<ActivityScoreInfo>(currentActivity.scoreInfos)
+        var scoreInfos = currentActivity.get("score_infos", String::class.java)
+        if (!scoreInfos.isNullOrBlank()) {
+            var scoreInfo = mapper.readValue<ActivityScoreInfo>(scoreInfos)
             checkInScore = if (isVip) {
                 scoreInfo.vipUserScore
             } else {
@@ -454,7 +461,7 @@ class WxActivityController {
             "【免费】"
         }
 
-        var startTime = currentActivity.startTime
+        var startTime = currentActivity.get("start_time", Date::class.java)
         var now = DateUtil.date().toTimestamp()
         var hours = DateUtil.between(now, startTime, DateUnit.HOUR)
         if (startTime < now || hours < 2) {
@@ -473,7 +480,7 @@ class WxActivityController {
         }
 
 
-        var dueTime = currentActivity.attendDueTime
+        var dueTime = currentActivity.get("attend_due_time", Date::class.java)
         map["cancelMessage"] = if (cancelMessage.isNullOrEmpty()) "" else cancelMessage!!
         map["is_over_due"] = dueTime <= DateUtil.date().toTimestamp()
 
@@ -542,25 +549,13 @@ class WxActivityController {
             }
         }
 
-        result["checkInTime"] = checkInTime
+        result["checkInTime"] = util!!.fromNow(checkInTime)
         result["checkInScore"] = checkInScore
 
 
-        var map = mutableMapOf<String, Any?>()
-        var avatar:String? = null
-        if(activity["avatar"] != null){
-            avatar =  commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
-        }
-        map["id"] = activity.get("id", Int::class.java)
-        map["activity_type"] = activity.get("activity_type", Int::class.java)
-        map["favorite_count"] = activity.get("favorite_count", Int::class.java)
-        map["attend_count"] = activity.get("attend_count", Int::class.java)
-        map["avatar"] = avatar
-        map["start_time"] = util!!.fromNow(activity.get("start_time"))
 
-        map["title"] =activity.get("title").toString()
 
-        result["activity"] = map
+        result["activity"] = activityService!!.getActivityItem(activity)
 
         var checkInCountSql = "select count(user_id) check_in_count from activity_user where activity_id =? and check_in_time is not null"
 
