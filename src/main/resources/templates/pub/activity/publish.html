@@ -11,16 +11,26 @@
     <div class="c-publish">
         <div class="am-u-lg-12">
             <div class="get-title">
-                <a href="/sec/activity/publish?type=1" class="get_font_left">
+                <a href="/sec/thirdactivity/publish?type=1" class="get_font_item">
                     <img src="/img/activity/activity.png" alt="" />
                     <br />
-                    <span style="color:white;font-size: 35px;white-space:nowrap">活动</span>
+                    <span style="color:white;font-size: 35px;white-space:nowrap">一般活动</span>
                 </a>
-                <div style="width:100px;" class="get_font_center" ></div>
-                <a href="/sec/activity/publish?type=2" class="get_font_rigth">
+                <a href="/sec/thirdactivity/publish?type=2" class="get_font_item">
                     <img src="/img/activity/match.png" alt="" />
                     <br />
-                    <span style="color:white;font-size: 35px;white-space:nowrap">赛事</span>
+                    <span style="color:white;font-size: 35px;white-space:nowrap">体育赛事</span>
+                </a>
+
+                <a href="/sec/thirdactivity/publish?type=3" class="get_font_item">
+                    <img src="/img/activity/activity.png" alt="" />
+                    <br />
+                    <span style="color:white;font-size: 35px;white-space:nowrap">抽签活动</span>
+                </a>
+                <a href="/sec/thirdactivity/publish?type=4" class="get_font_item">
+                    <img src="/img/activity/match.png" alt="" />
+                    <br />
+                    <span style="color:white;font-size: 35px;white-space:nowrap">打卡活动</span>
                 </a>
             </div>
 
@@ -34,8 +44,19 @@
 </div>
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
+    .c-publish{
+        height: 600px;
+        width:100%;
+        position: absolute;
+        background-color: #00000088;
+    }
     .c-publish .get-title{
         height: 335px;
+    }
+    .get_font_item{
+        margin-top: 50px;
+        width:250px;
+        display: inline-block;
     }
 </style>
 </body>

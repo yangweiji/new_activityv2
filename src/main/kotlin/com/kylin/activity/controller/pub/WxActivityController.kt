@@ -190,9 +190,29 @@ class WxActivityController {
 
         val mapper = jacksonObjectMapper()
 
+
+        //自动填充报名信息
         var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.get("attend_infos", String::class.java))
         attendInfos[0].value = user.realName
         attendInfos[1].value = user.username
+
+        for(attendInfo in attendInfos){
+            attendInfo.value = when {
+                attendInfo.title == "昵称" -> user.displayname
+                attendInfo.title == "邮件" -> user.email
+                attendInfo.title == "性别" -> user.gender
+                attendInfo.title == "血型" -> user.bloodType
+                attendInfo.title == "T恤尺寸" -> user.clothingSize
+                attendInfo.title == "工作单位" -> user.workCompany
+                attendInfo.title == "职业" -> user.occupation
+                attendInfo.title == "紧急联系人姓名" -> user.emergencyContactName
+                attendInfo.title == "紧急联系人电话" -> user.emergencyContactMobile
+                attendInfo.title == "是否党员" -> user.isParty
+                attendInfo.title == "家庭地址" -> user.address
+                attendInfo.title == "微信号" -> user.wechatId
+                else -> null
+            }
+        }
 
         map["attendInfos"] = attendInfos
 

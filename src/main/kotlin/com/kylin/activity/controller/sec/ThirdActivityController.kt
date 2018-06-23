@@ -140,6 +140,14 @@ class ThirdActivityController : BaseController() {
             data.canAttend = true
         }
         model.addAttribute("typeName", if (data.activityType == 2) "赛事" else "活动")
+        var titleName = when {
+            data.activityType == 1 -> "一般活动"
+            data.activityType == 2 -> "体育赛事"
+            data.activityType == 3 -> "抽签活动"
+            data.activityType == 4 -> "打卡活动"
+            else -> null
+        }
+        model.addAttribute("titleName", titleName)
         model.addAttribute("data", data)
 
         return "sec/thirdactivity/publish"
