@@ -10,8 +10,8 @@
           </span>
         </navigator>     
         <div>
-          <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" @change="swiperChange" @animationfinish="animationfinish">
-            <div v-for="item in poster" :key="index">        
+          <swiper :indicator-dots="indicatorDots" :autoplay="autoplay"   :interval="interval" :duration="duration" :circular="circular" >
+            <div v-for="item in poster" :key="item.id">        
               <swiper-item >               
                   <image :src="item.mobile_avatar" @click="checkdetails(item.activity_id)"  class="slide-image"  />
                       <span class="poster_title" >
