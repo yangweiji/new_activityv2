@@ -7,7 +7,7 @@
     <div class="weui-photosdetails__files" id="uploaderFiles">
       <block v-for="item in details" :key="item.id">
 
-        <image class="weui-photosdetails__img" @click="predivImage" :src="item.picture" mode="aspectFill" />
+        <image class="weui-photosdetails__img" @click="predivImage(item.picture)" :src="item.picture" mode="aspectFill" />
 
       </block>
     </div>
@@ -58,7 +58,7 @@ export default {
     },
     predivImage(e) {
       wx.previewImage({
-        current: e.currentTarget.picture, // 当前显示图片的http链接
+        current: e, // 当前显示图片的http链接
         urls: this.pictures // 需要预览的图片http链接列表
       });
     }
