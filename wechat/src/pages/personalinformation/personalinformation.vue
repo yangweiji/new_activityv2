@@ -1,15 +1,19 @@
 <template>
        <div class="page">
-         <div class="page__hd">
-      <!-- <div class="page__desc">表单输入</div> -->
-      <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
-      <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
-      <open-data class="userinfo-name" type="userNickName"></open-data>
+         <div class="page__hd" style="text-align:center">
+           完善个人信息    
          </div>
-          <div class="weui-media-box weui-media-box_appmsg" v-for="item in grids" :key="item.id">
-             <div class="weui-media-box__title" style="float:left;width:50%">{{item.title}}</div>
-              <div class="weui-media-box-text" > +{{item.count}}</div>
+       <div>
+       </div>
+         <div>
+           <div class="weui-cell__hd weui-check__hd_in-checkbox">
+          <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!checked"></icon>
+          <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="checked"></icon>
           </div>
+          <textarea>
+          </textarea>
+         </div>
+         
       </div>
       
 
@@ -29,6 +33,7 @@ export default {
         {id:"3", title: "北京马拉松比赛", count: 7}, 
         {id:"4", title: "长跑运动会", count:8}
       ],
+      checked:true
   
     };
   },
