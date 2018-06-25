@@ -22,6 +22,8 @@ class ProfileService {
 
     /**
      * 个人信息初始化
+     * @param communityId 团体ID
+     * @param userId 用户ID
      */
     fun getInitProInformation(communityId: Int?,userId: Int?):Result<Record>{
         val sql="select t1.*,(select count(activity_id) \n" +
