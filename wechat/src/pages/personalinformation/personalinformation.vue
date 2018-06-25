@@ -1,21 +1,142 @@
 <template>
        <div class="page">
-         <div class="page__hd" style="text-align:center">
-           完善个人信息    
-         </div>
-       <div>
-       </div>
-         <div>
-           <div class="weui-cell__hd weui-check__hd_in-checkbox">
-          <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!checked"></icon>
-          <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="checked"></icon>
+         <div class="page__hd">
+           <div class="page__title" style="text-align:center">请完善个人信息</div>
+        </div>
+        <div class="page__bd">
+
+      <div class="weui-cells__title">昵称</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入昵称" />
           </div>
-          <textarea>
-          </textarea>
-         </div>
-         
+        </div>
       </div>
-      
+
+     <div class="weui-cells__title">邮箱</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入邮箱" />
+          </div>
+        </div>
+      </div>
+
+  <div class="weui-cells__title">性别</div>
+      <div class="weui-cells weui-cells_after-title">
+        <radio-group @change="radioChange">
+          <label class="weui-cell weui-check__label" v-for="item in radioItems1" :key="index">
+            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <div class="weui-cell__bd">{{item.sex}}</div>
+            <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
+              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+            </div>
+          </label>
+        </radio-group>
+      </div>
+
+      <div class="weui-cells__title">血型</div>
+      <div class="weui-cells weui-cells_after-title">
+        <radio-group @change="radioChange">
+          <label class="weui-cell weui-check__label" v-for="item in radioItems2" :key="index">
+            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <div class="weui-cell__bd">{{item.level}}</div>
+            <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
+              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+            </div>
+          </label>
+        </radio-group>
+      </div>
+
+      <div class="weui-cells__title">T恤尺寸</div>
+      <div class="weui-cells weui-cells_after-title">
+        <radio-group @change="radioChange">
+          <label class="weui-cell weui-check__label" v-for="item in radioItems3" :key="index">
+            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <div class="weui-cell__bd">{{item.size}}</div>
+            <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
+              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+            </div>
+          </label>
+        </radio-group>
+      </div>
+
+        <div class="weui-cells__title">工作单位</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入工作单位" />
+          </div>
+        </div>
+      </div>
+
+      <div class="weui-cells__title">职业</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入职业" />
+          </div>
+        </div>
+      </div>
+
+           <div class="weui-cells__title">紧急联系人姓名</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入紧急联系人姓名" />
+          </div>
+        </div>
+      </div>
+
+        <div class="weui-cells__title">紧急联系人电话</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入紧急联系人电话" />
+          </div>
+        </div>
+      </div>
+
+    <div class="weui-cells__title">是否党员</div>
+      <div class="weui-cells weui-cells_after-title">
+        <radio-group @change="radioChange">
+          <label class="weui-cell weui-check__label" v-for="item in radioItems4" :key="index">
+            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <div class="weui-cell__bd">{{item.party}}</div>
+            <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
+              <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+            </div>
+          </label>
+        </radio-group>
+      </div>
+
+    <div class="weui-cells__title">家庭地址</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入家庭地址" />
+          </div>
+        </div>
+      </div>
+
+        <div class="weui-cells__title">微信号</div>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell weui-cell_input">
+          <div class="weui-cell__bd">
+            <input class="weui-input" placeholder="请输入微信号" />
+          </div>
+        </div>
+      </div>
+ <button class="weui-btn" type="primary"  >按钮</button>
+        </div>
+      </div>
+
+
+        
+
+    
+        
 
 </template>
 
@@ -33,7 +154,11 @@ export default {
         {id:"3", title: "北京马拉松比赛", count: 7}, 
         {id:"4", title: "长跑运动会", count:8}
       ],
-      checked:true
+      checked:true,
+      radioItems1:[{sex:"男",value:0},{sex:"女",value:1,checked:true}],
+      radioItems2:[{level:"A",value:0},{level:"B",value:1,checked:true},{level:"AB",value:2},{level:"O",value:3}],
+      radioItems3:[{size:"S",value:0},{size:"M",value:1},{size:"L",value:2},{size:"XL",value:3,checked:true},{size:"XXL",value:4},{size:"XXXL",value:5}],
+      radioItems4:[{party:"群众",value:0},{party:"党员",value:1,checked:true}],
   
     };
   },
@@ -52,6 +177,14 @@ export default {
     
         
      });
+    },
+      radioChange(e) {
+      console.log('radio发生change事件，携带value值为：' + e.mp.detail.value);
+      let radioItems = this.radioItems;
+      for (let i = 0; i < radioItems.length; ++i) {
+        radioItems[i].checked = radioItems[i].value === e.mp.detail.value;
+      }
+      this.radioItems = radioItems;
     },
   },
   created() {
@@ -91,6 +224,37 @@ export default {
   text-align: right;
   font-size: 18px;
   color: #F37B1D;
+}
+.weui-text{
+  width: 95%;
+  height: 25px;
+  border: 1px solid #cdcdcd;
+  margin-left: 2.5%
+}
+.weui-title{
+width:100%;
+height: 20px;
+margin: 2.5%;
+}
+.weui-radio-first{
+  width: 100%;
+  height: 110px;
+}
+.page_body{
+  width: 100%;
+  height: 100%;
+  padding-bottom: 5px;
+}
+.weui-button-box{
+  width:100%;
+  height: 30px;
+}
+.weui-commint-button{
+   width: 50%;
+   height: 20px;
+   padding-left:2.5%;
+   background-color: #F37B1D;
+   color:white;
 }
 
 </style>
