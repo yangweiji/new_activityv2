@@ -595,37 +595,4 @@ class WxActivityController {
 
         return result
     }
-
-
-    /**
-     * 根据团体编号获取活动信息
-     * ，活动参与人数，活动收藏人数
-     * ，已签到人数，未签到人数
-     * @param communityId 团体id
-     */
-    @RequestMapping("/getActivityItems")
-    fun getActivityItems(@RequestParam(required = false) communityId: Int,
-                         @RequestParam(required = false) type: Int): Any {
-        var activities = activityService!!.getActivityItems(communityId, type)
-        var items = mutableListOf<MutableMap<String, Any?>>()
-
-        for (activity in activities) {
-            var map = mutableMapOf<String, Any?>()
-            var avatar: String? = null
-            if (activity["avatar"] != null) {
-                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
-            }
-            map["id"] = activity.get("id", Int::class.java)
-            map["activity_type"] = activity.get("activity_type", Int::class.java)
-            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
-            map["attend_count"] = activity.get("attend_count", Int::class.java)
-            map["avatar"] = avatar
-            map["start_time"] = util!!.fromNow(activity.get("start_time"))
-
-            map["title"] = activity.get("title").toString()
-            items.add(map)
-        }
-        return items
-
-    }
 }
