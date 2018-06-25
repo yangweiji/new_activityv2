@@ -128,7 +128,7 @@
           </div>
         </div>
       </div>
- <button class="weui-btn" type="primary"  >按钮</button>
+ <button class="weui-btn" type="primary" >提交</button>
         </div>
       </div>
 
