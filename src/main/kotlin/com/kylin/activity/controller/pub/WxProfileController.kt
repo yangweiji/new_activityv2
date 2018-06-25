@@ -52,7 +52,17 @@ private val proFileService:ProfileService?=null
             map["username"]=username
             map["avatar"]=userAvatar
             map["level"]=DateUtil.thisYear()
+            if(map["level"]!=null){
+                map["level"]=mapOf<String,String>("level" to "会员")
+            }else{
+                map["level"]=mapOf<String,String>("level" to "非会员")
+            }
             map["is_real"]=item.get("is_real",Boolean::class.java)
+            if(map["is_real"]!=null){
+                map["is_real"]=mapOf<String,String>("is_real" to "已认证")
+            }else{
+                map["is_real"]=mapOf<String,String>("is_real" to "未认证")
+            }
             map["counts"]=item.get("counts",Int::class.java)
             mapList.add(map)
         }
