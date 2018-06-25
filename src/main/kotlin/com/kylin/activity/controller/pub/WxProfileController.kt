@@ -47,6 +47,8 @@ class WxProfileController {
 
     /**
      * 微信端个人信息页面初始化
+     * @param userId 用户ID
+     * @param communityId 团体ID
      */
     @GetMapping("/getPerInformation")
     fun getPerInformation(@RequestParam(required = false)userId:Int?,@RequestParam(required = false)communityId:Int?): Any {
@@ -76,16 +78,6 @@ class WxProfileController {
             map["username"] = username
             map["avatar"] = userAvatar
 
-            /* val isVip = thirdUserService!!.isVip(community!!.id, userId!!, DateUtil.thisYear())*/
-            /* if(isVip){
-                 map["level"]=isVip
-             }*/
-
-            //会员认证
-           /* var isVip = item.get("level", Int::class.java) == DateUtil.thisYear()
-            map["level"] = isVip*/
-              /*  map["level"]=item.get("level", Int::class.java)==DateUtil.thisYear()*/
-
             //是否为本年的VIP
             val isVip = proFileService!!.isVip(community!!.id, userId!!, DateUtil.thisYear())
             if(isVip) map["level"]=isVip
@@ -101,7 +93,10 @@ class WxProfileController {
             map["ne_checked_count"] = item.get("ne_checked_count", Int::class.java)
             //已签到
             map["checked_count"] = item.get("checked_count", Int::class.java)
+            //积分总额
+            map["sum_score"]=item.get("sum_score",Int::class.java)
             mapList.add(map)
+
         }
         return mapList
     }
