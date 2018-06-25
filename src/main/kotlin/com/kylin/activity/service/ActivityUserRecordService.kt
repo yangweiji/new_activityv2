@@ -82,9 +82,44 @@ class ActivityUserRecordService {
      * 操作历史记录DAO
      */
     @Autowired
-    private val actionHistoryDao: ActionHistoryDao? = null
+    private val activityUserRecordDao: ActivityUserRecordDao? = null
 
 
+    /**
+     * 获取活动的所有打开记录，并格式化好相关信息
+     * @param activityId 活动Id
+     */
 
+    fun getRecordsByActivityId(activityId:Int):ResultQuery<Record>{
+        var records = create!!.resultQuery("select t1.*, t2.record_time, t2.pictures, t2.notes from activity_user t1   left join activity_user_record t2 on t1.id = t2.activity_user_id where t1.activity_id = ?", activityId)
+        return records
+
+    }
+
+    /**
+     * 获取打卡记录
+     */
+    fun getRecord(recordId: Int):ActivityUserRecord{
+        return activityUserRecordDao!!.fetchOneById(recordId)
+    }
+
+
+    /**
+     * 保存打卡记录
+     */
+    fun saveRecord(record : ActivityUserRecord){
+        if(record.id > 0){
+            activityUserRecordDao!!.update(record)
+        } else {
+            activityUserRecordDao!!.insert(record)
+        }
+    }
+
+    /**
+     * 取消打卡记录
+     */
+    fun removeRecord(recordId: Int):Int{
+        return activityUserRecordDao!!.deleteById(recordId) as Int
+    }
 
 }

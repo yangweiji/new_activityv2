@@ -1,5 +1,6 @@
 //引入filter
 import Vue2Filters from 'vue2-filters'
+import Dateutil from './date'
 var kyFilters = {
     mixin() {}
 }
@@ -217,6 +218,17 @@ function getCommunityId() {
     return wx.getStorageSync("community_id") || 1
 }
 
+function downloadUrl(name, style) {
+    if (name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0)) {
+        return name
+    }
+    var url = 'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/' + name
+    if (style) {
+        url += '?x-oss-process=style/' + style
+    }
+    return url
+}
+
 export default {
     data: data,
     HttpRequest: HttpRequest,
@@ -224,5 +236,7 @@ export default {
     CheckUserValidation: CheckUserValidation,
     GetUser: getUser,
     GetCommunityId: getCommunityId,
-    filters: kyFilters
+    filters: kyFilters,
+    date: Dateutil,
+    downloadUrl: downloadUrl
 }

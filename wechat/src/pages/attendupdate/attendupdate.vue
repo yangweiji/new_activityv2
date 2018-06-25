@@ -78,7 +78,7 @@
         </div>
       </div>
     </div>
-    <div v-if="item" class="c-footer-btns weui-flex c-border-top">
+    <div v-if="item" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="submitAttend()" class="weui-flex__item c-bg-primary">
         提交修改信息
       </div>
@@ -91,6 +91,7 @@ import { Decimal } from "decimal.js";
 export default {
   data() {
     return {
+      isIpx:false,
       activityId: 0,
       userId: 2128,
       loaded: false, //是否加载完成
@@ -305,7 +306,9 @@ export default {
       });
     }
   },
-  created() {},
+  created() {
+    this.isIpx = this.$kyutil.data.isIpx
+  },
   onShow() {
     console.log(this.$root.$mp.query);
     var that = this;

@@ -36,7 +36,8 @@ export default {
             'pages/photosdetails/photosdetails',
             'pages/myactivitys/myactivitys',
             'pages/integrals/integrals',
-            'pages/personalinformation/personalinformation'
+            'pages/personalinformation/personalinformation',
+            'pages/activityrecord/activityrecord'
         ],
 
         // Will be filled in webpack

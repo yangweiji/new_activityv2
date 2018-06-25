@@ -131,6 +131,13 @@
         提交报名信息
       </div>
     </div>
+
+    <!-- 打卡活动， 显示打卡按钮 -->
+    <div v-if="item && item.attendUser && item.activity.activity_type == 4" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+      <div :disabled="processing" @click="gotoActivityUserRecord()" class="weui-flex__item c-bg-primary">
+        活动打卡
+      </div>
+    </div>
   </div>
 </template>
 
@@ -464,6 +471,11 @@ export default {
       wx.navigateTo({
         url: "../../pages/details/details?activityId=" + that.activityId
       });
+    },
+    gotoActivityUserRecord(){
+      wx.navigateTo({
+        url: "../../pages/activityrecord/activityrecord?activityId=" + this.activityId
+      });
     }
   },
   created() {
@@ -473,8 +485,7 @@ export default {
     console.log(this.$root.$mp.query);
     var that = this;
     that.loaded = false;
-    that.activityId =
-      this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
+    that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
     this.$kyutil.CheckUserValidation();
     var user = this.$kyutil.GetUser();
     if (user) {

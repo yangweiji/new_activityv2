@@ -82,6 +82,13 @@ class WxActivityController {
     @Autowired
     private val scoreService: ScoreService? = null
 
+
+    /**
+     * 打卡活动服务
+     */
+    @Autowired
+    private val activityUserRecordService: ActivityUserRecordService? = null
+
     /**
      * 上下文环境信息，可读取配置文件
      */
@@ -345,9 +352,9 @@ class WxActivityController {
     }
 
 
-    /*
-    *  免费票直接报名
-    * */
+    /**
+     *  取消报名
+     */
     @PostMapping("/cancelattend")
     @Transactional
     fun cancelAttend(@RequestBody id: Int?): Boolean {
@@ -628,4 +635,6 @@ class WxActivityController {
         return items
 
     }
+
+
 }
