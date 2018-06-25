@@ -23,19 +23,26 @@ class ProfileService {
     /**
      * 个人信息初始化
      */
-    fun getInitProInformation(userId:Int?):Result<Record>{
-        val sql="select count(activity_id) counts,t2.avatar,t2.displayname,t2.level,t2.username,t2.is_real,t1.user_id from activity_user t1 left join user t2 on t1.user_id=t2.id where t1.user_id=? \n" +
-                "union all" +
-                " select count(activity_id)  counts,t2.avatar,t2.displayname,t2.level,t2.username,t2.is_real,t1.user_id from activity_favorite t1 left join user t2 on t1.user_id=t2.id where t1.user_id=?  \n" +
-                "union all " +
-                "select ifnull(sum(case  when check_in_time is null then 1 else 0 end ), 0)  counts,t3.avatar,t3.displayname,t3.level,t3.username,t3.is_real,t1.user_id from  \n" +
-                " activity_user t1 left join user t3 on t1.user_id=t3.id inner join activity t2 on t1.activity_id = t2.id and t1.user_id= ?   and t2.end_time > now() \n" +
-                "  union all " +
-                " select count(activity_id) counts,t2.avatar,t2.displayname,t2.level,t2.username,t2.is_real,t1.user_id from activity_user t1 left join user t2 on t1.user_id=t2.id where t1.user_id=?  \n" +
-                "and check_in_time is not null " +
-                "union all " +
-                " select ifnull(sum(score), 0) counts ,t2.avatar,t2.displayname,t2.level,t2.username,t2.is_real,t1.user_id from score_history t1 left join user t2 on t1.user_id=t2.id where t1.user_id=? \n"
-       return create!!.resultQuery(sql,userId,userId,userId,userId,userId).fetch()
+    fun getInitProInformation(communityId: Int?,userId: Int?):Result<Record>{
+        val sql="select t1.*,(select count(activity_id) \n" +
+                "from activity_user where user_id=t1.id ) attend_user_count,\n" +
+                "(select count(activity_id)\n" +
+                " from activity_favorite where user_id=t1.id) favorite_count,\n" +
+                "(select ifnull(sum(case  when check_in_time is null then 1 else 0 end ), 0) from \n" +
+                " activity_user inner join activity t2 on activity_id = t2.id and t2.end_time > now() where user_id=t1.id ) ne_checked_count,\n" +
+                "(select count(activity_id) from activity_user where user_id=t1.id and check_in_time is not null) checked_count,\n" +
+                "(select ifnull(sum(score), 0) from score_history where user_id=t1.id) sum_score\n" +
+                " from user t1 left join community_user c on t1.id=c.user_id left join community c1 on c.community_id=c1.id where c.community_Id=? and t1.id=? "
+        return create!!.resultQuery(sql,communityId,userId).fetch()
     }
 
+
+    /**
+     * 检查当前用户是否是团体的会员
+     */
+    fun isVip(communityId: Int?, userId: Int?, year: Int): Boolean {
+        val sql = "select count(*) counts from community_user where user_id = ? and community_id = ? and level = ?"
+        val counts = create!!.fetchOne(sql, userId, communityId, year)
+        return counts != null && counts.get("counts", Int::class.java) > 0
+    }
 }
