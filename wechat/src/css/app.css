@@ -194,6 +194,11 @@ page {
     background-color: #f8f8f8;
 }
 
+.c-note-text {
+    text-align: center;
+    font-size: 18px;
+}
+
 
 /* weui override */
 

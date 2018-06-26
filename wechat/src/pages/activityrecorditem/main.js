@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import App from './acticityrecorditem'
+import App from './activityrecorditem'
 
 const app = new Vue(App)
 app.$mount()

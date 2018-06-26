@@ -229,6 +229,19 @@ function downloadUrl(name, style) {
     return url
 }
 
+
+function httpGet(url, param) {
+    return new Promise((resolve, reject) => {
+        HttpRequest(true, url, false, "", param, "GET", false, resolve, reject)
+    })
+}
+
+function httpPost(url, param) {
+    return new Promise((resolve, reject) => {
+        HttpRequest(true, url, false, "", param, "POST", false, resolve, reject)
+    })
+}
+
 export default {
     data: data,
     HttpRequest: HttpRequest,
@@ -238,5 +251,7 @@ export default {
     GetCommunityId: getCommunityId,
     filters: kyFilters,
     date: Dateutil,
-    downloadUrl: downloadUrl
+    downloadUrl: downloadUrl,
+    get: httpGet,
+    post: httpPost
 }
