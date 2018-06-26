@@ -51,11 +51,11 @@ class WxProfileController {
      * @param communityId 团体ID
      */
     @GetMapping("/getPerInformation")
-    fun getPerInformation(@RequestParam(required = false)userId:Int?,@RequestParam(required = false)communityId:Int?): Any {
-         /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
-         var community = communityService!!.getCommunity(communityId!!)
+    fun getPerInformation(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
+        /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
+        var community = communityService!!.getCommunity(communityId!!)
 
-        var proInformation = proFileService!!.getInitProInformation(communityId,userId)
+        var proInformation = proFileService!!.getInitProInformation(communityId, userId)
 
         var mapList = mutableListOf<MutableMap<String, Any?>>()
         for (item in proInformation) {
@@ -80,7 +80,7 @@ class WxProfileController {
 
             //是否为本年的VIP
             val isVip = proFileService!!.isVip(community!!.id, userId!!, DateUtil.thisYear())
-            if(isVip) map["level"]=isVip
+            if (isVip) map["level"] = isVip
             //实名认证
             map["is_real"] = item.get("is_real", Boolean::class.java)
             if (map["is_real"] == null) 0 else map["is_real"]
@@ -94,10 +94,27 @@ class WxProfileController {
             //已签到
             map["checked_count"] = item.get("checked_count", Int::class.java)
             //积分总额
-            map["sum_score"]=item.get("sum_score",Int::class.java)
+            map["sum_score"] = item.get("sum_score", Int::class.java)
             mapList.add(map)
 
         }
         return mapList
     }
+
+    /**
+     * 微信端个人信息页面初始化
+     * @param userId 用户ID
+     * @param communityId 团体ID
+     */
+    @GetMapping("/getIntegral")
+    fun getintegral(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
+        val scores = proFileService!!.getActivityIntegral(communityId, userId)
+
+        var resuls = mutableListOf<Any>()
+        if(scores != null){
+            scores.forEach { resuls.add(it.intoMap()) }
+        }
+        return resuls
+    }
+
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div class="page__bd">
+    <div class="page__bd" v-for="item in grids" :key="item.id">
 
       <div v-if="xs==1">
         <!-- banner -->
@@ -21,7 +21,7 @@
          <navigator url="/pages/myactivitys/myactivitys">
              <dl>
            <dt>
-             3
+            {{item.attend_user_count}}
            </dt>
            <dd>
              已参与
@@ -34,7 +34,7 @@
            <navigator url="/pages/myactivitys/myactivitys">
          <dl>
            <dt>
-             2
+          {{item.ne_checked_count}}
            </dt>
            <dd>
             需签到
@@ -46,10 +46,10 @@
            <navigator url="/pages/myactivitys/myactivitys">
           <dl>
            <dt>
-             1
+             {{item.checked_count}}
            </dt>
            <dd>
-             已签到
+            已签到
            </dd>
          </dl>
            </navigator>
@@ -58,10 +58,10 @@
            <navigator url="/pages/myactivitys/myactivitys">
           <dl>
            <dt>
-             2
+              {{item.favorite_count}}
            </dt>
            <dd>
-             我喜欢
+           我喜欢
            </dd>
          </dl>
            </navigator>
@@ -98,7 +98,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>积分</div>
               </div>
-              <div class="weui-cell_integral" >20</div>
+              <div class="weui-cell_integral" >{{item.sum_score}}</div>
           </navigator> 
 
           <navigator url="/pages/personalinformation/personalinformation" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -118,7 +118,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>会员</div>
               </div>
-              <div class="weui-cell_comment">非会员</div>
+              <div class="weui-cell_comment">{{item.level!=true?"非会员":"会员"}}</div>
           </navigator> 
 
           <!-- 如下为全局功能 -->
@@ -129,7 +129,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>实名认证</div>
               </div>
-              <div class="weui-cell_comment">未认证</div>
+              <div class="weui-cell_comment">{{item.is_real!=true?"未认证":"已认证"}}</div>
           </navigator> 
 
           <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -205,35 +205,53 @@ export default {
     return {
       icon20: base64.icon20,
       xs: 1,
-
       community: {
         id: 1, //默认的组织团体ID
         name: "北京市马拉松协会",
         background: "NzrSDNSBEP.png"
-      }
+      },
+      grids:[]
     };
   },
   components: {},
   methods: {
-    getData() {},
+    getData() {
+      var that = this;
+      var param = {
+        communityId: that.community.id,
+        userId: wx.getStorageSync("user").id
+      };
+      this.$kyutil.HttpRequest(
+        true,
+        "/pub/wx/profile/getPerInformation",
+        false,
+        "",
+        param,
+        "GET",
+        false,
+        function(res) {
+          console.log(res);
+          that.grids=res;
+        }
+      );
+    },
     qh(cs) {
       this.xs = cs;
     }
   },
   created() {
-    console.log("oneself created");
+    console.log();
   },
   onLoad() {
     this.$kyutil.CheckUserValidation();
-    if (wx.getStorageSync("user")) {
-      this.getData();
-    }
   },
   onShow() {
-    console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
+    // console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
     //接受参数
     if (this.$store.state.community) {
       this.community = this.$store.state.community;
+      this.users= wx.getStorageSync("user");
+       console.log(this.users);
       //设置标题
       wx.setNavigationBarTitle({
         title: this.community.name
@@ -341,31 +359,31 @@ export default {
   justify-content: center;
   overflow: hidden;
 }
-.wx_counts{
+.wx_counts {
   width: 100%;
-  height:60px;
+  height: 60px;
 }
-.wx_group_count dl dt{
-   text-align: center;
-   color:#F37B1D;
+.wx_group_count dl dt {
+  text-align: center;
+  color: #f37b1d;
 }
-.wx_group_count dd{
-  color:#8a8a8a;
+.wx_group_count dd {
+  color: #8a8a8a;
 }
-.weui-cell_integral{
-  height:100%;
-  width:30px;
-  background-color:#F37B1D;
-  text-align:center;
-  color:#ffffff;
-  border-radius: 50%
+.weui-cell_integral {
+  height: 100%;
+  width: 30px;
+  background-color: #f37b1d;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 50%;
 }
-.weui-cell_comment{
- height:30%;
-  width:55px;
-  background-color:#F37B1D;
-  text-align:center;
-  color:#ffffff;
-  border-radius: 50%
+.weui-cell_comment {
+  height: 30%;
+  width: 55px;
+  background-color: #f37b1d;
+  text-align: center;
+  color: #ffffff;
+  border-radius: 50%;
 }
 </style>

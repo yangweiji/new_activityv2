@@ -47,4 +47,10 @@ class ProfileService {
         val counts = create!!.fetchOne(sql, userId, communityId, year)
         return counts != null && counts.get("counts", Int::class.java) > 0
     }
+    fun getActivityIntegral(communityId: Int?,userId: Int?):Result<Record>{
+        var sql = "select t1.*, t2.title from score_history t1 left join activity t2 on t1.activity_id = t2.id where t1.user_id=? and t1.community_id=? order by t1.created desc"
+        val scores = create!!.resultQuery(sql,userId,communityId).fetch()
+        return scores
+    }
+
 }
