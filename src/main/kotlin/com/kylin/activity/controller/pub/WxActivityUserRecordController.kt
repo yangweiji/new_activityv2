@@ -49,11 +49,15 @@ class WxActivityUserRecordController {
 
 
     /**
-     * 获取打卡记录
+     * 获取打卡记录,指定recordId时，直接返回指定的record， 否则返回指定活动和用户当天的打卡记录
      */
     @GetMapping("/get")
-    fun getRecord(@RequestParam(required = true) id:Int): Any{
-        return activityUserRecordService!!.getRecord(id)
+    fun getRecord(@RequestParam(required = false) recordId:Int?,@RequestParam(required = false) activityUserId:Int?): Any?{
+        return if(recordId != null && recordId > 0) {
+            activityUserRecordService!!.getRecord(recordId!!)
+        } else {
+            activityUserRecordService!!.getTodayRecord( activityUserId!!)
+        }
     }
 
     /**

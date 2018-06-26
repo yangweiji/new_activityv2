@@ -1,19 +1,12 @@
 package com.kylin.activity.service
 
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.*
 import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
-import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.*
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.cache.annotation.CacheConfig
-import org.springframework.cache.annotation.CacheEvict
-import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 /**
  * 活动服务
@@ -101,6 +94,17 @@ class ActivityUserRecordService {
      */
     fun getRecord(recordId: Int):ActivityUserRecord{
         return activityUserRecordDao!!.fetchOneById(recordId)
+    }
+
+    /**
+     * 获取指定活动和用户当天的打卡记录
+     */
+    fun getTodayRecord(activityUserId:Int):ActivityUserRecord?{
+        var item = create!!.resultQuery("select * from  activity_user_record   where activity_user_id = ? and DATE(`record_time`)=curdate()", activityUserId)
+        if(item.count() > 0) {
+            return item.fetchOneInto(ActivityUserRecord::class.java)
+        }
+        return null
     }
 
 

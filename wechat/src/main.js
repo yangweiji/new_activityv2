@@ -37,7 +37,8 @@ export default {
             'pages/myactivitys/myactivitys',
             'pages/integrals/integrals',
             'pages/personalinformation/personalinformation',
-            'pages/activityrecord/activityrecord'
+            'pages/activityrecord/activityrecord',
+            'pages/activityrecorditem/activityrecorditem'
         ],
 
         // Will be filled in webpack

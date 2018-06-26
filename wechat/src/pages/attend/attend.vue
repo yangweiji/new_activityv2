@@ -14,7 +14,7 @@
                 </div>
       <div>
         <div class="weui-cells__title" v-if="overDue">
-          <h1 class="c-title-text">
+          <h1 class="c-note-text">
             报名截止时间已过
           </h1>
         </div>
@@ -509,8 +509,4 @@ export default {
            * Copyright 2017 Tencent, Inc.
            * Licensed under the MIT license
            */
-.c-title-text {
-  text-align: center;
-  font-size: 18px;
-}
 </style>

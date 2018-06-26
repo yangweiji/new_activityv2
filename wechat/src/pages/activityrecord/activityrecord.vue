@@ -22,13 +22,23 @@
         </div>
         <div class="weui-tab__panel">
           <div v-if="activeTab.id == 1">
-            <Calendar :months="calendar.months" :value="calendar.value" @next="next" @prev="prev" :events="events" clean="true" multi="true" @select="select" ref="calendar" @selectMonth="selectMonth" @selectYear="selectYear" />
+            <Calendar :months="calendar.months" :begin="calendar.begin" :end="calendar.end" :value="calendar.value" @next="next" @prev="prev" :events="events" clean="true" @select="select" ref="calendar" @selectMonth="selectMonth" @selectYear="selectYear" />
           </div>
         </div>
+
+         <div class="weui-cells__title" v-if="isEnd">
+          <h1 class="c-note-text">
+            活动已经结束
+          </h1>
+        </div>
+
       </div>
-      <div v-if="item && item.user_id == userId" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
-        <div :disabled="processing" @click="addRecord()" class="weui-flex__item c-bg-primary">
-          提交
+      <div v-if="item && !isEnd" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+        <div v-if="canAddRecord" :disabled="processing" @click="addRecord()" class="weui-flex__item c-bg-primary">
+          今日打卡
+        </div>
+        <div v-if="!hasAttendActivity" :disabled="processing" @click="gotoAttend()" class="weui-flex__item c-bg-primary">
+          立即报名
         </div>
       </div>
     </div>
@@ -44,11 +54,13 @@
     data() {
       return {
         isIpx: false,
+        isEnd:false,
         loaded: false,
         item: null,
         activityId: null,
         userId: null,
         canAddRecord:false,
+        hasAttendActivity:false,
         tabs: [{
           id: 1,
           title: '我的打卡',
@@ -60,8 +72,7 @@
         }],
         activeTab: null,
         calendar: {
-          months: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
-          value: null,
+          value: [],
           begin: null,
           end: null,
           lunar: false,
@@ -122,15 +133,22 @@
 
 
             var now = new Date()
-            
 
-            that.canAddRecord =  that.calendar.startTime <= now && now <= that.calendar.endTime
+            //已经报名的用户，至少有一条记录
+            that.hasAttendActivity = that.myRecords.length > 0
+
+            //活动已经结束
+            that.isEnd = now > that.calendar.endTime
+
+            //在活动期间，可以进行打卡操作
+            that.canAddRecord =  that.hasAttendActivity && that.calendar.startTime <= now && now <= that.calendar.endTime
+
             if(that.calendar.startTime > now){
               that.calendar.value = that.calendar.begin
             } else if(now >= that.calendar.endTime){
               that.calendar.value = that.calendar.end
             } else {
-that.calendar.value = that.dateArray(now)
+              that.calendar.value = that.dateArray(now)
             }
 
             that.loaded = true;
@@ -141,11 +159,22 @@ that.calendar.value = that.dateArray(now)
         var realDate = this.$kyutil.date.anyToDate(date) 
         return [realDate.getFullYear(), realDate.getMonth() + 1, realDate.getDate()]
       },
-      checkdetails(activityId) {
+      checkdetails() {
         var that = this;
-        that.activityId = activityId;
         wx.navigateTo({
           url: "../../pages/details/details?activityId=" + that.activityId
+        });
+      },
+      gotoAttend() {
+        var that = this;
+        wx.navigateTo({
+          url: "../../pages/attend/attend?activityId=" + that.activityId
+        });
+      },
+      addRecord(){
+        var that = this;
+        wx.navigateTo({
+          url: "../../pages/activityrecorditem/activityrecorditem?uid=" + that.myRecords[0].id
         });
       },
       tabClick(tab) {
@@ -166,9 +195,12 @@ that.calendar.value = that.dateArray(now)
       setToday(val, val1, val2) {
         this.$refs.calendar.setToday();
       },
-      select(val, val2) {
-        console.log(val)
-        console.log(val2)
+      select(date, record) {
+        if(record){
+          wx.navigateTo({
+            url: "../../pages/activityrecorditem/activityrecorditem?id=" + record.id
+          });
+        }
       }
     },
     created() {
