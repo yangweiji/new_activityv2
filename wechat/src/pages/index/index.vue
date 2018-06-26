@@ -28,7 +28,7 @@
       <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
         <block v-for="(item,index) in grids" :key='index'>
           <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
-            <image  :src='item.src' style="width:50px;height:50px"/>
+            <image  :src='item.src' style="width:70px;height:70px"/>
             <div class="weui-grid_label" style="text-align:center">{{item.name}}</div>
           </navigator>
         </block>

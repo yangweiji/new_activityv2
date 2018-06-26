@@ -183,7 +183,7 @@ export default {
           userId: wx.getStorageSync("user").id
       };
       this.$kyutil.get("/pub/wx/profile/getIntoPersonalInformation", param, "GET").then(res => {
-        that.users=res[0];
+        that.users=res;
         console.log(res);
       })
     },

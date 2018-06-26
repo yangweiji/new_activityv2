@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
@@ -7,6 +8,7 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -111,6 +113,8 @@ class WxProfileController {
         return scores.intoMaps()
     }
 
+
+
     /**
      * 小程序：完善个人信息页面
      * @param userId 用户id
@@ -118,9 +122,36 @@ class WxProfileController {
      */
     @CrossOrigin
     @GetMapping("/getIntoPersonalInformation")
-    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): List<Any> {
-        var personalInformationList = proFileService!!.getIntoPersonalInformation(userId)
-        return personalInformationList.intoMaps()
+    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): User {
+        return userService!!.getUser(userId!!)
+    }
+
+
+    /**
+     * 小程序：更新并保存用户信息
+     */
+    @CrossOrigin
+    @Transactional
+    @GetMapping("/savePersonalInformation")
+    fun savePersonalInformation(displayname: String?, email: String?, gender: Int?,
+                                bloodType: String?, clothingSize: String?, workCompany: String?, occupation: String?,
+                                emergencyContactName: String?, emergencyContactMobile: String?, isParty: Boolean?,
+                                address: String?, wechatId: String?):Boolean {
+        var userInfo=proFileService!!.fetchByUsername()
+        userInfo.displayname=displayname
+        userInfo.gender=gender
+        userInfo.email=email
+        userInfo.bloodType=bloodType
+        userInfo.clothingSize=clothingSize
+        userInfo.workCompany=workCompany
+        userInfo.occupation=occupation
+        userInfo.emergencyContactName=emergencyContactName
+        userInfo.emergencyContactMobile=emergencyContactMobile
+        userInfo.isParty=isParty
+        userInfo.address=address
+        userInfo.wechatId=wechatId
+        proFileService!!.updateUserInfo(userInfo)
+        return true
     }
 
 
