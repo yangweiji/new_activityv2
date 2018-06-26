@@ -4,11 +4,10 @@ import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
+import org.jooq.Record
+import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * Created by 9kylin on 2018-06-12.
@@ -107,14 +106,25 @@ class WxProfileController {
      * @param communityId 团体ID
      */
     @GetMapping("/getIntegral")
-    fun getintegral(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
+    fun getIntegral(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): List<Any> {
         val scores = proFileService!!.getActivityIntegral(communityId, userId)
-
-        var resuls = mutableListOf<Any>()
-        if(scores != null){
-            scores.forEach { resuls.add(it.intoMap()) }
-        }
-        return resuls
+        return scores.intoMaps()
     }
+
+    /**
+     * 小程序：完善个人信息页面
+     * @param userId 用户id
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/getIntoPersonalInformation")
+    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): List<Any> {
+        var personalInformationList = proFileService!!.getIntoPersonalInformation(userId)
+        return personalInformationList.intoMaps()
+    }
+
+
+
+
 
 }

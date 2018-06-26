@@ -17,7 +17,7 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入邮箱" />
+            <input class="weui-input" v-model="users.email" placeholder="请输入邮箱" />
           </div>
         </div>
       </div>
@@ -170,7 +170,7 @@ export default {
         { party: "群众", value: 0 },
         { party: "党员", value: 1, checked: true }
       ],
-      users:[]
+      users:{}
     };
   },
   computed: {},
@@ -179,14 +179,13 @@ export default {
     //取得文章信息
     getData() {
       var that = this;
-       that.users= wx.getStorageSync("user");
-       console.log(that.users);
       var param = {
-        communityId: 1
+          userId: wx.getStorageSync("user").id
       };
-      global.HttpRequest(true, "", false, "", param, "GET", false, function(
-        res
-      ) {});
+      this.$kyutil.get("/pub/wx/profile/getIntoPersonalInformation", param, "GET").then(res => {
+        that.users=res[0];
+        console.log(res);
+      })
     },
     radioChange(e) {
       console.log("radio发生change事件，携带value值为：" + e.mp.detail.value);

@@ -53,4 +53,16 @@ class ProfileService {
         return scores
     }
 
+
+    /**
+     *
+     * 小程序：完善个人信息页面
+     * @param userId 用户id
+     *
+     */
+    fun getIntoPersonalInformation(userId: Int?):Result<Record> {
+        val sql="select t1.* from user t1 where t1.id=? "
+        return create!!.resultQuery(sql,userId).fetch()
+    }
+
 }
