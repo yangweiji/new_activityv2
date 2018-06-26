@@ -4,7 +4,6 @@
       <div class="weui-cells__title">
         上传图片
       </div>
-<<<<<<< HEAD
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell">
           <div class="weui-cell__bd">
@@ -12,10 +11,6 @@
           </div>
         </div>
       </div>
-      
-=======
-      <uploader v-model="item.pictures"></uploader>
->>>>>>> 4040b065bbc047ed6cbbe66288282a82bf203039
       <div class="weui-cells__title">
         备注信息
       </div>
@@ -73,15 +68,9 @@ import kyuploader from '@/components/kyuploader.vue'
       },
       save() {
         this.processing = true
-<<<<<<< HEAD
         this.$kyutil.post("/pub/wx/activityuserrecord/save", this.item).then(res => {
           that.item = res;
           that.processing = false
-=======
-        this.$kyutil.post("/pub/wx/activityuserrecord/get", this.item).then(res => {
-          this.item = res;
-          this.processing = false
->>>>>>> 4040b065bbc047ed6cbbe66288282a82bf203039
         })
       }
       
