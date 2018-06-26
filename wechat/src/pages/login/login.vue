@@ -22,9 +22,9 @@
       <div class="weui-toptips" :class="{'weui-toptips_warn': isError, 'weui-toptips_primary': !isError}" 
             v-if="showTopTips">{{infoMessage}}</div>
 
-      <div class="weui-cells__title">用户登录，
+      <!-- <div class="weui-cells__title">用户登录，
         <navigator url="../../pages/register/register" open-type="redirect" hover-class="navigator-hover" class="weui-agree__link">新用户注册</navigator>
-      </div>
+      </div> -->
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
           <div class="weui-cell__hd">
@@ -53,16 +53,29 @@
           </div>
         </div>
 
-        <div class="weui-cell weui-cell_input">
+        <!-- <div class="weui-cell weui-cell_input">
           <div class="weui-cell__hd">
             <div class="weui-label">密码</div>
           </div>
           <div class="weui-cell__bd">
             <input class="weui-input" password type="text" placeholder="请输入字符和数字密码" v-model="password" />
           </div>
-        </div>
+        </div> -->
         
       </div>
+
+      <!-- <checkbox-group @click="bindAgreeChange">
+        <label class="weui-agree" for="weuiAgree">
+          <div class="weui-agree__text">
+            <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="isAgree" />
+            <div class="weui-agree__checkbox-icon">
+              <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" v-if="isAgree"></icon>
+            </div>
+            阅读并同意
+            <navigator url="" class="weui-agree__link">《相关条款》</navigator>
+          </div>
+        </label>
+      </checkbox-group> -->
 
       <!-- <div class="weui-cells__tips">底部说明文字底部说明文字</div> -->
       <div class="weui-btn-area">
@@ -102,7 +115,6 @@ export default {
     disabled () {
       if (!this.username || this.username.length != 11 
             || !this.vercode || this.vercode.length == 0
-            || !this.password || this.password.length == 0
           )
       {
         return true;
@@ -124,7 +136,7 @@ export default {
       //获取短信验证码
       var that = this;
       if (that.canGetVerCode) {
-        this.$kyutil.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
+        this.$kyutil.HttpRequest(false, "/pub/wx/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
           if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
@@ -151,28 +163,6 @@ export default {
         console.log("请等待..");
       }
     },
-    // bindLogin (e) {
-    //   //验证用户名和密码
-    //   var that = this;
-    //   var param = {
-    //     username: that.username,
-    //     password: that.password,
-    //     vercode: that.vercode,
-    //     openId: wx.getStorageSync("sessionInfo").openid,
-    //   };
-
-    //   this.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
-    //     if (res.code == 200) {
-    //       wx.navigateBack({
-    //         delta: 1
-    //       })
-    //     }
-    //     else {
-    //       that.infoMessage = res.message;
-    //       that.showTopTipsFun();
-    //     }
-    //   })
-    // },
     bindGetUserInfo: function(e) {
       console.log("bindGetUserInfo: ", e)
       //验证用户名和密码
@@ -194,6 +184,9 @@ export default {
               password: that.password,
               vercode: that.vercode,
               openId: res.openid,
+              nickName: res.nickName,
+              avatarUrl: res.avatarUrl,
+              gender: res.gender
             }
             that.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
               console.log("userLogin: " + res)
@@ -203,9 +196,6 @@ export default {
                     if (res) {
                         //将user存储于storage
                         wx.setStorageSync("user", res)
-                        // wx.navigateBack({
-                        //   delta: 1
-                        // });
                         wx.showToast({
                           title: '登录成功，跳转中...',
                           icon: 'success',

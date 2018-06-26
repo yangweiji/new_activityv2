@@ -18,6 +18,11 @@ import javax.validation.constraints.NotNull
 class SmsTemplateListProperties {
 
     /**
+     * 验证码过期
+     */
+    var timeout: Long = 0L
+
+    /**
      * 短信签名
      */
     var sign: String = ""

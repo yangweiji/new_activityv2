@@ -5,6 +5,7 @@ import com.kylin.activity.model.MessageResult
 import com.kylin.activity.service.UserService
 import com.kylin.activity.service.VerCodeService
 import com.kylin.activity.service.WxService
+import com.kylin.activity.sms.SmsTemplateListProperties
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import me.chanjar.weixin.common.exception.WxErrorException
@@ -60,6 +61,12 @@ class WxAuthController {
      */
     @Autowired
     private val verCodeService: VerCodeService? = null
+
+    /**
+     * 短信配置
+     */
+    @Autowired
+    private val templateListProperties: SmsTemplateListProperties? = null
 
     @GetMapping("/getSessionInfo")
     fun getSessionInfo(@RequestParam(required = false) code: String?): Any {
@@ -167,34 +174,79 @@ class WxAuthController {
         var username = map["username"]
         var password = map["password"]
         var verCode = map["vercode"]
+        //OpenId
         var openId = map["openId"]
+        //用户昵称
+        var nickName = map["nickName"]
+        //用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表132*132正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
+        var avatarUrl = map["avatarUrl"]
+        //用户的性别，值为1时是男性，值为2时是女性，值为0时是未知
+        var gender = map["gender"]
 
         var messageResult = MessageResult()
         var verCodeInfo = verCodeService!!.getVerCode(username.toString(), verCode.toString())
 
         //登录，短信有效期10分钟
-        if (verCodeInfo != null && DateUtil.betweenMs(DateUtil.date(), verCodeInfo!!.created) <= 1000 * 60 * 10) {
+        if (verCodeInfo != null && DateUtil.betweenMs(DateUtil.date(), verCodeInfo!!.created) <= templateListProperties!!.timeout) {
             var user = userService!!.getUser(username.toString())
             if (user == null) {
-                messageResult.code = -2
-                messageResult.message = "用户名无效！"
-                return JsonUtils.toJson(messageResult)
-            }
+//                messageResult.code = -2
+//                messageResult.message = "用户名无效！"
+//                return JsonUtils.toJson(messageResult)
 
-            var coder = BCryptPasswordEncoder()
-            if (coder.matches(password, user!!.password)){
-                //更新openid
-                user!!.openId = openId
-                userService!!.update(user)
-                LogUtil.printLog("更新用户OK, ID: ${user.id}")
+                //添加用户信息
+                var user = User()
+                user.username = username
+                var coder = BCryptPasswordEncoder()
+                //初始密码: 123456
+                user.password = coder.encode("123456")
+                user.enabled = true
+                user.created = DateUtil.date().toTimestamp()
+                //显示名称与登录名一致
+                user.displayname = nickName
+                user.avatar = avatarUrl
+                user.gender = gender!!.toInt()
+                user.openId = openId
 
-                messageResult.code = 200
-                messageResult.message = "SUCCESS"
+                userService!!.insert(user)
+                LogUtil.printLog("注册用户OK, ID: ${user.id}")
             }
             else {
-                messageResult.code = -3
-                messageResult.message = "密码无效！"
+                //更新OpenId
+                user!!.openId = openId
+                if (user.displayname == null) {
+                    //显示名称与登录名一致
+                    user.displayname = nickName
+                }
+                if (user.avatar == null) {
+                    user.avatar = avatarUrl
+                }
+                if (user.gender == null) {
+                    user.gender = gender!!.toInt()
+                }
+
+                userService!!.update(user)
+                LogUtil.printLog("更新用户OK, ID: ${user.id}")
             }
+
+            messageResult.code = 200
+            messageResult.message = "SUCCESS"
+
+//            var coder = BCryptPasswordEncoder()
+//            if (coder.matches(password, user!!.password)){
+//                //更新openid
+//                user!!.openId = openId
+//                userService!!.update(user)
+//                LogUtil.printLog("更新用户OK, ID: ${user.id}")
+//
+//                messageResult.code = 200
+//                messageResult.message = "SUCCESS"
+//            }
+//            else {
+//                messageResult.code = -3
+//                messageResult.message = "密码无效！"
+//            }
+
         }
         else {
             messageResult.code = -1
