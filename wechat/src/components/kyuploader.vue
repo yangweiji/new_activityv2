@@ -88,7 +88,7 @@
         var startUpload = function(uploadFilePath) {
           var fileName = random_string(10) + get_suffix(uploadFilePath)
           wx.uploadFile({
-            url: "https://oss-cn-beijing.aliyuncs.com",
+            url: "https://fs.9kylin.cn",
             filePath: uploadFilePath,
             name: 'file',
             formData: {
