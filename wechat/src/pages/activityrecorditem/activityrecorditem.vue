@@ -2,12 +2,12 @@
   <div class="page">
     <div v-if="item" class="page__bd">
       <div class="weui-cells__title">
-        上传图片
+        打卡图片
       </div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <kyuploader v-model="item.pictures"></kyuploader>
+            <kyuploader :disabled="!editable" v-model="item.pictures"></kyuploader>
           </div>
         </div>
       </div>
@@ -17,15 +17,15 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea class="" placeholder="请输入..." v-model="item.notes" style="height: 3.3em" />
+            <textarea :disabled="!editable" placeholder="请输入..." v-model="item.notes" style="height: 3.3em" />
             <div class="weui-textarea-counter">0/200</div>
           </div>
         </div>
       </div>
     </div>
-    <div v-if="item && item.user_id == userId" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+    <div v-if="item && editable" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="save()" class="weui-flex__item c-bg-primary">
-        提交
+        保存
       </div>
     </div>
   </div>
@@ -38,6 +38,7 @@ import kyuploader from '@/components/kyuploader.vue'
     data() {
       return {
         isIpx: false,
+        editable:false,
         activityUserId: null,
         loaded: false,
         item: null,
@@ -50,6 +51,7 @@ import kyuploader from '@/components/kyuploader.vue'
     methods: {
       //取得文章信息
       getData() {
+        this.editable = !!this.activityUserId
         this.processing = true
         var param = {}
         if(this.recordId){
@@ -69,8 +71,12 @@ import kyuploader from '@/components/kyuploader.vue'
       save() {
         this.processing = true
         this.$kyutil.post("/pub/wx/activityuserrecord/save", this.item).then(res => {
-          that.item = res;
-          that.processing = false
+          this.back()
+        })
+      },
+      back(){
+        wx.navigateBack({
+          delta: 1
         })
       }
       

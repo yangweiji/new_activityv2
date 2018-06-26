@@ -84,7 +84,7 @@ class ActivityUserRecordService {
      */
 
     fun getRecordsByActivityId(activityId:Int):ResultQuery<Record>{
-        var records = create!!.resultQuery("select t1.*, t2.record_time, t2.pictures, t2.notes from activity_user t1   left join activity_user_record t2 on t1.id = t2.activity_user_id where t1.activity_id = ?", activityId)
+        var records = create!!.resultQuery("select t1.*, t2.id record_id, t2.record_time, t2.pictures, t2.notes from activity_user t1   left join activity_user_record t2 on t1.id = t2.activity_user_id where t1.activity_id = ?", activityId)
         return records
 
     }
@@ -112,7 +112,7 @@ class ActivityUserRecordService {
      * 保存打卡记录
      */
     fun saveRecord(record : ActivityUserRecord){
-        if(record.id > 0){
+        if(record.id != null && record.id > 0){
             activityUserRecordDao!!.update(record)
         } else {
             activityUserRecordDao!!.insert(record)
