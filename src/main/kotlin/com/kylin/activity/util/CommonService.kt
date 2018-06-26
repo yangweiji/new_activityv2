@@ -36,11 +36,7 @@ class CommonService {
     /**
      * 活动签名
      */
-    val activitySmsSign: String get() = env!!.getProperty("activity.sms.sign")
-    /**
-     * 活动取消短息模板
-     */
-    val cancelActivitySmsTemplate: String get() = env!!.getProperty("activity.cancel.template")
+    val activitySmsSign: String get() = env!!.getProperty("sms.sign")
 
     /**
      * 发送模板消息短息：接收短信码
