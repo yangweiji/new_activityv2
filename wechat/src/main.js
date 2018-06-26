@@ -5,8 +5,6 @@ import './css/app.css'
 
 import store from './store';
 import kyutil from './global';
-//导入自定义组件
-import "./components"
 
 
 Vue.config.productionTip = false

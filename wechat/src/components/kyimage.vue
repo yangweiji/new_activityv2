@@ -1,6 +1,6 @@
 <template>
   <image :class="{'weui-media-box__thumb': type=='thumb','banner': type=='banner'}" 
-    :src="fileUrl"  />
+    :src="url"  />
 </template>
 
 <script>
@@ -20,8 +20,11 @@ export default {
     },
   },
   computed:{
-    fileUrl(){
-      return this.$kyutil.downloadUrl(src, size)
+    url(){
+      if(this.src){
+        return this.$kyutil.downloadUrl(this.src, this.size)
+      } 
+      return null
     }
   }
 }

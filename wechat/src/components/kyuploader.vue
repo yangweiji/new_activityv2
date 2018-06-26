@@ -2,9 +2,9 @@
   <div class="weui-uploader">
     <div class="weui-uploader__bd">
       <div class="weui-uploader__files" id="uploaderFiles">
-        <div v-for="(item ,index) in files" :key="index">
+        <div v-for="(item ,index) in smallFiles" :key="index">
           <div class="weui-uploader__file">
-            <kyimage class="weui-uploader__img" :src="item" mode="aspectFill" @click="predivImage(index)" />
+            <image class="weui-uploader__img" :src="item" mode="aspectFill" @click="predivImage(index)" />
             <div class="delete-icon" @click="deleteImg(index)" ></div>
           </div>
         </div>
@@ -28,6 +28,9 @@
         ossInfo: null
       }
     },
+    created(){
+      console.log("upload created")
+    },
     computed:{
       files(){
         if(this.value){
@@ -35,7 +38,11 @@
           return files
         }
         return []
+      },
+      smallFiles(){
+        return this.getShowFiles('small')
       }
+
     },
     methods: {
       chooseImage(e) {
@@ -45,7 +52,10 @@
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function(res) {
-            that.uploadToSSO()
+            for(var i= 0; i < res.tempFilePaths.length; i++){
+              that.uploadToSSO(res.tempFilePaths[i])
+            }
+            
           },
           fail: function() {
             console.log('fail');
@@ -62,14 +72,14 @@
           var chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
           var maxPos = chars.length;
           var pwd = '';
-          for (i = 0; i < len; i++) {
+          for (var i = 0; i < len; i++) {
             pwd += chars.charAt(Math.floor(Math.random() * maxPos));
           }
           return pwd;
         }
         function get_suffix(filename) {
           var pos = filename.lastIndexOf('.')
-          suffix = ''
+          var suffix = ''
           if (pos != -1) {
             suffix = filename.substring(pos)
           }
@@ -78,9 +88,9 @@
         var startUpload = function(uploadFilePath) {
           var fileName = random_string(10) + get_suffix(uploadFilePath)
           wx.uploadFile({
-            url: "http://oss.aliyuncs.com",
+            url: "https://fs.9kylin.cn",
             filePath: uploadFilePath,
-            name: fileName,
+            name: 'file',
             formData: {
               'key': that.ossInfo.key + '/' + fileName,
               'policy': that.ossInfo.policy,
@@ -91,13 +101,13 @@
             success(res) {
               var files = that.files
               files.push(fileName)
-              this.$emit('input', files.join())
+              that.$emit('input', files.join())
             }
           })
         }
         var now = Date.parse(new Date()) / 1000;
         if (!that.ossInfo || that.ossInfo.expire < now + 3) {
-          this.$kyutil.HttpRequest(true, "/pub/file/policy", false, "", "", "GET", false, function(res) {
+          this.$kyutil.get("/pub/file/policy").then(res => {
             that.ossInfo = res
             startUpload(file)
           })
@@ -106,8 +116,7 @@
         }
       },
       predivImage(index) {
-        var fullPathFiles = []
-        var files = this.files
+        var fullPathFiles = this.getShowFiles()
         wx.previewImage({
           current: fullPathFiles[index], // 当前显示图片的http链接
           urls: fullPathFiles// 需要预览的图片http链接列表
@@ -117,12 +126,20 @@
         var files = this.files
         files.splice(index, 1)
         this.$emit('input', files.join())
+      },
+      getShowFiles(size){
+        var fs = this.files
+        var showFiles = []
+        for(var i = 0; i < fs.length; i++){
+          showFiles.push(this.$kyutil.downloadUrl(fs[i], size))
+        }
+        return showFiles
       }
     }
   }
 </script>
 
-<style scoped>
+<style>
   .weui-uploader__file {
     position: relative;
   }
