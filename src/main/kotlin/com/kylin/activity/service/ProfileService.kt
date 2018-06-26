@@ -1,6 +1,7 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.tables.daos.UserDao
+import com.kylin.activity.databases.tables.pojos.User
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
@@ -63,5 +64,23 @@ class ProfileService {
         val sql="select t1.* from user t1 left join community_user t2 on t1.id=t2.user_id where t1.id=? "
         return create!!.resultQuery(sql,userId).fetch()
      }
+
+
+    /**
+     * 查找用户信息
+     */
+    fun fetchByUsername(): User {
+        val auth = SecurityContextHolder.getContext().authentication
+        var user = userDao!!.fetchByUsername(auth.name).first()
+        return user
+    }
+
+    /**
+     * 更新并保存用户信息
+     */
+    fun updateUserInfo(user: User) {
+        userDao!!.update(user)
+    }
+
 
 }

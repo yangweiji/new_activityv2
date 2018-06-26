@@ -1,10 +1,12 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -13,22 +15,11 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("pub/wx/profile")
 class WxProfileController {
+    /**
+     * 个人信息服务
+     */
     @Autowired
     private val proFileService: ProfileService? = null
-
-    @Autowired
-    private val thirdUserService: ThirdUserService? = null
-
-    /**
-     * 活动服务
-     */
-    private val activityService: ActivityService? = null
-
-    /**
-     * 用户服务
-     */
-    @Autowired
-    private val userService: UserService? = null
 
     /**
      * 团体服务
@@ -43,13 +34,18 @@ class WxProfileController {
     private val commonService: CommonService? = null
 
     /**
+     * 用户服务
+     */
+    @Autowired
+    private val userService:UserService?=null
+
+    /**
      * 微信端个人信息页面初始化
      * @param userId 用户ID
      * @param communityId 团体ID
      */
     @GetMapping("/getPerInformation")
     fun getPerInformation(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
-        /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
         var community = communityService!!.getCommunity(communityId!!)
 
         var proInformation = proFileService!!.getInitProInformation(communityId, userId)
@@ -106,12 +102,35 @@ class WxProfileController {
      */
     @CrossOrigin
     @GetMapping("/getIntoPersonalInformation")
-    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): Any {
-        var personalInformationList = proFileService!!.getIntoPersonalInformation(userId)
-        var resuls = mutableListOf<Any>()
-        if (personalInformationList != null) {
-            personalInformationList.forEach { resuls.add(it.intoMap()) }
-        }
-        return personalInformationList
+    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): User {
+        return userService!!.getUser(userId!!)
+    }
+
+
+    /**
+     * 小程序：更新并保存用户信息
+     */
+    @CrossOrigin
+    @Transactional
+    @GetMapping("/savePersonalInformation")
+    fun savePersonalInformation(displayname: String?, email: String?, gender: Int?,
+                                bloodType: String?, clothingSize: String?, workCompany: String?, occupation: String?,
+                                emergencyContactName: String?, emergencyContactMobile: String?, isParty: Boolean?,
+                                address: String?, wechatId: String?):Boolean {
+        var userInfo=proFileService!!.fetchByUsername()
+        userInfo.displayname=displayname
+        userInfo.gender=gender
+        userInfo.email=email
+        userInfo.bloodType=bloodType
+        userInfo.clothingSize=clothingSize
+        userInfo.workCompany=workCompany
+        userInfo.occupation=occupation
+        userInfo.emergencyContactName=emergencyContactName
+        userInfo.emergencyContactMobile=emergencyContactMobile
+        userInfo.isParty=isParty
+        userInfo.address=address
+        userInfo.wechatId=wechatId
+        proFileService!!.updateUserInfo(userInfo)
+        return true
     }
 }
