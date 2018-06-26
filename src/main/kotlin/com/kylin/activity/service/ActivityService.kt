@@ -870,7 +870,7 @@ class ActivityService {
                 "where t2.id = ? "
         var items = create!!.resultQuery(sql, activityId).fetch()
 
-        var strResult: String = ""
+        var strResult = ""
         for (item in items) {
             strResult = strResult + "," + item["mobile"]
         }
