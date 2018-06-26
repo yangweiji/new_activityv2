@@ -7,6 +7,7 @@ import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ActivitySmsService
 import com.kylin.activity.service.UserService
+import com.kylin.activity.sms.SmsTemplateListProperties
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
 import org.springframework.beans.factory.annotation.Autowired
@@ -45,9 +46,15 @@ class SmsController : BaseController() {
     private val activitySmsService: ActivitySmsService? = null
 
     /**
+     * 短信配置
+     */
+    @Autowired
+    private val templateListProperties: SmsTemplateListProperties? = null
+
+    /**
      * 查询短信信息
      */
-    @RequestMapping(value = "/smsHistory", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/smsHistory", method = [RequestMethod.POST, RequestMethod.GET])
     fun getActivitySms(): String {
         return "sec/community/sms/smsHistory"
     }
@@ -59,7 +66,7 @@ class SmsController : BaseController() {
      * title 活动标题
      */
     @CrossOrigin
-    @RequestMapping(value = "/getActivitySms", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/getActivitySms", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
     fun getActivitySmsItem(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var templateName = map["templateName"]
@@ -75,6 +82,8 @@ class SmsController : BaseController() {
      */
     @GetMapping("/sendSms")
     fun sendSms(model: Model): String {
+        LogUtil.printLog("sms.timeout: ${templateListProperties!!.timeout}")
+
         var sms = ActivitySms()
         sms.templateCode = "SMS_136391188"
         model.addAttribute("sms", sms)
