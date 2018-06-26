@@ -110,8 +110,10 @@
 
 <script>
 import base64 from "../../../static/images/base64";
+import kyimage from '@/components/kyimage.vue'
 
 export default {
+  components:{kyimage},
   data() {
     return {
       imageUrl: this.$kyutil.imageServer,
