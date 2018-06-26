@@ -4,6 +4,7 @@
       <div class="weui-cells__title">
         上传图片
       </div>
+<<<<<<< HEAD
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell">
           <div class="weui-cell__bd">
@@ -12,6 +13,9 @@
         </div>
       </div>
       
+=======
+      <uploader v-model="item.pictures"></uploader>
+>>>>>>> 4040b065bbc047ed6cbbe66288282a82bf203039
       <div class="weui-cells__title">
         备注信息
       </div>
@@ -24,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div v-if="item && activityUserId" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+    <div v-if="item && item.user_id == userId" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="save()" class="weui-flex__item c-bg-primary">
         提交
       </div>
@@ -51,7 +55,6 @@ import kyuploader from '@/components/kyuploader.vue'
     methods: {
       //取得文章信息
       getData() {
-        var that = this
         this.processing = true
         var param = {}
         if(this.recordId){
@@ -59,21 +62,26 @@ import kyuploader from '@/components/kyuploader.vue'
         } else {
           param.activityUserId= this.activityUserId
         }
-        this.$kyutil.get("/pub/wx/activityuserrecord/get", param).then(res => {
+        this.$kyutil.get("/pub/wx/activityuserrecord/get", param, "GET").then(res => {
           if(res){
-            that.item = res;
+            this.item = res;
           } else {
-            that.item = {recordTime:new Date(), activityUserId:that.activityUserId}
+            this.item = {recordTime:new Date(), activityUserId:this.activityUserId}
           }
-          that.processing = false
+          this.processing = false
         });
       },
       save() {
-        var that = this
         this.processing = true
+<<<<<<< HEAD
         this.$kyutil.post("/pub/wx/activityuserrecord/save", this.item).then(res => {
           that.item = res;
           that.processing = false
+=======
+        this.$kyutil.post("/pub/wx/activityuserrecord/get", this.item).then(res => {
+          this.item = res;
+          this.processing = false
+>>>>>>> 4040b065bbc047ed6cbbe66288282a82bf203039
         })
       }
       
@@ -97,4 +105,7 @@ import kyuploader from '@/components/kyuploader.vue'
 </script>
 
 <style scoped>
+  .c-text {
+    color: red;
+  }
 </style>
