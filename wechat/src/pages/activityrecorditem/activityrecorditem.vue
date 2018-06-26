@@ -4,7 +4,7 @@
       <div class="weui-cells__title">
         上传图片
       </div>
-      <uploader v-model="item.pictures"></uploader>
+      <kyuploader v-model="item.pictures"></kyuploader>
       <div class="weui-cells__title">
         备注信息
       </div>
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div v-if="item && item.user_id == userId" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
+    <div v-if="item && activityUserId" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="save()" class="weui-flex__item c-bg-primary">
         提交
       </div>
@@ -42,6 +42,7 @@
     methods: {
       //取得文章信息
       getData() {
+        var that = this
         this.processing = true
         var param = {}
         if(this.recordId){
@@ -49,20 +50,21 @@
         } else {
           param.activityUserId= this.activityUserId
         }
-        this.$kyutil.get("/pub/wx/activityuserrecord/get", param, "GET").then(res => {
+        this.$kyutil.get("/pub/wx/activityuserrecord/get", param).then(res => {
           if(res){
-            this.item = res;
+            that.item = res;
           } else {
-            this.item = {recordTime:new Date(), activityUserId:this.activityUserId}
+            that.item = {recordTime:new Date(), activityUserId:that.activityUserId}
           }
-          this.processing = false
+          that.processing = false
         });
       },
       save() {
+        var that = this
         this.processing = true
         this.$kyutil.post("/pub/wx/activityuserrecord/get", this.item).then(res => {
-          this.item = res;
-          this.processing = false
+          that.item = res;
+          that.processing = false
         })
       }
       
@@ -86,7 +88,4 @@
 </script>
 
 <style scoped>
-  .c-text {
-    color: red;
-  }
 </style>

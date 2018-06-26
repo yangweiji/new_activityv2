@@ -5,4 +5,4 @@ import backtohome from '@/components/BackToHome'
 Vue.component('backtohome', backtohome)
 
 import uploader from '@/components/uploader'
-Vue.component('uploader', uploader)
+Vue.component('kyuploader', uploader)
