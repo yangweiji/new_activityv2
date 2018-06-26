@@ -8,7 +8,7 @@
          </div>
           <div class="weui-media-box weui-media-box_appmsg" v-for="item in grids" :key="item.id">
              <div class="weui-media-box__title" style="float:left;width:50%">{{item.title}}</div>
-              <div class="weui-media-box-text" > +{{item.count}}</div>
+              <div class="weui-media-box-text" > +{{item.score}}</div>
           </div>
       </div>
       
@@ -24,10 +24,6 @@ export default {
     return {
       //活动相册
       grids: [
-        {id:"1",title: "冬季香山20公里长跑", count:5}, 
-        {id:"2", title: "奥园接力跑", count:6}, 
-        {id:"3", title: "北京马拉松比赛", count: 7}, 
-        {id:"4", title: "长跑运动会", count:8}
       ],
   
     };
@@ -38,15 +34,25 @@ export default {
   },
   methods: {
     //取得文章信息
-    getData() {
+    getData()  {
       var that = this;
       var param = {
-        communityId:1
-     };
-      global.HttpRequest(true, "", false, "", param, "GET", false, function (res) {
-    
-        
-     });
+        communityId: that.community.id,
+        userId: wx.getStorageSync("user").id
+      };
+      this.$kyutil.HttpRequest(
+        true,
+        "/pub/wx/profile/getIntegral",
+        false,
+        "",
+        param,
+        "GET",
+        false,
+        function(res) {
+         console.log(res);
+         that.grids=res;
+        }
+      );
     },
   },
   created() {
@@ -54,8 +60,8 @@ export default {
   },
    onShow () {
   //   console.log('小程序触发的 onshow, 获取参数: '+ this.$root.$mp.query);
-  //   var that = this;
-  //   that.articleId = this.$root.$mp.query.articleId;
+    var that = this;
+   this.community = this.$store.state.community;
    this.getData();
    }
 };
