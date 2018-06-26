@@ -5,10 +5,7 @@ import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * Created by 9kylin on 2018-06-12.
@@ -51,11 +48,11 @@ class WxProfileController {
      * @param communityId 团体ID
      */
     @GetMapping("/getPerInformation")
-    fun getPerInformation(@RequestParam(required = false)userId:Int?,@RequestParam(required = false)communityId:Int?): Any {
-         /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
-         var community = communityService!!.getCommunity(communityId!!)
+    fun getPerInformation(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
+        /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
+        var community = communityService!!.getCommunity(communityId!!)
 
-        var proInformation = proFileService!!.getInitProInformation(communityId,userId)
+        var proInformation = proFileService!!.getInitProInformation(communityId, userId)
 
         var mapList = mutableListOf<MutableMap<String, Any?>>()
         for (item in proInformation) {
@@ -80,7 +77,7 @@ class WxProfileController {
 
             //是否为本年的VIP
             val isVip = proFileService!!.isVip(community!!.id, userId!!, DateUtil.thisYear())
-            if(isVip) map["level"]=isVip
+            if (isVip) map["level"] = isVip
             //实名认证
             map["is_real"] = item.get("is_real", Boolean::class.java)
             if (map["is_real"] == null) 0 else map["is_real"]
@@ -94,10 +91,27 @@ class WxProfileController {
             //已签到
             map["checked_count"] = item.get("checked_count", Int::class.java)
             //积分总额
-            map["sum_score"]=item.get("sum_score",Int::class.java)
+            map["sum_score"] = item.get("sum_score", Int::class.java)
             mapList.add(map)
 
         }
         return mapList
+    }
+
+
+    /**
+     * 小程序：完善个人信息页面
+     * @param userId 用户id
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/getIntoPersonalInformation")
+    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): Any {
+        var personalInformationList = proFileService!!.getIntoPersonalInformation(userId)
+        var resuls = mutableListOf<Any>()
+        if (personalInformationList != null) {
+            personalInformationList.forEach { resuls.add(it.intoMap()) }
+        }
+        return personalInformationList
     }
 }

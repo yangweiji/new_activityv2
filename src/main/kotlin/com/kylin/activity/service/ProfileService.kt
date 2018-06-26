@@ -1,9 +1,11 @@
 package com.kylin.activity.service
 
+import com.kylin.activity.databases.tables.daos.UserDao
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
 
 /**
@@ -20,13 +22,16 @@ class ProfileService {
     @Autowired
     private val create: DSLContext? = null
 
+    @Autowired
+    private val userDao: UserDao? = null
+
     /**
      * 个人信息初始化
      * @param communityId 团体ID
      * @param userId 用户ID
      */
-    fun getInitProInformation(communityId: Int?,userId: Int?):Result<Record>{
-        val sql="select t1.*,(select count(activity_id) \n" +
+    fun getInitProInformation(communityId: Int?, userId: Int?): Result<Record> {
+        val sql = "select t1.*,(select count(activity_id) \n" +
                 "from activity_user where user_id=t1.id ) attend_user_count,\n" +
                 "(select count(activity_id)\n" +
                 " from activity_favorite where user_id=t1.id) favorite_count,\n" +
@@ -35,7 +40,7 @@ class ProfileService {
                 "(select count(activity_id) from activity_user where user_id=t1.id and check_in_time is not null) checked_count,\n" +
                 "(select ifnull(sum(score), 0) from score_history where user_id=t1.id) sum_score\n" +
                 " from user t1 left join community_user c on t1.id=c.user_id left join community c1 on c.community_id=c1.id where c.community_Id=? and t1.id=? "
-        return create!!.resultQuery(sql,communityId,userId).fetch()
+        return create!!.resultQuery(sql, communityId, userId).fetch()
     }
 
 
@@ -47,4 +52,16 @@ class ProfileService {
         val counts = create!!.fetchOne(sql, userId, communityId, year)
         return counts != null && counts.get("counts", Int::class.java) > 0
     }
+
+    /**
+     *
+     * 小程序：完善个人信息页面
+     * @param userId 用户id
+     *
+     */
+     fun getIntoPersonalInformation(userId: Int?):Result<Record> {
+        val sql="select t1.* from user t1 left join community_user t2 on t1.id=t2.user_id where t1.id=? "
+        return create!!.resultQuery(sql,userId).fetch()
+     }
+
 }
