@@ -13,16 +13,25 @@
             <div data-am-widget="slider" class="am-slider am-slider-c3"
                  data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
                 <ul class="am-slides">
-                    <li th:each="item:${posterItems}">
+                    <li th:each="poster,item:${posterItems}">
                         <div>
-                            <a th:href="${item.get('link')}" target="_blank">
-                                <img th:src="${item.get('avatar')}"></a>
+                            <a th:href="${poster.get('link')}" target="_blank">
+                                <img th:src="${poster.get('avatar')}"></a>
+
                             <div class="am-slider-desc">
-                                <div th:text="${item.get('title')}"></div>
+                                <!--Thymeleaf中each标签遍历list获取count,
+                                如 th:each="poster,item:${posterItems}" ,直接使用item.count计数-->
+                                <span class="am-slider-counter"><span class="am-active" th:text="${item.count}"></span>
+                                    /<span th:each="items:${counts}">
+                                        <span th:text="${items.get('counts')}"></span>
+                                    </span>
+                                </span>
+                                <a th:href="${poster.get('link')}" target="_blank"><span
+                                        th:text="${poster.get('title')}" style="color:#eff0f1"></span>
+                                </a>
+                                <span style="float: right"><a th:href="@{pub/poster/allposter/{posterType} (posterType=${poster.get('poster_type')})}"
+                                         style="color:#4990d3">更多</a></span>
                             </div>
-                            <div class="am-slider-desc"><a
-                                    th:href="@{pub/poster/allposter/{posterType} (posterType=${item.get('poster_type')})  }"
-                                    style="margin-left:1070px">更多</a></div>
                         </div>
 
                     </li>
