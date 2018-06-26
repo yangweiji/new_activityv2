@@ -4,7 +4,14 @@
       <div class="weui-cells__title">
         上传图片
       </div>
-      <kyuploader v-model="item.pictures"></kyuploader>
+      <div class="weui-cells weui-cells_after-title">
+        <div class="weui-cell">
+          <div class="weui-cell__bd">
+            <kyuploader v-model="item.pictures"></kyuploader>
+          </div>
+        </div>
+      </div>
+      
       <div class="weui-cells__title">
         备注信息
       </div>
@@ -26,7 +33,9 @@
 </template>
 
 <script>
+import kyuploader from '@/components/kyuploader.vue'
   export default {
+    components:{kyuploader},
     data() {
       return {
         isIpx: false,
@@ -62,7 +71,7 @@
       save() {
         var that = this
         this.processing = true
-        this.$kyutil.post("/pub/wx/activityuserrecord/get", this.item).then(res => {
+        this.$kyutil.post("/pub/wx/activityuserrecord/save", this.item).then(res => {
           that.item = res;
           that.processing = false
         })
