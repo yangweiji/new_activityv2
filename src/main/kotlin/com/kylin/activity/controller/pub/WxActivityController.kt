@@ -595,4 +595,11 @@ class WxActivityController {
 
         return result
     }
+
+
+   /* @CrossOrigin
+    @GetMapping("/getMyActivities")
+    fun getMyActivities(@RequestParam(required = false) communityId: Int?,activityId: Int?):Any{
+        var activities=activityService!!
+    }*/
 }

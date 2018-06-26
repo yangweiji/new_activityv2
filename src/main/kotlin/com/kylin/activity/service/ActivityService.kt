@@ -980,5 +980,10 @@ class ActivityService {
     }
 
 
-
+    /**
+     * 我的活动
+     */
+   /* fun myActivities(communityId: Int?,activityId: Int?):Result<Record>{
+         val sql=""
+    }*/
 }

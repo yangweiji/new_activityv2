@@ -64,6 +64,13 @@ class PosterService {
         return create!!.resultQuery(sql).fetch()
     }
 
+    /**
+     * 海报总数
+     */
+     fun posterCounts():Result<Record>{
+        var sql="select count(*) counts from poster where `show`=1 "
+        return create!!.resultQuery(sql).fetch()
+    }
 
     /**
      * 获取海报信息集合
@@ -105,11 +112,11 @@ class PosterService {
         return posterDao!!.fetchOne(Tables.POSTER.TITLE, title)
     }
 
-    /*fun getFirstActivityPhoto(activityId: Int?): ActivityPhoto? {
-        var list = activityPhotoDao!!.fetchByActivityId(activityId)
-        return if (list != null && list.size > 0) list.first() else null
-    }*/
 
+    /**
+     * 根据活动id取得单个活动信息
+     * @param activityId 活动id
+     */
     fun getActivity(activityId: Int?): Activity?{
         var list=activityDao!!.fetchById(activityId)
         return if(list!=null&&list.size>0) list.first() else null
@@ -173,21 +180,5 @@ class PosterService {
         return create!!.resultQuery(sql, posterType).fetch()
     }
 
-    fun getPosterLinkDetail(activityId: Int?): Record {
-        var sql ="select t1.* from poster t1 left join activity t2 " +
-                "on t1.activity_id=t2.id where 1=1 and t1.activity_id=?  "
-        return create!!.resultQuery(sql,activityId).fetchOne()
-    }
-
-
-   /* fun getPosterActivityId(): Poster? {
-        var list=posterDao!!.fetchByActivityId()
-        return if (list != null && list.size > 0) list.first() else null
-    }
-*/
-    fun getPosterActivityId():Result<Record>{
-       var sql="select t1.* from poster t1 left join activity t2 on t1.activity_id=t2.id "
-       return create!!.resultQuery(sql).fetch()
-}
 
 }
