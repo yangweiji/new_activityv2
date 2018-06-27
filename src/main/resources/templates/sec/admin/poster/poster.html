@@ -36,6 +36,9 @@
                 <div class="am-u-lg-12">
                     <form class="am-form am-form-horizontal" data-am-validator method="post"
                           action="/sec/admin/poster/savePoster">
+                        <input type="hidden" id="id" name="id"
+                               placeholder="" v-model="cacheData.poster.id"/>
+
                         <div class="am-form-group">
                             <label for="poster_title" class="am-u-sm-2 am-form-label">海报标题</label>
                             <div class="am-u-sm-10">
@@ -77,17 +80,19 @@
                         <div class="am-form-group">
                             <label for="link" class="am-u-sm-2 am-form-label">链接地址</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="link" name="link"
+                                <input type="text" id="link" name="link"
                                        v-model="cacheData.poster.link"
                                        placeholder="请输入外部链接地址"/>
+                                <span>温馨提示：外部链接地址与活动编号，至少输入一项，不能均为空！</span>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="activityId" class="am-u-sm-2 am-form-label">活动编号</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="number" id="activityId" name="activityId"
+                                <input type="number" max="999999999" id="activityId" name="activityId"
                                        v-model="cacheData.poster.activityId"
                                        placeholder="请输入活动编号"/>
+                                <span>温馨提示：外部链接地址与活动编号，至少输入一项，不能均为空！</span>
                             </div>
                         </div>
                         <div class="am-form-group">

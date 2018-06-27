@@ -20,9 +20,9 @@
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdmanage/ordersstatistics'?'am-nav-header':''" th:if="${true}"><a class="ddtj" th:href="@{/sec/community/thirdmanage/ordersstatistics}"><b></b>订单统计</a></li>
         <li class="am-nav-divider"></li>
 
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/sms/sendSms'?'am-nav-header':''" th:if="${true}"><a class="dxgl" th:href="@{/sec/community/sms/sendSms}"><b></b>短信管理</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/sms/sendSms'?'am-nav-header':''" th:if="${true}"><a class="dxgl" th:href="@{/sec/community/sms/sendSms}"><b></b>发送短信</a></li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/sms/smsHistory'?'am-nav-header':''" th:if="${true}"><a class="dxcx" th:href="@{/sec/community/sms/smsHistory}"><b></b>短信历史</a></li>
         <li class="am-nav-divider"></li>
-        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/sms/smsHistory'?'am-nav-header':''" th:if="${true}"><a class="dxcx" th:href="@{/sec/community/sms/smsHistory}"><b></b>短信查询</a></li>
     </ul>
 </div>
 </body>
