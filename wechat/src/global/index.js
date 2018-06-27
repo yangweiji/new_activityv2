@@ -1,11 +1,14 @@
 //引入filter
 import Vue2Filters from 'vue2-filters'
 import Dateutil from './date'
-var kyFilters = {
-    mixin() {}
-}
+var kyFilters = {}
 kyFilters.filter = (key, value) => {
     kyFilters[key] = value
+}
+kyFilters.mixin = opt => {
+    for (var key in opt.methods) {
+        kyFilters[key] = opt.methods[key]
+    }
 }
 Vue2Filters.install(kyFilters)
 
