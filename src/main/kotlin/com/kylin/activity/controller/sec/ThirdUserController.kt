@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.sec
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.CommunityUser
@@ -33,6 +34,12 @@ class ThirdUserController : BaseController() {
      */
     @Autowired
     private val userService: ThirdUserService? = null
+
+    /**
+     * 全局配置信息
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
 
     /**
      * 取得用户信息
@@ -126,7 +133,7 @@ class ThirdUserController : BaseController() {
      * @param model: 模型
      * @return 添加用户页面
      */
-    @RequestMapping(value = "/createUser", method =[RequestMethod.GET])
+    @RequestMapping(value = "/createUser", method = [RequestMethod.GET])
     fun createUser(user: User, model: Model): String {
         var user = User()
         model.addAttribute("user", user)
@@ -145,24 +152,32 @@ class ThirdUserController : BaseController() {
     @Transactional
     @Throws(Exception::class)
     fun saveUser(@ModelAttribute("user") user: User, redirectAttributes: RedirectAttributes
-                    , model: Model): String {
+                 , model: Model): String {
         var u = userService!!.getUser(user!!.username)
         if (u != null) {
-            model.addAttribute("errorMessage", "用户账号: ${user!!.username} 已存在！")
+            //如果用户手机号已存在，则添加至当前团体组织中
+            user.id = u.id
+            user.username = u.username
+        } else {
+            //添加用户
+            var coder = BCryptPasswordEncoder()
+            user.password = coder.encode(activityProperties!!.defaultPassword)
+            user.enabled = true
+            user.created = DateUtil.date().toTimestamp()
+            if (user.isReal) {
+                user.realTime = DateUtil.date().toTimestamp()
+            }
+
+            userService!!.insert(user)
+            LogUtil.printLog("添加用户成功, 用户ID: ${user.id}")
+        }
+
+        //检查关联关系是否已经存在
+        var communityExistUser = userService!!.getCommunityUser(this.sessionCommunity.id, user.id)
+        if (communityExistUser != null) {
+            model.addAttribute("errorMessage", "用户: ${user.username} 已在当前团体组织下，无需重复添加！")
             return "sec/community/thirduser/create"
         }
-
-        //添加用户
-        var coder = BCryptPasswordEncoder()
-        user.password = coder.encode("123456")
-        user.enabled = true
-        user.created = DateUtil.date().toTimestamp()
-        if (user.isReal) {
-            user.realTime = DateUtil.date().toTimestamp()
-        }
-
-        userService!!.insert(user)
-        LogUtil.printLog("添加用户成功, 用户ID: ${user.id}")
 
         //将用户关联到当前团体组织
         var communityUser = CommunityUser()
@@ -174,11 +189,14 @@ class ThirdUserController : BaseController() {
         userService!!.insertCommunityUser(communityUser)
         LogUtil.printLog("添加团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
 
-        //用户角色设置为NULL
-        user.role = null
-        //用户会员年度设置为NULL
-        user.level = null
-        userService!!.update(user)
+        if (u == null) {
+            //将用户平台角色设置为NULL
+            user.role = null
+            //将用户平台会员年度设置为NULL
+            user.level = null
+            userService!!.update(user)
+            LogUtil.printLog("更新用户信息成功, 用户ID: ${user.id}")
+        }
 
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/community/thirduser/users"
@@ -214,8 +232,7 @@ class ThirdUserController : BaseController() {
     fun updateUser(model: Model, user: User, redirectAttributes: RedirectAttributes): String {
         //用户的角色、会员年度
         var communityUser = userService!!.getCommunityUser(this.sessionCommunity.id, user.id)
-        if (user == null)
-        {
+        if (user == null) {
             //将用户关联到当前团体组织
             communityUser = CommunityUser()
             communityUser.communityId = this.sessionCommunity.id
@@ -225,20 +242,21 @@ class ThirdUserController : BaseController() {
             communityUser.created = DateUtil.date().toTimestamp()
             userService!!.insertCommunityUser(communityUser)
             LogUtil.printLog("添加团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
-        }
-        else {
+        } else {
             communityUser!!.role = user.role
             communityUser!!.level = user.level
             userService!!.updateCommunityUser(communityUser)
             LogUtil.printLog("更新团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
         }
 
-        //用户角色设置为NULL
-        user.role = null
-        //用户会员年度设置为NULL
-        user.level = null
-        userService!!.update(user)
-        LogUtil.printLog("更新用户信息成功, 用户ID: ${user.id}")
+        var u = userService!!.getUser(communityUser!!.userId)
+        if (u != null) {
+            //不更新平台管理角色及平台会员年度
+            user.role = u.role
+            user.level = u.level
+            userService!!.update(user)
+            LogUtil.printLog("更新用户信息成功, 用户ID: ${user.id}")
+        }
 
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/community/thirduser/users"
@@ -258,7 +276,7 @@ class ThirdUserController : BaseController() {
         //删除团体组织用户关联信息
         userService!!.deleteCommunityUser(this.sessionCommunity.id, id)
         //删除用户信息
-        userService!!.deleteById(id)
+        //userService!!.deleteById(id)
 
         return true
     }

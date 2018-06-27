@@ -84,7 +84,11 @@ class ActivityUserRecordService {
      */
 
     fun getRecordsByActivityId(activityId:Int):ResultQuery<Record>{
-        var records = create!!.resultQuery("select t1.*, t2.id record_id, t2.record_time, t2.pictures, t2.notes from activity_user t1   left join activity_user_record t2 on t1.id = t2.activity_user_id where t1.activity_id = ?", activityId)
+        var records = create!!.resultQuery("select t1.id, t1.user_id, t1.activity_id, t1.real_name activity_real_name, t1.mobile activity_mobile, \n" +
+                "t2.avatar, t2.displayname, t2.real_name, t2.username,\n" +
+                "t3.id record_id, t3.record_time, t3.pictures, t3.notes from activity_user t1   \n" +
+                "inner join user t2  on t1.user_id = t2.id and t1.activity_id = ?\n" +
+                "left join activity_user_record t3 on t1.id = t3.activity_user_id", activityId)
         return records
 
     }

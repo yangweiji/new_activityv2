@@ -5,6 +5,7 @@ import com.kylin.activity.service.ArticleService
 import com.kylin.activity.service.CommunityService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
+import org.jooq.Record
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.beans.factory.annotation.Autowired
@@ -54,14 +55,12 @@ class HomeController : BaseController() {
      * @param request: 请求参数
      */
     @GetMapping("/")
-    fun index(@RequestParam(required = false) s: Int?,
+    fun index(@RequestParam(required = false) s: Int?, @RequestParam(required = false) tags: String?,
               model: Model, request: HttpServletRequest): String {
 
         var user = this.sessionUser
         if (user != null) {
             model.addAttribute("user", user)
-//            var communityUser = communityService!!.getCommunityAdminUser(user.id)
-//            request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
         }
 
         //公告通知
@@ -79,13 +78,18 @@ class HomeController : BaseController() {
         var community = this.sessionCommunity
         model.addAttribute("community", community)
 
+        var items: List<Record>
         //取得活动信息,传参（sessionCommunity.id）
         var activities = activityService!!.getPublicActivities(this.sessionCommunity.id)
-        activities = when (s) {
+        items = when (s) {
         //人气最高
             2 -> activities.sortDesc("attend_user_count")
         //最新活动
             else -> activities.sortDesc("start_time")
+        }
+
+        if (!tags.isNullOrEmpty()) {
+            items = activities.filter { it["tags"] == tags }
         }
 
         //获取海报信息集合
@@ -94,15 +98,18 @@ class HomeController : BaseController() {
             if (r.get("avatar") != null) {
                 r.setValue(r.fieldsRow().field("avatar", String::class.java), commonService!!.getDownloadUrl(r.get("avatar").toString()))
             }
-            if(r.get("activity_id") != null && r.get("activity_id") != 0 ){
-                r.setValue(r.fieldsRow().field("link",String::class.java), "/pub/activity/detail/"+r.get("activity_id"))
+            if (r.get("activity_id") != null && r.get("activity_id") != 0) {
+                r.setValue(r.fieldsRow().field("link", String::class.java), "/pub/activity/detail/" + r.get("activity_id"))
             }
         }
-
+        //海报总数
+        var counts = posterService!!.posterCounts()
+        model.addAttribute("counts", counts)
         model.addAttribute("posterItems", posterItems)
 
         model.addAttribute("s", if (s == 2) 2 else 1)
-        model.addAttribute("activities", activities)
+        model.addAttribute("tags", tags)
+        model.addAttribute("activities", items)
 
         return "index"
     }

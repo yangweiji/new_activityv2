@@ -38,6 +38,8 @@ new Vue({
                     { title: '是否党员', multiple: false, type: 'select', required: false, options: [{ title:'群众' }, {title: '党员' }] },
                     { title: '家庭地址', type: 'text', required: false },
                     { title: '微信号', type: 'text', required: false },
+                    { title: '身份证号', type: 'text', required: false },
+                    { title: '出生日期', type: 'text', required: false },
                     { title: '备注', type: 'textarea', required: false },
                 ],
                 customs: [

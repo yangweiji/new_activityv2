@@ -48,6 +48,10 @@
                             <div class=" am-u-sm-9 am-list-main am_list_main">
                                 <h3 class="am-list-item-hd am_list_title">
                                     <a th:href="@{/pub/activity/detail/{id}(id=${item.get('id')})}" target="_blank" class="" th:text="${item.get('title')}"></a>
+                                    <span class="am-badge am-badge-primary am-round" th:if="${item.get('activity_type')}==1">活动</span>
+                                    <span class="am-badge am-badge-secondary am-round" th:if="${item.get('activity_type')}==2">赛事</span>
+                                    <span class="am-badge am-badge-success am-round" th:if="${item.get('activity_type')}==3">抽签活动</span>
+                                    <span class="am-badge am-badge-warning am-round" th:if="${item.get('activity_type')}==4">打卡活动</span>
                                 </h3>
                                 <div class="am_list_author">
                                     <a href="javascript:void(0)">
@@ -64,9 +68,9 @@
                                 <div class="am-list-item-text am_list_item_text" th:text="${item.get('address')}"></div>
 
                                 <div class="hd_list_cz">
-                                    <a th:href="@{/sec/thirdactivity/publish(id=${item.get('id')})}" class="bj" target="_blank">编辑</a>
-                                    <a th:href="@{/sec/thirdactivity/qrcode(id=${item.get('id')})}" class="tg"  target="_blank">二维码</a>
-                                    <a th:href="@{/sec/thirdactivity/attendusers(activityId=${item.get('id')},title=${item.get('title')})}" class="bj"  target="_blank">报名签到</a>
+                                    <a th:href="@{/sec/community/thirdactivity/publish(id=${item.get('id')})}" class="bj" target="_blank">编辑</a>
+                                    <a th:href="@{/sec/community/thirdactivity/qrcode(id=${item.get('id')})}" class="tg"  target="_blank">二维码</a>
+                                    <a th:href="@{/sec/community/thirdactivity/attendusers(activityId=${item.get('id')},title=${item.get('title')})}" class="bj"  target="_blank">报名签到</a>
                                 </div>
                             </div>
                         </li>

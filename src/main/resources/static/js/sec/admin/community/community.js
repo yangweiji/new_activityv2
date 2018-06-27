@@ -33,20 +33,6 @@ new Vue({
             }
         })
 
-        //社团创建时间控件
-
-      /*  $('.c-datetimepicker.created').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii:ss',
-            language: 'zh-CN'
-        }).on('changeDate', function (ev) {
-            if (ev.date.valueOf()) {
-                that.cacheData.community.created = ev.date
-            }
-        });
-        if (that.cacheData.community.created) {
-            $('.c-datetimepicker.created').datetimepicker('update', new Date(that.cacheData.community.created))
-        }*/
-
         //富文本控件
         var imageHandleCallback;
         var toolbarOptions = {
@@ -72,6 +58,7 @@ new Vue({
                 'image': function (callback) {
                     imageHandleCallback = callback
                     document.getElementById('c-upload-community-about-editor').click()
+                    document.getElementById('c-upload-community-vip-editor').click()
                 }
             }
         }
@@ -84,7 +71,7 @@ new Vue({
             modules: {
                 toolbar: toolbarOptions
             },
-            placeholder: '请在此输入社团详情',
+            placeholder: '请在此输入团体介绍',
             theme: 'snow'
         });
 
@@ -122,9 +109,53 @@ new Vue({
             bodyInput.trigger('change')
         })
 
+        //条款
+        var quillVip = new Quill('#c-community-vip-editor', {
+            modules: {
+                toolbar: toolbarOptions
+            },
+            placeholder: '请在此输入会员条款',
+            theme: 'snow'
+        });
+
+        this.editorUploader = Util.file.uploader({
+            randomName: true,
+            selectId: 'c-upload-community-vip-editor',
+            success: function (file) {
+                if (imageHandleCallback) {
+                    var url = Util.file.downloadUrl(file.randomName)
+                    var range = quillVip.getSelection()
+                    if (!range) {
+                        range = {index: 0}
+                    }
+                    quillVip.clipboard.dangerouslyPasteHTML(range.index, "<img src='" + url + "' />")
+                }
+            }
+        })
+
+
+        if (that.cacheData.community.vipAgreement) {
+            quillVip.clipboard.dangerouslyPasteHTML(that.cacheData.community.vipAgreement)
+        }
+
+        quillVip.on('editor-change', function (eventName) {
+            if (eventName === 'text-change') {
+                // args[0] will be delta
+            } else if (eventName === 'selection-change') {
+                // args[0] will be old range
+            }
+
+            var bodyInput = $('#c-community-vip-text')
+            bodyInput.val(quillVip.getText())
+            that.cacheData.community.vipAgreement = quillVip.getHtml()
+            bodyInput.trigger('change')
+        })
+
 
         $('#c-community-add-form').validator({}).submit(function () {
+
             $('input[name=json_data]').val(JSON.stringify(that.cacheData.community.about))
+            $('input[name=json_data]').val(JSON.stringify(that.cacheData.community.vipAgreement))
             return true;
         });
 
@@ -132,6 +163,10 @@ new Vue({
             var about = that.cacheData.community.about
             that.cacheData.community.about = null
             Util.storageGet(JSON.stringify(that.cacheData.community.about))
+
+            var vipAgreement = that.cacheData.community.vipAgreement
+            that.cacheData.community.vipAgreement = null
+            Util.storageGet(JSON.stringify(that.cacheData.community.vipAgreement))
         })
     },
     methods: {
@@ -152,6 +187,10 @@ new Vue({
                 return Util.file.downloadUrl(this.cacheData.community.businessLicense)
             else
                 return "/img/community/activity-avatar.png"
+        },
+        selectVal: function (e) {
+            console.log(e.target.value, this.cacheData.community.isVip);
+            // this.cacheData.community.isVip = e.target.value;
         }
     }
 })

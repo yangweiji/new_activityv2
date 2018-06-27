@@ -171,7 +171,7 @@ $(function () {
 
         action: function (e, dt, node, config) {
             // alert( this.text() );
-            location.href = "/sec/community/thirdactivity/publish?type=1";
+            location.href = "/pub/activity/publish";
         }
     };
 

@@ -21,8 +21,35 @@
           <div class="weui-navbar__slider" :class="activeTab.class"></div>
         </div>
         <div class="weui-tab__panel">
-          <div v-if="activeTab.id == 1">
+          <div class="weui-tab__content c-custom-calendar" :hidden="activeTab.id != 1">
             <Calendar :months="calendar.months" :begin="calendar.begin" :end="calendar.end" :value="calendar.value" @next="next" @prev="prev" :events="events" clean="true" @select="select" ref="calendar" @selectMonth="selectMonth" @selectYear="selectYear" />
+          </div>
+          <div class="weui-tab__content" :hidden="activeTab.id != 2">
+            <div class="calendar-tools">
+              <label class="calendar-prev" @click="bindDatePrev()">
+                <image class="_img" src="/copy-asset/node_modules/mpvue-calendar/src/arrow-left.png" />
+              </label>
+              <label class="calendar-next" @click="bindDateNext()">
+                <image class="_img" src="/copy-asset/node_modules/mpvue-calendar/src/arrow-right.png" />
+              </label>
+              <div class="calendar-info">
+                <picker mode="date" :value="currentDate" :start="calendar.startTime" :end="calendar.endTime" @change="bindDateChange">
+                  <div class="weui-input">{{currentDateText}}</div>
+                </picker>
+              </div>
+            </div>
+            <div class="weui-cells">
+              <div @click="gotoViewRecord(record)" v-for="record in dayRecords" :key="record.user_id" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                <div class="weui-cell__hd">
+                  <kyimage :src="record.avatar" size="small" />
+                </div>
+                <div class="weui-cell__bd">{{record.displayname}}</div>
+                <div class="weui-cell__ft" :class="{'weui-cell__ft_in-access': record.record_time}">
+                    <span v-if="record.record_time">{{record.record_time_text}}</span>
+                    <span v-if="!record.record_time">未打卡</span>
+                  </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -46,14 +73,18 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import Calendar from 'mpvue-calendar'
+  import kyimage from '@/components/kyimage.vue'
   export default {
     components: {
-      Calendar
+      Calendar,
+      kyimage
     },
     data() {
       return {
         isIpx: false,
+        isBackPage:false,//是否返回页面，此时部分信息不变
         isEnd:false,
         loaded: false,
         item: null,
@@ -77,7 +108,8 @@
           end: null,
           lunar: false,
           clean: true
-        }
+        },
+        currentDate:null
       };
     },
     computed: {
@@ -99,6 +131,40 @@
           }
         }
         return evts
+      },
+      dayRecords(){
+        var evts = []
+        if (this.item && this.item.records) {
+          var records = this.item.records
+          var attendUsers = {}
+          for (var i = 0; i < records.length; i++) {
+            var record = records[i]
+            if(!attendUsers[record.user_id]){
+              attendUsers[record.user_id] = {
+                  avatar:record.avatar,
+                  id: record.id, 
+                  displayname: record.real_name || record.activity_real_name || record.displayname,
+                }
+            }
+            if(this.$kyutil.date.sameDay(record.record_time, this.currentDate)){
+              attendUsers[record.user_id].record_time = record.record_time
+              attendUsers[record.user_id].record_id = record.record_id
+              attendUsers[record.user_id].record_time_text = this.$kyutil.date.format(record.record_time, 'HH:mm')
+            }
+          }
+
+          for(var userId in attendUsers){
+            evts.push(attendUsers[userId])
+          }
+          evts = this.$kyutil.filters.orderBy(evts, 'record_time', -1)
+        }
+        return evts
+      },
+      currentDateText(){
+        if(this.currentDate){
+          return this.$kyutil.date.format(this.currentDate, 'yyyy-MM-dd')
+        }
+        return ''
       }
     },
     methods: {
@@ -126,13 +192,13 @@
             
             }
 
-            that.calendar.startTime = that.$kyutil.date.anyToDate(that.item.activity.start) 
-            that.calendar.endTime = that.$kyutil.date.anyToDate(that.item.activity.end) 
+            that.calendar.startTime = that.$kyutil.date.datePart(that.item.activity.start) 
+            that.calendar.endTime = that.$kyutil.date.datePart(that.item.activity.end) 
             that.calendar.begin = that.dateArray(that.calendar.startTime)
             that.calendar.end = that.dateArray(that.calendar.endTime)
 
 
-            var now = new Date()
+            var now = that.$kyutil.date.today()
 
             //已经报名的用户，至少有一条记录
             that.hasAttendActivity = that.myRecords.length > 0
@@ -143,17 +209,38 @@
             //在活动期间，可以进行打卡操作
             that.canAddRecord =  that.hasAttendActivity && that.calendar.startTime <= now && now <= that.calendar.endTime
 
-            if(that.calendar.startTime > now){
-              that.calendar.value = that.calendar.begin
-            } else if(now >= that.calendar.endTime){
-              that.calendar.value = that.calendar.end
-            } else {
-              that.calendar.value = that.dateArray(now)
+            if(!that.calendar.value ||  !that.isBackPage){
+              if(that.calendar.startTime > now){
+                that.calendar.value = that.calendar.begin
+              } else if(now >= that.calendar.endTime){
+                that.calendar.value = that.calendar.end
+              } else {
+                that.calendar.value = that.dateArray(now)
+              }
+            }
+
+            if(!that.currentDate || !that.isBackPage){
+              that.currentDate = that.$kyutil.date.anyToDate(that.calendar.value)
             }
 
             that.loaded = true;
           }
         );
+      },
+      bindDatePrev(){
+        var newDate = this.$kyutil.date.addDays(this.currentDate, -1)
+        if(newDate >= this.calendar.startTime){
+          this.currentDate = newDate
+        }
+      },
+      bindDateNext(){
+        var newDate = this.$kyutil.date.addDays(this.currentDate, 1)
+        if(newDate <= this.calendar.endTime){
+          this.currentDate = newDate
+        }
+      },
+      bindDateChange(e){
+        this.currentDate = e.mp.detail.value
       },
       dateArray(date){
         var realDate = this.$kyutil.date.anyToDate(date) 
@@ -192,8 +279,12 @@
       selectYear(year) {
         console.log(year)
       },
-      setToday(val, val1, val2) {
-        this.$refs.calendar.setToday();
+      gotoViewRecord(record){
+        if(record && record.record_id){
+          wx.navigateTo({
+            url: "../../pages/activityrecorditem/activityrecorditem?id=" + record.record_id
+          });
+        }
       },
       select(date) {
         var key = date.join('-')
@@ -211,9 +302,11 @@
     onShow() {
       var that = this;
       that.loaded = false;
-      that.activeTab = that.tabs[0]
-      that.activityId =
-        this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
+      that.activeTab = that.activeTab  || that.tabs[0]
+
+      var activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
+      that.isBackPage = activityId == that.activityId
+      that.activityId = activityId
       this.$kyutil.CheckUserValidation();
       var user = this.$kyutil.GetUser();
       if (user) {
@@ -240,4 +333,9 @@
     left: 35rpx;
     transform: translateX(400rpx);
   }
+   .c-custom-calendar .calendar ._td.selected ._span{
+    background-color:transparent;
+    color: black;
+  }
+  
 </style>
