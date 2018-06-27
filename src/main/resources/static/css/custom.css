@@ -1,17 +1,15 @@
 #app {
     background-color: #f8f8f8;
-    margin-top: 100px;
-    width: 1190px;
-    /*width: 100%;*/
+    width: 1290px;
     min-height: 400px;
     overflow: hidden;
-    margin: 2px auto 0;
+    margin-top: 100px;
+    margin: 0 auto;
     font-size: 12px;
 }
 
 .manage-l {
     width: 140px;
-    /*width: 220px;*/
     /*position:absolute;left:0;top:0;*/
     overflow: hidden;
     float: left;
@@ -20,8 +18,7 @@
 }
 
 .manage-r {
-    /*width: 1050px;*/
-   /* width: 1100px;*/
+    width: 1150px;
     background-color: #FFF;
     overflow: hidden;
     border: none;
@@ -29,12 +26,22 @@
     padding-bottom: 40px;
 }
 
+.am_bdfw
+{
+    max-width: 100%;
+}
+
+.am-g {
+    width: 95%;
+    max-width: 95%;
+}
+
 .am-g .am-table {
     font-size: 12px;
 }
 
 .am_news_list_all {
-    max-width: 90%;
+    max-width: 95%;
 }
 
 .am_news_list_img {

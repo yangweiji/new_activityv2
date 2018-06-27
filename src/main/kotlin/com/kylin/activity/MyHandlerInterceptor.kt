@@ -28,8 +28,17 @@ class MyHandlerInterceptor : HandlerInterceptor {
                 var user = request.session.getAttribute("USER_CONTEXT") as User
                 var community = request.session.getAttribute("COMMUNITY_CONTEXT") as Community
                 var communityUser = communityService!!.getCommunityUser(user.id, community.id)
+
+                //平台管理员
+                if (!user!!.role.isNullOrEmpty()) {
+                    return true
+                }
+
+                //当前用户在当前团体组织下为普通用户
                 if (communityUser == null || communityUser!!.role.isNullOrEmpty()) {
                     LogUtil.printLog("${request.servletPath} 操作无权限！")
+
+                    //重定向至首页
                     response!!.sendRedirect("/")
                     return false
                 }

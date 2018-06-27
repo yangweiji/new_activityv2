@@ -56,7 +56,7 @@
                     <label for="activity_address" class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>地址</label>
                     <div class="am-u-sm-10">
                         <div  class="am-input-group am-input-group-primary">
-                            <input  v-model="cacheData.activity.address" required="required" type="text" id="activity_address" class="am-form-field" name="address" placeholder="打来地图选择举办地址" />
+                            <input  v-model="cacheData.activity.address" required="required" type="text" id="activity_address" class="am-form-field" name="address" placeholder="打开地图选择举办地址" />
                             <span v-on:click="showAddressMap = !showAddressMap" class="am-input-group-label"><i class="am-icon-location-arrow am-icon-fw"></i></span>
                         </div>
                         <div v-if="showAddressMap" style="height: 600px;width: 100%">
@@ -104,13 +104,13 @@
                             <table class="am-table am-table-bordered am-table-centered">
                                 <thead>
                                 <tr>
-                                    <th style="width: 50px;text-align: center;">序号</th>
+                                    <th style="width: 80px;text-align: center;">序号</th>
                                     <th>费用名称</th>
                                     <th style="width: 100px;">金额</th>
-                                    <th style="width: 100px;">积分最大使用量</th>
+                                    <th style="width: 150px;" th:if="${community.}">积分最大使用量</th>
                                     <th style="width: 100px;">名额限制</th>
-                                    <th style="width: 120px;">马协会员专享</th>
-                                    <th style="width: 150px;"></th>
+                                    <th style="width: 90px;">会员专享</th>
+                                    <th style="width: 100px;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -141,6 +141,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="am-form-group">
                     <label  class="am-u-sm-2 am-form-label">签到获取积分</label>
                     <div class="am-u-sm-10">
@@ -149,7 +150,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 50px;text-align: center;">一般用户积分</th>
-                                    <th style="width: 100px;">马协会员积分</th>
+                                    <th style="width: 100px;">会员积分</th>
                                 </tr>
                                 </thead>
                                 <tbody>

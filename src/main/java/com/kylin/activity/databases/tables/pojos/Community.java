@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community implements Serializable {
 
-    private static final long serialVersionUID = 1165204179;
+    private static final long serialVersionUID = -316372327;
 
     private Integer   id;
     private String    name;
@@ -32,6 +32,8 @@ public class Community implements Serializable {
     private Integer   status;
     private Boolean   usingScore;
     private String    avatar;
+    private Boolean   isVip;
+    private String    vipAgreement;
     private Double    vipAmount;
     private Integer   createdBy;
     private Timestamp created;
@@ -54,6 +56,8 @@ public class Community implements Serializable {
         this.status = value.status;
         this.usingScore = value.usingScore;
         this.avatar = value.avatar;
+        this.isVip = value.isVip;
+        this.vipAgreement = value.vipAgreement;
         this.vipAmount = value.vipAmount;
         this.createdBy = value.createdBy;
         this.created = value.created;
@@ -75,6 +79,8 @@ public class Community implements Serializable {
         Integer   status,
         Boolean   usingScore,
         String    avatar,
+        Boolean   isVip,
+        String    vipAgreement,
         Double    vipAmount,
         Integer   createdBy,
         Timestamp created,
@@ -94,6 +100,8 @@ public class Community implements Serializable {
         this.status = status;
         this.usingScore = usingScore;
         this.avatar = avatar;
+        this.isVip = isVip;
+        this.vipAgreement = vipAgreement;
         this.vipAmount = vipAmount;
         this.createdBy = createdBy;
         this.created = created;
@@ -161,6 +169,22 @@ public class Community implements Serializable {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public Boolean getIsVip() {
+        return this.isVip;
+    }
+
+    public void setIsVip(Boolean isVip) {
+        this.isVip = isVip;
+    }
+
+    public String getVipAgreement() {
+        return this.vipAgreement;
+    }
+
+    public void setVipAgreement(String vipAgreement) {
+        this.vipAgreement = vipAgreement;
     }
 
     public Double getVipAmount() {
@@ -262,6 +286,8 @@ public class Community implements Serializable {
         sb.append(", ").append(status);
         sb.append(", ").append(usingScore);
         sb.append(", ").append(avatar);
+        sb.append(", ").append(isVip);
+        sb.append(", ").append(vipAgreement);
         sb.append(", ").append(vipAmount);
         sb.append(", ").append(createdBy);
         sb.append(", ").append(created);

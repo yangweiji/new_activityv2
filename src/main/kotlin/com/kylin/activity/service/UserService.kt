@@ -371,6 +371,16 @@ class UserService {
     }
 
     /**
+     * 更新团体组织用户关联对象信息
+     * @param communityUser: 团体组织用户关联对象
+     * @return 团体组织用户关联对象ID
+     */
+    fun updateCommunityUser(communityUser: CommunityUser): Int {
+        communityUserDao!!.update(communityUser)
+        return communityUser.id
+    }
+
+    /**
      * 依据openId取得唯一的用户
      * @return 用户信息
      */
