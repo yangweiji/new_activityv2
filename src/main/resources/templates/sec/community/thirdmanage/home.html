@@ -68,9 +68,9 @@
                                 <div class="am-list-item-text am_list_item_text" th:text="${item.get('address')}"></div>
 
                                 <div class="hd_list_cz">
-                                    <a th:href="@{/sec/thirdactivity/publish(id=${item.get('id')})}" class="bj" target="_blank">编辑</a>
-                                    <a th:href="@{/sec/thirdactivity/qrcode(id=${item.get('id')})}" class="tg"  target="_blank">二维码</a>
-                                    <a th:href="@{/sec/thirdactivity/attendusers(activityId=${item.get('id')},title=${item.get('title')})}" class="bj"  target="_blank">报名签到</a>
+                                    <a th:href="@{/sec/community/thirdactivity/publish(id=${item.get('id')})}" class="bj" target="_blank">编辑</a>
+                                    <a th:href="@{/sec/community/thirdactivity/qrcode(id=${item.get('id')})}" class="tg"  target="_blank">二维码</a>
+                                    <a th:href="@{/sec/community/thirdactivity/attendusers(activityId=${item.get('id')},title=${item.get('title')})}" class="bj"  target="_blank">报名签到</a>
                                 </div>
                             </div>
                         </li>

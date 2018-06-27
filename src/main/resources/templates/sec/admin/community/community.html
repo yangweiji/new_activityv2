@@ -85,7 +85,7 @@
                         <input required="required" type="tel" id="community_managerPhoneNumber"
                                name="managerPhoneNumber" th:placeholder="请输入管理员手机号码"
                                v-model="cacheData.community.managerPhoneNumber"/>
-                        <span>温馨提示：团体管理员使用此手机号码登录平台，初始密码为123456！</span>
+                        <span class="c-avatar-tip">温馨提示：团体管理员使用此手机号码登录平台，初始密码为123456</span>
                     </div>
                 </div>
 
@@ -170,7 +170,7 @@
                             <input type="radio" name="usingScore"
                                    v-model="cacheData.community.usingScore" th:value=false> 否
                         </label><br>
-                        <span class="c-avatar-tip">温馨提示：启用积分后，发布活动时，可进行积分奖励；用户报名时，可使用积分抵扣；换算：1积分=1元（人民币）</span>
+                        <span class="c-avatar-tip">温馨提示：启用积分后，发布活动时，可进行积分奖励设置；用户报名时，可使用积分抵扣；换算：1积分=1元（人民币）</span>
                     </div>
                 </div>
 
@@ -185,7 +185,7 @@
                             <input type="radio" name="isVip" v-on:click="selectVal"
                                    v-model="cacheData.community.isVip" th:value=false> 否
                         </label><br>
-                        <span class="c-avatar-tip">温馨提示：启用会员后，发布活动时，可设置会员票种及会员积分奖励；</span>
+                        <span class="c-avatar-tip">温馨提示：启用会员后，发布活动时，可进行会员票种及会员积分奖励设置；</span>
                     </div>
                 </div>
 
