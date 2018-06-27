@@ -107,9 +107,9 @@
                                     <th style="width: 80px;text-align: center;">序号</th>
                                     <th>费用名称</th>
                                     <th style="width: 100px;">金额</th>
-                                    <th style="width: 150px;" th:if="${community.}">积分最大使用量</th>
+                                    <th style="width: 150px;" th:if="${community.usingScore}">积分最大使用量</th>
                                     <th style="width: 100px;">名额限制</th>
-                                    <th style="width: 90px;">会员专享</th>
+                                    <th style="width: 90px;" th:if="${community.isVip}">会员专享</th>
                                     <th style="width: 100px;"></th>
                                 </tr>
                                 </thead>
@@ -122,13 +122,13 @@
                                     <td class="c-input">
                                         <input required="required" type="number" v-model="ticket.price" placeholder="0为免费" />
                                     </td>
-                                    <td class="c-input">
+                                    <td class="c-input" th:if="${community.usingScore}">
                                         <input required="required" type="number" v-model="ticket.score" placeholder="0为不允许使用" />
                                     </td>
                                     <td class="c-input">
                                         <input required="required" type="number" v-model="ticket.count" placeholder="0为不限" />
                                     </td>
-                                    <td>
+                                    <td th:if="${community.isVip}">
                                         <input type="checkbox" v-bind:true-value="1" v-bind:false-value="0" v-model="ticket.userLevel" />
                                     </td>
                                     <td>
@@ -142,7 +142,7 @@
                     </div>
                 </div>
 
-                <div class="am-form-group">
+                <div class="am-form-group" th:if="${community.usingScore}">
                     <label  class="am-u-sm-2 am-form-label">签到获取积分</label>
                     <div class="am-u-sm-10">
                         <div class="c-ticket-table">
