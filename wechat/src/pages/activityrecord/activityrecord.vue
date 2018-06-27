@@ -93,7 +93,7 @@
           for (var i = 0; i < records.length; i++) {
             var record = records[i]
             if(record.record_time){
-              var dateStr = this.$kyutil.date.format(record.record_time, 'yyyy-MM-dd')
+              var dateStr = this.$kyutil.date.format(record.record_time, 'yyyy-M-d')
               evts[dateStr] = record
             }
           }
@@ -195,10 +195,12 @@
       setToday(val, val1, val2) {
         this.$refs.calendar.setToday();
       },
-      select(date, record) {
-        if(record){
+      select(date) {
+        var key = date.join('-')
+        var record = this.events[key]
+        if(record && record.record_id){
           wx.navigateTo({
-            url: "../../pages/activityrecorditem/activityrecorditem?id=" + record.id
+            url: "../../pages/activityrecorditem/activityrecorditem?id=" + record.record_id
           });
         }
       }

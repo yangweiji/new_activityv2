@@ -32,9 +32,35 @@ function HttpRequest(loading, url, sessionChoose, sessionId, params, method, ask
         { 'content-type': 'application/x-www-form-urlencoded', 'Cookie': 'JSESSIONID=' + sessionId },
         { 'content-type': 'application/x-www-form-urlencoded' }
     ]
+
+    //处理日期格式属性， 后台只识别yyyy-MM-dd HH:mm:ss格式日期
+    var castDate = function(obj) {
+        if (obj != null && obj instanceof Object) {
+            var copy = {}
+            for (var k in obj) {
+                var v = obj[k]
+                if (v instanceof Date) {
+                    copy[k] = Dateutil.format(v, 'yyyy-MM-dd HH:mm:ss')
+                } else if (v instanceof Object || v instanceof Array) {
+                    copy[k] = castDate(v)
+                } else {
+                    copy[k] = v
+                }
+            }
+            return copy
+        } else if (obj != null && obj instanceof Array) {
+            var copy = []
+            for (var i = 0; i < obj.length; i++) {
+                copy.push(castDate(obj[i]))
+            }
+            return copy
+        }
+        return obj
+    }
+
     wx.request({
         url: data.serverUrl + url,
-        data: params,
+        data: castDate(params),
         dataType: "json",
         header: paramSession[sessionChoose],
         method: method,

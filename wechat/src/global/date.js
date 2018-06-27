@@ -13,10 +13,11 @@ function anyToDate(d) {
 }
 
 function dateFormat(date, fmt) {
+    date = anyToDate(date)
     var o = {
         "M+": date.getMonth() + 1,
         "d+": date.getDate(),
-        "h+": date.getHours(),
+        "H+": date.getHours(),
         "m+": date.getMinutes(),
         "s+": date.getSeconds(),
         "q+": Math.floor((date.getMonth() + 3) / 3),
