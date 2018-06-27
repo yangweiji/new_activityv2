@@ -69,7 +69,8 @@ class ActivityPhotosController {
                     , activity!!.title
                     , DateUtil.date().toTimestamp()
                     , user!!.id
-                    , axtenalUrl)
+                    , axtenalUrl
+                    , null)
             //添加到数据库
             activityPhotoService!!.insert(activityPhoto)
             if (activityPhoto.id > 0) {

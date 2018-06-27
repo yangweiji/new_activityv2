@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhoto implements Serializable {
 
-    private static final long serialVersionUID = -297174130;
+    private static final long serialVersionUID = 969206909;
 
     private Integer   id;
     private Integer   activityId;
@@ -32,6 +32,7 @@ public class ActivityPhoto implements Serializable {
     private Timestamp created;
     private Integer   createdBy;
     private String    axtenalUrl;
+    private Integer   browseCount;
 
     public ActivityPhoto() {}
 
@@ -43,6 +44,7 @@ public class ActivityPhoto implements Serializable {
         this.created = value.created;
         this.createdBy = value.createdBy;
         this.axtenalUrl = value.axtenalUrl;
+        this.browseCount = value.browseCount;
     }
 
     public ActivityPhoto(
@@ -52,7 +54,8 @@ public class ActivityPhoto implements Serializable {
         String    description,
         Timestamp created,
         Integer   createdBy,
-        String    axtenalUrl
+        String    axtenalUrl,
+        Integer   browseCount
     ) {
         this.id = id;
         this.activityId = activityId;
@@ -61,6 +64,7 @@ public class ActivityPhoto implements Serializable {
         this.created = created;
         this.createdBy = createdBy;
         this.axtenalUrl = axtenalUrl;
+        this.browseCount = browseCount;
     }
 
     public Integer getId() {
@@ -119,6 +123,14 @@ public class ActivityPhoto implements Serializable {
         this.axtenalUrl = axtenalUrl;
     }
 
+    public Integer getBrowseCount() {
+        return this.browseCount;
+    }
+
+    public void setBrowseCount(Integer browseCount) {
+        this.browseCount = browseCount;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ActivityPhoto (");
@@ -130,6 +142,7 @@ public class ActivityPhoto implements Serializable {
         sb.append(", ").append(created);
         sb.append(", ").append(createdBy);
         sb.append(", ").append(axtenalUrl);
+        sb.append(", ").append(browseCount);
 
         sb.append(")");
         return sb.toString();

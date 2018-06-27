@@ -211,7 +211,7 @@ class ActivityController : BaseController() {
      * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/attendusers", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/attendusers", method = [RequestMethod.GET, RequestMethod.POST])
     fun attendusers(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -229,7 +229,6 @@ class ActivityController : BaseController() {
             end = sdf.format(calendar.time)
         }
 
-        //参数：手机号
         var activityId = request.getParameter("activityId")
         var title = request.getParameter("title")
         var mobile = request.getParameter("mobile")
@@ -253,7 +252,7 @@ class ActivityController : BaseController() {
                 if (!attendColumns.contains(key)) {
                     attendColumns.add(key)
                 }
-                map.put(key, info.value)
+                map[key] = info.value
             }
 
             listItems.add(map)
@@ -276,6 +275,7 @@ class ActivityController : BaseController() {
         model.addAttribute("activityStatistics", activityStatistics)
         model.addAttribute("attendcount", attendcount)
         model.addAttribute("checkcount", checkcount)
+
         return "sec/admin/activity/attendusers"
     }
 

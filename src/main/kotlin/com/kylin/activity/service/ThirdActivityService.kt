@@ -226,8 +226,6 @@ class ThirdActivityService {
 
         if (!status.isNullOrBlank()) {
             strCondition = " and t1.status = $status "
-        } else {
-            strCondition = " and (t1.status is null or t1.status = 0)  "
         }
         sql = sql.replace("{8}", strCondition)
 
