@@ -11,7 +11,7 @@
 
         <div class="c-bg">
             <div data-am-widget="slider" class="am-slider am-slider-c3"
-                 data-am-slider='{&quot;controlNav&quot;:false}' style="width:1170px;margin: 0 auto;height: 600px">
+                 data-am-slider='{&quot;controlNav&quot;:false}' style="">
                 <ul class="am-slides">
                     <li th:each="poster,item:${posterItems}">
                         <div>
@@ -30,7 +30,7 @@
                                         th:text="${poster.get('title')}" style="color:#eff0f1"></span>
                                 </a>
                                 <span style="float: right"><a th:href="@{pub/poster/allposter/{posterType} (posterType=${poster.get('poster_type')})}"
-                                         style="color:#4990d3">更多</a></span>
+                                         style="color:#4990d3" target="_blank">更多</a></span>
                             </div>
                         </div>
 
@@ -39,22 +39,22 @@
             </div>
         </div>
 
-        <!-- <div class="">
+        <div class="" style="display: none;">
              <div class="am-u-lg-12">
                  <div class="get-title">
                      <div class="get_font_left">
-                         &lt;!&ndash;<img src="/img/font_yjy.png" alt="" />&ndash;&gt;
+                         <!--<img src="/img/font_yjy.png" alt="" />-->
                          <span style="color:white;font-size: 35px;white-space:nowrap">已经有</span>
                      </div>
                      <div class="get_font_center" th:attr="count=${#lists.size(activities)}" id="banner_num"></div>
                      <div class="get_font_rigth">
-                         &lt;!&ndash;<img src="/img/font_zty.png" alt="" />&ndash;&gt;
+                         <!--<img src="/img/font_zty.png" alt="" />-->
                          <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
                      </div>
                  </div>
 
                  <div class="font_line">
-                     &lt;!&ndash;<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>&ndash;&gt;
+                     <!--<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>-->
                      <span style="color:white;font-size: 30px;white-space:nowrap"
                            th:text="${community.description}"></span>
                  </div>
@@ -62,10 +62,10 @@
                      <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
                          <i class="fa fa-weixin"></i>
                          微信小程序</a>
-                     &lt;!&ndash;<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>&ndash;&gt;
+                     <!--<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>-->
                  </p>
              </div>
-         </div>-->
+         </div>
     </div>
     <div class="c_orange_container">
         <div class="c_orange">
@@ -144,7 +144,8 @@
                 <a th:class="${tags == 'b5' ? 'banner_hover' : ''}" th:href="@{/?tags=b5}">跑步训练</a>
                 <a th:class="${tags == 'b13' ? 'banner_hover' : ''}" th:href="@{/?tags=b13}">运动装备</a>
                 <a th:class="${tags == 'b12' ? 'banner_hover' : ''}" th:href="@{/?tags=b12}">会员福利</a>
-                <a th:class="${tags == 'b10-b11' ? 'banner_hover' : ''}" th:href="@{/?tags=b10-b11}">赛事活动</a>
+                <a th:class="${tags == 'b10' ? 'banner_hover' : ''}" th:href="@{/?tags=b10}">国内赛事</a>
+                <a th:class="${tags == 'b11' ? 'banner_hover' : ''}" th:href="@{/?tags=b11}">国际赛事</a>
             </div>
         </div>
     </div>
@@ -266,15 +267,35 @@
 
     #o_notice, #o_news, #o_exercise {
         margin: 0 auto;
-
         border-radius: 8px;
-
         text-align: center;
     }
 
     .am-slides img {
-        height: 600px;
-        /* width: 1080px;*/
+        height: 350px;
+    }
+
+    .get
+    {
+        height: 350px;
+    }
+
+    .get .c-bg
+    {
+        height:350px;
+    }
+
+    .am-slider-c3
+    {
+        width: 100%;
+        max-height: 350px;
+        margin: 0px auto;
+    }
+
+    .am-slider-c3 .am-slider-desc
+    {
+        width: 100%;
+        bottom: 0px;
     }
 </style>
 
