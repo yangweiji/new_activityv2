@@ -48,72 +48,6 @@ class WxProfileController {
 
 
     /**
-     * 用户已参加活动数
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    @CrossOrigin
-    @GetMapping("/getActivityAttendCounts")
-    fun activityAttendCounts(@RequestParam(required = false) userId: Int?,
-                             @RequestParam(required = false) communityId: Int?): InfoData {
-        return proFileService!!.activityAttendCounts(userId, communityId)
-    }
-
-
-    /**
-     * 用户收藏活动数
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    @CrossOrigin
-    @GetMapping("/getFavoriteActivityCounts")
-    fun favoriteActivityCounts(@RequestParam(required = false) userId: Int?,
-                               @RequestParam(required = false) communityId: Int?): InfoData {
-        return proFileService!!.favoriteActivityCounts(userId, communityId)
-    }
-
-
-    /**
-     * 用户需签到活动数
-     * @param userId 用户id
-     * @param communityId 团体id
-     *
-     */
-    @CrossOrigin
-    @GetMapping("/getNoCheckedActivityCounts")
-    fun noCheckedActivityCounts(@RequestParam(required = false) userId: Int?,
-                                @RequestParam(required = false) communityId: Int?): InfoData {
-        return proFileService!!.noCheckedActivityCounts(userId, communityId)
-    }
-
-
-    /**
-     * 用户已签到活动数
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    @CrossOrigin
-    @GetMapping("/getCheckedActivityCounts")
-    fun checkedActivityCounts(@RequestParam(required = false) userId: Int?,
-                              @RequestParam(required = false) communityId: Int?): InfoData {
-        return proFileService!!.checkedActivityCounts(userId, communityId)
-    }
-
-
-    /**
-     * 用户积分总额
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    @CrossOrigin
-    @GetMapping("/getSumScores")
-    fun sumScores(@RequestParam(required = false) userId: Int?,
-                  @RequestParam(required = false) communityId: Int?): InfoData {
-        return proFileService!!.sumScores(userId, communityId)
-    }
-
-
-    /**
      * 完善个人信息
      * @param userId 用户id
      */
@@ -148,6 +82,21 @@ class WxProfileController {
         userInfo!!.wechatId = user.wechatId
         proFileService!!.updateUserInfo(userInfo)
         return true
+    }
+
+
+    /**
+     * 个人中心4个活动数+积分总额
+     * counts:已参加/我喜欢/需签到/已签到/积分总额
+     * @param userId 用户编号
+     * @param communityId 团体编号
+     */
+    @CrossOrigin
+    @GetMapping("/getPersonalInfoCounts")
+    fun getPersonalInfoCounts(@RequestParam(required = false) userId: Int?,
+                              @RequestParam(required = false) communityId: Int?): List<Any> {
+        val personalInfoCounts = proFileService!!.getPersonalInfoCounts(userId, communityId)
+        return personalInfoCounts.intoMaps()
     }
 
 
