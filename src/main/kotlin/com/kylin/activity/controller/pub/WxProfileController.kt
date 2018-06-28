@@ -2,6 +2,8 @@ package com.kylin.activity.controller.pub
 
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
+import com.kylin.activity.util.CommonService
+import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
@@ -12,6 +14,9 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("pub/wx/profile")
 class WxProfileController {
+    @Autowired
+    private val util: KylinUtil? = null
+
     /**
      * 个人信息服务
      */
@@ -24,6 +29,11 @@ class WxProfileController {
     @Autowired
     private val userService: UserService? = null
 
+    /**
+     * 公共服务
+     */
+    @Autowired
+    private val commonService: CommonService? = null
 
     /**
      * 微信端个人信息页面初始化
@@ -39,6 +49,8 @@ class WxProfileController {
 
     /**
      * 用户已参加活动数
+     * @param userId 用户id
+     * @param communityId 团体id
      */
     @CrossOrigin
     @GetMapping("/getActivityAttendCounts")
@@ -50,6 +62,8 @@ class WxProfileController {
 
     /**
      * 用户收藏活动数
+     * @param userId 用户id
+     * @param communityId 团体id
      */
     @CrossOrigin
     @GetMapping("/getFavoriteActivityCounts")
@@ -61,6 +75,8 @@ class WxProfileController {
 
     /**
      * 用户需签到活动数
+     * @param userId 用户id
+     * @param communityId 团体id
      *
      */
     @CrossOrigin
@@ -73,6 +89,8 @@ class WxProfileController {
 
     /**
      * 用户已签到活动数
+     * @param userId 用户id
+     * @param communityId 团体id
      */
     @CrossOrigin
     @GetMapping("/getCheckedActivityCounts")
@@ -84,6 +102,8 @@ class WxProfileController {
 
     /**
      * 用户积分总额
+     * @param userId 用户id
+     * @param communityId 团体id
      */
     @CrossOrigin
     @GetMapping("/getSumScores")
@@ -95,6 +115,7 @@ class WxProfileController {
 
     /**
      * 完善个人信息
+     * @param userId 用户id
      */
     @CrossOrigin
     @GetMapping("/getIntoPersonalInformation")
@@ -106,6 +127,7 @@ class WxProfileController {
 
     /**
      * 保存并更新用户信息
+     * @param user 用户信息
      */
     @CrossOrigin
     @Transactional
@@ -128,6 +150,42 @@ class WxProfileController {
         return true
     }
 
+
+    /**
+     * 个人中心我的活动
+     * @param type 活动类型
+     * @param userId 活动编号
+     * @param communityId 编号id
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/getMyActivities")
+    fun myActivities(@RequestParam(required = false) type: Int?, userId: Int?, communityId: Int?): List<Any> {
+        var activitiesList = proFileService!!.myActivities(type, userId, communityId)
+        var items = mutableListOf<MutableMap<String, Any?>>()
+        for (activity in activitiesList) {
+            var map = mutableMapOf<String, Any?>()
+            var avatar: String? = null
+            var user_avatar: String? = null
+            if (activity["avatar"] != null) {
+                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+            }
+            if (activity["user_avatar"] != null) {
+                user_avatar = commonService!!.getDownloadUrl(activity.get("user_avatar", String::class.java), "middle")
+            }
+            map["id"] = activity.get("id", Int::class.java)
+            map["community_id"] = activity.get("community_id", Int::class.java)
+            map["title"] = activity.get("title").toString()
+            map["avatar"] = avatar
+            map["user_avatar"] = user_avatar
+            map["start_time"] = util!!.fromNow(activity.get("start_time"))
+            map["end_time"] = util!!.fromNow(activity.get("end_time"))
+            map["attend_count"] = activity.get("attend_count", Int::class.java)
+            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+            items.add(map)
+        }
+        return items
+    }
 
 
 }
