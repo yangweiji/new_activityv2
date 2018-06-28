@@ -1,6 +1,15 @@
-html,body { margin: 0; padding: 0; min-height: 100%; background: #f4f4f4; }
+html,body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    background: #f4f4f4;
+    -ms-text-size-adjust:100%;
+    -webkit-text-size-adjust:100%;
+    /*font-family:Verdana,"Microsoft YaHei","微软雅黑",Arial,Helvetica,sans-serif;*/
+}
+
 @font-face {
-    font-family: 'avantgarde_md_btmedium';
+    /*font-family: 'avantgarde_md_btmedium';*/
     src: url('../fonts/tt0156m-webfont.eot');
     src: url('../fonts/tt0156m-webfont.eot?#iefix') format('embedded-opentype'),
     url('../fonts/tt0156m-webfont.woff2') format('woff2'),
@@ -24,14 +33,14 @@ ul,li,dl,dt,dd { margin: 0; padding: 0; list-style: none;}
 .am-dropdown-content:after { display: none;}
 /*.am-dropdown-content { background: #454648; border:none; margin-top:0px; }*/
 .am-dropdown-content { background: #FFFFFF; border:none; margin-top:0px; }
-.am-nav { font-size: 14px; margin-left: 20px;}
+.am-nav { font-size: 14px; margin-left: 0px;}
 ul.am-dropdown-content { padding:0px;}
 .am-dropdown-content  { min-width: 106px; text-align: center;}
 ul.am-dropdown-content>li>a { color: #8C8C8C; font-size: 12px;}
 ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover { background: #ff5656; color: #fff;transition: background-color ease .3s;}
 .am-icon-caret-down:before { font-size: 8px;}
 /*.amz-container { max-width: 1500px; margin: 0 auto;}*/
-.amz-container { max-width: 1190px; margin: 0 auto;}
+.amz-container { max-width: 1290px; margin: 0 auto;}
 .am-topbar-logo img{ width: 130px; height: 37px; vertical-align: top; margin-top:7px; }
 .am-list, .am-topbar { margin-bottom: 0;}
 /*.get {background: url(../img/banner_bg.png) top center no-repeat;color: #fff;text-align: center;height: 278px;}*/

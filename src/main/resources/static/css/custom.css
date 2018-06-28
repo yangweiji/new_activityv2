@@ -368,6 +368,31 @@
     background-position: -20px -5px;
 }
 
+.am-nav>li {
+    padding-left: 20px;
+}
+.am-nav>li>a {
+    padding: 0.4em 0.4em;
+    display: inline-block;
+    color: inherit;
+    font-size: 14px;
+}
+
+.am-nav>li+li {
+    padding-left: 20px;
+    color: #444;
+}
+
+.am-nav-header {
+    padding-left: 20px;
+    color: #FFF;
+}
+
+.am-nav>li+.am-nav-header {
+    padding-left: 20px;
+    color: #FFF;
+}
+
 .manage-r ul.am-tabs-nav.am-cf.am_cf
 {
     max-width: 90%;
