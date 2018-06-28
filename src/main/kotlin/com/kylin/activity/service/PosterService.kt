@@ -64,13 +64,6 @@ class PosterService {
         return create!!.resultQuery(sql).fetch()
     }
 
-    /**
-     * 海报总数
-     */
-     fun posterCounts():Result<Record>{
-        var sql="select count(*) counts from poster where `show`=1 "
-        return create!!.resultQuery(sql).fetch()
-    }
 
     /**
      * 获取海报信息集合

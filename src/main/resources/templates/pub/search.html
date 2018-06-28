@@ -1,42 +1,13 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/head :: default">
 </head>
-<link rel="stylesheet" href="/css/custom.css?1" />
+<link rel="stylesheet" href="/css/custom.css?1"/>
 <body>
 <div th:replace="fragments/header :: default"></div>
 
 <div id="app">
-    <div class="get" style="display: none;">
-        <div class="c-bg"></div>
-        <div class="">
-            <div class="am-u-lg-12">
-                <div class="get-title">
-                    <div class="get_font_left">
-                        <!--<img src="/img/font_yjy.png" alt="" />-->
-                        <span style="color:white;font-size: 35px;white-space:nowrap">已经有</span>
-                    </div>
-                    <div class="get_font_center" th:attr="count=${#lists.size(activities)}" id="banner_num"></div>
-                    <div class="get_font_rigth">
-                        <!--<img src="/img/font_zty.png" alt="" />-->
-                        <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
-                </div>
-                </div>
-
-                <div class="font_line">
-                    <!--<img src="/img/font_line.png" alt="" />-->
-                    <span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>
-                </div>
-                <p>
-                    <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
-                        <i class="fa fa-weixin"></i>
-                        微信公众号</a>
-                    <!--<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>-->
-                </p>
-            </div>
-        </div>
-    </div>
 
     <!--活动筛选 start-->
     <div class="activity_select_tc" id="activity_select_tc">
@@ -45,44 +16,55 @@
             <div class="select_qu_zu">
                 <h3 class="select_qu_tit">分类：</h3>
                 <ul class="select_ul" id="hd_tag" th:attr=(data-id=${tag})>
-                    <li><a th:classappend="${tag=='0'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=0;time='+time+';pay='+pay}"><span>全部</span></a></li>
-                    <li><a th:classappend="${tag=='b5'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b5;time='+time+';pay='+pay}"><span>跑步训练</span></a></li>
-                    <li><a th:classappend="${tag=='b13'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b13;time='+time+';pay='+pay}"><span>运动装备</span></a></li>
-                    <li><a th:classappend="${tag=='b12'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b12;time='+time+';pay='+pay}"><span>会员福利</span></a></li>
-                    <li><a th:classappend="${tag=='b10'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b10;time='+time+';pay='+pay}"><span>国内赛事</span></a></li>
-                    <li><a th:classappend="${tag=='b11'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b11;time='+time+';pay='+pay}"><span>国际赛事</span></a></li>
-                    <li><a th:classappend="${tag=='b1'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b1;time='+time+';pay='+pay}"><span>徒步</span></a></li>
-                    <li><a th:classappend="${tag=='b2'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b2;time='+time+';pay='+pay}"><span>越野</span></a></li>
-                    <li><a th:classappend="${tag=='b3'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b3;time='+time+';pay='+pay}"><span>聚餐</span></a></li>
-                    <li><a th:classappend="${tag=='b4'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b4;time='+time+';pay='+pay}"><span>骑行</span></a></li>
-                    <li><a th:classappend="${tag=='b6'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b6;time='+time+';pay='+pay}"><span>会议</span></a></li>
-                    <li><a th:classappend="${tag=='b7'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b7;time='+time+';pay='+pay}"><span>招募</span></a></li>
-                    <li><a th:classappend="${tag=='b8'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b8;time='+time+';pay='+pay}"><span>讲座</span></a></li>
-                    <!--<li><a th:classappend="${tag=='b9'}?'thisOver'" th:href="${'/pub/search/'+s+';tag=b9;time='+time+';pay='+pay}"><span>赛事报名</span></a></li>-->
+                    <li><a th:classappend="${tag=='0'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=0;time='+time+';pay='+pay}"><span>全部</span></a></li>
+                    <li><a th:classappend="${tag=='b5'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b5;time='+time+';pay='+pay}"><span>跑步训练</span></a></li>
+                    <li><a th:classappend="${tag=='b13'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b13;time='+time+';pay='+pay}"><span>运动装备</span></a></li>
+                    <li><a th:classappend="${tag=='b12'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b12;time='+time+';pay='+pay}"><span>会员福利</span></a></li>
+                    <li><a th:classappend="${tag=='b10'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b10;time='+time+';pay='+pay}"><span>国内赛事</span></a></li>
+                    <li><a th:classappend="${tag=='b11'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b11;time='+time+';pay='+pay}"><span>国际赛事</span></a></li>
+                    <li><a th:classappend="${tag=='b1'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b1;time='+time+';pay='+pay}"><span>徒步</span></a></li>
+                    <li><a th:classappend="${tag=='b2'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b2;time='+time+';pay='+pay}"><span>越野</span></a></li>
+                    <li><a th:classappend="${tag=='b3'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b3;time='+time+';pay='+pay}"><span>聚餐</span></a></li>
+                    <li><a th:classappend="${tag=='b4'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b4;time='+time+';pay='+pay}"><span>骑行</span></a></li>
+                    <li><a th:classappend="${tag=='b6'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b6;time='+time+';pay='+pay}"><span>会议</span></a></li>
+                    <li><a th:classappend="${tag=='b7'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b7;time='+time+';pay='+pay}"><span>招募</span></a></li>
+                    <li><a th:classappend="${tag=='b8'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag=b8;time='+time+';pay='+pay}"><span>讲座</span></a></li>
                 </ul>
             </div>
             <div class="select_qu_zu">
                 <h3 class="select_qu_tit">时间：</h3>
                 <ul class="select_ul" id="hd_time" th:attr=(data-id=${time})>
-                    <li><a th:classappend="${time=='0'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time=0;pay='+pay}"><span>不限</span></a></li>
-                    <li><a th:classappend="${time=='d'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time=d;pay='+pay}"><span>今天</span></a></li>
-                    <li><a th:classappend="${time=='w'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time=w;pay='+pay}"><span>近一周</span></a></li>
-                    <li><a th:classappend="${time=='m'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time=m;pay='+pay}"><span>近一月</span></a></li>
-                    <li><a th:classappend="${time=='z'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time=z;pay='+pay}"><span>周末</span></a></li>
-                    <li class="date_Manually" id="select_day" th:styleappend="${#strings.length(time)>1}?'background-color:#dd514c'">
+                    <li><a th:classappend="${time=='0'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag='+tag+';time=0;pay='+pay}"><span>不限</span></a></li>
+                    <li><a th:classappend="${time=='d'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag='+tag+';time=d;pay='+pay}"><span>今天</span></a></li>
+                    <li><a th:classappend="${time=='w'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag='+tag+';time=w;pay='+pay}"><span>近一周</span></a></li>
+                    <li><a th:classappend="${time=='m'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag='+tag+';time=m;pay='+pay}"><span>近一月</span></a></li>
+                    <li><a th:classappend="${time=='z'}?'thisOver'"
+                           th:href="${'/pub/search/'+s+';tag='+tag+';time=z;pay='+pay}"><span>周末</span></a></li>
+                    <li class="date_Manually" id="select_day"
+                        th:styleappend="${#strings.length(time)>1}?'background-color:#dd514c'">
                         <input id="start_date" type="text" class="post_tiMe4 star" placeholder="手动选择日期"
-                               data-am-datepicker="{theme: 'danger'}" readonly th:value="${start_date}" />
+                               data-am-datepicker="{theme: 'danger'}" readonly th:value="${start_date}"/>
                     </li>
                 </ul>
             </div>
-            <!--<div class="select_qu_zu">-->
-                <!--<h3 class="select_qu_tit">费用：</h3>-->
-                <!--<ul class="select_ul" id="hd_pay" th:attr=(data-id=${pay})>-->
-                    <!--<li><a th:classappend="${pay=='0'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay=0'}"><span>全部</span></a></li>-->
-                    <!--<li><a th:classappend="${pay=='1'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay=1'}"><span>收费</span></a></li>-->
-                    <!--<li><a th:classappend="${pay=='2'}?'thisOver'" th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay=2'}"><span>免费</span></a></li>-->
-                <!--</ul>-->
-            <!--</div>-->
+
         </div>
     </div>
 
@@ -114,13 +96,14 @@
             </ul>
         </div>
 
-        <!--<span th:inline="text">[[${pageImpl}]]</span>-->
         <ul class="am-pagination am-pagination-centered" th:if="${#lists.size(activities)} > 0">
             <li class="" th:classappend="${first}?'am-disabled'">
                 <a th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay='+pay+';page='+(pageImpl.number-1)}">&laquo;</a>
             </li>
-            <li class="" th:classappend="${(pageImpl.number+1)==i}?'am-active'" th:each="i:${#numbers.sequence(1, pageImpl.totalPages)}">
-                <a th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay='+pay+';page='+(i-1)}" th:text="${i}"></a>
+            <li class="" th:classappend="${(pageImpl.number+1)==i}?'am-active'"
+                th:each="i:${#numbers.sequence(1, pageImpl.totalPages)}">
+                <a th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay='+pay+';page='+(i-1)}"
+                   th:text="${i}"></a>
             </li>
             <li class="" th:classappend="${last}?'am-disabled'">
                 <a th:href="${'/pub/search/'+s+';tag='+tag+';time='+time+';pay='+pay+';page='+(pageImpl.number+1)}">&raquo;</a>
@@ -137,10 +120,6 @@
     var tag = [[${tag}]];
     var time = [[${time}]];
     var pay = [[${pay}]];
-//    console.log(s);
-//    console.log(tag);
-//    console.log(time);
-//    console.log(pay);
     /*]]>*/
 </script>
 <script type="text/javascript" src="/js/petshow.js"></script>

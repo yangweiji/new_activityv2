@@ -1,12 +1,11 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
-import com.xiaoleilu.hutool.date.DateUtil
-import org.jooq.DSLContext
-import org.jooq.Record
-import org.jooq.Result
+import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 /**
@@ -16,15 +15,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("pub/wx/profile")
 class WxProfileController {
     @Autowired
-    private val proFileService: ProfileService? = null
-
-    @Autowired
-    private val thirdUserService: ThirdUserService? = null
+    private val util: KylinUtil? = null
 
     /**
-     * 活动服务
+     * 个人信息服务
      */
-    private val activityService: ActivityService? = null
+    @Autowired
+    private val proFileService: ProfileService? = null
 
     /**
      * 用户服务
@@ -33,72 +30,10 @@ class WxProfileController {
     private val userService: UserService? = null
 
     /**
-     * 团体服务
-     */
-    @Autowired
-    private val communityService: CommunityService? = null
-
-    /**
-     * 通用服务
+     * 公共服务
      */
     @Autowired
     private val commonService: CommonService? = null
-
-    /**
-     * 微信端个人信息页面初始化
-     * @param userId 用户ID
-     * @param communityId 团体ID
-     */
-    @GetMapping("/getPerInformation")
-    fun getPerInformation(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
-        /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
-        var community = communityService!!.getCommunity(communityId!!)
-
-        var proInformation = proFileService!!.getInitProInformation(communityId, userId)
-
-        var mapList = mutableListOf<MutableMap<String, Any?>>()
-        for (item in proInformation) {
-            var map = mutableMapOf<String, Any?>()
-            var userAvatar: String? = null
-            var displayname: String? = null
-            var username: String? = null
-            if (item["displayname"] != null) {
-                displayname = item.get("displayname").toString()
-            }
-
-            if (item["username"] != null) {
-                username = item.get("username").toString()
-            }
-            if (item["avatar"] != null) {
-                userAvatar = commonService!!.getDownloadUrl(item.get("avatar", String::class.java), "middle")
-            }
-            map["id"] = item.get("id", Int::class.java)
-            map["displayname"] = displayname
-            map["username"] = username
-            map["avatar"] = userAvatar
-
-            //是否为本年的VIP
-            val isVip = proFileService!!.isVip(community!!.id, userId!!, DateUtil.thisYear())
-            if (isVip) map["level"] = isVip
-            //实名认证
-            map["is_real"] = item.get("is_real", Boolean::class.java)
-            if (map["is_real"] == null) 0 else map["is_real"]
-
-            //已参加
-            map["attend_user_count"] = item.get("attend_user_count", Int::class.java)
-            //我喜欢
-            map["favorite_count"] = item.get("favorite_count", Int::class.java)
-            //需签到
-            map["ne_checked_count"] = item.get("ne_checked_count", Int::class.java)
-            //已签到
-            map["checked_count"] = item.get("checked_count", Int::class.java)
-            //积分总额
-            map["sum_score"] = item.get("sum_score", Int::class.java)
-            mapList.add(map)
-
-        }
-        return mapList
-    }
 
     /**
      * 微信端个人信息页面初始化
@@ -111,20 +46,146 @@ class WxProfileController {
         return scores.intoMaps()
     }
 
+
     /**
-     * 小程序：完善个人信息页面
+     * 用户已参加活动数
      * @param userId 用户id
-     *
+     * @param communityId 团体id
      */
     @CrossOrigin
-    @GetMapping("/getIntoPersonalInformation")
-    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): List<Any> {
-        var personalInformationList = proFileService!!.getIntoPersonalInformation(userId)
-        return personalInformationList.intoMaps()
+    @GetMapping("/getActivityAttendCounts")
+    fun activityAttendCounts(@RequestParam(required = false) userId: Int?,
+                             @RequestParam(required = false) communityId: Int?): InfoData {
+        return proFileService!!.activityAttendCounts(userId, communityId)
     }
 
 
+    /**
+     * 用户收藏活动数
+     * @param userId 用户id
+     * @param communityId 团体id
+     */
+    @CrossOrigin
+    @GetMapping("/getFavoriteActivityCounts")
+    fun favoriteActivityCounts(@RequestParam(required = false) userId: Int?,
+                               @RequestParam(required = false) communityId: Int?): InfoData {
+        return proFileService!!.favoriteActivityCounts(userId, communityId)
+    }
 
+
+    /**
+     * 用户需签到活动数
+     * @param userId 用户id
+     * @param communityId 团体id
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/getNoCheckedActivityCounts")
+    fun noCheckedActivityCounts(@RequestParam(required = false) userId: Int?,
+                                @RequestParam(required = false) communityId: Int?): InfoData {
+        return proFileService!!.noCheckedActivityCounts(userId, communityId)
+    }
+
+
+    /**
+     * 用户已签到活动数
+     * @param userId 用户id
+     * @param communityId 团体id
+     */
+    @CrossOrigin
+    @GetMapping("/getCheckedActivityCounts")
+    fun checkedActivityCounts(@RequestParam(required = false) userId: Int?,
+                              @RequestParam(required = false) communityId: Int?): InfoData {
+        return proFileService!!.checkedActivityCounts(userId, communityId)
+    }
+
+
+    /**
+     * 用户积分总额
+     * @param userId 用户id
+     * @param communityId 团体id
+     */
+    @CrossOrigin
+    @GetMapping("/getSumScores")
+    fun sumScores(@RequestParam(required = false) userId: Int?,
+                  @RequestParam(required = false) communityId: Int?): InfoData {
+        return proFileService!!.sumScores(userId, communityId)
+    }
+
+
+    /**
+     * 完善个人信息
+     * @param userId 用户id
+     */
+    @CrossOrigin
+    @GetMapping("/getIntoPersonalInformation")
+    fun intoPersonalInformation(@RequestParam(required = false) userId: Int): User? {
+        var user = userService!!.getUser(userId)
+        return user
+    }
+
+
+    /**
+     * 保存并更新用户信息
+     * @param user 用户信息
+     */
+    @CrossOrigin
+    @Transactional
+    @PostMapping("/savePersonalInformation")
+    fun savePersonalInformation(user: User): Boolean {
+        var userInfo = userService!!.getCurrentUserInfo()
+        userInfo!!.displayname = user.displayname
+        userInfo!!.gender = user.gender
+        userInfo!!.email = user.email
+        userInfo!!.bloodType = user.bloodType
+        userInfo!!.clothingSize = user.clothingSize
+        userInfo!!.workCompany = user.workCompany
+        userInfo!!.occupation = user.occupation
+        userInfo!!.emergencyContactName = user.emergencyContactName
+        userInfo!!.emergencyContactMobile = user.emergencyContactMobile
+        userInfo!!.isParty = user.isParty
+        userInfo!!.address = user.address
+        userInfo!!.wechatId = user.wechatId
+        proFileService!!.updateUserInfo(userInfo)
+        return true
+    }
+
+
+    /**
+     * 个人中心我的活动
+     * @param type 活动类型
+     * @param userId 活动编号
+     * @param communityId 编号id
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/getMyActivities")
+    fun myActivities(@RequestParam(required = false) type: Int?, userId: Int?, communityId: Int?): List<Any> {
+        var activitiesList = proFileService!!.myActivities(type, userId, communityId)
+        var items = mutableListOf<MutableMap<String, Any?>>()
+        for (activity in activitiesList) {
+            var map = mutableMapOf<String, Any?>()
+            var avatar: String? = null
+            var user_avatar: String? = null
+            if (activity["avatar"] != null) {
+                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+            }
+            if (activity["user_avatar"] != null) {
+                user_avatar = commonService!!.getDownloadUrl(activity.get("user_avatar", String::class.java), "middle")
+            }
+            map["id"] = activity.get("id", Int::class.java)
+            map["community_id"] = activity.get("community_id", Int::class.java)
+            map["title"] = activity.get("title").toString()
+            map["avatar"] = avatar
+            map["user_avatar"] = user_avatar
+            map["start_time"] = util!!.fromNow(activity.get("start_time"))
+            map["end_time"] = util!!.fromNow(activity.get("end_time"))
+            map["attend_count"] = activity.get("attend_count", Int::class.java)
+            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+            items.add(map)
+        }
+        return items
+    }
 
 
 }

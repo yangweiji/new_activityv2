@@ -1,6 +1,7 @@
 #app {
-    background-color: #f8f8f8;
-    width: 1290px;
+    /*background-color: #f8f8f8;*/
+    background-color: #f4f4f4;
+    width: 1190px;
     min-height: 400px;
     overflow: hidden;
     margin-top: 100px;
@@ -18,7 +19,7 @@
 }
 
 .manage-r {
-    width: 1150px;
+    width: 1050px;
     background-color: #FFF;
     overflow: hidden;
     border: none;
@@ -147,21 +148,20 @@
 
 .am_img.animated.c-img {
     height: 130px;
-    width: 242px;
+    width: 232px;
 }
 
 /*列表页(原发现页)*/
 .activity_select_tc {
     width: 100%;
-    background-color: #F8F8F8;
-    /*margin-top: 104px;*/
+    background-color: #f4f4f4;
     margin-left: 30px;
 }
 
 .activity_select_tc .select_K {
-    width: 1190px;
+    width: 100%;
     overflow: hidden;
-    padding: 26px 0 26px;
+    padding: 25px 0 25px 0;
     margin: 0 auto;
 }
 
@@ -368,6 +368,36 @@
     background-position: -20px -5px;
 }
 
+.am-nav>li {
+    /*padding-left: 20px;*/
+}
+
+.am-nav > li > span {
+    margin-left: 20px;
+}
+
+.am-nav>li>a {
+    padding: 5px 5px;
+    display: inline-block;
+    color: inherit;
+    font-size: 14px;
+}
+
+.am-nav>li+li {
+    /*padding-left: 20px;*/
+    color: #444;
+}
+
+.am-nav-header {
+    padding: 5px 0px;
+    color: #FFF;
+}
+
+.am-nav>li+.am-nav-header {
+    /*padding-left: 20px;*/
+    color: #FFF;
+}
+
 .manage-r ul.am-tabs-nav.am-cf.am_cf
 {
     max-width: 90%;
@@ -415,3 +445,7 @@
     border-top: 1px solid #ddd;
 }
 
+div.dataTables_wrapper div.dataTables_paginate {
+    position: relative;
+    top: -60px;
+}

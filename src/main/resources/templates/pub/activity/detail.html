@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/head :: default">
 
 </head>
@@ -14,7 +14,8 @@
                 <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activity/detail')}?'am-active':''">
                     <a th:href="@{/pub/activity/detail/{activityId}(activityId=${activity.get('id')})}">活动详情</a>
                 </li>
-                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activityphoto/detail')}?'am-active':''">
+                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activityphoto/detail')}?'am-active':''"
+                    th:if="${photo}">
                     <a th:href="@{/pub/activityphoto/detail/{photoId}(photoId=${photo.id})}">活动相册</a>
                 </li>
             </ul>
