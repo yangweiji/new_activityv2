@@ -62,7 +62,12 @@ class ActivityPhotoController : BaseController() {
 
         var activityPhoto = activityPhotoService!!.getActivityPhotoItem(activityPhotoId)
         //记录浏览次数
-        activityPhoto.browseCount ++
+        if (activityPhoto.browseCount != null) {
+            activityPhoto.browseCount++
+        } else {
+            activityPhoto.browseCount = 0
+        }
+
         activityPhotoService!!.update(activityPhoto)
         model.addAttribute("activityPhoto", activityPhoto)
 

@@ -107,20 +107,16 @@ class ThirdActivityService {
                 "where 1=1 {0} {1} {2} {3} " +
                 "and ?=t1.community_id " +
                 "order by t1.start_time desc "
-        var params = mutableListOf<Any>()
         var strCondition = ""
         if (!title.isNullOrBlank()) {
-            strCondition = "and t1.title like ?"
-            params.add("%$title%")
+            strCondition = "and t1.title like '%$title%'"
         }
         sql = sql.replace("{0}", strCondition)
 
         if (!tags.isNullOrBlank() && tags != "0") {
-            strCondition = "and t1.tags = ?"
-            params.add(tags!!)
+            strCondition = "and t1.tags = '$tags'"
         }
         sql = sql.replace("{1}", strCondition)
-
 
         if (status == "1") {
             //未开始的活动
@@ -135,13 +131,11 @@ class ThirdActivityService {
         sql = sql.replace("{2}", strCondition)
 
         if (activityId!!.isNotEmpty()) {
-            strCondition = "and t1.id = ?"
-            params.add(activityId!!)
+            strCondition = "and t1.id = $activityId"
         }
         sql = sql.replace("{3}", strCondition)
 
-        params.add(id)
-        return create!!.resultQuery(sql, *params.toTypedArray()).fetch()
+        return create!!.resultQuery(sql, id).fetch()
     }
 
     /**

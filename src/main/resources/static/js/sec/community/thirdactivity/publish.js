@@ -102,6 +102,10 @@ new Vue({
         if(that.cacheData.activity.attendDueTime) {
             $('.c-datetimepicker.attend-due-time').datetimepicker('update', new Date(that.cacheData.activity.attendDueTime))
         }
+        //类别
+        $('#activity_type').on('change', function(ev) {
+            that.cacheData.activity.activityType = ev.currentTarget.value
+        }).val(that.cacheData.activity.activityType);
 
         $('#activity_tags').on('change', function(ev) {
             that.cacheData.activity.tags = ev.currentTarget.value

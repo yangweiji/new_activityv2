@@ -63,16 +63,17 @@ $(function () {
     });
 
 //@首页 数字跳动
-    var options = {
-        useEasing: true,
-        useGrouping: true,
-        separator: '',
-        decimal: '.',
-        prefix: '',
-        suffix: ''
-    };
-    var banner_num = new CountUp("banner_num", 0, parseInt($('#banner_num').attr('count')), 0, 5, options);
-    banner_num.start();
+//     var options = {
+//         useEasing: true,
+//         useGrouping: true,
+//         separator: '',
+//         decimal: '.',
+//         prefix: '',
+//         suffix: ''
+//     };
+//     var banner_num = new CountUp("banner_num", 0, parseInt($('#banner_num').attr('count')), 0, 5, options);
+//     banner_num.start();
+
 });
 
 //动画效果

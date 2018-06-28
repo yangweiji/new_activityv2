@@ -67,6 +67,18 @@
                     </div>
                 </div>
                 <div class="am-form-group">
+                    <label for="activity_type" class="am-u-sm-2 am-form-label">类别</label>
+                    <div class="am-u-sm-10">
+                        <select required="required" id="activity_type" name="activity_type" placeholder="请选择类别"  data-am-selected="">
+                            <option value="">--</option>
+                            <option value="1">一般活动</option>
+                            <option value="2">体育赛事</option>
+                            <option value="3">抽签活动</option>
+                            <option value="4">打卡活动</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="am-form-group">
                     <label for="activity_tags" class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>标签</label>
                     <div class="am-u-sm-10">
                         <select required="required" id="activity_tags" name="tags" placeholder="请选择标签"  data-am-selected="">
