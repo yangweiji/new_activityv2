@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.Community;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record20;
 import org.jooq.Row20;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityRecord extends UpdatableRecordImpl<CommunityRecord> implements Record20<Integer, String, String, String, Integer, Boolean, String, Boolean, String, Double, Integer, Timestamp, String, String, String, String, String, String, String, Integer> {
 
-    private static final long serialVersionUID = -1127356024;
+    private static final long serialVersionUID = 1701725762;
 
     /**
      * Setter for <code>activityv2.community.id</code>. 编号
@@ -131,14 +129,14 @@ public class CommunityRecord extends UpdatableRecordImpl<CommunityRecord> implem
     }
 
     /**
-     * Setter for <code>activityv2.community.is_vip</code>. 会员功能是否开启
+     * Setter for <code>activityv2.community.is_vip</code>. 是否是会员
      */
     public void setIsVip(Boolean value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.is_vip</code>. 会员功能是否开启
+     * Getter for <code>activityv2.community.is_vip</code>. 是否是会员
      */
     public Boolean getIsVip() {
         return (Boolean) get(7);

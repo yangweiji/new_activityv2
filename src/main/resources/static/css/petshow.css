@@ -88,7 +88,10 @@ ul.am-dropdown-content>li>a:focus, ul.am-dropdown-content>li>a:hover { backgroun
 .am_listimg_right {  float: right; margin-right: 0;}
 .am_listimg_info span { margin-right: 15px; font-size: 12px; }
 .banner_nav a { color: #535353; display: inline-block; margin: 0 5px;}
-.banner_nav .banner_hover {color: #ff5656;}
+
+.banner_nav .banner_hover {
+    color: #F37B1D;
+}
 .am-g .avg_list { background: #fff; }
 .am_list_time {  float: right; }
 .am-g .avg_list_content { padding:10px;}

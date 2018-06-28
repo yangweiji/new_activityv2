@@ -29,7 +29,7 @@
                                         th:text="${poster.get('title')}" style="color:#eff0f1"></span>
                                 </a>
                                 <span style="float: right"><a
-                                        th:href="@{pub/poster/allposter/{posterType} (posterType=${poster.get('poster_type')})}"
+                                        th:href="${poster.get('link')}"
                                         style="color:#4990d3" target="_blank">了解更多</a></span>
                             </div>
                         </div>
@@ -43,18 +43,15 @@
             <div class="am-u-lg-12">
                 <div class="get-title">
                     <div class="get_font_left">
-                        <!--<img src="/img/font_yjy.png" alt="" />-->
                         <span style="color:white;font-size: 35px;white-space:nowrap">已经有</span>
                     </div>
                     <div class="get_font_center" th:attr="count=${#lists.size(activities)}" id="banner_num"></div>
                     <div class="get_font_rigth">
-                        <!--<img src="/img/font_zty.png" alt="" />-->
                         <span style="color:white;font-size: 35px;white-space:nowrap">个活动</span>
                     </div>
                 </div>
 
                 <div class="font_line">
-                    <!--<span style="color:white;font-size: 30px;white-space:nowrap">北马北马，跑遍中华</span>-->
                     <span style="color:white;font-size: 30px;white-space:nowrap"
                           th:text="${community.description}"></span>
                 </div>
@@ -62,7 +59,6 @@
                     <a href="#" class="am-btn am-btn-sm get-btn  am-radius banner_ios ">
                         <i class="fa fa-weixin"></i>
                         微信小程序</a>
-                    <!--<a href="###" class="am-btn am-btn-sm  am-radius get-btn banner_android am-icon-android"> Android</a>-->
                 </p>
             </div>
         </div>
@@ -71,44 +67,68 @@
         <div class="c_orange">
             <div class="orange_1 am-fl">
                 <div class="orange_list">
-                    <a class="am-btn am-btn-warning am-round" id="o_notice"
-                       th:href="@{/pub/article/indexArticleCategory/1}"
-                       type="button">公告通知</a>
-                    <ul class="am-list am-list-border">
-                        <li th:each="item:${articles}">
-                            <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"
-                               target="_blank">
-                                <span class="o_min" th:text="${item.get('title')}"></span>
-                                <span class="fal fa-angle-right"></span>
-                                <span class="o_time"
-                                      th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
-                                      th:text="${#kylin.fromNow(item.get('publish_time'))}"
-                                >
-                            </span>
-                            </a>
-                        </li>
-                    </ul>
+                    <a class="am-btn am-btn-warning am-round" id="o_news"
+                       th:href="@{pub/poster/allposter/n1}"
+                       type="button">赛事活动</a>
+                    <div class="orange_list list">
+                        <ul class="am-list am-list-border">
+                            <li th:each="poster:${posterItemsTop}" class="myOrange">
+                                <a th:href="${poster.get('link')}" class="am-list-a"
+                                   target="_blank">
+                                    <span class="o_min" th:text="${poster.get('title')}"></span>
+                                    <span class="fal fa-angle-right"></span>
+                                    <span class="o_time"
+                                          th:text="${#dates.format(poster.get('created'),'yyyy-MM-dd HH:mm:ss')}"
+                                          th:text="${#kylin.fromNow(poster.get('created'))}"
+                                    ></span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!--<a class="orange_list more" th:href="@{pub/poster/allposter/n1}">更多</a>-->
+                    </div>
+
+                    <!--<a class="am-btn am-btn-warning am-round" id="o_news"-->
+                    <!--th:href="@{/pub/article/indexArticleCategory/2}"-->
+                    <!--type="button">赛事新闻</a>-->
+                    <!--<ul class="am-list am-list-border">-->
+                    <!--<li th:each="item:${articles_news}" class="myOrange">-->
+                    <!--<a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"-->
+                    <!--target="_blank">-->
+                    <!--<span class="o_min" th:text="${item.get('title')}"></span>-->
+                    <!--<span class="fal fa-angle-right"></span>-->
+                    <!--<span class="o_time"-->
+                    <!--th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"-->
+                    <!--th:text="${#kylin.fromNow(item.get('publish_time'))}"-->
+                    <!--&gt;</span>-->
+                    <!--</a>-->
+                    <!--</li>-->
+                    <!--</ul>-->
                 </div>
             </div>
 
             <div class="orange_2 am-fl">
                 <div class="orange_list">
-                    <a class="am-btn am-btn-warning am-round" id="o_news"
-                       th:href="@{/pub/article/indexArticleCategory/2}"
-                       type="button">赛事新闻</a>
-                    <ul class="am-list am-list-border">
-                        <li th:each="item:${articles_news}" class="myOrange">
-                            <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"
-                               target="_blank">
-                                <span class="o_min" th:text="${item.get('title')}"></span>
-                                <span class="fal fa-angle-right"></span>
-                                <span class="o_time"
-                                      th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
-                                      th:text="${#kylin.fromNow(item.get('publish_time'))}"
-                                ></span>
-                            </a>
-                        </li>
-                    </ul>
+                    <a class="am-btn am-btn-warning am-round" id="o_notice"
+                       th:href="@{/pub/article/indexArticleCategory/1}"
+                       type="button">公告通知</a>
+                    <div class="orange_list list">
+                        <ul class="am-list am-list-border">
+                            <li th:each="item:${articles}">
+                                <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }"
+                                   class="am-list-a"
+                                   target="_blank">
+                                    <span class="o_min" th:text="${item.get('title')}"></span>
+                                    <span class="fal fa-angle-right"></span>
+                                    <span class="o_time"
+                                          th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                          th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                                    >
+                                </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!--<a class="orange_list more" th:href="@{/pub/article/indexArticleCategory/1}">更多</a>-->
+                    </div>
                 </div>
             </div>
 
@@ -117,20 +137,24 @@
                     <a class="am-btn am-btn-warning am-round" id="o_exercise"
                        th:href="@{/pub/article/indexArticleCategory/3}"
                        type="button">运动指南</a>
-                    <ul class="am-list am-list-border">
-                        <li th:each="item:${articles_exercise}">
-                            <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }" class="am-list-a"
-                               target="_blank">
-                                <span class="o_min" th:text="${item.get('title')}"></span>
-                                <span class="fal fa-angle-right"></span>
-                                <span class="o_time"
-                                      th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
-                                      th:text="${#kylin.fromNow(item.get('publish_time'))}"
-                                ></span>
+                    <div class="orange_list list">
+                        <ul class="am-list am-list-border">
+                            <li th:each="item:${articles_exercise}">
+                                <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }"
+                                   class="am-list-a"
+                                   target="_blank">
+                                    <span class="o_min" th:text="${item.get('title')}"></span>
+                                    <span class="fal fa-angle-right"></span>
+                                    <span class="o_time"
+                                          th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
+                                          th:text="${#kylin.fromNow(item.get('publish_time'))}"
+                                    ></span>
 
-                            </a>
-                        </li>
-                    </ul>
+                                </a>
+                            </li>
+                        </ul>
+                        <!--<a class="orange_list more" th:href="@{/pub/article/indexArticleCategory/3}">更多</a>-->
+                    </div>
                 </div>
             </div>
             <div style="clear: both;"></div>
@@ -292,6 +316,22 @@
     .am-slider-c3 .am-slider-desc {
         width: 100%;
         bottom: 0px;
+    }
+
+    /*.orange_list.list*/
+    /*{*/
+    /*display:block;*/
+    /*background-color: #ffffff;*/
+    /*height: 200px;*/
+    /*}*/
+
+    .orange_list.more {
+        display: block;
+        float: right;
+        font-size: 12px;
+        color: #3d464d;
+        margin-right: 10px;
+        margin-top: 0px;
     }
 </style>
 
