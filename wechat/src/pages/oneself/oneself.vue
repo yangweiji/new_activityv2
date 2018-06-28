@@ -81,15 +81,6 @@
         </div> -->
        
         <div>
-          <!-- <navigator url="/pages/myactivitys/myactivitys" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-              <div class="weui-cell__hd">
-                <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-              </div>
-              <div class="weui-cell__bd weui-cell_primary">
-                <div>我的活动</div>
-              </div>
-              <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator>  -->
 
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
@@ -148,68 +139,14 @@
     </div>
   </div>
 
-  <!-- <div v-if="xs==2" :hidden=true>
-      
-      <div>
-          <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(1)">
-             切换到参与者 >>
-          </div>
-          <div style="position:absolute;margin-top:15%;width:100%;">
-           <images :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></images>
-            <p class="p-text__xx">用户信息【管理者】</p>
-            <p class="p-text__xx">用户加入的团体信息</p>
-          </div>
-          <images style="height:200px; width:100%;"></images>
-      </div>
-      <div>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>我发布的活动</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-              </navigator> 
-
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>加入团队人员</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
-
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>团队会员</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
-
-      </div>
-   </div>
-  </div> -->
-
 </template>
 
 <script>
-import base64 from "../../../static/images/base64";
 export default {
   data() {
     return {
-      icon20: base64.icon20,
       xs: 1,
-      community: {
-        id: 1, //默认的组织团体ID
-        name: "北京市马拉松协会",
-        background: "NzrSDNSBEP.png"
-      },
+      community: null,
       grids:[]
     };
   },
