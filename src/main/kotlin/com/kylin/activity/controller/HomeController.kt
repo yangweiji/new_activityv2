@@ -102,9 +102,6 @@ class HomeController : BaseController() {
                 r.setValue(r.fieldsRow().field("link", String::class.java), "/pub/activity/detail/" + r.get("activity_id"))
             }
         }
-        //海报总数
-        var counts = posterService!!.posterCounts()
-        model.addAttribute("counts", counts)
         model.addAttribute("posterItems", posterItems)
 
         model.addAttribute("s", if (s == 2) 2 else 1)

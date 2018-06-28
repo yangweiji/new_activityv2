@@ -20,11 +20,10 @@
 
                             <div class="am-slider-desc">
                                 <!--Thymeleaf中each标签遍历list获取count,
-                                如 th:each="poster,item:${posterItems}" ,直接使用item.count计数-->
+                                如 th:each="poster,item:${posterItems}" ,
+                                直接使用item.count计数，item.size取得集合的长度-->
                                 <span class="am-slider-counter"><span class="am-active" th:text="${item.count}"></span>
-                                    /<span th:each="items:${counts}">
-                                        <span th:text="${items.get('counts')}"></span>
-                                    </span>
+                                    /<span th:text="${item.size}"></span>
                                 </span>
                                 <a th:href="${poster.get('link')}" target="_blank"><span
                                         th:text="${poster.get('title')}" style="color:#eff0f1"></span>
