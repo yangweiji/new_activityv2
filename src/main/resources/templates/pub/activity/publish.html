@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/head :: default">
 
 </head>
 <body>
 <div th:replace="fragments/header :: default"></div>
 <div class="get">
-    <div class="c-bg" th:style="'background:url('+${#httpSession.getAttribute('COMMUNITY_BACKGROUND')}+')no-repeat;background-size: cover;'"></div>
+    <div class="c-bg"
+         th:style="'background:url('+${session.COMMUNITY_CONTEXT.background}+')no-repeat;background-size: cover;'"></div>
     <div class="c-publish">
         <div class="am-u-lg-12">
             <div class="get-title">

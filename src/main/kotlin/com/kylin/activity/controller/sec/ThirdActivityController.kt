@@ -102,10 +102,11 @@ class ThirdActivityController : BaseController() {
      */
     @GetMapping("/publish")
     fun publish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
-        //检查用户权限
-        if (!userService!!.checkPermission("PUBLISH")) {
-            return "pub/error/20"
-        }
+
+//        //检查用户权限
+//        if (!userService!!.checkPermission("PUBLISH")) {
+//            return "pub/error/20"
+//        }
 
         var data = ThirdActivityPublishData()
         if (id != null && id > 0) {

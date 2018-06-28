@@ -6,7 +6,7 @@
         <div class="amz-container">
             <h1 class="am-topbar-brand">
                 <a th:href="@{/}" class="am-topbar-logo">
-                    <img th:src="${#httpSession.getAttribute('COMMUNITY_AVATAR')}">
+                    <img th:src="${session.COMMUNITY_CONTEXT.avatar}">
                 </a>
             </h1>
             <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -25,7 +25,11 @@
                         </a>
                     </li>
                     <li th:if="${#httpServletRequest.remoteUser}
-                                and (${session.USER_CONTEXT.role}=='发布者' or ${session.USER_CONTEXT.role}=='管理员')">
+                                and (${session.USER_CONTEXT.role}=='发布者'
+                                        or ${session.USER_CONTEXT.role}=='管理员'
+                                        or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '管理员')
+                                        or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '发布者')
+                                     )">
                         <a th:href="@{/pub/activity/publish}">
                             发活动
                         </a>
@@ -81,7 +85,7 @@
 
                 <div class="am-topbar-right" style="width: 400px;">
 
-                    <ul class="am-nav am-nav-pills am-topbar-nav">
+                    <ul class="am-nav am-nav-pills am-topbar-nav" style="width: 200px;">
                         <li class="am-dropdown" data-am-dropdown="">
                             <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
                                 <span class="fa fa-exchange"></span>
@@ -105,7 +109,7 @@
                             <a th:href="@{/login}" class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span
                                     class="am-icon-user"></span> 登录</a>
                             <a th:href="@{/pub/register}" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span
-                                    class="am-icon-pencil"></span>注册</a>
+                                    class="fa-user-plus"></span>注册</a>
                         </span>
                     </div>
 

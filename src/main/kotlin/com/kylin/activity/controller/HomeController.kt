@@ -123,6 +123,8 @@ class HomeController : BaseController() {
     fun changeCommunity(@RequestParam(required = false) id: Int
                         , request: HttpServletRequest): Boolean {
         var community = communityService!!.getCommunity(id)
+        community.avatar = commonService!!.getDownloadUrl(community.avatar)
+        community.background = commonService!!.getDownloadUrl(community.background)
         this.sessionCommunity = community
 
         //取得当前用户登录后的角色

@@ -30,7 +30,7 @@
                                 </a>
                                 <span style="float: right"><a
                                         th:href="${poster.get('link')}"
-                                        style="color:#4990d3" target="_blank">了解更多</a></span>
+                                        style="color:#eff0f1" target="_blank">了解更多</a></span>
                             </div>
                         </div>
 
@@ -75,8 +75,8 @@
                             <li th:each="poster:${posterItemsTop}" class="myOrange">
                                 <a th:href="${poster.get('link')}" class="am-list-a"
                                    target="_blank">
+                                    <span class="fa fa-caret-right"></span>
                                     <span class="o_min" th:text="${poster.get('title')}"></span>
-                                    <span class="fal fa-angle-right"></span>
                                     <span class="o_time"
                                           th:text="${#dates.format(poster.get('created'),'yyyy-MM-dd HH:mm:ss')}"
                                           th:text="${#kylin.fromNow(poster.get('created'))}"
@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <!--<a class="orange_list more" th:href="@{pub/poster/allposter/n1}">更多</a>-->
+                        <a class="orange_list more" th:href="@{pub/poster/allposter/n1}">更多</a>
                     </div>
 
                     <!--<a class="am-btn am-btn-warning am-round" id="o_news"-->
@@ -117,8 +117,8 @@
                                 <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }"
                                    class="am-list-a"
                                    target="_blank">
+                                    <span class="fa fa-caret-right"></span>
                                     <span class="o_min" th:text="${item.get('title')}"></span>
-                                    <span class="fal fa-angle-right"></span>
                                     <span class="o_time"
                                           th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
                                           th:text="${#kylin.fromNow(item.get('publish_time'))}"
@@ -127,7 +127,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <!--<a class="orange_list more" th:href="@{/pub/article/indexArticleCategory/1}">更多</a>-->
+                        <a class="orange_list more" th:href="@{/pub/article/indexArticleCategory/1}">更多</a>
                     </div>
                 </div>
             </div>
@@ -143,8 +143,8 @@
                                 <a th:href="@{/pub/article/indexArticleList/{id} (id=${item.get('id')}) }"
                                    class="am-list-a"
                                    target="_blank">
+                                    <span class="fa fa-caret-right"></span>
                                     <span class="o_min" th:text="${item.get('title')}"></span>
-                                    <span class="fal fa-angle-right"></span>
                                     <span class="o_time"
                                           th:text="${#dates.format(item.get('publish_time'),'yyyy-MM-dd HH:mm:ss')}"
                                           th:text="${#kylin.fromNow(item.get('publish_time'))}"
@@ -153,7 +153,7 @@
                                 </a>
                             </li>
                         </ul>
-                        <!--<a class="orange_list more" th:href="@{/pub/article/indexArticleCategory/3}">更多</a>-->
+                        <a class="orange_list more" th:href="@{/pub/article/indexArticleCategory/3}">更多</a>
                     </div>
                 </div>
             </div>
@@ -318,20 +318,23 @@
         bottom: 0px;
     }
 
-    /*.orange_list.list*/
-    /*{*/
-    /*display:block;*/
-    /*background-color: #ffffff;*/
-    /*height: 200px;*/
-    /*}*/
+    .orange_list.list {
+        display: block;
+        background-color: #ffffff;
+        height: 190px;
+    }
 
     .orange_list.more {
         display: block;
         float: right;
         font-size: 12px;
-        color: #3d464d;
+        color: #d1d1d1;
         margin-right: 10px;
         margin-top: 0px;
+    }
+
+    .fa.fa-caret-right {
+        margin-bottom: 4px;
     }
 </style>
 

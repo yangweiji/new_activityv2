@@ -255,7 +255,8 @@
 }
 
 .am-nav-header {
-    background-color: #ff5656;
+    /*background-color: #ff5656;*/
+    background: #ff5656 url(/static/images/square.png) no-repeat 134px center
 }
 
 .am-nav-header a {

@@ -1,19 +1,14 @@
 package com.kylin.activity
 
 import com.kylin.activity.model.AuthUser
-import com.kylin.activity.service.CommunityService
-import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
-import org.springframework.stereotype.Service
-
+import java.io.IOException
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import java.io.IOException
 
 /**
  * Created by 9kylin on 2017-12-04.
@@ -32,6 +27,11 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
     @Throws(ServletException::class, IOException::class)
     override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
         val session = request.session
+        //清除全部session值
+        session.removeAttribute("USER_CONTEXT")
+        session.removeAttribute("COMMUNITY_CONTEXT")
+        session.removeAttribute("COMMUNITY_USER_CONTEXT")
+
         val userDetails = authentication.principal as UserDetails
         //将登录用户信息存入session中
         session.setAttribute("USER_CONTEXT", (userDetails as AuthUser).user)

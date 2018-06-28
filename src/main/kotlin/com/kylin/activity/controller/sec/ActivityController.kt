@@ -6,7 +6,9 @@ import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityUserDao
-import com.kylin.activity.databases.tables.pojos.*
+import com.kylin.activity.databases.tables.pojos.Activity
+import com.kylin.activity.databases.tables.pojos.ActivityTicket
+import com.kylin.activity.databases.tables.pojos.ActivityUser
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
 import com.kylin.activity.service.ActivityService
@@ -16,10 +18,10 @@ import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
-import org.springframework.transaction.annotation.Transactional
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -63,10 +65,10 @@ class ActivityController : BaseController() {
     @GetMapping("/publish")
     fun getPublish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
 
-        //检查用户权限
-        if (!userService!!.checkPermission("PUBLISH")) {
-            return "pub/error/20"
-        }
+//        //检查用户权限
+//        if (!userService!!.checkPermission("PUBLISH")) {
+//            return "pub/error/20"
+//        }
 
         var data = ActivityPublishData()
         if (id != null && id > 0) {
