@@ -24,6 +24,7 @@ export default {
             'pages/error/error',
             'pages/tool/tool',
             'pages/oneself/oneself',
+            'pages/myvip/myvip',
             'pages/details/details',
             'pages/articlelist/articlelist',
             'pages/article/article',

@@ -15,6 +15,11 @@
             <span class="fa fa-pencil-square"></span>
             <a class="bmgl" th:href="@{/sec/community/thirdactivity/attendusers}"><b></b>报名管理</a>
         </li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdactivity/checkInData'?'am-nav-header':''">
+            <span class="fa fa-check-square"></span>
+            <a class="bmgl" th:href="@{/sec/community/thirdactivity/checkInData}"><b></b>打卡统计</a>
+        </li>
+
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdphotos/photos'?'am-nav-header':''">
             <span class="fa fa-camera"></span>
             <a class="xcgl" th:href="@{/sec/community/thirdphotos/photos}"><b></b>相册管理</a>
