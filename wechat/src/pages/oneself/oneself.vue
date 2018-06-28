@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <div class="page__bd" v-for="item in grids" :key="item.id">
+    <div v-if="item" class="page__bd">
 
-      <div v-if="xs==1">
+      <div>
         <!-- banner -->
         <div>
           <navigator url="../../pages/community/community" hover-class="navigator-hover">
@@ -89,7 +89,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>积分</div>
               </div>
-              <div class="weui-cell_integral" >{{item.sum_score}}</div>
+              <div class="weui-cell_integral" >{{item.score}}</div>
           </navigator> 
 
           <navigator url="/pages/personalinformation/personalinformation" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -109,7 +109,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>会员</div>
               </div>
-              <div class="weui-cell_comment">{{item.level!=true?"非会员":"会员"}}</div>
+              <div class="weui-cell_comment">{{item.isVip ? "非会员":"会员"}}</div>
           </navigator> 
 
           <!-- 如下为全局功能 -->
@@ -120,7 +120,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>实名认证</div>
               </div>
-              <div class="weui-cell_comment">{{item.is_real!=true?"未认证":"已认证"}}</div>
+              <div class="weui-cell_comment">{{item.user.isReal!=true?"未认证":"已认证"}}</div>
           </navigator> 
 
           <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -146,8 +146,9 @@ export default {
   data() {
     return {
       xs: 1,
+      userId:null,
       community: null,
-      grids:[]
+      item:null
     };
   },
   components: {},
@@ -156,21 +157,9 @@ export default {
       var that = this;
       var param = {
         communityId: that.community.id,
-        userId: wx.getStorageSync("user").id
+        userId: this.userId
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/profile/getPerInformation",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-          console.log(res);
-          that.grids=res;
-        }
-      );
+      this.$kyutil.get("/pub/wx/profile/info",param).then(res => this.item = res)
     },
     qh(cs) {
       this.xs = cs;
@@ -183,22 +172,20 @@ export default {
     this.$kyutil.CheckUserValidation();
   },
   onShow() {
-    // console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
     //接受参数
     if (this.$store.state.community) {
       this.community = this.$store.state.community;
-      this.users= wx.getStorageSync("user");
-       console.log(this.users);
-      //设置标题
+      
+      this.$kyutil.CheckUserValidation();
+      var user = this.$kyutil.GetUser();
+      if (user) {
+        this.userId = user.id;
+        this.getData();
+      }
       wx.setNavigationBarTitle({
         title: this.community.name
       });
     }
-    this.getData();
-
-    // wx.setNavigationBarTitle({
-    //   title: "个人中心"
-    // });
   }
 };
 </script>
