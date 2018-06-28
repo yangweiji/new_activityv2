@@ -27,8 +27,11 @@ $(function () {
                 else if (data == 4) {
                     return "已完成退款";
                 }
+                else if (data == 0){
+                    return "待抽签";
+                }
                 else {
-                    return "待审";
+                    return "待抽签"
                 }
             }
         }];

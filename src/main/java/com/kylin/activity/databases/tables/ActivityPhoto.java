@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
 
-    private static final long serialVersionUID = 345408515;
+    private static final long serialVersionUID = -316420167;
 
     /**
      * The reference instance of <code>activityv2.activity_photo</code>
@@ -89,6 +89,11 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
      * The column <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
      */
     public final TableField<ActivityPhotoRecord, String> AXTENAL_URL = createField("axtenal_url", org.jooq.impl.SQLDataType.VARCHAR(255), this, "外部相册地址");
+
+    /**
+     * The column <code>activityv2.activity_photo.browse_count</code>. 浏览次数
+     */
+    public final TableField<ActivityPhotoRecord, Integer> BROWSE_COUNT = createField("browse_count", org.jooq.impl.SQLDataType.INTEGER, this, "浏览次数");
 
     /**
      * Create a <code>activityv2.activity_photo</code> table reference

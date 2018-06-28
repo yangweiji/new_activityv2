@@ -398,7 +398,11 @@
 .am-g.qr_code img
 {
     width: 200px;
-    border: 1px solid #ddd;
+    /*border: 0px solid #ddd;*/
+}
+
+.am-g.qr_code a {
+    margin-left: 20px;
 }
 
 .am-list-news-bd.am_news_list_all.qr_code .am_news_list_img

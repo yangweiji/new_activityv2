@@ -3,6 +3,7 @@ package com.kylin.activity.controller.pub
 import com.kylin.activity.config.WxMaProperties
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
+import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.WxService
 import com.kylin.activity.util.CommonService
@@ -44,6 +45,12 @@ class ActivityDetailController : BaseController() {
     private val wxService: WxService? = null
 
     /**
+     * 活动相册
+     */
+    @Autowired
+    private val activityPhotoService: ActivityPhotoService? = null
+
+    /**
      * 活动发布
      */
     @GetMapping("/publish")
@@ -69,6 +76,11 @@ class ActivityDetailController : BaseController() {
             activity.setValue(activity.fieldsRow().field("user_avatar", String::class.java), commonService!!.getDownloadUrl(activity.get("user_avatar").toString(), "small"))
         }
         model.addAttribute("activity", activity)
+
+        //取得活动对应相册ID
+        var photo = activityPhotoService!!.getFirstActivityPhoto(id)
+        model.addAttribute("photo", photo)
+
         return "pub/activity/detail"
     }
 
