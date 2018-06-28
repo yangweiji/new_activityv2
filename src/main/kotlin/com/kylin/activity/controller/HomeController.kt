@@ -6,9 +6,9 @@ import com.kylin.activity.service.CommunityService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
 import org.jooq.Record
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import javax.servlet.http.HttpServletRequest
 
@@ -103,6 +103,9 @@ class HomeController : BaseController() {
             }
         }
         model.addAttribute("posterItems", posterItems)
+
+        var limit = if (posterItems != null && posterItems.size < 3) posterItems.size else 3
+        model.addAttribute("posterItemsTop", posterItems.subList(0, limit))
 
         model.addAttribute("s", if (s == 2) 2 else 1)
         model.addAttribute("tags", tags)

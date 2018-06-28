@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityUserRecordRecord;
-
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
+import org.jooq.*;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
+
+import javax.annotation.Generated;
+import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
 
-    private static final long serialVersionUID = 64755132;
+    private static final long serialVersionUID = -1159485830;
 
     /**
      * The reference instance of <code>activityv2.activity_user_record</code>
@@ -68,7 +59,7 @@ public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
     /**
      * The column <code>activityv2.activity_user_record.record_time</code>. 打卡时间
      */
-    public final TableField<ActivityUserRecordRecord, Timestamp> RECORD_TIME = createField("record_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "打卡时间");
+    public final TableField<ActivityUserRecordRecord, Date> RECORD_TIME = createField("record_time", org.jooq.impl.SQLDataType.DATE, this, "打卡时间");
 
     /**
      * The column <code>activityv2.activity_user_record.pictures</code>. 打开上传截图，图片可以多张
