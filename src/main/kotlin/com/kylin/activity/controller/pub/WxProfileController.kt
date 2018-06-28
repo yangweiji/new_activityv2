@@ -7,6 +7,7 @@ import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
+import com.xiaoleilu.hutool.date.DateUtil
 
 /**
  * Created by 9kylin on 2018-06-12.
@@ -34,6 +35,25 @@ class WxProfileController {
      */
     @Autowired
     private val commonService: CommonService? = null
+
+    /**
+     * 团体服务
+     */
+    @Autowired
+    private val communityService: CommunityService? = null
+
+    /**
+     * 团体用户服务
+     */
+    @Autowired
+    private val thirdUserService: ThirdUserService? = null
+
+    /**
+     * 团体积分服务
+     */
+    @Autowired
+    private val thirdScoreService: ThirdScoreService? = null
+
 
     /**
      * 微信端个人信息页面初始化
@@ -136,5 +156,46 @@ class WxProfileController {
         return items
     }
 
+    /**
+     * 个人信息页相关数据
+     * @param userId 用户编id
+     * @param communityId 团体id
+     */
+    @GetMapping("/info")
+    fun getProfileInfo(@RequestParam(required = false) userId: Int,
+                       @RequestParam(required = false) communityId: Int): Any {
+
+        var result = mutableMapOf<String, Any>()
+        var user = userService!!.getUser(userId)
+        result["user"] = user
+        var community = communityService!!.getCommunity(communityId)
+        result["community"] = community
+        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+        result["score"] = thirdScoreService!!.getUseableScore(userId, communityId)
+        var personalInfoCounts=proFileService!!.getPersonalInfoCounts(userId, communityId)
+        var counts= personalInfoCounts.intoMaps()
+        result["activityCounts"] =counts
+        return result
+    }
+
+
+    /**
+     * vip页，查询用户在指定团体的vip信息
+     * @param userId 用户编id
+     * @param communityId 团体id
+     */
+    @GetMapping("/vip")
+    fun getVipInfo(@RequestParam(required = false) userId: Int,
+                   @RequestParam(required = false) communityId: Int): Any {
+
+        var result = mutableMapOf<String, Any>()
+        var user = userService!!.getUser(userId)
+        result["user"] = user
+        var community = communityService!!.getCommunity(communityId)
+        result["community"] = community
+        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+
+        return result
+    }
 
 }

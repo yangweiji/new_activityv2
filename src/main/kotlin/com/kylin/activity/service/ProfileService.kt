@@ -9,28 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.math.BigInteger
 
-data class InfoData(
-        /**
-         * 已参加活动数
-         */
-        var joinedCount: Int = 0,
-        /**
-         * 需签到活动数
-         */
-        var needCheckedCount: Int = 0,
-        /**
-         * 已签到活动数
-         */
-        var checkedCount: Int = 0,
-        /**
-         * 收藏活动数
-         */
-        var likedCount: Int = 0,
-        /**
-         * 积分总额
-         */
-        var sumScores: Int = 0
-)
+/*data class InfoData(
+        var counts:Int=0
+
+)*/
 
 
 /**
@@ -56,12 +38,26 @@ class ProfileService {
 
 
     /**
-     * 检查当前用户是否是团体的会员
+     * 个人中心4个活动数+积分总额
+     * counts:已参加/我喜欢/需签到/已签到/积分总额
+     * @param userId 用户编号
+     * @param communityId 团体编号
      */
-    fun isVip(communityId: Int?, userId: Int?, year: Int): Boolean {
-        val sql = "select count(*) counts from community_user where user_id = ? and community_id = ? and level = ?"
-        val counts = create!!.fetchOne(sql, userId, communityId, year)
-        return counts != null && counts.get("counts", Int::class.java) > 0
+    fun getPersonalInfoCounts(userId: Int?,communityId: Int?):Result<Record>{
+         val sql="select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? \n" +
+                 "union all\n" +
+                 "select count(activity_id) counts from activity_favorite t1 inner join activity t2 on t1.activity_id=t2.id  and t1.user_id=? and t2.community_id=? \n" +
+                 "union all\n" +
+                 "select ifnull(sum(case  when check_in_time is null then 1 else 0 end ), 0)  \n" +
+                 "counts from activity_user t1 inner join activity t2 on t1.user_id=? and t2.community_id=? and t2.end_time > now()\n" +
+                 "union all\n" +
+                 "select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id  \n" +
+                 "and t1.user_id=? and t2.community_id=?  and check_in_time is not null \n" +
+                 "union all\n" +
+                 "select ifnull(sum(score), 0) counts from score_history where user_id=? and community_id=?"
+       return create!!.resultQuery(sql,userId,communityId,userId,communityId,userId,
+                communityId,userId,communityId,userId,communityId).fetch()
+
     }
 
 
@@ -86,82 +82,6 @@ class ProfileService {
 
 
     /**
-     * 用户已参加活动数
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    fun activityAttendCounts(userId: Int?, communityId: Int?): InfoData {
-        var infoData = InfoData()
-        var sql = "select count(activity_id) counts from activity_user t1 " +
-                "left join activity t2 on t1.activity_id=t2.id " +
-                "left join community t3 on t2.community_id=t3.id " +
-                "where t1.user_id=? and t2.community_id=? "
-        infoData.joinedCount = (create!!.fetchValue(sql, userId, communityId) as Long).toInt()
-        return infoData
-    }
-
-    /**
-     * 用户收藏活动数
-     * fetchValue():执行一个包含普通SQL的新查询.
-     * SQL中包含的绑定变量必须与绑定参数* bindings参数中一样多
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    fun favoriteActivityCounts(userId: Int?, communityId: Int?): InfoData {
-        var infoData = InfoData()
-        var sql = "select count(activity_id) counts from activity_favorite t1 " +
-                "left join activity t2 on t1.activity_id=t2.id left join community t3 " +
-                "on t2.community_id=t3.id where t1.user_id= ? and t2.community_id=? "
-        infoData.likedCount = (create!!.fetchValue(sql, userId, communityId) as Long).toInt()
-        return infoData
-    }
-
-
-    /**
-     * 用户需签到的活动数
-     *  @param userId 用户id
-     *  @param communityId 团体id
-     */
-    fun noCheckedActivityCounts(userId: Int?, communityId: Int?): InfoData {
-        var infoData = InfoData()
-        var sql = " select ifnull(sum(case  when check_in_time is null then 1 else 0 end ), 0)  counts from activity_user t1 " +
-                "inner join activity t2 on t1.activity_id = t2.id  and t2.end_time > now() " +
-                "left join community t3 on t2.community_id=t3.id where t1.user_id= ? and t2.community_id=?  "
-        infoData.needCheckedCount = (create!!.fetchValue(sql, userId, communityId) as BigInteger).toInt()
-        return infoData
-    }
-
-    /**
-     * 用户已签到活动数
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    fun checkedActivityCounts(userId: Int?, communityId: Int?): InfoData {
-        var infoData = InfoData()
-        var sql = "select count(activity_id) counts from activity_user t1 " +
-                "left join activity t2 on t1.activity_id=t2.id " +
-                "left join community t3 on t2.community_id=t3.id " +
-                " where t1.user_id= ? and t2.community_id=? and check_in_time is not null "
-        infoData.checkedCount = (create!!.fetchValue(sql, userId, communityId) as Long).toInt()
-        return infoData
-    }
-
-    /**
-     * 用户积分总额
-     * @param userId 用户id
-     * @param communityId 团体id
-     */
-    fun sumScores(userId: Int?, communityId: Int?): InfoData {
-        var infoData = InfoData()
-        var sql = "select ifnull(sum(score), 0) counts from score_history t1 " +
-                "left join activity t2 on t1.activity_id=t2.id " +
-                "where t1.user_id= ? and t1.community_id=? "
-        infoData.sumScores = (create!!.fetchValue(sql, userId, communityId) as BigInteger).toInt()
-        return infoData
-    }
-
-
-    /**
      * 我的活动
      * @param type 活动类型
      * @param userId 用户id
@@ -174,38 +94,33 @@ class ProfileService {
                             "ifnull(count(activity_user.id), 0) as attend_count,activity_user.user_id\n" +
                             "from activity_user\n" +
                             "group by activity_user.activity_id) t2 on t1.id=t2.activity_id\n" +
-                            "LEFT JOIN(select activity_favorite.activity_id, \n" +
+                            "left join(select activity_favorite.activity_id, \n" +
                             "ifnull(count(activity_favorite.id), 0) as favorite_count,activity_favorite.user_id\n" +
                             "from activity_favorite\n" +
                             "group by activity_favorite.activity_id ) t3 on t1.id=t3.activity_id"
-
         var sql = if (type == 1) {
             //已参加活动数
-            "select t.*,t5.avatar as user_avatar from ($activitySql) t inner join activity_user t4 " +
-                    "on t.id=t4.activity_id \n" +
-                    "left join user t5 on t4.user_id=t5.id\n" +
-                    "where t4.user_id=?\n" +
+            "select t.* from ($activitySql) t inner join activity_user t4 " +
+                    "on t.id=t4.activity_id \n"+
+                    "and t4.user_id=?\n"+
                     "and t.community_id=?"
         } else if (type == 2) {
             //收藏活动数
-            "select t.*,t5.avatar as user_avatar from ($activitySql) t inner join activity_favorite t4 " +
+            "select t.* from ($activitySql) t inner join activity_favorite t4 " +
                     "on t.id=t4.activity_id \n" +
-                    "left join user t5 on t4.user_id=t5.id\n" +
-                    "where t4.user_id=?\n" +
+                    "and t4.user_id=?\n"+
                     "and t.community_id=?"
         } else if (type == 3) {
             //需签到活动数
-            "select t.*,t5.avatar as user_avatar from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
-                    "left join user t5 on t4.user_id=t5.id\n" +
+            "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
                     "and t4.check_in_time is null and t.end_time > now()\n "+
-                    "where t4.user_id=?\n" +
+                    "and t4.user_id=?\n" +
                     "and t.community_id=?"
         } else {
             //已签到活动数
-            "select t.*,t5.avatar as user_avatar from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
+            "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
                     "and t4.check_in_time is not null\n"+
-                    "left join user t5 on t4.user_id=t5.id\n" +
-                    "where t4.user_id=?\n" +
+                    "and t4.user_id=?\n" +
                     "and t.community_id=?"
         }
         return create!!.resultQuery(sql,userId,communityId).fetch()

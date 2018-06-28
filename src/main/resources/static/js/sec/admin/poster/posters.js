@@ -29,7 +29,7 @@ $(function () {
                     text: '导出Excel',
                     title: '海报记录',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9,10]
+                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
                     },
                     modifier: {
                         search: 'none'
@@ -51,7 +51,7 @@ $(function () {
                 "data": function () {
                     //查询条件参数
                     var param = {
-                        posterType:$("#posterType").val().trim(),
+                        posterType: $("#posterType").val().trim(),
                         title: $("#title").val().trim()
                     };
                     return JSON.stringify(param);
@@ -66,31 +66,31 @@ $(function () {
                 {
                     "data": "poster_type", defaultContent: "",
                     render: function (data, type, row) {
-                        if (data=='b1') {
+                        if (data == 'b1') {
                             return "徒步"
-                        }else if(data=='b2'){
+                        } else if (data == 'b2') {
                             return "越野"
-                        }else if(data=='b3'){
+                        } else if (data == 'b3') {
                             return "聚餐"
-                        }else if(data=='b4'){
+                        } else if (data == 'b4') {
                             return "骑行"
-                        }else if(data=="b5"){
+                        } else if (data == "b5") {
                             return "跑步训练"
-                        }else if(data=='b6'){
+                        } else if (data == 'b6') {
                             return "会议"
-                        }else if(data=='b7'){
+                        } else if (data == 'b7') {
                             return "招募"
-                        }else if(data=='b8'){
+                        } else if (data == 'b8') {
                             return "讲座"
-                        }else if(data=='b10'){
+                        } else if (data == 'b10') {
                             return "国内赛事"
-                        }else if(data=='b11'){
+                        } else if (data == 'b11') {
                             return "国际赛事"
-                        }else if(data=='b12'){
+                        } else if (data == 'b12') {
                             return "会员福利"
-                        }else if(data=='b13'){
+                        } else if (data == 'b13') {
                             return "运动装备"
-                        }else if(data=='n1'){
+                        } else if (data == 'n1') {
                             return "赛事新闻"
                         }
                     }
@@ -115,7 +115,7 @@ $(function () {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
                             + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
                             + '<button id="showPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
-                        +'<button id="displayPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
+                            + '<button id="displayPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
                     }
                 }
             ],
@@ -130,7 +130,7 @@ $(function () {
                 {targets: "_all", visible: false}
             ],
             //默认排序
-             order: [[6,'asc']],
+            order: [[6, 'asc']],
             autoWidth: false,
             scrollX: true,
             //推迟渲染
@@ -175,7 +175,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#showPoster', function () {
         var data = t.row($(this).parents('tr')).data();
-        if(window.confirm('确定隐藏吗？')) {
+        if (window.confirm('确定隐藏吗？')) {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
@@ -185,6 +185,7 @@ $(function () {
                 },
                 success: function (data) {
                     if (data) {
+                        alert("操作成功！");
                         location.reload()
                     }
                 }
@@ -197,7 +198,7 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#displayPoster', function () {
         var data = t.row($(this).parents('tr')).data();
-        if(window.confirm('确定显示吗？')) {
+        if (window.confirm('确定显示吗？')) {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
@@ -207,6 +208,7 @@ $(function () {
                 },
                 success: function (data) {
                     if (data) {
+                        alert("操作成功！");
                         location.reload()
                     }
                 }
