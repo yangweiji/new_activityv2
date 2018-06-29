@@ -8,14 +8,23 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,7 +40,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
 
-    private static final long serialVersionUID = 1824489661;
+    private static final long serialVersionUID = -316420167;
 
     /**
      * The reference instance of <code>activityv2.activity_photo</code>
@@ -84,7 +93,7 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
     /**
      * The column <code>activityv2.activity_photo.browse_count</code>. 浏览次数
      */
-    public final TableField<ActivityPhotoRecord, Integer> BROWSE_COUNT = createField("browse_count", org.jooq.impl.SQLDataType.INTEGER.defaultValue(org.jooq.impl.DSL.inline("0", org.jooq.impl.SQLDataType.INTEGER)), this, "浏览次数");
+    public final TableField<ActivityPhotoRecord, Integer> BROWSE_COUNT = createField("browse_count", org.jooq.impl.SQLDataType.INTEGER, this, "浏览次数");
 
     /**
      * Create a <code>activityv2.activity_photo</code> table reference
