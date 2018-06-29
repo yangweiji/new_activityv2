@@ -7,30 +7,6 @@ new Vue({
     },
     mounted: function () {
         var that = this
-        //图片上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId: 'c-upload-article-avatar',
-            success: function (file) {
-                that.cacheData.article.avatar = file.randomName
-            }
-        })
-
-
-
-        //发布时间控件
-      /*  $('.c-datetimepicker.publish-time').datetimepicker({
-            format: 'yyyy-mm-dd hh:ii:ss ',
-            language: 'zh-CN'
-        }).on('changeDate', function (ev) {
-            if (ev.date.valueOf()) {
-                that.cacheData.article.publishTime = ev.date
-            }
-        });
-        if (that.cacheData.article.publishTime) {
-            $('.c-datetimepicker.publish-time').datetimepicker('update', new Date(that.cacheData.article.publishTime))
-        }*/
-
         //富文本控件
         var imageHandleCallback;
         var toolbarOptions = {
@@ -107,6 +83,7 @@ new Vue({
 
             bodyInput.trigger('change')
         })
+
         $('#c-article-create-form').validator({}).submit(function () {
             $('input[name=json_data]').val(JSON.stringify(that.cacheData.article.body))
             return true;
@@ -118,11 +95,5 @@ new Vue({
         })
     },
     methods: {
-        getArticleAvatar: function () {
-            if (this.cacheData.article.avatar)
-                return Util.file.downloadUrl(this.cacheData.article.avatar)
-            else
-                return "/img/article/activity-avatar.png"
-        }
     }
 });

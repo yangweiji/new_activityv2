@@ -45,15 +45,17 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21
+                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
                         ],
                         modifier: {
                             search: 'none'
                         },
                         format: {
                             body: function ( data, row, column, node ) {
-                                //身份证号格式化
-                                return column === 7 ? ("\u200C" + data) : data;
+                                if (data && data.length > 15) {
+                                    //身份证号格式化
+                                    return ("\u200C" + data)
+                                }
                             }
                         }
                     },
@@ -89,9 +91,8 @@ $(function () {
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "username"},
-                {"data": "displayname"},
+                {"data": "displayname", "width:": "80px"},
                 {"data": "real_name", "width": "80px"},
-                {"data": "total_score", "width": "30px"},
                 {"data": "gender", "defaultContent": "",
                     render: function (data, type, row) {
                         if (data == 1) {
@@ -105,6 +106,7 @@ $(function () {
                         }
                     }},
                 {"data": "id_card"},
+                {"data": "created"},
                 {"data": "is_real", "defaultContent": "",
                     render: function (data, type, row) {
                         if (data == true) {
@@ -116,7 +118,6 @@ $(function () {
                     }},
                 {"data": "real_time"},
                 {"data": "level_name"}, //会员年度
-                {"data": "created"},
                 {"data": "email"},
                 {"data": "work_company"},
                 {"data": "is_party", "defaultContent": "",
@@ -142,6 +143,7 @@ $(function () {
                 {"data": "emergency_contact_mobile"},
                 {"data": "wechat_id"},
                 {"data": "role_name"},  //角色
+                {"data": "total_score", "width": "30px"}, //积分
                 {"data": "action", "width": "100px", "defaultContent": "",
                     render: function (data, type, row) {
                         return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
@@ -155,13 +157,11 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {
-                    targets: [1, 5, 8, 9, 10, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21],
-                    visible: false
-                },
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, -3, -2, -1], visible: true},
+                {targets: '_all', visible: false}
             ],
             //默认排序
-            "order": [[11, 'desc']],
+            "order": [[1, 'desc']],
             "autoWidth": false,
             "scrollX": true,
             // "scrollY": '50vh',

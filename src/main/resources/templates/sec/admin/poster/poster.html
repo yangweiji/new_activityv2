@@ -48,35 +48,23 @@
                         </div>
 
                         <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">海报</label>
+                            <label class="am-u-sm-2 am-form-label">海报(PC)</label>
                             <div class="am-u-sm-10">
-                                <input type="hidden" name="avatar" v-model="cacheData.poster.avatar"/>
-                                <div class="c-avatar">
-                                    <img v-bind:src="getPosterAvatar()"/>
-                                    <span>
-                                <button id="c-upload-poster-avatar"
-                                        class="am-btn am-btn-primary am-btn-xs">更新海报</button>
-                                <br/>
-                                <span class="c-avatar-tip">温馨提示：海报尺寸建议为：1500*400，海报小于4M</span>
-                            </span>
-                                </div>
+                                <input-image-uploader v-model="cacheData.poster.avatar"
+                                                      name-text="avatar"
+                                                      desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
                             </div>
                         </div>
+
                         <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">手机海报</label>
+                            <label class="am-u-sm-2 am-form-label">海报(手机)</label>
                             <div class="am-u-sm-10">
-                                <input type="hidden" name="mobileAvatar" v-model="cacheData.poster.mobileAvatar"/>
-                                <div class="c-avatar">
-                                    <img v-bind:src="getPosterMobileAvatar()"/>
-                                    <span>
-                                <button id="c-upload-poster-mobileAvatar"
-                                        class="am-btn am-btn-primary am-btn-xs">更新海报</button>
-                                <br/>
-                                <span class="c-avatar-tip">温馨提示：海报尺寸建议为：900*525，海报小于4M</span>
-                            </span>
-                                </div>
+                                <input-image-uploader v-model="cacheData.poster.mobileAvatar"
+                                                      name-text="mobileAvatar"
+                                                      desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
                             </div>
                         </div>
+
                         <div class="am-form-group">
                             <label for="link" class="am-u-sm-2 am-form-label">链接地址</label>
                             <div class="am-u-sm-10">
@@ -167,18 +155,6 @@
 </div>
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-       #app .c-avatar img {
-        display: inline-block;
-        height: 123px;
-        min-width: 50px;
-        max-width: 500px;
-    }
-
-    #app .c-avatar .c-avatar-tip {
-        font-size: 12px;
-        color: gray;
-    }
-
 
 </style>
 <script th:inline="javascript">
@@ -189,5 +165,6 @@
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
 <script type="text/javascript" src="/js/sec/admin/poster/poster.js"></script>
 </body>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -20,7 +20,7 @@
                             <span style="padding: 0px 5px" v-on:click="startUpdateDisplayname()"><i class="fa fa-pencil"></i></span>
                         </span>
                         <span v-if="isUpdateDisplayname">
-                            <input v-model="displayname" class="am-input" />
+                            <input v-model="displayname" class="am-form-field am-radius"/>
                             <button v-on:click="updateDisplayname()" class="am-btn am-btn-primary am-btn-xs">保存</button>
                             <button v-on:click="cancelUpdateDisplayname()" class="am-btn default am-btn-xs">取消</button>
                         </span>
@@ -68,11 +68,12 @@
 
             <div class="am-tabs-bd">
 
-                <table class="am-table" id="bmTable" cellspacing="0" width="100%">
+                <table class="am-table am-table-striped am-table-compact am-table-hover" id="bmTable" cellspacing="0"
+                       width="100%">
                     <thead>
                     <tr>
                         <th>序号</th>
-                        <th>ID</th>
+                        <th>编号</th>
                         <th>活动标题</th>
                         <th>积分</th>
                         <th>时间</th>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -93,13 +93,14 @@
             <div class="am-tab-panel am-fade am-in am-active">
 
                 <div class="am-g dis_line">
-                    <table class="am-table" id="bmTable" cellspacing="0" width="100%">
+                    <table class="am-table am-table-striped am-table-compact am-table-hover" id="bmTable"
+                           cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>
                                 <input type="checkbox" class="icheckbox_minimal" id="all_checked"/>
                             </th>
-                            <th>ID</th>
+                            <th>编号</th>
                             <th>账号</th>
                             <th>名称</th>
                             <th>金额</th>
