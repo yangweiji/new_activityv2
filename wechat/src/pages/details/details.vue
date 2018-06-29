@@ -1,10 +1,5 @@
 <template>
-  <div class="page">
-
-    <!-- <div class="page__hd">
-        <div class="page__title">Article</div>
-        <div class="page__desc">文章</div>
-    </div> -->
+  <!-- <div class="page">
     <div class="page__bd">
         <div class="weui-article">
             <div class="weui-article__h1">{{item.title}}</div>
@@ -16,21 +11,8 @@
                     <div class="weui-article__h3 c-display-text">{{item.displayname}} {{item.created}}</div>
                     <div class="weui-article__p">
                         <wxParse :content="item.body" />
-                    </div>
-                    <!-- <div class="weui-article__p">
-                        <image class="weui-article__img" src="/static/images/pic_article.png" mode="aspectFit" style="height: 180px" />
-                        <image class="weui-article__img" src="/static/images/pic_article.png" mode="aspectFit" style="height: 180px" />
-                    </div> -->
-                </div>
-                <!-- <div class="weui-article__section">
-                    <div class="weui-article__h3">1.2 节标题</div>
-                    <div class="weui-article__p">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </div>
-                </div> -->
+                    </div>                 
+                </div>               
             </div>
         </div>
     </div>
@@ -45,6 +27,24 @@
         立即报名
       </div>
     </div>
+  </div> -->
+  <div class="page">
+    <div class="page__bd">
+      <div class="weui-tab">
+        <div class="weui-navbar">
+          <block v-for="(item,index) in tabs" :key="index">
+            <div :id="index" :class="{'weui-bar__item_on':activeIndex == index}" class="weui-navbar__item" @click="tabClick">
+              <div class="weui-navbar__title">{{item}}</div>
+            </div>
+          </block>
+          <div class="weui-navbar__slider" :class="navbarSliderClass"></div>
+        </div>
+        <div class="weui-tab__panel">
+          <div class="weui-tab__content" :hidden="activeIndex != 0">活动详情</div>
+          <div class="weui-tab__content" :hidden="activeIndex != 1">活动相册</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -54,13 +54,28 @@ import wxParse from "mpvue-wxparse";
 export default {
   data() {
     return {
-      isIpx:false,
+      isIpx: false,
       activityId: 0,
-      ilike:false,
-      item: {}
+      ilike: false,
+      item: {},
+      tabs: ["活动详情", "活动相册"],
+      activeIndex: 0,
+      fontSize: 30
     };
   },
-  computed: {},
+  computed: {
+    navbarSliderClass() {
+      if (this.activeIndex == 0) {
+        return "weui-navbar__slider_0";
+      }
+      if (this.activeIndex == 1) {
+        return "weui-navbar__slider_1";
+      }
+      if (this.activeIndex == 2) {
+        return "weui-navbar__slider_2";
+      }
+    }
+  },
   components: {
     wxParse
   },
@@ -83,14 +98,16 @@ export default {
         }
       );
     },
+    tabClick(e) {
+      console.log(e);
+      this.activeIndex = e.currentTarget.id;
+    },
     gotoAttend() {
       wx.navigateTo({
         url: "../../pages/attend/attend?activityId=" + this.activityId
       });
     },
-    gotoAttendUsers(){
-
-    },
+    gotoAttendUsers() {},
     addFavorite() {
       var that = this;
       this.$kyutil.CheckUserValidation();
@@ -104,13 +121,13 @@ export default {
           { activityId: that.activityId, userId: user.id },
           "GET",
           false,
-          res => that.item.favorite_count = res
+          res => (that.item.favorite_count = res)
         );
       }
     }
   },
   created() {
-    this.isIpx = this.$kyutil.data.isIpx
+    this.isIpx = this.$kyutil.data.isIpx;
   },
   onShow() {
     console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
@@ -118,11 +135,11 @@ export default {
     that.activityId = this.$root.$mp.query.activityId;
     this.getData();
   },
-  onShareAppMessage(res){
+  onShareAppMessage(res) {
     return {
       title: this.item.activity.title,
-      path: '/page/details/details?activityId='+ this.activityId
-    }
+      path: "/page/details/details?activityId=" + this.activityId
+    };
   }
 };
 </script>
@@ -139,5 +156,28 @@ export default {
   color: grey;
   margin-left: 50px;
 }
-
+page,
+.page,
+.page__bd {
+  height: 100%;
+}
+.page__bd {
+  padding-bottom: 0;
+}
+.weui-tab__content {
+  padding-top: 60px;
+  text-align: center;
+}
+.weui-navbar__slider_0 {
+  left: 29rpx;
+  transform: translateX(0);
+}
+.weui-navbar__slider_1 {
+  left: 29rpx;
+  transform: translateX(250rpx);
+}
+.weui-navbar__slider_2 {
+  left: 29rpx;
+  transform: translateX(500rpx);
+}
 </style>

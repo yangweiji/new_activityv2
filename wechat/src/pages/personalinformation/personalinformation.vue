@@ -3,12 +3,12 @@
     <div class="page__hd">
       <div class="page__title" style="text-align:center">请完善个人信息</div>
     </div>
-    <div class="page__bd" >
+    <div class="page__bd">
       <div class="weui-cells__title">昵称</div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
-          <div class="weui-cell__bd" >
-            <input class="weui-input"  v-model="users.displayname"  />
+          <div class="weui-cell__bd">
+            <input class="weui-input" v-model="users.displayname" />
           </div>
         </div>
       </div>
@@ -25,8 +25,8 @@
       <div class="weui-cells__title">性别</div>
       <div class="weui-cells weui-cells_after-title">
         <radio-group @change="radioChange">
-          <label class="weui-cell weui-check__label" v-for="item in radioItems1" :key="item.id">
-            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+          <label class="weui-cell weui-check__label" v-for="item in radioItems1" :key="item.value">
+            <radio class="weui-check" :value="item.value"  :checked="item.checked" />
             <div class="weui-cell__bd">{{item.sex}}</div>
             <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
               <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
@@ -37,9 +37,9 @@
 
       <div class="weui-cells__title">血型</div>
       <div class="weui-cells weui-cells_after-title">
-        <radio-group @change="radioChange">
+        <radio-group >
           <label class="weui-cell weui-check__label" v-for="item in radioItems2" :key="item.id">
-            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <radio class="weui-check" :value="item.value" v-model="users.bloodType" :checked="item.checked" />
             <div class="weui-cell__bd">{{item.level}}</div>
             <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
               <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
@@ -50,9 +50,9 @@
 
       <div class="weui-cells__title">T恤尺寸</div>
       <div class="weui-cells weui-cells_after-title">
-        <radio-group @change="radioChange">
+        <radio-group >
           <label class="weui-cell weui-check__label" v-for="item in radioItems3" :key="item.id">
-            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <radio class="weui-check" :value="item.value" v-model="users.clothingSize" :checked="item.checked" />
             <div class="weui-cell__bd">{{item.size}}</div>
             <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
               <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
@@ -65,7 +65,7 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入工作单位" />
+            <input class="weui-input" v-model="users.workCompany" placeholder="请输入工作单位" />
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入职业" />
+            <input class="weui-input" v-model="users.occupation" placeholder="请输入职业" />
           </div>
         </div>
       </div>
@@ -83,7 +83,7 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入紧急联系人姓名" />
+            <input class="weui-input" v-model="users.emergency_contact_name" placeholder="请输入紧急联系人姓名" />
           </div>
         </div>
       </div>
@@ -92,16 +92,16 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入紧急联系人电话" />
+            <input class="weui-input" v-model="users.emergency_contact_mobile" placeholder="请输入紧急联系人电话" />
           </div>
         </div>
       </div>
 
       <div class="weui-cells__title">是否党员</div>
       <div class="weui-cells weui-cells_after-title">
-        <radio-group @change="radioChange">
+        <radio-group >
           <label class="weui-cell weui-check__label" v-for="item in radioItems4" :key="index">
-            <radio class="weui-check" :value="item.value" :checked="item.checked" />
+            <radio class="weui-check" :value="item.value" v-model="users.is_party" :checked="item.checked" />
             <div class="weui-cell__bd">{{item.party}}</div>
             <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
               <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
@@ -114,7 +114,7 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入家庭地址" />
+            <input class="weui-input" v-model="users.address" placeholder="请输入家庭地址" />
           </div>
         </div>
       </div>
@@ -123,11 +123,11 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input">
           <div class="weui-cell__bd">
-            <input class="weui-input" placeholder="请输入微信号" />
+            <input class="weui-input" v-model="users.wechat_id" placeholder="请输入微信号" />
           </div>
         </div>
       </div>
-      <button class="weui-btn" type="primary">提交</button>
+      <button class="weui-btn" @click="save" type="primary">提交</button>
     </div>
   </div>
 
@@ -149,28 +149,41 @@ export default {
       ],
       checked: true,
       radioItems1: [
-        { sex: "男", value: 0 },
-        { sex: "女", value: 1, checked: true }
+        { sex: "男", value: 1 },
+        { sex: "女", value: 2, checked: true }
       ],
       radioItems2: [
-        { level: "A", value: 0 },
-        { level: "B", value: 1, checked: true },
-        { level: "AB", value: 2 },
-        { level: "O", value: 3 }
+        { level: "A", value: "A" },
+        { level: "B", value: "B", checked: true },
+        { level: "AB", value: "AB" },
+        { level: "O", value: "O" }
       ],
       radioItems3: [
-        { size: "S", value: 0 },
-        { size: "M", value: 1 },
-        { size: "L", value: 2 },
-        { size: "XL", value: 3, checked: true },
-        { size: "XXL", value: 4 },
-        { size: "XXXL", value: 5 }
+        { size: "S", value: "S" },
+        { size: "M", value: "M" },
+        { size: "L", value: "L" },
+        { size: "XL", value: "XL", checked: true },
+        { size: "XXL", value: "XXL" },
+        { size: "XXXL", value: "XXXL" }
       ],
       radioItems4: [
-        { party: "群众", value: 0 },
-        { party: "党员", value: 1, checked: true }
+        { party: "群众", value: true },
+        { party: "党员", value: true, checked: true }
       ],
-      users:{}
+      users: {
+        displayname: "",
+        email: "",
+        gender: "",
+        bloodType: "",
+        clothingSize: "",
+        workCompany: "",
+        occupation: "",
+        emergency_contact_name: "",
+        emergency_contact_mobile: "",
+        is_party: "",
+        address:"",
+        wechat_id:""
+      }
     };
   },
   computed: {},
@@ -180,17 +193,36 @@ export default {
     getData() {
       var that = this;
       var param = {
-          userId: wx.getStorageSync("user").id
+        userId: wx.getStorageSync("user").id
       };
-      this.$kyutil.get("/pub/wx/profile/getIntoPersonalInformation", param, "GET").then(res => {
-        that.users=res;
-        console.log(res);
-      })
+
+
+
+      
+      this.$kyutil
+        .get("/pub/wx/profile/getIntoPersonalInformation", param, "GET")
+        .then(res => {
+          that.users = res;
+          console.log(res);
+        });
     },
+    save() {
+      this.processing = true;
+       var param = {
+        userId: wx.getStorageSync("user").id
+      };
+      this.$kyutil
+        .get("/pub/wx/profile/savePersonalInformation",param,"GET")
+        .then(res => {
+          that.item = res;
+          that.processing = false;
+        });
+    },
+
     radioChange(e) {
-      console.log("radio发生change事件，携带value值为：" + e.mp.detail.value);
-      let radioItems = this.radioItems;
-      for (let i = 0; i < radioItems.length; ++i) {
+      console.log('radio 携带的值为：' + e.mp.detail.value);
+      var radioItems = this.radioItems1;
+      for (var i = 0; i < radioItems.length; i++) {
         radioItems[i].checked = radioItems[i].value === e.mp.detail.value;
       }
       this.radioItems = radioItems;

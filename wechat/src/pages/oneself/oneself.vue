@@ -21,7 +21,7 @@
          <navigator url="/pages/myactivitys/myactivitys">
              <dl>
            <dt>
-            {{item.attend_user_count}}
+            {{item.attend_user_count?0:item.attend_user_count}}
            </dt>
            <dd>
              已参与
@@ -159,7 +159,13 @@ export default {
         communityId: that.community.id,
         userId: this.userId
       };
-      this.$kyutil.get("/pub/wx/profile/info",param).then(res => this.item = res)
+      this.$kyutil.get("/pub/wx/profile/info",param).then(res => {
+
+         that.item = res
+         console.log(res);
+      }
+
+      )
     },
     qh(cs) {
       this.xs = cs;

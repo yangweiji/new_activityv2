@@ -104,7 +104,7 @@ public class Tables {
     public static final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
 
     /**
-     * The table <code>activityv2.poster</code>.
+     * 海报表
      */
     public static final Poster POSTER = com.kylin.activity.databases.tables.Poster.POSTER;
 
