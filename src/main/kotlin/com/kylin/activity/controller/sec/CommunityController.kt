@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.sec
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.CommunityUser
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpServletRequest
 
 /**
@@ -39,12 +41,17 @@ class CommunityController : BaseController() {
     @Autowired
     private val communityService: CommunityService? = null
 
-
     /**
      * 用户服务
      */
     @Autowired
     private val userService: UserService? = null
+
+    /**
+     * 活动配置
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
 
     /**
      * 查询团体信息
@@ -100,26 +107,20 @@ class CommunityController : BaseController() {
     @Transactional
     fun saveCommunity(@ModelAttribute("community") community: Community,
                       @ModelAttribute("user") user: User
-                      , model: Model): String {
+                      , model: Model
+                      , redirectAttributes: RedirectAttributes): String {
 
         var code = BCryptPasswordEncoder()
         if (community.id != null && community.id > 0) {
             //团体组织已存在，编辑团体组织信息
-            //检查该团体组织是否已经有管理员
-            var communityUser = userService!!.getCommunityUser(community.id)
-            if (communityUser != null) {
-                //更新该管理的信息
-                communityUser.username = community.managerPhoneNumber
-                communityUser.displayname = community.controlName
-                communityUser.workCompany = community.company
-                userService!!.update(communityUser)
-                LogUtil.printLog("更新成功,管理员ID：${communityUser.id}")
-            } else {
-                //添加团体组织管理员
-                //构建一个新User对象
-                var u = User()
+            //检查负责人用户是否存在
+            var u = userService!!.getUser(community.managerPhoneNumber)
+            if (u == null)
+            {
+                //构建一个新用户
+                u = User()
                 u.username = community.managerPhoneNumber
-                u.password = code.encode("000000")
+                u.password = code.encode(activityProperties!!.defaultPassword)
                 u.displayname = community.controlName
                 u.workCompany = community.company
                 u.enabled = true
@@ -127,10 +128,14 @@ class CommunityController : BaseController() {
                 u.isReal = true
                 u.realTime = DateUtil.date().toTimestamp()
                 userService!!.insert(u)
-                LogUtil.printLog("添加成功,管理员ID：${u.id}")
+                LogUtil.printLog("添加成功,用户ID：${u.id}")
+            }
 
-                //构建一个新团体组织用户关联对象
-                var communityUser = CommunityUser()
+            //判断团体组织下是否已有用户
+            var communityUser = communityService!!.getCommunityUser(u.id, community.id)
+            if (communityUser == null) {
+                //构建一个新团体组织用户关联对象，管理员
+                communityUser = CommunityUser()
                 communityUser.communityId = community.id
                 communityUser.userId = u.id
                 communityUser.role = "管理员"
@@ -139,36 +144,41 @@ class CommunityController : BaseController() {
                 userService.insertCommunityUser(communityUser)
                 LogUtil.printLog("添加成功,团体组织用户关联ID：${communityUser.id}")
             }
+            else {
+                communityUser.role = "管理员"
+                communityUser.level = DateUtil.thisYear()
+                userService.updateCommunityUser(communityUser)
+            }
 
             //更新团体组织信息
-            community.created = DateUtil.date().toTimestamp()
             community.createdBy = user!!.id
+            community.created = DateUtil.date().toTimestamp()
             communityService!!.update(community)
             LogUtil.printLog("更新成功,团体组织ID：${community.id}")
         } else {
             //取得用户信息
             var u = userService!!.getUser(community.managerPhoneNumber)
-            if (u != null) {
-                var communitiesData = CommunitiesData()
-                communitiesData.community = community
-                model.addAttribute("communitiesData", communitiesData)
-                model.addAttribute("errorMessage", "用户: ${community.managerPhoneNumber} 已存在！")
-                return "/sec/admin/community/community"
+            if (u == null) {
+                //构建一个新的User对象
+                u = User()
+                u.username = community.managerPhoneNumber
+                u!!.displayname = community.controlName
+                u.password = code.encode(activityProperties!!.defaultPassword)
+                u!!.workCompany = community.company
+                u.enabled = true
+                u.isReal = true
+                u.realTime = DateUtil.date().toTimestamp()
+                u!!.created = DateUtil.date().toTimestamp()
+                userService!!.insert(u)
+                LogUtil.printLog("添加成功,管理员ID：${u.id}")
             }
-            //构建一个新的User对象
-            u = User()
-            u.username = community.managerPhoneNumber
-            u!!.displayname = community.controlName
-            u.password = code.encode("000000")
-            u!!.workCompany = community.company
-            u.enabled = true
-            u.isReal = true
-            u.realTime = DateUtil.date().toTimestamp()
-            u!!.created = DateUtil.date().toTimestamp()
-            userService!!.insert(u)
-            LogUtil.printLog("添加成功,管理员ID：${u.id}")
 
-            //构建一个新团体组织用户关联对象
+            community.createdBy = user!!.id
+            community.created = DateUtil.date().toTimestamp()
+            communityService!!.insert(community)
+            LogUtil.printLog("添加成功,团体组织ID：${community.id}")
+
+            //构建一个新团体组织用户关联对象，管理员
             var communityUser = CommunityUser()
             communityUser.communityId = community.id
             communityUser.userId = u.id
@@ -177,12 +187,9 @@ class CommunityController : BaseController() {
             communityUser.created = DateUtil.date().toTimestamp()
             userService.insertCommunityUser(communityUser)
             LogUtil.printLog("添加成功,团体组织用户关联ID：${communityUser.id}")
-
-            community.created = DateUtil.date().toTimestamp()
-            communityService!!.insert(community)
-            LogUtil.printLog("添加成功,团体组织ID：${community.id}")
         }
 
+        redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/admin/community/communities"
     }
 

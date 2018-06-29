@@ -8,24 +8,48 @@
 <div id="app">
     <div class="amz-container">
 
-        <h1>活动相册</h1>-<span th:text="${activityPhoto.description}"></span>
-
-        <div class="am-g am-imglist" data-am-widget="paragraph"
-             data-am-paragraph="{ tableScrollable: true, pureview: true }" >
-            <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
-                <li th:each="item : ${activityPhotoPictureItems}">
-                    <div class="am-gallery-item am_list_block">
-                        <a target="_blank" th:href="${item.picture}" title="点击查看大图" class="am_img_bg">
-                            <img class="am_img animated c-img"
-                                 alt=""
-                                 th:src="${item.picture}"/>
-                        </a>
-                    </div>
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <ul class="am-tabs-nav am-cf am_cf">
+                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activity/detail')}?'am-active':''">
+                    <a th:href="@{/pub/activity/detail/{activityId}(activityId=${activity.id})}">活动详情</a>
                 </li>
-
-
+                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activityphoto/detail')}?'am-active':''">
+                    <a th:href="@{/pub/activityphoto/detail/{photoId}(photoId=${activityPhoto.id})}">活动相册</a>
+                </li>
             </ul>
+
+
+            <article data-am-widget="paragraph" class="am-paragraph am-paragraph-default article_nr">
+                <h1 class="article_nr_title" th:text="${activityPhoto.description}"></h1>
+                <div class="am_list_author">
+                    <span class="fa fa-picture-o"></span>
+                    <span class="name" th:text="${#lists.size(activityPhotoPictureItems)}"></span> 张
+                    &nbsp;&nbsp;
+                    <span class="fa fa-eye"></span>
+                    <span class="name" th:text="${activityPhoto.browseCount}"></span> 次
+                </div>
+
+                <div class="am-g am-imglist" data-am-widget="paragraph" data-am-paragraph="{ tableScrollable: true, pureview: true }" >
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
+                        <li th:each="item : ${activityPhotoPictureItems}">
+                            <div class="am-gallery-item am_list_block">
+                                <a target="_blank" th:href="${item.picture}" title="点击查看大图" class="am_img_bg">
+                                    <img class="am_img animated c-img"
+                                         alt="加载中..."
+                                         th:src="${item.picture}"/>
+                                </a>
+                            </div>
+                        </li>
+
+
+                    </ul>
+                </div>
+            </article>
+
+
         </div>
+
+
 
     </div>
 
@@ -37,6 +61,14 @@
     #app{
         margin: 50px;
         min-height: 500px;
+    }
+
+    ul.am-tabs-nav.am-cf.am_cf {
+        max-width: 1190px;
+    }
+
+    .article_nr {
+        max-width: 1190px;
     }
 
     .am_img.animated.c-img {

@@ -59,12 +59,12 @@
 
                 <div class="am-g qr_code">
                     <div class="am-u-sm-6">
-                        <img th:src="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/>
-                        (<a th:href="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}">下载报名二维码</a>)
+                        <img th:src="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/><br>
+                        <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}">下载报名二维码</a>
                     </div>
                     <div class="am-u-sm-6">
-                        <img th:src="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/>
-                        (<a th:href="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}">下载签到二维码</a>)
+                        <img th:src="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/><br>
+                        <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}">下载签到二维码</a>
                     </div>
                 </div>
 

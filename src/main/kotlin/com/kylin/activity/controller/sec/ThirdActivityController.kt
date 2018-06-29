@@ -6,23 +6,16 @@ import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest
 import com.github.binarywang.wxpay.bean.result.WxPayOrderQueryResult
 import com.github.binarywang.wxpay.exception.WxPayException
 import com.kylin.activity.controller.BaseController
-import com.kylin.activity.databases.Tables
-import com.kylin.activity.databases.tables.daos.ActivityDao
-import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
-import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
-import com.kylin.activity.databases.tables.daos.ActivityTicketDao
-import com.kylin.activity.databases.tables.pojos.*
+import com.kylin.activity.databases.tables.pojos.Activity
+import com.kylin.activity.databases.tables.pojos.ActivityTicket
+import com.kylin.activity.databases.tables.pojos.ActivityUser
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
-import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.ThirdActivityService
 import com.kylin.activity.service.UserService
 import com.kylin.activity.service.WxService
-import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
-import com.xiaoleilu.hutool.date.DateTime
 import com.xiaoleilu.hutool.date.DateUtil
-import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
@@ -30,7 +23,6 @@ import org.springframework.ui.Model
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
@@ -110,10 +102,11 @@ class ThirdActivityController : BaseController() {
      */
     @GetMapping("/publish")
     fun publish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
-        //检查用户权限
-        if (!userService!!.checkPermission("PUBLISH")) {
-            return "pub/error/20"
-        }
+
+//        //检查用户权限
+//        if (!userService!!.checkPermission("PUBLISH")) {
+//            return "pub/error/20"
+//        }
 
         var data = ThirdActivityPublishData()
         if (id != null && id > 0) {
@@ -139,6 +132,7 @@ class ThirdActivityController : BaseController() {
             )
             data.canAttend = true
         }
+
         model.addAttribute("typeName", if (data.activityType == 2) "赛事" else "活动")
         var titleName = when {
             data.activityType == 1 -> "一般活动"
@@ -147,8 +141,12 @@ class ThirdActivityController : BaseController() {
             data.activityType == 4 -> "打卡活动"
             else -> null
         }
+
         model.addAttribute("titleName", titleName)
         model.addAttribute("data", data)
+
+        //添加当前团体组织
+        model.addAttribute("community", this.sessionCommunity)
 
         return "sec/community/thirdactivity/publish"
     }
@@ -310,7 +308,7 @@ class ThirdActivityController : BaseController() {
     @RequestMapping(value = "/getAttendUsers", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
     fun getAttendUsers(@RequestBody(required = false) map: Map<String, String>): List<Any> {
-        val start = map["start"]
+        var start = map["start"]
         var end = map["end"]
         var activityId = map["activityId"]
         var title = map["title"]
@@ -646,4 +644,51 @@ class ThirdActivityController : BaseController() {
         return "sec/community/thirdactivity/attend"
     }
 
+    /**
+     * 第三方打卡活动统计
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/checkInData", method = [RequestMethod.POST, RequestMethod.GET])
+    fun checkInData(request: HttpServletRequest, model: Model): String {
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank()) {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
+
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank()) {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+
+        return "sec/community/thirdactivity/checkInData"
+    }
+
+    /**
+     *
+     * 第三方打卡活动统计
+     * @param map: 查询条件参数
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getCheckInData", method = [RequestMethod.POST, RequestMethod.GET])
+    @ResponseBody
+    fun getCheckInData(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
+        var activityId = map["activityId"]
+        var title = map["title"]
+        var username = map["username"]
+        var displayname = map["displayname"]
+
+        return thirdActivityService!!.getCheckInData(start, end, activityId, title, username, displayname, this.sessionCommunity.id).intoMaps()
+    }
 }

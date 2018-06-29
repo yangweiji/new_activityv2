@@ -1,4 +1,7 @@
 function anyToDate(d) {
+    if (!d) {
+        return null
+    }
     if (d instanceof Date) {
         return d;
     }
@@ -6,17 +9,23 @@ function anyToDate(d) {
         return new Date(parseInt(d));
 
     }
-    return new Date((d || '').trim().replace(/\.\d+/, '')
-        .replace(/-/, '/').replace(/-/, '/')
-        .replace(/(\d)T(\d)/, '$1 $2').replace(/Z/, ' UTC')
-        .replace(/([\+\-]\d\d)\:?(\d\d)/, ' $1$2'));
+    if (d.constructor == Array && d.length == 3) {
+        return new Date(d[0], d[1] - 1, d[2])
+    }
+    if (d.constructor == String) {
+        return new Date((d || '').trim().replace(/\.\d+/, '')
+            .replace(/-/, '/').replace(/-/, '/')
+            .replace(/(\d)T(\d)/, '$1 $2').replace(/Z/, ' UTC')
+            .replace(/([\+\-]\d\d)\:?(\d\d)/, ' $1$2'));
+    }
 }
 
 function dateFormat(date, fmt) {
+    date = anyToDate(date)
     var o = {
         "M+": date.getMonth() + 1,
         "d+": date.getDate(),
-        "h+": date.getHours(),
+        "H+": date.getHours(),
         "m+": date.getMinutes(),
         "s+": date.getSeconds(),
         "q+": Math.floor((date.getMonth() + 3) / 3),
@@ -87,7 +96,7 @@ function timeago(time) {
     ]
 
     var timeNow = new Date()
-    var _time = Math.round((anyToDate(timeNow) - anyToDate(t.time)) / 1000),
+    var _time = Math.round((anyToDate(timeNow) - anyToDate(time)) / 1000),
         isin;
 
     for (var i = 0; i < agos.length; i++) {
@@ -99,9 +108,39 @@ function timeago(time) {
 }
 
 
+function addDays(date, days) {
+    var result = new Date(date);
+    result.setDate(result.getDate() + days);
+    return result;
+}
+
+function today() {
+    var now = new Date()
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate())
+}
+
+function datePart(date) {
+    date = anyToDate(date)
+    return new Date(date.getFullYear(), date.getMonth(), date.getDate())
+}
+
+function sameDay(a, b) {
+    if (a && b) {
+        a = anyToDate(a)
+        b = anyToDate(b)
+        return a.getMonth() == b.getMonth() && a.getFullYear() == b.getFullYear() && a.getDate() == b.getDate();
+    }
+    return false;
+}
+
+
 
 export default {
     format: dateFormat,
     fromNow: timeago,
-    anyToDate: anyToDate
+    anyToDate: anyToDate,
+    addDays: addDays,
+    today: today,
+    datePart: datePart,
+    sameDay: sameDay
 }

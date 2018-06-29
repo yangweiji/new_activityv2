@@ -14,12 +14,9 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.Authentication
-import org.springframework.stereotype.Service
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletRequestAttributes
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.stereotype.Service
 
 
 @Service
@@ -195,15 +192,13 @@ class UserService {
     /**
      * 查询全部用户与积分
      */
-    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?,real_name: String?,id_card: String?,level: String?,isMember: String?): Result<Record> {
-        var sql = "select t1.*, t2.total_score,t4.name from user t1 " +
+    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?): Result<Record> {
+        var sql = "select t1.*, t2.total_score from user t1 " +
                 "left join (select user_id, sum(score) total_score " +
                 "from score_history " +
                 "group by user_id) t2 " +
-                "on t1.id = t2.user_id " +
-                "left join community_user t3 on t1.id=t3.user_id "+
-                "left join community t4 on t3.community_id=t4.id " +
-                "where 1=1 {0} {1} {2} {3} {4} {5} {6} {7} "
+                "on t1.id = t2.user_id "
+        "where 1=1 {0} {1} {2} {3} {4} {5} "
         var strCondition = ""
         if (!username.isNullOrBlank())
         {
@@ -229,29 +224,17 @@ class UserService {
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!level.isNullOrBlank())
-        {
-            strCondition = "and t1.level = {0}".replace("{0}", level!!)
-        }
-        sql = sql.replace("{4}", strCondition)
-
         if (!start.isNullOrBlank())
         {
             strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
         }
-        sql = sql.replace("{5}", strCondition)
+        sql = sql.replace("{4}", strCondition)
 
         if (!end.isNullOrBlank())
         {
             strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
         }
-        sql = sql.replace("{6}", strCondition)
-
-        if (!isMember.isNullOrBlank())
-        {
-            strCondition = "and t1.level > 0"
-        }
-        sql = sql.replace("{7}", strCondition)
+        sql = sql.replace("{5}", strCondition)
 
         var items = create!!.resultQuery(sql).fetch()
         return items
@@ -367,6 +350,16 @@ class UserService {
      */
     fun insertCommunityUser(communityUser: CommunityUser): Int {
         communityUserDao!!.insert(communityUser)
+        return communityUser.id
+    }
+
+    /**
+     * 更新团体组织用户关联对象信息
+     * @param communityUser: 团体组织用户关联对象
+     * @return 团体组织用户关联对象ID
+     */
+    fun updateCommunityUser(communityUser: CommunityUser): Int {
+        communityUserDao!!.update(communityUser)
         return communityUser.id
     }
 

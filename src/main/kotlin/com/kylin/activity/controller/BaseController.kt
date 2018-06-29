@@ -1,17 +1,13 @@
 package com.kylin.activity.controller
 
-import com.kylin.activity.databases.tables.daos.CommunityDao
+import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.User
+import com.kylin.activity.service.CommunityService
 import com.kylin.activity.util.CommonService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
-import org.springframework.util.Assert
 import org.springframework.web.context.request.RequestContextHolder
 import org.springframework.web.context.request.ServletRequestAttributes
-
-import javax.servlet.http.HttpServletRequest
-import com.kylin.activity.databases.tables.pojos.Community
-import com.kylin.activity.service.CommunityService
 
 /**
  * Created by 9kylin on 2017-12-04.
@@ -19,10 +15,6 @@ import com.kylin.activity.service.CommunityService
  */
 @Controller
 class BaseController {
-
-    @Autowired
-    private var communityDao: CommunityDao? = null
-
     /**
      * 通用服务
      */
@@ -56,6 +48,8 @@ class BaseController {
         set(user) {
             val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
             request.session.setAttribute("USER_CONTEXT", user)
+
+
         }
 
     /***
@@ -65,20 +59,33 @@ class BaseController {
         get() {
             val request = (RequestContextHolder.getRequestAttributes() as ServletRequestAttributes).request
             val session = request.session
+            var user = session.getAttribute("USER_CONTEXT") as User?
             var result = session.getAttribute("COMMUNITY_CONTEXT") as Community?
             if (result == null) {
+                if (user != null) {
+                    //如果当前用户是团体组织管理员，设置当前团体组织信息
+                    var communityUser = communityService!!.getCommunityAdminUser(user!!.id)
 
-                result = communityDao!!.fetchOneById(1)
-                sessionCommunity = result
+                    //删除COMMUNITY_USER_CONTEXT
+                    request.session.removeAttribute("COMMUNITY_USER_CONTEXT")
+                    if (communityUser != null) {
+                        request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
+                    }
+
+                    result = if (user != null && user!!.role != "管理员" && communityUser != null) {
+                        communityService!!.getCommunity(communityUser!!.communityId)
+                    } else {
+                        communityService!!.getCommunity(1)
+                    }
+                } else {
+                    communityService!!.getCommunity(1)
+                }
+
+                result!!.avatar = commonService!!.getDownloadUrl(result!!.avatar)
+                result!!.background = commonService!!.getDownloadUrl(result!!.background)
+
+                sessionCommunity = result!!
             }
-
-            //获取团体图标
-            var avatar = commonService!!.getDownloadUrl(result!!.avatar)
-            session.setAttribute("COMMUNITY_AVATAR", avatar)
-
-            //获取团体背景图片
-            var background = commonService!!.getDownloadUrl(result!!.background)
-            session.setAttribute("COMMUNITY_BACKGROUND", background)
 
             return result!!
         }

@@ -1,8 +1,8 @@
 <template>
   <div class="page">
-    <div class="page__bd" v-for="item in grids" :key="item.id">
+    <div v-if="item" class="page__bd">
 
-      <div v-if="xs==1">
+      <div>
         <!-- banner -->
         <div>
           <navigator url="../../pages/community/community" hover-class="navigator-hover">
@@ -81,15 +81,6 @@
         </div> -->
        
         <div>
-          <!-- <navigator url="/pages/myactivitys/myactivitys" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-              <div class="weui-cell__hd">
-                <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-              </div>
-              <div class="weui-cell__bd weui-cell_primary">
-                <div>我的活动</div>
-              </div>
-              <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator>  -->
 
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
               <div class="weui-cell__hd">
@@ -98,7 +89,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>积分</div>
               </div>
-              <div class="weui-cell_integral" >{{item.sum_score}}</div>
+              <div class="weui-cell_integral" >{{item.score}}</div>
           </navigator> 
 
           <navigator url="/pages/personalinformation/personalinformation" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -118,7 +109,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>会员</div>
               </div>
-              <div class="weui-cell_comment">{{item.level!=true?"非会员":"会员"}}</div>
+              <div class="weui-cell_comment">{{item.isVip ? "非会员":"会员"}}</div>
           </navigator> 
 
           <!-- 如下为全局功能 -->
@@ -129,7 +120,7 @@
               <div class="weui-cell__bd weui-cell_primary">
                 <div>实名认证</div>
               </div>
-              <div class="weui-cell_comment">{{item.is_real!=true?"未认证":"已认证"}}</div>
+              <div class="weui-cell_comment">{{item.user.isReal!=true?"未认证":"已认证"}}</div>
           </navigator> 
 
           <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -148,69 +139,16 @@
     </div>
   </div>
 
-  <!-- <div v-if="xs==2" :hidden=true>
-      
-      <div>
-          <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(1)">
-             切换到参与者 >>
-          </div>
-          <div style="position:absolute;margin-top:15%;width:100%;">
-           <images :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></images>
-            <p class="p-text__xx">用户信息【管理者】</p>
-            <p class="p-text__xx">用户加入的团体信息</p>
-          </div>
-          <images style="height:200px; width:100%;"></images>
-      </div>
-      <div>
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>我发布的活动</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-              </navigator> 
-
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>加入团队人员</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
-
-            <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-                <div class="weui-cell__hd">
-                  <image :src="icon20" style="width: 20px;height: 20px;margin-right: 5px" />
-                </div>
-                <div class="weui-cell__bd weui-cell_primary">
-                  <div>团队会员</div>
-                </div>
-                <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-            </navigator> 
-
-      </div>
-   </div>
-  </div> -->
-
 </template>
 
 <script>
-import base64 from "../../../static/images/base64";
 export default {
   data() {
     return {
-      icon20: base64.icon20,
       xs: 1,
-      community: {
-        id: 1, //默认的组织团体ID
-        name: "北京市马拉松协会",
-        background: "NzrSDNSBEP.png"
-      },
-      grids:[]
+      userId:null,
+      community: null,
+      item:null
     };
   },
   components: {},
@@ -219,21 +157,9 @@ export default {
       var that = this;
       var param = {
         communityId: that.community.id,
-        userId: wx.getStorageSync("user").id
+        userId: this.userId
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/profile/getPerInformation",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-          console.log(res);
-          that.grids=res;
-        }
-      );
+      this.$kyutil.get("/pub/wx/profile/info",param).then(res => this.item = res)
     },
     qh(cs) {
       this.xs = cs;
@@ -246,22 +172,20 @@ export default {
     this.$kyutil.CheckUserValidation();
   },
   onShow() {
-    // console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
     //接受参数
     if (this.$store.state.community) {
       this.community = this.$store.state.community;
-      this.users= wx.getStorageSync("user");
-       console.log(this.users);
-      //设置标题
+      
+      this.$kyutil.CheckUserValidation();
+      var user = this.$kyutil.GetUser();
+      if (user) {
+        this.userId = user.id;
+        this.getData();
+      }
       wx.setNavigationBarTitle({
         title: this.community.name
       });
     }
-    this.getData();
-
-    // wx.setNavigationBarTitle({
-    //   title: "个人中心"
-    // });
   }
 };
 </script>

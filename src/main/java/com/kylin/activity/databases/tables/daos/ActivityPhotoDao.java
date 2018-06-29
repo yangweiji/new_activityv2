@@ -110,4 +110,11 @@ public class ActivityPhotoDao extends DAOImpl<ActivityPhotoRecord, com.kylin.act
     public List<com.kylin.activity.databases.tables.pojos.ActivityPhoto> fetchByAxtenalUrl(String... values) {
         return fetch(ActivityPhoto.ACTIVITY_PHOTO.AXTENAL_URL, values);
     }
+
+    /**
+     * Fetch records that have <code>browse_count IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.ActivityPhoto> fetchByBrowseCount(Integer... values) {
+        return fetch(ActivityPhoto.ACTIVITY_PHOTO.BROWSE_COUNT, values);
+    }
 }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/head :: default">
 
 </head>
@@ -11,11 +11,12 @@
 
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
-                <li class="am-active">
-                    <a href="#">活动详情</a>
+                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activity/detail')}?'am-active':''">
+                    <a th:href="@{/pub/activity/detail/{activityId}(activityId=${activity.get('id')})}">活动详情</a>
                 </li>
-                <li class="">
-                    <a href="#">活动相册</a>
+                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activityphoto/detail')}?'am-active':''"
+                    th:if="${photo}">
+                    <a th:href="@{/pub/activityphoto/detail/{photoId}(photoId=${photo.id})}">活动相册</a>
                 </li>
             </ul>
 
@@ -30,10 +31,15 @@
                         <span class="name" th:text="${activity.get('displayname')}"></span>
                     </a>
                     <span class="am_news_time">
-                &nbsp;•&nbsp;
+                    &nbsp;•&nbsp;
                     <span class="timeago"
                           th:title="${#dates.format(activity.get('created'), 'yyyy-MM-dd HH:mm')}"
                           th:text="${#kylin.fromNow(activity.get('created'))}"></span>
+                        &nbsp;•&nbsp;
+                    <span class="am-badge am-badge-primary am-round" th:if="${activity.get('activity_type')}==1">活动</span>
+                    <span class="am-badge am-badge-secondary am-round" th:if="${activity.get('activity_type')}==2">赛事</span>
+                    <span class="am-badge am-badge-success am-round" th:if="${activity.get('activity_type')}==3">抽签活动</span>
+                    <span class="am-badge am-badge-warning am-round" th:if="${activity.get('activity_type')}==4">打卡活动</span>
                 </span>
 
                 </div>
@@ -84,8 +90,13 @@
     }
 
     ul.am-tabs-nav.am-cf.am_cf {
-        max-width: 810px;
+        max-width: 1190px;
     }
+
+    .article_nr {
+        max-width: 1190px;
+    }
+
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/

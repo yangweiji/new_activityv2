@@ -6,7 +6,7 @@
         <div class="amz-container">
             <h1 class="am-topbar-brand">
                 <a th:href="@{/}" class="am-topbar-logo">
-                    <img th:src="${#httpSession.getAttribute('COMMUNITY_AVATAR')}">
+                    <img th:src="${session.COMMUNITY_CONTEXT.avatar}">
                 </a>
             </h1>
             <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
@@ -25,7 +25,11 @@
                         </a>
                     </li>
                     <li th:if="${#httpServletRequest.remoteUser}
-                                and (${session.USER_CONTEXT.role}=='发布者' or ${session.USER_CONTEXT.role}=='管理员')">
+                                and (${session.USER_CONTEXT.role}=='发布者'
+                                        or ${session.USER_CONTEXT.role}=='管理员'
+                                        or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '管理员')
+                                        or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '发布者')
+                                     )">
                         <a th:href="@{/pub/activity/publish}">
                             发活动
                         </a>
@@ -40,16 +44,16 @@
                             活动相册
                         </a>
                     </li>
-                    <li th:if="${#httpServletRequest.remoteUser}
-                                and (${session.USER_CONTEXT.role}=='发布者'
-                                        or ${session.USER_CONTEXT.role}=='管理员'
-                                        or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '管理员')
-                                        or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '发布者')
-                                     )">
-                        <a th:href="@{/sec/community/thirdmanage/home/0}">
-                            团体中心
-                        </a>
-                    </li>
+                    <!--<li th:if="${#httpServletRequest.remoteUser}-->
+                                <!--and (${session.USER_CONTEXT.role}=='发布者'-->
+                                        <!--or ${session.USER_CONTEXT.role}=='管理员'-->
+                                        <!--or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '管理员')-->
+                                        <!--or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '发布者')-->
+                                     <!--)">-->
+                        <!--<a th:href="@{/sec/community/thirdmanage/home/0}">-->
+                            <!--团体中心-->
+                        <!--</a>-->
+                    <!--</li>-->
 
 
                    <!-- <li class="am-dropdown" data-am-dropdown style="margin-left:130px;top:12px;">
@@ -58,41 +62,66 @@
                                th:href="@{/pub/applyforcommunity/applyforcommunities}">申请团体</a>
                         </span>
                     </li>-->
-                    <li class="am-dropdown" data-am-dropdown style="margin-left: 280px;top:8px;">
-                        <span class="btn1">
-                            <button type="button" style="font-size: 14px;"
-                                    class="am-btn am-btn-default am-btn-secondary
-                                     am-radius am-dropdown-toggle">
-                                <span th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>
-                            <span class="am-icon-caret-down"></span>
-                            </button>
-                        </span>
-                        <ul class="am-dropdown-content">
-                            <li class="am-dropdown-header">团体名称</li>
-                            <li class="am-divider"></li>
-                            <li th:each="item:${handlerCommunities}">
-                                <a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.id}+ ')'"
-                                   th:text="${item.name}"></a>
-                            </li>
-                        </ul>
-                    </li>
+
+                    <!--<li class="am-dropdown" data-am-dropdown style="margin-left: 280px;top:8px;">-->
+                        <!--<span class="btn1">-->
+                            <!--<button type="button" style="font-size: 14px;"-->
+                                    <!--class="am-btn am-btn-default am-btn-secondary-->
+                                     <!--am-radius am-dropdown-toggle">-->
+                                <!--<span th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>-->
+                            <!--<span class="am-icon-caret-down"></span>-->
+                            <!--</button>-->
+                        <!--</span>-->
+                        <!--<ul class="am-dropdown-content">-->
+                            <!--<li class="am-dropdown-header">团体名称</li>-->
+                            <!--<li class="am-divider"></li>-->
+                            <!--<li th:each="item:${handlerCommunities}">-->
+                                <!--<a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.id}+ ')'"-->
+                                   <!--th:text="${item.name}"></a>-->
+                            <!--</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
                 </ul>
 
-                <div class="am-topbar-right">
-                    <span th:unless="${#httpServletRequest.remoteUser}">
-                        <a th:href="@{/login}" class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span
-                                class="am-icon-user"></span> 登录</a>
-                        <a th:href="@{/pub/register}" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span
-                                class="am-icon-pencil"></span>注册</a>
-                    </span>
+                <div class="am-topbar-right" style="width: 400px;">
+
+                    <ul class="am-nav am-nav-pills am-topbar-nav" style="width: 200px;">
+                        <li class="am-dropdown" data-am-dropdown="">
+                            <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
+                                <span class="fa fa-exchange"></span>
+                                <span th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>
+                                <span class="am-icon-caret-down"></span>
+                            </a>
+
+                            <ul class="am-dropdown-content">
+                                <li class="am-dropdown-header">团体名称</li>
+                                <li class="am-divider"></li>
+                                <li th:each="item:${handlerCommunities}">
+                                    <a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.id}+ ')'"
+                                       th:text="${item.name}"></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <div style="float:right;">
+                        <span th:unless="${#httpServletRequest.remoteUser}">
+                            <a th:href="@{/login}" class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span
+                                    class="am-icon-user"></span> 登录</a>
+                            <a th:href="@{/pub/register}" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span
+                                    class="fa-user-plus"></span>注册</a>
+                        </span>
+                    </div>
 
                     <form th:action="@{/logout}" method="post">
-                        <ul th:if="${#httpServletRequest.remoteUser}" class="am-nav am-nav-pills am-topbar-nav">
+                        <ul th:if="${#httpServletRequest.remoteUser}" class="am-nav am-nav-pills am-topbar-nav" style="float:right;">
                             <li class="am-dropdown" data-am-dropdown="">
+
                                 <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
                                     <!--<span th:inline="text">[[${#httpServletRequest.remoteUser}]]</span>-->
                                     <!--<span th:inline="text">[[${session.SPRING_SECURITY_CONTEXT}]]</span>-->
                                     <!--<span th:inline="text">[[${session.USER_CONTEXT}]]</span>-->
+                                    <span class="fa fa-user"></span>
                                     <span th:inline="text">[[${session.USER_CONTEXT.displayname}]]</span>
                                     <span class="am-icon-caret-down"></span>
                                 </a>

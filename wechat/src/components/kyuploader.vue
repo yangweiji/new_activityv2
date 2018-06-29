@@ -5,11 +5,11 @@
         <div v-for="(item ,index) in smallFiles" :key="index">
           <div class="weui-uploader__file">
             <image class="weui-uploader__img" :src="item" mode="aspectFill" @click="predivImage(index)" />
-            <div class="delete-icon" @click="deleteImg(index)" ></div>
+            <div v-if="!disabled" class="delete-icon" @click="deleteImg(index)" ></div>
           </div>
         </div>
       </div>
-      <div class="weui-uploader__input-box">
+      <div v-if="!disabled" class="weui-uploader__input-box">
         <div class="weui-uploader__input" @click="chooseImage"></div>
       </div>
     </div>
@@ -21,11 +21,15 @@
     props: {
       value: {
         type: String
+      },
+      disabled:{
+        type:Boolean
       }
     },
     data() {
       return {
-        ossInfo: null
+        ossInfo: null,
+        version:0
       }
     },
     created(){
@@ -40,6 +44,7 @@
         return []
       },
       smallFiles(){
+        var a = this.version
         return this.getShowFiles('small')
       }
 
@@ -92,7 +97,7 @@
             filePath: uploadFilePath,
             name: 'file',
             formData: {
-              'key': that.ossInfo.key + '/' + fileName,
+              'key': that.ossInfo.dir + '/' + fileName,
               'policy': that.ossInfo.policy,
               'OSSAccessKeyId': that.ossInfo.accessid,
               'success_action_status': '200', //让服务端返回200,不然，默认会返回204
@@ -101,7 +106,7 @@
             success(res) {
               var files = that.files
               files.push(fileName)
-              that.$emit('input', files.join())
+              that.updateValue(files)
             }
           })
         }
@@ -125,7 +130,7 @@
       deleteImg(index) {
         var files = this.files
         files.splice(index, 1)
-        this.$emit('input', files.join())
+        this.updateValue(files)
       },
       getShowFiles(size){
         var fs = this.files
@@ -134,12 +139,20 @@
           showFiles.push(this.$kyutil.downloadUrl(fs[i], size))
         }
         return showFiles
+      },
+      updateValue(files){
+        this.version++
+        this.$emit('input', files.join())
       }
     }
   }
 </script>
 
-<style>
+<style scoped>
+.weui-uploader{
+    margin-top:10px;
+min-height:84px;
+}
   .weui-uploader__file {
     position: relative;
   }

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/head :: default">
 </head>
 <body>
@@ -17,10 +17,18 @@
                             <img class="am_img animated c-img"
                                  alt=""
                                  th:src="${item.get('axtenal_url')}"/>
-                            <div class="am_listimg_info">
-                                <span class="am_imglist_user_font" th:text="${item.get('description')}"></span>
-                            </div>
                         </a>
+                        <div class="am_list_author" style="float:left;">
+                            <span class="fa fa-picture-o"></span>
+                            <span class="name" th:text="${item.get('pictureCount')}"></span> 张
+                        </div>
+                        <div class="am_list_author" style="float:right;">
+                            <span class="fa fa-eye"></span>
+                            <span class="name" th:text="${item.get('browse_count')}"></span> 次
+                        </div>
+                        <div class="am_listimg_info">
+                            <span class="am_imglist_user_font" th:text="${item.get('description')}"></span>
+                        </div>
                     </div>
                 </li>
 
@@ -30,10 +38,20 @@
 
     </div>
 </div>
+
 <style type="text/css">
     .am_img.animated.c-img {
         height: 130px;
         width: 242px;
+    }
+
+    .am_listimg_info .am_imglist_user_font {
+        display: inline-block;
+        max-height: 30px;
+        max-width: 230px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 </style>
 <div th:replace="fragments/footer :: default"></div>

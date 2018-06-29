@@ -6,7 +6,6 @@ import com.kylin.activity.databases.tables.pojos.ActivitySms
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ActivitySmsService
-import com.kylin.activity.service.UserService
 import com.kylin.activity.sms.SmsTemplateListProperties
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -102,7 +100,7 @@ class SmsController : BaseController() {
         var activity = activityService!!.getCommunityActivity(sms.activityId, this.sessionCommunity.id)
         if (activity == null) {
             model.addAttribute("errorMessage", "活动编号: ${sms.activityId} 无效！")
-            return "sec/sms/sendSms"
+            return "sec/community/sms/sendSms"
         }
 
         //短信接收手机号

@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -78,18 +78,18 @@
             <div class="am-tab-panel am-fade am-in am-active">
 
                 <div class="am-g dis_line">
-                    <table class="am-table" id="bmTable" cellspacing="0" width="100%">
+                    <table class="am-table am-table-striped am-table-compact am-table-hover" id="bmTable"
+                           cellspacing="0" width="100%">
                         <thead>
                         <tr>
-                            <th style="width:50px;">序号</th>
-                            <th style="width:50px;">编号</th>
+                            <th>序号</th>
+                            <th>编号</th>
                             <th>用户账号</th>
-                            <th>显示名称</th>
-                            <th>注册时间</th>
-                            <th>真实姓名</th>
-                            <th>积分</th>
+                            <th>显示名</th>
+                            <th>姓名</th>
                             <th>性别</th>
                             <th>身份证号</th>
+                            <th>注册时间</th>
                             <th>是否认证</th>
                             <th>认证时间</th>
                             <th>邮箱</th>
@@ -102,6 +102,8 @@
                             <th>紧急联系人姓名</th>
                             <th>紧急联系人电话</th>
                             <th>微信号</th>
+
+                            <th>积分</th>
                             <th>操作</th>
                         </tr>
                         </thead>

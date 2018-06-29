@@ -3,6 +3,7 @@ package com.kylin.activity.controller.pub
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.ActivityPhoto
 import com.kylin.activity.service.ActivityPhotoService
+import com.kylin.activity.service.ActivityService
 import com.kylin.activity.util.CommonService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -23,13 +24,19 @@ class ActivityPhotoController : BaseController() {
      * 活动相册服务
      */
     @Autowired
-    private var activityPhotoService: ActivityPhotoService? = null
+    private val activityPhotoService: ActivityPhotoService? = null
 
     /**
      * 通用服务
      */
     @Autowired
-    private var commonService: CommonService? = null
+    private val commonService: CommonService? = null
+
+    /**
+     * 活动服务
+     */
+    @Autowired
+    private val activityService: ActivityService? = null
 
     /**
      * 首页活动相册
@@ -50,9 +57,18 @@ class ActivityPhotoController : BaseController() {
      * @return 相册详情页面视图
      */
     @CrossOrigin
-    @RequestMapping(value = "/detail/{activityPhotoId}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/detail/{activityPhotoId}", method = [RequestMethod.GET, RequestMethod.POST])
     fun activityPhotoDetail(@PathVariable("activityPhotoId") activityPhotoId: Int, model: Model): String {
+
         var activityPhoto = activityPhotoService!!.getActivityPhotoItem(activityPhotoId)
+        //记录浏览次数
+        if (activityPhoto.browseCount != null) {
+            activityPhoto.browseCount++
+        } else {
+            activityPhoto.browseCount = 0
+        }
+
+        activityPhotoService!!.update(activityPhoto)
         model.addAttribute("activityPhoto", activityPhoto)
 
         var activityPhotoPictureItems = activityPhotoService!!.getPhotoPictureList(activityPhotoId)
@@ -61,6 +77,10 @@ class ActivityPhotoController : BaseController() {
         }
 
         model.addAttribute("activityPhotoPictureItems", activityPhotoPictureItems)
+
+        //添加活动至模型
+        var activity = activityService!!.getActivity(activityPhoto.activityId)
+        model.addAttribute("activity", activity)
 
         return "pub/activityphoto/detail"
     }

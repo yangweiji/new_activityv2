@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = 1124489019;
+    private static final long serialVersionUID = -1058592487;
 
     /**
      * The reference instance of <code>activityv2.community_user</code>
@@ -84,6 +84,11 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      * The column <code>activityv2.community_user.level</code>.
      */
     public final TableField<CommunityUserRecord, Integer> LEVEL = createField("level", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+    /**
+     * The column <code>activityv2.community_user.is_black</code>. 是否黑名单用户
+     */
+    public final TableField<CommunityUserRecord, Boolean> IS_BLACK = createField("is_black", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "是否黑名单用户");
 
     /**
      * Create a <code>activityv2.community_user</code> table reference

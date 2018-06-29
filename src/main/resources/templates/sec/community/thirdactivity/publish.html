@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head th:include="fragments/head :: default">
+>
+<head th:include="fragments/backhead :: default">
 </head>
 <body>
 <link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
@@ -31,19 +31,14 @@
                 </div>
 
                 <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>海报</label>
+                    <label class="am-u-sm-2 am-form-label">海报</label>
                     <div class="am-u-sm-10">
-                        <input type="hidden" name="avatar" v-model="cacheData.activity.avatar"/>
-                        <div class="c-avatar">
-                            <img v-bind:src="getActivityAvatar()"/>
-                            <span>
-                                <button id="c-upload-activity-avatar" class="am-btn am-btn-primary am-btn-xs">更新海报</button>
-                                <br />
-                                <span class="c-avatar-tip">温馨提示：图片尺寸建议为：900*525，图片小于4M</span>
-                            </span>
-                        </div>
+                        <input-image-uploader v-model="cacheData.activity.avatar"
+                                              name-text="avatar"
+                                              desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
                     </div>
                 </div>
+
                 <div class="am-form-group">
                     <label for="activity_startTime" class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>时间</label>
                     <div class="am-u-sm-10">
@@ -56,7 +51,7 @@
                     <label for="activity_address" class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>地址</label>
                     <div class="am-u-sm-10">
                         <div  class="am-input-group am-input-group-primary">
-                            <input  v-model="cacheData.activity.address" required="required" type="text" id="activity_address" class="am-form-field" name="address" placeholder="打来地图选择举办地址" />
+                            <input  v-model="cacheData.activity.address" required="required" type="text" id="activity_address" class="am-form-field" name="address" placeholder="打开地图选择举办地址" />
                             <span v-on:click="showAddressMap = !showAddressMap" class="am-input-group-label"><i class="am-icon-location-arrow am-icon-fw"></i></span>
                         </div>
                         <div v-if="showAddressMap" style="height: 600px;width: 100%">
@@ -64,6 +59,18 @@
                             </iframe>
                         </div>
 
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label for="activity_type" class="am-u-sm-2 am-form-label">类别</label>
+                    <div class="am-u-sm-10">
+                        <select required="required" id="activity_type" name="activity_type" placeholder="请选择类别"  data-am-selected="">
+                            <option value="">--</option>
+                            <option value="1">一般活动</option>
+                            <option value="2">体育赛事</option>
+                            <option value="3">抽签活动</option>
+                            <option value="4">打卡活动</option>
+                        </select>
                     </div>
                 </div>
                 <div class="am-form-group">
@@ -104,13 +111,13 @@
                             <table class="am-table am-table-bordered am-table-centered">
                                 <thead>
                                 <tr>
-                                    <th style="width: 50px;text-align: center;">序号</th>
+                                    <th style="width: 80px;text-align: center;">序号</th>
                                     <th>费用名称</th>
                                     <th style="width: 100px;">金额</th>
-                                    <th style="width: 100px;">积分最大使用量</th>
+                                    <th style="width: 150px;" th:if="${community.usingScore}">积分最大使用量</th>
                                     <th style="width: 100px;">名额限制</th>
-                                    <th style="width: 120px;">马协会员专享</th>
-                                    <th style="width: 150px;"></th>
+                                    <th style="width: 90px;" th:if="${community.isVip}">会员专享</th>
+                                    <th style="width: 100px;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -122,13 +129,13 @@
                                     <td class="c-input">
                                         <input required="required" type="number" v-model="ticket.price" placeholder="0为免费" />
                                     </td>
-                                    <td class="c-input">
+                                    <td class="c-input" th:if="${community.usingScore}">
                                         <input required="required" type="number" v-model="ticket.score" placeholder="0为不允许使用" />
                                     </td>
                                     <td class="c-input">
                                         <input required="required" type="number" v-model="ticket.count" placeholder="0为不限" />
                                     </td>
-                                    <td>
+                                    <td th:if="${community.isVip}">
                                         <input type="checkbox" v-bind:true-value="1" v-bind:false-value="0" v-model="ticket.userLevel" />
                                     </td>
                                     <td>
@@ -141,7 +148,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="am-form-group">
+
+                <div class="am-form-group" th:if="${community.usingScore}">
                     <label  class="am-u-sm-2 am-form-label">签到获取积分</label>
                     <div class="am-u-sm-10">
                         <div class="c-ticket-table">
@@ -149,7 +157,7 @@
                                 <thead>
                                 <tr>
                                     <th style="width: 50px;text-align: center;">一般用户积分</th>
-                                    <th style="width: 100px;">马协会员积分</th>
+                                    <th style="width: 100px;">会员积分</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -236,16 +244,6 @@
     #c_sec_thirdactivity_publish_app{
         margin-top: 30px;
     }
-    #c_sec_thirdactivity_publish_app .c-avatar img{
-        display: inline-block;
-        height: 123px;
-        min-width: 50px;
-        max-width: 500px;
-    }
-    #c_sec_thirdactivity_publish_app .c-avatar .c-avatar-tip{
-        font-size:12px;
-        color: gray;
-    }
     #c_sec_thirdactivity_publish_app .c-datetimepicker{
         display: inline-block;
         width: 200px;
@@ -331,6 +329,7 @@
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
 <script type="text/javascript" src="/js/sec/community/thirdactivity/publish.js"></script>
 </body>
 </html>

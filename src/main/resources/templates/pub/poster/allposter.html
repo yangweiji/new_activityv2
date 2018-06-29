@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 
 <head th:include="fragments/backhead :: default">
 </head>
@@ -12,46 +12,50 @@
     <div class="manage-r">
         <div class="hd_list_right_tt">
             <div class="l">
-                <span th:if="${posterType}=='b5'">
-                    <strong th:classappend="${posterType}=='b5'">跑步训练</strong>
+                <!--<span th:if="${posterType}=='b5'">-->
+                <!--<strong th:classappend="${posterType}=='b5'">跑步训练</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='n1'">-->
+                <!--<strong th:classappend="${posterType}=='n1'">赛事新闻</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b13'">-->
+                <!--<strong th:classappend="${posterType}=='b13'">运动装备</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b12'">-->
+                <!--<strong th:classappend="${posterType}=='b12'">会员福利</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b10'">-->
+                <!--<strong th:classappend="${posterType}=='b10'">国内赛事</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b11'">-->
+                <!--<strong th:classappend="${posterType}=='b11'">国际赛事</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b1'">-->
+                <!--<strong th:classappend="${posterType}=='b1'">徒步</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b2'">-->
+                <!--<strong th:classappend="${posterType}=='b2'">越野</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b3'">-->
+                <!--<strong th:classappend="${posterType}=='b3'">聚餐</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b4'">-->
+                <!--<strong th:classappend="${posterType}=='b4'">骑行</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b6'">-->
+                <!--<strong th:classappend="${posterType}=='b6'">会议</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b7'">-->
+                <!--<strong th:classappend="${posterType}=='b7'">招募</strong>-->
+                <!--</span>-->
+                <!--<span th:if="${posterType}=='b8'">-->
+                <!--<strong th:classappend="${posterType}=='b8'">讲座</strong>-->
+                <!--</span>-->
+
+                <span>
+                    <strong>海报信息</strong>
                 </span>
-                <span th:if="${posterType}=='n1'">
-                    <strong th:classappend="${posterType}=='n1'">赛事新闻</strong>
-                </span>
-                <span th:if="${posterType}=='b13'">
-                    <strong th:classappend="${posterType}=='b13'">运动装备</strong>
-                </span>
-                <span th:if="${posterType}=='b12'">
-                    <strong th:classappend="${posterType}=='b12'">会员福利</strong>
-                </span>
-                <span th:if="${posterType}=='b10'">
-                    <strong th:classappend="${posterType}=='b10'">国内赛事</strong>
-                </span>
-                <span th:if="${posterType}=='b11'">
-                    <strong th:classappend="${posterType}=='b11'">国际赛事</strong>
-                </span>
-                <span th:if="${posterType}=='b1'">
-                    <strong th:classappend="${posterType}=='b1'">徒步</strong>
-                </span>
-                <span th:if="${posterType}=='b2'">
-                    <strong th:classappend="${posterType}=='b2'">越野</strong>
-                </span>
-                <span th:if="${posterType}=='b3'">
-                    <strong th:classappend="${posterType}=='b3'">聚餐</strong>
-                </span>
-                <span th:if="${posterType}=='b4'">
-                    <strong th:classappend="${posterType}=='b4'">骑行</strong>
-                </span>
-                <span th:if="${posterType}=='b6'">
-                    <strong th:classappend="${posterType}=='b6'">会议</strong>
-                </span>
-                <span th:if="${posterType}=='b7'">
-                    <strong th:classappend="${posterType}=='b7'">招募</strong>
-                </span>
-                <span th:if="${posterType}=='b8'">
-                    <strong th:classappend="${posterType}=='b8'">讲座</strong>
-                </span>
-                共<span th:text="${#lists.size(posters)}"></span>条记录
+                <!--共<span th:text="${#lists.size(posters)}"></span>条记录-->
             </div>
         </div>
         <div class="am-tabs am-tabs-d2 am_news_tab">

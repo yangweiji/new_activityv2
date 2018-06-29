@@ -112,6 +112,20 @@ public class CommunityDao extends DAOImpl<CommunityRecord, com.kylin.activity.da
     }
 
     /**
+     * Fetch records that have <code>is_vip IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByIsVip(Boolean... values) {
+        return fetch(Community.COMMUNITY.IS_VIP, values);
+    }
+
+    /**
+     * Fetch records that have <code>vip_agreement IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Community> fetchByVipAgreement(String... values) {
+        return fetch(Community.COMMUNITY.VIP_AGREEMENT, values);
+    }
+
+    /**
      * Fetch records that have <code>vip_amount IN (values)</code>
      */
     public List<com.kylin.activity.databases.tables.pojos.Community> fetchByVipAmount(Double... values) {

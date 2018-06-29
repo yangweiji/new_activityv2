@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -11,20 +11,30 @@
         <div th:replace="fragments/leftnav :: default"></div>
     </div>
     <div class="manage-r">
-        <!--错误消息提示-->
-        <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
-            <button type="button" class="am-close">&times;</button>
-            <p>
-                <span class="am-icon-lg am-warning am-icon-warning"></span>
-                <span th:text="${errorMessage}">Some Error message</span>
-            </p>
-        </div>
         <div class="hd_list_right_tt">
             <div class="l"><strong>团体管理</strong><span>共<span id="communityCount"></span>条记录</span>
             </div>
             <div class="vip_adv"></div>
         </div>
         <div class="am-tabs-bd am_bdfw">
+
+            <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-success am-icon-check"></span>
+                    <span th:text="${globalMessage}">Some Success message</span>
+                </p>
+            </div>
+
+            <!--错误消息提示-->
+            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-warning am-icon-warning"></span>
+                    <span th:text="${errorMessage}">Some Error message</span>
+                </p>
+            </div>
+
             <div class="am-g">
                 <form class="am-form-inline" method="post">
                     <div class="am-form-group">
@@ -41,7 +51,8 @@
             <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>
             <div class="am-tab-panel am-fade am-in am-active">
                 <div class="am-g dis_line">
-                    <table class="am-table" id="bmTable" cellspacing="0" width="100%">
+                    <table class="am-table am-table-striped am-table-compact am-table-hover" id="bmTable"
+                           cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>序号</th>

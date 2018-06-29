@@ -3,13 +3,11 @@ package com.kylin.activity.controller.pub
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
-import com.xiaoleilu.hutool.date.DateUtil
-import org.jooq.DSLContext
-import org.jooq.Record
-import org.jooq.Result
+import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
+import com.xiaoleilu.hutool.date.DateUtil
 
 /**
  * Created by 9kylin on 2018-06-12.
@@ -18,15 +16,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("pub/wx/profile")
 class WxProfileController {
     @Autowired
-    private val proFileService: ProfileService? = null
-
-    @Autowired
-    private val thirdUserService: ThirdUserService? = null
+    private val util: KylinUtil? = null
 
     /**
-     * 活动服务
+     * 个人信息服务
      */
-    private val activityService: ActivityService? = null
+    @Autowired
+    private val proFileService: ProfileService? = null
 
     /**
      * 用户服务
@@ -35,72 +31,29 @@ class WxProfileController {
     private val userService: UserService? = null
 
     /**
+     * 公共服务
+     */
+    @Autowired
+    private val commonService: CommonService? = null
+
+    /**
      * 团体服务
      */
     @Autowired
     private val communityService: CommunityService? = null
 
     /**
-     * 通用服务
+     * 团体用户服务
      */
     @Autowired
-    private val commonService: CommonService? = null
+    private val thirdUserService: ThirdUserService? = null
 
     /**
-     * 微信端个人信息页面初始化
-     * @param userId 用户ID
-     * @param communityId 团体ID
+     * 团体积分服务
      */
-    @GetMapping("/getPerInformation")
-    fun getPerInformation(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
-        /*val currentActivity = activityService!!.getActivityDetail(activityId)*/
-        var community = communityService!!.getCommunity(communityId!!)
+    @Autowired
+    private val thirdScoreService: ThirdScoreService? = null
 
-        var proInformation = proFileService!!.getInitProInformation(communityId, userId)
-
-        var mapList = mutableListOf<MutableMap<String, Any?>>()
-        for (item in proInformation) {
-            var map = mutableMapOf<String, Any?>()
-            var userAvatar: String? = null
-            var displayname: String? = null
-            var username: String? = null
-            if (item["displayname"] != null) {
-                displayname = item.get("displayname").toString()
-            }
-
-            if (item["username"] != null) {
-                username = item.get("username").toString()
-            }
-            if (item["avatar"] != null) {
-                userAvatar = commonService!!.getDownloadUrl(item.get("avatar", String::class.java), "middle")
-            }
-            map["id"] = item.get("id", Int::class.java)
-            map["displayname"] = displayname
-            map["username"] = username
-            map["avatar"] = userAvatar
-
-            //是否为本年的VIP
-            val isVip = proFileService!!.isVip(community!!.id, userId!!, DateUtil.thisYear())
-            if (isVip) map["level"] = isVip
-            //实名认证
-            map["is_real"] = item.get("is_real", Boolean::class.java)
-            if (map["is_real"] == null) 0 else map["is_real"]
-
-            //已参加
-            map["attend_user_count"] = item.get("attend_user_count", Int::class.java)
-            //我喜欢
-            map["favorite_count"] = item.get("favorite_count", Int::class.java)
-            //需签到
-            map["ne_checked_count"] = item.get("ne_checked_count", Int::class.java)
-            //已签到
-            map["checked_count"] = item.get("checked_count", Int::class.java)
-            //积分总额
-            map["sum_score"] = item.get("sum_score", Int::class.java)
-            mapList.add(map)
-
-        }
-        return mapList
-    }
 
     /**
      * 微信端个人信息页面初始化
@@ -114,48 +67,135 @@ class WxProfileController {
     }
 
 
-
     /**
-     * 小程序：完善个人信息页面
+     * 完善个人信息
      * @param userId 用户id
-     *
      */
     @CrossOrigin
     @GetMapping("/getIntoPersonalInformation")
-    fun intoPersonalInformation(@RequestParam(required = false) userId: Int?): User {
-        return userService!!.getUser(userId!!)
+    fun intoPersonalInformation(@RequestParam(required = false) userId: Int): User? {
+        var user = userService!!.getUser(userId)
+        return user
     }
 
 
     /**
-     * 小程序：更新并保存用户信息
+     * 保存并更新用户信息
+     * @param user 用户信息
      */
     @CrossOrigin
     @Transactional
-    @GetMapping("/savePersonalInformation")
-    fun savePersonalInformation(displayname: String?, email: String?, gender: Int?,
-                                bloodType: String?, clothingSize: String?, workCompany: String?, occupation: String?,
-                                emergencyContactName: String?, emergencyContactMobile: String?, isParty: Boolean?,
-                                address: String?, wechatId: String?):Boolean {
-        var userInfo=proFileService!!.fetchByUsername()
-        userInfo.displayname=displayname
-        userInfo.gender=gender
-        userInfo.email=email
-        userInfo.bloodType=bloodType
-        userInfo.clothingSize=clothingSize
-        userInfo.workCompany=workCompany
-        userInfo.occupation=occupation
-        userInfo.emergencyContactName=emergencyContactName
-        userInfo.emergencyContactMobile=emergencyContactMobile
-        userInfo.isParty=isParty
-        userInfo.address=address
-        userInfo.wechatId=wechatId
+    @PostMapping("/savePersonalInformation")
+    fun savePersonalInformation(user: User): Boolean {
+        var userInfo = userService!!.getCurrentUserInfo()
+        userInfo!!.displayname = user.displayname
+        userInfo!!.gender = user.gender
+        userInfo!!.email = user.email
+        userInfo!!.bloodType = user.bloodType
+        userInfo!!.clothingSize = user.clothingSize
+        userInfo!!.workCompany = user.workCompany
+        userInfo!!.occupation = user.occupation
+        userInfo!!.emergencyContactName = user.emergencyContactName
+        userInfo!!.emergencyContactMobile = user.emergencyContactMobile
+        userInfo!!.isParty = user.isParty
+        userInfo!!.address = user.address
+        userInfo!!.wechatId = user.wechatId
         proFileService!!.updateUserInfo(userInfo)
         return true
     }
 
 
+    /**
+     * 个人中心4个活动数+积分总额
+     * counts:已参加/我喜欢/需签到/已签到/积分总额
+     * @param userId 用户编号
+     * @param communityId 团体编号
+     */
+    @CrossOrigin
+    @GetMapping("/getPersonalInfoCounts")
+    fun getPersonalInfoCounts(@RequestParam(required = false) userId: Int?,
+                              @RequestParam(required = false) communityId: Int?): List<Any> {
+        val personalInfoCounts = proFileService!!.getPersonalInfoCounts(userId, communityId)
+        return personalInfoCounts.intoMaps()
+    }
 
 
+    /**
+     * 个人中心我的活动
+     * @param type 活动类型
+     * @param userId 活动编号
+     * @param communityId 编号id
+     *
+     */
+    @CrossOrigin
+    @GetMapping("/getMyActivities")
+    fun myActivities(@RequestParam(required = false) type: Int?, userId: Int?, communityId: Int?): List<Any> {
+        var activitiesList = proFileService!!.myActivities(type, userId, communityId)
+        var items = mutableListOf<MutableMap<String, Any?>>()
+        for (activity in activitiesList) {
+            var map = mutableMapOf<String, Any?>()
+            var avatar: String? = null
+            var user_avatar: String? = null
+            if (activity["avatar"] != null) {
+                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+            }
+            if (activity["user_avatar"] != null) {
+                user_avatar = commonService!!.getDownloadUrl(activity.get("user_avatar", String::class.java), "middle")
+            }
+            map["id"] = activity.get("id", Int::class.java)
+            map["community_id"] = activity.get("community_id", Int::class.java)
+            map["title"] = activity.get("title").toString()
+            map["avatar"] = avatar
+            map["user_avatar"] = user_avatar
+            map["start_time"] = util!!.fromNow(activity.get("start_time"))
+            map["end_time"] = util!!.fromNow(activity.get("end_time"))
+            map["attend_count"] = activity.get("attend_count", Int::class.java)
+            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+            items.add(map)
+        }
+        return items
+    }
+
+    /**
+     * 个人信息页相关数据
+     * @param userId 用户编id
+     * @param communityId 团体id
+     */
+    @GetMapping("/info")
+    fun getProfileInfo(@RequestParam(required = false) userId: Int,
+                       @RequestParam(required = false) communityId: Int): Any {
+
+        var result = mutableMapOf<String, Any>()
+        var user = userService!!.getUser(userId)
+        result["user"] = user
+        var community = communityService!!.getCommunity(communityId)
+        result["community"] = community
+        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+        result["score"] = thirdScoreService!!.getUseableScore(userId, communityId)
+        var personalInfoCounts=proFileService!!.getPersonalInfoCounts(userId, communityId)
+        var counts= personalInfoCounts.intoMaps()
+        result["activityCounts"] =counts
+        return result
+    }
+
+
+    /**
+     * vip页，查询用户在指定团体的vip信息
+     * @param userId 用户编id
+     * @param communityId 团体id
+     */
+    @GetMapping("/vip")
+    fun getVipInfo(@RequestParam(required = false) userId: Int,
+                   @RequestParam(required = false) communityId: Int): Any {
+
+        var result = mutableMapOf<String, Any>()
+        var user = userService!!.getUser(userId)
+        result["user"] = user
+        var community = communityService!!.getCommunity(communityId)
+        result["community"] = community
+        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+
+        return result
+    }
 
 }

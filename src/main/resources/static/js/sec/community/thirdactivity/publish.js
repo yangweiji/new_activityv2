@@ -38,6 +38,8 @@ new Vue({
                     { title: '是否党员', multiple: false, type: 'select', required: false, options: [{ title:'群众' }, {title: '党员' }] },
                     { title: '家庭地址', type: 'text', required: false },
                     { title: '微信号', type: 'text', required: false },
+                    { title: '身份证号', type: 'text', required: false },
+                    { title: '出生日期', type: 'text', required: false },
                     { title: '备注', type: 'textarea', required: false },
                 ],
                 customs: [
@@ -55,15 +57,6 @@ new Vue({
     },
     mounted: function(){
         var that = this
-        //海报上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId:'c-upload-activity-avatar',
-            success:function (file) {
-                that.cacheData.activity.avatar = file.randomName
-            }
-        })
-
         ///时间控件
         $('.c-datetimepicker.start-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
@@ -100,6 +93,10 @@ new Vue({
         if(that.cacheData.activity.attendDueTime) {
             $('.c-datetimepicker.attend-due-time').datetimepicker('update', new Date(that.cacheData.activity.attendDueTime))
         }
+        //类别
+        $('#activity_type').on('change', function(ev) {
+            that.cacheData.activity.activityType = ev.currentTarget.value
+        }).val(that.cacheData.activity.activityType);
 
         $('#activity_tags').on('change', function(ev) {
             that.cacheData.activity.tags = ev.currentTarget.value
@@ -223,11 +220,6 @@ new Vue({
         },
         removeTicket:function (index) {
             this.cacheData.tickets.splice(index, 1);
-        },
-        getActivityAvatar: function () {
-            if (this.cacheData.activity.avatar)
-                return Util.file.downloadUrl(this.cacheData.activity.avatar)
-            return "/img/activity/activity-avatar.png"
         },
         addAttendInfo: function (info) {
             this.cacheData.attendInfos.push($.extend(true, {}, info))

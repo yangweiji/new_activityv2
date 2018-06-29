@@ -11,9 +11,18 @@
 <div id="app">
     <div class="manage-r">
         <div class="hd_list_right_tt">
-            <div class="l"><strong>公告通知</strong>共<span th:text="${#lists.size(article)}"></span>条记录</div>
+            <div class="l">
+               <span th:if="${category}==1">
+                    <strong th:classappend="${category}==1">公告通知</strong>
+             </span>
+                <span th:if="${category}==2">
+                    <strong th:classappend="${category}==2">赛事新闻</strong>
+            </span>
+                <span th:if="${category}==3">
+                    <strong th:classappend="${category}==3">运动指南</strong>
+            </span>
+                共<span th:text="${#lists.size(article)}"></span>条记录</div>
         </div>
-
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
                 <li class="" th:classappend="${category}==1?'am-active'">

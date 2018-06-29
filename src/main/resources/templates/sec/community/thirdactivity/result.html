@@ -15,6 +15,7 @@
             </h1>
             <a th:href="'/sec/community/thirdactivity/publish?id=' + ${param.id[0]}" class="am-btn am-btn-default" >返回修改活动</a>
             <a th:href="'/pub/activity/detail/'+${param.id[0]}" class="am-btn am-btn-primary" >查看活动详情</a>
+            <a th:href="'/sec/community/thirdactivity/activities'" class="am-btn am-btn-primary" >返回活动管理</a>
             <script th:inline="javascript">
                 /*<![CDATA[*/
                 var type = Util.getQueryStrings("type")

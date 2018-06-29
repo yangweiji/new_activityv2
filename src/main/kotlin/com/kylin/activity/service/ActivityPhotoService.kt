@@ -2,7 +2,6 @@ package com.kylin.activity.service
 
 import com.kylin.activity.databases.tables.daos.ActivityPhotoDao
 import com.kylin.activity.databases.tables.daos.ActivityPhotoPictureDao
-import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import com.kylin.activity.databases.tables.pojos.ActivityPhotoPicture
 import org.jooq.DSLContext
@@ -57,7 +56,7 @@ class ActivityPhotoService {
      * @return 相册信息记录集
      */
     fun getActivityPhotoItemsByCommunity(communityId: Int): Result<Record> {
-        var sql = "select t1.* from activity_photo t1 inner join activity t2 on t1.activity_id = t2.id " +
+        var sql = "select t1.*, (select count(*) from activity_photo_picture where activity_photo_id = t1.id) as pictureCount from activity_photo t1 inner join activity t2 on t1.activity_id = t2.id " +
                 "where t2.community_id = ? " +
                 "order by t1.id desc"
         return create!!.resultQuery(sql, communityId).fetch()

@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = -700266451;
+    private static final long serialVersionUID = -1672233774;
 
     /**
      * The reference instance of <code>activityv2.community</code>
@@ -89,6 +89,16 @@ public class Community extends TableImpl<CommunityRecord> {
      * The column <code>activityv2.community.avatar</code>. 社团小图标
      */
     public final TableField<CommunityRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团小图标");
+
+    /**
+     * The column <code>activityv2.community.is_vip</code>. 会员功能是否开启
+     */
+    public final TableField<CommunityRecord, Boolean> IS_VIP = createField("is_vip", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "会员功能是否开启");
+
+    /**
+     * The column <code>activityv2.community.vip_agreement</code>. 会员条款
+     */
+    public final TableField<CommunityRecord, String> VIP_AGREEMENT = createField("vip_agreement", org.jooq.impl.SQLDataType.CLOB, this, "会员条款");
 
     /**
      * The column <code>activityv2.community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
