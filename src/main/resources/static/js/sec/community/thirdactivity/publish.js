@@ -57,15 +57,6 @@ new Vue({
     },
     mounted: function(){
         var that = this
-        //海报上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId:'c-upload-activity-avatar',
-            success:function (file) {
-                that.cacheData.activity.avatar = file.randomName
-            }
-        })
-
         ///时间控件
         $('.c-datetimepicker.start-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
@@ -229,11 +220,6 @@ new Vue({
         },
         removeTicket:function (index) {
             this.cacheData.tickets.splice(index, 1);
-        },
-        getActivityAvatar: function () {
-            if (this.cacheData.activity.avatar)
-                return Util.file.downloadUrl(this.cacheData.activity.avatar)
-            return "/img/activity/activity-avatar.png"
         },
         addAttendInfo: function (info) {
             this.cacheData.attendInfos.push($.extend(true, {}, info))

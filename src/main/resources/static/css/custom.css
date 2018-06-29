@@ -450,3 +450,16 @@ div.dataTables_wrapper div.dataTables_paginate {
     position: relative;
     top: -60px;
 }
+
+/*图片上传样式*/
+.c-image-tip {
+    font-size: 12px;
+    color: gray;
+}
+
+.c-image img {
+    display: inline-block;
+    height: 123px;
+    width: 218px;
+    height: 123px;
+}
