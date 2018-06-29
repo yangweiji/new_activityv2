@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser implements Serializable {
 
-    private static final long serialVersionUID = 350704484;
+    private static final long serialVersionUID = -739952495;
 
     private Integer   id;
     private Integer   communityId;
@@ -31,6 +31,7 @@ public class CommunityUser implements Serializable {
     private String    role;
     private Timestamp created;
     private Integer   level;
+    private Boolean   isBlack;
 
     public CommunityUser() {}
 
@@ -41,6 +42,7 @@ public class CommunityUser implements Serializable {
         this.role = value.role;
         this.created = value.created;
         this.level = value.level;
+        this.isBlack = value.isBlack;
     }
 
     public CommunityUser(
@@ -49,7 +51,8 @@ public class CommunityUser implements Serializable {
         Integer   userId,
         String    role,
         Timestamp created,
-        Integer   level
+        Integer   level,
+        Boolean   isBlack
     ) {
         this.id = id;
         this.communityId = communityId;
@@ -57,6 +60,7 @@ public class CommunityUser implements Serializable {
         this.role = role;
         this.created = created;
         this.level = level;
+        this.isBlack = isBlack;
     }
 
     public Integer getId() {
@@ -107,6 +111,14 @@ public class CommunityUser implements Serializable {
         this.level = level;
     }
 
+    public Boolean getIsBlack() {
+        return this.isBlack;
+    }
+
+    public void setIsBlack(Boolean isBlack) {
+        this.isBlack = isBlack;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("CommunityUser (");
@@ -117,6 +129,7 @@ public class CommunityUser implements Serializable {
         sb.append(", ").append(role);
         sb.append(", ").append(created);
         sb.append(", ").append(level);
+        sb.append(", ").append(isBlack);
 
         sb.append(")");
         return sb.toString();
