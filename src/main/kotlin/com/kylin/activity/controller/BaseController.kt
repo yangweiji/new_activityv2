@@ -1,8 +1,6 @@
 package com.kylin.activity.controller
 
-import com.kylin.activity.databases.tables.daos.CommunityDao
 import com.kylin.activity.databases.tables.pojos.Community
-import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.CommunityService
 import com.kylin.activity.util.CommonService
@@ -17,10 +15,6 @@ import org.springframework.web.context.request.ServletRequestAttributes
  */
 @Controller
 class BaseController {
-
-    @Autowired
-    private var communityDao: CommunityDao? = null
-
     /**
      * 通用服务
      */
@@ -68,23 +62,23 @@ class BaseController {
             var user = session.getAttribute("USER_CONTEXT") as User?
             var result = session.getAttribute("COMMUNITY_CONTEXT") as Community?
             if (result == null) {
-
-                var communityUser = CommunityUser()
                 if (user != null) {
                     //如果当前用户是团体组织管理员，设置当前团体组织信息
-                    communityUser = communityService!!.getCommunityAdminUser(user!!.id)!!
+                    var communityUser = communityService!!.getCommunityAdminUser(user!!.id)
 
                     //删除COMMUNITY_USER_CONTEXT
                     request.session.removeAttribute("COMMUNITY_USER_CONTEXT")
-                    if (communityUser != null && communityUser.communityId != null) {
+                    if (communityUser != null) {
                         request.session.setAttribute("COMMUNITY_USER_CONTEXT", communityUser)
                     }
-                }
 
-                result = if (user != null && user!!.role != "管理员" && communityUser != null && communityUser.communityId != null) {
-                    communityService!!.getCommunity(communityUser!!.communityId)
+                    result = if (user != null && user!!.role != "管理员" && communityUser != null) {
+                        communityService!!.getCommunity(communityUser!!.communityId)
+                    } else {
+                        communityService!!.getCommunity(1)
+                    }
                 } else {
-                    communityDao!!.fetchOneById(1)
+                    communityService!!.getCommunity(1)
                 }
 
                 result!!.avatar = commonService!!.getDownloadUrl(result!!.avatar)
@@ -92,14 +86,6 @@ class BaseController {
 
                 sessionCommunity = result!!
             }
-
-//            //获取团体图标
-//            var avatar = commonService!!.getDownloadUrl(result!!.avatar)
-//            session.setAttribute("COMMUNITY_AVATAR", avatar)
-//
-//            //获取团体背景图片
-//            var background = commonService!!.getDownloadUrl(result!!.background)
-//            session.setAttribute("COMMUNITY_BACKGROUND", background)
 
             return result!!
         }

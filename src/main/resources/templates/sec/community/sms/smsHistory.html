@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 <body>
 <div th:replace="fragments/header :: default"></div>
@@ -37,7 +37,8 @@
             <div class="am-tab-panel am-fade am-in am-active">
 
                 <div class="am-g dis_line">
-                    <table class="am-table" id="bmTable" cellspacing="0" width="100%">
+                    <table class="am-table am-table-striped am-table-compact am-table-hover" id="bmTable"
+                           cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th>序号</th>
@@ -65,6 +66,6 @@
 </div>
 <div th:replace="fragments/footer :: default"></div>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript" src="/js/sec/community/sms/activitysms.js"></script>
+<script type="text/javascript" src="/js/sec/community/sms/smsHistory.js"></script>
 </body>
 </html>

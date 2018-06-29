@@ -57,8 +57,10 @@ $(function () {
                         },
                         format: {
                             body: function (data, row, column, node) {
-                                //身份证号格式化
-                                return column === 7 ? ("\u200C" + data) : data;
+                                if (data && data.length > 15) {
+                                    //身份证号格式化
+                                    return ("\u200C" + data)
+                                }
                             }
                         }
                     },
@@ -93,10 +95,8 @@ $(function () {
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "username"},
-                {"data": "displayname"},
-                {"data": "created"},
+                {"data": "displayname", "width:": "80px"},
                 {"data": "real_name", "width": "80px"},
-                {"data": "total_score", "width": "30px"},
                 {
                     "data": "gender", "defaultContent": "",
                     render: function (data, type, row) {
@@ -112,6 +112,7 @@ $(function () {
                     }
                 },
                 {"data": "id_card"},
+                {"data": "created"},
                 {
                     "data": "is_real", "defaultContent": "",
                     render: function (data, type, row) {
@@ -154,6 +155,7 @@ $(function () {
                 {"data": "emergency_contact_name"},
                 {"data": "emergency_contact_mobile"},
                 {"data": "wechat_id"},
+                {"data": "total_score", "width": "30px"}, //积分
                 {
                     "data": "action", "width": "100px", "defaultContent": "",
                     render: function (data, type, row) {
@@ -170,20 +172,11 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, -2, -1], visible: true},
                 {targets: '_all', visible: false}
-                // {
-                //     targets:[8],//身份证号的导出处理
-                //     render: function(data){
-                //         return "\u200C" + data ;
-                //     }
-                // },
-                /* {
-                     targets: [7,8,9,10,11,12,13,14,15,16,17,18,19,20], visible: false
-                 },*/
             ],
             //默认排序
-            "order": [[5, 'desc']],
+            "order": [[1, 'desc']],
             "autoWidth": false,
             "scrollX": true,
             // "scrollY": '50vh',

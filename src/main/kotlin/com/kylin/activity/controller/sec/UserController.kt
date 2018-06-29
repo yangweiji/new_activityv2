@@ -1,28 +1,20 @@
 package com.kylin.activity.controller.sec
 
-import com.fasterxml.jackson.module.kotlin.readValue
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.User
-import com.kylin.activity.service.ScoreService
 import com.kylin.activity.service.UserService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
-import org.jooq.Record
-import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletRequestAttributes
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.text.SimpleDateFormat
 import java.util.*
-
 import javax.servlet.http.HttpServletRequest
 
 /**
@@ -186,13 +178,8 @@ class UserController : BaseController() {
             end = sdf.format(calendar.time)
         }
 
-//        var username = request.getParameter("username")
-//        //所有用户
-//        var users = userService!!.getAllUsersAndScores(start, end, username)
-
         model.addAttribute("start", start)
         model.addAttribute("end", end)
-//        model.addAttribute("users", users)
         return "sec/admin/user/users"
     }
 
@@ -210,11 +197,9 @@ class UserController : BaseController() {
         var displayname = map["displayname"]
         var real_name = map["real_name"]
         var id_card = map["id_card"]
-        var level = map["level"]
-        var isMember = map["isMember"]
 
         //查询用户
-        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember)
+        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card)
         var list = items.intoMaps()
         return list
     }
