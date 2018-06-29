@@ -20,7 +20,7 @@
                             <span style="padding: 0px 5px" v-on:click="startUpdateDisplayname()"><i class="fa fa-pencil"></i></span>
                         </span>
                         <span v-if="isUpdateDisplayname">
-                            <input v-model="displayname" class="am-input" />
+                            <input v-model="displayname" class="am-form-field am-radius"/>
                             <button v-on:click="updateDisplayname()" class="am-btn am-btn-primary am-btn-xs">保存</button>
                             <button v-on:click="cancelUpdateDisplayname()" class="am-btn default am-btn-xs">取消</button>
                         </span>
@@ -73,8 +73,8 @@
                     <thead>
                     <tr>
                         <th>序号</th>
-                        <!--<th>ID</th>-->
-                        <th class="hd_table">活动标题</th>
+                        <!--<th>编号</th>-->
+                        <th>活动标题</th>
                         <th>票种</th>
                         <th>用户账号</th>
                         <!--<th>名称</th>-->
