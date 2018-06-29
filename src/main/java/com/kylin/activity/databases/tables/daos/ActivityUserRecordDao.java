@@ -6,14 +6,16 @@ package com.kylin.activity.databases.tables.daos;
 
 import com.kylin.activity.databases.tables.ActivityUserRecord;
 import com.kylin.activity.databases.tables.records.ActivityUserRecordRecord;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.Generated;
-import java.sql.Date;
-import java.util.List;
 
 
 /**
@@ -77,7 +79,7 @@ public class ActivityUserRecordDao extends DAOImpl<ActivityUserRecordRecord, com
     /**
      * Fetch records that have <code>record_time IN (values)</code>
      */
-    public List<com.kylin.activity.databases.tables.pojos.ActivityUserRecord> fetchByRecordTime(Date... values) {
+    public List<com.kylin.activity.databases.tables.pojos.ActivityUserRecord> fetchByRecordTime(Timestamp... values) {
         return fetch(ActivityUserRecord.ACTIVITY_USER_RECORD.RECORD_TIME, values);
     }
 

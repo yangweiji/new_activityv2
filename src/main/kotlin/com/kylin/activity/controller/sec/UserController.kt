@@ -212,9 +212,9 @@ class UserController : BaseController() {
         var id_card = map["id_card"]
         var level = map["level"]
         var isMember = map["isMember"]
-
+        var isBlack=map["isBlack"]
         //查询用户
-        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember)
+        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, level, isMember,isBlack)
         var list = items.intoMaps()
         return list
     }
@@ -316,4 +316,33 @@ class UserController : BaseController() {
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/admin/user/users"
     }
+
+
+    /**
+     * 移除黑名单
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/removeBlack", method = [RequestMethod.POST])
+    @ResponseBody
+    fun removeBlack(request: HttpServletRequest): Any? {
+        var userId = if (request.getParameter("userId") != null)
+            request.getParameter("userId").toInt() else 0
+        userService!!.removeBlack(userId)
+        return true
+    }
+
+
+    /**
+     * 加入黑名单
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/addBlack", method = [RequestMethod.POST])
+    @ResponseBody
+    fun addBlack(request: HttpServletRequest): Any? {
+        var userId = if (request.getParameter("userId") != null)
+            request.getParameter("userId").toInt() else 0
+        userService!!.addBlack(userId)
+        return true
+    }
+
 }

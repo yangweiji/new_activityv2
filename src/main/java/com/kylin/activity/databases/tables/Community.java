@@ -8,14 +8,23 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,7 +40,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = 1662561586;
+    private static final long serialVersionUID = -1672233774;
 
     /**
      * The reference instance of <code>activityv2.community</code>
@@ -82,9 +91,9 @@ public class Community extends TableImpl<CommunityRecord> {
     public final TableField<CommunityRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团小图标");
 
     /**
-     * The column <code>activityv2.community.is_vip</code>. 是否是会员
+     * The column <code>activityv2.community.is_vip</code>. 会员功能是否开启
      */
-    public final TableField<CommunityRecord, Boolean> IS_VIP = createField("is_vip", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "是否是会员");
+    public final TableField<CommunityRecord, Boolean> IS_VIP = createField("is_vip", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "会员功能是否开启");
 
     /**
      * The column <code>activityv2.community.vip_agreement</code>. 会员条款

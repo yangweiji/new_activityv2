@@ -84,6 +84,7 @@ $(function () {
                         displayname: $("#displayname").val().trim(),
                         real_name: $("#real_name").val().trim(),
                         id_card: $("#id_card").val().trim(),
+                        isBlack:$("#is_black").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -112,6 +113,15 @@ $(function () {
                     }
                 },
                 {"data": "id_card"},
+                {"data": "is_black","width":"50px","defaultContent": "",
+                    render:function (data,type,row) {
+                        if(data==true){
+                            return "黑名单";
+                        }else if(data==false){
+                            return "正常";
+                        }
+                    }
+                },
                 {
                     "data": "is_real", "defaultContent": "",
                     render: function (data, type, row) {
@@ -157,8 +167,10 @@ $(function () {
                 {
                     "data": "action", "width": "100px", "defaultContent": "",
                     render: function (data, type, row) {
-                        return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
-                            + '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
+                        return '<button id="btnEdit"  class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
+                            + '<button id="btnDelete" style="width: 42px"  class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
+                            + '<button id="removeBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="移除黑名单"><i class="am-icon-edit"></i></button>'
+                            + '<button id="addBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="加入黑名单"><i class="am-icon-trash-o"></i></button>'
                     }
                 },
             ],
@@ -170,7 +182,7 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1], visible: true},
                 {targets: '_all', visible: false}
                 // {
                 //     targets:[8],//身份证号的导出处理
@@ -223,6 +235,53 @@ $(function () {
             location.href = "/sec/admin/user/delete/" + data.id;
         }
     });
+
+
+    /**
+     * 移除黑名单
+     */
+    $("#bmTable tbody").on('click', 'button#removeBlack', function () {
+        var data = t.row($(this).parents('tr')).data();
+        if (window.confirm('确定移除黑名单吗？')) {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/admin/user/removeBlack',
+                data: {
+                    userId: data.id
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("操作成功！");
+                        location.reload()
+                    }
+                }
+            })
+        }
+    });
+
+    /**
+     * 加入黑名单
+     */
+    $("#bmTable tbody").on('click', 'button#addBlack', function () {
+        var data = t.row($(this).parents('tr')).data();
+        if (window.confirm('确定加入黑名单吗？')) {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/admin/user/addBlack',
+                data: {
+                    userId: data.id
+                },
+                success: function (data) {
+                    if (data) {
+                        alert("操作成功！");
+                        location.reload()
+                    }
+                }
+            })
+        }
+    })
 });
 
 new Vue({

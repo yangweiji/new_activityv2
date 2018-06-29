@@ -4,9 +4,10 @@
 package com.kylin.activity.databases.tables.pojos;
 
 
-import javax.annotation.Generated;
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
 
 
 /**
@@ -22,13 +23,13 @@ import java.sql.Date;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord implements Serializable {
 
-    private static final long serialVersionUID = -29851662;
+    private static final long serialVersionUID = -203499522;
 
-    private Integer id;
-    private Integer activityUserId;
-    private Date recordTime;
-    private String pictures;
-    private String notes;
+    private Integer   id;
+    private Integer   activityUserId;
+    private Timestamp recordTime;
+    private String    pictures;
+    private String    notes;
 
     public ActivityUserRecord() {}
 
@@ -41,11 +42,11 @@ public class ActivityUserRecord implements Serializable {
     }
 
     public ActivityUserRecord(
-            Integer id,
-            Integer activityUserId,
-            Date recordTime,
-            String pictures,
-            String notes
+        Integer   id,
+        Integer   activityUserId,
+        Timestamp recordTime,
+        String    pictures,
+        String    notes
     ) {
         this.id = id;
         this.activityUserId = activityUserId;
@@ -70,11 +71,11 @@ public class ActivityUserRecord implements Serializable {
         this.activityUserId = activityUserId;
     }
 
-    public Date getRecordTime() {
+    public Timestamp getRecordTime() {
         return this.recordTime;
     }
 
-    public void setRecordTime(Date recordTime) {
+    public void setRecordTime(Timestamp recordTime) {
         this.recordTime = recordTime;
     }
 
