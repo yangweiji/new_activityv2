@@ -78,7 +78,7 @@ class BaseController {
                         communityService!!.getCommunity(1)
                     }
                 } else {
-                    communityService!!.getCommunity(1)
+                    result = communityService!!.getCommunity(1)
                 }
 
                 result!!.avatar = commonService!!.getDownloadUrl(result!!.avatar)
