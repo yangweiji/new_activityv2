@@ -7,6 +7,7 @@ import com.kylin.activity.databases.tables.daos.ActivityTicketDao
 import com.kylin.activity.databases.tables.daos.PayOrderDao
 import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.ActivityUser
+import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.PayOrder
 import com.kylin.activity.util.KylinUtil
 import com.xiaoleilu.hutool.date.DateUtil
@@ -49,6 +50,12 @@ class PayService {
     @Autowired
     private val userDao: UserDao? = null
 
+
+    /**
+     * 团体用户服务
+     */
+    @Autowired
+    private val thirdUserService: ThirdUserService? = null
 
 
     /**
@@ -123,11 +130,7 @@ class PayService {
                 } else {
                     //升级VIP
                     var year = order.otherInfo.toInt()
-                    var user = userDao!!.fetchOneById(order.userId)
-                    if (user.level != year) {
-                        user.level = year
-                        userDao!!.update(user)
-                    }
+                    thirdUserService!!.updateVipYear(order.communityId, order.userId, year)
                 }
             }
         }
