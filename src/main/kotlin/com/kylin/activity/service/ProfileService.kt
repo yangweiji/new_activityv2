@@ -88,16 +88,34 @@ class ProfileService {
      * @param communityId 团体id
      */
     fun myActivities(type: Int?,userId:Int?,communityId: Int?): Result<Record> {
-        var activitySql = "select t1.id,t1.community_id,t1.end_time,t1.avatar,t1.start_time,t1.title,t2.attend_count,\n" +
-                            "t3.favorite_count from activity t1 left join \n" +
-                            "(select activity_user.activity_id,\n" +
-                            "ifnull(count(activity_user.id), 0) as attend_count,activity_user.user_id\n" +
-                            "from activity_user\n" +
-                            "group by activity_user.activity_id) t2 on t1.id=t2.activity_id\n" +
-                            "left join(select activity_favorite.activity_id, \n" +
-                            "ifnull(count(activity_favorite.id), 0) as favorite_count,activity_favorite.user_id\n" +
-                            "from activity_favorite\n" +
-                            "group by activity_favorite.activity_id ) t3 on t1.id=t3.activity_id"
+        var activitySql =   " select \n" +
+                            "t1.id, \n" +
+                            "t1.title,\n" +
+                            "t1.community_id,\n" +
+                            "t1.start_time, \n" +
+                            "t1.end_time,\n" +
+                            " t1.avatar, \n" +
+                            "  t1.activity_type,\n" +
+                            " t2.attend_count,\n" +
+                            " t3.favorite_count\n" +
+                            "from activity as t1\n" +
+                            "left  join (\n" +
+                            "select \n" +
+                            " activity_user.activity_id, activity_user.user_id,\n" +
+                            "ifnull(count(activity_user.id), 0) as attend_count\n" +
+                            "from activity_user where activity_user.user_id=?\n" +
+                            "group by activity_user.activity_id\n" +
+                            " ) as t2\n" +
+                            "on t1.id = t2.activity_id \n" +
+                            "left join(\n" +
+                            "select \n" +
+                            "activity_favorite.activity_id,activity_favorite.user_id,\n" +
+                            "ifnull(count(activity_favorite.id), 0) as favorite_count\n" +
+                            "from activity_favorite where activity_favorite.user_id=? \n" +
+                            "group by activity_favorite.activity_id\n"+
+                            ") as t3 on t1.id=t3.activity_id\n"+
+                            "where t1.public = true\n"+
+                            "order by t1.start_time desc"
         var sql = if (type == 1) {
             //已参加活动数
             "select t.* from ($activitySql) t inner join activity_user t4 " +
@@ -123,7 +141,7 @@ class ProfileService {
                     "and t4.user_id=?\n" +
                     "and t.community_id=?"
         }
-        return create!!.resultQuery(sql,userId,communityId).fetch()
+        return create!!.resultQuery(sql,userId,userId,userId,communityId).fetch()
 
     }
 }

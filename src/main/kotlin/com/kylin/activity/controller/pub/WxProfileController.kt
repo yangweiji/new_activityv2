@@ -56,7 +56,7 @@ class WxProfileController {
 
 
     /**
-     * 微信端个人信息页面初始化
+     * 小程序个人中心积分信息
      * @param userId 用户ID
      * @param communityId 团体ID
      */
@@ -135,22 +135,18 @@ class WxProfileController {
         for (activity in activitiesList) {
             var map = mutableMapOf<String, Any?>()
             var avatar: String? = null
-            var user_avatar: String? = null
             if (activity["avatar"] != null) {
                 avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
-            }
-            if (activity["user_avatar"] != null) {
-                user_avatar = commonService!!.getDownloadUrl(activity.get("user_avatar", String::class.java), "middle")
             }
             map["id"] = activity.get("id", Int::class.java)
             map["community_id"] = activity.get("community_id", Int::class.java)
             map["title"] = activity.get("title").toString()
             map["avatar"] = avatar
-            map["user_avatar"] = user_avatar
             map["start_time"] = util!!.fromNow(activity.get("start_time"))
-            map["end_time"] = util!!.fromNow(activity.get("end_time"))
+            map["activity_type"]=activity.get("activity_type",Int::class.java)
             map["attend_count"] = activity.get("attend_count", Int::class.java)
             map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+
             items.add(map)
         }
         return items

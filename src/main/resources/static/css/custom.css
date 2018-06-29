@@ -482,3 +482,28 @@ div.dataTables_wrapper div.dataTables_paginate {
     width: 218px;
     height: 123px;
 }
+
+/*横向Tab*/
+.am-tabs-d2 .am-tabs-nav a {
+    /*display:block;*/
+    width: 100%;
+    height: 45px;
+    text-align: center;
+    line-height: 45px;
+    font-size: 14px;
+    color: #444;
+    transform: scale(1);
+    transition: all 200ms ease 0s;
+}
+
+.am-tabs-d2 .am-tabs-nav a:hover {
+    font-size: 14px \9;
+    *font-size: 14px;
+    color: #ff5656;
+    transform: scale(1.2);
+    text-decoration: none;
+    -webkit-transform: scale(1.2);
+    -moz-transform: scale(1.2);
+    -o-transform: scale(1.2);
+    -ms-transform: scale(1.2);
+}

@@ -248,15 +248,16 @@ class ActivityController : BaseController() {
         val mapper = jacksonObjectMapper()
         for (item in items) {
             var map = item.intoMap()
-            var otherInfo = mapper.readValue<Map<String, String>>(map.get("other_info").toString())
-            for (info in otherInfo) {
-                var key = "报名：" + info.key
-                if (!attendColumns.contains(key)) {
-                    attendColumns.add(key)
+            if (map["other_info"] != null) {
+                var otherInfo = mapper.readValue<Map<String, String>>(map["other_info"].toString())
+                for (info in otherInfo) {
+                    var key = "报名：" + info.key
+                    if (!attendColumns.contains(key)) {
+                        attendColumns.add(key)
+                    }
+                    map[key] = info.value
                 }
-                map[key] = info.value
             }
-
             listItems.add(map)
         }
 
@@ -308,13 +309,15 @@ class ActivityController : BaseController() {
         val mapper = jacksonObjectMapper()
         for (item in items) {
             var map = item.intoMap()
-            var otherInfo = mapper.readValue<Map<String, String>>(map.get("other_info").toString())
-            for (info in otherInfo) {
-                var key = "报名：" + info.key
-                if (!attendColumns.contains(key)) {
-                    attendColumns.add(key)
+            if (map["other_info"] != null) {
+                var otherInfo = mapper.readValue<Map<String, String>>(map["other_info"].toString())
+                for (info in otherInfo) {
+                    var key = "报名：" + info.key
+                    if (!attendColumns.contains(key)) {
+                        attendColumns.add(key)
+                    }
+                    map[key] = info.value
                 }
-                map.put(key, info.value)
             }
 
             listItems.add(map)
@@ -363,13 +366,15 @@ class ActivityController : BaseController() {
         val mapper = jacksonObjectMapper()
         for (item in items) {
             var map = item.intoMap()
-            var otherInfo = mapper.readValue<Map<String, String>>(map.get("other_info").toString())
-            for (info in otherInfo) {
-                var key = "报名：" + info.key
-                if (!attendColumns.contains(key)) {
-                    attendColumns.add(key)
+            if (map["other_info"] != null) {
+                var otherInfo = mapper.readValue<Map<String, String>>(map["other_info"].toString())
+                for (info in otherInfo) {
+                    var key = "报名：" + info.key
+                    if (!attendColumns.contains(key)) {
+                        attendColumns.add(key)
+                    }
+                    map[key] = info.value
                 }
-                map.put(key, info.value)
             }
 
             listItems.add(map)
