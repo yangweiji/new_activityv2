@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <link rel="stylesheet" href="/asset/datetimepicker/css/amazeui.datetimepicker.css"/>
 <link rel="stylesheet" href="/asset/quill/quill.snow.css"/>
 <!--<script type="text/javascript" src="/asset/datetimepicker/js/amazeui.datetimepicker.min.js"></script>
@@ -49,20 +49,14 @@
                         </div>
 
                         <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">内容图片</label>
+                            <label class="am-u-sm-2 am-form-label">摘要图片</label>
                             <div class="am-u-sm-10">
-                                <input type="hidden" name="avatar" v-model="cacheData.article.avatar"/>
-                                <div class="c-avatar">
-                                    <img v-bind:src="getArticleAvatar()"/>
-                                    <span>
-                                <button id="c-upload-article-avatar"
-                                        class="am-btn am-btn-primary am-btn-xs">更新图片</button>
-                                <br/>
-                                <span class="c-avatar-tip">温馨提示：图片尺寸建议为：900*525，图片小于4M</span>
-                            </span>
-                                </div>
+                                <input-image-uploader v-model="cacheData.article.avatar"
+                                                      name-text="avatar"
+                                                      desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
                             </div>
                         </div>
+
                         <!-- <div class="am-form-group">
                              <div class="time" th:if="${articlesData.article.id !=null }">
                                  <label for="article_publishTime" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
@@ -89,7 +83,7 @@
                             </div>
                         </div>
                         <div class="am-form-group">
-                            <label for="article_body" class="am-u-sm-2 am-form-label">内容详情</label>
+                            <label for="c-article-body-text" class="am-u-sm-2 am-form-label">内容详情</label>
                             <div class="am-u-sm-10">
                                 <div id="c-upload-article-body-editor"></div>
                                 <input id="c-article-body-text" required="required" style="display: none;" type="text"
@@ -129,6 +123,7 @@
                                        placeholder="请输入发布单位名称"/>
                             </div>
                         </div>
+
                         <div class="am-form-group">
                             <div class="am-u-sm-10 am-u-sm-offset-2">
                                 <button class="am-btn am-btn-secondary" type="submit">发布</button>
@@ -147,18 +142,6 @@
 </div>
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-    #app .c-avatar img {
-        display: inline-block;
-        height: 123px;
-        min-width: 50px;
-        max-width: 500px;
-    }
-
-    #app .c-avatar .c-avatar-tip {
-        font-size: 12px;
-        color: gray;
-    }
-
     #app .c-datetimepicker {
         display: inline-block;
         width: 200px;
@@ -178,6 +161,7 @@
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
 <script type="text/javascript" src="/js/upload.js"></script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
 <script type="text/javascript" src="/js/sec/admin/article/pubarticle.js"></script>
 </body>
 </html>

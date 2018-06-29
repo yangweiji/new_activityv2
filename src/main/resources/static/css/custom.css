@@ -60,7 +60,7 @@
 .hd_list_right_tt {
     height: 42px;
     line-height: 42px;
-    margin: 15px 0 0 40px;
+    margin: 15px 0 0 10px;
     text-align: left;
     border-bottom: 1px solid #eeeeee;
     position: relative;
@@ -446,7 +446,39 @@
     border-top: 1px solid #ddd;
 }
 
+.am-divider-default {
+    margin-left: 10px;
+}
+
+.c-tip {
+    font-size: 12px;
+    color: gray;
+}
+
+/*表格样式*/
+.dataTables_length {
+    position: relative;
+    top: 10px;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+    position: relative;
+    top: 10px;
+}
 div.dataTables_wrapper div.dataTables_paginate {
     position: relative;
-    top: -60px;
+    top: -50px;
+}
+
+/*图片上传样式*/
+.c-image-tip {
+    font-size: 12px;
+    color: gray;
+}
+
+.c-image img {
+    display: inline-block;
+    height: 123px;
+    width: 218px;
+    height: 123px;
 }

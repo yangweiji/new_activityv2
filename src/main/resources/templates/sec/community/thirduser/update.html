@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -27,6 +27,7 @@
                             <div class="am-u-sm-10">
                                 <input disabled="disabled" id="username" type="text" name="username" th:value="${user.username}"
                                        placeholder="请输入手机号" class="am-form-field am-radius" required/>
+                                <span class="c-tip">温馨提示: 用户登录账号，新用户初始密码：123456</span>
                             </div>
                         </div>
                         <div class="am-form-group">
@@ -94,10 +95,11 @@
                         <div class="am-form-group">
                             <label for="role" class="am-u-sm-2 am-form-label">角色：</label>
                             <div class="am-u-sm-10">
-                                <select name="role" id="role" placeholder="请选择角色"  >
-                                    <option value="">--</option>
+                                <select name="role" id="role" placeholder="">
+                                    <option value="">--请选择--</option>
                                     <option th:selected="${user.role == item}" th:each="item : ${roles}" th:value="${item}" th:text="${item}"></option>
                                 </select>
+                                <span class="c-tip">温馨提示: 团体组织管理员及发布员可以对当前团体组织进行后台管理！</span>
                             </div>
                         </div>
 

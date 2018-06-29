@@ -7,31 +7,6 @@ new Vue({
     },
     mounted: function () {
         var that = this
-        //社团背景图片上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId: 'c-upload-community-background',
-            success: function (file) {
-                that.cacheData.community.background = file.randomName
-            }
-        })
-        //社团小图标上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId: 'c-upload-community-avatar',
-            success: function (file) {
-                that.cacheData.community.avatar = file.randomName
-            }
-        })
-
-        //营业执照上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId: 'c-upload-community-businessLicense',
-            success: function (file) {
-                that.cacheData.community.businessLicense = file.randomName
-            }
-        })
 
         //富文本控件
         var imageHandleCallback;
@@ -170,27 +145,8 @@ new Vue({
         })
     },
     methods: {
-        getCommunityBackground: function () {
-            if (this.cacheData.community.background)
-                return Util.file.downloadUrl(this.cacheData.community.background)
-            else
-                return "/img/community/activity-avatar.png"
-        },
-        getCommunityAvatar: function () {
-            if (this.cacheData.community.avatar)
-                return Util.file.downloadUrl(this.cacheData.community.avatar)
-            else
-                return "/img/community/activity-avatar.png"
-        },
-        getCommunityBusinessLicense: function () {
-            if (this.cacheData.community.businessLicense)
-                return Util.file.downloadUrl(this.cacheData.community.businessLicense)
-            else
-                return "/img/community/activity-avatar.png"
-        },
         selectVal: function (e) {
             console.log(e.target.value, this.cacheData.community.isVip);
-            // this.cacheData.community.isVip = e.target.value;
         }
     }
 })
