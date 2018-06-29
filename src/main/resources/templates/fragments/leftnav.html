@@ -19,44 +19,44 @@
         </li>
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
-        <li style="display:none" th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header':''">
-            <span class="fa fa-cog"></span>
-            <a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a>
-        </li>
+        <!--<li style="display:none" th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header':''">-->
+        <!--<span class="fa fa-cog"></span>-->
+        <!--<a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a>-->
+        <!--</li>-->
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/activity/activities'?'am-nav-header':''">
             <span class="fa fa-cog"></span>
-            <a class="hdgl" th:href="@{/sec/admin/activity/activities}"><b></b>活动管理</a>
+            <a class="hdgl" th:href="@{/sec/admin/activity/activities}"><b></b>活动赛事</a>
         </li>
-        <li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/attendusers'?'am-nav-header':''">
-            <span class="fa fa-pencil-square"></span>
-            <a class="bmgl" th:href="@{/sec/activity/attendusers}"><b></b>报名管理</a>
-        </li>
+        <!--<li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/attendusers'?'am-nav-header':''">-->
+        <!--<span class="fa fa-pencil-square"></span>-->
+        <!--<a class="bmgl" th:href="@{/sec/activity/attendusers}"><b></b>报名管理</a>-->
+        <!--</li>-->
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/user/users'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
             <span class="fa fa-user"></span>
-            <a class="yhgl" th:href="@{/sec/admin/user/users}"><b></b>用户管理</a>
+            <a class="yhgl" th:href="@{/sec/admin/user/users}"><b></b>平台用户</a>
         </li>
-        <li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/members'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
-            <span class="fa fa-user"></span>
-            <a class="hygl" th:href="@{/sec/user/members}"><b></b>会员管理</a>
-        </li>
+        <!--<li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/members'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">-->
+        <!--<span class="fa fa-user"></span>-->
+        <!--<a class="hygl" th:href="@{/sec/user/members}"><b></b>会员管理</a>-->
+        <!--</li>-->
         <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <li  th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/manage/scores'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
             <span class="fa fa-yen"></span>
-            <a class="jfgl" th:href="@{/sec/admin/manage/scores}"><b></b>积分管理</a>
+            <a class="jfgl" th:href="@{/sec/admin/manage/scores}"><b></b>用户积分</a>
         </li>
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <li  th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/manage/payments'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
             <span class="fa fa-file-text"></span>
-            <a class="ddgl" th:href="@{/sec/admin/manage/payments}"><b></b>订单管理</a>
+            <a class="ddgl" th:href="@{/sec/admin/manage/payments}"><b></b>用户订单</a>
         </li>
-        <li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/ordersstatistics'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
-            <span class="fa fa-line-chart"></span>
-            <a class="ddtj" th:href="@{/sec/manage/ordersstatistics}"><b></b>订单统计</a>
-        </li>
+        <!--<li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/ordersstatistics'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">-->
+        <!--<span class="fa fa-line-chart"></span>-->
+        <!--<a class="ddtj" th:href="@{/sec/manage/ordersstatistics}"><b></b>订单统计</a>-->
+        <!--</li>-->
 
     </ul>
 </div>

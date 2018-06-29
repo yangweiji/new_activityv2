@@ -81,7 +81,7 @@ $(function () {
                 {"data": "price"},
                 {"data": "pay_time"},
                 {"data": "body"},
-                {"data": "activity_title"},
+                {"data": "activity_title", width: "160px"},
                 {"data": "ticket_title"},
                 {"data": "status", defaultContent: "",
                     render: function (data, type, row) {
