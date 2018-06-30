@@ -4,33 +4,15 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.ActionHistory;
-import com.kylin.activity.databases.tables.Activity;
-import com.kylin.activity.databases.tables.ActivityFavorite;
-import com.kylin.activity.databases.tables.ActivityPhoto;
-import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-import com.kylin.activity.databases.tables.ActivitySms;
-import com.kylin.activity.databases.tables.ActivityTicket;
-import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.ActivityUserRecord;
-import com.kylin.activity.databases.tables.Article;
-import com.kylin.activity.databases.tables.Community;
-import com.kylin.activity.databases.tables.CommunityUser;
-import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.Poster;
-import com.kylin.activity.databases.tables.ScoreHistory;
-import com.kylin.activity.databases.tables.User;
-import com.kylin.activity.databases.tables.Vercode;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
+import com.kylin.activity.databases.tables.*;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+
+import javax.annotation.Generated;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -46,7 +28,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activityv2 extends SchemaImpl {
 
-    private static final long serialVersionUID = 2101538572;
+    private static final long serialVersionUID = -1545725860;
 
     /**
      * The reference instance of <code>activityv2</code>
@@ -119,7 +101,7 @@ public class Activityv2 extends SchemaImpl {
     public final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
 
     /**
-     * The table <code>activityv2.poster</code>.
+     * 海报表
      */
     public final Poster POSTER = com.kylin.activity.databases.tables.Poster.POSTER;
 

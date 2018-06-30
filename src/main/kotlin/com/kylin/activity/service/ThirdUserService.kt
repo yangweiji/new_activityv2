@@ -105,12 +105,12 @@ class ThirdUserService {
      * @param isMember: 是否会员
      * @return 用户列表信息
      */
-    fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?): Result<Record> {
-        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name from user t1 " +
+    fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?,is_black:String?): Result<Record> {
+        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name,t3.is_black from user t1 " +
                 "inner join community_user t3 on t1.id = t3.user_id " +
                 "left join (select user_id, sum(score) total_score from score_history group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
-                "where t3.community_id = ? {0} {1} {2} {3} {4} {5} {6} {7} "
+                "where t3.community_id = ? {0} {1} {2} {3} {4} {5} {6} {7} {8} "
         var strCondition = ""
         if (!username.isNullOrBlank()) {
             strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
@@ -151,6 +151,12 @@ class ThirdUserService {
             strCondition = "and t3.level > 0"
         }
         sql = sql.replace("{7}", strCondition)
+
+        //是否为黑名单
+        if(!is_black.isNullOrBlank()){
+            strCondition="and t3.is_black={8} ".replace("{8}",is_black!!)
+        }
+        sql=sql.replace("{8}",strCondition)
 
         return create!!.resultQuery(sql, communityId).fetch()
     }
@@ -305,4 +311,21 @@ class ThirdUserService {
         }
     }
 
+
+
+    /**
+     * 移除黑名单
+     */
+    fun removeBlack(id: Int): Record {
+        var sql = "update community_user set is_black=0 where user_id=? "
+        return create!!.resultQuery(sql, id).fetchOne()
+    }
+
+    /**
+     * 加入黑名单
+     */
+    fun addBlack(id:Int):Record{
+        var sql = "update community_user set is_black=1 where user_id=? "
+        return create!!.resultQuery(sql, id).fetchOne()
+    }
 }

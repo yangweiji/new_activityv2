@@ -543,3 +543,13 @@ ul.am-tabs-nav.am-cf.am_cf {border-radius: 2px;height: 40px;background: #e7e7e7;
     border:1px solid #ccc;
     background-color: white;
 }
+
+/*自定义样式*/
+.top-text {
+    display: inline-block;
+    line-height: 12px;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
