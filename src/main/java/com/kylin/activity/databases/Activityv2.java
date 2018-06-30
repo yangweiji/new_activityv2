@@ -46,7 +46,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activityv2 extends SchemaImpl {
 
-    private static final long serialVersionUID = 2101538572;
+    private static final long serialVersionUID = -1545725860;
 
     /**
      * The reference instance of <code>activityv2</code>
@@ -119,7 +119,7 @@ public class Activityv2 extends SchemaImpl {
     public final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
 
     /**
-     * The table <code>activityv2.poster</code>.
+     * 海报表
      */
     public final Poster POSTER = com.kylin.activity.databases.tables.Poster.POSTER;
 

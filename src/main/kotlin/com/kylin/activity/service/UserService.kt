@@ -197,7 +197,7 @@ class UserService {
                 "left join (select user_id, sum(score) total_score " +
                 "from score_history " +
                 "group by user_id) t2 " +
-                "on t1.id = t2.user_id "
+                "on t1.id = t2.user_id "+
         "where 1=1 {0} {1} {2} {3} {4} {5} "
         var strCondition = ""
         if (!username.isNullOrBlank())
