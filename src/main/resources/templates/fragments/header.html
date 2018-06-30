@@ -89,7 +89,7 @@
                         <li class="am-dropdown" data-am-dropdown="">
                             <a class="am-dropdown-toggle" data-am-dropdown-toggle="" href="javascript:;">
                                 <span class="fa fa-exchange"></span>
-                                <span th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>
+                                <span class="top-text" th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>
                                 <span class="am-icon-caret-down"></span>
                             </a>
 
@@ -122,7 +122,8 @@
                                     <!--<span th:inline="text">[[${session.SPRING_SECURITY_CONTEXT}]]</span>-->
                                     <!--<span th:inline="text">[[${session.USER_CONTEXT}]]</span>-->
                                     <span class="fa fa-user"></span>
-                                    <span th:inline="text">[[${session.USER_CONTEXT.displayname}]]</span>
+                                    <span class="top-text"
+                                          th:inline="text">[[${session.USER_CONTEXT.displayname}]]</span>
                                     <span class="am-icon-caret-down"></span>
                                 </a>
 
