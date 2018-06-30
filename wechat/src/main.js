@@ -24,6 +24,7 @@ export default {
             'pages/tool/tool',
             'pages/oneself/oneself',
             'pages/myvip/myvip',
+            'pages/agreement/agreement',
             'pages/details/details',
             'pages/articlelist/articlelist',
             'pages/article/article',
@@ -34,7 +35,8 @@ export default {
             'pages/photosdetails/photosdetails',
             'pages/myactivitys/myactivitys',
             'pages/integrals/integrals',
-            'pages/personalinformation/personalinformation',
+            'pages/userinfo/userinfo',
+            'pages/realinfo/realinfo',
             'pages/activityrecord/activityrecord',
             'pages/activityrecorditem/activityrecorditem'
         ],

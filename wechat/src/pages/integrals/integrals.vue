@@ -42,7 +42,7 @@ export default {
       };
       this.$kyutil.HttpRequest(
         true,
-        "/pub/wx/profile/getIntegral",
+        "/pub/wx/profile/scores",
         false,
         "",
         param,

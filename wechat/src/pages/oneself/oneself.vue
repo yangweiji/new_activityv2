@@ -17,10 +17,10 @@
         </div>
         <div class="wx_group_count">
           <div class="wx_attend_count" style="float:left;padding:22px">
-            <navigator url="/pages/myactivitys/myactivitys">
+            <navigator url="/pages/myactivitys/myactivitys?type=1">
               <dl>
                 <dt>
-              {{item.attend_user_count}}
+              {{item.activityCounts[0].counts}}
              </dt>
                 <dd>
                   已参与
@@ -29,10 +29,10 @@
             </navigator>
           </div>
           <div class="wx_no_check_count" style="float:left;padding:22px">
-            <navigator url="/pages/myactivitys/myactivitys">
+            <navigator url="/pages/myactivitys/myactivitys?type=2">
               <dl>
                 <dt>
-            {{item.ne_checked_count}}
+            {{item.activityCounts[1].counts}}
              </dt>
                 <dd>
                   需签到
@@ -41,10 +41,10 @@
             </navigator>
           </div>
           <div class="wx_check_count" style="float:left;padding:22px">
-            <navigator url="/pages/myactivitys/myactivitys">
+            <navigator url="/pages/myactivitys/myactivitys?type=3">
               <dl>
                 <dt>
-               {{item.checked_count}}
+               {{item.activityCounts[2].counts}}
              </dt>
                 <dd>
                   已签到
@@ -53,10 +53,10 @@
             </navigator>
           </div>
           <div class="wx_favorite_count" style="float:left;padding:22px">
-            <navigator url="/pages/myactivitys/myactivitys">
+            <navigator url="/pages/myactivitys/myactivitys?type=4">
               <dl>
                 <dt>
-                {{item.favorite_count}}
+                {{item.activityCounts[3].counts}}
              </dt>
                 <dd>
                   我喜欢
@@ -77,6 +77,15 @@
               <image style="height:200px; width:100%;" />
           </div> -->
         <div>
+          <navigator url="/pages/userinfo/userinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image src="/static/images/personal_information.png" style="width: 25px;height: 25px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>个人信息</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+          </navigator>
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
@@ -86,14 +95,15 @@
             </div>
             <div class="weui-cell_integral">{{item.score}}</div>
           </navigator>
-          <navigator url="/pages/personalinformation/personalinformation" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+          
+          <navigator url="/pages/realinfo/realinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
-              <image src="/static/images/personal_information.png" style="width: 25px;height: 25px;margin-right: 5px" />
+              <image src="/static/images/real_name.png" style="width: 25px;height: 25px;margin-right: 5px" />
             </div>
             <div class="weui-cell__bd weui-cell_primary">
-              <div>个人信息完善</div>
+              <div>实名认证</div>
             </div>
-            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+            <div class="weui-cell_comment">{{item.user.isReal!=true?"未认证":"已认证"}}</div>
           </navigator>
           <navigator url="/pages/myvip/myvip" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
@@ -105,24 +115,7 @@
             <div class="weui-cell_comment">{{vipText}}</div>
           </navigator>
           <!-- 如下为全局功能 -->
-          <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <div class="weui-cell__hd">
-              <image src="/static/images/real_name.png" style="width: 25px;height: 25px;margin-right: 5px" />
-            </div>
-            <div class="weui-cell__bd weui-cell_primary">
-              <div>实名认证</div>
-            </div>
-            <div class="weui-cell_comment">{{item.user.isReal!=true?"未认证":"已认证"}}</div>
-          </navigator>
-          <navigator url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <div class="weui-cell__hd">
-              <image src="/static/images/group_image.png" style="width: 25px;height: 22px;margin-right: 5px" />
-            </div>
-            <div class="weui-cell__bd weui-cell_primary">
-              <div>我参与的团体</div>
-            </div>
-            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
-          </navigator>
+          
         </div>
       </div>
     </div>
@@ -279,17 +272,17 @@
   .weui-cell_integral {
     height: 100%;
     width: 30px;
-    background-color: #f37b1d;
+    /* background-color: #1296db; */
     text-align: center;
-    color: #ffffff;
+    /* color: #ffffff; */
     border-radius: 50%;
   }
   .weui-cell_comment {
     height: 30%;
     width: 55px;
-    background-color: #f37b1d;
+    /* background-color: #1296db; */
     text-align: center;
-    color: #ffffff;
-    border-radius: 50%;
+    /* color: #ffffff; */
+    border-radius: 3px;
   }
 </style>

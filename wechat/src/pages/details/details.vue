@@ -116,6 +116,12 @@ export default {
     console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
     var that = this;
     that.activityId = this.$root.$mp.query.activityId;
+    if (this.$store.state.community) {
+      wx.setNavigationBarTitle({
+          title: this.$store.state.community.name
+        })
+    }
+    
     this.getData();
   },
   onShareAppMessage(res){

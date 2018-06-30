@@ -70,8 +70,6 @@ class PayService {
             var ticket = ticketDao!!.fetchOneById(order.activityTicketId)
             order.activityId = ticket.activityId
 //            order.price = ticket.price
-        } else {
-            order.price = BigDecimal(env!!.getProperty("vip.level1.price").toDouble())
         }
         order.created = start.toTimestamp()
         order.userId = user.id
