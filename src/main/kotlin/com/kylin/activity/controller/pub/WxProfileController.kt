@@ -166,7 +166,7 @@ class WxProfileController {
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
-        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+        result["vipYear"] =thirdUserService!!.getVipYear(communityId, userId)
         result["score"] = thirdScoreService!!.getUseableScore(userId, communityId)
         var personalInfoCounts=proFileService!!.getPersonalInfoCounts(userId, communityId)
         var counts= personalInfoCounts.intoMaps()
@@ -189,9 +189,18 @@ class WxProfileController {
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
-        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+        result["vipYear"] =thirdUserService!!.getVipYear(communityId, userId)
 
         return result
+    }
+
+    /**
+     * 更新vip年度信息
+     */
+    @GetMapping("/updatevip")
+    fun updateVipYear(@RequestParam(required = false) userId: Int,
+                      @RequestParam(required = false) communityId: Int, @RequestParam(required = false) year:Int){
+        thirdUserService!!.updateVipYear(communityId, userId, year)
     }
 
 }

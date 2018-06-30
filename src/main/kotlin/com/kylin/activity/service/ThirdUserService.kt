@@ -6,6 +6,7 @@ import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.AuthUser
+import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
@@ -268,10 +269,40 @@ class ThirdUserService {
     /**
      * 检查当前用户是否是团体的会员
      */
-    fun isVip(communityId: Int?, userId: Int?, year: Int): Boolean {
-        val sql = "select count(*) counts from community_user where user_id = ? and community_id = ? and level = ?"
-        val counts = create!!.fetchOne(sql, userId, communityId, year)
-        return counts != null && counts.get("counts", Int::class.java) > 0
+    fun isVip(communityId: Int, userId: Int, year: Int): Boolean {
+        var level = getVipYear(communityId, userId)
+        return level == year
+    }
+
+    /**
+     * 获取会员年度
+     */
+    fun getVipYear(communityId: Int, userId: Int): Int {
+        val sql = "select level from community_user where user_id = ? and community_id = ?"
+        val level = create!!.fetchOne(sql, userId, communityId)
+        return if(level == null) 0 else level.get("level", Int::class.java)
+    }
+
+    /**
+     * 更新VIP会员
+     */
+    fun updateVipYear(communityId: Int, userId: Int, year: Int){
+        var communityUser = getCommunityUser(communityId, userId)
+        if(communityUser == null){
+            communityUser = CommunityUser()
+            communityUser!!.userId = userId
+            communityUser!!.communityId = communityId
+            communityUser!!.created = DateUtil.date().toTimestamp()
+        }
+
+        if (communityUser!!.level != year) {
+            communityUser!!.level = year
+            if(communityUser!!.id != null && communityUser!!.id > 0) {
+                updateCommunityUser(communityUser)
+            } else {
+                insertCommunityUser(communityUser)
+            }
+        }
     }
 
 }
