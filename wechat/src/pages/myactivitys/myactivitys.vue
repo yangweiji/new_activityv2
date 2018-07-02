@@ -5,16 +5,7 @@
       <div class="userinfo-name" v-if="items && items.length == 0">还没有{{types[type]}}的活动</div>
     </div>
      <div class="weui-panel__bd">
-       <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" v-for="item in items" :key="item.id">
-          <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.avatar" />
-          </div>
-          <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-             <div class="weui-media-box__title">{{item.title}}</div>
-             <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-             <div class="weui-media-box__desc" style="float:right"> 喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
-          </div>
-       </div>
+       <activity :item="item" v-for="item in items" :key="item.id"></activity>
      </div>
             
    </div>           
@@ -27,6 +18,7 @@
 import base64 from "../../../static/images/base64";
 import global from '../../global/index';
 import wxParse from 'mpvue-wxparse'
+import activity from '@/components/activity.vue'
 export default {
   data() {
     return {
@@ -45,7 +37,8 @@ export default {
   computed: {
   },
   components: {
-    wxParse
+    wxParse,
+    activity
   },
   methods: {
     //取得文章信息

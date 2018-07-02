@@ -9,8 +9,11 @@
           </div>
         </div>
       </div>
-      <div v-if="!disabled" class="weui-uploader__input-box">
-        <div class="weui-uploader__input" @click="chooseImage"></div>
+      <div v-if="!disabled" :class="{'loading': loadings > 0, 'weui-uploader__input-box': loadings == 0}">
+        <div v-if="loadings == 0" class="weui-uploader__input" @click="chooseImage"></div>
+        <div v-if="loadings > 0" class="weui-uploader__file-content">
+          <div class="weui-loading"></div>
+        </div>
       </div>
     </div>
   </div>
@@ -29,7 +32,8 @@
     data() {
       return {
         ossInfo: null,
-        version:0
+        version:0,
+        loadings:0
       }
     },
     created(){
@@ -53,7 +57,7 @@
       chooseImage(e) {
         let that = this;
         wx.chooseImage({
-          count: 1, // 默认9
+          count: 9, // 默认9
           sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
           sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
           success: function(res) {
@@ -92,6 +96,7 @@
         }
         var startUpload = function(uploadFilePath) {
           var fileName = random_string(10) + get_suffix(uploadFilePath)
+          that.loadings++
           wx.uploadFile({
             url: "https://fs.9kylin.cn",
             filePath: uploadFilePath,
@@ -107,6 +112,12 @@
               var files = that.files
               files.push(fileName)
               that.updateValue(files)
+              that.loadings--
+              that.$emit('loading', that.loadings)
+            },
+            fail(){
+              that.loadings--
+              that.$emit('loading', that.loadings)
             }
           })
         }
@@ -178,5 +189,16 @@ min-height:84px;
     left: 50%;
     transform: translate(-50%, -50%);
     background: #fff;
+  }
+
+  .loading{
+    background-color: rgba(0, 0, 0, 0.5);
+    float: left;
+    position: relative;
+    margin-right: 9px;
+    margin-bottom: 9px;
+    width: 77px;
+    height: 77px;
+    border: 1px solid #d9d9d9;
   }
 </style>

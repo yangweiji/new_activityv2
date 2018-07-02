@@ -17,7 +17,7 @@ export default {
     type: {
       type: String,
       default: ''
-    },
+    }
   },
   computed:{
     url(){

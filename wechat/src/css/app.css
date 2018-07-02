@@ -200,13 +200,6 @@ page {
     font-size: 18px;
 }
 
-.c-custom-calendar .dot {
-    width: 40px;
-    height: 40px;
-    margin-top: -40px;
-    background-color: #F37B1D;
-}
-
 
 /* weui override */
 

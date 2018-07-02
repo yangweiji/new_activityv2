@@ -1,16 +1,8 @@
 <template>
-  <div class="page">
+  <div class="page c-activity-record">
     <div v-if="item" class="page__bd">
-      <div @click="checkdetails(item.activity.id)" class="weui-media-box weui-media-box_appmsg c-border-bottom" hover-class="weui-cell_active">
-        <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-          <image class="weui-media-box__thumb" :src="item.activity.avatar" />
-        </div>
-        <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-          <div class="weui-media-box__title">{{item.activity.title}}</div>
-          <div class="weui-media-box__desc" style="float:left">{{item.activity.start_time}}</div>
-          <div class="weui-media-box__desc" style="float:right">喜欢：{{item.activity.favorite_count}} 报名：{{item.activity.attend_count}}</div>
-        </div>
-      </div>
+      <activity :item="item.activity" ></activity>
+      
       <div class="weui-tab">
         <div class="weui-navbar" style="top:auto;">
           <block v-for="(tab,index) in tabs" :key="index">
@@ -22,15 +14,15 @@
         </div>
         <div class="weui-tab__panel">
           <div class="weui-tab__content c-custom-calendar" :hidden="activeTab.id != 1">
-            <Calendar :months="calendar.months" :begin="calendar.begin" :end="calendar.end" :value="calendar.value" @next="next" @prev="prev" :events="events" clean="true" @select="select" ref="calendar" @selectMonth="selectMonth" @selectYear="selectYear" />
+            <Calendar :no-selected="true" :months="calendar.months" :begin="calendar.begin" :end="calendar.end" :value="calendar.value" @next="next" @prev="prev" :events="events" clean="true" @select="select" ref="calendar" @selectMonth="selectMonth" @selectYear="selectYear" />
           </div>
           <div class="weui-tab__content" :hidden="activeTab.id != 2">
             <div class="calendar-tools">
               <label class="calendar-prev" @click="bindDatePrev()">
-                <image class="_img" src="/copy-asset/node_modules/mpvue-calendar/src/arrow-left.png" />
+                <image class="_img" src="/copy-asset/components/calendar/arrow-left.png" />
               </label>
               <label class="calendar-next" @click="bindDateNext()">
-                <image class="_img" src="/copy-asset/node_modules/mpvue-calendar/src/arrow-right.png" />
+                <image class="_img" src="/copy-asset/components/calendar/arrow-right.png" />
               </label>
               <div class="calendar-info">
                 <picker mode="date" :value="currentDate" :start="calendar.startTime" :end="calendar.endTime" @change="bindDateChange">
@@ -74,12 +66,14 @@
 
 <script>
   import Vue from 'vue'
-  import Calendar from 'mpvue-calendar'
+  import Calendar from '@/components/calendar/mpvue-calendar.vue'
   import kyimage from '@/components/kyimage.vue'
+  import activity from '@/components/activity.vue'
   export default {
     components: {
       Calendar,
-      kyimage
+      kyimage,
+      activity
     },
     data() {
       return {
@@ -246,12 +240,6 @@
         var realDate = this.$kyutil.date.anyToDate(date) 
         return [realDate.getFullYear(), realDate.getMonth() + 1, realDate.getDate()]
       },
-      checkdetails() {
-        var that = this;
-        wx.navigateTo({
-          url: "../../pages/details/details?activityId=" + that.activityId
-        });
-      },
       gotoAttend() {
         var that = this;
         wx.navigateTo({
@@ -318,24 +306,28 @@
 </script>
 
 <style>
-  .c-checkin-num {
-    font-weight: bold;
-    font-size: 35px;
-    margin: 30px;
-  }
-  .weui-navbar__slider_0 {
+  .c-activity-record .weui-navbar__slider_0 {
     width:40%;
     left: 0px;
     transform: translateX(35rpx);
   }
-  .weui-navbar__slider_1 {
+  .c-activity-record .weui-navbar__slider_1 {
     width:40%;
     left: 35rpx;
     transform: translateX(400rpx);
   }
-   .c-custom-calendar .calendar ._td.selected ._span{
-    background-color:transparent;
-    color: black;
+
+  .c-activity-record .c-custom-calendar .calendar td.has-event span{
+    background-color: #F37B1D;
+    color: #fff;
   }
-  
+
+  .c-activity-record .c-custom-calendar .calendar ._td.has-event:not(.selected) ._span:not(.red):hover{
+    background-color: #F37B1D;
+    color: #fff;
+  }
+
+  .c-activity-record .c-custom-calendar .dot {
+    display: none;
+}
 </style>
