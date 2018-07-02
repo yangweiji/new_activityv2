@@ -1,8 +1,8 @@
 new Vue({
-    el: "#c_sec_community_add_app",
+    el: "#app",
     data: function () {
         return {
-            cacheData: _global_data
+            community: _global_data
         }
     },
     mounted: function () {
@@ -66,8 +66,8 @@ new Vue({
         })
 
 
-        if (that.cacheData.community.about) {
-            quill.clipboard.dangerouslyPasteHTML(that.cacheData.community.about)
+        if (that.community.about) {
+            quill.clipboard.dangerouslyPasteHTML(that.community.about)
         }
 
         quill.on('editor-change', function (eventName) {
@@ -80,7 +80,7 @@ new Vue({
 
             var bodyInput = $('#c-community-about-text')
             bodyInput.val(quill.getText())
-            that.cacheData.community.about = quill.getHtml()
+            that.community.about = quill.getHtml()
             bodyInput.trigger('change')
         })
 
@@ -109,8 +109,8 @@ new Vue({
         })
 
 
-        if (that.cacheData.community.vipAgreement) {
-            quillVip.clipboard.dangerouslyPasteHTML(that.cacheData.community.vipAgreement)
+        if (that.community.vipAgreement) {
+            quillVip.clipboard.dangerouslyPasteHTML(that.community.vipAgreement)
         }
 
         quillVip.on('editor-change', function (eventName) {
@@ -122,31 +122,31 @@ new Vue({
 
             var bodyInput = $('#c-community-vip-text')
             bodyInput.val(quillVip.getText())
-            that.cacheData.community.vipAgreement = quillVip.getHtml()
+            that.community.vipAgreement = quillVip.getHtml()
             bodyInput.trigger('change')
         })
 
 
         $('#c-community-add-form').validator({}).submit(function () {
 
-            $('input[name=json_data]').val(JSON.stringify(that.cacheData.community.about))
-            $('input[name=json_data]').val(JSON.stringify(that.cacheData.community.vipAgreement))
+            $('input[name=json_data]').val(JSON.stringify(that.community.about))
+            $('input[name=json_data]').val(JSON.stringify(that.community.vipAgreement))
             return true;
         });
 
         $(window).on("upload", function () {
-            var about = that.cacheData.community.about
-            that.cacheData.community.about = null
-            Util.storageGet(JSON.stringify(that.cacheData.community.about))
+            var about = that.community.about
+            that.community.about = null
+            Util.storageGet(JSON.stringify(that.community.about))
 
-            var vipAgreement = that.cacheData.community.vipAgreement
-            that.cacheData.community.vipAgreement = null
-            Util.storageGet(JSON.stringify(that.cacheData.community.vipAgreement))
+            var vipAgreement = that.community.vipAgreement
+            that.community.vipAgreement = null
+            Util.storageGet(JSON.stringify(that.community.vipAgreement))
         })
     },
     methods: {
         selectVal: function (e) {
-            console.log(e.target.value, this.cacheData.community.isVip);
+            console.log(e.target.value, this.community.isVip);
         }
     }
 })

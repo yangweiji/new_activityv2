@@ -63,6 +63,7 @@ class PosterController {
             poster = Poster()
             poster.show = true
             poster.posterType = "n1"
+            poster.created = DateUtil.date().toTimestamp()
         }
         model.addAttribute("poster", poster)
         return "sec/admin/poster/poster"

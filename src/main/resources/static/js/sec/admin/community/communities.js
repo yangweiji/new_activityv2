@@ -123,7 +123,7 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 8, -1], visible: true},
                 {targets: "_all", visible: false}
             ],
             //默认排序

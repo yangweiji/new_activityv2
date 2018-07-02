@@ -139,6 +139,16 @@ class ArticleService {
      * @param article 文章
      */
     @CacheEvict(allEntries = true)
+    fun update(article: Article) {
+        articleDao!!.update(article)
+    }
+
+
+    /**
+     * 更新内容
+     * @param article 文章
+     */
+    @CacheEvict(allEntries = true)
     fun updateArticle(title: String,summary:String,avatar:String,unit:String,body:String,status:Int,
                       modified:Timestamp,modified_by:Int,pulishTime:Timestamp,category: Int,id:Int?):Any {
         var sql="update article set title=?,summary=?,avatar=?,unit=?, " +

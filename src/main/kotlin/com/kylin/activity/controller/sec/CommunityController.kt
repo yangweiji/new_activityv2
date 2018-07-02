@@ -5,7 +5,8 @@ import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
-import com.kylin.activity.service.*
+import com.kylin.activity.service.CommunityService
+import com.kylin.activity.service.UserService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,21 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpServletRequest
 
 /**
- * 团体数据类
- */
-data class CommunitiesData(
-        var community: Community? = null,
-        var user: User? = null
-)
-
-
-/**
  * 团体组织控制器
  * @author weiji.yang
  */
 @Controller
 @RequestMapping("sec/admin/community")
-@SessionAttributes("user")
 class CommunityController : BaseController() {
 
     /**
@@ -59,9 +50,6 @@ class CommunityController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/communities", method = [RequestMethod.GET, RequestMethod.POST])
     fun afterCommunity(model: Model, request: HttpServletRequest): String {
-        var user = this.sessionUser
-        model.addAttribute("user", user)
-
         return "sec/admin/community/communities"
     }
 
@@ -87,13 +75,14 @@ class CommunityController : BaseController() {
     fun community(@RequestParam(required = false) id: Int?
                   , model: Model
                   , @ModelAttribute("community") community: Community): String {
-        var communitiesData = CommunitiesData()
+        var community: Community
         if (id != null && id > 0) {
-            communitiesData.community = communityService!!.getCommunity(id)
+            community = communityService!!.getCommunity(id)
         } else {
-            communitiesData.community = Community()
+            community = Community()
+            community.created = DateUtil.date().toTimestamp()
         }
-        model.addAttribute("communitiesData", communitiesData)
+        model.addAttribute("community", community)
 
         return "sec/admin/community/community"
     }
@@ -105,11 +94,10 @@ class CommunityController : BaseController() {
      */
     @PostMapping("/saveCommunity")
     @Transactional
-    fun saveCommunity(@ModelAttribute("community") community: Community,
-                      @ModelAttribute("user") user: User
+    fun saveCommunity(@ModelAttribute("community") community: Community
                       , model: Model
                       , redirectAttributes: RedirectAttributes): String {
-
+        var user = this.sessionUser
         var code = BCryptPasswordEncoder()
         if (community.id != null && community.id > 0) {
             //团体组织已存在，编辑团体组织信息
@@ -192,7 +180,6 @@ class CommunityController : BaseController() {
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/admin/community/communities"
     }
-
 
     /**
      * 删除团体信息

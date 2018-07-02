@@ -110,7 +110,7 @@ $(function () {
                 {"data": "avatar"},
                 {"data": "mobile_avatar"},
                 {
-                    "data": "action", "width": "180px", defaultContent: "",
+                    "data": "action", "width": "120px", defaultContent: "",
                     render: function (data, type, row) {
                         if (row.show == true) {
                             return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'

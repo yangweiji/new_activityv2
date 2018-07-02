@@ -1,9 +1,7 @@
 package com.kylin.activity.service
 
 import com.kylin.activity.databases.Tables
-import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.PosterDao
-import com.kylin.activity.databases.tables.pojos.Activity
 import com.kylin.activity.databases.tables.pojos.Poster
 import org.jooq.DSLContext
 import org.jooq.Record
@@ -28,9 +26,6 @@ class PosterService {
      */
     @Autowired
     private val posterDao: PosterDao? = null
-
-    @Autowired
-    private val activityDao: ActivityDao? = null
 
     /**
      * 数据访问
@@ -120,18 +115,6 @@ class PosterService {
     fun getPosterTitle(title: String): Poster? {
         return posterDao!!.fetchOne(Tables.POSTER.TITLE, title)
     }
-
-
-    /**
-     * 根据活动id取得单个活动信息
-     * @param activityId 活动id
-     */
-    fun getActivity(activityId: Int?): Activity?{
-        var list=activityDao!!.fetchById(activityId)
-        return if(list!=null&&list.size>0) list.first() else null
-
-    }
-
 
     /**
      * 删除海报信息

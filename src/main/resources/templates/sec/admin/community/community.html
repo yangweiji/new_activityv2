@@ -11,17 +11,20 @@
         charset="UTF-8"></script>
 <script type="text/javascript" src="/asset/quill/quill.min.js" charset="UTF-8"></script>
 <div th:replace="fragments/header :: default"></div>
-<div id="c_sec_community_add_app">
-    <div class="amz-container">
-        <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
-            action="/sec/admin/community/saveCommunity">
-            <input type="hidden" id="id"
-                   name="id" v-model="cacheData.community.id"/>
+<div id="app">
+    <div class="manage-l">
+        <div th:replace="fragments/leftnav :: default"></div>
+    </div>
 
-            <fieldset>
+    <div class="manage-r">
+        <div class="hd_list_right_tt">
+            <div class="l"><strong>团体管理</strong></div>
+            <div class="vip_adv"></div>
 
-                <legend>团体管理</legend>
+        </div>
 
+        <div class="am-tabs-bd am_bdfw">
+            <div class="am-g">
                 <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
                     <button type="button" class="am-close">&times;</button>
                     <p>
@@ -29,215 +32,188 @@
                         <span th:text="${errorMessage}">Some Error message</span>
                     </p>
                 </div>
+            </div>
 
-                <div class="am-form-group">
-                    <label for="community_name" class="am-u-sm-2 am-form-label">团体名称</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="text" id="community_name"
-                               name="name" th:placeholder="请输入团体名称" v-model="cacheData.community.name"/>
-                    </div>
-                </div>
+            <div class="am-g">
+                <div class="am-u-lg-12">
+                    <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
+                          action="/sec/admin/community/saveCommunity">
+                        <input type="hidden" id="id"
+                               name="id" th:value="${community.id}"/>
+                        <input type="hidden" id="created"
+                               name="created" th:value="${community.created}"/>
+                        <input type="hidden" id="createdBy"
+                               name="createdBy" th:value="${community.createdBy}"/>
 
-                <div class="am-form-group">
-                    <label for="community_description" class="am-u-sm-2 am-form-label">标语</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="text" id="community_description"
-                               name="description" th:placeholder="请输入标语" v-model="cacheData.community.description"/>
-                    </div>
-                </div>
-                <div class="am-form-group">
-                    <label for="community_address" class="am-u-sm-2 am-form-label">地址</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="text" id="community_address"
-                               name="address" th:placeholder="请输入地址" v-model="cacheData.community.address"/>
-                    </div>
-                </div>
-                <div class="am-form-group">
-                    <label for="community_contact" class="am-u-sm-2 am-form-label">联系电话</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="text" id="community_contact"
-                               name="contact" th:placeholder="请输入联系电话" v-model="cacheData.community.contact"/>
-                    </div>
-                </div>
-                <div class="am-form-group">
-                    <label for="community_company" class="am-u-sm-2 am-form-label">公司名称</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="text" id="community_company"
-                               name="company" th:placeholder="请输入公司名称" v-model="cacheData.community.company"/>
-                    </div>
-                </div>
-
-                <!--负责人名称-->
-                <div class="am-form-group">
-                    <label for="community_controlName" class="am-u-sm-2 am-form-label">负责人名称</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="text" id="community_controlName"
-                               name="controlName" th:placeholder="请输入负责人名称"
-                               v-model="cacheData.community.controlName"/>
-                    </div>
-                </div>
-
-
-                <!--管理员联系电话-->
-                <div class="am-form-group">
-                    <label for="community_managerPhoneNumber" class="am-u-sm-2 am-form-label">管理员手机号码</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="tel" id="community_managerPhoneNumber"
-                               name="managerPhoneNumber" th:placeholder="请输入管理员手机号码"
-                               v-model="cacheData.community.managerPhoneNumber"/>
-                        <span class="c-avatar-tip">温馨提示：团体管理员使用此手机号码登录平台，初始密码为123456</span>
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label for="community_countPeople" class="am-u-sm-2 am-form-label">规模人数</label>
-                    <div class="am-u-sm-10">
-                        <input required="required" type="number" id="community_countPeople"
-                               name="countPeople" th:placeholder="请输入规模人数" v-model="cacheData.community.countPeople"/>
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label">营业执照</label>
-                    <div class="am-u-sm-10">
-                        <input-image-uploader v-model="cacheData.community.businessLicense"
-                                              name-text="businessLicense"
-                                              desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label">背景图片</label>
-                    <div class="am-u-sm-10">
-                        <input-image-uploader v-model="cacheData.community.background"
-                                              name-text="background"
-                                              desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label">图标</label>
-                    <div class="am-u-sm-10">
-                        <input-image-uploader v-model="cacheData.community.avatar"
-                                              name-text="avatar"
-                                              desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
-                    </div>
-                </div>
-
-
-                <div class="am-form-group">
-                    <label for="c-community-about-text" class="am-u-sm-2 am-form-label">团体介绍</label>
-                    <div class="am-u-sm-10">
-                        <div id="c-upload-community-about-editor"></div>
-                        <input id="c-community-about-text" required="required"
-                               style="display: none;" type="text" name="about" v-model="cacheData.community.about"/>
-                        <div id="c-community-about-editor">
+                        <div class="am-form-group">
+                            <label for="name" class="am-u-sm-2 am-form-label">团体名称</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="name"
+                                       name="name" th:placeholder="请输入团体名称" th:value="${community.name}"/>
+                            </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label">启动积分</label>
-                    <div class="am-u-sm-10">
-                        <label class="am-radio-inline">
-                            <input type="checkbox" id="usingScore"
-                                   name="usingScore" v-model="cacheData.community.usingScore">
-                        </label>
-                        <!--<label class="am-radio-inline">-->
-                        <!--<input type="radio" name="usingScore"-->
-                        <!--v-model="cacheData.community.usingScore" th:value=true> 是-->
-                        <!--</label>-->
-                        <!--<label class="am-radio-inline">-->
-                        <!--<input type="radio" name="usingScore"-->
-                        <!--v-model="cacheData.community.usingScore" th:value=false> 否-->
-                        <!--</label>-->
-                        <br>
-                        <span class="c-avatar-tip">温馨提示：启用积分后，发布活动时，可进行积分奖励设置；用户报名时，可使用积分抵扣；换算：1积分=1元（人民币）</span>
-                    </div>
-                </div>
-
-                <div class="am-form-group">
-                    <label class="am-u-sm-2 am-form-label">启动会员</label>
-                    <div class="am-u-sm-10">
-                        <label class="am-radio-inline">
-                            <input type="checkbox" id="isVip"
-                                   name="isVip" v-model="cacheData.community.isVip">
-                        </label>
-                        <!--<label class="am-radio-inline">-->
-                        <!--<input type="radio" name="isVip" v-on:click="selectVal"-->
-                        <!--v-model="cacheData.community.isVip" th:value=true> 是-->
-                        <!--</label>-->
-                        <!--<label class="am-radio-inline">-->
-                        <!--<input type="radio" name="isVip" v-on:click="selectVal"-->
-                        <!--v-model="cacheData.community.isVip" th:value=false> 否-->
-                        <!--</label>-->
-                        <br>
-                        <span class="c-avatar-tip">温馨提示：启用会员后，发布活动时，可进行会员票种及会员积分奖励设置；</span>
-                    </div>
-                </div>
-
-                <div class="am-form-group" v-show="cacheData.community.isVip===true">
-                    <label class="am-u-sm-2 am-form-label">会费</label>
-                    <div class="am-u-sm-10">
-                        <input type="number" id="vipAmount" th:required="${communitiesData.community.isVip==true}"
-                               name="vipAmount" th:placeholder="请输入会费金额"
-                               v-model="cacheData.community.vipAmount"/>
-                        <span class="c-avatar-tip">温馨提示：按自然年缴纳会费！</span>
-                    </div>
-                </div>
-                <div class="am-form-group" v-show="cacheData.community.isVip===true">
-                    <label class="am-u-sm-2 am-form-label">会员条款</label>
-                    <div class="am-u-sm-10">
-                        <div id="c-upload-community-vip-editor"></div>
-                        <input id="c-community-vip-text" th:required="${communitiesData.community.isVip==true}"
-                               style="display: none;" type="text" name="vipAgreement" v-model="cacheData.community.vipAgreement"/>
-                        <div id="c-community-vip-editor">
+                        <div class="am-form-group">
+                            <label for="description" class="am-u-sm-2 am-form-label">标语</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="description"
+                                       name="description" th:placeholder="请输入标语" th:value="${community.description}"/>
+                            </div>
                         </div>
-                    </div>
+                        <div class="am-form-group">
+                            <label for="address" class="am-u-sm-2 am-form-label">地址</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="address"
+                                       name="address" th:placeholder="请输入地址" th:value="${community.address}"/>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="contact" class="am-u-sm-2 am-form-label">联系电话</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="contact"
+                                       name="contact" th:placeholder="请输入联系电话" th:value="${community.contact}"/>
+                            </div>
+                        </div>
+                        <div class="am-form-group">
+                            <label for="company" class="am-u-sm-2 am-form-label">公司名称</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="company"
+                                       name="company" th:placeholder="请输入公司名称" th:value="${community.company}"/>
+                            </div>
+                        </div>
+
+                        <!--负责人名称-->
+                        <div class="am-form-group">
+                            <label for="controlName" class="am-u-sm-2 am-form-label">负责人名称</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="text" id="controlName"
+                                       name="controlName" th:placeholder="请输入负责人名称"
+                                       th:value="${community.controlName}"/>
+                            </div>
+                        </div>
+
+
+                        <!--管理员联系电话-->
+                        <div class="am-form-group">
+                            <label for="managerPhoneNumber" class="am-u-sm-2 am-form-label">管理员手机号码</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="tel" id="managerPhoneNumber"
+                                       name="managerPhoneNumber" th:placeholder="请输入管理员手机号码"
+                                       th:value="${community.managerPhoneNumber}"/>
+                                <span class="c-avatar-tip">温馨提示：团体管理员使用此手机号码登录平台，初始密码为123456</span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="countPeople" class="am-u-sm-2 am-form-label">规模人数</label>
+                            <div class="am-u-sm-10">
+                                <input required="required" type="number" id="countPeople"
+                                       name="countPeople" th:placeholder="请输入规模人数" th:value="${community.countPeople}"/>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">营业执照</label>
+                            <div class="am-u-sm-10">
+                                <input-image-uploader v-model="community.businessLicense"
+                                                      name-text="businessLicense"
+                                                      desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">背景图片</label>
+                            <div class="am-u-sm-10">
+                                <input-image-uploader v-model="community.background"
+                                                      name-text="background"
+                                                      desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">图标</label>
+                            <div class="am-u-sm-10">
+                                <input-image-uploader v-model="community.avatar"
+                                                      name-text="avatar"
+                                                      desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label for="c-community-about-text" class="am-u-sm-2 am-form-label">团体介绍</label>
+                            <div class="am-u-sm-10">
+                                <div id="c-upload-community-about-editor"></div>
+                                <input id="c-community-about-text" required="required"
+                                       style="display: none;" type="text" name="about" v-model="community.about"/>
+                                <div id="c-community-about-editor">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">启动积分</label>
+                            <div class="am-u-sm-10">
+                                <label class="am-radio-inline">
+                                    <input type="checkbox" id="usingScore"
+                                           name="usingScore" v-model="community.usingScore">
+                                </label>
+                                <br>
+                                <span class="c-avatar-tip">温馨提示：启用积分后，发布活动时，可进行积分奖励设置；用户报名时，可使用积分抵扣；换算：1积分=1元（人民币）</span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">启动会员</label>
+                            <div class="am-u-sm-10">
+                                <label class="am-radio-inline">
+                                    <input type="checkbox" id="isVip"
+                                           name="isVip" v-model="community.isVip">
+                                </label>
+                                <br>
+                                <span class="c-avatar-tip">温馨提示：启用会员后，发布活动时，可进行会员票种及会员积分奖励设置；</span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group" v-show="community.isVip===true">
+                            <label class="am-u-sm-2 am-form-label">会费</label>
+                            <div class="am-u-sm-10">
+                                <input type="number" id="vipAmount" th:required="${community.isVip==true}"
+                                       name="vipAmount" th:placeholder="请输入会费金额"
+                                       th:value="${community.vipAmount}"/>
+                                <span class="c-avatar-tip">温馨提示：按自然年缴纳会费！</span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group" v-show="community.isVip===true">
+                            <label class="am-u-sm-2 am-form-label">会员条款</label>
+                            <div class="am-u-sm-10">
+                                <div id="c-upload-community-vip-editor"></div>
+                                <input id="c-community-vip-text" th:required="${community.isVip==true}"
+                                       style="display: none;" type="text" name="vipAgreement"
+                                       v-model="community.vipAgreement"/>
+                                <div id="c-community-vip-editor">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-10 am-u-sm-offset-2">
+                                <button type="submit" class="am-btn am-btn-primary">保存</button>
+                                <a class="am-btn am-btn-default" type="button"
+                                   th:href="@{/sec/admin/community/communities}">返回</a>
+                            </div>
+                        </div>
+                    </form>
+
                 </div>
 
-                <!--社团状态-->
-                <!--<div class="am-form-group">
-                    <label for="community_status" class="am-u-sm-2 am-form-label">社团状态</label>
-                    <div class="am-u-sm-10">
-                        <select required="required" id="community_status" name="status" placeholder="请选择社团状态"
-                                data-am-selected="">
-                            <option value="">&#45;&#45;</option>
-                            <option th:selected="${communitiesData.community.status==0}"
-                                    th:value="0" th:text="草稿"></option>
-                            <option th:selected="${communitiesData.community.status==1}"
-                                    th:value="1" th:text="待审核"></option>
-                            <option th:selected="${communitiesData.community.status==2}"
-                                    th:value="2" th:text="拒绝"></option>
-                            <option th:selected="${communitiesData.community.status==9}"
-                                    th:value="9" th:text="审核通过">
-                            </option>
-                        </select>
-                    </div>
-                </div>-->
-
-
-                <div class="am-form-group">
-                    <div class="am-u-sm-10 am-u-sm-offset-2">
-                        <button type="submit" class="am-btn am-btn-primary">保存</button>
-                        <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/community/communities}">返回</a>
-                    </div>
-                </div>
-            </fieldset>
-        </form>
+            </div>
+        </div>
     </div>
 </div>
+
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-    #c_sec_community_add_app {
-        margin-top: 30px;
-    }
-
-    #c_sec_community_add_app .c-datetimepicker {
-        display: inline-block;
-        width: 200px;
-    }
-
     #c-community-about-editor {
         background-color: white;
         min-height: 200px;
@@ -250,7 +226,7 @@
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/
-    var _global_data = [[${communitiesData}]]
+    var _global_data = [[${community}]]
     /*]]>*/
 </script>
 <script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
