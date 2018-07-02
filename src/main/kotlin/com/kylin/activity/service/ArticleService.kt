@@ -109,7 +109,7 @@ class ArticleService {
      */
     @Cacheable()
     fun getArticlesLimited(category: Int): Result<Record> {
-        var sql = "select a.id, a.category, a.title , a.publish_time from article a where category = ? " +
+        var sql = "select a.id, a.category, a.title , a.publish_time from article a where category = ? and a.status=1 " +
                 "order by a.publish_time desc limit ?"
         return create!!.resultQuery(sql, category, articleLimit).fetch()
     }

@@ -22,7 +22,6 @@ import javax.servlet.http.HttpServletRequest
  */
 @Controller
 @RequestMapping("sec/admin/user")
-@SessionAttributes("user")
 class UserController : BaseController() {
     @Autowired
     private val userService: UserService? = null
@@ -86,20 +85,19 @@ class UserController : BaseController() {
      */
     @RequestMapping(value = "/registermember", method = arrayOf(RequestMethod.POST))
     @Transactional
-    fun registerMember(
-            @ModelAttribute("user") user: User,
-            request: HttpServletRequest,
+    fun registerMember(request: HttpServletRequest,
             @ModelAttribute("current_url") current_url: String,
             redirectAttributes: RedirectAttributes,
             model: Model): String {
+        var user=this.sessionUser
         //获取用户的基本注册信息
-        var member = userService!!.getUser(user.id!!)
+        var member = userService!!.getUser(user!!.id!!)
         member.level = 1 //会员用户
         member.realTime = DateUtil.date().toTimestamp()
         member.isReal = true //认证通过
-        member.realName = user.realName
-        member.idCard = user.idCard
-        member.gender = user.gender
+        member.realName = user!!.realName
+        member.idCard = user!!.idCard
+        member.gender = user!!.gender
         //更新成为会员
         userService!!.update(member)
 
@@ -267,9 +265,8 @@ class UserController : BaseController() {
      */
     @RequestMapping(value = "/saveUser", method = arrayOf(RequestMethod.POST))
     @Throws(Exception::class)
-    fun saveUser(
-            @ModelAttribute("user") user: User?,
-            redirectAttributes: RedirectAttributes): String {
+    fun saveUser(redirectAttributes: RedirectAttributes): String {
+        var user=this.sessionUser
         var u = userService!!.getUser(user!!.username)
         if (u != null)
         {

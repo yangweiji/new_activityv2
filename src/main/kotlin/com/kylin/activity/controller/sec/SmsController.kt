@@ -22,7 +22,6 @@ import java.util.*
  */
 @Controller
 @RequestMapping("sec/community/sms")
-@SessionAttributes("user")
 class SmsController : BaseController() {
     /**
      * 活动服务
@@ -94,7 +93,7 @@ class SmsController : BaseController() {
      */
     @CrossOrigin
     @RequestMapping(value = "/send", method = [RequestMethod.POST])
-    fun send(@ModelAttribute user: User, @ModelAttribute("sms") sms: ActivitySms, model: Model): String {
+    fun send(@ModelAttribute("sms") sms: ActivitySms, model: Model): String {
 
         //检查团体组织下的活动是否有效
         var activity = activityService!!.getCommunityActivity(sms.activityId, this.sessionCommunity.id)

@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest
  */
 @Controller
 @RequestMapping("sec/community/thirdmanage")
-@SessionAttributes("user")
 class ThirdManageController : BaseController() {
     /**
      * 订单服务
@@ -199,10 +198,10 @@ class ThirdManageController : BaseController() {
      */
     @RequestMapping(value = "/saveActivityScore", method = [RequestMethod.POST])
     @Throws(Exception::class)
-    private fun saveActivityScore(@ModelAttribute("user") user: User?
-                                  , @ModelAttribute("score") score: ScoreHistory
+    private fun saveActivityScore(@ModelAttribute("score") score: ScoreHistory
                                   , redirectAttributes: RedirectAttributes
                                   , model: Model): String {
+        var user=this.sessionUser
         //取得用户信息
         var u = userService!!.getUser(user!!.username)
 

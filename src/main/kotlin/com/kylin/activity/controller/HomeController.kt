@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest
  * @author Richard C. Hu
  */
 @Controller
-@SessionAttributes("user")
 class HomeController : BaseController() {
     /**
      * 通用服务

@@ -26,7 +26,6 @@ import java.util.Calendar
  */
 @Controller
 @RequestMapping("sec/admin/manage")
-@SessionAttributes("user")
 class ManageCenterController : BaseController() {
 
     /**
@@ -199,10 +198,9 @@ class ManageCenterController : BaseController() {
     @Throws(Exception::class)
     private fun saveActivityScore(
             @ModelAttribute("score") score: ScoreHistory,
-            @ModelAttribute("user") user: User?,
             redirectAttributes: RedirectAttributes): String {
         var score = score
-        var user = user
+        var user = this.sessionUser
 
         //取得用户信息
         user = userService!!.getUser(user!!.username)

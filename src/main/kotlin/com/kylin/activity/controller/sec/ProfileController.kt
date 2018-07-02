@@ -22,7 +22,6 @@ class ProfileUpdateProperty {
 
 @Controller
 @RequestMapping("sec/user")
-@SessionAttributes("user")
 class ProfileController : BaseController() {
 
     @Autowired
