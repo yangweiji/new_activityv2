@@ -18,6 +18,12 @@
                     th:if="${photo}">
                     <a th:href="@{/pub/activityphoto/detail/{photoId}(photoId=${photo.id})}">活动相册</a>
                 </li>
+                <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/pub/activityphoto/detail')}?'am-active':''"
+                    th:if="${photo}">
+                    <span th:if="${activity.get('id')}<=0">
+                        <a style="display:none;" th:href="@{/pub/activityphoto/detail/{photoId}(photoId=${photo.id})}">活动相册</a>
+                    </span>
+                </li>
             </ul>
 
 
@@ -36,10 +42,14 @@
                           th:title="${#dates.format(activity.get('created'), 'yyyy-MM-dd HH:mm')}"
                           th:text="${#kylin.fromNow(activity.get('created'))}"></span>
                         &nbsp;•&nbsp;
-                    <span class="am-badge am-badge-primary am-round" th:if="${activity.get('activity_type')}==1">活动</span>
-                    <span class="am-badge am-badge-secondary am-round" th:if="${activity.get('activity_type')}==2">赛事</span>
-                    <span class="am-badge am-badge-success am-round" th:if="${activity.get('activity_type')}==3">抽签活动</span>
-                    <span class="am-badge am-badge-warning am-round" th:if="${activity.get('activity_type')}==4">打卡活动</span>
+                    <span class="am-badge am-badge-primary am-round"
+                          th:if="${activity.get('activity_type')}==1">活动</span>
+                    <span class="am-badge am-badge-secondary am-round"
+                          th:if="${activity.get('activity_type')}==2">赛事</span>
+                    <span class="am-badge am-badge-success am-round"
+                          th:if="${activity.get('activity_type')}==3">抽签活动</span>
+                    <span class="am-badge am-badge-warning am-round"
+                          th:if="${activity.get('activity_type')}==4">打卡活动</span>
                 </span>
 
                 </div>

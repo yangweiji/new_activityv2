@@ -516,7 +516,7 @@ div.dataTables_wrapper div.dataTables_paginate {
 /*下拉框样式*/
 .top-text {
     display: inline-block;
-    line-height: 12px;
+    line-height: 15px;
     max-width: 120px;
     text-overflow: ellipsis;
     overflow: hidden;

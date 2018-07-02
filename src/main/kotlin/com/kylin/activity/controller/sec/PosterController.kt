@@ -3,7 +3,6 @@ package com.kylin.activity.controller.sec
 import com.kylin.activity.databases.tables.pojos.Poster
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.PosterService
-import com.kylin.activity.util.CommonService
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
@@ -12,20 +11,9 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpServletRequest
 
-data class PostersData(
-        var poster: Poster? = null
-)
-
 @Controller
 @RequestMapping("sec/admin/poster")
 class PosterController {
-
-
-    /**
-     * 通用服务
-     */
-    @Autowired
-    private val commonService: CommonService? = null
 
     /**
      * 海报服务
@@ -68,16 +56,15 @@ class PosterController {
      */
     @RequestMapping(value = "/poster", method = [RequestMethod.GET])
     fun poster(@RequestParam(required = false) id: Int?, model: Model): String {
-        var postersData = PostersData()
+        var poster: Poster
         if (id != null && id > 0) {
-            postersData.poster = posterService!!.getPoster(id)
+            poster = posterService!!.getPoster(id)
         } else {
-            var poster = Poster()
+            poster = Poster()
             poster.show = true
             poster.posterType = "n1"
-            postersData.poster = poster
         }
-        model.addAttribute("postersData", postersData)
+        model.addAttribute("poster", poster)
         return "sec/admin/poster/poster"
     }
 
@@ -87,60 +74,38 @@ class PosterController {
      * @return 重定向至海报信息界面
      */
     @RequestMapping(value = "/savePoster", method = [RequestMethod.POST])
-    fun savePoster(@ModelAttribute("poster") poster: Poster?,
+    fun savePoster(@ModelAttribute("poster") poster: Poster,
                    model: Model, redirectAttributes: RedirectAttributes): String {
 
-        if (poster!!.id != null && poster!!.id > 0) {
-            var title = poster.title
-            var avatar = poster.avatar
-            var mobileAvatar = poster.mobileAvatar
-            var link = poster.link
-            var activityId = poster.activityId
-            var posterType = poster.posterType
-            var show = poster.show
-            var sequence = poster.sequence
+        //链接和活动编号，至少填写一项
+        if (poster.activityId == null && poster.link.isNullOrBlank()) {
+            model.addAttribute("errorMessage", "链接和活动编号，至少填写其中一项！")
+            return "/sec/admin/poster/poster"
+        }
 
-            redirectAttributes.addFlashAttribute("globalMessage", "海报：【${title}】编辑成功！")
-            posterService!!.updatePoster(title, avatar, mobileAvatar, link, activityId, posterType, show, sequence, poster.id)
+        //如果用户输入了活动编号，判断海报活动是否存在
+        if (poster.activityId != 0) {
+            var activity = activityService!!.getActivity(poster.activityId)
+            if (activity == null) {
+                model.addAttribute("errorMessage", "活动编号：[${poster.activityId}] 无效！")
+                return "/sec/admin/poster/poster"
+            }
+        }
+
+        if (poster.id != null) {
+            //编辑
+            redirectAttributes.addFlashAttribute("globalMessage", "海报：【${poster.title}】编辑成功！")
+            posterService!!.update(poster)
         } else {
             //检验海报标题是否已存在
-            var posterTitle = posterService!!.getPosterTitle(poster.title)
-            if (posterTitle != null) {
+            if (posterService!!.getPosterTitle(poster.title) != null) {
                 model.addAttribute("errorMessage", "海报：【${poster.title}】名称重复！")
-
-                var postersData = PostersData()
-                postersData.poster = poster
-                model.addAttribute("postersData", postersData)
                 return "/sec/admin/poster/poster"
             }
 
-            //如果用户输入了活动编号，判断海报活动是否存在
-            if (poster.activityId != 0) {
-                var activity = posterService!!.getActivity(poster.activityId)
-                if (activity == null) {
-                    model.addAttribute("errorMessage", "活动编号：[${poster.activityId}] 不正确，请重新输入！")
-
-                    var postersData = PostersData()
-                    postersData.poster = poster
-                    model.addAttribute("postersData", postersData)
-                    return "/sec/admin/poster/poster"
-                }
-            }
-
-            //新建海报信息
-            var posters = Poster()
-            posters.title = poster.title
-            posters.avatar = poster.avatar
-            posters.mobileAvatar = poster.mobileAvatar
-            posters.link = commonService!!.getDownloadUrl(posters.avatar)
-            posters.activityId = poster.activityId
-            posters.created = DateUtil.date().toTimestamp()
-            posters.posterType = poster.posterType
-            posters.show = poster.show
-            posters.sequence = poster.sequence
-
-            redirectAttributes.addFlashAttribute("globalMessage", "海报：【${posters.title}】添加成功！")
-            posterService!!.insertPoster(posters)
+            poster.created = DateUtil.date().toTimestamp()
+            posterService!!.insertPoster(poster)
+            redirectAttributes.addFlashAttribute("globalMessage", "海报：【${poster.title}】添加成功！")
         }
         return "redirect:/sec/admin/poster/posters"
     }

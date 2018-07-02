@@ -9,6 +9,9 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 
 /**
@@ -17,6 +20,7 @@ import org.springframework.stereotype.Service
  * @Description: 海报服务层
  */
 @Service
+@CacheConfig(cacheNames = ["article"])
 class PosterService {
 
     /**
@@ -38,14 +42,25 @@ class PosterService {
      * 添加海报信息
      * @param poster: 海报信息
      */
+    @CacheEvict(allEntries = true)
     fun insertPoster(poster: Poster) {
         posterDao!!.insert(poster)
     }
 
     /**
      * 更新海报信息
+     * @param poster: 海报信息
+     */
+    @CacheEvict(allEntries = true)
+    fun update(poster: Poster) {
+        posterDao!!.update(poster)
+    }
+
+    /**
+     * 更新海报信息
      * @param title: 海报信息
      */
+    @CacheEvict(allEntries = true)
     fun updatePoster(title: String, avatar: String, mobileAvatar: String, link: String,
                      activityId: Int, posterType: String, show: Boolean, sequence: Int, id: Int): Any {
         var sql = "update poster SET title=?,avatar=?,mobile_avatar=?,link=?,activity_id=?, " +
@@ -58,6 +73,7 @@ class PosterService {
      * 获取海报信息集合，
      * 排序相同时再通过时间倒序排
      */
+    @Cacheable()
     fun getPosterItems(): Result<Record> {
         var sql = "select t1.*,t2.body from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1 " +
                 "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
@@ -121,6 +137,7 @@ class PosterService {
      * 删除海报信息
      * @param id 海报id
      */
+    @CacheEvict(allEntries = true)
     fun deletePoster(id: Int) {
         posterDao!!.deleteById(id)
     }
@@ -129,6 +146,7 @@ class PosterService {
      * 隐藏海报
      * @param id 海报id
      */
+    @CacheEvict(allEntries = true)
     fun showPoster(id: Int): Record {
         var sql = "UPDATE poster set `show`=0 where id=? "
         return create!!.resultQuery(sql, id).fetchOne()
@@ -138,6 +156,7 @@ class PosterService {
      * 显示海报
      * @param id 海报id
      */
+    @CacheEvict(allEntries = true)
     fun displayPoster(id: Int): Record {
         var sql = "UPDATE poster set `show`=1 where id=? "
         return create!!.resultQuery(sql, id).fetchOne()
