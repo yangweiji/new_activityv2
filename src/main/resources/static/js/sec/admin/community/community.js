@@ -125,24 +125,6 @@ new Vue({
             that.community.vipAgreement = quillVip.getHtml()
             bodyInput.trigger('change')
         })
-
-
-        $('#c-community-add-form').validator({}).submit(function () {
-
-            $('input[name=json_data]').val(JSON.stringify(that.community.about))
-            $('input[name=json_data]').val(JSON.stringify(that.community.vipAgreement))
-            return true;
-        });
-
-        $(window).on("upload", function () {
-            var about = that.community.about
-            that.community.about = null
-            Util.storageGet(JSON.stringify(that.community.about))
-
-            var vipAgreement = that.community.vipAgreement
-            that.community.vipAgreement = null
-            Util.storageGet(JSON.stringify(that.community.vipAgreement))
-        })
     },
     methods: {
         selectVal: function (e) {

@@ -11,7 +11,7 @@
         <div class="am-g am-imglist">
             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
                 <li th:each="item : ${activityPhotoItems}">
-                    <div class="am-gallery-item am_list_block">
+                    <div class="am-gallery-item am_list_block" style="height: 232px;">
                         <a th:href="@{/pub/activityphoto/detail/{id}(id=${item.get('id')}) }" target="_blank"
                            class="am_img_bg">
                             <img class="am_img animated c-img"
@@ -40,9 +40,21 @@
 </div>
 
 <style type="text/css">
+
+    .am_list_block {
+        height: 232px;
+    }
+
     .am_img.animated.c-img {
         height: 130px;
         width: 242px;
+    }
+
+    .am_listimg_info {
+        position: relative;
+        top: 40px;
+        left: -40px;
+        display: block;
     }
 
     .am_listimg_info .am_imglist_user_font {

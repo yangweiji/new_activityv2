@@ -96,16 +96,6 @@ new Vue({
 
             bodyInput.trigger('change')
         })
-
-        $('#c-article-create-form').validator({}).submit(function () {
-            $('input[name=json_data]').val(JSON.stringify(that.article.body))
-            return true;
-        });
-        $(window).on("upload", function () {
-            var body = that.article.body
-            that.article.body = null
-            Util.storageGet(JSON.stringify(that.article.body))
-        })
     },
     methods: {
     }
