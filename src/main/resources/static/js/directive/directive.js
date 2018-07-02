@@ -38,7 +38,7 @@ Vue.directive('translator', {
 Vue.component('input-image-uploader', {
     template: '\
         <div>\
-            <input type="hidden" :value="value" @input="updateValue" :id="nameText" :name="nameText" />\
+            <input type="hidden" :value="value" :id="nameText" :name="nameText" />\
             <div class="c-image">\
                 <img :src="getImageUrl">\
                 <span>\
@@ -66,9 +66,9 @@ Vue.component('input-image-uploader', {
         return {}
     },
     methods: {
-        updateValue: function (e) {
-            this.$emit('input', e.target.value);
-        }
+        // updateValue: function (e) {
+        //     this.$emit('input', e.target.value);
+        // }
     },
     computed: {
         getImageUrl: function () {
@@ -90,7 +90,7 @@ Vue.component('input-image-uploader', {
             randomName: true,
             selectId: that.getImageId,
             success: function (file) {
-                that.value = file.randomName;
+                that.$emit('input', file.randomName);
             }
         });
     }

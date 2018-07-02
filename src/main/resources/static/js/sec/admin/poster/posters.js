@@ -237,7 +237,8 @@ $(function () {
                 },
                 success: function (data) {
                     if (data) {
-                        location.reload()
+                        alert("操作成功！");
+                        location.reload();
                     }
                 }
             })
