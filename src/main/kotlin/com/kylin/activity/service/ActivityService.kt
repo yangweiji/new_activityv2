@@ -424,6 +424,7 @@ class ActivityService {
             avatar =  commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
         }
         map["id"] = activity.get("id", Int::class.java)
+        map["community_id"] = activity.get("community_id", Int::class.java)
         map["activity_type"] = activity.get("activity_type", Int::class.java)
         map["favorite_count"] = activity.get("favorite_count", Int::class.java)
         map["attend_count"] = activity.get("attend_count", Int::class.java)

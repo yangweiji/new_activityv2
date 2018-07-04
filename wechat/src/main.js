@@ -27,6 +27,7 @@ export default {
             'pages/agreement/agreement',
             'pages/details/details',
             'pages/articlelist/articlelist',
+            'pages/posterlist/posterlist',
             'pages/article/article',
             'pages/community/community',
             'pages/attend/attend',
@@ -38,7 +39,8 @@ export default {
             'pages/userinfo/userinfo',
             'pages/realinfo/realinfo',
             'pages/activityrecord/activityrecord',
-            'pages/activityrecorditem/activityrecorditem'
+            'pages/activityrecorditem/activityrecorditem',
+            'pages/toolcaculate/toolcaculate'
         ],
 
         // Will be filled in webpack

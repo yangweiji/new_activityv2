@@ -375,6 +375,7 @@ export default {
         //收费活动，创建订单
         var order = {
           activityTicketId: activityUser.activityTicketId,
+          communityId:that.item.activity.community_id,
           price: activityUser.price,
           body: "活动报名",
           userId: that.userId,

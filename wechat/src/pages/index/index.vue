@@ -25,7 +25,7 @@
       </div>
 
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
-      <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
+      <div class="weui-grids c-blocks">
         <block v-for="(item,index) in grids" :key='index'>
           <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
             <image  :src='item.src' style="width:50px;height:50px"/>
@@ -115,14 +115,14 @@ export default {
       //文章集合
       grids: [
         {
+          src: "/static/images/images_news.png",
+          name: "赛事活动",
+          url: "/pages/posterlist/posterlist"
+        },
+        {
           src: "/static/images/activity_notices.png",
           name: "通知公告",
           url: "/pages/articlelist/articlelist?articleCategory=1"
-        },
-        {
-          src: "/static/images/images_news.png",
-          name: "赛事新闻",
-          url: "/pages/articlelist/articlelist?articleCategory=2"
         },
         {
           src: "/static/images/images_sport.png",
@@ -452,5 +452,9 @@ export default {
   font-size: 12px;
   color: #fff;
   background-color: #fff;
+}
+.c-blocks {
+  border-top:0px; border-left:0px; background-color:#ffffff;
+  text-align: center;
 }
 </style>

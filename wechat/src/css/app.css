@@ -160,6 +160,17 @@ page {
     z-index: 100;
 }
 
+.c-footer-btns button {
+    padding: 0px;
+    margin: 0px;
+    border-radius: 0px;
+    line-height: 48px;
+}
+
+.c-footer-btns button::after {
+    border: none;
+}
+
 .c-footer-btns .weui-badge {
     margin-bottom: 3px;
 }
