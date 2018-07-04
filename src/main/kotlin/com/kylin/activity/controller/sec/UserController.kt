@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest
  */
 @Controller
 @RequestMapping("sec/admin/user")
+@SessionAttributes("user")
 class UserController : BaseController() {
     @Autowired
     private val userService: UserService? = null
@@ -85,11 +86,10 @@ class UserController : BaseController() {
      */
     @RequestMapping(value = "/registermember", method = arrayOf(RequestMethod.POST))
     @Transactional
-    fun registerMember(request: HttpServletRequest,
+    fun registerMember(@ModelAttribute("user") user: User,request: HttpServletRequest,
             @ModelAttribute("current_url") current_url: String,
             redirectAttributes: RedirectAttributes,
             model: Model): String {
-        var user=this.sessionUser
         //获取用户的基本注册信息
         var member = userService!!.getUser(user!!.id!!)
         member.level = 1 //会员用户
@@ -265,8 +265,7 @@ class UserController : BaseController() {
      */
     @RequestMapping(value = "/saveUser", method = arrayOf(RequestMethod.POST))
     @Throws(Exception::class)
-    fun saveUser(redirectAttributes: RedirectAttributes): String {
-        var user=this.sessionUser
+    fun saveUser(   @ModelAttribute("user") user: User?,redirectAttributes: RedirectAttributes): String {
         var u = userService!!.getUser(user!!.username)
         if (u != null)
         {

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletRequest
  */
 @Controller
 @RequestMapping("sec/community/thirduser")
+@SessionAttributes("user")
 class ThirdUserController : BaseController() {
 
     /**
@@ -151,9 +152,8 @@ class ThirdUserController : BaseController() {
     @RequestMapping(value = "/saveUser", method = [RequestMethod.POST])
     @Transactional
     @Throws(Exception::class)
-    fun saveUser(redirectAttributes: RedirectAttributes
+    fun saveUser(@ModelAttribute("user") user: User,redirectAttributes: RedirectAttributes
                  , model: Model): String {
-        var user=this.sessionUser
         var u = userService!!.getUser(user!!.username)
         if (u != null) {
             //如果用户手机号已存在，则添加至当前团体组织中
