@@ -3,7 +3,6 @@ package com.kylin.activity.controller.pub
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.kylin.activity.databases.tables.Activity
-import com.kylin.activity.databases.tables.pojos.ActionHistory
 import com.kylin.activity.databases.tables.pojos.ActivityUser
 import com.kylin.activity.databases.tables.pojos.ScoreHistory
 import com.kylin.activity.model.ActivityAttendInfo
@@ -17,11 +16,8 @@ import org.jooq.DSLContext
 import org.jooq.Record
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
-import org.springframework.data.jpa.domain.AbstractPersistable_.id
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import java.security.Timestamp
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 
@@ -308,7 +304,7 @@ class WxActivityController {
             var now = DateUtil.date().toTimestamp()
             var hours = DateUtil.between(now, startTime, DateUnit.HOUR)
             if (startTime < now || hours < 2) {
-                cancelMessage = "活动开始前2小时才能取消报名"
+                cancelMessage = "活动开始2小时之前才能取消报名！"
             }
 
             map["ticket_title"] = title
@@ -490,7 +486,7 @@ class WxActivityController {
         var now = DateUtil.date().toTimestamp()
         var hours = DateUtil.between(now, startTime, DateUnit.HOUR)
         if (startTime < now || hours < 2) {
-            cancelMessage = "活动开始前2小时才能取消报名"
+            cancelMessage = "活动开始2小时之前才能取消报名！"
         }
 
         map["ticket_title"] = title
