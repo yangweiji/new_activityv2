@@ -1,53 +1,91 @@
 new Vue({
-    el: '#c_pub_register_app',
+    el: '#app',
     data: function() {
         return {
-            username: $('#username').attr('data-session'),
-            disabled: false,
-            seconds: 60,
-            error: null
+            //验证码时间计数
+            codeCount: 0,
+            canGetVerCode: true,
+            error: '',
+            username: null,
+            password: null,
+            password2: null,
+            code: null,
         }
     },
+    computed: {
+        disabled() {
+            if (!this.username || this.username.length != 11
+                || !this.password || !this.password2 || (this.password != this.password2)
+            ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+    },
     methods: {
-        sendVercode:function () {
-            var that = this
-            this.disabled = true
-            if(!this.username){
-                this.username = $('#username').val()
+        getVerCode: function () {
+            var that = this;
+            that.canGetVerCode = true;
+            if (!that.username || that.username.length < 11) {
+                nativeToast({
+                    message: '请输入有效的手机号码！',
+                    position: 'center',
+                    timeout: 3000,
+                    square: true,
+                    // type: 'error'
+                });
+                return;
             }
-            if(!this.username || this.username.length < 11){
-                alert("请先输入合法的手机号")
-                return
+
+            if (!that.username.match(/^1\d{10}$/)) {
+                nativeToast({
+                    message: '请输入有效的手机号码！',
+                    position: 'center',
+                    timeout: 3000,
+                    square: true,
+                    // type: 'error'
+                });
+                return;
             }
-            Util.ajax({
-                type: 'get',
-                url: '/pub/vercode/getVerCode/' + this.username,
+
+            $.ajax({
+                url: "/pub/wx/vercode/getVerCode/" + this.username,
+                contentType: "application/json;charset=utf-8",
+                type: "get",
                 dataType: "json",
                 success: function (data) {
-                    var fun = function () {
-                        that.seconds--;
-                        if(that.seconds > 0){
-                            setTimeout(fun,1000)
-                        } else {
-                            that.seconds = 60
-                            that.disabled = false
+                    if (data.code == 200) {
+                        nativeToast({
+                            message: '短信验证码已发送，十分钟内有效！',
+                            position: 'center',
+                            timeout: 5000,
+                            square: true,
+                            // type: 'error'
+                        });
+
+                        that.code = data.message;
+                        that.canGetVerCode = false;
+                        that.codeCount = 60;
+                        var fun = function () {
+                            that.codeCount--;
+                            if (that.codeCount > 0) {
+                                setTimeout(fun, 1000)
+                            } else {
+                                that.codeCount = 60
+                                that.canGetVerCode = true
+                            }
                         }
+                        setTimeout(fun, 1000)
                     }
-                    setTimeout(fun,1000)
                 },
-                error:function () {
-                    that.disabled = false
+                error: function () {
+                    that.canGetVerCode = true;
                     that.error = "发送验证码出现错误"
                 }
-            })
-
+            });
         },
-        vercodeBtnText: function () {
-            if(this.seconds < 60){
-                return '还有（{seconds}s）'.format(this)
-            }
-            return '获取验证码'
-        }
     }
 
 })
