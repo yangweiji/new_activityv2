@@ -98,16 +98,24 @@ new Vue({
                         that.code = data.message;
                         that.canGetVerCode = false;
                         that.codeCount = 60;
-                        var i = setInterval(() = > {
-                                that.codeCount--;
-                        if (that.codeCount <= 0) {
-                            clearInterval(i);
-                            that.canGetVerCode = true;
+                        var fun = function () {
+                            that.codeCount--;
+                            if (that.codeCount > 0) {
+                                setTimeout(fun, 1000)
+                            } else {
+                                that.codeCount = 60
+                                that.canGetVerCode = true
+                            }
                         }
-                    },
-                        1000
-                    )
-                        ;
+                        setTimeout(fun, 1000)
+
+                        // var i = setInterval(()=>{
+                        //     that.codeCount--;
+                        //     if (that.codeCount <= 0) {
+                        //         clearInterval(i);
+                        //         that.canGetVerCode = true;
+                        //     }
+                        // }, 1000);
                     }
                 },
                 error: function () {
