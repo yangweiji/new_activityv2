@@ -18,11 +18,9 @@ export default {
     return {
           navigationData:[
           {url:'../../pages/toolcaculate/toolcaculate',name:'配速计算',src:''},
-          {url:'',name:'配速转换',src:''},
-          {url:'',name:'完整时间计算',src:''},
-          {url:'',name:'马拉松训练配速',src:''},
-          {url:'',name:'比赛成绩预测',src:''},
-          {url:'',name:'跑力值计算',src:''},
+          {url:'../../pages/toolbomamatch/toolbomamatch',name:'波马参赛资格',src:''},
+          {url:'../../pages/toolmaf180/toolmaf180',name:'MAF180心率计算',src:''},
+          {url:'../../pages/toolsizemap/toolsizemap',name:'鞋码对照',src:''}
       ]
     }
   },

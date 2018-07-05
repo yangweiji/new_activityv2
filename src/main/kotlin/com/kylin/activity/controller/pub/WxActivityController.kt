@@ -147,6 +147,19 @@ class WxActivityController {
     }
 
     /**
+     * 显示活动参与人员列表
+     * @param activityId: 活动ID
+     * @return 参与人员列表
+     */
+    @GetMapping("/attendusers")
+    fun getAttendusers(@RequestParam(required = false) activityId: Int): Any {
+        //活动详情信息
+        var tickets =activityService!!.getActivityTickets(activityId)
+        var users = activityService!!.getAttendUsers(activityId)
+        return mapOf( "tickets" to tickets, "users" to users )
+    }
+
+    /**
      * 设置喜欢活动，已经喜欢的活动不在重复添加
      * @param activityId: 活动ID userId: 用户Id
      * @return 单个活动信息

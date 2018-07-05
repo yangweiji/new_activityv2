@@ -89,7 +89,9 @@ export default {
       });
     },
     gotoAttendUsers(){
-
+       wx.navigateTo({
+        url: "../../pages/attendusers/attendusers?activityId=" + this.activityId
+      });
     },
     addFavorite() {
       var that = this;

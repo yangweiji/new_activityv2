@@ -40,14 +40,18 @@ export default {
             'pages/realinfo/realinfo',
             'pages/activityrecord/activityrecord',
             'pages/activityrecorditem/activityrecorditem',
-            'pages/toolcaculate/toolcaculate'
+            'pages/toolcaculate/toolcaculate',
+            'pages/toolbomamatch/toolbomamatch',
+            'pages/toolmaf180/toolmaf180',
+            'pages/toolsizemap/toolsizemap',
+            'pages/attendusers/attendusers'
         ],
 
         // Will be filled in webpack
         window: {
             backgroundTextStyle: 'light',
             navigationBarBackgroundColor: '#fff',
-            navigationBarTitleText: '活动平台V2',
+            navigationBarTitleText: '活动平台',
             navigationBarTextStyle: 'black'
         },
         tabBar: {

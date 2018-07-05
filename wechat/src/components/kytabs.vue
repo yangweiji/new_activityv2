@@ -1,9 +1,12 @@
 <template>
   <div @touchmove="touchmove" class="c-kytabs weui-navbar" style="top:auto;">
             <block v-for="item in tabs" :key="item.id">
-              <div :class="{'weui-bar__item_on' : value==item.id}" class="weui-navbar__item"  
+              <div :class="{'weui-bar__item_on' :value==item.id}" class="weui-navbar__item"  
                 @click="tabClick(item)">
-                <div :style="[theTabWidth]" class="weui-navbar__title">{{item.name}}</div>
+                <div :style="[theTabWidth]" class="weui-navbar__title">
+                  <div v-if="item.number" class="weui-badge">{{item.number}}</div>
+                  {{item.name}}
+                </div>
               </div>
             </block>
           <div class="weui-navbar__slider" style="left:0px;" :style="[navbarSliderClass]"></div>
@@ -27,13 +30,13 @@ export default {
           break
         }
       }
-      return "transform: translateX("+ index * (this.tabWidth || 200) + "rpx)"
+      return "transform: translateX("+ index * (this.tabWidth || 200) + "rpx);" + this.theTabWidth
     },
     theTabWidth(){
       if(this.tabWidth){
-        return "width:" + this.tabWidth + "rpx"
+        return "width:" + this.tabWidth + "rpx;"
       }
-      return "width:200rpx"
+      return "width:200rpx;"
     }
   },
   methods:{
@@ -45,10 +48,5 @@ export default {
 </script>
 
 <style>
-.c-kytabs{
-  overflow-x: auto;
-}
-.c-kytabs .weui-navbar__title{
-  width:200rpx;
-}
+
 </style>

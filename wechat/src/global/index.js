@@ -247,11 +247,17 @@ function getCommunityId() {
     return wx.getStorageSync("community_id") || 1
 }
 
-function downloadUrl(name, style) {
-    if (name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0)) {
+function downloadUrl(name, style, folder) {
+    if (name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0 || name.indexOf('/') == 0)) {
         return name
     }
-    var url = 'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/' + name
+    var url = 'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/'
+    if (folder) {
+        url += folder + "/"
+    } else {
+        url += "activity/"
+    }
+    url += name
     if (style) {
         url += '?x-oss-process=style/' + style
     }

@@ -211,6 +211,71 @@ page {
     font-size: 18px;
 }
 
+.c-field-component.notitle .weui-cells__title {
+    display: none;
+}
+
+.c-field-component.clean {
+    margin: 0px;
+    padding: 0px;
+}
+
+.c-field-component.clean .weui-cells__title {
+    display: none;
+}
+
+.c-field-component.clean .weui-cells {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+}
+
+.c-field-component.clean .weui-cells:after {
+    border: none;
+}
+
+.c-field-component.clean .weui-cells::before {
+    border: none;
+}
+
+.c-field-component.clean picker {
+    border: none;
+}
+
+.c-table .weui-flex__item {
+    padding: 5px;
+}
+
+.c-header {
+    font-weight: bold;
+}
+
+.c-tr {
+    background-color: white;
+}
+
+.c-kytabs {
+    overflow-x: auto;
+}
+
+.c-kytabs .weui-navbar__slider {
+    width: auto;
+}
+
+.c-kytabs .weui-navbar__title {
+    max-width: none;
+}
+
+.c-kytabs .weui-badge {
+    margin-right: 5px;
+    margin-top: -3px;
+    background-color: gray;
+}
+
+.c-kytabs .weui-navbar__item.weui-bar__item_on .weui-badge {
+    background-color: #F37B1D;
+}
+
 
 /* weui override */
 
@@ -246,4 +311,6 @@ page {
     vertical-align: middle;
     width: 20px;
     height: 20px;
+    margin-top: -4px;
+    border-radius: 50%;
 }
