@@ -21,6 +21,14 @@
         </div>
 
         <div class="am-tabs-bd am_bdfw">
+            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                <button type="button" class="am-close">&times;</button>
+                <p>
+                    <span class="am-icon-lg am-warning am-icon-warning"></span>
+                    <span th:text="${errorMessage}">Some Error message</span>
+                </p>
+            </div>
+
             <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
                 <button type="button" class="am-close">&times;</button>
                 <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->

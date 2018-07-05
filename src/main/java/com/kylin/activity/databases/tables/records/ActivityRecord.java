@@ -30,7 +30,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implements Record22<Integer, String, String, String, String, String, String, Integer, Timestamp, Timestamp, Timestamp, Timestamp, Integer, Timestamp, Integer, String, String, String, Integer, Boolean, String, Integer> {
 
-    private static final long serialVersionUID = 2033080469;
+    private static final long serialVersionUID = -401991257;
 
     /**
      * Setter for <code>activityv2.activity.id</code>. 编号
@@ -285,14 +285,14 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.activity.activity_type</code>.
+     * Setter for <code>activityv2.activity.activity_type</code>. 活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动
      */
     public void setActivityType(Integer value) {
         set(18, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.activity_type</code>.
+     * Getter for <code>activityv2.activity.activity_type</code>. 活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动
      */
     public Integer getActivityType() {
         return (Integer) get(18);

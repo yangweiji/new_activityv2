@@ -54,7 +54,7 @@ class ThirdActivityPhotoController : BaseController() {
      */
     @RequestMapping(value = "/activityphotos", method = [RequestMethod.GET, RequestMethod.POST])
     fun activityPhotos(@RequestParam(required = false) activityId: Int?, model: Model): String {
-        var user =this.sessionUser
+        var user = this.sessionUser
         //取得活动详情信息
         var activity = activityService!!.getActivity(activityId!!)
         //存储活动详情信息至模型数据中
@@ -129,12 +129,15 @@ class ThirdActivityPhotoController : BaseController() {
     @PostMapping("/savePictures")
     fun savePictures(@ModelAttribute("activityPhotoPicture") activityPhotoPicture: ActivityPhotoPicture
                      , @RequestParam(required = false) activityId: Int?
-                     , redirectAttributes: RedirectAttributes): String {
-        var user=this.sessionUser
+                     , redirectAttributes: RedirectAttributes, model: Model): String {
+        var user = this.sessionUser
         activityPhotoPicture.created = DateUtil.date().toTimestamp()
         activityPhotoPicture.createdBy = user!!.id
         activityPhotoPicture.order = null
-
+        if (activityPhotoPicture.picture == "") {
+            redirectAttributes.addFlashAttribute("errorMessage", "请选择上传图片！")
+            return "redirect:/sec/community/thirdactivity/activityphotos?activityId=${activityId}"
+        }
         activityPhotoService!!.insertPicture(activityPhotoPicture)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         LogUtil.printLog("添加图片OK, 图片ID: ${activityPhotoPicture.id}")
