@@ -1,0 +1,587 @@
+input,
+select,
+button {
+    margin: 0;
+    border: none;
+    padding: 0;
+    outline: none;
+    vertical-align: middle;
+    background: transparent;
+}
+
+/*登录弹窗*/
+#tc_login {
+    width: 400px;
+    overflow: hidden;
+    border-radius: 5px;
+    position: absolute;
+    background-color: #FFF;
+    display: none;
+}
+
+.tc_login .tc_login_close {
+    height: 35px;
+}
+
+.tc_login .tc_login_close a {
+    width: 20px;
+    height: 20px;
+    overflow: hidden;
+    float: right;
+    margin: 10px 10px 0 0;
+}
+
+.tc_login .tc_login_close a img {
+    width: 20px;
+    height: 40px;
+}
+
+.tc_login .tc_login_close a:hover img {
+    margin-top: -20px;
+}
+
+.tc_login .login_HDB,
+.tc_login .login_Weixin {
+    overflow: hidden;
+    padding: 10px 30px;
+}
+
+.tc_login .tit {
+    font-size: 18px;
+    color: #000;
+    height: 25px;
+}
+
+.tc_login .tit2 {
+    font-size: 16px;
+    color: #444;
+    height: 35px;
+    padding: 20px 0 0 0;
+    text-align: center;
+}
+
+.tc_login .tit3 {
+    font-size: 16px;
+    color: #444;
+    height: 35px;
+    padding: 58px 0 10px 0;
+    /*padding: 30px 0 0 0;*/
+    text-align: center;
+
+}
+
+.tc_login .tit3 a {
+    font-size: 16px;
+    color: #aaa;
+    font-weight: bold;
+}
+
+.tc_login .tit3 a.active, .tc_login .tit3 a:hover {
+    color: #ff5656;
+}
+
+.tc_login .tit3 span {
+    background: url(/static/img/shuxian_login.jpg) no-repeat;
+    display: inline-block;
+    width: 1px;
+    height: 16px;
+    margin: 0 33px;
+}
+
+/*.tc_login .login_tcs{display: none;}*/
+
+.tc_login .login_tcs {
+    position: relative;
+
+}
+
+.tc_login .login_tcs.thisOver {
+    display: block;
+}
+
+.tc_login .error_ts {
+    height: 35px;
+    line-height: 35px;
+    font-size: 13px;
+    color: #e90000;
+    background: url(/static/img/tan_13.png) no-repeat left;
+    padding-left: 17px;
+    text-align: left;
+}
+
+.tc_login .k_sj,
+.tc_login .k_mm {
+    height: 48px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    position: relative;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    position: relative;
+}
+
+.k_yzm,
+.k_txm {
+    height: 48px;
+    border: 1px solid #ddd;
+    margin-top: 10px;
+    position: relative;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    position: relative;
+}
+
+.tc_login .k_mm .forget_a {
+    position: absolute;
+    right: 8px;
+    top: 18px;
+    font-size: 12px;
+    color: #444;
+}
+
+.tc_login .k_mm .forget_a:hover {
+    text-decoration: underline;
+}
+
+.tc_login .k_sj span,
+.tc_login .k_mm span {
+    display: block;
+    width: 40px;
+    height: 50px;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    background: url(/static/img/sweep_code_landing_icon1.png) no-repeat 13px 13px;
+}
+
+.tc_login .k_mm span {
+    background-position: 16px -48px;
+}
+
+.tc_login .k_sj input,
+.tc_login .k_mm input {
+    width: 230px;
+    height: 20px;
+    float: left;
+    margin: 14px 0 0 40px;
+    font-size: 14px;
+    color: #666;
+    background: #f8f8f8;
+}
+
+.k_yzm span.yzm_icon,
+.k_txm span {
+    display: block;
+    width: 40px;
+    height: 50px;
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    background: url(/static/img/sweep_code_landing_icon2.png) no-repeat 13px 17px;
+}
+
+.k_yzm span.yzm_icon {
+    background-position: 15px -64px;
+}
+
+.k_yzm input,
+.k_txm input {
+    width: 230px;
+    height: 20px;
+    float: left;
+    margin: 14px 0 0 40px;
+    font-size: 14px;
+    color: #666;
+    background: #f8f8f8;
+}
+
+.k_txm.none {
+    display: none;
+}
+
+.k_txm #picYzm {
+    width: 100px;
+    height: 38px;
+    cursor: pointer;
+    position: absolute;
+    top: 5px;
+    right: 4px;
+}
+
+.k_txm #picYesno {
+    position: absolute;
+    right: 110px;
+    top: 18px;
+    display: none;
+    width: 15px;
+    height: 15px;
+}
+
+.k_yzm #huoYzm,
+.k_yzm #huoYzm:hover {
+    display: block;
+    width: 100px;
+    height: 38px;
+    line-height: 38px;
+    font-size: 12px;
+    text-align: center;
+    position: absolute;
+    top: 5px;
+    right: 4px;
+    background: url(/static/img/shuxian_login.jpg) no-repeat 0 4px / 1px 30px;
+}
+
+.k_yzm #huoYzm a {
+    color: #1e87e5;
+    cursor: pointer;
+    display: block;
+    width: 96px;
+    height: 38px;
+    line-height: 38px;
+    float: right;
+}
+
+.k_yzm #huoYzm a:hover {
+    color: #0082c6;
+}
+
+.k_yzm #huoYzm i,
+.k_yzm #huoYzm i:hover {
+    width: 96px;
+    float: right;
+    height: 38px;
+    line-height: 38px;
+    text-align: center;
+    display: block;
+    color: #999999;
+    cursor: default;
+}
+
+.tc_login .login_Btn {
+    display: block;
+    height: 48px;
+    line-height: 48px;
+    background-color: #1e87e5;
+    text-align: center;
+    font-size: 16px;
+    color: #FFF;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+.tc_login .login_Btn.login_Btn_padding {
+    margin-bottom: 20px;
+}
+
+.tc_login .login_Btn:hover {
+    background-color: #0082c6;
+}
+
+.tc_login .txt_ts {
+    font-size: 13px;
+    color: #999;
+    padding: 8px 0 20px;
+}
+
+.tc_login .pic_2wm {
+    text-align: center;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+.tc_login .pic_2wm img {
+    width: 160px;
+    height: 160px;
+}
+
+.tc_login .forget {
+    margin: 10px 0 0;
+    text-align: left;
+    height: 20px;
+    font-size: 14px;
+    color: #999;
+}
+
+.tc_login .forget input {
+    float: left;
+    margin: 2px 4px 0 0;
+}
+
+.tc_login .forget a {
+    float: right;
+    color: #1e87e5;
+}
+
+.tc_login .forget a:hover {
+    color: #0082c6;
+}
+
+.tc_login .login_icon {
+    height: 84px;
+}
+
+.tc_login .login_icon2 {
+    margin: 0 30px;
+}
+
+.tc_login .login_icon .login_icon_t {
+    height: 36px;
+    margin: 0 30px;
+    text-align: center;
+}
+
+.tc_login .login_icon .login_icon_b {
+    width: 202px;
+    margin: 0 auto;
+}
+
+.tc_login .login_icon .login_icon_t .left {
+    width: 104px;
+    border-bottom: 1px solid #ddd;
+    float: left;
+    margin-top: 10px;
+}
+
+.tc_login .login_icon .login_icon_t .right {
+    width: 104px;
+    border-bottom: 1px solid #ddd;
+    float: right;
+    margin-top: 10px;
+}
+
+.tc_login .login_icon span {
+    font-size: 12px;
+    color: #999;
+    line-height: 20px;
+}
+
+.tc_login .login_icon a {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    background: url(/static/img/sweep_code_landing_icon.png) no-repeat;
+}
+
+.tc_login .login_icon a.login_icon_Qq {
+    background-position: -1px -101px;
+    margin: 0 28px;
+}
+
+.tc_login .login_icon a.login_icon_Wb {
+    background-position: -1px -201px;
+}
+
+.tc_login .login_icon a.login_icon_Wx {
+    background-position: -1px -1px;
+}
+
+.tc_login .login_icon a.login_icon_Hd {
+    background: url(http://img.sys.hudongba.com/static_v4/images/icon/menu04_33.png) no-repeat;
+}
+
+.tc_login .login_icon a.login_icon_Qq:hover {
+    background-position: -1px -151px;
+}
+
+.tc_login .login_icon a.login_icon_Wb:hover {
+    background-position: -1px -251px;
+}
+
+.tc_login .login_icon a.login_icon_Wx:hover {
+    background-position: -1px -51px;
+}
+
+.tc_login .login_icon a.login_icon_Hd:hover {
+    background: url(http://img.sys.hudongba.com/static_v4/images/icon/menu04_33_on.png) no-repeat;
+}
+
+.tc_login .noHao {
+    height: 58px;
+    line-height: 58px;
+    color: #444;
+    font-size: 12px;
+    text-align: right;
+    padding-right: 20px;
+}
+
+.tc_login .noHao a {
+    color: #1e87e5;
+}
+
+.tc_login .noHao a:hover {
+    text-decoration: underline;
+}
+
+.tc_login .dis_none {
+    display: none;
+}
+
+.tc_login .login_li {
+    height: 330px;
+    position: relative;
+}
+
+.tc_login .login_li .top_img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 178px;
+}
+
+.tc_login .login_li .top_img .img {
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    float: right;
+    background: url(/static/img/sweep_code_landing_icon.png) no-repeat -1px -561px;
+}
+
+.tc_login .login_li .top_img .txt {
+    width: 92px;
+    height: 22px;
+    line-height: 22px;
+    padding-left: 25px;
+    background: #e7f5ff url(/static/img/sweep_code_landing_icon.png) no-repeat 8px -298px;
+    border: 1px solid #47affa;
+    font-size: 12px;
+    color: #47affa;
+    position: absolute;
+    left: 0;
+    top: 20px;
+}
+
+.tc_login .login_li .top_img img {
+    position: absolute;
+    top: 25px;
+    right: 50px;
+    z-index: 1;
+}
+
+.tc_login .login_li.first .top_img .img {
+    background-position: -1px -481px;
+}
+
+.tc_login .login_li.first .top_img .txt {
+    background-position: 7px -347px;
+}
+
+.tc_login .login_li.first h4 {
+    font-size: 16px;
+    color: #444;
+    font-weight: bold;
+    text-align: center;
+    height: 32px;
+    line-height: 16px;
+    padding-top: 58px;
+}
+
+.tc_login .login_li.first .scan_succeed .pic {
+    width: 64px;
+    height: 64px;
+    background: url(/static/img/sweep_code_landing_icon.png) no-repeat -1px -401px;
+    margin: 35px auto 8px;
+}
+
+.tc_login .login_li.first .scan_succeed .txt1 {
+    font-size: 14px;
+    color: #000;
+    height: 25px;
+    text-align: center;
+}
+
+.tc_login .login_li.first .scan_succeed .txt2 {
+    font-size: 18px;
+    color: #444;
+    height: 50px;
+    text-align: center;
+}
+
+.tc_login .login_li.first .scan_succeed a {
+    font-size: 12px;
+    color: #1e87e5;
+    float: left;
+    margin-left: 164px;
+}
+
+.tc_login .login_li.first .scan_succeed a:hover {
+    text-decoration: underline;
+}
+
+.tc_login .login_li.first .scan .ewm_wrap {
+    height: 195px;
+    position: relative;
+}
+
+.tc_login .login_li.first .scan .ewm_wrap .ewm {
+    width: 174px;
+    height: 174px;
+    position: absolute;
+    top: 8px;
+    left: 115px;
+    margin-top: 2px;
+}
+
+.tc_login .login_li.first .scan .ewm_wrap .bg_phone {
+    position: absolute;
+    top: 8px;
+    right: 20px;
+    display: none;
+}
+
+.tc_login .login_li.first .scan .top_wrap {
+    position: absolute;
+    left: 0px;
+    top: 90px;
+    height: 195px;
+    width: 100%;
+    display: none;
+}
+
+.tc_login .login_li.first .scan .top_wrap .gray_bg {
+    width: 192px;
+    height: 192px;
+    background: #000;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    margin-left: 106px;
+}
+
+.tc_login .login_li.first .scan .top_wrap .txt3 {
+    position: absolute;
+    left: 178px;
+    top: 80px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.tc_login .login_li.first .scan .top_wrap .sx {
+    width: 78px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    position: absolute;
+    left: 163px;
+    top: 110px;
+    background: #1e87e5;
+    font-size: 14px;
+    color: #fff;
+}
+
+.tc_login .login_li.first .scan .top_wrap .sx:hover {
+    background: #0082c6;
+}
+
+.tc_login .login_li.first .scan .txt_bottom {
+    font-size: 12px;
+    color: #444;
+    text-align: center;
+}
+
+.tc_login .login_li.first .scan .txt_bottom span {
+    color: #1e87e5;
+}
+
+.tc_login .login_li.first .scan .txt_bottom span.dj {
+    color: #1e87e5;
+    cursor: pointer;
+}
