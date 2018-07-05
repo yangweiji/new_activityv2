@@ -603,13 +603,13 @@ button {
 }
 
 .reg_Ul li span {
-    display: inline-block;
+    /*display: inline-block;*/
     width: 70px;
     height: 40px;
     line-height: 40px;
-    font-size: 14px;
-    color: #000;
-    float: left;
+    /*font-size: 14px;*/
+    /*color: #000;*/
+    /*float: left;*/
     text-align: right;
 }
 
