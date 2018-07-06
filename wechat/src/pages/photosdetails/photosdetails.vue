@@ -4,10 +4,10 @@
       {{name}}
     </div>
     <div class="page__bd">
-    <div class="weui-photosdetails__files" id="uploaderFiles">
-      <block v-for="item in details" :key="item.id">
+    <div class="weui-photosdetails__files weui-photosdetails__img" >
+      <block v-for="item in items" :key="item.id">
 
-        <image class="weui-photosdetails__img" @click="predivImage(item.picture)" :src="item.picture" mode="aspectFill" />
+        <kyimage :preview="true" :src="item.picture" />
 
       </block>
     </div>
@@ -17,64 +17,44 @@
 </template>
 
 <script>
-import base64 from "../../../static/images/base64";
-
+import kyimage from '@/components/kyimage.vue'
 export default {
   data() {
     return {
-      //活动相册
-      details: [{ picture: "" }],
-      picture: "",
-      pictures: [],
-      photoId: 0,
+      activityId: 0,
+      items:null,
       name: ''
     };
   },
-  computed: {},
+  components: {kyimage},
   methods: {
     //取得文章信息
     getData() {
       var that = this;
       var param = {
-        photoId: that.photoId
+        activityId: that.activityId
       };
-      this.$kyutil.get("/pub/wx/photo/getPictures",param).then( res => {
-          that.details = res;
-          console.log(res);
-          for (var i = 0; i < res.length; i++) {
-            that.pictures.push(res[i].picture);
-          }
-
+      this.$kyutil.get("/pub/wx/photo/getPicturesByActivityId",param).then( res => {
+          that.items = res.pictures
+          that.name = res.description
         }
       );
-    },
-    predivImage(e) {
-      wx.previewImage({
-        current: e, // 当前显示图片的http链接
-        urls: this.pictures // 需要预览的图片http链接列表
-      });
     }
+   
   },
   created() {
-    console.log("photosdetails created");
+   
   },
   onShow() {
-    // console.log('小程序触发的 onshow, 获取参数: '+ this.$root.$mp.query);
     var that = this;
-    that.photoId = this.$root.$mp.query.photoId;
-    that.name = this.$root.$mp.query.name; 
+    that.activityId = this.$root.$mp.query.activityId;
     this.getData();
   }
 };
 </script>
 
-<style scoped>
-/*!
- * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
- * Copyright 2017 Tencent, Inc.
- * Licensed under the MIT license
- */
-.weui-photosdetails__img {
+<style>
+.weui-photosdetails__img image{
   height: 100px;
   width: 48%;
   padding-right: 3.5px;

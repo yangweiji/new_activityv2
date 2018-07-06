@@ -13,7 +13,7 @@
               搜索团体
             </span>
         </navigator>  
-        <image src="../../static/images/banner_road.jpg" class="banner-community" model="aspectFit" />
+        <kyimage src="fl01.png" folder="wx_home" type="banner" />
         <div class="c-bg"></div>
       </div>
     

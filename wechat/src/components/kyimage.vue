@@ -1,6 +1,6 @@
 <template>
   <image @click="previewClick" :class="{'weui-media-box__thumb': type=='thumb','banner': type=='banner', 'weui-article__img' : type=='article'}" 
-    :src="url"  />
+    :src="url" :model="imageMode"  />
 </template>
 
 <script>
@@ -27,6 +27,9 @@ export default {
     },
     defaultSrc:{
       type:String
+    },
+    mode:{
+      type:String
     }
   },
   computed:{
@@ -38,6 +41,9 @@ export default {
         return this.$kyutil.downloadUrl(this.innerSrc, this.size, this.folder)
       } 
       return null
+    },
+    imageMode(){
+      return this.mode || 'aspectFill'
     }
   },
   created(){

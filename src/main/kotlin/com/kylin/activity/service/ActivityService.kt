@@ -415,7 +415,8 @@ class ActivityService {
     fun getActivityDetail(id: Int?): Record {
         var sql = "select t1.*, t2.avatar user_avatar, t2.displayname, " +
                 "ifnull(tu.attend_count, 0) attend_count, " +
-                "ifnull(tf.favorite_count, 0) favorite_count " +
+                "ifnull(tf.favorite_count, 0) favorite_count, " +
+                "ifnull(p.picture_count, 0) picture_count " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by  = t2.id " +
                 "left join ( " +
@@ -424,8 +425,11 @@ class ActivityService {
                 "left join ( " +
                 " select activity_id, count(user_id) favorite_count from activity_favorite where activity_id=? " +
                 ") as tf on t1.id = tf.activity_id " +
+                "left join ( " +
+                " select activity_id, count(p2.id) picture_count  from activity_photo p1 inner join activity_photo_picture p2 on  p1.activity_id =  ? and p1.id = p2.activity_photo_id group by p1.activity_id " +
+                ") p on t1.id = p.activity_id " +
                 "where t1.id = ? "
-        return create!!.resultQuery(sql, id, id, id).fetchOne()
+        return create!!.resultQuery(sql, id, id, id, id).fetchOne()
     }
 
     /**
@@ -444,6 +448,7 @@ class ActivityService {
         map["activity_type"] = activity.get("activity_type", Int::class.java)
         map["favorite_count"] = activity.get("favorite_count", Int::class.java)
         map["attend_count"] = activity.get("attend_count", Int::class.java)
+        map["picture_count"] = activity.get("picture_count", Int::class.java)
         map["avatar"] = avatar
         map["start_time"] = util!!.fromNow(activity.get("start_time"))
 

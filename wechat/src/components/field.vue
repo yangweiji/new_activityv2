@@ -4,7 +4,7 @@
     <div v-if="config.type == 'text'" class="weui-cells weui-cells_after-title">
       <div class="weui-cell weui-cell_input">
         <div class="weui-cell__bd">
-          <input :disabled="disabled" @input="input" class="weui-input" :value="value" :placeholder="'请输入' + config.title" />
+          <input :disabled="disabled" @change="input" class="weui-input" :value="value" :placeholder="'请输入' + config.title" />
         </div>
       </div>
     </div>

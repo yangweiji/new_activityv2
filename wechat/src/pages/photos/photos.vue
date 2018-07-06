@@ -4,8 +4,7 @@
       <div class="flex-row photos">
 
         <div class="flex-div-item photo-w" v-for="item in items" :key="item.id">
-
-          <navigator :url="'/pages/photosdetails/photosdetails?photoId='+item.id+'&name='+item.description" class="photo">
+          <navigator :url="'/pages/photosdetails/photosdetails?activityId='+item.activity_id" class="photo">
             <image :src="item.axtenal_url" mode="aspectFill" class="photo-img" />
             <p class="photo-desc">
               {{item.description}}
@@ -22,7 +21,6 @@
 </template>
 
 <script>
-import base64 from "../../../static/images/base64";
 
 export default {
   data() {

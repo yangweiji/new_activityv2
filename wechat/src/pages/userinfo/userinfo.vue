@@ -119,19 +119,10 @@
           type: 'text',
           required: true,
         }, {
-          name: 'isPart',
+          name: 'isParty',
           title: '是否党员',
           type: 'bool',
-          required: false,
-          options: [{
-              title: "群众",
-              value: false
-            },
-            {
-              title: "党员",
-              value: true
-            }
-          ]
+          required: false
         }, {
           name: 'address',
           title: '家庭地址',

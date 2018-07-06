@@ -56,9 +56,9 @@ class ActivityPhotoService {
      * @return 相册信息记录集
      */
     fun getActivityPhotoItemsByCommunity(communityId: Int): Result<Record> {
-        var sql = "select t1.*, (select count(*) from activity_photo_picture where activity_photo_id = t1.id) as pictureCount from activity_photo t1 inner join activity t2 on t1.activity_id = t2.id " +
-                "where t2.community_id = ? " +
-                "order by t1.id desc"
+        var sql = "select * from (select t1.*, (select count(*) from activity_photo_picture where activity_photo_id = t1.id) as pictureCount from activity_photo t1 inner join activity t2 on t1.activity_id = t2.id " +
+                "where t2.community_id = ? ) t where pictureCount > 0 " +
+                "order by id desc"
         return create!!.resultQuery(sql, communityId).fetch()
     }
 
@@ -194,6 +194,8 @@ class ActivityPhotoService {
     }
 
 
+
+
     /**
      * 获取相应相册所有的图片信息
      * @param photoId 相册id
@@ -203,5 +205,17 @@ class ActivityPhotoService {
         var sql="select t1.* from activity_photo_picture t1 inner join activity_photo t2 on t1.activity_photo_id=t2.id " +
                 "where t1.activity_photo_id=? "
         return create!!.resultQuery(sql,photoId).fetch()
+    }
+
+
+    /**
+     * 获取所有的图片信息
+     * @param activityId： 活动Id
+     * @return 相册下的图片集合
+     */
+    fun getPicturesByActivityId(activityId: Int?): List<ActivityPhotoPicture> {
+        var sql="select t1.* from activity_photo_picture t1 inner join activity_photo t2 on t1.activity_photo_id=t2.id " +
+                "where t2.activity_id=? "
+        return create!!.resultQuery(sql,activityId).fetchInto(ActivityPhotoPicture::class.java)
     }
 }

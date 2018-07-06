@@ -8,8 +8,13 @@
             <image :src="item.avatar" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; float: left; position: relative;" />
           </div>
           <div class="weui-article__section">
-            <div class="weui-article__h3 c-display-text">{{item.displayname}} {{item.created}}</div>
-            <div class="weui-article__p">
+            <div class="weui-article__h3 c-display-text">
+              {{item.displayname}}   {{item.created}}
+              <navigator v-if="item.picture_count > 0" :url="'/pages/photosdetails/photosdetails?activityId='+item.id" class="c-photo">
+                活动相册<div class="weui-badge">{{item.picture_count}}</div>
+              </navigator>
+            </div>
+            <div v-if="item.body" class="weui-article__p">
               <wxParse :content="item.body" />
             </div>
           </div>
@@ -112,5 +117,12 @@
     line-height: 40px;
     color: grey;
     margin-left: 50px;
+  }
+  .c-photo{
+    float: right;
+    color:#008cff;
+  }
+  .c-photo .weui-badge{
+    background-color: #008cff;
   }
 </style>

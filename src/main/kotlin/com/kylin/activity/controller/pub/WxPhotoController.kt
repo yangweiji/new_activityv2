@@ -29,6 +29,12 @@ class WxPhotoController {
     @Autowired
     private var commonService: CommonService? = null
 
+    /**
+     * 活动服务
+     */
+    @Autowired
+    private val activityService: ActivityService? = null
+
 
     /**
      * 第三方工具
@@ -52,50 +58,30 @@ class WxPhotoController {
         var photoItems = mutableListOf<MutableMap<String, Any?>>()
         for (photo in photos) {
             var map = mutableMapOf<String, Any?>()
-            var picture:String?=null
+            var picture: String? = null
             if (photo["picture"] != null) {
                 picture = commonService!!.getDownloadUrl(photo.get("picture", String::class.java), "middle")
             }
-            map["id"]=photo.get("id",Int::class.java)
-            map["activity_id"]=photo.get("activity_id",Int::class.java)
-            map["description"]=photo.get("description").toString()
-            map["created"]=util!!.fromNow(photo.get("created"))
-            map["created_by"]=photo.get("created_by",Int::class.java)
-            map["axtenal_url"]=photo.get("axtenal_url").toString()
-            map["picture"]=picture
+            map["id"] = photo.get("id", Int::class.java)
+            map["activity_id"] = photo.get("activity_id", Int::class.java)
+            map["description"] = photo.get("description").toString()
+            map["created"] = util!!.fromNow(photo.get("created"))
+            map["created_by"] = photo.get("created_by", Int::class.java)
+            map["axtenal_url"] = photo.get("axtenal_url").toString()
+            map["picture"] = picture
             photoItems.add(map)
         }
         return photoItems
     }
 
-
     /**
-     * 获取指定相册所有的图片信息
-     * @param photoId 相册id
-     * @return 指定相册图片集合
+     * 活动详情页面，获取照片列表
      */
-    @CrossOrigin
-    @RequestMapping(value="/getPictures",method = [RequestMethod.GET,RequestMethod.POST])
-    fun getPhotoPictures(@RequestParam(required=false) photoId:Int? ):Any{
-        var photoId=if(photoId==null) 0 else photoId!!
-        //获取相应相册所有图片信息
-        var pictures=activityPhotoService!!.getActivityPhotoPictureItems(photoId)
-        var pictureItems= mutableListOf<MutableMap<String,Any?>>()
-        for(picture in pictures){
-            var map= mutableMapOf<String,Any?>()
-            var photoPicture:String?=null
-            if (picture["picture"] != null) {
-                photoPicture = commonService!!.getDownloadUrl(picture.get("picture", String::class.java))
-            }
-            map["id"]=picture.get("id",Int::class.java)
-            map["activity_photo_id"]=picture.get("activity_photo_id",Int::class.java)
-            map["created"]=util!!.fromNow(picture.get("created"))
-            map["created_by"]=picture.get("created_by",Int::class.java)
-            map["order"]=picture.get("order",Int::class.java)
-            map["picture"]=photoPicture
-            pictureItems.add(map)
-        }
-        return pictureItems
+    @GetMapping("getPicturesByActivityId")
+    fun getPicturesByActivityId(@RequestParam(required = true) activityId: Int): Any {
+        var photo = activityPhotoService!!.getFirstActivityPhoto(activityId)
+        var pictures = activityPhotoService!!.getPicturesByActivityId(activityId)
+        return mapOf("description" to photo!!.description, "pictures" to pictures)
     }
 
 }

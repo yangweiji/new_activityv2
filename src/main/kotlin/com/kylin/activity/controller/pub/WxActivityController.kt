@@ -170,14 +170,12 @@ class WxActivityController {
 
         //自动填充报名信息
         var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.get("attend_infos", String::class.java))
-        attendInfos[0].value = user.realName
-        attendInfos[1].value = user.username
 
         for(attendInfo in attendInfos){
             attendInfo.value = when {
                 attendInfo.title == "昵称" -> user.displayname
                 attendInfo.title == "邮件" -> user.email
-                attendInfo.title == "性别" -> user.gender
+                attendInfo.title == "性别" -> if(user.gender == 2) '女' else '男'
                 attendInfo.title == "血型" -> user.bloodType
                 attendInfo.title == "T恤尺寸" -> user.clothingSize
                 attendInfo.title == "工作单位" -> user.workCompany
@@ -190,6 +188,8 @@ class WxActivityController {
                 else -> null
             }
         }
+        attendInfos[0].value = user.realName
+        attendInfos[1].value = user.username
 
         map["attendInfos"] = attendInfos
 
