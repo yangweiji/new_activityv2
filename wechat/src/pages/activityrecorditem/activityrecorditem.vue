@@ -7,7 +7,7 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <kyuploader :disabled="!editable" v-model="item.pictures"></kyuploader>
+            <kyuploader @input="save()" :disabled="!editable" v-model="item.pictures"></kyuploader>
           </div>
         </div>
       </div>
@@ -17,15 +17,15 @@
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell">
           <div class="weui-cell__bd">
-            <textarea :disabled="!editable" placeholder="请输入..." v-model="item.notes" style="height: 3.3em" />
+            <textarea @change="save()" :disabled="!editable" placeholder="请输入..." v-model="item.notes" style="height: 3.3em" />
             <div class="weui-textarea-counter">0/200</div>
           </div>
         </div>
       </div>
     </div>
     <div v-if="item && editable" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
-      <div :disabled="processing" @click="save()" class="weui-flex__item c-bg-primary">
-        保存
+      <div :disabled="processing" @click="back()" class="weui-flex__item c-bg-primary">
+        确定
       </div>
     </div>
   </div>
@@ -71,7 +71,6 @@ import kyuploader from '@/components/kyuploader.vue'
       save() {
         this.processing = true
         this.$kyutil.post("/pub/wx/activityuserrecord/save", this.item).then(res => {
-          this.back()
         })
       },
       back(){
@@ -85,6 +84,13 @@ import kyuploader from '@/components/kyuploader.vue'
       this.isIpx = this.$kyutil.data.isIpx
     },
     onShow() {
+      var pages = getCurrentPages()
+
+      //修改小程序 chooseImage 会触发页面重新 onShow 事件问题, url参数和缓存页面数据相同事， 不重新加载数据
+      if(this.$root.$mp.query.uid == this.activityUserId && this.recordId == this.$root.$mp.query.id){
+        return
+      }
+      
       this.loaded = false;
       this.recordId =
         this.$root.$mp.query.id

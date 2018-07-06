@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest
  * @author Richard C. Hu
  */
 @Controller
-@SessionAttributes("user")
 class HomeController : BaseController() {
     /**
      * 通用服务
@@ -54,7 +53,7 @@ class HomeController : BaseController() {
      * @param s: 排序分类条件
      * @param request: 请求参数
      */
-    @GetMapping("/")
+    @GetMapping("/", "/index")
     fun index(@RequestParam(required = false) s: Int?, @RequestParam(required = false) tags: String?,
               model: Model, request: HttpServletRequest): String {
 
@@ -112,6 +111,29 @@ class HomeController : BaseController() {
         model.addAttribute("activities", items)
 
         return "index"
+    }
+
+    /**
+     * 用户登录
+     * @param s: 排序分类条件
+     * @param request: 请求参数
+     */
+    @GetMapping("/login", "/login/mobile")
+    fun login(@RequestParam(required = false) s: Int?, model: Model, request: HttpServletRequest): String {
+
+        var user = this.sessionUser
+        if (user != null) {
+            model.addAttribute("user", user)
+        }
+
+        //点击团体切换按钮，选中团体
+        var community = this.sessionCommunity
+        model.addAttribute("community", community)
+        var count = activityService!!.getPublicTotalActivityCount()
+        model.addAttribute("count", count)
+
+
+        return "login"
     }
 
     /**

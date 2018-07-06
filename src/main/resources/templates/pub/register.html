@@ -1,93 +1,235 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/head :: default">
-
 </head>
 <body>
 <style type="text/css">
-    /* Write your styles */
-    .c-am-g{
-        max-width:400px;
+    .am-form-set > input:first-child {
+        border-radius: 30px !important;
     }
-    .c-security{
-        color:gray;
-        font-size: 12px;
-        margin-left:10px;
-    }
-    /* 登陆logo */
-    .c-login-logo { font-size: 130px; color: #ff6a4c; }
-    .c-alert { text-align: center; margin: 10px;color:#ff6a4c; }
-    .am-form-set { margin-bottom: 10px;}
-    .c-login-form .c-login-input-text { font-size: 14px!important; padding-left: 48px!important; line-height: 1.8!important; border-radius: 30px!important; margin-top: 8px;}
-    .c-login-form .c-login-input-text:focus { border-color: #ff6a4c!important; -webkit-box-shadow: inset 0 1px 1px rgba(225,86,86,.075),0 0 5px rgba(225,86,86,.3)!important;box-shadow: inset 0 1px 1px rgba(225,86,86,.075),0 0 5px rgba(225,86,86,.3)!important; }
-    .am-form-set>input:first-child {border-radius: 30px!important;}
-    .c-login-form .am-form-icon i {color: #ccc; padding-left: 15px;}
-    .c-login-form-submit { background: #ff6a4c; border-radius: 30px; border-color: #ff6a4c;}
-    .c-login-form-submit:hover { background: #ff8e77;border-color: #ff8e77;}
-    .c-login-form-shortcut { position: relative; height: 30px; line-height: 30px; margin-top: 30px; padding: 0; width: 88%;  overflow: hidden;box-sizing: border-box;-webkit-box-sizing: border-box; }
-    .c-login-form-shortcut .c-login-form-hr { background: #ccc;  position: absolute; top:50%; left:0; right:0;display: block;  width: 100%; z-index: 1;}
-    .c-login-form-shortcut .c-login-form-hr-font { display: inline-block; padding: 0 16px; background: #fff; position: relative; font-size: 12px; color: #ccc; z-index: 2;}
-    .c-login-form-listico { padding-top: 30px;}
-    .c-login-form-listico .am-icon-btn { width: 60px; height: 60px; line-height: 60px; font-size: 30px;}
-    .c-login-form-listico .am-icon-btn:hover { opacity: .9;}
 
+    .c-login-form .am-form-icon i {
+        color: #ccc;
+        padding-left: 15px;
+    }
+
+    .c-login-form-submit {
+        background: #ff6a4c;
+        border-radius: 30px;
+        border-color: #ff6a4c;
+        margin-top: 10px;
+    }
+
+    .c-login-form-submit:hover {
+        background: #ff8e77;
+        border-color: #ff8e77;
+    }
 </style>
-<div id="c_pub_register_app" class="am-g c-am-g">
-    <!-- LOGO -->
-    <div class="am-u-sm-12 am-text-center" >
-        <i class="am-icon-twitch c-login-logo"></i>
-        <!--<img style="width:50%;" src="/img/activity/logo2.png"/>-->
-    </div>
 
-    <!-- 注册框 -->
-    <div class="am-u-sm-11 am-u-sm-centered">
-        <div class="c-alert" th:if="${param.exist}">
-            手机号已存在
-        </div>
-        <div class="c-alert"  th:if="${param.vercode}">
-            验证码错误或过期
-        </div>
-        <div th:if="${param.success}" class="am-text-center">
-            <a href="/login"  class="c-login-form-submit am-btn am-btn-warning am-round"  th:text="${username} + '注册成功，进入登陆页面'"></a>
-        </div>
-        <div th:unless="${param.success}">
-            <div class="c-alert" v-if="error"  v-text="error">
+<header class="c-header am-topbar am-topbar-inverse">
+    <div class="amz-container">
+        <div class="am-topbar-brand">
+            <a th:href="@{/}" class="am-topbar-logo">
+                <img th:src="${session.COMMUNITY_CONTEXT.avatar}">
+            </a>
 
+        </div>
+
+        <div class="am-collapse am-topbar-collapse">
+            <div class="am-topbar-right" style="">
+                <div>
+                    <a th:href="@{/}" title="">活动吧首页</a>
+                </div>
             </div>
-            <form th:action="@{/pub/register}" method="post" class="am-form">
-            <fieldset class="c-login-form am-form-set">
-                <div class="am-form-group am-form-icon">
-                    <i class="am-icon-user"></i>
-                    <input id="username" required="required" th:attr="data-session=${username}" minlength="11" type="text"  name="username" v-model="username" class="c-login-input-text am-form-field" placeholder="请输入您的手机号" />
-                </div>
-                <div class="am-form-group am-form-icon">
-                    <i class="am-icon-lock"></i>
-                    <input required="required" minlength="6" type="password" name="password" class="c-login-input-text am-form-field" placeholder="至少6个字符" />
-                </div>
-                <div class="am-form-group am-form-icon" style="margin-right:120px; position: relative; ">
-                    <i class="am-icon-lock"></i>
-                    <input required="required" minlength="6" type="text"  name="code" class="c-login-form-submit c-login-input-text am-form-field" placeholder="请输入验证码" />
-                    <div style="width: 100px;position: absolute;right: -106px; top:2px;">
-                        <button type="button" v-bind:disabled="disabled" v-on:click="sendVercode()" class="am-btn am-btn-warning am-round" v-text="vercodeBtnText()">获取验证码</button>
-                    </div>
-                </div>
-                <div class="am-form-group c-security">
-                    <input name="security" required type="checkbox" id="c-security-checkbox" value="" checked="checked">
-                    <span>我已阅读并同意<a target="_blank" href="https://mp.weixin.qq.com/s?__biz=MzI3Mjk5Njk0NQ==&mid=100000009&idx=1&sn=48dd150d203ef1192f959e0e971c3096&chksm=6b2b4e375c5cc721cb9575aff41daf0726b0b41cdbdeb63a5b82071e3a16a04cfcbc03741460&rd2">《用户服务使用协议》</a></span>
-                </div>
-
-            </fieldset>
-            <button type="submit" class="c-login-form-submit am-btn am-btn-primary am-btn-block ">注  册</button>
-        </form>
         </div>
     </div>
-    <div class="am-text-center am-u-sm-11 am-u-sm-centered c-login-form-shortcut">
-        <hr class="c-login-form-hr" />
-        <a href="/login" class="c-login-form-hr-font">返回登录</a>
+</header>
+
+
+<div id="app">
+    <div class="get">
+        <div class="c-bg">
+        </div>
+        <div class="summary">
+            <div class="summary left">
+                <!--<div class="get-title">-->
+                <!--<div class="get_font_left font_line">-->
+                <!--<span>已经有</span>-->
+                <!--</div>-->
+                <!--<div class="get_font_center" th:attr="count=${count}" id="banner_num">-->
+                <!--<span th:text="${count}"></span>-->
+                <!--</div>-->
+                <!--<div class="get_font_rigth font_line">-->
+                <!--<span>个活动</span>-->
+                <!--</div>-->
+                <!--</div>-->
+
+                <!--<div class="font_line">-->
+                <!--<span th:text="${community.description}"></span>-->
+                <!--</div>-->
+            </div>
+
+            <div class="summary right">
+                <div class="tc_login">
+                    <div class="register_HDB">
+                        <form th:action="@{/pub/register}" method="post">
+                            <p class="tit2">免费注册</p>
+                            <ul class="reg_Ul">
+                                <li class="k_sj"><span></span>
+                                    <input name="username" type="tel" placeholder="输入手机号" id="username" maxlength="11"
+                                           autocomplete="off" v-model="username"></li>
+                                <!--<li class="k_txm"><span></span>-->
+                                <!--<input name="" type="text" placeholder="输入图形码" id="rg_form_pic_code" maxlength="4"-->
+                                <!--onkeyup="_register._icon()">-->
+                                <!--<img id="picYzm" src="/captcha?send_type=0" alt="" title="图形码看不清，换一张"-->
+                                <!--onclick="_register._change()">-->
+                                <!--<img id="picYesno" src="http://img.sys.hudongba.com/static_v4/images/other/yzm_no.png">-->
+                                <!--</li>-->
+                                <li class="k_yzm"><span class="yzm_icon"></span>
+                                    <span class="yzm_icon"></span>
+                                    <input name="code" type="tel" placeholder="输入短信验证码"
+                                           maxlength="6"
+                                           autocomplete="off" v-model="code">
+                                    <span id="huoYzm">
+                                        <a href="javascript:void(0);" @click="getVerCode" v-if="canGetVerCode">获取验证码</a>
+                                        <span v-if="!canGetVerCode" class="cxhuo">重新获取 ( {{codeCount}}s )</span>
+                                    </span>
+                                </li>
+                                <li class="k_mm"><span></span><input name="password" type="password" placeholder="输入密码"
+                                                                     id="password" autocomplete="off"
+                                                                     v-model="password"></li>
+                                <li class="k_mm"><span></span><input name="password2" type="password"
+                                                                     placeholder="再次输入密码"
+                                                                     id="password2" autocomplete="off"
+                                                                     v-model="password2"></li>
+                            </ul>
+                            <button type="submit" class="c-login-form-submit am-btn am-btn-xl am-btn-block"
+                                    :disabled="disabled">注册
+                            </button>
+                        </form>
+                    </div>
+                    <div class="forget2">
+                        <input name="" type="checkbox" value="" checked="checked">
+                        <span>我已阅读并同意<a target="_blank"
+                                        href="https://mp.weixin.qq.com/s?__biz=MzI3Mjk5Njk0NQ==&mid=100000009&idx=1&sn=48dd150d203ef1192f959e0e971c3096&chksm=6b2b4e375c5cc721cb9575aff41daf0726b0b41cdbdeb63a5b82071e3a16a04cfcbc03741460&rd2">《用户服务使用协议》</a></span>
+                    </div>
+                    <div class="login_icon">
+                        <div class="login_icon_t">
+                            <i class="left"></i>
+                            <span>使用其他方式登录</span>
+                            <i class="right"></i>
+                        </div>
+                        <div class="login_icon_t">
+                            <a href="javascript:void(0)"
+                               class="login_icon_Wx">
+                                <i class="am-icon-btn am-success am-icon-weixin"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="noHao">我已有帐号，<a th:href="@{/login}">我要登录</a></div>
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+
+<div th:replace="fragments/footer :: default"></div>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
-<script type="text/javascript"  src="/js/pub/register.js"></script>
+<script type="text/javascript" th:src="@{/js/pub/register.js}"></script>
+<style>
+    .get {
+        background: url(http://bjmlsxh.oss-cn-beijing.aliyuncs.com/home/banner_bg.png) top center no-repeat;
+        color: #fff;
+        text-align: center;
+        height: 765px;
+        background-size: cover
+    }
+
+    .get .c-bg {
+        position: absolute;
+        width: 100%;
+        height: 765px;
+        background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .summary {
+        width: 1190px;
+        margin: 0 auto;
+        position: relative;
+        top: 40px;
+    }
+
+    .summary.left {
+        display: block;
+        float: left;
+        position: relative;
+        height: 300px;
+        width: 500px;
+        /*border: 2px solid red;*/
+    }
+
+    .summary.right {
+        display: block;
+        float: right;
+        margin-right: 120px;
+        position: relative;
+        max-height: 580px;
+        width: 400px;
+        background-color: #fff;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+
+    .amz-container {
+        min-height: 76px;
+        height: 76px;
+    }
+
+    .am-topbar-brand {
+        padding: 0 10px;
+        float: left;
+        font-size: 1.8rem;
+        height: 76px;
+        line-height: 76px;
+        color: #233040;
+    }
+
+    .am-topbar {
+        border-bottom: none;
+    }
+
+    .am-topbar-logo img {
+        width: 160px;
+        height: 60px;
+        margin-top: 10px;
+    }
+
+    .am-topbar-right {
+        display: block;
+        float: right;
+        height: 76px;
+        margin-right: 120px;
+    }
+
+    .am-topbar-right a {
+        display: inline-block;
+        overflow: auto;
+        color: #aaa;
+        padding-top: 26px;
+        height: 76px;
+    }
+
+    .font_line {
+        color: #fff;
+        font-size: 30px;
+        white-space: nowrap
+    }
+
+    .cxhuo {
+        color: #aaa;
+    }
+</style>
 </body>
 </html>

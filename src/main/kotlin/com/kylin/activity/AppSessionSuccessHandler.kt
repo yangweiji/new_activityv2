@@ -5,6 +5,7 @@ import com.kylin.activity.util.LogUtil
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
+import org.springframework.stereotype.Component
 import java.io.IOException
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse
  * Created by 9kylin on 2017-12-04.
  * @author Richard C. Hu
  */
+@Component
 class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler() {
 
     /**

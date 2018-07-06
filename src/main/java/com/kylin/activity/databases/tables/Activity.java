@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activity extends TableImpl<ActivityRecord> {
 
-    private static final long serialVersionUID = -383760913;
+    private static final long serialVersionUID = -53489689;
 
     /**
      * The reference instance of <code>activityv2.activity</code>
@@ -146,9 +146,9 @@ public class Activity extends TableImpl<ActivityRecord> {
     public final TableField<ActivityRecord, String> COORDINATE = createField("coordinate", org.jooq.impl.SQLDataType.VARCHAR(255), this, "活动坐标");
 
     /**
-     * The column <code>activityv2.activity.activity_type</code>.
+     * The column <code>activityv2.activity.activity_type</code>. 活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动
      */
-    public final TableField<ActivityRecord, Integer> ACTIVITY_TYPE = createField("activity_type", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<ActivityRecord, Integer> ACTIVITY_TYPE = createField("activity_type", org.jooq.impl.SQLDataType.INTEGER, this, "活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动");
 
     /**
      * The column <code>activityv2.activity.public</code>.

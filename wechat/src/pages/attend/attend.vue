@@ -2,16 +2,7 @@
   <div class="page">
     <div v-if="loaded" class="page__bd">
       <div class="weui-toptips weui-toptips_warn" v-if="errorMessage">{{errorMessage}}</div>
-      <div @click="checkdetails(item.activity.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" >
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.activity.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.activity.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.activity.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.activity.favorite_count}} 报名：{{item.activity.attend_count}}</div>
-                    </div>
-                </div>
+      <activity :item="item.activity" ></activity>
       <div>
         <div class="weui-cells__title" v-if="overDue">
           <h1 class="c-note-text">
@@ -143,7 +134,9 @@
 
 <script>
 import { Decimal } from "decimal.js";
+import activity from '@/components/activity.vue'
 export default {
+  components:{activity},
   data() {
     return {
       isIpx:false,
@@ -382,6 +375,7 @@ export default {
         //收费活动，创建订单
         var order = {
           activityTicketId: activityUser.activityTicketId,
+          communityId:that.item.activity.community_id,
           price: activityUser.price,
           body: "活动报名",
           userId: that.userId,
@@ -463,13 +457,6 @@ export default {
     getoCheckIn() {
       wx.navigateTo({
         url: "../../pages/checkin/checkin?activityId=" + this.activityId
-      });
-    },
-    checkdetails(activityId) {
-      var that = this;
-      that.activityId = activityId;
-      wx.navigateTo({
-        url: "../../pages/details/details?activityId=" + that.activityId
       });
     },
     gotoActivityUserRecord(){

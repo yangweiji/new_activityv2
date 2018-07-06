@@ -3,15 +3,18 @@ package com.kylin.activity.service
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.ArticleDao
 import com.kylin.activity.databases.tables.pojos.Article
-import com.kylin.activity.util.CommonService
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.cache.annotation.CacheConfig
+import org.springframework.cache.annotation.CacheEvict
+import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
-import java.sql.*
+import java.sql.Timestamp
 
 @Service
+@CacheConfig(cacheNames = ["article"])
 class ArticleService {
     @Autowired
     private val articleDao: ArticleDao? = null
@@ -82,6 +85,7 @@ class ArticleService {
      * 删除内容
      * @param id  内容编号
      */
+    @CacheEvict(allEntries = true)
     fun deleteArticleById(id: Int) {
         articleDao!!.deleteById(id)
     }
@@ -99,11 +103,13 @@ class ArticleService {
 
     /**
      * 取得文章列表信息,限制记录数
+     * 添加缓存机制
      * @param category: 分类
      * @return 文章列表信息
      */
+    @Cacheable()
     fun getArticlesLimited(category: Int): Result<Record> {
-        var sql = "select a.id, a.category, a.title , a.publish_time from article a where category = ? " +
+        var sql = "select a.id, a.category, a.title , a.publish_time from article a where category = ? and a.status=1 " +
                 "order by a.publish_time desc limit ?"
         return create!!.resultQuery(sql, category, articleLimit).fetch()
     }
@@ -123,6 +129,7 @@ class ArticleService {
      * 添加内容
      * @param article 文章
      */
+    @CacheEvict(allEntries = true)
     fun insertArticle(article: Article) {
         articleDao!!.insert(article)
     }
@@ -131,6 +138,17 @@ class ArticleService {
      * 更新内容
      * @param article 文章
      */
+    @CacheEvict(allEntries = true)
+    fun update(article: Article) {
+        articleDao!!.update(article)
+    }
+
+
+    /**
+     * 更新内容
+     * @param article 文章
+     */
+    @CacheEvict(allEntries = true)
     fun updateArticle(title: String,summary:String,avatar:String,unit:String,body:String,status:Int,
                       modified:Timestamp,modified_by:Int,pulishTime:Timestamp,category: Int,id:Int?):Any {
         var sql="update article set title=?,summary=?,avatar=?,unit=?, " +

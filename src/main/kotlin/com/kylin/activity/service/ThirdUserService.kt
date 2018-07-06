@@ -6,6 +6,7 @@ import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.AuthUser
+import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
@@ -104,12 +105,12 @@ class ThirdUserService {
      * @param isMember: 是否会员
      * @return 用户列表信息
      */
-    fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?): Result<Record> {
-        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name from user t1 " +
+    fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?,is_black:String?): Result<Record> {
+        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name,t3.is_black from user t1 " +
                 "inner join community_user t3 on t1.id = t3.user_id " +
                 "left join (select user_id, sum(score) total_score from score_history group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
-                "where t3.community_id = ? {0} {1} {2} {3} {4} {5} {6} {7} "
+                "where t3.community_id = ? {0} {1} {2} {3} {4} {5} {6} {7} {8} "
         var strCondition = ""
         if (!username.isNullOrBlank()) {
             strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
@@ -150,6 +151,12 @@ class ThirdUserService {
             strCondition = "and t3.level > 0"
         }
         sql = sql.replace("{7}", strCondition)
+
+        //是否为黑名单
+        if(!is_black.isNullOrBlank()){
+            strCondition="and t3.is_black={8} ".replace("{8}",is_black!!)
+        }
+        sql=sql.replace("{8}",strCondition)
 
         return create!!.resultQuery(sql, communityId).fetch()
     }
@@ -268,10 +275,57 @@ class ThirdUserService {
     /**
      * 检查当前用户是否是团体的会员
      */
-    fun isVip(communityId: Int?, userId: Int?, year: Int): Boolean {
-        val sql = "select count(*) counts from community_user where user_id = ? and community_id = ? and level = ?"
-        val counts = create!!.fetchOne(sql, userId, communityId, year)
-        return counts != null && counts.get("counts", Int::class.java) > 0
+    fun isVip(communityId: Int, userId: Int, year: Int): Boolean {
+        var level = getVipYear(communityId, userId)
+        return level == year
     }
 
+    /**
+     * 获取会员年度
+     */
+    fun getVipYear(communityId: Int, userId: Int): Int {
+        val sql = "select level from community_user where user_id = ? and community_id = ?"
+        val level = create!!.fetchOne(sql, userId, communityId)
+        return if(level == null) 0 else level.get("level", Int::class.java)
+    }
+
+    /**
+     * 更新VIP会员
+     */
+    fun updateVipYear(communityId: Int, userId: Int, year: Int){
+        var communityUser = getCommunityUser(communityId, userId)
+        if(communityUser == null){
+            communityUser = CommunityUser()
+            communityUser!!.userId = userId
+            communityUser!!.communityId = communityId
+            communityUser!!.created = DateUtil.date().toTimestamp()
+        }
+
+        if (communityUser!!.level != year) {
+            communityUser!!.level = year
+            if(communityUser!!.id != null && communityUser!!.id > 0) {
+                updateCommunityUser(communityUser)
+            } else {
+                insertCommunityUser(communityUser)
+            }
+        }
+    }
+
+
+
+    /**
+     * 移除黑名单
+     */
+    fun removeBlack(id: Int): Record {
+        var sql = "update community_user set is_black=0 where user_id=? "
+        return create!!.resultQuery(sql, id).fetchOne()
+    }
+
+    /**
+     * 加入黑名单
+     */
+    fun addBlack(id:Int):Record{
+        var sql = "update community_user set is_black=1 where user_id=? "
+        return create!!.resultQuery(sql, id).fetchOne()
+    }
 }

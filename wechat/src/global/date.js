@@ -133,6 +133,20 @@ function sameDay(a, b) {
     return false;
 }
 
+function getSeconds(hours, minutes, seconds) {
+    var seconds = 0
+    if (hours) {
+        seconds += hours * 3600
+    }
+    if (minutes) {
+        seconds += minutes * 60
+    }
+    if (seconds) {
+        seconds += seconds * 1
+    }
+    return seconds
+}
+
 
 
 export default {
@@ -142,5 +156,6 @@ export default {
     addDays: addDays,
     today: today,
     datePart: datePart,
-    sameDay: sameDay
+    sameDay: sameDay,
+    getSeconds: getSeconds
 }

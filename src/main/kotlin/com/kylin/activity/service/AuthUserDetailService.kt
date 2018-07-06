@@ -2,15 +2,12 @@ package com.kylin.activity.service
 
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.pojos.User
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UserDetailsService
-import org.springframework.stereotype.Service
 import com.kylin.activity.model.AuthUser
 import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletRequestAttributes
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.stereotype.Service
 
 
 /**
@@ -19,10 +16,8 @@ import org.springframework.web.context.request.ServletRequestAttributes
 @Service
 class AuthUserDetailsServiceImpl : UserDetailsService {
 
-
     @Autowired
     private val create: DSLContext? = null
-
 
     @Override
     override fun loadUserByUsername(username: String): UserDetails? {

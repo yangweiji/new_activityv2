@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App'
-import '../static/weui/weui.css'
 import './css/app.css'
 
 import store from './store';
@@ -25,8 +24,10 @@ export default {
             'pages/tool/tool',
             'pages/oneself/oneself',
             'pages/myvip/myvip',
+            'pages/agreement/agreement',
             'pages/details/details',
             'pages/articlelist/articlelist',
+            'pages/posterlist/posterlist',
             'pages/article/article',
             'pages/community/community',
             'pages/attend/attend',
@@ -35,16 +36,22 @@ export default {
             'pages/photosdetails/photosdetails',
             'pages/myactivitys/myactivitys',
             'pages/integrals/integrals',
-            'pages/personalinformation/personalinformation',
+            'pages/userinfo/userinfo',
+            'pages/realinfo/realinfo',
             'pages/activityrecord/activityrecord',
-            'pages/activityrecorditem/activityrecorditem'
+            'pages/activityrecorditem/activityrecorditem',
+            'pages/toolcaculate/toolcaculate',
+            'pages/toolbomamatch/toolbomamatch',
+            'pages/toolmaf180/toolmaf180',
+            'pages/toolsizemap/toolsizemap',
+            'pages/attendusers/attendusers'
         ],
 
         // Will be filled in webpack
         window: {
             backgroundTextStyle: 'light',
             navigationBarBackgroundColor: '#fff',
-            navigationBarTitleText: '活动平台V2',
+            navigationBarTitleText: '活动平台',
             navigationBarTextStyle: 'black'
         },
         tabBar: {

@@ -1,13 +1,14 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import com.xiaoleilu.hutool.date.DateUtil
 
 /**
  * Created by 9kylin on 2018-06-12.
@@ -60,8 +61,8 @@ class WxProfileController {
      * @param userId 用户ID
      * @param communityId 团体ID
      */
-    @GetMapping("/getIntegral")
-    fun getIntegral(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): List<Any> {
+    @GetMapping("/scores")
+    fun getScores(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any{
         val scores = proFileService!!.getActivityIntegral(communityId, userId)
         return scores.intoMaps()
     }
@@ -71,11 +72,9 @@ class WxProfileController {
      * 完善个人信息
      * @param userId 用户id
      */
-    @CrossOrigin
-    @GetMapping("/getIntoPersonalInformation")
-    fun intoPersonalInformation(@RequestParam(required = false) userId: Int): User? {
-        var user = userService!!.getUser(userId)
-        return user
+    @GetMapping("/getuserinfo")
+    fun getUserInfo(@RequestParam(required = false) userId: Int): User {
+        return userService!!.getUser(userId)
     }
 
 
@@ -83,11 +82,10 @@ class WxProfileController {
      * 保存并更新用户信息
      * @param user 用户信息
      */
-    @CrossOrigin
     @Transactional
-    @PostMapping("/savePersonalInformation")
-    fun savePersonalInformation(user: User): Boolean {
-        var userInfo = userService!!.getCurrentUserInfo()
+    @PostMapping("/saveuserinfo")
+    fun saveUserInfo(@RequestBody user: User): User {
+        var userInfo = userService!!.getUser(user.id)
         userInfo!!.displayname = user.displayname
         userInfo!!.gender = user.gender
         userInfo!!.email = user.email
@@ -101,23 +99,42 @@ class WxProfileController {
         userInfo!!.address = user.address
         userInfo!!.wechatId = user.wechatId
         proFileService!!.updateUserInfo(userInfo)
-        return true
+        return userInfo
     }
+
 
 
     /**
-     * 个人中心4个活动数+积分总额
-     * counts:已参加/我喜欢/需签到/已签到/积分总额
-     * @param userId 用户编号
-     * @param communityId 团体编号
+     * 完成实名认证，同时更新用户信息
+     * @param user 用户信息
      */
-    @CrossOrigin
-    @GetMapping("/getPersonalInfoCounts")
-    fun getPersonalInfoCounts(@RequestParam(required = false) userId: Int?,
-                              @RequestParam(required = false) communityId: Int?): List<Any> {
-        val personalInfoCounts = proFileService!!.getPersonalInfoCounts(userId, communityId)
-        return personalInfoCounts.intoMaps()
+    @Transactional
+    @PostMapping("/saverealinfo")
+    fun saveRealInfo(@RequestBody user: User): User {
+        var userInfo = userService!!.getUser(user.id)
+
+        userInfo!!.realName = user.realName
+        userInfo!!.idCard = user.idCard
+        userInfo!!.realTime = DateUtil.date().toTimestamp()
+        userInfo!!.isReal = true
+
+        userInfo!!.displayname = user.displayname
+        userInfo!!.gender = user.gender
+        userInfo!!.email = user.email
+        userInfo!!.bloodType = user.bloodType
+        userInfo!!.clothingSize = user.clothingSize
+        userInfo!!.workCompany = user.workCompany
+        userInfo!!.occupation = user.occupation
+        userInfo!!.emergencyContactName = user.emergencyContactName
+        userInfo!!.emergencyContactMobile = user.emergencyContactMobile
+        userInfo!!.isParty = user.isParty
+        userInfo!!.address = user.address
+        userInfo!!.wechatId = user.wechatId
+        proFileService!!.updateUserInfo(userInfo)
+        return userInfo
     }
+
+
 
 
     /**
@@ -128,7 +145,7 @@ class WxProfileController {
      *
      */
     @CrossOrigin
-    @GetMapping("/getMyActivities")
+    @GetMapping("/getmyactivities")
     fun myActivities(@RequestParam(required = false) type: Int?, userId: Int?, communityId: Int?): List<Any> {
         var activitiesList = proFileService!!.myActivities(type, userId, communityId)
         var items = mutableListOf<MutableMap<String, Any?>>()
@@ -166,7 +183,7 @@ class WxProfileController {
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
-        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+        result["vipYear"] =thirdUserService!!.getVipYear(communityId, userId)
         result["score"] = thirdScoreService!!.getUseableScore(userId, communityId)
         var personalInfoCounts=proFileService!!.getPersonalInfoCounts(userId, communityId)
         var counts= personalInfoCounts.intoMaps()
@@ -189,9 +206,29 @@ class WxProfileController {
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
-        result["isVip"] = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
+        result["vipYear"] =thirdUserService!!.getVipYear(communityId, userId)
 
         return result
     }
+
+    /**
+     * 更新vip年度信息
+     */
+    @GetMapping("/updatevip")
+    fun updateVipYear(@RequestParam(required = false) userId: Int,
+                      @RequestParam(required = false) communityId: Int, @RequestParam(required = false) year:Int){
+        thirdUserService!!.updateVipYear(communityId, userId, year)
+    }
+
+    /**
+     * VIP会员查看条款页面内容
+     */
+    @GetMapping("/agreement")
+    fun getVipAgreement(@RequestParam(required = false) communityId: Int): Community{
+        return communityService!!.getCommunity(communityId)
+    }
+
+
+
 
 }

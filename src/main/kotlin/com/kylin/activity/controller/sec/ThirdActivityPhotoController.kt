@@ -25,7 +25,6 @@ data class PicturesData(
 
 @Controller
 @RequestMapping("sec/community/thirdactivity")
-@SessionAttributes("user")
 class ThirdActivityPhotoController : BaseController() {
 
     /**
@@ -54,8 +53,8 @@ class ThirdActivityPhotoController : BaseController() {
      * @return 图片信息集合
      */
     @RequestMapping(value = "/activityphotos", method = [RequestMethod.GET, RequestMethod.POST])
-    fun activityPhotos(@ModelAttribute user: User, @RequestParam(required = false) activityId: Int?, model: Model): String {
-
+    fun activityPhotos(@RequestParam(required = false) activityId: Int?, model: Model): String {
+        var user = this.sessionUser
         //取得活动详情信息
         var activity = activityService!!.getActivity(activityId!!)
         //存储活动详情信息至模型数据中
@@ -128,14 +127,17 @@ class ThirdActivityPhotoController : BaseController() {
      * @param activityId 活动id(活动相册的外键)
      */
     @PostMapping("/savePictures")
-    fun savePictures(@ModelAttribute user: User
-                     , @ModelAttribute("activityPhotoPicture") activityPhotoPicture: ActivityPhotoPicture
+    fun savePictures(@ModelAttribute("activityPhotoPicture") activityPhotoPicture: ActivityPhotoPicture
                      , @RequestParam(required = false) activityId: Int?
-                     , redirectAttributes: RedirectAttributes): String {
+                     , redirectAttributes: RedirectAttributes, model: Model): String {
+        var user = this.sessionUser
         activityPhotoPicture.created = DateUtil.date().toTimestamp()
         activityPhotoPicture.createdBy = user!!.id
         activityPhotoPicture.order = null
-
+        if (activityPhotoPicture.picture == "") {
+            redirectAttributes.addFlashAttribute("errorMessage", "请选择上传图片！")
+            return "redirect:/sec/community/thirdactivity/activityphotos?activityId=${activityId}"
+        }
         activityPhotoService!!.insertPicture(activityPhotoPicture)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         LogUtil.printLog("添加图片OK, 图片ID: ${activityPhotoPicture.id}")

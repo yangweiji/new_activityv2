@@ -27,7 +27,6 @@ data class ActivityPhotoData(
  */
 @Controller
 @RequestMapping("sec/community/thirdphotos")
-@SessionAttributes("user")
 class ThirdPhotoController : BaseController() {
 
     /**
@@ -124,9 +123,9 @@ class ThirdPhotoController : BaseController() {
      */
     @RequestMapping(value = "/saveActivityPhoto", method = [RequestMethod.POST])
     @Transactional
-    fun saveActivityPhoto(@ModelAttribute user: User
-                          , @ModelAttribute("activityPhoto") activityPhoto: ActivityPhoto
+    fun saveActivityPhoto(@ModelAttribute("activityPhoto") activityPhoto: ActivityPhoto
                           , redirectAttributes: RedirectAttributes, model: Model): String {
+        var user=this.sessionUser
         //验证活动编号是否有效
         var activity = activityService!!.getCommunityActivity(activityPhoto.activityId, this.sessionCommunity.id)
         if (activity == null)

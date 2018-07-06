@@ -25,7 +25,7 @@
       </div>
 
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
-      <div class="weui-grids" style=" border-top:0px; border-left:0px; background-color:#ffffff;">
+      <div class="weui-grids c-blocks">
         <block v-for="(item,index) in grids" :key='index'>
           <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
             <image  :src='item.src' style="width:70px;height:70px"/>
@@ -58,81 +58,31 @@
 
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b5'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
-                  v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
-                    </div>
-                </div>
+                <activity :item="item" v-for="item in items" :key="item.id"></activity>
               </div>
             </div>
 
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b13'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
-                  v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
-                    </div>
-                </div>
+                <activity :item="item" v-for="item in items" :key="item.id"></activity>
               </div>
             </div>
 
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b12'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
-                  v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
-                    </div>
-                </div>
+                <activity :item="item" v-for="item in items" :key="item.id"></activity>
               </div>
             </div>
 
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != 'b10,b11'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
-                  v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
-                    </div>
-                </div>
+                <activity :item="item" v-for="item in items" :key="item.id"></activity>
               </div>
             </div>
 
             <div class="weui-panel weui-panel_access" :hidden="activeIndex != '0'">
               <div class="weui-panel__bd">
-                <div @click="checkdetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active"
-                  v-for="item in items" :key="item.id">
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;">
-                      <image class="weui-media-box__thumb" :src="item.avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-                        <div class="weui-media-box__desc" style="float:right">喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
-                    </div>
-                </div>
+                <activity :item="item" v-for="item in items" :key="item.id"></activity>
               </div>
           </div>
 
@@ -148,7 +98,7 @@
 
 <script>
 import base64 from "../../../static/images/base64";
-
+import activity from '@/components/activity.vue'
 export default {
   data() {
     return {
@@ -165,14 +115,14 @@ export default {
       //文章集合
       grids: [
         {
+          src: "/static/images/images_news.png",
+          name: "赛事活动",
+          url: "/pages/posterlist/posterlist"
+        },
+        {
           src: "/static/images/activity_notices.png",
           name: "通知公告",
           url: "/pages/articlelist/articlelist?articleCategory=1"
-        },
-        {
-          src: "/static/images/images_news.png",
-          name: "赛事新闻",
-          url: "/pages/articlelist/articlelist?articleCategory=2"
         },
         {
           src: "/static/images/images_sport.png",
@@ -260,7 +210,7 @@ export default {
       }
     }
   },
-  components: {},
+  components: {activity},
   methods: {
     //获取活动信息
     getData() {
@@ -502,5 +452,9 @@ export default {
   font-size: 12px;
   color: #fff;
   background-color: #fff;
+}
+.c-blocks {
+  border-top:0px; border-left:0px; background-color:#ffffff;
+  text-align: center;
 }
 </style>

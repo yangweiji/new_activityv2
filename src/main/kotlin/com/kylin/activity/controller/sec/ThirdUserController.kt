@@ -120,9 +120,10 @@ class ThirdUserController : BaseController() {
         var id_card = map["id_card"]
         var level = map["level"]
         var isMember = map["isMember"]
+        var is_black=map["is_black"]
 
         //查询用户
-        var items = userService!!.getCommunityUsersAndScores(this.sessionCommunity.id, start, end, username, displayname, real_name, id_card, level, isMember)
+        var items = userService!!.getCommunityUsersAndScores(this.sessionCommunity.id, start, end, username, displayname, real_name, id_card, level, isMember,is_black)
         return items.intoMaps()
     }
 
@@ -151,7 +152,7 @@ class ThirdUserController : BaseController() {
     @RequestMapping(value = "/saveUser", method = [RequestMethod.POST])
     @Transactional
     @Throws(Exception::class)
-    fun saveUser(@ModelAttribute("user") user: User, redirectAttributes: RedirectAttributes
+    fun saveUser(@ModelAttribute("user") user: User,redirectAttributes: RedirectAttributes
                  , model: Model): String {
         var u = userService!!.getUser(user!!.username)
         if (u != null) {
@@ -186,6 +187,7 @@ class ThirdUserController : BaseController() {
         communityUser.role = user.role
         communityUser.level = user.level
         communityUser.created = DateUtil.date().toTimestamp()
+        communityUser.isBlack=false
         userService!!.insertCommunityUser(communityUser)
         LogUtil.printLog("添加团体组织用户关联数据成功, 关联ID: ${communityUser.id}")
 
@@ -338,19 +340,19 @@ class ThirdUserController : BaseController() {
      */
     @PostMapping("/registerMember")
     @Transactional
-    fun registerMember(@ModelAttribute("user") user: User,
-                       request: HttpServletRequest,
+    fun registerMember(request: HttpServletRequest,
                        @ModelAttribute("current_url") current_url: String,
                        redirectAttributes: RedirectAttributes,
                        model: Model): String {
+        var user=this.sessionUser
         //获取用户的基本注册信息
-        var member = userService!!.getUser(user.id!!)
+        var member = userService!!.getUser(user!!.id!!)
         member.level = 1 //会员用户
         member.realTime = DateUtil.date().toTimestamp()
         member.isReal = true //认证通过
-        member.realName = user.realName
-        member.idCard = user.idCard
-        member.gender = user.gender
+        member.realName = user!!.realName
+        member.idCard = user!!.idCard
+        member.gender = user!!.gender
         //更新成为会员
         userService!!.update(member)
 
@@ -363,4 +365,31 @@ class ThirdUserController : BaseController() {
         return "redirect:$current_url"
     }
 
+
+    /**
+     * 移除黑名单
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/removeBlack", method = [RequestMethod.POST])
+    @ResponseBody
+    fun removeBlack(request: HttpServletRequest): Any? {
+        var userId = if (request.getParameter("userId") != null)
+            request.getParameter("userId").toInt() else 0
+        userService!!.removeBlack(userId)
+        return true
+    }
+
+
+    /**
+     * 加入黑名单
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/addBlack", method = [RequestMethod.POST])
+    @ResponseBody
+    fun addBlack(request: HttpServletRequest): Any? {
+        var userId = if (request.getParameter("userId") != null)
+            request.getParameter("userId").toInt() else 0
+        userService!!.addBlack(userId)
+        return true
+    }
 }

@@ -11,6 +11,7 @@ import com.kylin.activity.databases.tables.pojos.ActivityTicket
 import com.kylin.activity.databases.tables.pojos.ActivityUser
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
+import com.kylin.activity.service.CommunityService
 import com.kylin.activity.service.ThirdActivityService
 import com.kylin.activity.service.UserService
 import com.kylin.activity.service.WxService
@@ -62,6 +63,11 @@ class ThirdActivityController : BaseController() {
     @Autowired
     private val wxService: WxService? = null
 
+    /**
+     * 团体组织服务
+     */
+    @Autowired
+    private val communityService: CommunityService? = null
     /**
      * 第三方活动管理之
      * 查询活动信息
@@ -145,8 +151,9 @@ class ThirdActivityController : BaseController() {
         model.addAttribute("titleName", titleName)
         model.addAttribute("data", data)
 
-        //添加当前团体组织
-        model.addAttribute("community", this.sessionCommunity)
+        //重新获取当前团体组织的信息
+        var community = communityService!!.getCommunity(this.sessionCommunity.id)
+        model.addAttribute("community", community)
 
         return "sec/community/thirdactivity/publish"
     }
@@ -174,18 +181,22 @@ class ThirdActivityController : BaseController() {
         data.activity!!.attendInfos = mapper.writeValueAsString(data.attendInfos)
         data.activity!!.scoreInfos = mapper.writeValueAsString(data.scoreInfos)
 
-        var user = userService!!.getCurrentUserInfo()
-        data.activity!!.created = DateUtil.date().toTimestamp()
-        data.activity!!.createdBy = user!!.id
-
+        var user = this.sessionUser
         if (data.activity!!.id == null || data.activity!!.id == 0) {
             //添加活动
+            data.activity!!.created = DateUtil.date().toTimestamp()
+            data.activity!!.createdBy = user!!.id
+            data.activity!!.modified = DateUtil.date().toTimestamp()
+            data.activity!!.modifiedBy = user!!.id
             thirdActivityService!!.insert(data.activity)
             data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
             //添加活动票种
             thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
         } else {
             //更新活动
+
+            data.activity!!.modified = DateUtil.date().toTimestamp()
+            data.activity!!.modifiedBy = user!!.id
             thirdActivityService!!.update(data.activity)
             data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
             //删除活动票种

@@ -476,6 +476,11 @@ div.dataTables_wrapper div.dataTables_paginate {
     color: gray;
 }
 
+.c-avatar-tip {
+    font-size: 12px;
+    color: gray;
+}
+
 .c-image img {
     display: inline-block;
     height: 123px;
@@ -506,4 +511,14 @@ div.dataTables_wrapper div.dataTables_paginate {
     -moz-transform: scale(1.2);
     -o-transform: scale(1.2);
     -ms-transform: scale(1.2);
+}
+
+/*下拉框样式*/
+.top-text {
+    display: inline-block;
+    line-height: 15px;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }

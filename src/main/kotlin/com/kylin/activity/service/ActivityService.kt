@@ -7,7 +7,9 @@ import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
 import com.xiaoleilu.hutool.date.DateUtil
-import org.jooq.*
+import org.jooq.DSLContext
+import org.jooq.Record
+import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CacheEvict
@@ -230,10 +232,24 @@ class ActivityService {
         return items
     }
 
-   /* if (!checked.isNullOrBlank()) {
-        strCondition = "and t1.check_in_time is not null"
-    }*/
 
+    /**
+     * 取得活动总数
+     */
+    @Cacheable()
+    fun getPublicTotalActivityCount(): Long {
+        var sql = "select count(*) from activity t1"
+        return create!!.fetchValue(sql) as Long
+    }
+
+    /**
+     * 取得指定团体组织下的活动总数
+     */
+    @Cacheable()
+    fun getCommunityTotalActivityCount(communityId: Int): Long {
+        var sql = "select count(*) from activity t1 where t1.community = ?"
+        return create!!.fetchValue(sql, communityId) as Long
+    }
 
     fun getActivitiesByCommunityId(id: Int): Result<Record> {
 
@@ -424,6 +440,7 @@ class ActivityService {
             avatar =  commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
         }
         map["id"] = activity.get("id", Int::class.java)
+        map["community_id"] = activity.get("community_id", Int::class.java)
         map["activity_type"] = activity.get("activity_type", Int::class.java)
         map["favorite_count"] = activity.get("favorite_count", Int::class.java)
         map["attend_count"] = activity.get("attend_count", Int::class.java)
@@ -580,8 +597,37 @@ class ActivityService {
         return items
     }
 
-
     /**
+     * 获取活动报名用户信息，显示在界面上
+     */
+    fun getAttendUsers(activityId: Int) :Any {
+        var users = create!!.resultQuery("select t1.*, t2.displayname, t2.avatar, " +
+                "t3.title activity_ticket_title, t3.price activity_ticket_price from activity_user t1 inner join user t2 on t1.activity_id=? and t1.user_id = t2.id" +
+                " inner join activity_ticket t3 on t1.activity_ticket_id = t3.id order by attend_time desc", activityId)
+
+
+        var items = mutableListOf<MutableMap<String, Any?>>()
+
+        for(user in users){
+            var map = mutableMapOf<String, Any?>()
+            map["id"] = user.get("id", Int::class.java)
+            map["displayname"] = user.get("displayname", String::class.java)
+            map["attend_time"] = util!!.fromNow(user.get("attend_time"))
+            map["check_in_time"] = null
+            if(user.get("check_in_time") != null) {
+                map["check_in_time"] = util!!.fromNow(user.get("check_in_time"))
+            }
+            map["activity_ticket_id"] = user.get("activity_ticket_id", Int::class.java)
+            map["avatar"] = user["avatar"]
+            map["activity_ticket_title"]  = user.get("activity_ticket_title", String::class.java)
+
+            items.add(map)
+        }
+        return items
+    }
+
+
+   /**
      * 活动报名信息
      * @param start: 开始日期
      * @param end: 结束日期
