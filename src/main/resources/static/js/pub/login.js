@@ -1,21 +1,48 @@
+$(function () {
+    //@首页 数字跳动
+    var options = {
+        useEasing: true,
+        useGrouping: true,
+        separator: '',
+        decimal: '.',
+        prefix: '',
+        suffix: ''
+    };
+    var banner_num = new CountUp("banner_num", 0, parseInt($('#banner_num').attr('count')), 0, 5, options);
+    banner_num.start();
+});
+
+//noinspection JSAnnotator
 new Vue({
     el: '#app',
-    data: function() {
+    data: function () {
         return {
+            //登录方式，1：手机号+密码 2：手机号+短信验证码 3: 微信扫码
+            loginType: 1,
             //验证码时间计数
             codeCount: 0,
             canGetVerCode: true,
             error: '',
             username: null,
             password: null,
-            password2: null,
+            mobile: null,
             code: null,
         }
     },
     computed: {
-        disabled() {
+        disabled1 () {
             if (!this.username || this.username.length != 11
-                || !this.password || !this.password2 || (this.password != this.password2)
+                || !this.password
+            ) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        },
+        disabled2 () {
+            if (!this.mobile || this.mobile.length != 11
+                || !this.code || this.code.length < 6
             ) {
                 return true;
             }
@@ -25,10 +52,13 @@ new Vue({
         },
     },
     methods: {
+        show: function (e) {
+            this.loginType = e
+        },
         getVerCode: function () {
             var that = this;
             that.canGetVerCode = true;
-            if (!that.username || that.username.length < 11) {
+            if (!that.mobile || that.mobile.length < 11) {
                 nativeToast({
                     message: '请输入有效的手机号码！',
                     position: 'center',
@@ -39,7 +69,7 @@ new Vue({
                 return;
             }
 
-            if (!that.username.match(/^1\d{10}$/)) {
+            if (!that.mobile.match(/^1\d{10}$/)) {
                 nativeToast({
                     message: '请输入有效的手机号码！',
                     position: 'center',
@@ -51,7 +81,7 @@ new Vue({
             }
 
             $.ajax({
-                url: "/pub/wx/vercode/getVerCode/" + this.username,
+                url: "/pub/wx/vercode/getVerCode/" + this.mobile,
                 contentType: "application/json;charset=utf-8",
                 type: "get",
                 dataType: "json",
@@ -78,6 +108,14 @@ new Vue({
                             }
                         }
                         setTimeout(fun, 1000)
+
+                        // var i = setInterval(()=>{
+                        //     that.codeCount--;
+                        //     if (that.codeCount <= 0) {
+                        //         clearInterval(i);
+                        //         that.canGetVerCode = true;
+                        //     }
+                        // }, 1000);
                     }
                 },
                 error: function () {
@@ -85,7 +123,8 @@ new Vue({
                     that.error = "发送验证码出现错误"
                 }
             });
-        },
-    }
 
+
+        }
+    },
 })

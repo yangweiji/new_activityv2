@@ -1,19 +1,19 @@
 package com.kylin.activity
 
-import org.springframework.context.annotation.Configuration
-import org.springframework.web.util.UrlPathHelper
 import com.kylin.activity.service.CommunityService
 import com.kylin.activity.util.LogUtil
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.context.annotation.Configuration
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.servlet.config.annotation.*
+import org.springframework.web.util.UrlPathHelper
 
 
 @Configuration
 class MvcConfig : WebMvcConfigurerAdapter() {
 
     @Autowired
-    private var communityService: CommunityService? = null
+    private val communityService: CommunityService? = null
 
     override fun addViewControllers(registry: ViewControllerRegistry?) {
         registry!!.addViewController("/login").setViewName("login")

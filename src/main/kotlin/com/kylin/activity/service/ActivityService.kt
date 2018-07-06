@@ -7,7 +7,9 @@ import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
 import com.xiaoleilu.hutool.date.DateUtil
-import org.jooq.*
+import org.jooq.DSLContext
+import org.jooq.Record
+import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CacheEvict
@@ -230,10 +232,24 @@ class ActivityService {
         return items
     }
 
-   /* if (!checked.isNullOrBlank()) {
-        strCondition = "and t1.check_in_time is not null"
-    }*/
 
+    /**
+     * 取得活动总数
+     */
+    @Cacheable()
+    fun getPublicTotalActivityCount(): Long {
+        var sql = "select count(*) from activity t1"
+        return create!!.fetchValue(sql) as Long
+    }
+
+    /**
+     * 取得指定团体组织下的活动总数
+     */
+    @Cacheable()
+    fun getCommunityTotalActivityCount(communityId: Int): Long {
+        var sql = "select count(*) from activity t1 where t1.community = ?"
+        return create!!.fetchValue(sql, communityId) as Long
+    }
 
     fun getActivitiesByCommunityId(id: Int): Result<Record> {
 

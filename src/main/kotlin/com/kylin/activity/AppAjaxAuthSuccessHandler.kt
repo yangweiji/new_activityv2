@@ -4,7 +4,7 @@ import com.kylin.activity.model.AuthUser
 import com.kylin.activity.util.LogUtil
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler
+import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler
 import org.springframework.stereotype.Component
 import java.io.IOException
 import javax.servlet.ServletException
@@ -12,21 +12,12 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 /**
- * Created by 9kylin on 2017-12-04.
- * @author Richard C. Hu
+ * Created by 9kylin on 2018-07-05.
  */
 @Component
-class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler() {
+class AppAjaxAuthSuccessHandler : SimpleUrlAuthenticationSuccessHandler() {
 
-    /**
-     * 认证成功
-     * @param request
-     * @param response
-     * @param authentication
-     * @throws ServletException
-     * @throws IOException
-     */
-    @Throws(ServletException::class, IOException::class)
+    @Throws(IOException::class, ServletException::class)
     override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication) {
         val session = request.session
         //清除全部session值
@@ -40,6 +31,8 @@ class AppSessionSuccessHandler : SavedRequestAwareAuthenticationSuccessHandler()
 
         LogUtil.printLog("登录系统IP :" + getIpAddress(request))
         super.onAuthenticationSuccess(request, response, authentication)
+
+        response.status = HttpServletResponse.SC_OK
     }
 
     /**
