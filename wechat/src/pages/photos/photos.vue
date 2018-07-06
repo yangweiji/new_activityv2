@@ -3,7 +3,7 @@
     <div class="page__bd">
       <div class="flex-row photos">
 
-        <div class="flex-div-item photo-w" v-for="item in items" :key="index">
+        <div class="flex-div-item photo-w" v-for="item in items" :key="item.id">
 
           <navigator :url="'/pages/photosdetails/photosdetails?photoId='+item.id+'&name='+item.description" class="photo">
             <image :src="item.axtenal_url" mode="aspectFill" class="photo-img" />
@@ -46,15 +46,7 @@ export default {
       var param = {
         communityId: that.community.id
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/photo/getPhotos",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
+      this.$kyutil.get("/pub/wx/photo/getPhotos",param).then(res => {
           that.items = res;
         }
       );

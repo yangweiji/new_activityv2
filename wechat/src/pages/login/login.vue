@@ -136,7 +136,7 @@ export default {
       //获取短信验证码
       var that = this;
       if (that.canGetVerCode) {
-        this.$kyutil.HttpRequest(false, "/pub/wx/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
+        this.$kyutil.get("/pub/wx/vercode/getVerCode/" + that.username).then(res=>{
           if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
@@ -175,7 +175,7 @@ export default {
           encryptedData: e.mp.detail.encryptedData,
           ivStr: e.mp.detail.iv,
         }
-        that.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
+        that.$kyutil.get("/pub/wx/auth/getMiniAppUserInfo", param).then(res=>{
           console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
             //获取openid
@@ -188,10 +188,10 @@ export default {
               avatarUrl: res.avatarUrl,
               gender: res.gender
             }
-            that.$kyutil.HttpRequest(false, "/pub/wx/auth/userLogin", 2, "", param, "POST", false, function(res) {
+            that.$kyutil.post("/pub/wx/auth/userLogin", param).then(res => {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                that.$kyutil.HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": param.openId }, "GET", false, function (res) {
+                that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId }).then(res => {
                     console.log("user: ", res)
                     if (res) {
                         //将user存储于storage

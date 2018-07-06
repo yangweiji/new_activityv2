@@ -148,18 +148,9 @@ export default {
         userId: wx.getStorageSync("user").id,
         status: that.activeIndex
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/community/search",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-          that.items = res;
-        }
-      );
+      this.$kyutil.get("/pub/wx/community/search",param).then(res =>{
+        that.items = res;
+      })
     },
     tabClick(e) {
       console.log(e);

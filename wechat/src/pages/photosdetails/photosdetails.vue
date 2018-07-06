@@ -38,15 +38,7 @@ export default {
       var param = {
         photoId: that.photoId
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/photo/getPictures",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
+      this.$kyutil.get("/pub/wx/photo/getPictures",param).then( res => {
           that.details = res;
           console.log(res);
           for (var i = 0; i < res.length; i++) {

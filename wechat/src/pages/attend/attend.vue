@@ -212,16 +212,8 @@ export default {
         activityId: that.activityId,
         userId: that.userId
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/activity/attend",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-          that.isAttend = !!res.attendUser;
+      this.$kyutil.get("/pub/wx/activity/attend",param).then(res=>{
+        that.isAttend = !!res.attendUser;
           that.overDue = !res.attendUser && res.is_over_due;
           that.score = res.userScore;
           that.scoreRate = res.scoreRate;
@@ -242,9 +234,7 @@ export default {
           }
           that.item = res;
           that.loaded = true;
-          console.log("attend get data:", res);
-        }
-      );
+      })
     },
     changeAttendInfo() {
       wx.navigateTo({
@@ -271,22 +261,13 @@ export default {
           cancelText: "取消",
           success: function(res) {
             if (res.confirm) {
-              that.$kyutil.HttpRequest(
-                true,
-                "/pub/wx/activity/cancelattend",
-                false,
-                "",
-                param,
-                "POST",
-                false,
-                function(res) {
-                  wx.redirectTo({
+              that.$kyutil.post("/pub/wx/activity/cancelattend",param).then(res => {
+                wx.redirectTo({
                     url:
                       "../../pages/details/details?activityId=" +
                       that.activityId
                   });
-                }
-              );
+              })
             }
           }
         });
@@ -384,31 +365,14 @@ export default {
         that.payOrder(order);
       } else {
         //免费活动，直接报名
-        that.$kyutil.HttpRequest(
-          true,
-          "/pub/wx/activity/attend",
-          false,
-          "",
-          activityUser,
-          "POST",
-          false,
-          function(res) {
-            that.getData();
-          }
-        );
+        that.$kyutil.post("/pub/wx/activity/attend",activityUser).then(()=>{
+          that.getData();
+        })
       }
     },
     payOrder(order) {
       var that = this;
-      that.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/pay/create",
-        false,
-        "",
-        order,
-        "POST",
-        false,
-        res => {
+      that.$kyutil.post("/pub/wx/pay/create",order).then(res => {
           var payOpt = {
             timeStamp: res[0].timeStamp,
             nonceStr: res[0].nonceStr,
@@ -423,36 +387,26 @@ export default {
             that.processing = false;
           };
           wx.requestPayment(payOpt);
-        },
-        () => {
+        }).catch(() => {
           that.processing = false;
-        }
-      );
+        })
+        
     },
     checkOrder(id) {
       var that = this;
-      that.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/pay/check",
-        false,
-        "",
-        {
+      that.$kyutil.get("/pub/wx/pay/check",{
           id
-        },
-        "Get",
-        false,
-        orderStatus => {
+        }).then(orderStatus => {
           //支付成功后，检查订单也成功，报名最终成功
           if (orderStatus == 2) {
             that.getData(); // 支付成功
           } else {
             alert("支付出现问题，请联系相关人员处理");
           }
-        },
+        }).catch(
         () => {
           that.processing = false;
-        }
-      );
+        })
     },
     getoCheckIn() {
       wx.navigateTo({

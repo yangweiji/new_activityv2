@@ -57,19 +57,10 @@
           activityId: that.activityId,
           userId: that.userId
         }
-        this.$kyutil.HttpRequest(
-          true,
-          "/pub/wx/activity/checkin",
-          false,
-          "",
-          param,
-          "GET",
-          false,
-          function(res) {
-            that.item = res;
+        this.$kyutil.get("/pub/wx/activity/checkin",param).then(res=>{
+          that.item = res;
             that.loaded = true;
-          }
-        )
+        })
       }
     },
     onShow() {

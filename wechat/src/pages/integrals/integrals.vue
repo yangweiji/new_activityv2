@@ -40,19 +40,9 @@ export default {
         communityId: that.community.id,
         userId: wx.getStorageSync("user").id
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/profile/scores",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-         console.log(res);
-         that.grids=res;
-        }
-      );
+      this.$kyutil.get("/pub/wx/profile/scores",param).then(res=>{
+        that.grids=res;
+      })
     },
   },
   created() {

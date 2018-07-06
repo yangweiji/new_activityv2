@@ -154,16 +154,8 @@ export default {
         activityId: that.activityId,
         userId: that.userId
       };
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/activity/attendupdate",
-        false,
-        "",
-        param,
-        "GET",
-        false,
-        function(res) {
-          that.isAttend = !!res.attendUser;
+      this.$kyutil.get("/pub/wx/activity/attendupdate",param).then(res=>{
+        that.isAttend = !!res.attendUser;
           that.overDue = !res.attendUser && res.is_over_due;
           that.score = res.userScore;
           that.scoreRate = res.scoreRate;
@@ -193,9 +185,7 @@ export default {
           }
           that.item = res;
           that.loaded = true;
-          console.log("attend get data:", res);
-        }
-      );
+      })
     },
 
     ticketRadioChange(e) {
@@ -276,20 +266,12 @@ export default {
         activityUser.score = 0;
       }
       that.processing = true;
-      this.$kyutil.HttpRequest(
-        true,
-        "/pub/wx/activity/attendupdate",
-        false,
-        "",
-        activityUser,
-        "POST",
-        false,
-        function(res) {
-          wx.redirectTo({
+      this.$kyutil.post("/pub/wx/activity/attendupdate",activityUser).then(res=>{
+        wx.redirectTo({
             url: "../../pages/attend/attend?activityId=" + that.activityId
           });
-        }
-      );
+      })
+        
     }
   },
   created() {

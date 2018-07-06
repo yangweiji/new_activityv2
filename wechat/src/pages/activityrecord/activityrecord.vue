@@ -168,16 +168,8 @@
         var param = {
           activityId: that.activityId
         };
-        this.$kyutil.HttpRequest(
-          true,
-          "/pub/wx/activityuserrecord/records",
-          false,
-          "",
-          param,
-          "GET",
-          false,
-          function(res) {
-            that.item = res;
+        this.$kyutil.get("/pub/wx/activityuserrecord/records",param).then(res=>{
+          that.item = res;
             for (var i = 0; i < that.item.records.length; i++) {
               var record = that.item.records[i]
               if (record.user_id == that.userId) {
@@ -218,8 +210,7 @@
             }
 
             that.loaded = true;
-          }
-        );
+        })
       },
       bindDatePrev(){
         var newDate = this.$kyutil.date.addDays(this.currentDate, -1)
