@@ -145,7 +145,7 @@ export default {
       //获取短信验证码
       var that = this;
       if (that.canGetVerCode) {
-        this.$kyutil.HttpRequest(false, "/pub/vercode/getVerCode/" + that.username, false, "", "", "GET", false, function(res) {
+        this.$kyutil.get("/pub/vercode/getVerCode/" + that.username).then(res => {
           if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
@@ -190,7 +190,7 @@ export default {
           encryptedData: e.mp.detail.encryptedData,
           ivStr: e.mp.detail.iv,
         }
-        that.$kyutil.HttpRequest(false, "/pub/wx/auth/getMiniAppUserInfo", false, "", param, "GET", false, function(res) {
+        that.$kyutil.get("/pub/wx/auth/getMiniAppUserInfo", param).then(res => {
           console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
             param = {
@@ -201,10 +201,10 @@ export default {
               nickName: res.nickName,
               avatarUrl: res.avatarUrl,
             }
-            that.$kyutil.HttpRequest(false, "/pub/wx/auth/register", 2, "", param, "POST", false, function(res) {
+            that.$kyutil.post("/pub/wx/auth/register", param).then(res => {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                that.$kyutil.HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": wx.getStorageSync("sessionInfo").openid }, "GET", false, function (res) {
+                that.$kyutil.get("/pub/wx/auth/getUserInfo", { "openid": wx.getStorageSync("sessionInfo").openid }).then(res => {
                     console.log("user: ", res)
                     if (res) {
                         wx.setStorageSync("user", res)

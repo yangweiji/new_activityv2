@@ -92,7 +92,7 @@ class HomeController : BaseController() {
         }
 
         //获取海报信息集合
-        var posterItems = posterService!!.getPosterItems()
+        var posterItems = posterService!!.getTopPosters()
         for (r in posterItems) {
             if (r.get("avatar") != null) {
                 r.setValue(r.fieldsRow().field("avatar", String::class.java), commonService!!.getDownloadUrl(r.get("avatar").toString()))

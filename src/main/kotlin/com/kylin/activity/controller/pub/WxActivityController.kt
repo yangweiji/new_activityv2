@@ -90,38 +90,6 @@ class WxActivityController {
     @Autowired
     private val create: DSLContext? = null
 
-    /**
-     * 查询指定团体组织的活动信息
-     * @param communityId: 团体组织标识
-     * @param t: 活动标签分类
-     * @return 团体组织活动信息集合
-     */
-    @GetMapping("/search")
-    fun search(@RequestParam(required = false) communityId: Int, @RequestParam(required = false) t: String?): Any {
-        //活动标签分类:默认为【训练】
-        var tag = if (t.isNullOrBlank()) "b5" else t!!
-        //获取团体组织活动信息
-        var teamActivities = activityService!!.getTeamActivities(communityId, tag)
-        //团体组织活动信息
-        var teamActivityItems = mutableListOf<MutableMap<String, Any?>>()
-        for (activity in teamActivities) {
-            var map = mutableMapOf<String, Any?>()
-            var avatar: String? = null
-            if (activity["avatar"] != null) {
-                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
-            }
-            map["id"] = activity.get("id", Int::class.java)
-            map["activity_type"] = activity.get("activity_type", Int::class.java)
-            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
-            map["attend_count"] = activity.get("attend_user_count", Int::class.java)
-            map["avatar"] = avatar
-            map["start_time"] = util!!.fromNow(activity.get("start_time"))
-            map["title"] = activity.get("title").toString()
-            teamActivityItems.add(map)
-        }
-
-        return teamActivityItems
-    }
 
     /**
      * 显示活动详情内容

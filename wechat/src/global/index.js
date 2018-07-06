@@ -267,13 +267,13 @@ function downloadUrl(name, style, folder) {
 
 function httpGet(url, param) {
     return new Promise((resolve, reject) => {
-        HttpRequest(true, url, false, "", param, "GET", false, resolve, reject)
+        HttpRequest(false, url, false, "", param, "GET", false, resolve, reject)
     })
 }
 
 function httpPost(url, param) {
     return new Promise((resolve, reject) => {
-        HttpRequest(true, url, false, "", param, "POST", false, resolve, reject)
+        HttpRequest(false, url, false, "", param, "POST", false, resolve, reject)
     })
 }
 

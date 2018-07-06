@@ -51,29 +51,6 @@ class PosterService {
         posterDao!!.update(poster)
     }
 
-    /**
-     * 更新海报信息
-     * @param title: 海报信息
-     */
-    @CacheEvict(allEntries = true)
-    fun updatePoster(title: String, avatar: String, mobileAvatar: String, link: String,
-                     activityId: Int, posterType: String, show: Boolean, sequence: Int, id: Int): Any {
-        var sql = "update poster SET title=?,avatar=?,mobile_avatar=?,link=?,activity_id=?, " +
-                "poster_type=?,`show`=?,sequence=? WHERE id=? "
-        return create!!.execute(sql, title, avatar, mobileAvatar, link, activityId, posterType, show, sequence, id)
-    }
-
-
-    /**
-     * 获取海报信息集合，
-     * 排序相同时再通过时间倒序排
-     */
-    @Cacheable()
-    fun getPosterItems(): Result<Record> {
-        var sql = "select t1.*,t2.body from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1 " +
-                "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
-        return create!!.resultQuery(sql).fetch()
-    }
 
 
     /**
@@ -158,9 +135,9 @@ class PosterService {
     /**
      * 微信端获取海报信息
      */
-    fun getPosterByActivityId(): Result<Record> {
-        var sql = "select t1.* from poster t1 LEFT JOIN activity t2 on t1.activity_id=t2.id where 1=1  " +
-                "and t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
+    @Cacheable
+    fun getTopPosters(): Result<Record> {
+        var sql = "select t1.* from poster t1 where t1.`show`=1 order by t1.sequence asc,t1.created desc limit 6 "
         return create!!.resultQuery(sql).fetch()
     }
 
@@ -169,9 +146,7 @@ class PosterService {
      * @param posterType 海报类型
      */
     fun getAllPoster(posterType: String): Result<Record> {
-        var sql = "select t1.* from poster t1 left join " +
-                "activity t2 on t1.activity_id=t2.id where t1.poster_type=? " +
-                "order by t1.sequence asc,t1.created desc limit 50 "
+        var sql = "select t1.* from poster t1  where t1.poster_type=? order by t1.sequence asc,t1.created desc limit 50 "
         return create!!.resultQuery(sql, posterType).fetch()
     }
 
