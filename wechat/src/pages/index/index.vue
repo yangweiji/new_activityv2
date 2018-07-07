@@ -3,8 +3,8 @@
     <div v-if="posters" class="page__bd">
       <!-- banner -->
       <div>
-        <navigator url="../../pages/community/community" hover-class="navigator-hover">
-          <span class="community-select">
+        <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
+          <span class="">
               切换团体
             </span>
         </navigator>

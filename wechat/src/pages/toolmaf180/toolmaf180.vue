@@ -11,11 +11,22 @@
       <field :config="ageField" v-model="item.age" />
       <field :config="statusField" v-model="item.status" />
       <div class="weui-cells__title">
-        NOTE0：MAF180公式是一个经验公式，请根据你的真实
-        健康状况做调整，适当保守一点。
-        NOTE1:16岁及以下年龄的跑者不适用。
-        NOTE2:65岁以上的跑者需要另作调整。
-        NOTE3：对于训练有素非常健康的跑者可以在d的基础上最多再加5。
+        <div class="weui-flex">
+          <div>NOTE0：</div>
+          <div>MAF180公式是一个经验公式，请根据你的真实健康状况做调整，适当保守一点</div>
+        </div>
+        <div class="weui-flex">
+          <div>NOTE1：</div>
+          <div>16岁及以下年龄的跑者不适用。</div>
+        </div>
+        <div class="weui-flex">
+          <div>NOTE2：</div>
+          <div>65岁以上的跑者需要另作调整。</div>
+        </div>
+        <div class="weui-flex">
+          <div>NOTE3：</div>
+          <div>对于训练有素非常健康的跑者可以在d的基础上最多再加5。</div>
+        </div>
       </div>
       <field :config="additionalField" v-model="item.additional" />
       <div class="weui-cells__title c-text-primary c-text-center c-main-value">

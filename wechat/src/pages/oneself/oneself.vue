@@ -4,8 +4,8 @@
       <div>
         <!-- banner -->
         <div>
-          <navigator url="../../pages/community/community" hover-class="navigator-hover">
-            <span class="community-select" style="top:5px;">
+          <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
+            <span style="top:5px;">
                 切换团体
               </span>
           </navigator>
