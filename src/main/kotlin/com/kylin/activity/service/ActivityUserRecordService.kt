@@ -119,7 +119,16 @@ class ActivityUserRecordService {
         if(record.id != null && record.id > 0){
             activityUserRecordDao!!.update(record)
         } else {
-            activityUserRecordDao!!.insert(record)
+            var existRecord:ActivityUserRecord?
+            var item = create!!.resultQuery("select * from  activity_user_record   where activity_user_id = ? and DATE(`record_time`)=DATE(?)", record.activityUserId, record.recordTime)
+            if(item.count() > 0) {
+                existRecord = item.fetchOneInto(ActivityUserRecord::class.java)
+                existRecord.pictures = record.pictures
+                existRecord.notes = record.notes
+                activityUserRecordDao!!.update(existRecord)
+            } else {
+                activityUserRecordDao!!.insert(record)
+            }
         }
     }
 

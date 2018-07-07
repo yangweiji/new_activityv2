@@ -38,7 +38,7 @@
         {
           name: 'idCard',
           title: '身份证号',
-          type: 'text'
+          type: 'idcard'
         },{
           name: 'wechatId',
           title: '微信号',
@@ -54,7 +54,7 @@
         {
           name: 'idCard',
           title: '身份证号',
-          type: 'text',
+          type: 'idcard',
           required: true,
         },{
           name: 'displayname',

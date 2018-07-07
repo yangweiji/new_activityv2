@@ -1,10 +1,18 @@
 <template>
   <div class="c-field-component" :class="[mode]">
     <div class="weui-cells__title">{{config.title}}<span v-if="config.required" style="color:red;font-size:10px;">(必填)</span></div>
-    <div v-if="config.type == 'text'" class="weui-cells weui-cells_after-title">
+    <div v-if="config.type == 'text' || config.type == 'number' || config.type == 'idcard' || config.type == 'digit'" class="weui-cells weui-cells_after-title">
       <div class="weui-cell weui-cell_input">
         <div class="weui-cell__bd">
-          <input :disabled="disabled" @change="input" class="weui-input" :value="value" :placeholder="'请输入' + config.title" />
+          <input :disabled="disabled" :type="config.type" @change="input" class="weui-input" :value="value" :placeholder="'请输入' + config.title" />
+        </div>
+      </div>
+    </div>
+    <div v-if="config.type == 'textarea'" class="weui-cells weui-cells_after-title">
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+          <textarea :disabled="disabled" @change="input" :value="value" :placeholder="'请输入' + config.title" style="height: 3.3em"  />
+          <div class="weui-textarea-counter">0/200</div>
         </div>
       </div>
     </div>

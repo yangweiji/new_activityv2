@@ -175,16 +175,17 @@ class WxActivityController {
             attendInfo.value = when {
                 attendInfo.title == "昵称" -> user.displayname
                 attendInfo.title == "邮件" -> user.email
-                attendInfo.title == "性别" -> if(user.gender == 2) '女' else '男'
+                attendInfo.title == "性别" -> if(user.gender == 2) "女" else "男"
                 attendInfo.title == "血型" -> user.bloodType
                 attendInfo.title == "T恤尺寸" -> user.clothingSize
                 attendInfo.title == "工作单位" -> user.workCompany
                 attendInfo.title == "职业" -> user.occupation
                 attendInfo.title == "紧急联系人姓名" -> user.emergencyContactName
                 attendInfo.title == "紧急联系人电话" -> user.emergencyContactMobile
-                attendInfo.title == "是否党员" -> user.isParty
+                attendInfo.title == "是否党员" -> if(user.isParty != null && user.isParty) "党员" else "群众"
                 attendInfo.title == "家庭地址" -> user.address
                 attendInfo.title == "微信号" -> user.wechatId
+                attendInfo.title == "身份证号" -> user.idCard
                 else -> null
             }
         }

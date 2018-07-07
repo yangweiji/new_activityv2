@@ -66,7 +66,7 @@ export default {
     touchmove(e) {},
     getData() {
       var that = this;
-      this.$kyutil.get("/pub/wx/poster/getPosters", {posterType:activeTab}).then(res => {
+      this.$kyutil.get("/pub/wx/poster/getPosters", { posterType: this.activeTab }).then(res => {
         this.items = res;
       });
     },

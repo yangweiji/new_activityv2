@@ -55,25 +55,24 @@ export default {
             navigationBarTextStyle: 'black'
         },
         tabBar: {
+            selectedColor: '#f37b1d',
+            color: '#7f8389',
             list: [{
                     pagePath: 'pages/index/index',
                     iconPath: 'static/images/home_page.png',
                     selectedIconPath: 'static/images/home_pages.png',
-                    selectedColor: '#F37B1D',
                     text: '首页'
                 },
                 {
                     pagePath: 'pages/tool/tool',
                     iconPath: 'static/images/small_tool.png',
                     selectedIconPath: 'static/images/small_tools.png',
-                    selectedColor: '#F37B1D',
                     text: '小工具'
                 },
                 {
                     pagePath: 'pages/oneself/oneself',
                     iconPath: 'static/images/myself.png',
                     selectedIconPath: 'static/images/myselves.png',
-                    selectedColor: '#F37B1D',
                     text: '我'
                 }
             ]

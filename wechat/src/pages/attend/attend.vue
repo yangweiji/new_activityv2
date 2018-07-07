@@ -31,7 +31,7 @@
             <div class="weui-form-preview__bd">
               <div class="weui-form-preview__item" v-for="attendInfoItem in item.attendInfos" :key="attendInfoItem.key">
                 <div class="weui-form-preview__label">{{attendInfoItem.title}}</div>
-                <div class="weui-form-preview__value">{{item.otherInfo[attendInfoItem.title]}}</div>
+                <div class="weui-form-preview__value">{{item.otherInfo[attendInfoItem.title] || ''}}</div>
               </div>
             </div>
             <div class="weui-form-preview__ft">
@@ -55,44 +55,9 @@
             </radio-group>
           </div>
           <div class="weui-cells__title" v-if="!item.hasTickets">活动票已售完</div>
-          <div v-for="(attItem, index) in item.attendInfos" :key="attItem.title">
-            <div class="weui-cells__title">
-              {{attItem.title}}
-              <span v-if="attItem.required" style="color:red;font-size:10px;">(必填)</span>
-            </div>
-            <div class="weui-cells weui-cells_after-title">
-              <div v-if="attItem.type == 'text'" class="weui-cell weui-cell_input">
-                <div class="weui-cell__bd">
-                  <input class="weui-input" v-model="attItem.value" placeholder="请输入..." />
-                </div>
-              </div>
-              <div v-if="attItem.type == 'textarea'" class="weui-cell">
-                <div class="weui-cell__bd">
-                  <textarea class="" placeholder="请输入..." v-model="attItem.value" style="height: 3.3em" />
-                  <div class="weui-textarea-counter">0/200</div>
-                </div>
-              </div>
-              <radio-group :id="index" v-if="attItem.type == 'select' && !attItem.multiple" @change="attendInfoRadioChange">
-                <label class="weui-cell weui-check__label" v-for="(singleOpt, singleIndex) in attItem.options" :key="singleOpt.title">
-                              <radio class="weui-check" :value="singleOpt.title" :checked="singleOpt.checked" />
-                              <div :name="singleIndex" class="weui-cell__bd">{{singleOpt.title}}</div>
-                              <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="singleOpt.checked">
-                                <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
-                              </div>
-                            </label>
-              </radio-group>
-              <checkbox-group :id="index" v-if="attItem.type == 'select' && attItem.multiple" @change="attendInfoCheckboxChange">
-                <label class="weui-cell weui-check__label" v-for="(multipleOpt, multipleIndex) in attItem.options" :key="multipleOpt.title">
-                              <checkbox  class="weui-check" :value="multipleOpt.title" :checked="multipleOpt.checked" />
-                              <div :name="multipleIndex" class="weui-cell__hd weui-check__hd_in-checkbox">
-                                <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!multipleOpt.checked"></icon>
-                                <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="multipleOpt.checked"></icon>
-                              </div>
-                              <div class="weui-cell__bd">{{multipleOpt.title}}</div>
-                            </label>
-              </checkbox-group>
-            </div>
-          </div>
+          
+          <field :config="attFields[index]" v-model="attItem.value" v-for="(attItem, index) in item.attendInfos"  :key="attItem.title"/>
+
           <div v-if="item.checkInScore > 0" lass="weui-cells__title">
             <label class="c-block-text">活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
           </div>
@@ -135,8 +100,9 @@
 <script>
 import { Decimal } from "decimal.js";
 import activity from '@/components/activity.vue'
+import field from '@/components/field.vue'
 export default {
-  components:{activity},
+  components:{activity, field},
   data() {
     return {
       isIpx:false,
@@ -151,7 +117,8 @@ export default {
       scoreRate: 0,
       item: {},
       errorMessage: null,
-      processing: false
+      processing: false,
+      attFields:null
     };
   },
   computed: {
@@ -196,7 +163,7 @@ export default {
         if (result > this.score) {
           result = this.score;
         }
-        if (this.ticket.score != null && this.ticket.score < result) {
+        if (this.ticket.score != null && this.ticket.score != undefined && this.ticket.score != "" && this.ticket.score < result) {
           result = this.ticket.score;
         }
         return result;
@@ -222,16 +189,33 @@ export default {
               res.ticketInfos[i].checked = false;
             }
           }
+
+
+          var attFields = []
           if (res.attendInfos) {
             for (var i = 0; i < res.attendInfos.length; i++) {
               var attendInfo = res.attendInfos[i];
+              var field = {
+                type : attendInfo.type,
+                title: attendInfo.title,
+                required:attendInfo.required
+              }
               if (attendInfo.type == "select") {
+                field.options = []
                 for (var j = 0; j < attendInfo.options.length; j++) {
-                  attendInfo.options[j].checked = false;
+                  var optTitle = attendInfo.options[j].title
+                  field.options.push({title: optTitle, value: optTitle})
+                }
+                if(attendInfo.multiple){
+                  field.type = "check"
+                } else {
+                  field.type = "radio"
                 }
               }
+              attFields.push(field)
             }
           }
+          that.attFields = attFields
           that.item = res;
           that.loaded = true;
       })
@@ -283,29 +267,6 @@ export default {
         }
       }
       this.item.ticketInfos = ticketInfos;
-    },
-    attendInfoRadioChange(e) {
-      let attendInfo = this.item.attendInfos[e.mp.target.id];
-      attendInfo.value = e.mp.detail.value;
-      for (let i = 0; i < attendInfo.options.length; ++i) {
-        var opt = attendInfo.options[i];
-        opt.checked = opt.title == e.mp.detail.value;
-      }
-    },
-    attendInfoCheckboxChange(e) {
-      let attendInfo = this.item.attendInfos[e.mp.target.id];
-      let values = e.mp.detail.value;
-      attendInfo.value = e.mp.detail.value.join();
-      for (var i = 0, lenI = attendInfo.options.length; i < lenI; ++i) {
-        let opt = attendInfo.options[i];
-        opt.checked = false;
-        for (var j = 0, lenJ = values.length; j < lenJ; ++j) {
-          if (opt.title == values[j]) {
-            opt.checked = true;
-            break;
-          }
-        }
-      }
     },
     usingScoreChange() {
       this.isUsingScore = !this.isUsingScore;

@@ -231,27 +231,10 @@
     methods: {
       getData() {},
       getTimeSeconds() {
-        var seconds = 0
-        if (this.item.timeHours) {
-          seconds += this.item.timeHours * 3600
-        }
-        if (this.item.timeMinutes) {
-          seconds += this.item.timeMinutes * 60
-        }
-        if (this.item.timeSeconds) {
-          seconds += this.item.timeSeconds
-        }
-        return seconds
+        return this.$kyutil.date.getSeconds(this.item.timeHours, this.item.timeMinutes, this.item.timeSeconds)
       },
       getSpeedSeconds() {
-        var seconds = 0
-        if (this.item.speedMinutes) {
-          seconds += this.item.speedMinutes * 60
-        }
-        if (this.item.speedSeconds) {
-          seconds += this.item.speedSeconds
-        }
-        return seconds
+        return this.$kyutil.date.getSeconds(0, this.item.speedMinutes, this.item.speedSeconds)
       },
       checkNull() {
         for (var key in this.item) {

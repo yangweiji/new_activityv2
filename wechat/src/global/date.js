@@ -133,16 +133,16 @@ function sameDay(a, b) {
     return false;
 }
 
-function getSeconds(hours, minutes, seconds) {
+function getSeconds(h, m, s) {
     var seconds = 0
-    if (hours) {
-        seconds += hours * 3600
+    if (h) {
+        seconds += h * 3600
     }
-    if (minutes) {
-        seconds += minutes * 60
+    if (m) {
+        seconds += m * 60
     }
-    if (seconds) {
-        seconds += seconds * 1
+    if (s) {
+        seconds += s * 1
     }
     return seconds
 }

@@ -4,7 +4,7 @@
 </template>
 
 <script>
-var _cache_urls = []
+var _cache_urls = {}
 export default {
   name: '',
   props: {
@@ -49,18 +49,28 @@ export default {
   created(){
     if(this.preview && this.innerSrc){
       var url = this.$kyutil.downloadUrl(this.innerSrc, '', this.folder)
-      if(_cache_urls.indexOf(url) < 0){
-        _cache_urls.push(url)
+      var cacheUrls = this.currentPageUrls()
+      if(cacheUrls.indexOf(url) < 0){
+        cacheUrls.push(url)
       }
     }
   },
   methods:{
+    currentPageUrls(){
+      var currentPages = getCurrentPages()
+      var id = "_cache_" + currentPages[currentPages.length - 1].data.__webviewId__
+      if(!_cache_urls[id]){
+        _cache_urls[id] = []
+      }
+      return _cache_urls[id]
+    },
     previewClick(){
       if(this.preview){
         var current = this.$kyutil.downloadUrl(this.innerSrc, '', this.folder)
+        var cacheUrls = this.currentPageUrls()
         wx.previewImage({
           current: current, 
-          urls: _cache_urls
+          urls: cacheUrls
         })
       }
     }
