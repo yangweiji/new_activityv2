@@ -18,7 +18,9 @@
         NOTE3：对于训练有素非常健康的跑者可以在d的基础上最多再加5。
       </div>
       <field :config="additionalField" v-model="item.additional" />
-      <div class="weui-cells__title c-text-primary c-text-center" v-if="item.value">您的MAF心率是{{item.value}}</div>
+      <div class="weui-cells__title c-text-primary c-text-center c-main-value">
+        <span v-if="item.value">您的MAF心率是{{item.value}}</span>
+        </div>
     </div>
     <div class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div class="weui-flex__item c-bg-default">
@@ -113,6 +115,11 @@
           }
         }
         this.item.value = new Decimal(value).floor().toNumber()
+
+        wx.pageScrollTo({
+          scrollTop: 3000,
+          duration: 300
+        })
       },
       reset() {
         this.item = {
@@ -156,5 +163,10 @@
   }
   .page__desc {
     color: white;
+  }
+  .c-main-value{
+    margin-bottom: 50px;
+    font-size: 30px;
+    height: 40px;
   }
 </style>

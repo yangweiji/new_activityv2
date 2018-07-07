@@ -19,7 +19,7 @@
     <div v-if="config.type == 'picker'" class="weui-cells weui-cells_after-title">
       <div class="weui-cell weui-cell_select">
         <div class="weui-cell__bd">
-          <picker :placeholder="'请输入' + config.title" :disabled="disabled" :value="pickerIndex" @change="pickerChange" :range="config.options">
+          <picker color="#F37B1D" :placeholder="'请输入' + config.title" :disabled="disabled" :value="pickerIndex" @change="pickerChange" :range="config.options">
                   <div class="weui-select">{{value}}</div>
                 </picker>
         </div>
@@ -31,7 +31,7 @@
                         <radio :disabled="disabled" class="weui-check" :value="item.value" :checked="item.checked" />
                         <div class="weui-cell__bd">{{item.title}}</div>
                         <div class="weui-cell__ft weui-cell__ft_in-radio" v-if="item.checked">
-                          <icon class="weui-icon-radio" type="success_no_circle" size="16"></icon>
+                          <icon class="weui-icon-radio" type="success_no_circle" color="#F37B1D" size="16"></icon>
                         </div>
                       </label>
       </radio-group>
@@ -42,7 +42,7 @@
                         <checkbox :disabled="disabled" class="weui-check" :value="item.value" :checked="item.checked" />
                         <div class="weui-cell__hd weui-check__hd_in-checkbox">
                                     <icon class="weui-icon-checkbox_circle" type="circle" size="23" v-if="!item.checked"></icon>
-                                    <icon class="weui-icon-checkbox_success" type="success" size="23" v-if="item.checked"></icon>
+                                    <icon class="weui-icon-checkbox_success" type="success" color="#F37B1D" size="23" v-if="item.checked"></icon>
                                   </div>
                                   <div class="weui-cell__bd">{{item.title}}</div>
                       </label>
@@ -52,7 +52,7 @@
       <div class="weui-cell weui-cell_switch">
         <div class="weui-cell__bd">{{config.title}}</div>
         <div class="weui-cell__ft">
-          <switch :disabled="disabled" :checked="value" @change="input" />
+          <switch :disabled="disabled" color="#F37B1D" :checked="value" @change="input" />
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@
             
             <div class="weui-panel weui-panel_access">
               <div class="weui-panel__bd">
-                <div @click="gotoDetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
+                <div @click="gotoDetails(item)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">    
                     <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
                       <image class="weui-media-box__thumb" :src="item.mobile_avatar" />
@@ -74,9 +74,11 @@ export default {
       this.getData()
     },
     gotoDetails(item) {
-      wx.navigateTo({
-        url: "../../pages/details/details?activityId=" + item.activity_id
-      });
+      if(item.activity_id){
+        wx.navigateTo({
+          url: "../../pages/details/details?activityId=" + item.activity_id
+        });
+      }
     }
   },
   created() {},

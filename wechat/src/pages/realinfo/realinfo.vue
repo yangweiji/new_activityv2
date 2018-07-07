@@ -193,13 +193,23 @@
       },
       save() {
         var that = this
+
+        if(!that.$kyutil.idcardValid(that.user.idCard)){
+          that.errorMessage = "您的身份证号不合法，请重新输入"
+            that.resetError()
+            return
+        }
+
         for (var i = 0; i < that.fields.length; i++) {
           var field = that.fields[i]
+
           if(field.required && (that.user[field.name] === null || that.user[field.name] === undefined || that.user[field.name] === '')){
             that.errorMessage = "请填写"+ field.title
             that.resetError()
             return
           }
+
+
         }
         this.$kyutil.post("/pub/wx/profile/saverealinfo", that.user).then(res => {
           if(!that.fromVip){

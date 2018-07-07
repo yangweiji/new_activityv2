@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <div v-if="items" class="page__bd">
+    <div v-if="posters" class="page__bd">
       <!-- banner -->
       <div>
         <navigator url="../../pages/community/community" hover-class="navigator-hover">
@@ -171,6 +171,7 @@
       },
       search() {
         var that = this;
+        that.items = null
         var param = {
           communityId: that.community.id,
           t: that.activeTab
