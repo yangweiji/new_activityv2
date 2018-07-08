@@ -62,25 +62,6 @@
                                th:href="@{/pub/applyforcommunity/applyforcommunities}">申请团体</a>
                         </span>
                     </li>-->
-
-                    <!--<li class="am-dropdown" data-am-dropdown style="margin-left: 280px;top:8px;">-->
-                        <!--<span class="btn1">-->
-                            <!--<button type="button" style="font-size: 14px;"-->
-                                    <!--class="am-btn am-btn-default am-btn-secondary-->
-                                     <!--am-radius am-dropdown-toggle">-->
-                                <!--<span th:inline="text">[[${session.COMMUNITY_CONTEXT.name}]]</span>-->
-                            <!--<span class="am-icon-caret-down"></span>-->
-                            <!--</button>-->
-                        <!--</span>-->
-                        <!--<ul class="am-dropdown-content">-->
-                            <!--<li class="am-dropdown-header">团体名称</li>-->
-                            <!--<li class="am-divider"></li>-->
-                            <!--<li th:each="item:${handlerCommunities}">-->
-                                <!--<a href="javascript:void(0);" th:onclick="'_communityChange(' + ${item.id}+ ')'"-->
-                                   <!--th:text="${item.name}"></a>-->
-                            <!--</li>-->
-                        <!--</ul>-->
-                    <!--</li>-->
                 </ul>
 
                 <div class="am-topbar-right" style="width: 400px;">
@@ -104,11 +85,11 @@
                         </li>
                     </ul>
 
-                    <div style="float:right;">
+                    <div style="float:right;margin-top:15px;">
                         <span th:unless="${#httpServletRequest.remoteUser}">
-                            <a th:href="@{/login}" class="am-btn am-btn-danger am-topbar-btn am-btn-sm"><span
+                            <a th:href="@{/login}" class="am-btn am-btn-warning am-topbar-btn am-btn-sm"><span
                                     class="am-icon-user"></span> 登录</a>
-                            <a th:href="@{/pub/register}" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm"><span
+                            <a th:href="@{/pub/register}" class="am-btn am-btn-warning am-topbar-btn am-btn-sm"><span
                                     class="fa-user-plus"></span>注册</a>
                         </span>
                     </div>
