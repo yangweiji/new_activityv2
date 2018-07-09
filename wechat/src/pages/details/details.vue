@@ -11,7 +11,7 @@
             <div class="weui-article__h3 c-display-text">
               {{item.displayname}}   {{item.created}}
               <navigator v-if="item.picture_count > 0" :url="'/pages/photosdetails/photosdetails?activityId='+item.id" class="c-photo">
-                活动相册<div class="weui-badge">{{item.picture_count}}</div>
+                <image src="/static/images/photos.png" style="width: 30px;height:20px" /> <div class="weui-badge">{{item.picture_count}}</div>
               </navigator>
             </div>
             <div v-if="item.body" class="weui-article__p">
@@ -23,7 +23,7 @@
     </div>
     <div class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div @click="addFavorite()" class="c-default-btn">
-        喜欢<span class="weui-badge">{{item.favorite_count}}</span>
+       喜欢<span class="weui-badge">{{item.favorite_count}}</span>
       </div>
       <div @click="gotoAttendUsers()" class="c-default-btn">
         参加<span class="weui-badge">{{item.attend_count}}</span>
@@ -124,5 +124,5 @@
   }
   .c-photo .weui-badge{
     background-color: #008cff;
-  }
+    margin-bottom: 10px;  }
 </style>
