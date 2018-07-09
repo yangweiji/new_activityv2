@@ -84,4 +84,16 @@ class WxPhotoController {
         return mapOf("description" to photo!!.description, "pictures" to pictures)
     }
 
+
+    /**
+     * 活动相册：预览数，图片总数
+     * @param communityId 团体id
+     */
+    @CrossOrigin
+    @GetMapping("/getPhotoInfo")
+    fun getPhotoInfo(@RequestParam(required = false)communityId: Int):List<Any>{
+        val photoItems=activityPhotoService!!.getActivityPhotoItemsByCommunity(communityId)
+        return photoItems.intoMaps()
+    }
+
 }
