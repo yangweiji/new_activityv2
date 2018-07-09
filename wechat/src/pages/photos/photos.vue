@@ -45,6 +45,7 @@ export default {
         communityId: that.community.id
       };
       this.$kyutil.get("/pub/wx/photo/getPhotos",param).then(res => {
+          console.log(res);
           that.items = res;
         }
       );
