@@ -30,12 +30,6 @@ class WxPhotoController {
     @Autowired
     private var commonService: CommonService? = null
 
-    /**
-     * 活动服务
-     */
-    @Autowired
-    private val activityService: ActivityService? = null
-
 
     /**
      * 第三方工具
@@ -89,23 +83,22 @@ class WxPhotoController {
 
 
     /**
-     * 活动相册详情
-     * @param activityPhotoId: 相册ID
-     * @return 相册详情页面视图
+     * 取得活动对应的唯一相册
+     * @param activityId: 活动ID
+     * @return 活动对应的首个相册
      */
     @CrossOrigin
     @GetMapping("/getPhotoDetail")
-    fun getPhotoDetail(@RequestParam(required = false)activityPhotoId: Int):ActivityPhoto{
-        //根据相册id取得唯一的相册信息
-       var activityPhoto= activityPhotoService!!.getActivityPhotoItem(activityPhotoId)
+    fun getPhotoDetail(@RequestParam(required = false)activityId: Int):ActivityPhoto{
+       var activityPhoto= activityPhotoService!!.getFirstActivityPhoto(activityId)
         //记录浏览次数
-        if(activityPhoto.browseCount!=null){
-            activityPhoto.browseCount++
+        if(activityPhoto!!.browseCount!=null){
+            activityPhoto!!.browseCount++
         }else{
-            activityPhoto.browseCount=0
+            activityPhoto!!.browseCount=0
         }
-        activityPhotoService!!.update(activityPhoto)
-        return activityPhoto
+        activityPhotoService!!.update(activityPhoto!!)
+        return activityPhoto!!
     }
 
     /**
