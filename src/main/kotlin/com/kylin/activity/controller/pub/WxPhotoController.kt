@@ -77,42 +77,15 @@ class WxPhotoController {
     @GetMapping("getPicturesByActivityId")
     fun getPicturesByActivityId(@RequestParam(required = true) activityId: Int): Any {
         var photo = activityPhotoService!!.getFirstActivityPhoto(activityId)
-        var pictures = activityPhotoService!!.getPicturesByActivityId(activityId)
-        return mapOf("description" to photo!!.description, "pictures" to pictures)
-    }
-
-
-    /**
-     * 取得活动对应的唯一相册
-     * @param activityId: 活动ID
-     * @return 活动对应的首个相册
-     */
-    @CrossOrigin
-    @GetMapping("/getPhotoDetail")
-    fun getPhotoDetail(@RequestParam(required = false)activityId: Int):ActivityPhoto{
-       var activityPhoto= activityPhotoService!!.getFirstActivityPhoto(activityId)
         //记录浏览次数
-        if(activityPhoto!!.browseCount!=null){
-            activityPhoto!!.browseCount++
+        if(photo!!.browseCount!=null){
+            photo!!.browseCount++
         }else{
-            activityPhoto!!.browseCount=0
+            photo!!.browseCount=0
         }
-        activityPhotoService!!.update(activityPhoto!!)
-        return activityPhoto!!
+        activityPhotoService!!.update(photo!!)
+        var pictures = activityPhotoService!!.getPicturesByActivityId(activityId)
+        return mapOf("description" to photo!!.description, "pictures" to pictures,"browseCount" to photo!!.browseCount)
     }
 
-    /**
-     * 获取相册所有图片信息
-     * @param activityPhotoId： 相册ID
-     * @return 相册下的图片集合
-     */
-    @CrossOrigin
-    @GetMapping("/getPhotoPictureDetail")
-    fun getPhotoPictureDetail(@RequestParam(required = false)activityPhotoId: Int):List<Any>{
-        val photoPictureList= activityPhotoService!!.getPhotoPictureList(activityPhotoId)
-        for (item in photoPictureList) {
-            item.picture = commonService!!.getDownloadUrl(item.picture)
-        }
-        return photoPictureList
-    }
 }
