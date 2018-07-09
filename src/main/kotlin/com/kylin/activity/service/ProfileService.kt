@@ -46,8 +46,10 @@ class ProfileService {
     fun getPersonalInfoCounts(userId: Int?,communityId: Int?):Result<Record>{
          val sql="select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? \n" +
                  "union all\n" +
-                 "select ifnull(sum(case  when check_in_time is null then 1 else 0 end ), 0)  \n" +
-                 "counts from activity_user t1 inner join activity t2 on t1.user_id=? and t2.community_id=? and t2.end_time > now()\n" +
+                 "select count(t1.activity_id) counts from activity_user t1 inner join \n" +
+                 "activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=?\n" +
+                 "and t2.end_time > now()\n" +
+                 "and t1.check_in_time is null\n"+
                  "union all\n" +
                  "select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id  \n" +
                  "and t1.user_id=? and t2.community_id=?  and check_in_time is not null \n" +
