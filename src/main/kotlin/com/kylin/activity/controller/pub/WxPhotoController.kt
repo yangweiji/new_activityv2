@@ -85,7 +85,7 @@ class WxPhotoController {
         }
         activityPhotoService!!.update(photo!!)
         var pictures = activityPhotoService!!.getPicturesByActivityId(activityId)
-        return mapOf("description" to photo!!.description, "pictures" to pictures,"browseCount" to photo!!.browseCount)
+        return mapOf("description" to photo!!.description, "pictures" to pictures,"browse_count" to photo!!.browseCount)
     }
 
 }
