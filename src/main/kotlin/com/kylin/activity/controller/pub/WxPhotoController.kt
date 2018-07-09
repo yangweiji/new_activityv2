@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.CommunityService
@@ -69,6 +70,8 @@ class WxPhotoController {
             map["created_by"] = photo.get("created_by", Int::class.java)
             map["axtenal_url"] = photo.get("axtenal_url").toString()
             map["picture"] = picture
+            map["pictureCount"]=photo.get("pictureCount",Int::class.java)
+            map["browse_count"]=photo.get("browse_count",Int::class.java)
             photoItems.add(map)
         }
         return photoItems
@@ -86,14 +89,37 @@ class WxPhotoController {
 
 
     /**
-     * 活动相册：预览数，图片总数
-     * @param communityId 团体id
+     * 活动相册详情
+     * @param activityPhotoId: 相册ID
+     * @return 相册详情页面视图
      */
     @CrossOrigin
-    @GetMapping("/getPhotoInfo")
-    fun getPhotoInfo(@RequestParam(required = false)communityId: Int):List<Any>{
-        val photoItems=activityPhotoService!!.getActivityPhotoItemsByCommunity(communityId)
-        return photoItems.intoMaps()
+    @GetMapping("/getPhotoDetail")
+    fun getPhotoDetail(@RequestParam(required = false)activityPhotoId: Int):ActivityPhoto{
+        //根据相册id取得唯一的相册信息
+       var activityPhoto= activityPhotoService!!.getActivityPhotoItem(activityPhotoId)
+        //记录浏览次数
+        if(activityPhoto.browseCount!=null){
+            activityPhoto.browseCount++
+        }else{
+            activityPhoto.browseCount=0
+        }
+        activityPhotoService!!.update(activityPhoto)
+        return activityPhoto
     }
 
+    /**
+     * 获取相册所有图片信息
+     * @param activityPhotoId： 相册ID
+     * @return 相册下的图片集合
+     */
+    @CrossOrigin
+    @GetMapping("/getPhotoPictureDetail")
+    fun getPhotoPictureDetail(@RequestParam(required = false)activityPhotoId: Int):List<Any>{
+        val photoPictureList= activityPhotoService!!.getPhotoPictureList(activityPhotoId)
+        for (item in photoPictureList) {
+            item.picture = commonService!!.getDownloadUrl(item.picture)
+        }
+        return photoPictureList
+    }
 }
