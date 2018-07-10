@@ -8,14 +8,23 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,7 +40,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = -1058592487;
+    private static final long serialVersionUID = 24436920;
 
     /**
      * The reference instance of <code>activityv2.community_user</code>
@@ -79,7 +88,7 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
     /**
      * The column <code>activityv2.community_user.is_black</code>. 是否黑名单用户
      */
-    public final TableField<CommunityUserRecord, Boolean> IS_BLACK = createField("is_black", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "是否黑名单用户");
+    public final TableField<CommunityUserRecord, Boolean> IS_BLACK = createField("is_black", org.jooq.impl.SQLDataType.BIT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "是否黑名单用户");
 
     /**
      * Create a <code>activityv2.community_user</code> table reference
