@@ -181,7 +181,7 @@ $(function () {
         ],
 
         //默认排序
-        order: [[7, 'desc']],
+            order: [[1, 'desc']],
         autoWidth: false,
         scrollX: true,
         // scrollY: '50vh',
