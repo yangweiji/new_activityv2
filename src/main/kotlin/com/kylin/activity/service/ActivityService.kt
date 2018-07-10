@@ -38,12 +38,6 @@ class ActivityService {
     private val util: KylinUtil? = null
 
     /**
-     * 用户服务
-     */
-    @Autowired
-    private val userService: UserService? = null
-
-    /**
      * 活动DAO
      */
     @Autowired
@@ -116,8 +110,7 @@ class ActivityService {
     fun save(activity: Activity): Activity {
         if (activity.id != null && activity.id > 0) {
             activityDao!!.update(activity)
-        }
-        else {
+        } else {
             activityDao!!.insert(activity)
         }
 
@@ -174,19 +167,6 @@ class ActivityService {
         return activityDao!!.fetchOne(Tables.ACTIVITY.ID, id)
     }
 
-
-    /**
-     * 获取活动团体id
-     * @param communityId 团体id
-     */
-    fun getActivityCommunity(communityId: Int?): Activity? {
-        var sql = "select * from activity where community_id=? "
-        var items = create!!.resultQuery(sql, communityId).fetch()
-        if (items.size > 0)
-            return items.first().into(Activity::class.java)
-        return null
-    }
-
     /**
      * 取得团体组织下的活动数量
      * @param communityId: 团体组织ID
@@ -194,7 +174,7 @@ class ActivityService {
      */
     fun getCommunityActivityCount(communityId: Int): Long {
         var sql = "select count(*) from activity where community_id = ? "
-        return create!!.fetchValue(sql,communityId) as Long
+        return create!!.fetchValue(sql, communityId) as Long
     }
 
 
@@ -219,7 +199,8 @@ class ActivityService {
     fun getPublicActivities(id: Int): Result<Record> {
 
         //构建活动数据源
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
@@ -231,7 +212,6 @@ class ActivityService {
         var items = create!!.resultQuery(sql, id).fetch()
         return items
     }
-
 
     /**
      * 取得活动总数
@@ -251,13 +231,19 @@ class ActivityService {
         return create!!.fetchValue(sql, communityId) as Long
     }
 
+    /**
+     * 取得指定团体组织下的活动信息
+     * @param id: 团体组织ID
+     * @return 活动集合
+     */
     fun getActivitiesByCommunityId(id: Int): Result<Record> {
 
         //构建活动数据源
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
-                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) checked , "+
-                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is null) no_checked , "+
+                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) checked , " +
+                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is null) no_checked , " +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by = t2.id " +
@@ -275,10 +261,12 @@ class ActivityService {
      * @param tags: 活动标签分类
      * @return 活动信息集合
      */
+    @Cacheable()
     fun getPublicActivities(tags: String): Result<Record> {
 
         //构建活动数据源
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
@@ -310,10 +298,11 @@ class ActivityService {
      *  @param tag: 活动标签分类
      *  @return 团体组织活动信息集合
      */
+    @Cacheable()
     fun getTeamActivities(sid: Int, tag: String): Result<Record> {
 
         //获取团队活动信息
-        var sql = "select t1.*, " +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count," +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1" +
@@ -350,12 +339,14 @@ class ActivityService {
      * @param pay:
      * @return 活动信息集合
      */
+    @Cacheable()
     fun getPublicActivities(tag: String, time: String, pay: String): Result<Record> {
 
         var sql_count = "select count(*) count from activity t1 where 1=1 {0} {1}"
 
         //构建活动数据源
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
@@ -437,11 +428,11 @@ class ActivityService {
      * @param id: 活动ID
      * @return 活动详情记录
      */
-    fun getActivityItem(activity:Record):MutableMap<String, Any?>{
+    fun getActivityItem(activity: Record): MutableMap<String, Any?> {
         var map = mutableMapOf<String, Any?>()
-        var avatar:String? = null
-        if(activity["avatar"] != null){
-            avatar =  commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+        var avatar: String? = null
+        if (activity["avatar"] != null) {
+            avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
         }
         map["id"] = activity.get("id", Int::class.java)
         map["community_id"] = activity.get("community_id", Int::class.java)
@@ -452,7 +443,7 @@ class ActivityService {
         map["avatar"] = avatar
         map["start_time"] = util!!.fromNow(activity.get("start_time"))
 
-        map["title"] =activity.get("title").toString()
+        map["title"] = activity.get("title").toString()
         return map
     }
 
@@ -460,10 +451,10 @@ class ActivityService {
      * 设置喜欢的活动，已经喜欢的活动不在重复添加
      * @return 本活动当前的喜欢数
      */
-    fun favorite(activityId: Int, userId:Int): Int{
+    fun favorite(activityId: Int, userId: Int): Int {
         var activityFavorites = create!!.resultQuery("select * from activity_favorite where activity_id=? and user_id=?"
                 , activityId, userId).fetch()
-        if(activityFavorites.count() == 0){
+        if (activityFavorites.count() == 0) {
             var activityFavorite = ActivityFavorite(0, activityId, userId, DateUtil.date().toTimestamp())
             activityFavoriteDao!!.insert(activityFavorite)
         }
@@ -473,50 +464,13 @@ class ActivityService {
         return counts.toInt()
     }
 
-
-    /**
-     * 取得所有活动集合，返回记录集合Result
-     * @return 活动信息集合
-     */
-    fun getActivities(): Result<Record> {
-        var sql = "select * from activity"
-        var items = create!!.resultQuery(sql).fetch()
-        return items
-    }
-
-
     /**
      * 取得所有活动信息，返回List
      * @return 活动信息集合
      */
+    @Cacheable()
     fun getAllActivities(): List<Activity> {
         var items = activityDao!!.findAll()
-        return items
-    }
-
-
-    /**
-     * 取得所有活动信息，关联创建人
-     * @return 活动信息集合
-     */
-    fun getAllActivityItems(): Result<Record> {
-        var sql = "select t1.*, t2.displayname from activity t1 left join user t2 on t1.created_by = t2.id"
-        var items = create!!.resultQuery(sql).fetch()
-        return items
-    }
-
-    /**
-     * 取得最新活动以及每个活动的参与人数信息
-     * 前50条记录
-     * @return 活动信息集合
-     */
-    fun getAllActivityUserItems(): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
-                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count " +
-                "from activity t1 left join user t2 on t1.created_by = t2.id " +
-                "order by t1.start_time desc " +
-                "limit 50"
-        var items = create!!.resultQuery(sql).fetch()
         return items
     }
 
@@ -526,8 +480,10 @@ class ActivityService {
      * @param status: 活动进行状态
      * @return 活动信息集合
      */
+    @Cacheable()
     fun getAllActivityUserItems(status: Int): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
                 "where 1=1 {0} " +
@@ -550,7 +506,6 @@ class ActivityService {
         return items
     }
 
-
     /**
      * 按活动标题、分类、状态查询活动
      * @param title: 活动标题
@@ -558,8 +513,9 @@ class ActivityService {
      * @param status: 活动进行状态
      * @return 活动信息集合
      */
+    @Cacheable()
     fun getAllActivityUserItems(title: String?, tags: String?, status: String?, communityname: String?): Result<Record> {
-        var sql = "select t1.*,t2.displayname,t2.avatar user_avatar,t3.name, " +
+        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar, t3.name, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
@@ -576,8 +532,6 @@ class ActivityService {
             strCondition = "and t1.tags = '{0}'".replace("{0}", tags!!)
         }
         sql = sql.replace("{1}", strCondition)
-
-
 
         if (status == "1") {
             //未开始的活动
@@ -605,34 +559,32 @@ class ActivityService {
     /**
      * 获取活动报名用户信息，显示在界面上
      */
-    fun getAttendUsers(activityId: Int) :Any {
+    fun getAttendUsers(activityId: Int): Any {
         var users = create!!.resultQuery("select t1.*, t2.displayname, t2.avatar, " +
                 "t3.title activity_ticket_title, t3.price activity_ticket_price from activity_user t1 inner join user t2 on t1.activity_id=? and t1.user_id = t2.id" +
                 " inner join activity_ticket t3 on t1.activity_ticket_id = t3.id order by attend_time desc", activityId)
 
-
         var items = mutableListOf<MutableMap<String, Any?>>()
 
-        for(user in users){
+        for (user in users) {
             var map = mutableMapOf<String, Any?>()
             map["id"] = user.get("id", Int::class.java)
             map["displayname"] = user.get("displayname", String::class.java)
             map["attend_time"] = util!!.fromNow(user.get("attend_time"))
             map["check_in_time"] = null
-            if(user.get("check_in_time") != null) {
+            if (user.get("check_in_time") != null) {
                 map["check_in_time"] = util!!.fromNow(user.get("check_in_time"))
             }
             map["activity_ticket_id"] = user.get("activity_ticket_id", Int::class.java)
             map["avatar"] = user["avatar"]
-            map["activity_ticket_title"]  = user.get("activity_ticket_title", String::class.java)
+            map["activity_ticket_title"] = user.get("activity_ticket_title", String::class.java)
 
             items.add(map)
         }
         return items
     }
 
-
-   /**
+    /**
      * 活动报名信息
      * @param start: 开始日期
      * @param end: 结束日期
@@ -821,25 +773,6 @@ class ActivityService {
     }
 
     /**
-     * 收藏活动
-     * @param item: 收藏活动记录
-     */
-    fun createActivityFavorite(item: ActivityFavorite) {
-        item.created = DateUtil.date().toTimestamp()
-        activityFavoriteDao!!.insert(item)
-    }
-
-    /**
-     * 取得活动收藏数
-     * @param activityId: 活动ID
-     * @return 活动收藏数量
-     */
-    fun getActivityFavoriteCount(activityId: Int): Int {
-        return activityFavoriteDao!!.fetch(Tables.ACTIVITY_FAVORITE.ACTIVITY_ID, activityId).size
-    }
-
-
-    /**
      * 取得用户收藏的活动
      * @param userId: 用户ID
      * @return 用户收藏的活动信息集合
@@ -930,22 +863,21 @@ class ActivityService {
             strResult = strResult.substring(1)
         }
 
-
         return strResult
     }
 
     /**
      * 保存活动报名信息，检查活动报名的票种和积分
      */
-    fun saveAttend(activityUser: ActivityUser){
+    fun saveAttend(activityUser: ActivityUser) {
         var ticketSql = "select t1.*, ifnull(t2.attend_count, 0) attend_count from activity_ticket t1 left join \n" +
                 "( select activity_ticket_id, count(user_id) attend_count from activity_user where activity_ticket_id = ? group by activity_ticket_id ) t2\n" +
                 "  on t1.id = t2.activity_ticket_id\n" +
                 "  where  t1.id = ?"
-        var ticket = create!!.resultQuery(ticketSql, activityUser.activityTicketId,activityUser.activityTicketId).fetchOne()
+        var ticket = create!!.resultQuery(ticketSql, activityUser.activityTicketId, activityUser.activityTicketId).fetchOne()
         var maxUsers = ticket.get("count", Int::class.java)
         var attendCount = ticket.get("attend_count", Int::class.java)
-        if(maxUsers > 0 && attendCount >= maxUsers){
+        if (maxUsers > 0 && attendCount >= maxUsers) {
             throw Exception("活动票已售完")
         }
 
@@ -954,12 +886,12 @@ class ActivityService {
         var now = DateUtil.date().toTimestamp()
         activityUser.activityId = activity!!.id
         activityUser.attendTime = DateUtil.date().toTimestamp()
-        activityUser.created  = DateUtil.date().toTimestamp()
+        activityUser.created = DateUtil.date().toTimestamp()
         activityUser.createdBy = activityUser.userId
 
-        if(activityUser.score > 0){
+        if (activityUser.score > 0) {
             var userScore = thirdScoreService!!.getUseableScore(activityUser.userId, activity!!.communityId)
-            if(userScore < activityUser.score){
+            if (userScore < activityUser.score) {
                 throw Exception("积分不足")
             }
             var scoreHistory = ScoreHistory()
@@ -971,9 +903,9 @@ class ActivityService {
             scoreHistoryDao!!.insert(scoreHistory)
         }
 
-        var selfCheck = create!!.resultQuery("select count(id) self_attend_count from activity_user where activity_id=? and user_id=?",activityUser.activityId, activityUser.userId).fetchOne()
+        var selfCheck = create!!.resultQuery("select count(id) self_attend_count from activity_user where activity_id=? and user_id=?", activityUser.activityId, activityUser.userId).fetchOne()
         var selfAttendCount = selfCheck.get("self_attend_count", Int::class.java)
-        if(selfAttendCount == 0) {
+        if (selfAttendCount == 0) {
             activityUserDao!!.insert(activityUser)
         } else {
             throw Exception("您已经报名，不能重复报名")
@@ -984,7 +916,7 @@ class ActivityService {
     /**
      * 取消报名
      */
-    fun cancelAttend(id: Int?):Boolean{
+    fun cancelAttend(id: Int?): Boolean {
         var activityUser = activityUserDao!!.fetchOneById(id)
 
         var actionHistory = ActionHistory()
@@ -1004,7 +936,7 @@ class ActivityService {
     /*
     *  免费票直接报名
     * */
-    fun updateAttend(activityUser:ActivityUser){
+    fun updateAttend(activityUser: ActivityUser) {
         var preActivityUser = activityUserDao!!.fetchOneById(activityUser.id)
         preActivityUser.activityTicketId = activityUser.activityTicketId
         preActivityUser.otherInfo = activityUser.otherInfo
@@ -1026,15 +958,8 @@ class ActivityService {
 
 
     fun getActivityId(): Activity? {
-        var list=activityDao!!.fetchById()
+        var list = activityDao!!.fetchById()
         return if (list != null && list.size > 0) list.first() else null
     }
 
-
-    /**
-     * 我的活动
-     */
-   /* fun myActivities(communityId: Int?,activityId: Int?):Result<Record>{
-         val sql=""
-    }*/
 }

@@ -135,7 +135,7 @@ $(function () {
                 {targets: '_all', visible: false}
             ],
             //默认排序
-            order: [[3, 'desc']],
+            order: [[1, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',
