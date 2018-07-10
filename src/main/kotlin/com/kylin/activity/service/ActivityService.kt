@@ -856,7 +856,10 @@ class ActivityService {
 
         var strResult = ""
         for (item in items) {
-            strResult = strResult + "," + item["mobile"]
+            //需要验证手机号码的有效性
+            if (KylinUtil().isPhone(item["mobile"].toString())) {
+                strResult = strResult + "," + item["mobile"]
+            }
         }
 
         if (strResult.isNotEmpty()) {
