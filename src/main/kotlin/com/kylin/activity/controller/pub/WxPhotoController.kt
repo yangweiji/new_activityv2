@@ -74,9 +74,11 @@ class WxPhotoController {
     /**
      * 活动详情页面，获取照片列表
      */
-    @GetMapping("getPicturesByActivityId")
+    @GetMapping("/getPicturesByActivityId")
     fun getPicturesByActivityId(@RequestParam(required = true) activityId: Int): Any {
         var photo = activityPhotoService!!.getFirstActivityPhoto(activityId)
+        //图片总张数
+        var counts=activityPhotoService!!.getPicturesCounts(activityId)
         //记录浏览次数
         if(photo!!.browseCount!=null){
             photo!!.browseCount++
@@ -85,7 +87,8 @@ class WxPhotoController {
         }
         activityPhotoService!!.update(photo!!)
         var pictures = activityPhotoService!!.getPicturesByActivityId(activityId)
-        return mapOf("description" to photo!!.description, "pictures" to pictures,"browse_count" to photo!!.browseCount)
+        return mapOf("description" to photo!!.description, "pictures" to pictures,
+                "browse_count" to photo!!.browseCount,"picturesCounts" to counts)
     }
 
 }
