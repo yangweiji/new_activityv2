@@ -400,6 +400,28 @@ class ThirdActivityService {
      * 取得报名用户的缴费订单
      * @param id: 报名ID
      * @param status: 订单状态
+     * @return 缴费订单信息
+     */
+    fun getActivityUserOrder(id: Int, status: Int): PayOrder? {
+        var order = create!!.fetchOne("select t2.* from activity_user t1 " +
+                "inner join pay_order t2 on t1.user_id = t2.user_id " +
+                "and t1.activity_id = t2.activity_id " +
+                "and t1.activity_ticket_id = t2.activity_ticket_id " +
+                "and t2.status=? " +
+                "and t2.refund_status is null " +
+                "and t1.id=? " +
+                "order by created desc " +
+                "limit 1", status, id)
+        if (order != null) {
+            return order.into(PayOrder::class.java)
+        }
+        return null
+    }
+
+    /**
+     * 取得报名用户的缴费订单
+     * @param id: 报名ID
+     * @param status: 订单状态
      * @param refund_status: 订单退款状态
      * @return 缴费订单信息
      */

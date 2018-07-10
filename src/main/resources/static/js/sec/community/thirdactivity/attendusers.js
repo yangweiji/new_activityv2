@@ -429,6 +429,13 @@ $(function () {
                     },
                     success: function (data) {
                         if (data) {
+                            nativeToast({
+                                message: '操作成功！',
+                                position: 'center',
+                                timeout: 3000,
+                                square: true,
+                                type: 'success'
+                            });
                             t.ajax.reload();
                         }
                     },
@@ -496,6 +503,7 @@ $(function () {
         t.button(1).enable(check === true);
         t.button(2).enable(check === true);
         t.button(3).enable(check === true);
+        t.button(4).enable(check === true);
     });
 
 
@@ -512,6 +520,7 @@ $(function () {
         t.button(1).enable(d.length > 0);
         t.button(2).enable(d.length > 0);
         t.button(3).enable(d.length > 0);
+        t.button(4).enable(d.length > 0);
     } );
 });
 

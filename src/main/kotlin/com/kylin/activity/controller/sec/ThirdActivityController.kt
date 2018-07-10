@@ -585,7 +585,7 @@ class ThirdActivityController : BaseController() {
     @Transactional
     fun innerDelete(id: Int): Boolean {
         var start = DateUtil.date()
-        var order = thirdActivityService!!.getActivityUserOrder(id, 2, null)
+        var order = thirdActivityService!!.getActivityUserOrder(id, 2)
         //如果有对应的报名订单，则先退费处理
         if (order != null) {
             var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)
