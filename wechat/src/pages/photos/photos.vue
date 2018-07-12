@@ -6,9 +6,14 @@
         <div class="flex-div-item photo-w" v-for="item in items" :key="item.id">
           <navigator :url="'/pages/photosdetails/photosdetails?activityId='+item.activity_id" class="photo">
             <image :src="item.axtenal_url" mode="aspectFill" class="photo-img" />
-            <p class="photo-desc">
-              {{item.description}}
-            </p>
+            
+           <div>
+              <p class="photo-desc">
+              {{item.description}}              
+            </p><span style=" font-size: 12px;float:right;margin-top:10px"> <image src="/static/images/browse.png" style="width: 10px;height:10px;" />{{item.browse_count}}</span>
+           </div>
+           
+           
           </navigator>
 
         </div>
@@ -26,7 +31,7 @@ export default {
   data() {
     return {
       //活动相册
-      items: [{ src: "", description: "", axtenal_url: "" }],
+      items: [{ src: "", description: "", axtenal_url: "",browse_count:""}],
       //默认的团体组织
       community: {
         id: 1, //默认的组织团体ID
@@ -45,6 +50,7 @@ export default {
         communityId: that.community.id
       };
       this.$kyutil.get("/pub/wx/photo/getPhotos",param).then(res => {
+          console.log(res);
           that.items = res;
         }
       );
@@ -117,5 +123,6 @@ export default {
   margin-left: 10px;
   margin-top: 10px;
   margin-bottom: 10px;
+  float:left;
 }
 </style>

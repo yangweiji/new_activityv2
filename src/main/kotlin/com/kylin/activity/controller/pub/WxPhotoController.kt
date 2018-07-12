@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.databases.tables.pojos.ActivityPhoto
 import com.kylin.activity.service.ActivityPhotoService
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.CommunityService
@@ -28,12 +29,6 @@ class WxPhotoController {
      */
     @Autowired
     private var commonService: CommonService? = null
-
-    /**
-     * 活动服务
-     */
-    @Autowired
-    private val activityService: ActivityService? = null
 
 
     /**
@@ -69,6 +64,8 @@ class WxPhotoController {
             map["created_by"] = photo.get("created_by", Int::class.java)
             map["axtenal_url"] = photo.get("axtenal_url").toString()
             map["picture"] = picture
+            map["pictureCount"]=photo.get("pictureCount",Int::class.java)
+            map["browse_count"]=photo.get("browse_count",Int::class.java)
             photoItems.add(map)
         }
         return photoItems
@@ -77,11 +74,21 @@ class WxPhotoController {
     /**
      * 活动详情页面，获取照片列表
      */
-    @GetMapping("getPicturesByActivityId")
+    @GetMapping("/getPicturesByActivityId")
     fun getPicturesByActivityId(@RequestParam(required = true) activityId: Int): Any {
         var photo = activityPhotoService!!.getFirstActivityPhoto(activityId)
+        //图片总张数
+        var counts=activityPhotoService!!.getPicturesCounts(activityId)
+        //记录浏览次数
+        if(photo!!.browseCount!=null){
+            photo!!.browseCount++
+        }else{
+            photo!!.browseCount=0
+        }
+        activityPhotoService!!.update(photo!!)
         var pictures = activityPhotoService!!.getPicturesByActivityId(activityId)
-        return mapOf("description" to photo!!.description, "pictures" to pictures)
+        return mapOf("description" to photo!!.description, "pictures" to pictures,
+                "browse_count" to photo!!.browseCount,"picturesCounts" to counts)
     }
 
 }

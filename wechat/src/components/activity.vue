@@ -6,7 +6,7 @@
     <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
       <div class="weui-media-box__title">{{item.title}}</div>
       <div class="weui-media-box__desc" style="float:left">{{item.start_time}}</div>
-      <div class="weui-media-box__desc" style="float:right">喜欢：{{item.favorite_count}} 报名：{{item.attend_count}}</div>
+      <div class="weui-media-box__desc" style="float:right"><label style="width:100px;height:40px;"><image src="/static/images/favorite.png" style="width: 18px;height:18px;" /> {{item.favorite_count}}</label> <label style="width:100px;height:40px;margin:5px;"><image src="/static/images/enter.png" style="width: 15px;height:15px;padding-right:5px" />{{item.attend_count}}</label></div>
     </div>
   </div>
 </template>

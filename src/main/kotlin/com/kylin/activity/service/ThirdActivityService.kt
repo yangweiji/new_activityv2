@@ -64,7 +64,8 @@ class ThirdActivityService {
      * @return 活动列表信息
      */
     fun getAllActivityUserItemsAndCommunity(status: Int, id: Int): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
                 "where 1=1 {0} " +
@@ -99,7 +100,8 @@ class ThirdActivityService {
      * @return 活动列表信息
      */
     fun getAllActivityUserItemsAndCommunity(activityId: String?, title: String?, tags: String?, status: String?, id: Int): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar," +
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+                ", t2.displayname, t2.avatar user_avatar," +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
@@ -365,7 +367,7 @@ class ThirdActivityService {
      * @return 缴费订单信息
      */
     fun getActivityUserOrder(id: Int): PayOrder? {
-        var order =  create!!.fetchOne("select t2.* from activity_user t1 " +
+        var order = create!!.fetchOne("select t2.* from activity_user t1 " +
                 "inner join pay_order t2 on t1.user_id = t2.user_id " +
                 "and t1.activity_id = t2.activity_id " +
                 "and t1.activity_ticket_id = t2.activity_ticket_id " +
@@ -373,8 +375,7 @@ class ThirdActivityService {
                 "and t1.id=? " +
                 "order by t2.created desc " +
                 "limit 1", id)
-        if (order != null)
-        {
+        if (order != null) {
             return order.into(PayOrder::class.java)
         }
 
@@ -399,6 +400,28 @@ class ThirdActivityService {
      * 取得报名用户的缴费订单
      * @param id: 报名ID
      * @param status: 订单状态
+     * @return 缴费订单信息
+     */
+    fun getActivityUserOrder(id: Int, status: Int): PayOrder? {
+        var order = create!!.fetchOne("select t2.* from activity_user t1 " +
+                "inner join pay_order t2 on t1.user_id = t2.user_id " +
+                "and t1.activity_id = t2.activity_id " +
+                "and t1.activity_ticket_id = t2.activity_ticket_id " +
+                "and t2.status=? " +
+                "and t2.refund_status is null " +
+                "and t1.id=? " +
+                "order by created desc " +
+                "limit 1", status, id)
+        if (order != null) {
+            return order.into(PayOrder::class.java)
+        }
+        return null
+    }
+
+    /**
+     * 取得报名用户的缴费订单
+     * @param id: 报名ID
+     * @param status: 订单状态
      * @param refund_status: 订单退款状态
      * @return 缴费订单信息
      */
@@ -412,8 +435,7 @@ class ThirdActivityService {
                 "and t1.id=? " +
                 "order by created desc " +
                 "limit 1", status, refund_status, id)
-        if (order != null)
-        {
+        if (order != null) {
             return order.into(PayOrder::class.java)
         }
         return null

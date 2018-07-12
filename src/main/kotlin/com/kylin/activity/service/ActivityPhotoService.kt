@@ -218,4 +218,14 @@ class ActivityPhotoService {
                 "where t2.activity_id=? "
         return create!!.resultQuery(sql,activityId).fetchInto(ActivityPhotoPicture::class.java)
     }
+
+    /**
+     * 图片总张数
+     */
+    fun getPicturesCounts(activityId: Int?):Int{
+        var sqlCounts="select count(t2.activity_id) picturesCounts from activity_photo_picture t1 inner join activity_photo t2 on t1.activity_photo_id=t2.id \n" +
+                "where t2.activity_id=?"
+        var counts=create!!.fetchOne(sqlCounts,activityId)
+        return if(counts==null) 0 else counts.get("picturesCounts",Int::class.java)
+    }
 }

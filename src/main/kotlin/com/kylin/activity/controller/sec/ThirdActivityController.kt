@@ -423,7 +423,9 @@ class ThirdActivityController : BaseController() {
 
                 order.refundTradeNo = refundOutTradeNo
                 order.refundTime = start.toTimestamp()
-                order.status = 1
+                //退款状态->已申请退款
+                order.refundStatus = 1
+
                 thirdActivityService!!.updateActivityUserOrder(order)
                 return true
             }
@@ -442,11 +444,11 @@ class ThirdActivityController : BaseController() {
         var order = thirdActivityService!!.getActivityUserOrder(id, 2, 1)
         if (order != null) {
             var refundOutTradeNo = order.refundTradeNo
-            //var tradeNo = order.extenalId
             var result = wxService!!.payService!!.refundQuery(null, null, refundOutTradeNo, null)
             if (result.resultCode == "SUCCESS") {
                 thirdActivityService!!.updateActivityUserStatus(id, 4)
-                order.status = 2
+                //退款状态->已完成退款
+                order.refundStatus = 2
                 thirdActivityService!!.updateActivityUserOrder(order)
 
                 return true
@@ -584,31 +586,13 @@ class ThirdActivityController : BaseController() {
      */
     @Transactional
     fun innerDelete(id: Int): Boolean {
-        var start = DateUtil.date()
-        var order = thirdActivityService!!.getActivityUserOrder(id, 2, null)
-        //如果有对应的报名订单，则先退费处理
-        if (order != null) {
-            var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)
-            var refundRequest = WxPayRefundRequest()
-            refundRequest.outTradeNo = order.extenalId
-            refundRequest.outRefundNo = refundOutTradeNo
-            var price = (order.price.toDouble() * 100).toInt()
-            refundRequest.totalFee = price
-            refundRequest.refundFee = price
-            var result = wxService!!.refund(refundRequest)
-            if (result.resultCode == "SUCCESS") {
-                thirdActivityService!!.updateActivityUserStatus(id, 3)
-
-                order.refundTradeNo = refundOutTradeNo
-                order.refundTime = start.toTimestamp()
-                order.refundStatus = 1
-                thirdActivityService!!.updateActivityUserOrder(order)
-            }
+        if (this.innerRefund(id) && this.innerCheckRefund(id)) {
+            //删除报名记录
+            thirdActivityService!!.deleteActivityUser(id)
+            return true
         }
 
-        //删除报名记录
-        thirdActivityService!!.deleteActivityUser(id)
-        return true
+        return false
     }
 
     /**

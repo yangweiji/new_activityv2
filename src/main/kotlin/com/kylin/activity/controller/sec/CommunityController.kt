@@ -127,6 +127,7 @@ class CommunityController : BaseController() {
                 communityUser.communityId = community.id
                 communityUser.userId = u.id
                 communityUser.role = "管理员"
+                communityUser.isBlack = false
                 communityUser.level = DateUtil.thisYear()
                 communityUser.created = DateUtil.date().toTimestamp()
                 userService.insertCommunityUser(communityUser)
@@ -171,6 +172,7 @@ class CommunityController : BaseController() {
             communityUser.communityId = community.id
             communityUser.userId = u.id
             communityUser.role = "管理员"
+            communityUser.isBlack = false
             communityUser.level = DateUtil.thisYear()
             communityUser.created = DateUtil.date().toTimestamp()
             userService.insertCommunityUser(communityUser)

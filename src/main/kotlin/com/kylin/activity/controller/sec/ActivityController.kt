@@ -177,15 +177,7 @@ class ActivityController : BaseController() {
     @CrossOrigin
     @RequestMapping(value = "/activities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     fun activities(request: HttpServletRequest, model: Model): String {
-        /*//标题
-         var title = request.getParameter("title")
-         //活动分类
-         var tags = request.getParameter("tags")
-         //时间状态
-         var status = request.getParameter("status"
-                 var activityItems = activityService !!. getAllActivityUserItems (title, tags, status)
-         model.addAttribute("activities", activityItems)
-        */
+
         return "sec/admin/activity/activities"
     }
 

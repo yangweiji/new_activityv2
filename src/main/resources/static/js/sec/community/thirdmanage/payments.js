@@ -74,8 +74,8 @@ $(function () {
                 "dataSrc": ""
             },
             columns: [
-                { "data": "id" },
-                { "data": "id" },
+                {"data": "id"},
+                {"data": "id"},
                 {"data": "username"},
                 {"data": "real_name"},
                 {"data": "price"},
@@ -92,7 +92,7 @@ $(function () {
                             return "未付";
                         }
                         else {
-                            return "取消";
+                            return "";
                         }
                     }},
                 {"data": "created"},

@@ -63,8 +63,10 @@
                     <div class="am-form-group">
                         <select type="text" id="status" name="status" th:value="${#httpServletRequest.getParameter('status')}"
                                 placeholder="选择状态" class="am-form-field am-radius">
-                            <option value="2">完成付款</option>
+                            <option value="">请选择</option>
                             <option th:selected="${#httpServletRequest.getParameter('status')} == 1" value="1">未付款</option>
+                            <option th:selected="${#httpServletRequest.getParameter('status')} == 2" value="2">完成付款
+                            </option>
                         </select>
                     </div>
 
