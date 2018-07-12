@@ -38,21 +38,40 @@ class WxPosterController {
      */
     @CrossOrigin
     @RequestMapping(value="/getPosters",method = [RequestMethod.GET])
-    fun getPosters():Any{
-        var posters=posterService!!.getTopPosters()
+    fun getPosters(posterType:String):Any{
+        var posters=posterService!!.getAllPoster(posterType)
         var posterItems = mutableListOf<MutableMap<String, Any?>>()
         for (poster in posters) {
             var map = mutableMapOf<String, Any?>()
-            var mobileAvatar:String?=null
-            if (poster["mobile_avatar"] != null) {
-                mobileAvatar = commonService!!.getDownloadUrl(poster.get("mobile_avatar", String::class.java), "middle")
+
+            var activityId = poster.get("activity_id",Int::class.java)
+            if(activityId != null && activityId > 0) { //小程序只显示活动海报
+                map["activity_id"]=activityId
+                map["poster_type"] = poster.get("poster_type").toString()
+
+                var avatar: String? = null
+                if (poster["avatar"] != null) {
+                    avatar = commonService!!.getDownloadUrl(poster.get("avatar", String::class.java), "middle")
+                }
+                var mobileAvatar: String? = null
+                if (mobileAvatar == null) {
+                    mobileAvatar = avatar
+                }
+                if (poster["mobile_avatar"] != null) {
+                    mobileAvatar = commonService!!.getDownloadUrl(poster.get("mobile_avatar", String::class.java), "middle")
+                }
+                map["id"] = poster.get("id", Int::class.java)
+                map["title"] = poster.get("title").toString()
+                map["created"] = util!!.fromNow(poster.get("created"))
+
+                map["link"] = poster.get("link").toString()
+                map["avatar"] = avatar
+                map["mobile_avatar"] = mobileAvatar
+
+                map["show"] = poster.get("show", Boolean::class.java)
+                map["sequence"] = poster.get("sequence", Int::class.java)
+                posterItems.add(map)
             }
-            if(map["activity_id"]!=null&&map["activity_id"]!=0){
-                poster.setValue(poster.fieldsRow().field("link",String::class.java),"/pub/wx/activity/details"+poster.get("activity_id"))
-            }
-            map["link"]=poster.get("link").toString()
-            map["mobile_avatar"]=mobileAvatar
-            posterItems.add(map)
         }
         return posterItems
     }

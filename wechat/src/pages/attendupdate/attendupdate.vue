@@ -206,7 +206,7 @@ export default {
         }
         if (i == 0) {
           activityUser.realName = attendInfo.value;
-        } else if (i == 2) {
+        } else if (i == 1) {
           activityUser.mobile = attendInfo.value;
         }
         activityUser.otherInfo[attendInfo.title] = attendInfo.value;

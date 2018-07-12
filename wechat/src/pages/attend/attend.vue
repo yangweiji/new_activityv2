@@ -217,6 +217,11 @@ export default {
           }
           that.attFields = attFields
           that.item = res;
+
+          //当只有一个可选票时， 自动选上
+            if(res.ticketInfos && res.ticketInfos.length == 1 && !res.ticketInfos[0].disabled){
+              that.selectTicket(res.ticketInfos[0].id)
+            }
           that.loaded = true;
       })
     },
@@ -258,10 +263,13 @@ export default {
       }
     },
     ticketRadioChange(e) {
+      this.selectTicket(e.mp.detail.value)
+    },
+    selectTicket(v){
       let ticketInfos = this.item.ticketInfos;
       for (let i = 0; i < ticketInfos.length; ++i) {
         var ticket = ticketInfos[i];
-        ticket.checked = ticket.id == e.mp.detail.value;
+        ticket.checked = ticket.id == v;
         if (ticket.checked) {
           this.ticket = ticket;
         }
@@ -300,7 +308,7 @@ export default {
         }
         if (i == 0) {
           activityUser.realName = attendInfo.value;
-        } else if (i == 2) {
+        } else if (i == 1) {
           activityUser.mobile = attendInfo.value;
         }
         activityUser.otherInfo[attendInfo.title] = attendInfo.value;
