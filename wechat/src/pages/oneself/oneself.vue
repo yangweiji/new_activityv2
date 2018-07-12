@@ -15,8 +15,8 @@
             <open-data class="userinfo-name" type="userNickName"></open-data>
           </div>
         </div>
-        <div class="wx_group_count">
-          <div class="wx_attend_count" style="float:left;padding:22px">
+        <div class="wx_group_count weui-flex">
+          <div class="wx_attend_count weui-flex__item">
             <navigator url="/pages/myactivitys/myactivitys?type=1">
               <dl>
                 <dt>
@@ -28,7 +28,7 @@
               </dl>
             </navigator>
           </div>
-          <div class="wx_no_check_count" style="float:left;padding:22px">
+          <div class="wx_no_check_count weui-flex__item" >
             <navigator url="/pages/myactivitys/myactivitys?type=2">
               <dl>
                 <dt>
@@ -40,7 +40,7 @@
               </dl>
             </navigator>
           </div>
-          <div class="wx_check_count" style="float:left;padding:22px">
+          <div class="wx_check_count weui-flex__item" >
             <navigator url="/pages/myactivitys/myactivitys?type=3">
               <dl>
                 <dt>
@@ -52,7 +52,7 @@
               </dl>
             </navigator>
           </div>
-          <div class="wx_favorite_count" style="float:left;padding:22px">
+          <div class="wx_favorite_count weui-flex__item" >
             <navigator url="/pages/myactivitys/myactivitys?type=4">
               <dl>
                 <dt>
@@ -261,6 +261,9 @@
   .wx_counts {
     width: 100%;
     height: 60px;
+  }
+  .wx_group_count .weui-flex__item{
+    padding: 22px;
   }
   .wx_group_count dl dt {
     text-align: center;

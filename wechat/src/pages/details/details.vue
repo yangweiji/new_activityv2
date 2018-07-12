@@ -11,7 +11,7 @@
             <div class="weui-article__h3 c-display-text">
               {{item.displayname}}   {{item.created}}
               <navigator v-if="item.picture_count > 0" :url="'/pages/photosdetails/photosdetails?activityId='+item.id" class="c-photo">
-                <image src="/static/images/photos.png" style="width: 30px;height:20px" /> <div class="weui-badge">{{item.picture_count}}</div>
+                <image src="/static/images/photos.png" style="width: 25px;height:20px;margin-right:5px;margin-bottom:-2px;" /> <div class="weui-badge">{{item.picture_count}}</div>
               </navigator>
             </div>
             <div v-if="item.body" class="weui-article__p">

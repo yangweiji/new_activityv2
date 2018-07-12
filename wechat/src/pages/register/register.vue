@@ -71,7 +71,7 @@
           <div class="weui-agree__text">
             <checkbox class="weui-agree__checkbox" id="weuiAgree" value="agree" checked="isAgree" />
             <div class="weui-agree__checkbox-icon">
-              <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" size="9" v-if="isAgree"></icon>
+              <icon class="weui-agree__checkbox-icon-check" type="success_no_circle" color="#F37B1D"  size="9" v-if="isAgree"></icon>
             </div>
             阅读并同意
             <navigator url="" class="weui-agree__link">《相关条款》</navigator>

@@ -38,7 +38,7 @@
             <div class="weui-flex,kind-list__item-hd" :class="{'kind-list__item-hd_show':isAgree}">
               <div @click="bindAgreeChange()" class="weui-flex__item">
                 <icon class="kind-list__img weui-icon-checkbox_circle" type="circle" size="23" v-if="!isAgree"></icon>
-                <icon class="kind-list__img weui-icon-checkbox_success" type="success" size="23" v-if="isAgree"></icon>
+                <icon class="kind-list__img weui-icon-checkbox_success" color="#F37B1D" type="success" size="23" v-if="isAgree"></icon>
                 阅读并同意
                 <div @click.stop="gotoAgreement()" class="weui-agree__link">《相关条款》</div>
               </div>
