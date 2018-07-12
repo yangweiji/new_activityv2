@@ -5,8 +5,8 @@
     </div>
     <div class="page__bd">
     <div class="weui-photosdetails__files weui-photosdetails__img" >
-      <block >
-        <kyimage :preview="true" :src="picture" />    
+      <block v-for="item in items" :key="item.id">
+        <kyimage :preview="true" :src="item.picture" />    
       </block>  
     </div>
     </div>
