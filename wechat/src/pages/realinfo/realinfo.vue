@@ -78,11 +78,11 @@
           required: true,
           options: [{
               title: "男",
-              value: 0
+              value: 1
             },
             {
               title: "女",
-              value: 1
+              value: 2
             }
           ]
         }, {
