@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRecord extends UpdatableRecordImpl<UserRecord> {
 
-    private static final long serialVersionUID = 291056346;
+    private static final long serialVersionUID = -539573160;
 
     /**
      * Setter for <code>activityv2.user.id</code>. 编号
@@ -379,6 +379,20 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
         return (String) get(24);
     }
 
+    /**
+     * Setter for <code>activityv2.user.union_id</code>. 微信开放平台，联合身份ID
+     */
+    public void setUnionId(String value) {
+        set(25, value);
+    }
+
+    /**
+     * Getter for <code>activityv2.user.union_id</code>. 微信开放平台，联合身份ID
+     */
+    public String getUnionId() {
+        return (String) get(25);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -405,7 +419,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     /**
      * Create a detached, initialised UserRecord
      */
-    public UserRecord(Integer id, String username, String displayname, String password, String role, Boolean enabled, Integer gender, Timestamp created, Integer level, String idCard, String realName, Timestamp realTime, Boolean isReal, String openId, String avatar, String email, String workCompany, Boolean isParty, String address, String bloodType, String clothingSize, String occupation, String emergencyContactName, String emergencyContactMobile, String wechatId) {
+    public UserRecord(Integer id, String username, String displayname, String password, String role, Boolean enabled, Integer gender, Timestamp created, Integer level, String idCard, String realName, Timestamp realTime, Boolean isReal, String openId, String avatar, String email, String workCompany, Boolean isParty, String address, String bloodType, String clothingSize, String occupation, String emergencyContactName, String emergencyContactMobile, String wechatId, String unionId) {
         super(User.USER);
 
         set(0, id);
@@ -433,5 +447,6 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
         set(22, emergencyContactName);
         set(23, emergencyContactMobile);
         set(24, wechatId);
+        set(25, unionId);
     }
 }

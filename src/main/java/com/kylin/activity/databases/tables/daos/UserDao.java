@@ -243,4 +243,11 @@ public class UserDao extends DAOImpl<UserRecord, com.kylin.activity.databases.ta
     public List<com.kylin.activity.databases.tables.pojos.User> fetchByWechatId(String... values) {
         return fetch(User.USER.WECHAT_ID, values);
     }
+
+    /**
+     * Fetch records that have <code>union_id IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.User> fetchByUnionId(String... values) {
+        return fetch(User.USER.UNION_ID, values);
+    }
 }

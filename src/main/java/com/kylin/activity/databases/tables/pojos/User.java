@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -1797540190;
+    private static final long serialVersionUID = -705878572;
 
     private Integer   id;
     private String    username;
@@ -50,6 +50,7 @@ public class User implements Serializable {
     private String    emergencyContactName;
     private String    emergencyContactMobile;
     private String    wechatId;
+    private String    unionId;
 
     public User() {}
 
@@ -79,6 +80,7 @@ public class User implements Serializable {
         this.emergencyContactName = value.emergencyContactName;
         this.emergencyContactMobile = value.emergencyContactMobile;
         this.wechatId = value.wechatId;
+        this.unionId = value.unionId;
     }
 
     public User(
@@ -106,7 +108,8 @@ public class User implements Serializable {
         String    occupation,
         String    emergencyContactName,
         String    emergencyContactMobile,
-        String    wechatId
+        String    wechatId,
+        String    unionId
     ) {
         this.id = id;
         this.username = username;
@@ -133,6 +136,7 @@ public class User implements Serializable {
         this.emergencyContactName = emergencyContactName;
         this.emergencyContactMobile = emergencyContactMobile;
         this.wechatId = wechatId;
+        this.unionId = unionId;
     }
 
     public Integer getId() {
@@ -335,6 +339,14 @@ public class User implements Serializable {
         this.wechatId = wechatId;
     }
 
+    public String getUnionId() {
+        return this.unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("User (");
@@ -364,6 +376,7 @@ public class User implements Serializable {
         sb.append(", ").append(emergencyContactName);
         sb.append(", ").append(emergencyContactMobile);
         sb.append(", ").append(wechatId);
+        sb.append(", ").append(unionId);
 
         sb.append(")");
         return sb.toString();
