@@ -5,17 +5,15 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.PayOrder;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record17;
 import org.jooq.Row17;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 
 /**
@@ -31,7 +29,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrderRecord extends UpdatableRecordImpl<PayOrderRecord> implements Record17<Integer, Integer, Integer, Integer, String, String, BigDecimal, Timestamp, Timestamp, Integer, String, Timestamp, String, String, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = -1815844716;
+    private static final long serialVersionUID = -1615573118;
 
     /**
      * Setter for <code>activityv2.pay_order.id</code>. 主键编号
@@ -132,28 +130,28 @@ public class PayOrderRecord extends UpdatableRecordImpl<PayOrderRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.pay_time</code>.
+     * Setter for <code>activityv2.pay_order.pay_time</code>. 付款时间
      */
     public void setPayTime(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.pay_time</code>.
+     * Getter for <code>activityv2.pay_order.pay_time</code>. 付款时间
      */
     public Timestamp getPayTime() {
         return (Timestamp) get(7);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.cancel_time</code>.
+     * Setter for <code>activityv2.pay_order.cancel_time</code>. 取消付款时间
      */
     public void setCancelTime(Timestamp value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.cancel_time</code>.
+     * Getter for <code>activityv2.pay_order.cancel_time</code>. 取消付款时间
      */
     public Timestamp getCancelTime() {
         return (Timestamp) get(8);
@@ -188,14 +186,14 @@ public class PayOrderRecord extends UpdatableRecordImpl<PayOrderRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.created</code>.
+     * Setter for <code>activityv2.pay_order.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.created</code>.
+     * Getter for <code>activityv2.pay_order.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(11);
@@ -216,56 +214,56 @@ public class PayOrderRecord extends UpdatableRecordImpl<PayOrderRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.refund_trade_no</code>.
+     * Setter for <code>activityv2.pay_order.refund_trade_no</code>. 退款单号
      */
     public void setRefundTradeNo(String value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.refund_trade_no</code>.
+     * Getter for <code>activityv2.pay_order.refund_trade_no</code>. 退款单号
      */
     public String getRefundTradeNo() {
         return (String) get(13);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.refund_time</code>.
+     * Setter for <code>activityv2.pay_order.refund_time</code>. 退款时间
      */
     public void setRefundTime(Timestamp value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.refund_time</code>.
+     * Getter for <code>activityv2.pay_order.refund_time</code>. 退款时间
      */
     public Timestamp getRefundTime() {
         return (Timestamp) get(14);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.refund_status</code>.
+     * Setter for <code>activityv2.pay_order.refund_status</code>. 退款状态
      */
     public void setRefundStatus(Integer value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.refund_status</code>.
+     * Getter for <code>activityv2.pay_order.refund_status</code>. 退款状态
      */
     public Integer getRefundStatus() {
         return (Integer) get(15);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.community_id</code>.
+     * Setter for <code>activityv2.pay_order.community_id</code>. 团体编号
      */
     public void setCommunityId(Integer value) {
         set(16, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.community_id</code>.
+     * Getter for <code>activityv2.pay_order.community_id</code>. 团体编号
      */
     public Integer getCommunityId() {
         return (Integer) get(16);

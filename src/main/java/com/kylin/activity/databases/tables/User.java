@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.UserRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = 292866956;
+    private static final long serialVersionUID = 1568017538;
 
     /**
      * The reference instance of <code>activityv2.user</code>
@@ -91,9 +82,9 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, Integer> GENDER = createField("gender", org.jooq.impl.SQLDataType.INTEGER, this, "性别 1 男 2 女");
 
     /**
-     * The column <code>activityv2.user.created</code>.
+     * The column <code>activityv2.user.created</code>. 创建时间
      */
-    public final TableField<UserRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<UserRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
      * The column <code>activityv2.user.level</code>. 会员级别 0 普通用户 年份： 值所确定的年份的会员
@@ -111,9 +102,9 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, String> REAL_NAME = createField("real_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "真实姓名");
 
     /**
-     * The column <code>activityv2.user.real_time</code>.
+     * The column <code>activityv2.user.real_time</code>. 认证时间
      */
-    public final TableField<UserRecord, Timestamp> REAL_TIME = createField("real_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<UserRecord, Timestamp> REAL_TIME = createField("real_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "认证时间");
 
     /**
      * The column <code>activityv2.user.is_real</code>. 是否通过认证
@@ -131,9 +122,9 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "头像");
 
     /**
-     * The column <code>activityv2.user.email</code>.
+     * The column <code>activityv2.user.email</code>. 邮件
      */
-    public final TableField<UserRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<UserRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR(255), this, "邮件");
 
     /**
      * The column <code>activityv2.user.work_company</code>. 工作单位

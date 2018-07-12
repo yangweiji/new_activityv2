@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.CommunityUser;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record7;
 import org.jooq.Row7;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,45 +28,45 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUserRecord extends UpdatableRecordImpl<CommunityUserRecord> implements Record7<Integer, Integer, Integer, String, Timestamp, Integer, Boolean> {
 
-    private static final long serialVersionUID = -1399930109;
+    private static final long serialVersionUID = 613983819;
 
     /**
-     * Setter for <code>activityv2.community_user.id</code>.
+     * Setter for <code>activityv2.community_user.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.community_user.id</code>.
+     * Getter for <code>activityv2.community_user.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.community_user.community_id</code>.
+     * Setter for <code>activityv2.community_user.community_id</code>. 关联团体编号
      */
     public void setCommunityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.community_user.community_id</code>.
+     * Getter for <code>activityv2.community_user.community_id</code>. 关联团体编号
      */
     public Integer getCommunityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.community_user.user_id</code>.
+     * Setter for <code>activityv2.community_user.user_id</code>. 用户编号
      */
     public void setUserId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.community_user.user_id</code>.
+     * Getter for <code>activityv2.community_user.user_id</code>. 用户编号
      */
     public Integer getUserId() {
         return (Integer) get(2);
@@ -103,28 +101,28 @@ public class CommunityUserRecord extends UpdatableRecordImpl<CommunityUserRecord
     }
 
     /**
-     * Setter for <code>activityv2.community_user.level</code>.
+     * Setter for <code>activityv2.community_user.level</code>. 会员年份
      */
     public void setLevel(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.community_user.level</code>.
+     * Getter for <code>activityv2.community_user.level</code>. 会员年份
      */
     public Integer getLevel() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.community_user.is_black</code>. 是否黑名单用户
+     * Setter for <code>activityv2.community_user.is_black</code>. 是否为黑名单用户
      */
     public void setIsBlack(Boolean value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.community_user.is_black</code>. 是否黑名单用户
+     * Getter for <code>activityv2.community_user.is_black</code>. 是否为黑名单用户
      */
     public Boolean getIsBlack() {
         return (Boolean) get(6);

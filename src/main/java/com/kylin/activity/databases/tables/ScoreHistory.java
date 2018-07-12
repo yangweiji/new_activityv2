@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ScoreHistoryRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
 
-    private static final long serialVersionUID = 220665332;
+    private static final long serialVersionUID = 519326496;
 
     /**
      * The reference instance of <code>activityv2.score_history</code>
@@ -71,9 +62,9 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
     public final TableField<ScoreHistoryRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户Id");
 
     /**
-     * The column <code>activityv2.score_history.activity_id</code>.
+     * The column <code>activityv2.score_history.activity_id</code>. 活动id
      */
-    public final TableField<ScoreHistoryRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<ScoreHistoryRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "活动id");
 
     /**
      * The column <code>activityv2.score_history.memo</code>. 积分说明
@@ -81,14 +72,14 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
     public final TableField<ScoreHistoryRecord, String> MEMO = createField("memo", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "积分说明");
 
     /**
-     * The column <code>activityv2.score_history.created</code>.
+     * The column <code>activityv2.score_history.created</code>. 创建时间
      */
-    public final TableField<ScoreHistoryRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ScoreHistoryRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.score_history.community_id</code>.
+     * The column <code>activityv2.score_history.community_id</code>. 团体id
      */
-    public final TableField<ScoreHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<ScoreHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "团体id");
 
     /**
      * Create a <code>activityv2.score_history</code> table reference

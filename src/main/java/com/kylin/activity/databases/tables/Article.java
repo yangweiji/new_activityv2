@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ArticleRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Article extends TableImpl<ArticleRecord> {
 
-    private static final long serialVersionUID = 1763091332;
+    private static final long serialVersionUID = 726715694;
 
     /**
      * The reference instance of <code>activityv2.article</code>
@@ -106,9 +97,9 @@ public class Article extends TableImpl<ArticleRecord> {
     public final TableField<ArticleRecord, String> UNIT = createField("unit", org.jooq.impl.SQLDataType.VARCHAR(256), this, "发布单位");
 
     /**
-     * The column <code>activityv2.article.created</code>.
+     * The column <code>activityv2.article.created</code>. 创建时间
      */
-    public final TableField<ArticleRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ArticleRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
      * The column <code>activityv2.article.created_by</code>. 创建人
@@ -116,9 +107,9 @@ public class Article extends TableImpl<ArticleRecord> {
     public final TableField<ArticleRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "创建人");
 
     /**
-     * The column <code>activityv2.article.modified</code>.
+     * The column <code>activityv2.article.modified</code>. 修改时间
      */
-    public final TableField<ArticleRecord, Timestamp> MODIFIED = createField("modified", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ArticleRecord, Timestamp> MODIFIED = createField("modified", org.jooq.impl.SQLDataType.TIMESTAMP, this, "修改时间");
 
     /**
      * The column <code>activityv2.article.modified_by</code>. 修改人

@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.Vercode;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class VercodeRecord extends UpdatableRecordImpl<VercodeRecord> implements Record4<Integer, String, String, Timestamp> {
 
-    private static final long serialVersionUID = -1785994296;
+    private static final long serialVersionUID = 1297130364;
 
     /**
      * Setter for <code>activityv2.vercode.id</code>. 编号
@@ -47,42 +45,42 @@ public class VercodeRecord extends UpdatableRecordImpl<VercodeRecord> implements
     }
 
     /**
-     * Setter for <code>activityv2.vercode.mobile</code>.
+     * Setter for <code>activityv2.vercode.mobile</code>. 手机联系方式
      */
     public void setMobile(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.vercode.mobile</code>.
+     * Getter for <code>activityv2.vercode.mobile</code>. 手机联系方式
      */
     public String getMobile() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.vercode.code</code>.
+     * Setter for <code>activityv2.vercode.code</code>. 验证码
      */
     public void setCode(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.vercode.code</code>.
+     * Getter for <code>activityv2.vercode.code</code>. 验证码
      */
     public String getCode() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.vercode.created</code>.
+     * Setter for <code>activityv2.vercode.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.vercode.created</code>.
+     * Getter for <code>activityv2.vercode.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(3);

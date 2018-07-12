@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityTicket;
-
-import java.math.BigDecimal;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.math.BigDecimal;
 
 
 /**
@@ -30,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityTicketRecord extends UpdatableRecordImpl<ActivityTicketRecord> implements Record8<Integer, Integer, String, String, BigDecimal, Integer, Integer, Integer> {
 
-    private static final long serialVersionUID = -1559397568;
+    private static final long serialVersionUID = 1236239340;
 
     /**
-     * Setter for <code>activityv2.activity_ticket.id</code>.
+     * Setter for <code>activityv2.activity_ticket.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_ticket.id</code>.
+     * Getter for <code>activityv2.activity_ticket.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.activity_ticket.activity_id</code>.
+     * Setter for <code>activityv2.activity_ticket.activity_id</code>. 活动编号
      */
     public void setActivityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_ticket.activity_id</code>.
+     * Getter for <code>activityv2.activity_ticket.activity_id</code>. 活动编号
      */
     public Integer getActivityId() {
         return (Integer) get(1);
@@ -89,14 +87,14 @@ public class ActivityTicketRecord extends UpdatableRecordImpl<ActivityTicketReco
     }
 
     /**
-     * Setter for <code>activityv2.activity_ticket.price</code>.
+     * Setter for <code>activityv2.activity_ticket.price</code>. 门票价格
      */
     public void setPrice(BigDecimal value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_ticket.price</code>.
+     * Getter for <code>activityv2.activity_ticket.price</code>. 门票价格
      */
     public BigDecimal getPrice() {
         return (BigDecimal) get(4);

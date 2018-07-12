@@ -4,23 +4,7 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.ActionHistory;
-import com.kylin.activity.databases.tables.Activity;
-import com.kylin.activity.databases.tables.ActivityFavorite;
-import com.kylin.activity.databases.tables.ActivityPhoto;
-import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-import com.kylin.activity.databases.tables.ActivitySms;
-import com.kylin.activity.databases.tables.ActivityTicket;
-import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.ActivityUserRecord;
-import com.kylin.activity.databases.tables.Article;
-import com.kylin.activity.databases.tables.Community;
-import com.kylin.activity.databases.tables.CommunityUser;
-import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.Poster;
-import com.kylin.activity.databases.tables.ScoreHistory;
-import com.kylin.activity.databases.tables.User;
-import com.kylin.activity.databases.tables.Vercode;
+import com.kylin.activity.databases.tables.*;
 
 import javax.annotation.Generated;
 
@@ -39,7 +23,7 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>activityv2.action_history</code>.
+     * 操作记录表
      */
     public static final ActionHistory ACTION_HISTORY = com.kylin.activity.databases.tables.ActionHistory.ACTION_HISTORY;
 
@@ -79,7 +63,7 @@ public class Tables {
     public static final ActivityUser ACTIVITY_USER = com.kylin.activity.databases.tables.ActivityUser.ACTIVITY_USER;
 
     /**
-     * The table <code>activityv2.activity_user_record</code>.
+     * 用户报名活动打卡记录表
      */
     public static final ActivityUserRecord ACTIVITY_USER_RECORD = com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD;
 

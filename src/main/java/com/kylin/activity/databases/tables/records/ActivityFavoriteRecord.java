@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityFavorite;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityFavoriteRecord extends UpdatableRecordImpl<ActivityFavoriteRecord> implements Record4<Integer, Integer, Integer, Timestamp> {
 
-    private static final long serialVersionUID = 1443908335;
+    private static final long serialVersionUID = 520687439;
 
     /**
      * Setter for <code>activityv2.activity_favorite.id</code>. 编号
@@ -75,14 +73,14 @@ public class ActivityFavoriteRecord extends UpdatableRecordImpl<ActivityFavorite
     }
 
     /**
-     * Setter for <code>activityv2.activity_favorite.created</code>.
+     * Setter for <code>activityv2.activity_favorite.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_favorite.created</code>.
+     * Getter for <code>activityv2.activity_favorite.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(3);

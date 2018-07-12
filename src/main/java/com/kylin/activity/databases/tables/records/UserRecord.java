@@ -5,13 +5,11 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.User;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -27,7 +25,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRecord extends UpdatableRecordImpl<UserRecord> {
 
-    private static final long serialVersionUID = -539573160;
+    private static final long serialVersionUID = 1558610960;
 
     /**
      * Setter for <code>activityv2.user.id</code>. 编号
@@ -128,14 +126,14 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     }
 
     /**
-     * Setter for <code>activityv2.user.created</code>.
+     * Setter for <code>activityv2.user.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.user.created</code>.
+     * Getter for <code>activityv2.user.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(7);
@@ -184,14 +182,14 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     }
 
     /**
-     * Setter for <code>activityv2.user.real_time</code>.
+     * Setter for <code>activityv2.user.real_time</code>. 认证时间
      */
     public void setRealTime(Timestamp value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activityv2.user.real_time</code>.
+     * Getter for <code>activityv2.user.real_time</code>. 认证时间
      */
     public Timestamp getRealTime() {
         return (Timestamp) get(11);
@@ -240,14 +238,14 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     }
 
     /**
-     * Setter for <code>activityv2.user.email</code>.
+     * Setter for <code>activityv2.user.email</code>. 邮件
      */
     public void setEmail(String value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activityv2.user.email</code>.
+     * Getter for <code>activityv2.user.email</code>. 邮件
      */
     public String getEmail() {
         return (String) get(15);

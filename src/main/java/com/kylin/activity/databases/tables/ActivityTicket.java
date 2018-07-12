@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityTicketRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityTicket extends TableImpl<ActivityTicketRecord> {
 
-    private static final long serialVersionUID = -1010299827;
+    private static final long serialVersionUID = 812823623;
 
     /**
      * The reference instance of <code>activityv2.activity_ticket</code>
@@ -56,14 +47,14 @@ public class ActivityTicket extends TableImpl<ActivityTicketRecord> {
     }
 
     /**
-     * The column <code>activityv2.activity_ticket.id</code>.
+     * The column <code>activityv2.activity_ticket.id</code>. 编号
      */
-    public final TableField<ActivityTicketRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ActivityTicketRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity_ticket.activity_id</code>.
+     * The column <code>activityv2.activity_ticket.activity_id</code>. 活动编号
      */
-    public final TableField<ActivityTicketRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<ActivityTicketRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "活动编号");
 
     /**
      * The column <code>activityv2.activity_ticket.title</code>. 活动票标题
@@ -76,9 +67,9 @@ public class ActivityTicket extends TableImpl<ActivityTicketRecord> {
     public final TableField<ActivityTicketRecord, String> MEMO = createField("memo", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "活动票说明");
 
     /**
-     * The column <code>activityv2.activity_ticket.price</code>.
+     * The column <code>activityv2.activity_ticket.price</code>. 门票价格
      */
-    public final TableField<ActivityTicketRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL(18, 2), this, "");
+    public final TableField<ActivityTicketRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL(18, 2), this, "门票价格");
 
     /**
      * The column <code>activityv2.activity_ticket.count</code>. 票张数 0表示不限制票的张数

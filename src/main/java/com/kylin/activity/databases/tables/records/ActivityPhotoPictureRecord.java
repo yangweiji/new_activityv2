@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record6;
 import org.jooq.Row6;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,31 +28,31 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhotoPictureRecord extends UpdatableRecordImpl<ActivityPhotoPictureRecord> implements Record6<Integer, Integer, String, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = -1789283594;
+    private static final long serialVersionUID = 628134492;
 
     /**
-     * Setter for <code>activityv2.activity_photo_picture.id</code>.
+     * Setter for <code>activityv2.activity_photo_picture.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo_picture.id</code>.
+     * Getter for <code>activityv2.activity_photo_picture.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联编号
+     * Setter for <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联活动相册编号
      */
     public void setActivityPhotoId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联编号
+     * Getter for <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联活动相册编号
      */
     public Integer getActivityPhotoId() {
         return (Integer) get(1);
@@ -75,28 +73,28 @@ public class ActivityPhotoPictureRecord extends UpdatableRecordImpl<ActivityPhot
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo_picture.created</code>.
+     * Setter for <code>activityv2.activity_photo_picture.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo_picture.created</code>.
+     * Getter for <code>activityv2.activity_photo_picture.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo_picture.created_by</code>.
+     * Setter for <code>activityv2.activity_photo_picture.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo_picture.created_by</code>.
+     * Getter for <code>activityv2.activity_photo_picture.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(4);

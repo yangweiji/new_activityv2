@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityPhoto;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhotoRecord extends UpdatableRecordImpl<ActivityPhotoRecord> implements Record8<Integer, Integer, String, String, Timestamp, Integer, String, Integer> {
 
-    private static final long serialVersionUID = -219321063;
+    private static final long serialVersionUID = 1844943909;
 
     /**
      * Setter for <code>activityv2.activity_photo.id</code>. 编号
@@ -89,28 +87,28 @@ public class ActivityPhotoRecord extends UpdatableRecordImpl<ActivityPhotoRecord
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.created</code>.
+     * Setter for <code>activityv2.activity_photo.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.created</code>.
+     * Getter for <code>activityv2.activity_photo.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.created_by</code>.
+     * Setter for <code>activityv2.activity_photo.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.created_by</code>.
+     * Getter for <code>activityv2.activity_photo.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);

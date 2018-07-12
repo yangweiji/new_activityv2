@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.Activity;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record22;
 import org.jooq.Row22;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implements Record22<Integer, String, String, String, String, String, String, Integer, Timestamp, Timestamp, Timestamp, Timestamp, Integer, Timestamp, Integer, String, String, String, Integer, Boolean, String, Integer> {
 
-    private static final long serialVersionUID = -401991257;
+    private static final long serialVersionUID = 1213631559;
 
     /**
      * Setter for <code>activityv2.activity.id</code>. 编号
@@ -145,56 +143,56 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.activity.start_time</code>.
+     * Setter for <code>activityv2.activity.start_time</code>. 开始时间
      */
     public void setStartTime(Timestamp value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.start_time</code>.
+     * Getter for <code>activityv2.activity.start_time</code>. 开始时间
      */
     public Timestamp getStartTime() {
         return (Timestamp) get(8);
     }
 
     /**
-     * Setter for <code>activityv2.activity.end_time</code>.
+     * Setter for <code>activityv2.activity.end_time</code>. 结束时间
      */
     public void setEndTime(Timestamp value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.end_time</code>.
+     * Getter for <code>activityv2.activity.end_time</code>. 结束时间
      */
     public Timestamp getEndTime() {
         return (Timestamp) get(9);
     }
 
     /**
-     * Setter for <code>activityv2.activity.attend_due_time</code>.
+     * Setter for <code>activityv2.activity.attend_due_time</code>. 报名截止时间
      */
     public void setAttendDueTime(Timestamp value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.attend_due_time</code>.
+     * Getter for <code>activityv2.activity.attend_due_time</code>. 报名截止时间
      */
     public Timestamp getAttendDueTime() {
         return (Timestamp) get(10);
     }
 
     /**
-     * Setter for <code>activityv2.activity.created</code>.
+     * Setter for <code>activityv2.activity.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.created</code>.
+     * Getter for <code>activityv2.activity.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(11);
@@ -215,14 +213,14 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.activity.modified</code>.
+     * Setter for <code>activityv2.activity.modified</code>. 修改时间
      */
     public void setModified(Timestamp value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.modified</code>.
+     * Getter for <code>activityv2.activity.modified</code>. 修改时间
      */
     public Timestamp getModified() {
         return (Timestamp) get(13);
@@ -299,14 +297,14 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.activity.public</code>.
+     * Setter for <code>activityv2.activity.public</code>. 活动是否公开
      */
     public void setPublic(Boolean value) {
         set(19, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.public</code>.
+     * Getter for <code>activityv2.activity.public</code>. 活动是否公开
      */
     public Boolean getPublic() {
         return (Boolean) get(19);
@@ -327,14 +325,14 @@ public class ActivityRecord extends UpdatableRecordImpl<ActivityRecord> implemen
     }
 
     /**
-     * Setter for <code>activityv2.activity.community_id</code>.
+     * Setter for <code>activityv2.activity.community_id</code>. 团体编号
      */
     public void setCommunityId(Integer value) {
         set(21, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity.community_id</code>.
+     * Getter for <code>activityv2.activity.community_id</code>. 团体编号
      */
     public Integer getCommunityId() {
         return (Integer) get(21);

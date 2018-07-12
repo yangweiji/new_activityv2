@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ScoreHistory;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record7;
 import org.jooq.Row7;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistoryRecord extends UpdatableRecordImpl<ScoreHistoryRecord> implements Record7<Integer, Integer, Integer, Integer, String, Timestamp, Integer> {
 
-    private static final long serialVersionUID = -981247948;
+    private static final long serialVersionUID = 1135392160;
 
     /**
      * Setter for <code>activityv2.score_history.id</code>. 编号
@@ -75,14 +73,14 @@ public class ScoreHistoryRecord extends UpdatableRecordImpl<ScoreHistoryRecord> 
     }
 
     /**
-     * Setter for <code>activityv2.score_history.activity_id</code>.
+     * Setter for <code>activityv2.score_history.activity_id</code>. 活动id
      */
     public void setActivityId(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.activity_id</code>.
+     * Getter for <code>activityv2.score_history.activity_id</code>. 活动id
      */
     public Integer getActivityId() {
         return (Integer) get(3);
@@ -103,28 +101,28 @@ public class ScoreHistoryRecord extends UpdatableRecordImpl<ScoreHistoryRecord> 
     }
 
     /**
-     * Setter for <code>activityv2.score_history.created</code>.
+     * Setter for <code>activityv2.score_history.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.created</code>.
+     * Getter for <code>activityv2.score_history.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.community_id</code>.
+     * Setter for <code>activityv2.score_history.community_id</code>. 团体id
      */
     public void setCommunityId(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.community_id</code>.
+     * Getter for <code>activityv2.score_history.community_id</code>. 团体id
      */
     public Integer getCommunityId() {
         return (Integer) get(6);

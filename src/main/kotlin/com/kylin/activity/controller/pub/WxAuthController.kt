@@ -6,15 +6,14 @@ import com.kylin.activity.service.UserService
 import com.kylin.activity.service.VerCodeService
 import com.kylin.activity.service.WxService
 import com.kylin.activity.sms.SmsTemplateListProperties
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
-import me.chanjar.weixin.common.exception.WxErrorException
 import com.kylin.activity.util.JsonUtils
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
+import me.chanjar.weixin.common.error.WxErrorException
 import org.apache.commons.lang3.StringUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.*
 
 /**
  * 小程序登录认证结果

@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityPhotoPictureRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhotoPicture extends TableImpl<ActivityPhotoPictureRecord> {
 
-    private static final long serialVersionUID = -648559933;
+    private static final long serialVersionUID = 1628051585;
 
     /**
      * The reference instance of <code>activityv2.activity_photo_picture</code>
@@ -56,14 +47,14 @@ public class ActivityPhotoPicture extends TableImpl<ActivityPhotoPictureRecord> 
     }
 
     /**
-     * The column <code>activityv2.activity_photo_picture.id</code>.
+     * The column <code>activityv2.activity_photo_picture.id</code>. 编号
      */
-    public final TableField<ActivityPhotoPictureRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<ActivityPhotoPictureRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联编号
+     * The column <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联活动相册编号
      */
-    public final TableField<ActivityPhotoPictureRecord, Integer> ACTIVITY_PHOTO_ID = createField("activity_photo_id", org.jooq.impl.SQLDataType.INTEGER, this, "关联编号");
+    public final TableField<ActivityPhotoPictureRecord, Integer> ACTIVITY_PHOTO_ID = createField("activity_photo_id", org.jooq.impl.SQLDataType.INTEGER, this, "关联活动相册编号");
 
     /**
      * The column <code>activityv2.activity_photo_picture.picture</code>. 图片
@@ -71,14 +62,14 @@ public class ActivityPhotoPicture extends TableImpl<ActivityPhotoPictureRecord> 
     public final TableField<ActivityPhotoPictureRecord, String> PICTURE = createField("picture", org.jooq.impl.SQLDataType.VARCHAR(255), this, "图片");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.created</code>.
+     * The column <code>activityv2.activity_photo_picture.created</code>. 创建时间
      */
-    public final TableField<ActivityPhotoPictureRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ActivityPhotoPictureRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.created_by</code>.
+     * The column <code>activityv2.activity_photo_picture.created_by</code>. 创建人
      */
-    public final TableField<ActivityPhotoPictureRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<ActivityPhotoPictureRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "创建人");
 
     /**
      * The column <code>activityv2.activity_photo_picture.order</code>. 排序

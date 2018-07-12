@@ -5,16 +5,14 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.Article;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record14;
 import org.jooq.Row14;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -30,7 +28,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleRecord extends UpdatableRecordImpl<ArticleRecord> implements Record14<Integer, Integer, String, String, Integer, String, Integer, Timestamp, String, String, Timestamp, Integer, Timestamp, Integer> {
 
-    private static final long serialVersionUID = -1019738436;
+    private static final long serialVersionUID = 1944901088;
 
     /**
      * Setter for <code>activityv2.article.id</code>. 编号
@@ -173,14 +171,14 @@ public class ArticleRecord extends UpdatableRecordImpl<ArticleRecord> implements
     }
 
     /**
-     * Setter for <code>activityv2.article.created</code>.
+     * Setter for <code>activityv2.article.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.created</code>.
+     * Getter for <code>activityv2.article.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(10);
@@ -201,14 +199,14 @@ public class ArticleRecord extends UpdatableRecordImpl<ArticleRecord> implements
     }
 
     /**
-     * Setter for <code>activityv2.article.modified</code>.
+     * Setter for <code>activityv2.article.modified</code>. 修改时间
      */
     public void setModified(Timestamp value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.modified</code>.
+     * Getter for <code>activityv2.article.modified</code>. 修改时间
      */
     public Timestamp getModified() {
         return (Timestamp) get(12);

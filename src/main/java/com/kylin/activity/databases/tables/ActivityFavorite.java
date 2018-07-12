@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityFavoriteRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
 
-    private static final long serialVersionUID = 1943290682;
+    private static final long serialVersionUID = -1394095336;
 
     /**
      * The reference instance of <code>activityv2.activity_favorite</code>
@@ -71,9 +62,9 @@ public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
     public final TableField<ActivityFavoriteRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户id");
 
     /**
-     * The column <code>activityv2.activity_favorite.created</code>.
+     * The column <code>activityv2.activity_favorite.created</code>. 创建时间
      */
-    public final TableField<ActivityFavoriteRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ActivityFavoriteRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
      * Create a <code>activityv2.activity_favorite</code> table reference

@@ -5,17 +5,15 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityUser;
-
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record16;
 import org.jooq.Row16;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 
 
 /**
@@ -31,7 +29,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> implements Record16<Integer, Integer, Integer, Integer, Timestamp, Integer, Timestamp, Timestamp, String, String, String, BigDecimal, Integer, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = 404577600;
+    private static final long serialVersionUID = 2070944458;
 
     /**
      * Setter for <code>activityv2.activity_user.id</code>. 编号
@@ -48,98 +46,98 @@ public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> 
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.user_id</code>.
+     * Setter for <code>activityv2.activity_user.user_id</code>. 用户编号
      */
     public void setUserId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.user_id</code>.
+     * Getter for <code>activityv2.activity_user.user_id</code>. 用户编号
      */
     public Integer getUserId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.activity_id</code>.
+     * Setter for <code>activityv2.activity_user.activity_id</code>. 活动编号
      */
     public void setActivityId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.activity_id</code>.
+     * Getter for <code>activityv2.activity_user.activity_id</code>. 活动编号
      */
     public Integer getActivityId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.activity_ticket_id</code>.
+     * Setter for <code>activityv2.activity_user.activity_ticket_id</code>. 活动门票编号
      */
     public void setActivityTicketId(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.activity_ticket_id</code>.
+     * Getter for <code>activityv2.activity_user.activity_ticket_id</code>. 活动门票编号
      */
     public Integer getActivityTicketId() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.created</code>.
+     * Setter for <code>activityv2.activity_user.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.created</code>.
+     * Getter for <code>activityv2.activity_user.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.created_by</code>.
+     * Setter for <code>activityv2.activity_user.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.created_by</code>.
+     * Getter for <code>activityv2.activity_user.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.attend_time</code>.
+     * Setter for <code>activityv2.activity_user.attend_time</code>. 报名时间
      */
     public void setAttendTime(Timestamp value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.attend_time</code>.
+     * Getter for <code>activityv2.activity_user.attend_time</code>. 报名时间
      */
     public Timestamp getAttendTime() {
         return (Timestamp) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.check_in_time</code>.
+     * Setter for <code>activityv2.activity_user.check_in_time</code>. 签到时间
      */
     public void setCheckInTime(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.check_in_time</code>.
+     * Getter for <code>activityv2.activity_user.check_in_time</code>. 签到时间
      */
     public Timestamp getCheckInTime() {
         return (Timestamp) get(7);
@@ -216,28 +214,28 @@ public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> 
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.modified</code>.
+     * Setter for <code>activityv2.activity_user.modified</code>. 修改时间
      */
     public void setModified(Timestamp value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.modified</code>.
+     * Getter for <code>activityv2.activity_user.modified</code>. 修改时间
      */
     public Timestamp getModified() {
         return (Timestamp) get(13);
     }
 
     /**
-     * Setter for <code>activityv2.activity_user.modified_by</code>.
+     * Setter for <code>activityv2.activity_user.modified_by</code>. 修改人
      */
     public void setModifiedBy(Integer value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_user.modified_by</code>.
+     * Getter for <code>activityv2.activity_user.modified_by</code>. 修改人
      */
     public Integer getModifiedBy() {
         return (Integer) get(14);

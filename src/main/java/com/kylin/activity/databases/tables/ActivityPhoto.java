@@ -8,23 +8,14 @@ import com.kylin.activity.databases.Activityv2;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
 
-    private static final long serialVersionUID = -316420167;
+    private static final long serialVersionUID = -1750709933;
 
     /**
      * The reference instance of <code>activityv2.activity_photo</code>
@@ -76,14 +67,14 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
     public final TableField<ActivityPhotoRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "描述");
 
     /**
-     * The column <code>activityv2.activity_photo.created</code>.
+     * The column <code>activityv2.activity_photo.created</code>. 创建时间
      */
-    public final TableField<ActivityPhotoRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ActivityPhotoRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.activity_photo.created_by</code>.
+     * The column <code>activityv2.activity_photo.created_by</code>. 创建人
      */
-    public final TableField<ActivityPhotoRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "");
+    public final TableField<ActivityPhotoRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "创建人");
 
     /**
      * The column <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址

@@ -2,7 +2,9 @@ package com.kylin.activity
 
 import com.kylin.activity.authorize.MobileCodeAuthenticationProvider
 import com.kylin.activity.authorize.UsernamePasswordAuthenticationProvider
+import com.kylin.activity.authorize.WxOpenAuthenticationProvider
 import com.kylin.activity.filter.MobileCodeAuthenticationProcessingFilter
+import com.kylin.activity.filter.WxOpenAuthenticationProcessingFilter
 import com.kylin.activity.service.AuthUserDetailsServiceImpl
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
@@ -46,6 +48,13 @@ class WebSecurityConfig
     }
 
     @Bean
+    fun wxOpenAuthenticationProcessingFilter(): WxOpenAuthenticationProcessingFilter {
+        val filter = WxOpenAuthenticationProcessingFilter()
+        filter.setAuthenticationManager(authenticationManager)
+        return filter
+    }
+
+    @Bean
     fun usernamePasswordAuthenticationProvider(): UsernamePasswordAuthenticationProvider {
         return UsernamePasswordAuthenticationProvider()
     }
@@ -53,6 +62,11 @@ class WebSecurityConfig
     @Bean
     fun mobileCodeAuthenticationProvider(): MobileCodeAuthenticationProvider {
         return MobileCodeAuthenticationProvider()
+    }
+
+    @Bean
+    fun wxOpenAuthenticationProvider(): WxOpenAuthenticationProvider {
+        return WxOpenAuthenticationProvider()
     }
 
     @Autowired
@@ -82,6 +96,11 @@ class WebSecurityConfig
         filter.setAuthenticationFailureHandler(customAuthenticationFailHandler)
         http.addFilterAfter(filter, UsernamePasswordAuthenticationFilter::class.java)
 
+        var wxFilter = wxOpenAuthenticationProcessingFilter()
+        wxFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler)
+        wxFilter.setAuthenticationFailureHandler(customAuthenticationFailHandler)
+        http.addFilterAfter(wxFilter, UsernamePasswordAuthenticationFilter::class.java)
+
         http.authorizeRequests()
                 .antMatchers("/"
                         , "/index"
@@ -97,7 +116,9 @@ class WebSecurityConfig
                         , "/fonts/**"
                         , "/img/**"
                         , "/images/**"
-                        , "/json/**").permitAll()
+                        , "/json/**"
+                        , "/notify/**"
+                        , "/api/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -122,6 +143,7 @@ class WebSecurityConfig
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder?) {
         auth!!.authenticationProvider(mobileCodeAuthenticationProvider())
+                .authenticationProvider(wxOpenAuthenticationProvider())
                 .authenticationProvider(usernamePasswordAuthenticationProvider())
     }
 }
