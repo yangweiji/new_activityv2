@@ -118,7 +118,7 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  width: 80%;
+  width: 75%;
   text-align: center;
   margin-left: 10px;
   margin-top: 10px;

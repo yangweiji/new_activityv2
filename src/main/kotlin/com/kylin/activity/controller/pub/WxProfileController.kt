@@ -77,6 +77,31 @@ class WxProfileController {
         return userService!!.getUser(userId)
     }
 
+    /**
+     * 保存并更新用户信息
+     * @param user 用户信息
+     */
+    @Transactional
+    @PostMapping("/saveuserinfo")
+    fun saveUserInfo(@RequestBody user: User): User {
+        var userInfo = userService!!.getUser(user.id)
+        userInfo!!.displayname = user.displayname
+        userInfo!!.gender = user.gender
+        userInfo!!.email = user.email
+        userInfo!!.bloodType = user.bloodType
+        userInfo!!.clothingSize = user.clothingSize
+        userInfo!!.workCompany = user.workCompany
+        userInfo!!.occupation = user.occupation
+        userInfo!!.emergencyContactName = user.emergencyContactName
+        userInfo!!.emergencyContactMobile = user.emergencyContactMobile
+        userInfo!!.isParty = user.isParty
+        userInfo!!.address = user.address
+        userInfo!!.wechatId = user.wechatId
+        proFileService!!.updateUserInfo(userInfo)
+        return userInfo
+    }
+
+
 
 
     /**

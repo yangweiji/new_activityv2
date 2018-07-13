@@ -67,7 +67,7 @@ export default {
     getData() {
       var that = this;
       this.$kyutil.get("/pub/wx/poster/getPosters", { posterType: this.activeTab }).then(res => {
-        this.items = res;
+        that.items = res;
       });
     },
     tabClick(){

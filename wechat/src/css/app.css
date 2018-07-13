@@ -276,6 +276,15 @@ page {
     background-color: #F37B1D;
 }
 
+.c-activity-com .c-activity-label {
+    margin-right: 10px;
+}
+
+.c-activity-com .weui-media-box__desc .c-activity-label image {
+    margin-right: 5px;
+    margin-bottom: -4px;
+}
+
 
 /* weui override */
 
@@ -313,4 +322,8 @@ page {
     height: 20px;
     margin-top: -4px;
     border-radius: 50%;
+}
+
+.weui-media-box__thumb {
+    border-radius: 3px;
 }

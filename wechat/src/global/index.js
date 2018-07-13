@@ -306,6 +306,14 @@ function IdentityCodeValid(code) {
     return pass;
 }
 
+function emailValid(email) {
+    var reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+    if (email) {
+        return reg.test(email)
+    }
+    return false
+}
+
 function getUser() {
     return wx.getStorageSync("user")
 }
@@ -356,5 +364,6 @@ export default {
     downloadUrl: downloadUrl,
     get: httpGet,
     post: httpPost,
-    idcardValid: IdentityCodeValid
+    idcardValid: IdentityCodeValid,
+    emailValid: emailValid
 }
