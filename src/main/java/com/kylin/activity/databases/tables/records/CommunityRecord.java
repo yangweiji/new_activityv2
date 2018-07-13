@@ -30,283 +30,283 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityRecord extends UpdatableRecordImpl<CommunityRecord> implements Record20<Integer, String, String, String, Integer, Boolean, String, Boolean, String, Double, Integer, Timestamp, String, String, String, String, String, String, String, Integer> {
 
-    private static final long serialVersionUID = -1127356024;
+    private static final long serialVersionUID = -1455722890;
 
     /**
-     * Setter for <code>activityv2.community.id</code>. 编号
+     * Setter for <code>community.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.id</code>. 编号
+     * Getter for <code>community.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.community.name</code>. 社团名称
+     * Setter for <code>community.name</code>. 社团名称
      */
     public void setName(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.name</code>. 社团名称
+     * Getter for <code>community.name</code>. 社团名称
      */
     public String getName() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.community.description</code>. 社团标语
+     * Setter for <code>community.description</code>. 社团标语
      */
     public void setDescription(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.description</code>. 社团标语
+     * Getter for <code>community.description</code>. 社团标语
      */
     public String getDescription() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.community.background</code>. 社团背景图片
+     * Setter for <code>community.background</code>. 社团背景图片
      */
     public void setBackground(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.background</code>. 社团背景图片
+     * Getter for <code>community.background</code>. 社团背景图片
      */
     public String getBackground() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.community.status</code>. 社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过
+     * Setter for <code>community.status</code>. 社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过
      */
     public void setStatus(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.status</code>. 社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过
+     * Getter for <code>community.status</code>. 社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过
      */
     public Integer getStatus() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
+     * Setter for <code>community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
      */
     public void setUsingScore(Boolean value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
+     * Getter for <code>community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
      */
     public Boolean getUsingScore() {
         return (Boolean) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.community.avatar</code>. 社团小图标
+     * Setter for <code>community.avatar</code>. 社团小图标
      */
     public void setAvatar(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.avatar</code>. 社团小图标
+     * Getter for <code>community.avatar</code>. 社团小图标
      */
     public String getAvatar() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.community.is_vip</code>. 会员功能是否开启
+     * Setter for <code>community.is_vip</code>. 会员功能是否开启
      */
     public void setIsVip(Boolean value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.is_vip</code>. 会员功能是否开启
+     * Getter for <code>community.is_vip</code>. 会员功能是否开启
      */
     public Boolean getIsVip() {
         return (Boolean) get(7);
     }
 
     /**
-     * Setter for <code>activityv2.community.vip_agreement</code>. 会员条款
+     * Setter for <code>community.vip_agreement</code>. 会员条款
      */
     public void setVipAgreement(String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.vip_agreement</code>. 会员条款
+     * Getter for <code>community.vip_agreement</code>. 会员条款
      */
     public String getVipAgreement() {
         return (String) get(8);
     }
 
     /**
-     * Setter for <code>activityv2.community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
+     * Setter for <code>community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
      */
     public void setVipAmount(Double value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
+     * Getter for <code>community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
      */
     public Double getVipAmount() {
         return (Double) get(9);
     }
 
     /**
-     * Setter for <code>activityv2.community.created_by</code>. 社团创建人
+     * Setter for <code>community.created_by</code>. 社团创建人
      */
     public void setCreatedBy(Integer value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.created_by</code>. 社团创建人
+     * Getter for <code>community.created_by</code>. 社团创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(10);
     }
 
     /**
-     * Setter for <code>activityv2.community.created</code>. 创建时间
+     * Setter for <code>community.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.created</code>. 创建时间
+     * Getter for <code>community.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(11);
     }
 
     /**
-     * Setter for <code>activityv2.community.address</code>. 社团地址
+     * Setter for <code>community.address</code>. 社团地址
      */
     public void setAddress(String value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.address</code>. 社团地址
+     * Getter for <code>community.address</code>. 社团地址
      */
     public String getAddress() {
         return (String) get(12);
     }
 
     /**
-     * Setter for <code>activityv2.community.contact</code>. 社团联系电话
+     * Setter for <code>community.contact</code>. 社团联系电话
      */
     public void setContact(String value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.contact</code>. 社团联系电话
+     * Getter for <code>community.contact</code>. 社团联系电话
      */
     public String getContact() {
         return (String) get(13);
     }
 
     /**
-     * Setter for <code>activityv2.community.company</code>. 社团公司名称
+     * Setter for <code>community.company</code>. 社团公司名称
      */
     public void setCompany(String value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.company</code>. 社团公司名称
+     * Getter for <code>community.company</code>. 社团公司名称
      */
     public String getCompany() {
         return (String) get(14);
     }
 
     /**
-     * Setter for <code>activityv2.community.about</code>. 关于社团富文本
+     * Setter for <code>community.about</code>. 关于社团富文本
      */
     public void setAbout(String value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.about</code>. 关于社团富文本
+     * Getter for <code>community.about</code>. 关于社团富文本
      */
     public String getAbout() {
         return (String) get(15);
     }
 
     /**
-     * Setter for <code>activityv2.community.control_name</code>. 负责人信息
+     * Setter for <code>community.control_name</code>. 负责人信息
      */
     public void setControlName(String value) {
         set(16, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.control_name</code>. 负责人信息
+     * Getter for <code>community.control_name</code>. 负责人信息
      */
     public String getControlName() {
         return (String) get(16);
     }
 
     /**
-     * Setter for <code>activityv2.community.business_license</code>. 营业执照（图片）
+     * Setter for <code>community.business_license</code>. 营业执照（图片）
      */
     public void setBusinessLicense(String value) {
         set(17, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.business_license</code>. 营业执照（图片）
+     * Getter for <code>community.business_license</code>. 营业执照（图片）
      */
     public String getBusinessLicense() {
         return (String) get(17);
     }
 
     /**
-     * Setter for <code>activityv2.community.manager_phone_number</code>. 团体管理员手机号码
+     * Setter for <code>community.manager_phone_number</code>. 团体管理员手机号码
      */
     public void setManagerPhoneNumber(String value) {
         set(18, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.manager_phone_number</code>. 团体管理员手机号码
+     * Getter for <code>community.manager_phone_number</code>. 团体管理员手机号码
      */
     public String getManagerPhoneNumber() {
         return (String) get(18);
     }
 
     /**
-     * Setter for <code>activityv2.community.count_people</code>. 团体规模人数
+     * Setter for <code>community.count_people</code>. 团体规模人数
      */
     public void setCountPeople(Integer value) {
         set(19, value);
     }
 
     /**
-     * Getter for <code>activityv2.community.count_people</code>. 团体规模人数
+     * Getter for <code>community.count_people</code>. 团体规模人数
      */
     public Integer getCountPeople() {
         return (Integer) get(19);

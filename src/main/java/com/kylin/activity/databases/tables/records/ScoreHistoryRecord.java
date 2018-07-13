@@ -30,101 +30,101 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistoryRecord extends UpdatableRecordImpl<ScoreHistoryRecord> implements Record7<Integer, Integer, Integer, Integer, String, Timestamp, Integer> {
 
-    private static final long serialVersionUID = -981247948;
+    private static final long serialVersionUID = -763498930;
 
     /**
-     * Setter for <code>activityv2.score_history.id</code>. 编号
+     * Setter for <code>score_history.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.id</code>. 编号
+     * Getter for <code>score_history.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.score</code>. 分值
+     * Setter for <code>score_history.score</code>. 分值
      */
     public void setScore(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.score</code>. 分值
+     * Getter for <code>score_history.score</code>. 分值
      */
     public Integer getScore() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.user_id</code>. 用户Id
+     * Setter for <code>score_history.user_id</code>. 用户Id
      */
     public void setUserId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.user_id</code>. 用户Id
+     * Getter for <code>score_history.user_id</code>. 用户Id
      */
     public Integer getUserId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.activity_id</code>.
+     * Setter for <code>score_history.activity_id</code>. 活动id
      */
     public void setActivityId(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.activity_id</code>.
+     * Getter for <code>score_history.activity_id</code>. 活动id
      */
     public Integer getActivityId() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.memo</code>. 积分说明
+     * Setter for <code>score_history.memo</code>. 积分说明
      */
     public void setMemo(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.memo</code>. 积分说明
+     * Getter for <code>score_history.memo</code>. 积分说明
      */
     public String getMemo() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.created</code>.
+     * Setter for <code>score_history.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.created</code>.
+     * Getter for <code>score_history.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.score_history.community_id</code>.
+     * Setter for <code>score_history.community_id</code>. 团体id
      */
     public void setCommunityId(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.score_history.community_id</code>.
+     * Getter for <code>score_history.community_id</code>. 团体id
      */
     public Integer getCommunityId() {
         return (Integer) get(6);

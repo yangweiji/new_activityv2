@@ -30,143 +30,143 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PosterRecord extends UpdatableRecordImpl<PosterRecord> implements Record10<Integer, String, String, String, String, Integer, Timestamp, String, Boolean, Integer> {
 
-    private static final long serialVersionUID = -1616865220;
+    private static final long serialVersionUID = 1062382432;
 
     /**
-     * Setter for <code>activityv2.poster.id</code>. 主键
+     * Setter for <code>poster.id</code>. 主键
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.id</code>. 主键
+     * Getter for <code>poster.id</code>. 主键
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.poster.title</code>. 海报标题，当海报链接活动时，自动使用活动的标题
+     * Setter for <code>poster.title</code>. 海报标题，当海报链接活动时，自动使用活动的标题
      */
     public void setTitle(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.title</code>. 海报标题，当海报链接活动时，自动使用活动的标题
+     * Getter for <code>poster.title</code>. 海报标题，当海报链接活动时，自动使用活动的标题
      */
     public String getTitle() {
         return (String) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.poster.avatar</code>. 默认海报背景图
+     * Setter for <code>poster.avatar</code>. 默认海报背景图
      */
     public void setAvatar(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.avatar</code>. 默认海报背景图
+     * Getter for <code>poster.avatar</code>. 默认海报背景图
      */
     public String getAvatar() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.poster.mobile_avatar</code>. 收集显示海报图，为空时使用avatar的值
+     * Setter for <code>poster.mobile_avatar</code>. 收集显示海报图，为空时使用avatar的值
      */
     public void setMobileAvatar(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.mobile_avatar</code>. 收集显示海报图，为空时使用avatar的值
+     * Getter for <code>poster.mobile_avatar</code>. 收集显示海报图，为空时使用avatar的值
      */
     public String getMobileAvatar() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.poster.link</code>. 海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报
+     * Setter for <code>poster.link</code>. 海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报
      */
     public void setLink(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.link</code>. 海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报
+     * Getter for <code>poster.link</code>. 海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报
      */
     public String getLink() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.poster.activity_id</code>. 海报关联的活动Id
+     * Setter for <code>poster.activity_id</code>. 海报关联的活动Id
      */
     public void setActivityId(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.activity_id</code>. 海报关联的活动Id
+     * Getter for <code>poster.activity_id</code>. 海报关联的活动Id
      */
     public Integer getActivityId() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.poster.created</code>. 创建时间
+     * Setter for <code>poster.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.created</code>. 创建时间
+     * Getter for <code>poster.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.poster.poster_type</code>. 海报类型， 与活动关联时，自动使用活动的类型
+     * Setter for <code>poster.poster_type</code>. 海报类型， 与活动关联时，自动使用活动的类型
      */
     public void setPosterType(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.poster_type</code>. 海报类型， 与活动关联时，自动使用活动的类型
+     * Getter for <code>poster.poster_type</code>. 海报类型， 与活动关联时，自动使用活动的类型
      */
     public String getPosterType() {
         return (String) get(7);
     }
 
     /**
-     * Setter for <code>activityv2.poster.show</code>. 是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序
+     * Setter for <code>poster.show</code>. 是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序
      */
     public void setShow(Boolean value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.show</code>. 是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序
+     * Getter for <code>poster.show</code>. 是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序
      */
     public Boolean getShow() {
         return (Boolean) get(8);
     }
 
     /**
-     * Setter for <code>activityv2.poster.sequence</code>. 海报排序，排序相同时按created倒序排
+     * Setter for <code>poster.sequence</code>. 海报排序，排序相同时按created倒序排
      */
     public void setSequence(Integer value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activityv2.poster.sequence</code>. 海报排序，排序相同时按created倒序排
+     * Getter for <code>poster.sequence</code>. 海报排序，排序相同时按created倒序排
      */
     public Integer getSequence() {
         return (Integer) get(9);

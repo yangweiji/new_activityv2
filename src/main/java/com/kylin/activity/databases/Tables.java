@@ -26,7 +26,7 @@ import javax.annotation.Generated;
 
 
 /**
- * Convenience access to all tables in activityv2
+ * Convenience access to all tables in 
  */
 @Generated(
     value = {
@@ -39,7 +39,7 @@ import javax.annotation.Generated;
 public class Tables {
 
     /**
-     * The table <code>activityv2.action_history</code>.
+     * 操作记录表
      */
     public static final ActionHistory ACTION_HISTORY = com.kylin.activity.databases.tables.ActionHistory.ACTION_HISTORY;
 
@@ -79,7 +79,7 @@ public class Tables {
     public static final ActivityUser ACTIVITY_USER = com.kylin.activity.databases.tables.ActivityUser.ACTIVITY_USER;
 
     /**
-     * The table <code>activityv2.activity_user_record</code>.
+     * 用户报名活动打卡记录表
      */
     public static final ActivityUserRecord ACTIVITY_USER_RECORD = com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD;
 
