@@ -314,6 +314,25 @@ function emailValid(email) {
     return false
 }
 
+
+function wxAlert(msg) {
+    return new Promise((resolve, reject) => {
+        wx.showModal({
+            title: '提示',
+            content: msg,
+            showCancel: false,
+            success: function(res) {
+                if (res.confirm) {
+                    resolve()
+                } else if (res.cancel) {
+                    reject()
+                }
+            }
+        })
+    })
+
+}
+
 function getUser() {
     return wx.getStorageSync("user")
 }
@@ -365,5 +384,6 @@ export default {
     get: httpGet,
     post: httpPost,
     idcardValid: IdentityCodeValid,
-    emailValid: emailValid
+    emailValid: emailValid,
+    alert: wxAlert
 }

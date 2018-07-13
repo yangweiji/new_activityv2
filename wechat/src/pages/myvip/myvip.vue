@@ -118,7 +118,7 @@
           })
           that.processing = false
 
-          if(that.start){ //从实名认证跳回，直接付款
+          if(that.start && that.canBuyVip){ //从实名认证跳回，直接付款
             that.isAgree = true
             that.payVip()
           }
@@ -134,6 +134,10 @@
     },
       payVip() {
         var that = this
+        if(that.processing){
+          return
+        }
+        
         var param = {
           communityId: that.item.community.id,
           userId: that.userId,
@@ -215,7 +219,7 @@
           if (orderStatus == 2) {
             that.getData(); // 支付成功
           } else {
-            alert("支付出现问题，请联系相关人员处理");
+            that.$kyutil.alert("支付出现问题，在确定是否支付成功前，请不要重复支付");
           }
         }).catch(() => {
           that.processing = false
