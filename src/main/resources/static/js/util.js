@@ -189,7 +189,7 @@ Util.file.downloadUrl = function (name, style) {
     if(name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0)){
         return name
     }
-    var url = 'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/' + name
+    var url = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/' + name
     if(style){
         url += '?x-oss-process=style/' + style
     }

@@ -146,7 +146,7 @@ class CommonService {
             return fileId
         }
         var subDir = if(subDir == null) dir else subDir
-        var url = "http://${bucket}.${endpoint}/${subDir}/${fileId}"
+        var url = "https://${bucket}.${endpoint}/${subDir}/${fileId}"
         if(style != null && !style.isNullOrBlank()){
             url += "?x-oss-process=style/" + style
         }

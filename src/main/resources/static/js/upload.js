@@ -118,7 +118,7 @@ Util.file.uploader = function (opt) {
         //container: document.getElementById('container'),
         flash_swf_url: libPath + '/js/Moxie.swf',
         silverlight_xap_url: libPath +'/js/Moxie.xap',
-        url: 'http://oss.aliyuncs.com',
+        url: 'https://oss.aliyuncs.com',
 
         filters: {
             mime_types: [ //只允许上传图片
