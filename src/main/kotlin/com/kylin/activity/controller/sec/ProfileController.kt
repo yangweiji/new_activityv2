@@ -2,6 +2,7 @@ package com.kylin.activity.controller.sec
 
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
+import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ScoreService
@@ -93,8 +94,9 @@ class ProfileController : BaseController() {
      */
     @RequestMapping(value = "/personalscore", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
     private fun getPersonalScore(@ModelAttribute user: User, model: Model): String {
+        var community=this.sessionCommunity
         //取得活动积分明细
-        val items = scoreService!!.getPersonalScore(user.id!!)
+        val items = scoreService!!.getPersonalScore(user.id!!,community.id!!)
         var totalscore: Int? = 0
         for (r in items) {
             totalscore = totalscore!!.plus(r.getValue("score") as Int)
