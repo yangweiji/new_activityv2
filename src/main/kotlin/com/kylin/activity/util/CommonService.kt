@@ -111,7 +111,7 @@ class CommonService {
 
 
     fun getPolicy(): LinkedHashMap<String, String> {
-        val host = "http://$bucket.$endpoint"
+        val host = "https://$bucket.$endpoint"
         val client = OSSClient(endpoint, accessKeyId, accessKeySecret)
         val expireTime: Long = 30
         val expireEndTime = System.currentTimeMillis() + expireTime * 1000
