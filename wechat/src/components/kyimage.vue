@@ -58,7 +58,9 @@ export default {
   methods:{
     currentPageUrls(){
       var currentPages = getCurrentPages()
-      var id = "_cache_" + currentPages[currentPages.length - 1].data.__webviewId__
+      var currentPage = currentPages[currentPages.length - 1]
+      var viewId =  currentPage.__wxWebviewId__ || currentPage.data.__webviewId__
+      var id = "_cache_" + viewId
       if(!_cache_urls[id]){
         _cache_urls[id] = []
       }
