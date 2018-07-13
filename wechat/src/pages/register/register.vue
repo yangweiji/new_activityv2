@@ -204,7 +204,8 @@ export default {
             that.$kyutil.post("/pub/wx/auth/register", param).then(res => {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                that.$kyutil.get("/pub/wx/auth/getUserInfo", { "openid": wx.getStorageSync("sessionInfo").openid }).then(res => {
+                var currentUser = wx.getStorageSync("sessionInfo")
+                that.$kyutil.get("/pub/wx/auth/getUserInfo", { "openid": currentUser.openid, "unionId": currentUser.unionId }).then(res => {
                     console.log("user: ", res)
                     if (res) {
                         wx.setStorageSync("user", res)

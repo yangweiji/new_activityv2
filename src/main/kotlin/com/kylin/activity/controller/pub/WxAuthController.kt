@@ -96,6 +96,7 @@ class WxAuthController {
             result.openid = session.openid
             result.sessionKey = session.sessionKey
             result.sessionId = session.openid + session.sessionKey
+            result.unionId = session.unionid
             result.code = 200
             result.isNeedUserInfo = true
 
@@ -112,8 +113,8 @@ class WxAuthController {
      * @return 返回用户信息
      */
     @GetMapping("/getUserInfo")
-    fun getUserInfo(openid: String): User? {
-        var user = userService!!.getUserByOpenId(openid)
+    fun getUserInfo(openid: String?, unionId: String?): User? {
+        var user = userService!!.getUserByOpenOrUnionId(openid, unionId)
         if (user != null) {
             user!!.password = null
         }
@@ -176,6 +177,8 @@ class WxAuthController {
         var verCode = map["vercode"]
         //OpenId
         var openId = map["openId"]
+        //unionId
+        var unionId = map["unionId"]
         //用户昵称
         var nickName = map["nickName"]
         //用户头像，最后一个数值代表正方形头像大小（有0、46、64、96、132数值可选，0代表132*132正方形头像），用户没有头像时该项为空。若用户更换头像，原有头像URL将失效。
@@ -207,6 +210,7 @@ class WxAuthController {
                 user.avatar = avatarUrl
                 user.gender = gender!!.toInt()
                 user.openId = openId
+                user.unionId = unionId
 
                 userService!!.insert(user)
                 LogUtil.printLog("注册用户OK, ID: ${user.id}")
@@ -214,6 +218,7 @@ class WxAuthController {
             else {
                 //更新OpenId
                 user!!.openId = openId
+                user!!.unionId = unionId
                 if (user.displayname == null) {
                     //显示名称与登录名一致
                     user.displayname = nickName

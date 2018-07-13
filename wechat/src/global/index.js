@@ -167,7 +167,7 @@ function Login() {
                     console.log("sessionInfo: ", res)
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
-                        HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid }, "GET", false, function(res) {
+                        HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
                             console.log("user: ", res)
                             if (res) {
                                 wx.setStorageSync("user", res)

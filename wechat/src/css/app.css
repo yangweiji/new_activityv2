@@ -327,3 +327,15 @@ page {
 .weui-media-box__thumb {
     border-radius: 3px;
 }
+
+button[disabled][type=primary] {
+    background-color: #F37B1D30;
+}
+
+button[type=primary] {
+    background-color: #F37B1D;
+}
+
+.weui-vcode-btn {
+    color: #F37B1D;
+}
