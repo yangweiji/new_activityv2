@@ -250,7 +250,7 @@
     onShareAppMessage(res) {
       return {
         title: this.item.activity.title,
-        path: '/page/myvip/myvip?communityId=' + this.communityId
+        path: 'pages/myvip/myvip?communityId=' + this.communityId
       }
     }
   };

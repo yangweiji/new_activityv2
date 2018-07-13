@@ -423,7 +423,7 @@
     onShareAppMessage(res) {
       return {
         title: "[报名]" + this.item.activity.title,
-        path: '/page/attend/attend?activityId=' + this.activityId
+        path: 'pages/attend/attend?activityId=' + this.activityId
       }
     }
   };

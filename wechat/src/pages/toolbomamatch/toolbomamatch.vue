@@ -259,7 +259,7 @@
     onShareAppMessage(res) {
       return {
         title: "波士顿马拉松参赛资格",
-        path: '/page/toolbomamatch/toolbomamatch'
+        path: 'pages/toolbomamatch/toolbomamatch'
       }
     }
   };

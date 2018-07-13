@@ -147,7 +147,7 @@
     onShareAppMessage(res) {
       return {
         title: "MAF180最大有氧心率计算",
-        path: '/page/toolmaf180/toolmaf180'
+        path: 'pages/toolmaf180/toolmaf180'
       }
     }
   };

@@ -62,7 +62,7 @@
     onShareAppMessage(res) {
       return {
         title: this.item.activity.title,
-        path: '/page/agreement/agreement?communityId=' + this.communityId
+        path: 'pages/agreement/agreement?communityId=' + this.communityId
       }
     }
   };
