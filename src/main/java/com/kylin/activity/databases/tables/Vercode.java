@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.VercodeRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Vercode extends TableImpl<VercodeRecord> {
 
-    private static final long serialVersionUID = 493173125;
+    private static final long serialVersionUID = 1650801475;
 
     /**
-     * The reference instance of <code>activityv2.vercode</code>
+     * The reference instance of <code>vercode</code>
      */
     public static final Vercode VERCODE = new Vercode();
 
@@ -47,41 +56,41 @@ public class Vercode extends TableImpl<VercodeRecord> {
     }
 
     /**
-     * The column <code>activityv2.vercode.id</code>. 编号
+     * The column <code>vercode.id</code>. 编号
      */
     public final TableField<VercodeRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.vercode.mobile</code>. 手机联系方式
+     * The column <code>vercode.mobile</code>. 手机联系方式
      */
     public final TableField<VercodeRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR(255), this, "手机联系方式");
 
     /**
-     * The column <code>activityv2.vercode.code</code>. 验证码
+     * The column <code>vercode.code</code>. 验证码
      */
     public final TableField<VercodeRecord, String> CODE = createField("code", org.jooq.impl.SQLDataType.VARCHAR(255), this, "验证码");
 
     /**
-     * The column <code>activityv2.vercode.created</code>. 创建时间
+     * The column <code>vercode.created</code>. 创建时间
      */
     public final TableField<VercodeRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * Create a <code>activityv2.vercode</code> table reference
+     * Create a <code>vercode</code> table reference
      */
     public Vercode() {
         this(DSL.name("vercode"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.vercode</code> table reference
+     * Create an aliased <code>vercode</code> table reference
      */
     public Vercode(String alias) {
         this(DSL.name(alias), VERCODE);
     }
 
     /**
-     * Create an aliased <code>activityv2.vercode</code> table reference
+     * Create an aliased <code>vercode</code> table reference
      */
     public Vercode(Name alias) {
         this(alias, VERCODE);
@@ -100,7 +109,7 @@ public class Vercode extends TableImpl<VercodeRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

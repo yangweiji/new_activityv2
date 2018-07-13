@@ -5,14 +5,16 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityFavorite;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record4;
 import org.jooq.Row4;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.sql.Timestamp;
 
 
 /**
@@ -28,59 +30,59 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityFavoriteRecord extends UpdatableRecordImpl<ActivityFavoriteRecord> implements Record4<Integer, Integer, Integer, Timestamp> {
 
-    private static final long serialVersionUID = 520687439;
+    private static final long serialVersionUID = 833784283;
 
     /**
-     * Setter for <code>activityv2.activity_favorite.id</code>. 编号
+     * Setter for <code>activity_favorite.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_favorite.id</code>. 编号
+     * Getter for <code>activity_favorite.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.activity_favorite.activity_id</code>. 活动id
+     * Setter for <code>activity_favorite.activity_id</code>. 活动id
      */
     public void setActivityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_favorite.activity_id</code>. 活动id
+     * Getter for <code>activity_favorite.activity_id</code>. 活动id
      */
     public Integer getActivityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.activity_favorite.user_id</code>. 用户id
+     * Setter for <code>activity_favorite.user_id</code>. 用户id
      */
     public void setUserId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_favorite.user_id</code>. 用户id
+     * Getter for <code>activity_favorite.user_id</code>. 用户id
      */
     public Integer getUserId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.activity_favorite.created</code>. 创建时间
+     * Setter for <code>activity_favorite.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_favorite.created</code>. 创建时间
+     * Getter for <code>activity_favorite.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(3);

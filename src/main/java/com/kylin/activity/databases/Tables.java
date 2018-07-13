@@ -10,7 +10,7 @@ import javax.annotation.Generated;
 
 
 /**
- * Convenience access to all tables in activityv2
+ * Convenience access to all tables in 
  */
 @Generated(
     value = {

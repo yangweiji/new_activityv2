@@ -873,45 +873,47 @@ class ActivityService {
      * 保存活动报名信息，检查活动报名的票种和积分
      */
     fun saveAttend(activityUser: ActivityUser) {
-        var ticketSql = "select t1.*, ifnull(t2.attend_count, 0) attend_count from activity_ticket t1 left join \n" +
-                "( select activity_ticket_id, count(user_id) attend_count from activity_user where activity_ticket_id = ? group by activity_ticket_id ) t2\n" +
-                "  on t1.id = t2.activity_ticket_id\n" +
-                "  where  t1.id = ?"
-        var ticket = create!!.resultQuery(ticketSql, activityUser.activityTicketId, activityUser.activityTicketId).fetchOne()
-        var maxUsers = ticket.get("count", Int::class.java)
-        var attendCount = ticket.get("attend_count", Int::class.java)
-        if (maxUsers > 0 && attendCount >= maxUsers) {
-            throw Exception("活动票已售完")
-        }
-
-        var activity = getActivity(ticket.get("activity_id", Int::class.java))
-
-        var now = DateUtil.date().toTimestamp()
-        activityUser.activityId = activity!!.id
-        activityUser.attendTime = DateUtil.date().toTimestamp()
-        activityUser.created = DateUtil.date().toTimestamp()
-        activityUser.createdBy = activityUser.userId
-
-        if (activityUser.score > 0) {
-            var userScore = thirdScoreService!!.getUseableScore(activityUser.userId, activity!!.communityId)
-            if (userScore < activityUser.score) {
-                throw Exception("积分不足")
+        synchronized(activityUser.userId) {
+            var ticketSql = "select t1.*, ifnull(t2.attend_count, 0) attend_count from activity_ticket t1 left join \n" +
+                    "( select activity_ticket_id, count(user_id) attend_count from activity_user where activity_ticket_id = ? group by activity_ticket_id ) t2\n" +
+                    "  on t1.id = t2.activity_ticket_id\n" +
+                    "  where  t1.id = ?"
+            var ticket = create!!.resultQuery(ticketSql, activityUser.activityTicketId, activityUser.activityTicketId).fetchOne()
+            var maxUsers = ticket.get("count", Int::class.java)
+            var attendCount = ticket.get("attend_count", Int::class.java)
+            if (maxUsers > 0 && attendCount >= maxUsers) {
+                throw Exception("活动票已售完")
             }
-            var scoreHistory = ScoreHistory()
-            scoreHistory.activityId = activityUser.activityId
-            scoreHistory.created = now
-            scoreHistory.userId = activityUser.userId
-            scoreHistory.memo = "参加活动抵扣"
-            scoreHistory.score = -activityUser.score
-            scoreHistoryDao!!.insert(scoreHistory)
-        }
 
-        var selfCheck = create!!.resultQuery("select count(id) self_attend_count from activity_user where activity_id=? and user_id=?", activityUser.activityId, activityUser.userId).fetchOne()
-        var selfAttendCount = selfCheck.get("self_attend_count", Int::class.java)
-        if (selfAttendCount == 0) {
-            activityUserDao!!.insert(activityUser)
-        } else {
-            throw Exception("您已经报名，不能重复报名")
+            var activity = getActivity(ticket.get("activity_id", Int::class.java))
+
+            var now = DateUtil.date().toTimestamp()
+            activityUser.activityId = activity!!.id
+            activityUser.attendTime = DateUtil.date().toTimestamp()
+            activityUser.created = DateUtil.date().toTimestamp()
+            activityUser.createdBy = activityUser.userId
+
+            if (activityUser.score > 0) {
+                var userScore = thirdScoreService!!.getUseableScore(activityUser.userId, activity!!.communityId)
+                if (userScore < activityUser.score) {
+                    throw Exception("积分不足")
+                }
+                var scoreHistory = ScoreHistory()
+                scoreHistory.activityId = activityUser.activityId
+                scoreHistory.created = now
+                scoreHistory.userId = activityUser.userId
+                scoreHistory.memo = "参加活动抵扣"
+                scoreHistory.score = -activityUser.score
+                scoreHistoryDao!!.insert(scoreHistory)
+            }
+
+            var selfCheck = create!!.resultQuery("select count(id) self_attend_count from activity_user where activity_id=? and user_id=?", activityUser.activityId, activityUser.userId).fetchOne()
+            var selfAttendCount = selfCheck.get("self_attend_count", Int::class.java)
+            if (selfAttendCount == 0) {
+                activityUserDao!!.insert(activityUser)
+            } else {
+                throw Exception("您已经报名，不能重复报名")
+            }
         }
     }
 

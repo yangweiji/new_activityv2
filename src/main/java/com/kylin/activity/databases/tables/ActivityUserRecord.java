@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityUserRecordRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
 
-    private static final long serialVersionUID = -469548891;
+    private static final long serialVersionUID = -295839332;
 
     /**
-     * The reference instance of <code>activityv2.activity_user_record</code>
+     * The reference instance of <code>activity_user_record</code>
      */
     public static final ActivityUserRecord ACTIVITY_USER_RECORD = new ActivityUserRecord();
 
@@ -47,46 +56,46 @@ public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
     }
 
     /**
-     * The column <code>activityv2.activity_user_record.id</code>. 主键，编号
+     * The column <code>activity_user_record.id</code>. 主键，编号
      */
     public final TableField<ActivityUserRecordRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "主键，编号");
 
     /**
-     * The column <code>activityv2.activity_user_record.activity_user_id</code>. 外键，活动用户表的主键id
+     * The column <code>activity_user_record.activity_user_id</code>. 外键，活动用户表的主键id
      */
     public final TableField<ActivityUserRecordRecord, Integer> ACTIVITY_USER_ID = createField("activity_user_id", org.jooq.impl.SQLDataType.INTEGER, this, "外键，活动用户表的主键id");
 
     /**
-     * The column <code>activityv2.activity_user_record.record_time</code>. 打卡时间
+     * The column <code>activity_user_record.record_time</code>. 打卡时间
      */
     public final TableField<ActivityUserRecordRecord, Timestamp> RECORD_TIME = createField("record_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "打卡时间");
 
     /**
-     * The column <code>activityv2.activity_user_record.pictures</code>. 打开上传截图，图片可以多张
+     * The column <code>activity_user_record.pictures</code>. 打开上传截图，图片可以多张
      */
     public final TableField<ActivityUserRecordRecord, String> PICTURES = createField("pictures", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "打开上传截图，图片可以多张");
 
     /**
-     * The column <code>activityv2.activity_user_record.notes</code>. 打卡备注
+     * The column <code>activity_user_record.notes</code>. 打卡备注
      */
     public final TableField<ActivityUserRecordRecord, String> NOTES = createField("notes", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "打卡备注");
 
     /**
-     * Create a <code>activityv2.activity_user_record</code> table reference
+     * Create a <code>activity_user_record</code> table reference
      */
     public ActivityUserRecord() {
         this(DSL.name("activity_user_record"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_user_record</code> table reference
+     * Create an aliased <code>activity_user_record</code> table reference
      */
     public ActivityUserRecord(String alias) {
         this(DSL.name(alias), ACTIVITY_USER_RECORD);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_user_record</code> table reference
+     * Create an aliased <code>activity_user_record</code> table reference
      */
     public ActivityUserRecord(Name alias) {
         this(alias, ACTIVITY_USER_RECORD);
@@ -105,7 +114,7 @@ public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

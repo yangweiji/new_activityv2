@@ -146,6 +146,7 @@
         var param = {
           userId: this.userId
         };
+
         this.$kyutil.get("/pub/wx/profile/getuserinfo", param).then(res => {
           that.user = res
           
@@ -159,6 +160,11 @@
       },
       save() {
         var that = this
+        if(!that.$kyutil.emailValid(that.user.email)){
+          that.errorMessage = "您的邮箱信息不合法，请重新输入"
+            that.resetError()
+            return
+        }
         for (var i = 0; i < that.fields.length; i++) {
           var field = that.fields[i]
           if(field.required && (that.user[field.name] === null || that.user[field.name] === undefined || that.user[field.name] === '')){

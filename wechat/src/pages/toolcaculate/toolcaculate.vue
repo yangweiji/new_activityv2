@@ -288,7 +288,7 @@
     onShareAppMessage(res) {
       return {
         title: "配速计算",
-        path: '/page/toolcaculate/toolcaculate'
+        path: 'pages/toolcaculate/toolcaculate'
       }
     }
   };

@@ -194,6 +194,12 @@
       save() {
         var that = this
 
+        if(!that.$kyutil.emailValid(that.user.email)){
+          that.errorMessage = "您的邮箱信息不合法，请重新输入"
+            that.resetError()
+            return
+        }
+
         if(!that.$kyutil.idcardValid(that.user.idCard)){
           that.errorMessage = "您的身份证号不合法，请重新输入"
             that.resetError()

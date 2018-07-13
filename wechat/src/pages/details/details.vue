@@ -100,7 +100,7 @@
     onShareAppMessage(res) {
       return {
         title: this.item.activity.title,
-        path: '/page/details/details?activityId=' + this.activityId
+        path: 'pages/details/details?activityId=' + this.activityId
       }
     }
   };

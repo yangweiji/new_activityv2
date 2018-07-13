@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ScoreHistoryRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
 
-    private static final long serialVersionUID = 519326496;
+    private static final long serialVersionUID = 1218210379;
 
     /**
-     * The reference instance of <code>activityv2.score_history</code>
+     * The reference instance of <code>score_history</code>
      */
     public static final ScoreHistory SCORE_HISTORY = new ScoreHistory();
 
@@ -47,56 +56,56 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
     }
 
     /**
-     * The column <code>activityv2.score_history.id</code>. 编号
+     * The column <code>score_history.id</code>. 编号
      */
     public final TableField<ScoreHistoryRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.score_history.score</code>. 分值
+     * The column <code>score_history.score</code>. 分值
      */
     public final TableField<ScoreHistoryRecord, Integer> SCORE = createField("score", org.jooq.impl.SQLDataType.INTEGER, this, "分值");
 
     /**
-     * The column <code>activityv2.score_history.user_id</code>. 用户Id
+     * The column <code>score_history.user_id</code>. 用户Id
      */
     public final TableField<ScoreHistoryRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户Id");
 
     /**
-     * The column <code>activityv2.score_history.activity_id</code>. 活动id
+     * The column <code>score_history.activity_id</code>. 活动id
      */
     public final TableField<ScoreHistoryRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "活动id");
 
     /**
-     * The column <code>activityv2.score_history.memo</code>. 积分说明
+     * The column <code>score_history.memo</code>. 积分说明
      */
     public final TableField<ScoreHistoryRecord, String> MEMO = createField("memo", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "积分说明");
 
     /**
-     * The column <code>activityv2.score_history.created</code>. 创建时间
+     * The column <code>score_history.created</code>. 创建时间
      */
     public final TableField<ScoreHistoryRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.score_history.community_id</code>. 团体id
+     * The column <code>score_history.community_id</code>. 团体id
      */
     public final TableField<ScoreHistoryRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "团体id");
 
     /**
-     * Create a <code>activityv2.score_history</code> table reference
+     * Create a <code>score_history</code> table reference
      */
     public ScoreHistory() {
         this(DSL.name("score_history"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.score_history</code> table reference
+     * Create an aliased <code>score_history</code> table reference
      */
     public ScoreHistory(String alias) {
         this(DSL.name(alias), SCORE_HISTORY);
     }
 
     /**
-     * Create an aliased <code>activityv2.score_history</code> table reference
+     * Create an aliased <code>score_history</code> table reference
      */
     public ScoreHistory(Name alias) {
         this(alias, SCORE_HISTORY);
@@ -115,7 +124,7 @@ public class ScoreHistory extends TableImpl<ScoreHistoryRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

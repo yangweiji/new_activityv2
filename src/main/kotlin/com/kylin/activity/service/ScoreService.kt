@@ -58,13 +58,13 @@ class ScoreService {
     /**
      * 取得当前用户的积分明细
      */
-    fun getPersonalScore(id: Int): Result<Record> {
+    fun getPersonalScore(id: Int,communityId: Int): Result<Record> {
         var sql = "select t1.*, t2.username, t2.displayname, t2.avatar user_avatar, t3.title " +
                 "from score_history t1 " +
                 "inner join user t2 on t1.user_id = t2.id and t1.user_id = ? " +
-                "inner join activity t3 on t1.activity_id = t3.id " +
+                "inner join activity t3 on t1.activity_id = t3.id  where t1.community_id = ? " +
                 "order by t1.created desc"
-        return dslContext!!.resultQuery(sql, id).fetch()
+        return dslContext!!.resultQuery(sql, id, communityId).fetch()
     }
 
     /**

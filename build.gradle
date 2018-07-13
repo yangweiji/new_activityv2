@@ -98,6 +98,7 @@ new groovy.xml.MarkupBuilder(writer).configuration('xmlns': 'http://www.jooq.org
     generator() {
         database() {
             inputSchema 'activityv2'
+            outputSchemaToDefault true
         }
         // Watch out for this caveat when using MarkupBuilder with "reserved names"
         // - https://github.com/jOOQ/jOOQ/issues/4797

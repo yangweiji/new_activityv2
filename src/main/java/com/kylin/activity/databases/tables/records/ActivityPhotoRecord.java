@@ -5,14 +5,16 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityPhoto;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record8;
 import org.jooq.Row8;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.sql.Timestamp;
 
 
 /**
@@ -28,115 +30,115 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhotoRecord extends UpdatableRecordImpl<ActivityPhotoRecord> implements Record8<Integer, Integer, String, String, Timestamp, Integer, String, Integer> {
 
-    private static final long serialVersionUID = 1844943909;
+    private static final long serialVersionUID = -39057975;
 
     /**
-     * Setter for <code>activityv2.activity_photo.id</code>. 编号
+     * Setter for <code>activity_photo.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.id</code>. 编号
+     * Getter for <code>activity_photo.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.activity_id</code>. 关联编号
+     * Setter for <code>activity_photo.activity_id</code>. 关联编号
      */
     public void setActivityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.activity_id</code>. 关联编号
+     * Getter for <code>activity_photo.activity_id</code>. 关联编号
      */
     public Integer getActivityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.picture</code>. 图片
+     * Setter for <code>activity_photo.picture</code>. 图片
      */
     public void setPicture(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.picture</code>. 图片
+     * Getter for <code>activity_photo.picture</code>. 图片
      */
     public String getPicture() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.description</code>. 描述
+     * Setter for <code>activity_photo.description</code>. 描述
      */
     public void setDescription(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.description</code>. 描述
+     * Getter for <code>activity_photo.description</code>. 描述
      */
     public String getDescription() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.created</code>. 创建时间
+     * Setter for <code>activity_photo.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.created</code>. 创建时间
+     * Getter for <code>activity_photo.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.created_by</code>. 创建人
+     * Setter for <code>activity_photo.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.created_by</code>. 创建人
+     * Getter for <code>activity_photo.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
+     * Setter for <code>activity_photo.axtenal_url</code>. 外部相册地址
      */
     public void setAxtenalUrl(String value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
+     * Getter for <code>activity_photo.axtenal_url</code>. 外部相册地址
      */
     public String getAxtenalUrl() {
         return (String) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.activity_photo.browse_count</code>. 浏览次数
+     * Setter for <code>activity_photo.browse_count</code>. 浏览次数
      */
     public void setBrowseCount(Integer value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_photo.browse_count</code>. 浏览次数
+     * Getter for <code>activity_photo.browse_count</code>. 浏览次数
      */
     public Integer getBrowseCount() {
         return (Integer) get(7);

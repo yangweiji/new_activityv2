@@ -15,13 +15,13 @@ Vue2Filters.install(kyFilters)
 //全局变量
 const data = {
     serverUrl: "https://a.9kylin.cn/",
-    imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/",
+    imageServer: "https://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/",
     isIpx: false
 }
 
-//sessionChoose 1是带sessionID的GET方法  2是不带sessionID的GET方法, 3是带sessionID的Post方法, 4是不带sessionID的Post方法  
-//ask是是否要进行询问授权，true为要，false为不要  
-//sessionChoose为1,2,3,4,所以paramSession下标为0的则为空  
+//sessionChoose 1是带sessionID的GET方法  2是不带sessionID的GET方法, 3是带sessionID的Post方法, 4是不带sessionID的Post方法
+//ask是是否要进行询问授权，true为要，false为不要
+//sessionChoose为1,2,3,4,所以paramSession下标为0的则为空
 function HttpRequest(loading, url, sessionChoose, sessionId, params, method, ask, callBack, error) {
     if (loading == true) {
         wx.showToast({
@@ -71,17 +71,17 @@ function HttpRequest(loading, url, sessionChoose, sessionId, params, method, ask
             console.log("HttpRequest 结果: ", res)
 
             if (loading == true) {
-                wx.hideToast(); //隐藏提示框  
+                wx.hideToast(); //隐藏提示框
             }
             if (res.data.code == 5000) {
                 console.log("需要登录")
-                    // wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, callBack);  
+                    // wxLogin(loading, url, sessionChoose, sessionId, params, method,ask, callBack);
             }
             callBack(res.data);
         },
         complete: function() {
             if (loading == true) {
-                wx.hideToast(); //隐藏提示框  
+                wx.hideToast(); //隐藏提示框
             }
         },
         fail: function(res) {
@@ -93,16 +93,16 @@ function HttpRequest(loading, url, sessionChoose, sessionId, params, method, ask
 function wxLogin(loading, url, sessionChoose, sessionId, params, method, ask, callBack) {
     wx.login({
         success: function(res) {
-            var code = res.code; //得到code  
+            var code = res.code; //得到code
             HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function(res) {
                 if (res.code == 200) {
                     wx.setStorageSync('sessionId', res.sessionId);
                     if (res.isNeedUserInfo == true) {
                         wx.getUserInfo({
                             success: function(res) {
-                                // HttpRequst(true, "ztc/product/saveUser", 3, wx.getStorageSync("sessionId"), { "encryptedData": res.encryptedData, "iv": res.iv }, "POST", false, function (res) {  
-                                //     HttpRequst(loading, url, sessionChoose, wx.getStorageSync("sessionId"), params, method, ask, callBack);  
-                                // })  
+                                // HttpRequst(true, "ztc/product/saveUser", 3, wx.getStorageSync("sessionId"), { "encryptedData": res.encryptedData, "iv": res.iv }, "POST", false, function (res) {
+                                //     HttpRequst(loading, url, sessionChoose, wx.getStorageSync("sessionId"), params, method, ask, callBack);
+                                // })
                             },
                             fail: function(res) {
                                 console.log("我还没有授权");
@@ -118,13 +118,13 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method, ask, ca
                                                     success: function(res) {
                                                         console.log(res)
                                                         if (!res.authSetting["scope.userInfo"] || !res.authSetting["scope.userLocation"]) {
-                                                            //这里是授权成功之后 填写你重新获取数据的js  
+                                                            //这里是授权成功之后 填写你重新获取数据的js
                                                             wx.getUserInfo({
                                                                 withCredentials: false,
                                                                 success: function(data) {
-                                                                    // HttpRequest(true, "ztc/product/saveUser", 3, wx.getStorageSync("sessionId"), { "encryptedData": res.encryptedData, "iv": res.iv }, "POST", false, function (res) {  
-                                                                    //     HttpRequest(loading, url, sessionChoose, wx.getStorageSync("sessionId"), params, method, ask, callBack);  
-                                                                    // })  
+                                                                    // HttpRequest(true, "ztc/product/saveUser", 3, wx.getStorageSync("sessionId"), { "encryptedData": res.encryptedData, "iv": res.iv }, "POST", false, function (res) {
+                                                                    //     HttpRequest(loading, url, sessionChoose, wx.getStorageSync("sessionId"), params, method, ask, callBack);
+                                                                    // })
                                                                 },
                                                                 fail: function() {
                                                                     console.info("3授权失败返回数据");
@@ -157,7 +157,7 @@ function Login() {
 
     wx.login({
         success: res => {
-            // 发送 res.code 到后台换取 openId, sessionKey, unionId  
+            // 发送 res.code 到后台换取 openId, sessionKey, unionId
             var errMsg = res.errMsg;
             if (errMsg != "login:ok") {
                 console.log("错误提示", "出错了，请稍后再试试...")
@@ -167,7 +167,7 @@ function Login() {
                     console.log("sessionInfo: ", res)
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
-                        HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid }, "GET", false, function(res) {
+                        HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
                             console.log("user: ", res)
                             if (res) {
                                 wx.setStorageSync("user", res)
@@ -190,11 +190,11 @@ function Login() {
     //         // session_key 已经失效，需要重新执行登录流程
     //         wx.login({
     //             success: res => {
-    //                 // 发送 res.code 到后台换取 openId, sessionKey, unionId  
-    //                 var errMsg = res.errMsg;  
-    //                 if (errMsg != "login:ok") {  
-    //                     console.log("错误提示","出错了，请稍后再试试...")  
-    //                 } else {  
+    //                 // 发送 res.code 到后台换取 openId, sessionKey, unionId
+    //                 var errMsg = res.errMsg;
+    //                 if (errMsg != "login:ok") {
+    //                     console.log("错误提示","出错了，请稍后再试试...")
+    //                 } else {
     //                     var code = res.code;
     //                     HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function (res) {
     //                         console.log("global data: ", res)
@@ -225,7 +225,7 @@ function CheckUserValidation() {
     //         wx.redirectTo({
     //             url: "/pages/login/login"
     //         });
-    //     }        
+    //     }
     // });
 
     console.log("user: ", wx.getStorageSync("user"));
@@ -252,20 +252,20 @@ function CheckUserValidation() {
     2000年后出生的肯定都是18位的了没有这个烦恼，至于1800年前出生的,那啥那时应该还没身份证号这个东东，⊙﹏⊙b汗...
 下面是正则表达式:
  出生日期1800-2099  (18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])
- 身份证正则表达式 /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i            
+ 身份证正则表达式 /^\d{6}(18|19|20)?\d{2}(0[1-9]|1[12])(0[1-9]|[12]\d|3[01])\d{3}(\d|X)$/i
  15位校验规则 6位地址编码+6位出生日期+3位顺序号
  18位校验规则 6位地址编码+8位出生日期+3位顺序号+1位校验位
- 
+
  校验位规则     公式:∑(ai×Wi)(mod 11)……………………………………(1)
-                公式(1)中： 
-                i----表示号码字符从由至左包括校验码在内的位置序号； 
-                ai----表示第i位置上的号码字符值； 
+                公式(1)中：
+                i----表示号码字符从由至左包括校验码在内的位置序号；
+                ai----表示第i位置上的号码字符值；
                 Wi----示第i位置上的加权因子，其数值依据公式Wi=2^(n-1）(mod 11)计算得出。
                 i 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1
                 Wi 7 9 10 5 8 4 2 1 6 3 7 9 10 5 8 4 2 1
 
 */
-//身份证号合法性验证 
+//身份证号合法性验证
 //支持15位和18位身份证号
 //支持地址编码、出生日期、校验位验证
 function IdentityCodeValid(code) {
@@ -306,6 +306,33 @@ function IdentityCodeValid(code) {
     return pass;
 }
 
+function emailValid(email) {
+    var reg = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+    if (email) {
+        return reg.test(email)
+    }
+    return false
+}
+
+
+function wxAlert(msg) {
+    return new Promise((resolve, reject) => {
+        wx.showModal({
+            title: '提示',
+            content: msg,
+            showCancel: false,
+            success: function(res) {
+                if (res.confirm) {
+                    resolve()
+                } else if (res.cancel) {
+                    reject()
+                }
+            }
+        })
+    })
+
+}
+
 function getUser() {
     return wx.getStorageSync("user")
 }
@@ -318,7 +345,7 @@ function downloadUrl(name, style, folder) {
     if (name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0 || name.indexOf('/') == 0)) {
         return name
     }
-    var url = 'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/'
+    var url = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com/'
     if (folder) {
         url += folder + "/"
     } else {
@@ -356,5 +383,7 @@ export default {
     downloadUrl: downloadUrl,
     get: httpGet,
     post: httpPost,
-    idcardValid: IdentityCodeValid
+    idcardValid: IdentityCodeValid,
+    emailValid: emailValid,
+    alert: wxAlert
 }

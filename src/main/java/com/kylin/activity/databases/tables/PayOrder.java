@@ -4,19 +4,28 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.PayOrderRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -32,10 +41,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrder extends TableImpl<PayOrderRecord> {
 
-    private static final long serialVersionUID = 513997102;
+    private static final long serialVersionUID = -1496861773;
 
     /**
-     * The reference instance of <code>activityv2.pay_order</code>
+     * The reference instance of <code>pay_order</code>
      */
     public static final PayOrder PAY_ORDER = new PayOrder();
 
@@ -48,106 +57,106 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
     }
 
     /**
-     * The column <code>activityv2.pay_order.id</code>. 主键编号
+     * The column <code>pay_order.id</code>. 主键编号
      */
     public final TableField<PayOrderRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "主键编号");
 
     /**
-     * The column <code>activityv2.pay_order.user_id</code>. 付款用户id
+     * The column <code>pay_order.user_id</code>. 付款用户id
      */
     public final TableField<PayOrderRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "付款用户id");
 
     /**
-     * The column <code>activityv2.pay_order.activity_id</code>. 付款活动id
+     * The column <code>pay_order.activity_id</code>. 付款活动id
      */
     public final TableField<PayOrderRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "付款活动id");
 
     /**
-     * The column <code>activityv2.pay_order.activity_ticket_id</code>. 付款活动票id
+     * The column <code>pay_order.activity_ticket_id</code>. 付款活动票id
      */
     public final TableField<PayOrderRecord, Integer> ACTIVITY_TICKET_ID = createField("activity_ticket_id", org.jooq.impl.SQLDataType.INTEGER, this, "付款活动票id");
 
     /**
-     * The column <code>activityv2.pay_order.title</code>. 付款商品标题
+     * The column <code>pay_order.title</code>. 付款商品标题
      */
     public final TableField<PayOrderRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR(255), this, "付款商品标题");
 
     /**
-     * The column <code>activityv2.pay_order.body</code>. 付款说明
+     * The column <code>pay_order.body</code>. 付款说明
      */
     public final TableField<PayOrderRecord, String> BODY = createField("body", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "付款说明");
 
     /**
-     * The column <code>activityv2.pay_order.price</code>. 付款金额
+     * The column <code>pay_order.price</code>. 付款金额
      */
     public final TableField<PayOrderRecord, BigDecimal> PRICE = createField("price", org.jooq.impl.SQLDataType.DECIMAL(18, 2), this, "付款金额");
 
     /**
-     * The column <code>activityv2.pay_order.pay_time</code>. 付款时间
+     * The column <code>pay_order.pay_time</code>. 付款时间
      */
     public final TableField<PayOrderRecord, Timestamp> PAY_TIME = createField("pay_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "付款时间");
 
     /**
-     * The column <code>activityv2.pay_order.cancel_time</code>. 取消付款时间
+     * The column <code>pay_order.cancel_time</code>. 取消付款时间
      */
     public final TableField<PayOrderRecord, Timestamp> CANCEL_TIME = createField("cancel_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "取消付款时间");
 
     /**
-     * The column <code>activityv2.pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
+     * The column <code>pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
      */
     public final TableField<PayOrderRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消");
 
     /**
-     * The column <code>activityv2.pay_order.extenal_id</code>. 微信统一订单id
+     * The column <code>pay_order.extenal_id</code>. 微信统一订单id
      */
     public final TableField<PayOrderRecord, String> EXTENAL_ID = createField("extenal_id", org.jooq.impl.SQLDataType.VARCHAR(255), this, "微信统一订单id");
 
     /**
-     * The column <code>activityv2.pay_order.created</code>. 创建时间
+     * The column <code>pay_order.created</code>. 创建时间
      */
     public final TableField<PayOrderRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.pay_order.other_info</code>. 活动报名时的报名json信息
+     * The column <code>pay_order.other_info</code>. 活动报名时的报名json信息
      */
     public final TableField<PayOrderRecord, String> OTHER_INFO = createField("other_info", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "活动报名时的报名json信息");
 
     /**
-     * The column <code>activityv2.pay_order.refund_trade_no</code>. 退款单号
+     * The column <code>pay_order.refund_trade_no</code>. 退款单号
      */
     public final TableField<PayOrderRecord, String> REFUND_TRADE_NO = createField("refund_trade_no", org.jooq.impl.SQLDataType.VARCHAR(255), this, "退款单号");
 
     /**
-     * The column <code>activityv2.pay_order.refund_time</code>. 退款时间
+     * The column <code>pay_order.refund_time</code>. 退款时间
      */
     public final TableField<PayOrderRecord, Timestamp> REFUND_TIME = createField("refund_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "退款时间");
 
     /**
-     * The column <code>activityv2.pay_order.refund_status</code>. 退款状态
+     * The column <code>pay_order.refund_status</code>. 退款状态
      */
     public final TableField<PayOrderRecord, Integer> REFUND_STATUS = createField("refund_status", org.jooq.impl.SQLDataType.INTEGER, this, "退款状态");
 
     /**
-     * The column <code>activityv2.pay_order.community_id</code>. 团体编号
+     * The column <code>pay_order.community_id</code>. 团体编号
      */
     public final TableField<PayOrderRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "团体编号");
 
     /**
-     * Create a <code>activityv2.pay_order</code> table reference
+     * Create a <code>pay_order</code> table reference
      */
     public PayOrder() {
         this(DSL.name("pay_order"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.pay_order</code> table reference
+     * Create an aliased <code>pay_order</code> table reference
      */
     public PayOrder(String alias) {
         this(DSL.name(alias), PAY_ORDER);
     }
 
     /**
-     * Create an aliased <code>activityv2.pay_order</code> table reference
+     * Create an aliased <code>pay_order</code> table reference
      */
     public PayOrder(Name alias) {
         this(alias, PAY_ORDER);
@@ -166,7 +175,7 @@ public class PayOrder extends TableImpl<PayOrderRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

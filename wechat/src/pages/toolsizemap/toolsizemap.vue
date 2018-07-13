@@ -38,7 +38,7 @@
     onShareAppMessage(res) {
       return {
         title: "鞋码对照表",
-        path: '/page/toolsizemap/toolsizemap'
+        path: 'pages/toolsizemap/toolsizemap'
       }
     }
   };

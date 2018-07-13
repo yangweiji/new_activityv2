@@ -5,14 +5,16 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.Article;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record14;
 import org.jooq.Row14;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.sql.Timestamp;
 
 
 /**
@@ -28,199 +30,199 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ArticleRecord extends UpdatableRecordImpl<ArticleRecord> implements Record14<Integer, Integer, String, String, Integer, String, Integer, Timestamp, String, String, Timestamp, Integer, Timestamp, Integer> {
 
-    private static final long serialVersionUID = 1944901088;
+    private static final long serialVersionUID = -2115231742;
 
     /**
-     * Setter for <code>activityv2.article.id</code>. 编号
+     * Setter for <code>article.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.id</code>. 编号
+     * Getter for <code>article.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.article.community_id</code>. 0：表示平台发布， &gt;0 : 团体发布
+     * Setter for <code>article.community_id</code>. 0：表示平台发布， &gt;0 : 团体发布
      */
     public void setCommunityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.community_id</code>. 0：表示平台发布， &gt;0 : 团体发布
+     * Getter for <code>article.community_id</code>. 0：表示平台发布， &gt;0 : 团体发布
      */
     public Integer getCommunityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.article.title</code>. 标题
+     * Setter for <code>article.title</code>. 标题
      */
     public void setTitle(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.title</code>. 标题
+     * Getter for <code>article.title</code>. 标题
      */
     public String getTitle() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.article.summary</code>. 摘要
+     * Setter for <code>article.summary</code>. 摘要
      */
     public void setSummary(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.summary</code>. 摘要
+     * Getter for <code>article.summary</code>. 摘要
      */
     public String getSummary() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.article.category</code>. 分类 1：公告通知、2： 赛事新闻、3 运动指南
+     * Setter for <code>article.category</code>. 分类 1：公告通知、2： 赛事新闻、3 运动指南
      */
     public void setCategory(Integer value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.category</code>. 分类 1：公告通知、2： 赛事新闻、3 运动指南
+     * Getter for <code>article.category</code>. 分类 1：公告通知、2： 赛事新闻、3 运动指南
      */
     public Integer getCategory() {
         return (Integer) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.article.body</code>. 正文
+     * Setter for <code>article.body</code>. 正文
      */
     public void setBody(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.body</code>. 正文
+     * Getter for <code>article.body</code>. 正文
      */
     public String getBody() {
         return (String) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.article.status</code>. 状态 0 草稿 1 发布 -1 禁用
+     * Setter for <code>article.status</code>. 状态 0 草稿 1 发布 -1 禁用
      */
     public void setStatus(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.status</code>. 状态 0 草稿 1 发布 -1 禁用
+     * Getter for <code>article.status</code>. 状态 0 草稿 1 发布 -1 禁用
      */
     public Integer getStatus() {
         return (Integer) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.article.publish_time</code>. 发布时间 显示时按时间倒序排
+     * Setter for <code>article.publish_time</code>. 发布时间 显示时按时间倒序排
      */
     public void setPublishTime(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.publish_time</code>. 发布时间 显示时按时间倒序排
+     * Getter for <code>article.publish_time</code>. 发布时间 显示时按时间倒序排
      */
     public Timestamp getPublishTime() {
         return (Timestamp) get(7);
     }
 
     /**
-     * Setter for <code>activityv2.article.avatar</code>. 图片
+     * Setter for <code>article.avatar</code>. 图片
      */
     public void setAvatar(String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.avatar</code>. 图片
+     * Getter for <code>article.avatar</code>. 图片
      */
     public String getAvatar() {
         return (String) get(8);
     }
 
     /**
-     * Setter for <code>activityv2.article.unit</code>. 发布单位
+     * Setter for <code>article.unit</code>. 发布单位
      */
     public void setUnit(String value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.unit</code>. 发布单位
+     * Getter for <code>article.unit</code>. 发布单位
      */
     public String getUnit() {
         return (String) get(9);
     }
 
     /**
-     * Setter for <code>activityv2.article.created</code>. 创建时间
+     * Setter for <code>article.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.created</code>. 创建时间
+     * Getter for <code>article.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(10);
     }
 
     /**
-     * Setter for <code>activityv2.article.created_by</code>. 创建人
+     * Setter for <code>article.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.created_by</code>. 创建人
+     * Getter for <code>article.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(11);
     }
 
     /**
-     * Setter for <code>activityv2.article.modified</code>. 修改时间
+     * Setter for <code>article.modified</code>. 修改时间
      */
     public void setModified(Timestamp value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.modified</code>. 修改时间
+     * Getter for <code>article.modified</code>. 修改时间
      */
     public Timestamp getModified() {
         return (Timestamp) get(12);
     }
 
     /**
-     * Setter for <code>activityv2.article.modified_by</code>. 修改人
+     * Setter for <code>article.modified_by</code>. 修改人
      */
     public void setModifiedBy(Integer value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activityv2.article.modified_by</code>. 修改人
+     * Getter for <code>article.modified_by</code>. 修改人
      */
     public Integer getModifiedBy() {
         return (Integer) get(13);

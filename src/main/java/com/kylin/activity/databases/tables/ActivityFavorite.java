@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityFavoriteRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
 
-    private static final long serialVersionUID = -1394095336;
+    private static final long serialVersionUID = 84004874;
 
     /**
-     * The reference instance of <code>activityv2.activity_favorite</code>
+     * The reference instance of <code>activity_favorite</code>
      */
     public static final ActivityFavorite ACTIVITY_FAVORITE = new ActivityFavorite();
 
@@ -47,41 +56,41 @@ public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
     }
 
     /**
-     * The column <code>activityv2.activity_favorite.id</code>. 编号
+     * The column <code>activity_favorite.id</code>. 编号
      */
     public final TableField<ActivityFavoriteRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity_favorite.activity_id</code>. 活动id
+     * The column <code>activity_favorite.activity_id</code>. 活动id
      */
     public final TableField<ActivityFavoriteRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "活动id");
 
     /**
-     * The column <code>activityv2.activity_favorite.user_id</code>. 用户id
+     * The column <code>activity_favorite.user_id</code>. 用户id
      */
     public final TableField<ActivityFavoriteRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户id");
 
     /**
-     * The column <code>activityv2.activity_favorite.created</code>. 创建时间
+     * The column <code>activity_favorite.created</code>. 创建时间
      */
     public final TableField<ActivityFavoriteRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * Create a <code>activityv2.activity_favorite</code> table reference
+     * Create a <code>activity_favorite</code> table reference
      */
     public ActivityFavorite() {
         this(DSL.name("activity_favorite"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_favorite</code> table reference
+     * Create an aliased <code>activity_favorite</code> table reference
      */
     public ActivityFavorite(String alias) {
         this(DSL.name(alias), ACTIVITY_FAVORITE);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_favorite</code> table reference
+     * Create an aliased <code>activity_favorite</code> table reference
      */
     public ActivityFavorite(Name alias) {
         this(alias, ACTIVITY_FAVORITE);
@@ -100,7 +109,7 @@ public class ActivityFavorite extends TableImpl<ActivityFavoriteRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

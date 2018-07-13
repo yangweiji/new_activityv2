@@ -184,6 +184,7 @@ export default {
               password: that.password,
               vercode: that.vercode,
               openId: res.openid,
+              unionId: res.unionId,
               nickName: res.nickName,
               avatarUrl: res.avatarUrl,
               gender: res.gender
@@ -191,7 +192,7 @@ export default {
             that.$kyutil.post("/pub/wx/auth/userLogin", param).then(res => {
               console.log("userLogin: " + res)
               if (res.code == 200) {
-                that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId }).then(res => {
+                that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId, "unionId": param.unionId }).then(res => {
                     console.log("user: ", res)
                     if (res) {
                         //将user存储于storage

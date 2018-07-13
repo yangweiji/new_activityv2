@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = -655260946;
+    private static final long serialVersionUID = -1058763866;
 
     /**
-     * The reference instance of <code>activityv2.community_user</code>
+     * The reference instance of <code>community_user</code>
      */
     public static final CommunityUser COMMUNITY_USER = new CommunityUser();
 
@@ -47,56 +56,56 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
     }
 
     /**
-     * The column <code>activityv2.community_user.id</code>. 编号
+     * The column <code>community_user.id</code>.
      */
-    public final TableField<CommunityUserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
+    public final TableField<CommunityUserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
-     * The column <code>activityv2.community_user.community_id</code>. 关联团体编号
+     * The column <code>community_user.community_id</code>.
      */
-    public final TableField<CommunityUserRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "关联团体编号");
+    public final TableField<CommunityUserRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activityv2.community_user.user_id</code>. 用户编号
+     * The column <code>community_user.user_id</code>.
      */
-    public final TableField<CommunityUserRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "用户编号");
+    public final TableField<CommunityUserRecord, Integer> USER_ID = createField("user_id", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activityv2.community_user.role</code>. 成员在社团中的角色 admin、publish
+     * The column <code>community_user.role</code>. 成员在社团中的角色 admin、publish
      */
     public final TableField<CommunityUserRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR(255), this, "成员在社团中的角色 admin、publish");
 
     /**
-     * The column <code>activityv2.community_user.created</code>. 加入时间
+     * The column <code>community_user.created</code>. 加入时间
      */
     public final TableField<CommunityUserRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "加入时间");
 
     /**
-     * The column <code>activityv2.community_user.level</code>. 会员年份
+     * The column <code>community_user.level</code>.
      */
-    public final TableField<CommunityUserRecord, Integer> LEVEL = createField("level", org.jooq.impl.SQLDataType.INTEGER, this, "会员年份");
+    public final TableField<CommunityUserRecord, Integer> LEVEL = createField("level", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
     /**
-     * The column <code>activityv2.community_user.is_black</code>. 是否为黑名单用户
+     * The column <code>community_user.is_black</code>.
      */
-    public final TableField<CommunityUserRecord, Boolean> IS_BLACK = createField("is_black", org.jooq.impl.SQLDataType.BIT.nullable(false).defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "是否为黑名单用户");
+    public final TableField<CommunityUserRecord, Boolean> IS_BLACK = createField("is_black", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "");
 
     /**
-     * Create a <code>activityv2.community_user</code> table reference
+     * Create a <code>community_user</code> table reference
      */
     public CommunityUser() {
         this(DSL.name("community_user"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.community_user</code> table reference
+     * Create an aliased <code>community_user</code> table reference
      */
     public CommunityUser(String alias) {
         this(DSL.name(alias), COMMUNITY_USER);
     }
 
     /**
-     * Create an aliased <code>activityv2.community_user</code> table reference
+     * Create an aliased <code>community_user</code> table reference
      */
     public CommunityUser(Name alias) {
         this(alias, COMMUNITY_USER);
@@ -115,7 +124,7 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

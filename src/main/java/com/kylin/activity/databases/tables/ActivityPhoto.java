@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
 
-    private static final long serialVersionUID = -1750709933;
+    private static final long serialVersionUID = -1670033037;
 
     /**
-     * The reference instance of <code>activityv2.activity_photo</code>
+     * The reference instance of <code>activity_photo</code>
      */
     public static final ActivityPhoto ACTIVITY_PHOTO = new ActivityPhoto();
 
@@ -47,61 +56,61 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
     }
 
     /**
-     * The column <code>activityv2.activity_photo.id</code>. 编号
+     * The column <code>activity_photo.id</code>. 编号
      */
     public final TableField<ActivityPhotoRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity_photo.activity_id</code>. 关联编号
+     * The column <code>activity_photo.activity_id</code>. 关联编号
      */
     public final TableField<ActivityPhotoRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "关联编号");
 
     /**
-     * The column <code>activityv2.activity_photo.picture</code>. 图片
+     * The column <code>activity_photo.picture</code>. 图片
      */
     public final TableField<ActivityPhotoRecord, String> PICTURE = createField("picture", org.jooq.impl.SQLDataType.VARCHAR(255), this, "图片");
 
     /**
-     * The column <code>activityv2.activity_photo.description</code>. 描述
+     * The column <code>activity_photo.description</code>. 描述
      */
     public final TableField<ActivityPhotoRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "描述");
 
     /**
-     * The column <code>activityv2.activity_photo.created</code>. 创建时间
+     * The column <code>activity_photo.created</code>. 创建时间
      */
     public final TableField<ActivityPhotoRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.activity_photo.created_by</code>. 创建人
+     * The column <code>activity_photo.created_by</code>. 创建人
      */
     public final TableField<ActivityPhotoRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "创建人");
 
     /**
-     * The column <code>activityv2.activity_photo.axtenal_url</code>. 外部相册地址
+     * The column <code>activity_photo.axtenal_url</code>. 外部相册地址
      */
     public final TableField<ActivityPhotoRecord, String> AXTENAL_URL = createField("axtenal_url", org.jooq.impl.SQLDataType.VARCHAR(255), this, "外部相册地址");
 
     /**
-     * The column <code>activityv2.activity_photo.browse_count</code>. 浏览次数
+     * The column <code>activity_photo.browse_count</code>. 浏览次数
      */
     public final TableField<ActivityPhotoRecord, Integer> BROWSE_COUNT = createField("browse_count", org.jooq.impl.SQLDataType.INTEGER, this, "浏览次数");
 
     /**
-     * Create a <code>activityv2.activity_photo</code> table reference
+     * Create a <code>activity_photo</code> table reference
      */
     public ActivityPhoto() {
         this(DSL.name("activity_photo"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_photo</code> table reference
+     * Create an aliased <code>activity_photo</code> table reference
      */
     public ActivityPhoto(String alias) {
         this(DSL.name(alias), ACTIVITY_PHOTO);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_photo</code> table reference
+     * Create an aliased <code>activity_photo</code> table reference
      */
     public ActivityPhoto(Name alias) {
         this(alias, ACTIVITY_PHOTO);
@@ -120,7 +129,7 @@ public class ActivityPhoto extends TableImpl<ActivityPhotoRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

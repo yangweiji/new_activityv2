@@ -5,15 +5,17 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.PayOrder;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record17;
 import org.jooq.Row17;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 
 /**
@@ -29,241 +31,241 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class PayOrderRecord extends UpdatableRecordImpl<PayOrderRecord> implements Record17<Integer, Integer, Integer, Integer, String, String, BigDecimal, Timestamp, Timestamp, Integer, String, Timestamp, String, String, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = -1615573118;
+    private static final long serialVersionUID = 301682736;
 
     /**
-     * Setter for <code>activityv2.pay_order.id</code>. 主键编号
+     * Setter for <code>pay_order.id</code>. 主键编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.id</code>. 主键编号
+     * Getter for <code>pay_order.id</code>. 主键编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.user_id</code>. 付款用户id
+     * Setter for <code>pay_order.user_id</code>. 付款用户id
      */
     public void setUserId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.user_id</code>. 付款用户id
+     * Getter for <code>pay_order.user_id</code>. 付款用户id
      */
     public Integer getUserId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.activity_id</code>. 付款活动id
+     * Setter for <code>pay_order.activity_id</code>. 付款活动id
      */
     public void setActivityId(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.activity_id</code>. 付款活动id
+     * Getter for <code>pay_order.activity_id</code>. 付款活动id
      */
     public Integer getActivityId() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.activity_ticket_id</code>. 付款活动票id
+     * Setter for <code>pay_order.activity_ticket_id</code>. 付款活动票id
      */
     public void setActivityTicketId(Integer value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.activity_ticket_id</code>. 付款活动票id
+     * Getter for <code>pay_order.activity_ticket_id</code>. 付款活动票id
      */
     public Integer getActivityTicketId() {
         return (Integer) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.title</code>. 付款商品标题
+     * Setter for <code>pay_order.title</code>. 付款商品标题
      */
     public void setTitle(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.title</code>. 付款商品标题
+     * Getter for <code>pay_order.title</code>. 付款商品标题
      */
     public String getTitle() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.body</code>. 付款说明
+     * Setter for <code>pay_order.body</code>. 付款说明
      */
     public void setBody(String value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.body</code>. 付款说明
+     * Getter for <code>pay_order.body</code>. 付款说明
      */
     public String getBody() {
         return (String) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.price</code>. 付款金额
+     * Setter for <code>pay_order.price</code>. 付款金额
      */
     public void setPrice(BigDecimal value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.price</code>. 付款金额
+     * Getter for <code>pay_order.price</code>. 付款金额
      */
     public BigDecimal getPrice() {
         return (BigDecimal) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.pay_time</code>. 付款时间
+     * Setter for <code>pay_order.pay_time</code>. 付款时间
      */
     public void setPayTime(Timestamp value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.pay_time</code>. 付款时间
+     * Getter for <code>pay_order.pay_time</code>. 付款时间
      */
     public Timestamp getPayTime() {
         return (Timestamp) get(7);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.cancel_time</code>. 取消付款时间
+     * Setter for <code>pay_order.cancel_time</code>. 取消付款时间
      */
     public void setCancelTime(Timestamp value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.cancel_time</code>. 取消付款时间
+     * Getter for <code>pay_order.cancel_time</code>. 取消付款时间
      */
     public Timestamp getCancelTime() {
         return (Timestamp) get(8);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
+     * Setter for <code>pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
      */
     public void setStatus(Integer value) {
         set(9, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
+     * Getter for <code>pay_order.status</code>. 订单状态 1 ：创建完成未付款， 2 ： 完成付款， -1： 订单取消
      */
     public Integer getStatus() {
         return (Integer) get(9);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.extenal_id</code>. 微信统一订单id
+     * Setter for <code>pay_order.extenal_id</code>. 微信统一订单id
      */
     public void setExtenalId(String value) {
         set(10, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.extenal_id</code>. 微信统一订单id
+     * Getter for <code>pay_order.extenal_id</code>. 微信统一订单id
      */
     public String getExtenalId() {
         return (String) get(10);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.created</code>. 创建时间
+     * Setter for <code>pay_order.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(11, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.created</code>. 创建时间
+     * Getter for <code>pay_order.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(11);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.other_info</code>. 活动报名时的报名json信息
+     * Setter for <code>pay_order.other_info</code>. 活动报名时的报名json信息
      */
     public void setOtherInfo(String value) {
         set(12, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.other_info</code>. 活动报名时的报名json信息
+     * Getter for <code>pay_order.other_info</code>. 活动报名时的报名json信息
      */
     public String getOtherInfo() {
         return (String) get(12);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.refund_trade_no</code>. 退款单号
+     * Setter for <code>pay_order.refund_trade_no</code>. 退款单号
      */
     public void setRefundTradeNo(String value) {
         set(13, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.refund_trade_no</code>. 退款单号
+     * Getter for <code>pay_order.refund_trade_no</code>. 退款单号
      */
     public String getRefundTradeNo() {
         return (String) get(13);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.refund_time</code>. 退款时间
+     * Setter for <code>pay_order.refund_time</code>. 退款时间
      */
     public void setRefundTime(Timestamp value) {
         set(14, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.refund_time</code>. 退款时间
+     * Getter for <code>pay_order.refund_time</code>. 退款时间
      */
     public Timestamp getRefundTime() {
         return (Timestamp) get(14);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.refund_status</code>. 退款状态
+     * Setter for <code>pay_order.refund_status</code>. 退款状态
      */
     public void setRefundStatus(Integer value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.refund_status</code>. 退款状态
+     * Getter for <code>pay_order.refund_status</code>. 退款状态
      */
     public Integer getRefundStatus() {
         return (Integer) get(15);
     }
 
     /**
-     * Setter for <code>activityv2.pay_order.community_id</code>. 团体编号
+     * Setter for <code>pay_order.community_id</code>. 团体编号
      */
     public void setCommunityId(Integer value) {
         set(16, value);
     }
 
     /**
-     * Getter for <code>activityv2.pay_order.community_id</code>. 团体编号
+     * Getter for <code>pay_order.community_id</code>. 团体编号
      */
     public Integer getCommunityId() {
         return (Integer) get(16);

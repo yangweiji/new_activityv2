@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activity extends TableImpl<ActivityRecord> {
 
-    private static final long serialVersionUID = 442578917;
+    private static final long serialVersionUID = 1288932779;
 
     /**
-     * The reference instance of <code>activityv2.activity</code>
+     * The reference instance of <code>activity</code>
      */
     public static final Activity ACTIVITY = new Activity();
 
@@ -47,131 +56,131 @@ public class Activity extends TableImpl<ActivityRecord> {
     }
 
     /**
-     * The column <code>activityv2.activity.id</code>. 编号
+     * The column <code>activity.id</code>. 编号
      */
     public final TableField<ActivityRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity.title</code>. 标题
+     * The column <code>activity.title</code>. 标题
      */
     public final TableField<ActivityRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "标题");
 
     /**
-     * The column <code>activityv2.activity.avatar</code>. 标题图片
+     * The column <code>activity.avatar</code>. 标题图片
      */
     public final TableField<ActivityRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "标题图片");
 
     /**
-     * The column <code>activityv2.activity.summary</code>. 摘要
+     * The column <code>activity.summary</code>. 摘要
      */
     public final TableField<ActivityRecord, String> SUMMARY = createField("summary", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "摘要");
 
     /**
-     * The column <code>activityv2.activity.body</code>. 正文
+     * The column <code>activity.body</code>. 正文
      */
     public final TableField<ActivityRecord, String> BODY = createField("body", org.jooq.impl.SQLDataType.CLOB, this, "正文");
 
     /**
-     * The column <code>activityv2.activity.unit</code>. 发布单位
+     * The column <code>activity.unit</code>. 发布单位
      */
     public final TableField<ActivityRecord, String> UNIT = createField("unit", org.jooq.impl.SQLDataType.VARCHAR(255), this, "发布单位");
 
     /**
-     * The column <code>activityv2.activity.tags</code>. 标签
+     * The column <code>activity.tags</code>. 标签
      */
     public final TableField<ActivityRecord, String> TAGS = createField("tags", org.jooq.impl.SQLDataType.VARCHAR(255), this, "标签");
 
     /**
-     * The column <code>activityv2.activity.status</code>. 状态 0 草稿 1 发布 -1 禁用
+     * The column <code>activity.status</code>. 状态 0 草稿 1 发布 -1 禁用
      */
     public final TableField<ActivityRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "状态 0 草稿 1 发布 -1 禁用");
 
     /**
-     * The column <code>activityv2.activity.start_time</code>. 开始时间
+     * The column <code>activity.start_time</code>. 开始时间
      */
     public final TableField<ActivityRecord, Timestamp> START_TIME = createField("start_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "开始时间");
 
     /**
-     * The column <code>activityv2.activity.end_time</code>. 结束时间
+     * The column <code>activity.end_time</code>. 结束时间
      */
     public final TableField<ActivityRecord, Timestamp> END_TIME = createField("end_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "结束时间");
 
     /**
-     * The column <code>activityv2.activity.attend_due_time</code>. 报名截止时间
+     * The column <code>activity.attend_due_time</code>. 报名截止时间
      */
     public final TableField<ActivityRecord, Timestamp> ATTEND_DUE_TIME = createField("attend_due_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "报名截止时间");
 
     /**
-     * The column <code>activityv2.activity.created</code>. 创建时间
+     * The column <code>activity.created</code>. 创建时间
      */
     public final TableField<ActivityRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.activity.created_by</code>. 创建人
+     * The column <code>activity.created_by</code>. 创建人
      */
     public final TableField<ActivityRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "创建人");
 
     /**
-     * The column <code>activityv2.activity.modified</code>. 修改时间
+     * The column <code>activity.modified</code>. 修改时间
      */
     public final TableField<ActivityRecord, Timestamp> MODIFIED = createField("modified", org.jooq.impl.SQLDataType.TIMESTAMP, this, "修改时间");
 
     /**
-     * The column <code>activityv2.activity.modified_by</code>. 修改人
+     * The column <code>activity.modified_by</code>. 修改人
      */
     public final TableField<ActivityRecord, Integer> MODIFIED_BY = createField("modified_by", org.jooq.impl.SQLDataType.INTEGER, this, "修改人");
 
     /**
-     * The column <code>activityv2.activity.attend_infos</code>. 报名需要提交的表单信息 报名信息json
+     * The column <code>activity.attend_infos</code>. 报名需要提交的表单信息 报名信息json
      */
     public final TableField<ActivityRecord, String> ATTEND_INFOS = createField("attend_infos", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "报名需要提交的表单信息 报名信息json");
 
     /**
-     * The column <code>activityv2.activity.address</code>. 活动地址
+     * The column <code>activity.address</code>. 活动地址
      */
     public final TableField<ActivityRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "活动地址");
 
     /**
-     * The column <code>activityv2.activity.coordinate</code>. 活动坐标
+     * The column <code>activity.coordinate</code>. 活动坐标
      */
     public final TableField<ActivityRecord, String> COORDINATE = createField("coordinate", org.jooq.impl.SQLDataType.VARCHAR(255), this, "活动坐标");
 
     /**
-     * The column <code>activityv2.activity.activity_type</code>. 活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动
+     * The column <code>activity.activity_type</code>. 活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动
      */
     public final TableField<ActivityRecord, Integer> ACTIVITY_TYPE = createField("activity_type", org.jooq.impl.SQLDataType.INTEGER, this, "活动类型：1.活动，2.赛事，3.抽签活动，4.打卡活动");
 
     /**
-     * The column <code>activityv2.activity.public</code>. 活动是否公开
+     * The column <code>activity.public</code>. 活动是否公开
      */
     public final TableField<ActivityRecord, Boolean> PUBLIC = createField("public", org.jooq.impl.SQLDataType.BIT, this, "活动是否公开");
 
     /**
-     * The column <code>activityv2.activity.score_infos</code>. 活动奖励积分信息
+     * The column <code>activity.score_infos</code>. 活动奖励积分信息
      */
     public final TableField<ActivityRecord, String> SCORE_INFOS = createField("score_infos", org.jooq.impl.SQLDataType.VARCHAR(1000), this, "活动奖励积分信息");
 
     /**
-     * The column <code>activityv2.activity.community_id</code>. 团体编号
+     * The column <code>activity.community_id</code>. 团体编号
      */
     public final TableField<ActivityRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "团体编号");
 
     /**
-     * Create a <code>activityv2.activity</code> table reference
+     * Create a <code>activity</code> table reference
      */
     public Activity() {
         this(DSL.name("activity"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity</code> table reference
+     * Create an aliased <code>activity</code> table reference
      */
     public Activity(String alias) {
         this(DSL.name(alias), ACTIVITY);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity</code> table reference
+     * Create an aliased <code>activity</code> table reference
      */
     public Activity(Name alias) {
         this(alias, ACTIVITY);
@@ -190,7 +199,7 @@ public class Activity extends TableImpl<ActivityRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

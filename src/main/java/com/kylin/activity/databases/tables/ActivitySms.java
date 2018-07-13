@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivitySmsRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivitySms extends TableImpl<ActivitySmsRecord> {
 
-    private static final long serialVersionUID = -101892961;
+    private static final long serialVersionUID = 1010562314;
 
     /**
-     * The reference instance of <code>activityv2.activity_sms</code>
+     * The reference instance of <code>activity_sms</code>
      */
     public static final ActivitySms ACTIVITY_SMS = new ActivitySms();
 
@@ -47,66 +56,66 @@ public class ActivitySms extends TableImpl<ActivitySmsRecord> {
     }
 
     /**
-     * The column <code>activityv2.activity_sms.id</code>. 编号
+     * The column <code>activity_sms.id</code>. 编号
      */
     public final TableField<ActivitySmsRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity_sms.activity_id</code>. 活动编号
+     * The column <code>activity_sms.activity_id</code>. 活动编号
      */
     public final TableField<ActivitySmsRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "活动编号");
 
     /**
-     * The column <code>activityv2.activity_sms.template_code</code>. 模板编码
+     * The column <code>activity_sms.template_code</code>. 模板编码
      */
     public final TableField<ActivitySmsRecord, String> TEMPLATE_CODE = createField("template_code", org.jooq.impl.SQLDataType.VARCHAR(50), this, "模板编码");
 
     /**
-     * The column <code>activityv2.activity_sms.template_name</code>. 模板名称
+     * The column <code>activity_sms.template_name</code>. 模板名称
      */
     public final TableField<ActivitySmsRecord, String> TEMPLATE_NAME = createField("template_name", org.jooq.impl.SQLDataType.VARCHAR(50), this, "模板名称");
 
     /**
-     * The column <code>activityv2.activity_sms.message_content</code>. 消息内容
+     * The column <code>activity_sms.message_content</code>. 消息内容
      */
     public final TableField<ActivitySmsRecord, String> MESSAGE_CONTENT = createField("message_content", org.jooq.impl.SQLDataType.VARCHAR(500), this, "消息内容");
 
     /**
-     * The column <code>activityv2.activity_sms.send_time</code>. 发送时间
+     * The column <code>activity_sms.send_time</code>. 发送时间
      */
     public final TableField<ActivitySmsRecord, Timestamp> SEND_TIME = createField("send_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "发送时间");
 
     /**
-     * The column <code>activityv2.activity_sms.send_user_id</code>. 发送人编号
+     * The column <code>activity_sms.send_user_id</code>. 发送人编号
      */
     public final TableField<ActivitySmsRecord, Integer> SEND_USER_ID = createField("send_user_id", org.jooq.impl.SQLDataType.INTEGER, this, "发送人编号");
 
     /**
-     * The column <code>activityv2.activity_sms.send_result_code</code>. 发送结果
+     * The column <code>activity_sms.send_result_code</code>. 发送结果
      */
     public final TableField<ActivitySmsRecord, String> SEND_RESULT_CODE = createField("send_result_code", org.jooq.impl.SQLDataType.VARCHAR(100), this, "发送结果");
 
     /**
-     * The column <code>activityv2.activity_sms.send_result_desc</code>. 发送结果描述
+     * The column <code>activity_sms.send_result_desc</code>. 发送结果描述
      */
     public final TableField<ActivitySmsRecord, String> SEND_RESULT_DESC = createField("send_result_desc", org.jooq.impl.SQLDataType.VARCHAR(255), this, "发送结果描述");
 
     /**
-     * Create a <code>activityv2.activity_sms</code> table reference
+     * Create a <code>activity_sms</code> table reference
      */
     public ActivitySms() {
         this(DSL.name("activity_sms"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_sms</code> table reference
+     * Create an aliased <code>activity_sms</code> table reference
      */
     public ActivitySms(String alias) {
         this(DSL.name(alias), ACTIVITY_SMS);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_sms</code> table reference
+     * Create an aliased <code>activity_sms</code> table reference
      */
     public ActivitySms(Name alias) {
         this(alias, ACTIVITY_SMS);
@@ -125,7 +134,7 @@ public class ActivitySms extends TableImpl<ActivitySmsRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

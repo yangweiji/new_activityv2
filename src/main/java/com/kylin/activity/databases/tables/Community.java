@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityRecord;
@@ -31,10 +31,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = -1672233774;
+    private static final long serialVersionUID = -80935034;
 
     /**
-     * The reference instance of <code>activityv2.community</code>
+     * The reference instance of <code>community</code>
      */
     public static final Community COMMUNITY = new Community();
 
@@ -47,121 +47,121 @@ public class Community extends TableImpl<CommunityRecord> {
     }
 
     /**
-     * The column <code>activityv2.community.id</code>. 编号
+     * The column <code>community.id</code>. 编号
      */
     public final TableField<CommunityRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.community.name</code>. 社团名称
+     * The column <code>community.name</code>. 社团名称
      */
     public final TableField<CommunityRecord, String> NAME = createField("name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团名称");
 
     /**
-     * The column <code>activityv2.community.description</code>. 社团标语
+     * The column <code>community.description</code>. 社团标语
      */
     public final TableField<CommunityRecord, String> DESCRIPTION = createField("description", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "社团标语");
 
     /**
-     * The column <code>activityv2.community.background</code>. 社团背景图片
+     * The column <code>community.background</code>. 社团背景图片
      */
     public final TableField<CommunityRecord, String> BACKGROUND = createField("background", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团背景图片");
 
     /**
-     * The column <code>activityv2.community.status</code>. 社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过
+     * The column <code>community.status</code>. 社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过
      */
     public final TableField<CommunityRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "社团状态 0 ： 草稿、1 待审核、2、拒绝、 9审核通过");
 
     /**
-     * The column <code>activityv2.community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
+     * The column <code>community.using_score</code>. 是否开启积分功能(0:（false）关闭，&gt;0(true)开启)
      */
     public final TableField<CommunityRecord, Boolean> USING_SCORE = createField("using_score", org.jooq.impl.SQLDataType.BIT, this, "是否开启积分功能(0:（false）关闭，>0(true)开启)");
 
     /**
-     * The column <code>activityv2.community.avatar</code>. 社团小图标
+     * The column <code>community.avatar</code>. 社团小图标
      */
     public final TableField<CommunityRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "社团小图标");
 
     /**
-     * The column <code>activityv2.community.is_vip</code>. 会员功能是否开启
+     * The column <code>community.is_vip</code>. 会员功能是否开启
      */
     public final TableField<CommunityRecord, Boolean> IS_VIP = createField("is_vip", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "会员功能是否开启");
 
     /**
-     * The column <code>activityv2.community.vip_agreement</code>. 会员条款
+     * The column <code>community.vip_agreement</code>. 会员条款
      */
     public final TableField<CommunityRecord, String> VIP_AGREEMENT = createField("vip_agreement", org.jooq.impl.SQLDataType.CLOB, this, "会员条款");
 
     /**
-     * The column <code>activityv2.community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
+     * The column <code>community.vip_amount</code>. 会费金额 0：不开启会员功能， &gt;0 :开启会员功能
      */
     public final TableField<CommunityRecord, Double> VIP_AMOUNT = createField("vip_amount", org.jooq.impl.SQLDataType.DOUBLE, this, "会费金额 0：不开启会员功能， >0 :开启会员功能");
 
     /**
-     * The column <code>activityv2.community.created_by</code>. 社团创建人
+     * The column <code>community.created_by</code>. 社团创建人
      */
     public final TableField<CommunityRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "社团创建人");
 
     /**
-     * The column <code>activityv2.community.created</code>. 创建时间
+     * The column <code>community.created</code>. 创建时间
      */
     public final TableField<CommunityRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.community.address</code>. 社团地址
+     * The column <code>community.address</code>. 社团地址
      */
     public final TableField<CommunityRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR(1024), this, "社团地址");
 
     /**
-     * The column <code>activityv2.community.contact</code>. 社团联系电话
+     * The column <code>community.contact</code>. 社团联系电话
      */
     public final TableField<CommunityRecord, String> CONTACT = createField("contact", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "社团联系电话");
 
     /**
-     * The column <code>activityv2.community.company</code>. 社团公司名称
+     * The column <code>community.company</code>. 社团公司名称
      */
     public final TableField<CommunityRecord, String> COMPANY = createField("company", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "社团公司名称");
 
     /**
-     * The column <code>activityv2.community.about</code>. 关于社团富文本
+     * The column <code>community.about</code>. 关于社团富文本
      */
     public final TableField<CommunityRecord, String> ABOUT = createField("about", org.jooq.impl.SQLDataType.CLOB, this, "关于社团富文本");
 
     /**
-     * The column <code>activityv2.community.control_name</code>. 负责人信息
+     * The column <code>community.control_name</code>. 负责人信息
      */
     public final TableField<CommunityRecord, String> CONTROL_NAME = createField("control_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "负责人信息");
 
     /**
-     * The column <code>activityv2.community.business_license</code>. 营业执照（图片）
+     * The column <code>community.business_license</code>. 营业执照（图片）
      */
     public final TableField<CommunityRecord, String> BUSINESS_LICENSE = createField("business_license", org.jooq.impl.SQLDataType.VARCHAR(255), this, "营业执照（图片）");
 
     /**
-     * The column <code>activityv2.community.manager_phone_number</code>. 团体管理员手机号码
+     * The column <code>community.manager_phone_number</code>. 团体管理员手机号码
      */
     public final TableField<CommunityRecord, String> MANAGER_PHONE_NUMBER = createField("manager_phone_number", org.jooq.impl.SQLDataType.VARCHAR(4000), this, "团体管理员手机号码");
 
     /**
-     * The column <code>activityv2.community.count_people</code>. 团体规模人数
+     * The column <code>community.count_people</code>. 团体规模人数
      */
     public final TableField<CommunityRecord, Integer> COUNT_PEOPLE = createField("count_people", org.jooq.impl.SQLDataType.INTEGER, this, "团体规模人数");
 
     /**
-     * Create a <code>activityv2.community</code> table reference
+     * Create a <code>community</code> table reference
      */
     public Community() {
         this(DSL.name("community"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.community</code> table reference
+     * Create an aliased <code>community</code> table reference
      */
     public Community(String alias) {
         this(DSL.name(alias), COMMUNITY);
     }
 
     /**
-     * Create an aliased <code>activityv2.community</code> table reference
+     * Create an aliased <code>community</code> table reference
      */
     public Community(Name alias) {
         this(alias, COMMUNITY);
@@ -180,7 +180,7 @@ public class Community extends TableImpl<CommunityRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

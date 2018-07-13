@@ -5,14 +5,16 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActionHistory;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record7;
 import org.jooq.Row7;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.sql.Timestamp;
 
 
 /**
@@ -28,101 +30,101 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActionHistoryRecord extends UpdatableRecordImpl<ActionHistoryRecord> implements Record7<Integer, Integer, Integer, String, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = -12523253;
+    private static final long serialVersionUID = -1163346523;
 
     /**
-     * Setter for <code>activityv2.action_history.id</code>. 编号
+     * Setter for <code>action_history.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.id</code>. 编号
+     * Getter for <code>action_history.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.action_history.axtenal_id</code>. 外部关联id
+     * Setter for <code>action_history.axtenal_id</code>. 外部关联id
      */
     public void setAxtenalId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.axtenal_id</code>. 外部关联id
+     * Getter for <code>action_history.axtenal_id</code>. 外部关联id
      */
     public Integer getAxtenalId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.action_history.action</code>. 操作名称
+     * Setter for <code>action_history.action</code>. 操作名称
      */
     public void setAction(Integer value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.action</code>. 操作名称
+     * Getter for <code>action_history.action</code>. 操作名称
      */
     public Integer getAction() {
         return (Integer) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.action_history.memo</code>. 注释
+     * Setter for <code>action_history.memo</code>. 注释
      */
     public void setMemo(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.memo</code>. 注释
+     * Getter for <code>action_history.memo</code>. 注释
      */
     public String getMemo() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.action_history.created</code>. 创建时间
+     * Setter for <code>action_history.created</code>. 创建时间
      */
     public void setCreated(Timestamp value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.created</code>. 创建时间
+     * Getter for <code>action_history.created</code>. 创建时间
      */
     public Timestamp getCreated() {
         return (Timestamp) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.action_history.created_by</code>. 创建人
+     * Setter for <code>action_history.created_by</code>. 创建人
      */
     public void setCreatedBy(Integer value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.created_by</code>. 创建人
+     * Getter for <code>action_history.created_by</code>. 创建人
      */
     public Integer getCreatedBy() {
         return (Integer) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.action_history.community_id</code>. 团体编号
+     * Setter for <code>action_history.community_id</code>. 团体编号
      */
     public void setCommunityId(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.action_history.community_id</code>. 团体编号
+     * Getter for <code>action_history.community_id</code>. 团体编号
      */
     public Integer getCommunityId() {
         return (Integer) get(6);

@@ -4,18 +4,27 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityPhotoPictureRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -31,10 +40,10 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityPhotoPicture extends TableImpl<ActivityPhotoPictureRecord> {
 
-    private static final long serialVersionUID = 1628051585;
+    private static final long serialVersionUID = -1340569929;
 
     /**
-     * The reference instance of <code>activityv2.activity_photo_picture</code>
+     * The reference instance of <code>activity_photo_picture</code>
      */
     public static final ActivityPhotoPicture ACTIVITY_PHOTO_PICTURE = new ActivityPhotoPicture();
 
@@ -47,51 +56,51 @@ public class ActivityPhotoPicture extends TableImpl<ActivityPhotoPictureRecord> 
     }
 
     /**
-     * The column <code>activityv2.activity_photo_picture.id</code>. 编号
+     * The column <code>activity_photo_picture.id</code>. 编号
      */
     public final TableField<ActivityPhotoPictureRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.activity_photo_id</code>. 关联活动相册编号
+     * The column <code>activity_photo_picture.activity_photo_id</code>. 关联活动相册编号
      */
     public final TableField<ActivityPhotoPictureRecord, Integer> ACTIVITY_PHOTO_ID = createField("activity_photo_id", org.jooq.impl.SQLDataType.INTEGER, this, "关联活动相册编号");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.picture</code>. 图片
+     * The column <code>activity_photo_picture.picture</code>. 图片
      */
     public final TableField<ActivityPhotoPictureRecord, String> PICTURE = createField("picture", org.jooq.impl.SQLDataType.VARCHAR(255), this, "图片");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.created</code>. 创建时间
+     * The column <code>activity_photo_picture.created</code>. 创建时间
      */
     public final TableField<ActivityPhotoPictureRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.created_by</code>. 创建人
+     * The column <code>activity_photo_picture.created_by</code>. 创建人
      */
     public final TableField<ActivityPhotoPictureRecord, Integer> CREATED_BY = createField("created_by", org.jooq.impl.SQLDataType.INTEGER, this, "创建人");
 
     /**
-     * The column <code>activityv2.activity_photo_picture.order</code>. 排序
+     * The column <code>activity_photo_picture.order</code>. 排序
      */
     public final TableField<ActivityPhotoPictureRecord, Integer> ORDER = createField("order", org.jooq.impl.SQLDataType.INTEGER, this, "排序");
 
     /**
-     * Create a <code>activityv2.activity_photo_picture</code> table reference
+     * Create a <code>activity_photo_picture</code> table reference
      */
     public ActivityPhotoPicture() {
         this(DSL.name("activity_photo_picture"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_photo_picture</code> table reference
+     * Create an aliased <code>activity_photo_picture</code> table reference
      */
     public ActivityPhotoPicture(String alias) {
         this(DSL.name(alias), ACTIVITY_PHOTO_PICTURE);
     }
 
     /**
-     * Create an aliased <code>activityv2.activity_photo_picture</code> table reference
+     * Create an aliased <code>activity_photo_picture</code> table reference
      */
     public ActivityPhotoPicture(Name alias) {
         this(alias, ACTIVITY_PHOTO_PICTURE);
@@ -110,7 +119,7 @@ public class ActivityPhotoPicture extends TableImpl<ActivityPhotoPictureRecord> 
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

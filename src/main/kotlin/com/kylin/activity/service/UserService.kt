@@ -372,10 +372,14 @@ class UserService {
     }
 
     /**
-     * 依据unionId取得唯一用户
+     * 依据openId 或 unionId 取得唯一的用户， unionId优先
      * @return 用户信息
      */
-    fun getUserByUnionId(unionId: String?): User? {
-        return userDao!!.fetchByUnionId(unionId).firstOrNull()
+    fun getUserByOpenOrUnionId(openId: String?, unionId:String?):User? {
+        return if(unionId.isNullOrBlank()){
+            userDao!!.fetchByOpenId(openId).firstOrNull()
+        } else {
+            userDao!!.fetchByUnionId(unionId).firstOrNull()
+        }
     }
 }

@@ -5,14 +5,16 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivitySms;
+
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record9;
 import org.jooq.Row9;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.sql.Timestamp;
 
 
 /**
@@ -28,129 +30,129 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivitySmsRecord extends UpdatableRecordImpl<ActivitySmsRecord> implements Record9<Integer, Integer, String, String, String, Timestamp, Integer, String, String> {
 
-    private static final long serialVersionUID = 639605785;
+    private static final long serialVersionUID = 750484903;
 
     /**
-     * Setter for <code>activityv2.activity_sms.id</code>. 编号
+     * Setter for <code>activity_sms.id</code>. 编号
      */
     public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.id</code>. 编号
+     * Getter for <code>activity_sms.id</code>. 编号
      */
     public Integer getId() {
         return (Integer) get(0);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.activity_id</code>. 活动编号
+     * Setter for <code>activity_sms.activity_id</code>. 活动编号
      */
     public void setActivityId(Integer value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.activity_id</code>. 活动编号
+     * Getter for <code>activity_sms.activity_id</code>. 活动编号
      */
     public Integer getActivityId() {
         return (Integer) get(1);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.template_code</code>. 模板编码
+     * Setter for <code>activity_sms.template_code</code>. 模板编码
      */
     public void setTemplateCode(String value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.template_code</code>. 模板编码
+     * Getter for <code>activity_sms.template_code</code>. 模板编码
      */
     public String getTemplateCode() {
         return (String) get(2);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.template_name</code>. 模板名称
+     * Setter for <code>activity_sms.template_name</code>. 模板名称
      */
     public void setTemplateName(String value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.template_name</code>. 模板名称
+     * Getter for <code>activity_sms.template_name</code>. 模板名称
      */
     public String getTemplateName() {
         return (String) get(3);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.message_content</code>. 消息内容
+     * Setter for <code>activity_sms.message_content</code>. 消息内容
      */
     public void setMessageContent(String value) {
         set(4, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.message_content</code>. 消息内容
+     * Getter for <code>activity_sms.message_content</code>. 消息内容
      */
     public String getMessageContent() {
         return (String) get(4);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.send_time</code>. 发送时间
+     * Setter for <code>activity_sms.send_time</code>. 发送时间
      */
     public void setSendTime(Timestamp value) {
         set(5, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.send_time</code>. 发送时间
+     * Getter for <code>activity_sms.send_time</code>. 发送时间
      */
     public Timestamp getSendTime() {
         return (Timestamp) get(5);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.send_user_id</code>. 发送人编号
+     * Setter for <code>activity_sms.send_user_id</code>. 发送人编号
      */
     public void setSendUserId(Integer value) {
         set(6, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.send_user_id</code>. 发送人编号
+     * Getter for <code>activity_sms.send_user_id</code>. 发送人编号
      */
     public Integer getSendUserId() {
         return (Integer) get(6);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.send_result_code</code>. 发送结果
+     * Setter for <code>activity_sms.send_result_code</code>. 发送结果
      */
     public void setSendResultCode(String value) {
         set(7, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.send_result_code</code>. 发送结果
+     * Getter for <code>activity_sms.send_result_code</code>. 发送结果
      */
     public String getSendResultCode() {
         return (String) get(7);
     }
 
     /**
-     * Setter for <code>activityv2.activity_sms.send_result_desc</code>. 发送结果描述
+     * Setter for <code>activity_sms.send_result_desc</code>. 发送结果描述
      */
     public void setSendResultDesc(String value) {
         set(8, value);
     }
 
     /**
-     * Getter for <code>activityv2.activity_sms.send_result_desc</code>. 发送结果描述
+     * Getter for <code>activity_sms.send_result_desc</code>. 发送结果描述
      */
     public String getSendResultDesc() {
         return (String) get(8);
