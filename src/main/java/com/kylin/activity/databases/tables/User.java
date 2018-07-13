@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.UserRecord;
@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = 292866956;
+    private static final long serialVersionUID = -369384141;
 
     /**
-     * The reference instance of <code>activityv2.user</code>
+     * The reference instance of <code>user</code>
      */
     public static final User USER = new User();
 
@@ -56,151 +56,156 @@ public class User extends TableImpl<UserRecord> {
     }
 
     /**
-     * The column <code>activityv2.user.id</code>. 编号
+     * The column <code>user.id</code>. 编号
      */
     public final TableField<UserRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "编号");
 
     /**
-     * The column <code>activityv2.user.username</code>. 登录名
+     * The column <code>user.username</code>. 登录名
      */
     public final TableField<UserRecord, String> USERNAME = createField("username", org.jooq.impl.SQLDataType.VARCHAR(255), this, "登录名");
 
     /**
-     * The column <code>activityv2.user.displayname</code>. 显示名
+     * The column <code>user.displayname</code>. 显示名
      */
     public final TableField<UserRecord, String> DISPLAYNAME = createField("displayname", org.jooq.impl.SQLDataType.VARCHAR(255), this, "显示名");
 
     /**
-     * The column <code>activityv2.user.password</code>. 密码
+     * The column <code>user.password</code>. 密码
      */
     public final TableField<UserRecord, String> PASSWORD = createField("password", org.jooq.impl.SQLDataType.VARCHAR(255), this, "密码");
 
     /**
-     * The column <code>activityv2.user.role</code>. 角色
+     * The column <code>user.role</code>. 角色
      */
     public final TableField<UserRecord, String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR(255), this, "角色");
 
     /**
-     * The column <code>activityv2.user.enabled</code>. 是否启用
+     * The column <code>user.enabled</code>. 是否启用
      */
     public final TableField<UserRecord, Boolean> ENABLED = createField("enabled", org.jooq.impl.SQLDataType.BIT, this, "是否启用");
 
     /**
-     * The column <code>activityv2.user.gender</code>. 性别 1 男 2 女
+     * The column <code>user.gender</code>. 性别 1 男 2 女
      */
     public final TableField<UserRecord, Integer> GENDER = createField("gender", org.jooq.impl.SQLDataType.INTEGER, this, "性别 1 男 2 女");
 
     /**
-     * The column <code>activityv2.user.created</code>.
+     * The column <code>user.created</code>.
      */
     public final TableField<UserRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activityv2.user.level</code>. 会员级别 0 普通用户 年份： 值所确定的年份的会员
+     * The column <code>user.level</code>. 会员级别 0 普通用户 年份： 值所确定的年份的会员
      */
     public final TableField<UserRecord, Integer> LEVEL = createField("level", org.jooq.impl.SQLDataType.INTEGER, this, "会员级别 0 普通用户 年份： 值所确定的年份的会员");
 
     /**
-     * The column <code>activityv2.user.id_card</code>. 身份证号
+     * The column <code>user.id_card</code>. 身份证号
      */
     public final TableField<UserRecord, String> ID_CARD = createField("id_card", org.jooq.impl.SQLDataType.VARCHAR(255), this, "身份证号");
 
     /**
-     * The column <code>activityv2.user.real_name</code>. 真实姓名
+     * The column <code>user.real_name</code>. 真实姓名
      */
     public final TableField<UserRecord, String> REAL_NAME = createField("real_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "真实姓名");
 
     /**
-     * The column <code>activityv2.user.real_time</code>.
+     * The column <code>user.real_time</code>.
      */
     public final TableField<UserRecord, Timestamp> REAL_TIME = createField("real_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
-     * The column <code>activityv2.user.is_real</code>. 是否通过认证
+     * The column <code>user.is_real</code>. 是否通过认证
      */
     public final TableField<UserRecord, Boolean> IS_REAL = createField("is_real", org.jooq.impl.SQLDataType.BIT, this, "是否通过认证");
 
     /**
-     * The column <code>activityv2.user.open_id</code>. 微信openId
+     * The column <code>user.open_id</code>. 微信openId
      */
     public final TableField<UserRecord, String> OPEN_ID = createField("open_id", org.jooq.impl.SQLDataType.VARCHAR(255), this, "微信openId");
 
     /**
-     * The column <code>activityv2.user.avatar</code>. 头像
+     * The column <code>user.avatar</code>. 头像
      */
     public final TableField<UserRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "头像");
 
     /**
-     * The column <code>activityv2.user.email</code>.
+     * The column <code>user.email</code>.
      */
     public final TableField<UserRecord, String> EMAIL = createField("email", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
 
     /**
-     * The column <code>activityv2.user.work_company</code>. 工作单位
+     * The column <code>user.work_company</code>. 工作单位
      */
     public final TableField<UserRecord, String> WORK_COMPANY = createField("work_company", org.jooq.impl.SQLDataType.VARCHAR(255), this, "工作单位");
 
     /**
-     * The column <code>activityv2.user.is_party</code>. 是否党员
+     * The column <code>user.is_party</code>. 是否党员
      */
     public final TableField<UserRecord, Boolean> IS_PARTY = createField("is_party", org.jooq.impl.SQLDataType.BIT, this, "是否党员");
 
     /**
-     * The column <code>activityv2.user.address</code>. 家庭地址
+     * The column <code>user.address</code>. 家庭地址
      */
     public final TableField<UserRecord, String> ADDRESS = createField("address", org.jooq.impl.SQLDataType.VARCHAR(255), this, "家庭地址");
 
     /**
-     * The column <code>activityv2.user.blood_type</code>. 血型
+     * The column <code>user.blood_type</code>. 血型
      */
     public final TableField<UserRecord, String> BLOOD_TYPE = createField("blood_type", org.jooq.impl.SQLDataType.VARCHAR(45), this, "血型");
 
     /**
-     * The column <code>activityv2.user.clothing_size</code>. T恤尺寸
+     * The column <code>user.clothing_size</code>. T恤尺寸
      */
     public final TableField<UserRecord, String> CLOTHING_SIZE = createField("clothing_size", org.jooq.impl.SQLDataType.VARCHAR(45), this, "T恤尺寸");
 
     /**
-     * The column <code>activityv2.user.occupation</code>. 职业
+     * The column <code>user.occupation</code>. 职业
      */
     public final TableField<UserRecord, String> OCCUPATION = createField("occupation", org.jooq.impl.SQLDataType.VARCHAR(255), this, "职业");
 
     /**
-     * The column <code>activityv2.user.emergency_contact_name</code>. 紧急联系人姓名
+     * The column <code>user.emergency_contact_name</code>. 紧急联系人姓名
      */
     public final TableField<UserRecord, String> EMERGENCY_CONTACT_NAME = createField("emergency_contact_name", org.jooq.impl.SQLDataType.VARCHAR(45), this, "紧急联系人姓名");
 
     /**
-     * The column <code>activityv2.user.emergency_contact_mobile</code>. 紧急联系人电话
+     * The column <code>user.emergency_contact_mobile</code>. 紧急联系人电话
      */
     public final TableField<UserRecord, String> EMERGENCY_CONTACT_MOBILE = createField("emergency_contact_mobile", org.jooq.impl.SQLDataType.VARCHAR(45), this, "紧急联系人电话");
 
     /**
-     * The column <code>activityv2.user.wechat_id</code>. 微信号
+     * The column <code>user.wechat_id</code>. 微信号
      */
     public final TableField<UserRecord, String> WECHAT_ID = createField("wechat_id", org.jooq.impl.SQLDataType.VARCHAR(45), this, "微信号");
 
     /**
-     * The column <code>activityv2.user.union_id</code>. 微信开放平台，联合身份ID
+     * The column <code>user.union_id</code>. 微信开放平台，联合身份ID
      */
-    public final TableField<UserRecord, String> UNION_ID = createField("union_id", org.jooq.impl.SQLDataType.VARCHAR(255), this, "微信开放平台，联合身份ID");
+    public final TableField<UserRecord, String> UNION_ID = createField("union_id", org.jooq.impl.SQLDataType.VARCHAR(225), this, "微信开放平台，联合身份ID");
 
     /**
-     * Create a <code>activityv2.user</code> table reference
+     * The column <code>user.nick_name</code>.
+     */
+    public final TableField<UserRecord, String> NICK_NAME = createField("nick_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * Create a <code>user</code> table reference
      */
     public User() {
         this(DSL.name("user"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.user</code> table reference
+     * Create an aliased <code>user</code> table reference
      */
     public User(String alias) {
         this(DSL.name(alias), USER);
     }
 
     /**
-     * Create an aliased <code>activityv2.user</code> table reference
+     * Create an aliased <code>user</code> table reference
      */
     public User(Name alias) {
         this(alias, USER);
@@ -219,7 +224,7 @@ public class User extends TableImpl<UserRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

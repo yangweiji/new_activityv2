@@ -30,7 +30,7 @@ import org.jooq.impl.AbstractKeys;
 
 
 /**
- * A class modelling indexes of tables of the <code>activityv2</code> schema.
+ * A class modelling indexes of tables of the <code></code> schema.
  */
 @Generated(
     value = {
@@ -53,6 +53,7 @@ public class Indexes {
     public static final Index ACTIVITY_PHOTO_PICTURE_PRIMARY = Indexes0.ACTIVITY_PHOTO_PICTURE_PRIMARY;
     public static final Index ACTIVITY_SMS_PRIMARY = Indexes0.ACTIVITY_SMS_PRIMARY;
     public static final Index ACTIVITY_TICKET_PRIMARY = Indexes0.ACTIVITY_TICKET_PRIMARY;
+    public static final Index ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = Indexes0.ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID;
     public static final Index ACTIVITY_USER_PRIMARY = Indexes0.ACTIVITY_USER_PRIMARY;
     public static final Index ACTIVITY_USER_RECORD_PRIMARY = Indexes0.ACTIVITY_USER_RECORD_PRIMARY;
     public static final Index ARTICLE_PRIMARY = Indexes0.ARTICLE_PRIMARY;
@@ -77,6 +78,7 @@ public class Indexes {
         public static Index ACTIVITY_PHOTO_PICTURE_PRIMARY = createIndex("PRIMARY", ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE, new OrderField[] { ActivityPhotoPicture.ACTIVITY_PHOTO_PICTURE.ID }, true);
         public static Index ACTIVITY_SMS_PRIMARY = createIndex("PRIMARY", ActivitySms.ACTIVITY_SMS, new OrderField[] { ActivitySms.ACTIVITY_SMS.ID }, true);
         public static Index ACTIVITY_TICKET_PRIMARY = createIndex("PRIMARY", ActivityTicket.ACTIVITY_TICKET, new OrderField[] { ActivityTicket.ACTIVITY_TICKET.ID }, true);
+        public static Index ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = createIndex("idx_activity_user_user_id_activity_id", ActivityUser.ACTIVITY_USER, new OrderField[] { ActivityUser.ACTIVITY_USER.USER_ID, ActivityUser.ACTIVITY_USER.ACTIVITY_ID }, true);
         public static Index ACTIVITY_USER_PRIMARY = createIndex("PRIMARY", ActivityUser.ACTIVITY_USER, new OrderField[] { ActivityUser.ACTIVITY_USER.ID }, true);
         public static Index ACTIVITY_USER_RECORD_PRIMARY = createIndex("PRIMARY", ActivityUserRecord.ACTIVITY_USER_RECORD, new OrderField[] { ActivityUserRecord.ACTIVITY_USER_RECORD.ID }, true);
         public static Index ARTICLE_PRIMARY = createIndex("PRIMARY", Article.ARTICLE, new OrderField[] { Article.ARTICLE.ID }, true);

@@ -4,7 +4,7 @@
 package com.kylin.activity.databases.tables;
 
 
-import com.kylin.activity.databases.Activityv2;
+import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.PosterRecord;
@@ -40,10 +40,10 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Poster extends TableImpl<PosterRecord> {
 
-    private static final long serialVersionUID = 1867249937;
+    private static final long serialVersionUID = -1616660693;
 
     /**
-     * The reference instance of <code>activityv2.poster</code>
+     * The reference instance of <code>poster</code>
      */
     public static final Poster POSTER = new Poster();
 
@@ -56,71 +56,71 @@ public class Poster extends TableImpl<PosterRecord> {
     }
 
     /**
-     * The column <code>activityv2.poster.id</code>. 主键
+     * The column <code>poster.id</code>. 主键
      */
     public final TableField<PosterRecord, Integer> ID = createField("id", org.jooq.impl.SQLDataType.INTEGER.nullable(false).identity(true), this, "主键");
 
     /**
-     * The column <code>activityv2.poster.title</code>. 海报标题，当海报链接活动时，自动使用活动的标题
+     * The column <code>poster.title</code>. 海报标题，当海报链接活动时，自动使用活动的标题
      */
     public final TableField<PosterRecord, String> TITLE = createField("title", org.jooq.impl.SQLDataType.VARCHAR(10244), this, "海报标题，当海报链接活动时，自动使用活动的标题");
 
     /**
-     * The column <code>activityv2.poster.avatar</code>. 默认海报背景图
+     * The column <code>poster.avatar</code>. 默认海报背景图
      */
     public final TableField<PosterRecord, String> AVATAR = createField("avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "默认海报背景图");
 
     /**
-     * The column <code>activityv2.poster.mobile_avatar</code>. 收集显示海报图，为空时使用avatar的值
+     * The column <code>poster.mobile_avatar</code>. 收集显示海报图，为空时使用avatar的值
      */
     public final TableField<PosterRecord, String> MOBILE_AVATAR = createField("mobile_avatar", org.jooq.impl.SQLDataType.VARCHAR(255), this, "收集显示海报图，为空时使用avatar的值");
 
     /**
-     * The column <code>activityv2.poster.link</code>. 海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报
+     * The column <code>poster.link</code>. 海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报
      */
     public final TableField<PosterRecord, String> LINK = createField("link", org.jooq.impl.SQLDataType.VARCHAR(255), this, "海报外部链接，当关联活动时可以为空，初次实现时可以不考虑该字段，只做活动海报");
 
     /**
-     * The column <code>activityv2.poster.activity_id</code>. 海报关联的活动Id
+     * The column <code>poster.activity_id</code>. 海报关联的活动Id
      */
     public final TableField<PosterRecord, Integer> ACTIVITY_ID = createField("activity_id", org.jooq.impl.SQLDataType.INTEGER, this, "海报关联的活动Id");
 
     /**
-     * The column <code>activityv2.poster.created</code>. 创建时间
+     * The column <code>poster.created</code>. 创建时间
      */
     public final TableField<PosterRecord, Timestamp> CREATED = createField("created", org.jooq.impl.SQLDataType.TIMESTAMP, this, "创建时间");
 
     /**
-     * The column <code>activityv2.poster.poster_type</code>. 海报类型， 与活动关联时，自动使用活动的类型
+     * The column <code>poster.poster_type</code>. 海报类型， 与活动关联时，自动使用活动的类型
      */
     public final TableField<PosterRecord, String> POSTER_TYPE = createField("poster_type", org.jooq.impl.SQLDataType.VARCHAR(255), this, "海报类型， 与活动关联时，自动使用活动的类型");
 
     /**
-     * The column <code>activityv2.poster.show</code>. 是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序
+     * The column <code>poster.show</code>. 是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序
      */
     public final TableField<PosterRecord, Boolean> SHOW = createField("show", org.jooq.impl.SQLDataType.BIT, this, "是否显示在首页，用户先设置是否展示在首页，然后设置展示的顺序");
 
     /**
-     * The column <code>activityv2.poster.sequence</code>. 海报排序，排序相同时按created倒序排
+     * The column <code>poster.sequence</code>. 海报排序，排序相同时按created倒序排
      */
     public final TableField<PosterRecord, Integer> SEQUENCE = createField("sequence", org.jooq.impl.SQLDataType.INTEGER, this, "海报排序，排序相同时按created倒序排");
 
     /**
-     * Create a <code>activityv2.poster</code> table reference
+     * Create a <code>poster</code> table reference
      */
     public Poster() {
         this(DSL.name("poster"), null);
     }
 
     /**
-     * Create an aliased <code>activityv2.poster</code> table reference
+     * Create an aliased <code>poster</code> table reference
      */
     public Poster(String alias) {
         this(DSL.name(alias), POSTER);
     }
 
     /**
-     * Create an aliased <code>activityv2.poster</code> table reference
+     * Create an aliased <code>poster</code> table reference
      */
     public Poster(Name alias) {
         this(alias, POSTER);
@@ -139,7 +139,7 @@ public class Poster extends TableImpl<PosterRecord> {
      */
     @Override
     public Schema getSchema() {
-        return Activityv2.ACTIVITYV2;
+        return DefaultSchema.DEFAULT_SCHEMA;
     }
 
     /**

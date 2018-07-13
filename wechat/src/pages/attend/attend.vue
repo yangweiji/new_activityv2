@@ -180,7 +180,7 @@
     methods: {
       getData() {
         var that = this;
-        that.processing = false;
+        that.processing = true;
         var param = {
           activityId: that.activityId,
           userId: that.userId
@@ -229,6 +229,7 @@
             that.selectTicket(res.ticketInfos[0].id)
           }
           that.loaded = true;
+          that.processing = false;
         })
       },
       changeAttendInfo() {
@@ -291,6 +292,11 @@
       },
       submitAttend() {
         var that = this;
+        ///禁止重复提交
+        if(that.processing){
+          return
+        }
+        
         that.errorMessage = null;
         if (!this.ticket) {
           that.errorMessage = "请选择一张活动票";
@@ -356,11 +362,15 @@
           payOpt.success = () => {
             that.checkOrder(res[1]);
           };
-          payOpt.fail = () => {
+          payOpt.fail = (e) => {
+            that.$kyutil.alert("支付出现问题，请联系相关人员处理");
+            console.error("支付出现错误[payOpt.fail]：" ,e)
             that.processing = false;
           };
           wx.requestPayment(payOpt);
-        }).catch(() => {
+        }).catch((e) => {
+          that.$kyutil.alert("支付出现问题，请联系相关人员处理");
+          console.error("支付出现错误[payOpt:catch]:" ,e)
           that.processing = false;
         })
       },
@@ -373,10 +383,13 @@
           if (orderStatus == 2) {
             that.getData(); // 支付成功
           } else {
-            alert("支付出现问题，请联系相关人员处理");
+            console.error("支付出现错误[orderStatus]:" ,e)
+            that.$kyutil.alert("支付出现问题，在确定是否支付成功前，请不要重复支付")
           }
         }).catch(
-          () => {
+          (e) => {
+            that.$kyutil.alert("支付出现问题，请联系相关人员处理")
+            console.error("支付出现错误[checkOrder:catch]：" ,e)
             that.processing = false;
           })
       },

@@ -23,7 +23,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -705878572;
+    private static final long serialVersionUID = -560055654;
 
     private Integer   id;
     private String    username;
@@ -51,6 +51,7 @@ public class User implements Serializable {
     private String    emergencyContactMobile;
     private String    wechatId;
     private String    unionId;
+    private String    nickName;
 
     public User() {}
 
@@ -81,6 +82,7 @@ public class User implements Serializable {
         this.emergencyContactMobile = value.emergencyContactMobile;
         this.wechatId = value.wechatId;
         this.unionId = value.unionId;
+        this.nickName = value.nickName;
     }
 
     public User(
@@ -109,7 +111,8 @@ public class User implements Serializable {
         String    emergencyContactName,
         String    emergencyContactMobile,
         String    wechatId,
-        String    unionId
+        String    unionId,
+        String    nickName
     ) {
         this.id = id;
         this.username = username;
@@ -137,6 +140,7 @@ public class User implements Serializable {
         this.emergencyContactMobile = emergencyContactMobile;
         this.wechatId = wechatId;
         this.unionId = unionId;
+        this.nickName = nickName;
     }
 
     public Integer getId() {
@@ -347,6 +351,14 @@ public class User implements Serializable {
         this.unionId = unionId;
     }
 
+    public String getNickName() {
+        return this.nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("User (");
@@ -377,6 +389,7 @@ public class User implements Serializable {
         sb.append(", ").append(emergencyContactMobile);
         sb.append(", ").append(wechatId);
         sb.append(", ").append(unionId);
+        sb.append(", ").append(nickName);
 
         sb.append(")");
         return sb.toString();

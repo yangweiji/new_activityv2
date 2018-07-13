@@ -47,7 +47,7 @@ import org.jooq.impl.AbstractKeys;
 
 /**
  * A class modelling foreign key relationships and constraints of tables of 
- * the <code>activityv2</code> schema.
+ * the <code></code> schema.
  */
 @Generated(
     value = {
@@ -93,6 +93,7 @@ public class Keys {
     public static final UniqueKey<ActivitySmsRecord> KEY_ACTIVITY_SMS_PRIMARY = UniqueKeys0.KEY_ACTIVITY_SMS_PRIMARY;
     public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = UniqueKeys0.KEY_ACTIVITY_TICKET_PRIMARY;
     public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_PRIMARY;
+    public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = UniqueKeys0.KEY_ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID;
     public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_RECORD_PRIMARY;
     public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = UniqueKeys0.KEY_ARTICLE_PRIMARY;
     public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = UniqueKeys0.KEY_COMMUNITY_PRIMARY;
@@ -142,6 +143,7 @@ public class Keys {
         public static final UniqueKey<ActivitySmsRecord> KEY_ACTIVITY_SMS_PRIMARY = createUniqueKey(ActivitySms.ACTIVITY_SMS, "KEY_activity_sms_PRIMARY", ActivitySms.ACTIVITY_SMS.ID);
         public static final UniqueKey<ActivityTicketRecord> KEY_ACTIVITY_TICKET_PRIMARY = createUniqueKey(ActivityTicket.ACTIVITY_TICKET, "KEY_activity_ticket_PRIMARY", ActivityTicket.ACTIVITY_TICKET.ID);
         public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = createUniqueKey(ActivityUser.ACTIVITY_USER, "KEY_activity_user_PRIMARY", ActivityUser.ACTIVITY_USER.ID);
+        public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = createUniqueKey(ActivityUser.ACTIVITY_USER, "KEY_activity_user_idx_activity_user_user_id_activity_id", ActivityUser.ACTIVITY_USER.USER_ID, ActivityUser.ACTIVITY_USER.ACTIVITY_ID);
         public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_PRIMARY = createUniqueKey(com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD, "KEY_activity_user_record_PRIMARY", com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD.ID);
         public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = createUniqueKey(Article.ARTICLE, "KEY_article_PRIMARY", Article.ARTICLE.ID);
         public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = createUniqueKey(Community.COMMUNITY, "KEY_community_PRIMARY", Community.COMMUNITY.ID);
