@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app" class="am_user">
+
+    <div class="am-g amz-container">
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <ul class="am-tabs-nav am-cf am_cf">
+                <li class="" v-bind:class="tab==1?'am-active':''">
+                    <a href="javascript:void(0)" v-on:click="go(1)">个人信息</a>
+                </li>
+                <li class="" v-bind:class="tab==2?'am-active':''">
+                    <a href="javascript:void(0)" v-on:click="go(2)">账户安全</a>
+                </li>
+
+            </ul>
+
+            <div class="am-tabs-bd am_bdfw">
+                <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <p>
+                        <span class="am-icon-lg am-success am-icon-check"></span>
+                        <span th:text="${globalMessage}">Some Success message</span>
+                    </p>
+                </div>
+
+                <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <p>
+                        <span class="am-icon-lg am-warning am-icon-warning"></span>
+                        <span th:text="${errorMessage}">Some Error message</span>
+                    </p>
+                </div>
+
+                <div class="am-g">
+                    <div class="am-u-lg-12">
+                        <form class="am-form am-form-horizontal" data-am-validator method="post"
+                              action="/sec/user/update">
+                            <input type="hidden" id="id" name="id" th:value="${user.id}"/>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">手机号</label>
+                                <div class="am-u-sm-10">
+                                    <span th:text="${user.username}"></span><br/>
+                                    <button class="am-btn am-btn-default am-btn-xs" type="button">修改</button>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">修改登录密码</label>
+                                <div class="am-u-sm-10">
+                                    建议您定期更改密码以保护账户安全<br/>
+                                    <button class="am-btn am-btn-default am-btn-xs" type="button">修改密码</button>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">
+                                    微信账号
+                                </label>
+                                <div class="am-u-sm-10">
+                                    <span th:if="${user.unionId}" th:text="${user.nickName}"></span>
+                                    <span th:unless="${user.unionId}">绑定后，可使用微信账号直接登录</span><br/>
+                                    <a th:unless="${user.unionId}" class="am-btn am-btn-default am-btn-xs"
+                                       th:href="@{/pub/wx/open/bindwx}">立即绑定</a>
+                                    <a th:if="${user.unionId}" class="am-btn am-btn-warning am-btn-xs"
+                                       th:href="@{/sec/user/unbindwx}">解除绑定</a>
+                                </div>
+                            </div>
+
+                            <!--<div class="am-form-group">-->
+                            <!--<div class="am-u-sm-10 am-u-sm-offset-2">-->
+                            <!--<button class="am-btn am-btn-secondary" type="submit">保存</button>-->
+                            <!--</div>-->
+                            <!--</div>-->
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: default"></div>
+<style rel="stylesheet">
+    #app {
+        width: 100%;
+    }
+
+    .am-g {
+        background-color: #fff;
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = [[${user}]]
+    /*]]>*/
+</script>
+
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
+<script type="text/javascript" src="/js/sec/user/account.js"></script>
+</body>
+</html>

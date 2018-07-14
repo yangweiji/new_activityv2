@@ -107,7 +107,7 @@ public class WxOpenAuthenticationProcessingFilter extends AbstractAuthentication
             e.printStackTrace();
         }
 
-        User user = userService.getUserByUnionId(wxMpUser.getUnionId());
+        User user = userService.getUserByOpenOrUnionId(wxMpUser.getOpenId(), wxMpUser.getUnionId());
         if (user == null) {
             user = new User();
             user.setEnabled(true);
@@ -118,12 +118,12 @@ public class WxOpenAuthenticationProcessingFilter extends AbstractAuthentication
             user.setGender(wxMpUser.getSex());
             user.setDisplayname(wxMpUser.getNickname());
             user.setAvatar(wxMpUser.getHeadImgUrl());
-
+            user.setNickName(wxMpUser.getNickname());
             userService.insert(user);
             LogUtil.printLog("添加用户成功: " + user.getId());
         }
 
-        WxOpenAuthenticationToken authRequest = new WxOpenAuthenticationToken(wxMpUser.getUnionId(), wxMpUser.getOpenId());
+        WxOpenAuthenticationToken authRequest = new WxOpenAuthenticationToken(user.getUnionId(), user.getOpenId());
 
         // Allow subclasses to set the "details" property
         setDetails(request, authRequest);

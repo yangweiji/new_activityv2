@@ -44,6 +44,11 @@ public class WechatOpenProperties {
      */
     private String webRedirectUri;
 
+    /**
+     * 微信号绑定重定向URI
+     */
+    private String webWxBindUri;
+
     public String getComponentAppId() {
         return componentAppId;
     }
@@ -98,6 +103,14 @@ public class WechatOpenProperties {
 
     public void setWebRedirectUri(String webRedirectUri) {
         this.webRedirectUri = webRedirectUri;
+    }
+
+    public String getWebWxBindUri() {
+        return webWxBindUri;
+    }
+
+    public void setWebWxBindUri(String webWxBindUri) {
+        this.webWxBindUri = webWxBindUri;
     }
 
     @Override
