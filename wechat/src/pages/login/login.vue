@@ -22,9 +22,9 @@
       <div class="weui-toptips" :class="{'weui-toptips_warn': isError, 'weui-toptips_primary': !isError}" 
             v-if="showTopTips">{{infoMessage}}</div>
 
-      <!-- <div class="weui-cells__title">用户登录，
-        <navigator url="../../pages/register/register" open-type="redirect" hover-class="navigator-hover" class="weui-agree__link">新用户注册</navigator>
-      </div> -->
+      <div class="weui-cells__title">
+        <navigator url="../../pages/index/index" open-type="switchTab" hover-class="navigator-hover" class="weui-agree__link">回到首页</navigator>
+      </div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
           <div class="weui-cell__hd">
@@ -148,6 +148,7 @@ export default {
 
           //测试环境下，直接显示出验证码
           that.vercode = res.message;
+          
           that.canGetVerCode = false;
           that.count = 60;
           var i = setInterval(() => {
@@ -175,6 +176,7 @@ export default {
           encryptedData: e.mp.detail.encryptedData,
           ivStr: e.mp.detail.iv,
         }
+        //取得小程序用户信息
         that.$kyutil.get("/pub/wx/auth/getMiniAppUserInfo", param).then(res=>{
           console.log("getMiniAppUserInfo: ", res);
           if (res.code == 200) {
@@ -189,14 +191,18 @@ export default {
               avatarUrl: res.avatarUrl,
               gender: res.gender
             }
+            //用户登录:如果系统没有用户信息则直接创建
             that.$kyutil.post("/pub/wx/auth/userLogin", param).then(res => {
               console.log("userLogin: " + res)
               if (res.code == 200) {
+                //取得用户信息
                 that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId, "unionId": param.unionId }).then(res => {
-                    console.log("user: ", res)
+                    // console.log("user: ", res)
                     if (res) {
                         //将user存储于storage
                         wx.setStorageSync("user", res)
+                        console.log("storage user->", res)
+
                         wx.showToast({
                           title: '登录成功，跳转中...',
                           icon: 'success',

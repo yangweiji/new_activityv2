@@ -79,7 +79,12 @@ class ActivitySmsService {
      * @return 消息ID
      */
     fun save(activitySms: ActivitySms): Int {
-        activitySmsDao!!.insert(activitySms)
+        if (activitySms.id == null) {
+            activitySmsDao!!.insert(activitySms)
+        } else {
+            activitySmsDao!!.update(activitySms)
+        }
+
         return activitySms.id
     }
 

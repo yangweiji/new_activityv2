@@ -3,12 +3,12 @@ package com.kylin.activity.controller.sec
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.ActivitySms
-import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ActivitySmsService
 import com.kylin.activity.sms.SmsTemplateListProperties
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
@@ -144,6 +144,16 @@ class SmsController : BaseController() {
 
         //发送短信
         var response = commonService!!.sendBatchSms(mobiles, commonService!!.activitySmsSign, sms.templateCode, templateParam)
+
+        sms.templateName = templateListProperties!!.templateMap!![sms.templateCode]!!.name
+        sms.messageContent = reason
+        sms.sendTime = DateUtil.date().toTimestamp()
+        sms.sendUserId = this.sessionUser!!.id
+        sms.sendResultCode = response.code
+        sms.sendResultDesc = response.message
+        activitySmsService!!.save(sms)
+        LogUtil.printLog("添加短信OK: ${sms.id}")
+
         if (response.code == "OK") {
             model.addAttribute("globalMessage", "短信已发送成功！")
         } else {
