@@ -91,7 +91,7 @@ new groovy.xml.MarkupBuilder(writer).configuration('xmlns': 'http://www.jooq.org
         url('jdbc:mysql://47.92.92.242:3306/activityv2?serverTimezone=GMT%2b8')
 //        url('jdbc:mysql://localhost:3306/activityv2?serverTimezone=GMT%2b8')
         user('root')
-        password("123456")
+        password('123456')
     }
     generator() {
         database() {
