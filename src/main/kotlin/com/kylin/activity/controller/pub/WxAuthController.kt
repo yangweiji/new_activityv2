@@ -179,7 +179,7 @@ class WxAuthController {
     @RequestMapping(value = "/userLogin", method = [RequestMethod.POST])
     fun userLogin(@RequestBody(required = false) map: Map<String, String>): Any {
         var username = map["username"]
-        var password = map["password"]
+        //var password = map["password"]
         var verCode = map["vercode"]
         //OpenId
         var openId = map["openId"]
@@ -202,6 +202,7 @@ class WxAuthController {
                 //添加用户信息
                 var user = User()
                 user.username = username
+                user.mobile = username
                 var coder = BCryptPasswordEncoder()
                 //初始密码: 123456
                 user.password = coder.encode(activityProperties!!.defaultPassword)

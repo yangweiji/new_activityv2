@@ -1,6 +1,5 @@
 package com.kylin.activity.controller.pub
 
-import com.kylin.activity.databases.tables.daos.VercodeDao
 import com.kylin.activity.databases.tables.pojos.Vercode
 import com.kylin.activity.model.MessageResult
 import com.kylin.activity.service.VerCodeService
@@ -8,11 +7,12 @@ import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.JsonUtils
 import com.kylin.activity.util.LogUtil
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.sql.Timestamp
 import java.time.Instant
-import java.util.Random
-import org.jooq.DSLContext
-import org.springframework.web.bind.annotation.*
+import java.util.*
 
 /**
  * 短信验证码
@@ -43,7 +43,7 @@ class VercodeRestController {
         val random = Random()
         var code = (random.nextInt(900000) + 100000).toString()
         LogUtil.printLog("短信验证码: $code")
-        //commonService!!.sendSms(mobile, code)
+        commonService!!.sendSms(mobile, code)
 
         var verCode = Vercode()
         verCode.mobile = mobile

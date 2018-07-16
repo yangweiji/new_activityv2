@@ -332,6 +332,10 @@ class ProfileController : BaseController() {
         var messageResult = MessageResult()
 
         when {
+            user.mobile != mobile -> {
+                messageResult.code = -4
+                messageResult.message = "原手机号输入不正确"
+            }
             userService!!.getUser(newMobile) != null -> {
                 messageResult.code = -3
                 messageResult.message = "新手机号码已绑定平台其他用户，请更换新手机号码"

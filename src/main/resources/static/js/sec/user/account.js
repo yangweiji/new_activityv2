@@ -50,6 +50,10 @@ new Vue({
         if (that.user.mobile) {
             that.mobile = that.user.mobile;
         }
+        else {
+            //弹出添加手机号
+            that.bindAddMobile()
+        }
     },
     computed: {
         //验证更换手机号
@@ -120,7 +124,7 @@ new Vue({
                             // type: 'error'
                         });
 
-                        that.smsCode = data.message;
+                        // that.smsCode = data.message;
                         that.canGetVerCode = false;
                         that.codeCount = 60;
                         var fun = function () {
@@ -170,7 +174,7 @@ new Vue({
                             // type: 'error'
                         });
 
-                        that.smsCode2 = data.message;
+                        // that.smsCode2 = data.message;
                         that.canGetVerCode2 = false;
                         that.codeCount2 = 60;
                         var fun = function () {
@@ -220,7 +224,7 @@ new Vue({
                             // type: 'error'
                         });
 
-                        that.smsCode3 = data.message;
+                        // that.smsCode3 = data.message;
                         that.canGetVerCode3 = false;
                         that.codeCount3 = 60;
                         var fun = function () {
