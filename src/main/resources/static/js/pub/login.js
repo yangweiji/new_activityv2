@@ -58,18 +58,7 @@ new Vue({
         getVerCode: function () {
             var that = this;
             that.canGetVerCode = true;
-            if (!that.mobile || that.mobile.length < 11) {
-                nativeToast({
-                    message: '请输入有效的手机号码！',
-                    position: 'center',
-                    timeout: 3000,
-                    square: true,
-                    // type: 'error'
-                });
-                return;
-            }
-
-            if (!that.mobile.match(/^1\d{10}$/)) {
+            if (!that.mobile || that.mobile.length < 11 || !that.mobile.match(/^1\d{10}$/)) {
                 nativeToast({
                     message: '请输入有效的手机号码！',
                     position: 'center',
@@ -90,12 +79,12 @@ new Vue({
                         nativeToast({
                             message: '短信验证码已发送，十分钟内有效！',
                             position: 'center',
-                            timeout: 5000,
+                            timeout: 3000,
                             square: true,
                             // type: 'error'
                         });
 
-                        that.code = data.message;
+                        // that.code = data.message;
                         that.canGetVerCode = false;
                         that.codeCount = 60;
                         var fun = function () {
@@ -108,14 +97,6 @@ new Vue({
                             }
                         }
                         setTimeout(fun, 1000)
-
-                        // var i = setInterval(()=>{
-                        //     that.codeCount--;
-                        //     if (that.codeCount <= 0) {
-                        //         clearInterval(i);
-                        //         that.canGetVerCode = true;
-                        //     }
-                        // }, 1000);
                     }
                 },
                 error: function () {
