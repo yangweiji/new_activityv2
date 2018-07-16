@@ -10,9 +10,13 @@
               </span>
           </navigator>
           <!-- <kyimage :src="community.background" model="aspectFit" type="banner" /> -->
-          <div class="community-avatar">
+          <!-- <div class="community-avatar">
             <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
             <open-data class="userinfo-name" type="userNickName"></open-data>
+          </div> -->
+          <div class="community-avatar">
+            <kyimage :src="user.avatar" type="avatar" />
+            <span class="userinfo-name">{{user.nickName}}</span>
           </div>
         </div>
         <div class="wx_group_count weui-flex">
@@ -123,16 +127,21 @@
 </template>
 
 <script>
+  import kyimage from '@/components/kyimage.vue'
+
   export default {
     data() {
       return {
         xs: 1,
         userId: null,
         community: null,
-        item: null
+        item: null,
+        user: null,
       };
     },
-    components: {},
+    components:{
+      kyimage
+    },
     methods: {
       getData() {
         var that = this;
@@ -144,7 +153,23 @@
       },
       qh(cs) {
         this.xs = cs;
-      }
+      },
+    //   getAvatar: function () {
+    //     var that = this;
+    //     that.user = this.$kyutil.GetUser();
+    //     var avatar = that.user.avatar;
+    //     if (avatar) {
+    //       if(avatar && (avatar.toLowerCase().indexOf('http://') == 0 || avatar.toLowerCase().indexOf('https://') == 0)){
+    //           return avatar
+    //       }
+    //       var url = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/' + avatar
+    //       url += '?x-oss-process=style/small'
+    //       return url;
+    //     }
+    //     else {
+    //         return '/img/activity/man.png'
+    //     }
+    //   },
     },
     computed: {
       vipText() {
@@ -166,6 +191,7 @@
         this.community = this.$store.state.community;
         this.$kyutil.CheckUserValidation();
         var user = this.$kyutil.GetUser();
+        this.user = user;
         if (user) {
           this.userId = user.id;
           this.getData();
@@ -287,5 +313,9 @@
     text-align: center;
     /* color: #ffffff; */
     border-radius: 3px;
+  }
+  .user-avatar {
+    height: 65px;
+    width: 65px;
   }
 </style>
