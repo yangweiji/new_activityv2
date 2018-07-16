@@ -255,4 +255,11 @@ public class UserDao extends DAOImpl<UserRecord, com.kylin.activity.databases.ta
     public List<com.kylin.activity.databases.tables.pojos.User> fetchByNickName(String... values) {
         return fetch(User.USER.NICK_NAME, values);
     }
+
+    /**
+     * Fetch records that have <code>mobile IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.User> fetchByMobile(String... values) {
+        return fetch(User.USER.MOBILE, values);
+    }
 }

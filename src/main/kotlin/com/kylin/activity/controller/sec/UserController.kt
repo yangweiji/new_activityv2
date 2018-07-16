@@ -1,11 +1,10 @@
 package com.kylin.activity.controller.sec
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.controller.BaseController
-import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.UserService
 import com.xiaoleilu.hutool.date.DateUtil
-import org.jooq.DSLContext
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
@@ -27,11 +26,11 @@ class UserController : BaseController() {
     @Autowired
     private val userService: UserService? = null
 
+    /**
+     * 活动配置
+     */
     @Autowired
-    private val userDao: UserDao? = null
-
-    @Autowired
-    private val create: DSLContext? = null
+    private val activityProperties: ActivityProperties? = null
 
     /**
      * 取得用户信息
@@ -84,7 +83,7 @@ class UserController : BaseController() {
      * 保存会员认证信息
      * @return
      */
-    @RequestMapping(value = "/registermember", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/registermember", method = [RequestMethod.POST])
     @Transactional
     fun registerMember(@ModelAttribute("user") user: User,request: HttpServletRequest,
             @ModelAttribute("current_url") current_url: String,
@@ -106,7 +105,7 @@ class UserController : BaseController() {
 
         model.addAttribute("user", member)
         redirectAttributes.addFlashAttribute("globalMessage", "注册会员成功！")
-        return "redirect:" + current_url
+        return "redirect:$current_url"
     }
 
     /**
@@ -115,7 +114,7 @@ class UserController : BaseController() {
      * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/members", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/members", method = [RequestMethod.GET, RequestMethod.POST])
     fun member(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -135,17 +134,8 @@ class UserController : BaseController() {
             end = sdf.format(calendar.time)
         }
 
-//        var username = request.getParameter("username")
-//        var displayname = request.getParameter("displayname")
-//        var real_name = request.getParameter("real_name")
-//        var id_card = request.getParameter("id_card")
-//        var level = request.getParameter("level")
-//
-//        var members = userService!!.getMembers(start, end, username, displayname, real_name, id_card, level)
-
         model.addAttribute("start", start)
         model.addAttribute("end", end)
-//        model.addAttribute("members", members)
 
         return "sec/admin/user/members"
     }
@@ -156,7 +146,7 @@ class UserController : BaseController() {
      * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/users", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/users", method = [RequestMethod.GET, RequestMethod.POST])
     fun allUsers(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
@@ -186,7 +176,7 @@ class UserController : BaseController() {
      * @author Richard
      */
     @CrossOrigin
-    @RequestMapping(value = "/searchUsers", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/searchUsers", method = [RequestMethod.GET, RequestMethod.POST])
     @ResponseBody
     fun searchUsers(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var start = map["start"]
@@ -213,36 +203,10 @@ class UserController : BaseController() {
         return "sec/admin/user/update"
     }
 
-//    @PostMapping("/update")
-//    fun postUpdate(id:Int, level:Int?, role:String,
-//                   displayname: String,email: String, gender:Int,
-//                   bloodType:String,clothingSize:String,workCompany:String,occupation:String,
-//                   emergencyContactName:String,emergencyContactMobile:String,isParty:Boolean,address:String,wechatId:String,model: Model): String {
-//        model.addAttribute("title", "个人信息")
-//
-//        var user = userDao!!.fetchOneById(id)
-//        user.level = level
-//        user.role = role
-//        user.displayname = displayname
-//        user.gender = gender
-//        user.email = email
-//        user.bloodType = bloodType
-//        user.clothingSize = clothingSize
-//        user.workCompany = workCompany
-//        user.occupation = occupation
-//        user.emergencyContactName = emergencyContactName
-//        user.emergencyContactMobile = emergencyContactMobile
-//        user.isParty = isParty
-//        user.address = address
-//        user.wechatId = wechatId
-//        userDao!!.update(user)
-//        return "redirect:/sec/user/users"
-//    }
-
     @PostMapping("/update")
     fun postUpdate(user: User, model: Model, redirectAttributes: RedirectAttributes): String {
         model.addAttribute("title", "个人信息")
-        userDao!!.update(user)
+        userService!!.update(user)
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/admin/user/users"
     }
@@ -250,7 +214,7 @@ class UserController : BaseController() {
     /**
      * 新建用户
      */
-    @RequestMapping(value = "/create", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/create", method = [RequestMethod.GET, RequestMethod.POST])
     fun createUser(user: User, model: Model): String {
         var user = User()
         model.addAttribute("user", user)
@@ -263,9 +227,9 @@ class UserController : BaseController() {
      * @param
      * @return
      */
-    @RequestMapping(value = "/saveUser", method = arrayOf(RequestMethod.POST))
+    @RequestMapping(value = "/saveUser", method = [RequestMethod.POST])
     @Throws(Exception::class)
-    fun saveUser(   @ModelAttribute("user") user: User?,redirectAttributes: RedirectAttributes): String {
+    fun saveUser(@ModelAttribute("user") user: User?, redirectAttributes: RedirectAttributes): String {
         var u = userService!!.getUser(user!!.username)
         if (u != null)
         {
@@ -273,7 +237,7 @@ class UserController : BaseController() {
         }
 
         var coder = BCryptPasswordEncoder()
-        user.password = coder.encode("123456")
+        user.password = coder.encode(activityProperties!!.defaultPassword)
         user.enabled = true
         user.created = DateUtil.date().toTimestamp()
         if (user.isReal)
@@ -286,10 +250,10 @@ class UserController : BaseController() {
     }
 
     /**
-     * 删除活动信息
+     * 删除用户信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/delete/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/delete/{id}", method = [RequestMethod.GET, RequestMethod.POST])
     fun delete(@PathVariable id: Int,
                model: Model,
                redirectAttributes: RedirectAttributes): String {
@@ -297,4 +261,6 @@ class UserController : BaseController() {
         redirectAttributes.addFlashAttribute("globalMessage", "操作成功！")
         return "redirect:/sec/admin/user/users"
     }
+
+
 }

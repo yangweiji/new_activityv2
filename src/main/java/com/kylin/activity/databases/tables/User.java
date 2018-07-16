@@ -8,23 +8,14 @@ import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.UserRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = -369384141;
+    private static final long serialVersionUID = 411942626;
 
     /**
      * The reference instance of <code>user</code>
@@ -189,6 +180,11 @@ public class User extends TableImpl<UserRecord> {
      * The column <code>user.nick_name</code>.
      */
     public final TableField<UserRecord, String> NICK_NAME = createField("nick_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+
+    /**
+     * The column <code>user.mobile</code>.
+     */
+    public final TableField<UserRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR(20), this, "");
 
     /**
      * Create a <code>user</code> table reference

@@ -9,6 +9,10 @@
     font-size: 12px;
 }
 
+[v-cloak] {
+    display: none;
+}
+
 .manage-l {
     width: 140px;
     /*position:absolute;left:0;top:0;*/

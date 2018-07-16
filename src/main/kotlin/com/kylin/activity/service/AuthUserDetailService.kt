@@ -33,6 +33,8 @@ class AuthUserDetailsServiceImpl : UserDetailsService {
         var user = create!!.selectFrom(Tables.USER)
                 .where(Tables.USER.UNION_ID.eq(unionId))
                 .fetchOneInto(User::class.java)
+        //设定用户名
+        user.username = unionId
         return if (user != null) AuthUser(user) else null
     }
 }

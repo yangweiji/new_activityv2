@@ -5,13 +5,11 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.User;
-
-import java.sql.Timestamp;
-
-import javax.annotation.Generated;
-
 import org.jooq.Record1;
 import org.jooq.impl.UpdatableRecordImpl;
+
+import javax.annotation.Generated;
+import java.sql.Timestamp;
 
 
 /**
@@ -27,7 +25,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRecord extends UpdatableRecordImpl<UserRecord> {
 
-    private static final long serialVersionUID = 471654873;
+    private static final long serialVersionUID = 1166488379;
 
     /**
      * Setter for <code>user.id</code>. 编号
@@ -407,6 +405,20 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
         return (String) get(26);
     }
 
+    /**
+     * Setter for <code>user.mobile</code>.
+     */
+    public void setMobile(String value) {
+        set(27, value);
+    }
+
+    /**
+     * Getter for <code>user.mobile</code>.
+     */
+    public String getMobile() {
+        return (String) get(27);
+    }
+
     // -------------------------------------------------------------------------
     // Primary key information
     // -------------------------------------------------------------------------
@@ -433,7 +445,7 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     /**
      * Create a detached, initialised UserRecord
      */
-    public UserRecord(Integer id, String username, String displayname, String password, String role, Boolean enabled, Integer gender, Timestamp created, Integer level, String idCard, String realName, Timestamp realTime, Boolean isReal, String openId, String avatar, String email, String workCompany, Boolean isParty, String address, String bloodType, String clothingSize, String occupation, String emergencyContactName, String emergencyContactMobile, String wechatId, String unionId, String nickName) {
+    public UserRecord(Integer id, String username, String displayname, String password, String role, Boolean enabled, Integer gender, Timestamp created, Integer level, String idCard, String realName, Timestamp realTime, Boolean isReal, String openId, String avatar, String email, String workCompany, Boolean isParty, String address, String bloodType, String clothingSize, String occupation, String emergencyContactName, String emergencyContactMobile, String wechatId, String unionId, String nickName, String mobile) {
         super(User.USER);
 
         set(0, id);
@@ -463,5 +475,6 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
         set(24, wechatId);
         set(25, unionId);
         set(26, nickName);
+        set(27, mobile);
     }
 }

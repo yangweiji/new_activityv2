@@ -3,8 +3,11 @@ package com.kylin.activity.controller.sec
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.pojos.User
+import com.kylin.activity.model.MessageResult
 import com.kylin.activity.service.*
+import com.kylin.activity.util.JsonUtils
 import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import me.chanjar.weixin.common.error.WxErrorException
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken
 import me.chanjar.weixin.mp.bean.result.WxMpUser
@@ -14,6 +17,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
@@ -50,6 +54,12 @@ class ProfileController : BaseController() {
 
     @Autowired
     private val wxService: WxService? = null
+
+    /**
+     * 短信验证码服务
+     */
+    @Autowired
+    private val verCodeService: VerCodeService? = null
 
     /**
      * 个人信息
@@ -217,7 +227,12 @@ class ProfileController : BaseController() {
 
         u.displayname = user.displayname
         u.gender = user.gender
+        u.realName = user.realName
         u.idCard = user.idCard
+        if (!user.idCard.isNullOrBlank() && !user.realName.isNullOrBlank()) {
+            u.isReal = true
+            u.realTime = DateUtil.date().toTimestamp()
+        }
         u.wechatId = user.wechatId
         u.email = user.email
         u.bloodType = user.bloodType
@@ -237,5 +252,141 @@ class ProfileController : BaseController() {
         //更新USER_CONTEXT
         request.session.setAttribute("USER_CONTEXT", u)
         return "/sec/user/baseinfo"
+    }
+
+    /**
+     * 注销用户信息
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/deletewx", method = [RequestMethod.GET, RequestMethod.POST])
+    fun deleteWechat(@ModelAttribute("user") user: User, request: HttpServletRequest): String {
+        if (user.id != null && user.id > 0) {
+            userService!!.deleteById(user.id)
+            //删除用户session
+            request.session.removeAttribute("USER_CONTEXT")
+        }
+
+        return "redirect:/logout"
+    }
+
+    /**
+     * 添加手机号
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/addMobile", method = [RequestMethod.POST])
+    @ResponseBody
+    fun addMobile(@ModelAttribute("user") user: User
+                  , request: HttpServletRequest
+                  , @RequestBody(required = false) map: Map<String, String>): String {
+        var mobile = map["mobile"].toString()
+        var smsCode = map["smsCode"].toString()
+        var password = map["password"].toString()
+
+        var messageResult = MessageResult()
+        var verCode = verCodeService!!.getVerCode(mobile, smsCode)
+        when {
+            verCode == null -> {
+                messageResult.code = -2
+                messageResult.message = "无效的短信验证码，请重新获取"
+            }
+            userService!!.getUser(mobile) != null -> {
+                messageResult.code = -3
+                messageResult.message = "该手机号已绑定平台其他用户，请更换手机号码"
+            }
+            userService!!.addMobile(user.id, mobile, password) -> {
+                //删除用户session
+                request.session.removeAttribute("USER_CONTEXT")
+                //设定手机号码
+                user.username = mobile
+                user.mobile = mobile
+                user.password = null
+                //更新用户session
+                request.session.setAttribute("USER_CONTEXT", user)
+                messageResult.code = 200
+                messageResult.message = "SUCCESS"
+            }
+            else -> {
+                messageResult.code = -1
+                messageResult.message = "添加登录手机号操作失败"
+            }
+        }
+
+        return JsonUtils.toJson(messageResult)
+    }
+
+
+    /**
+     * 更换手机号码
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/updateMobile", method = [RequestMethod.POST])
+    @ResponseBody
+    fun updateMobile(@ModelAttribute("user") user: User
+                     , request: HttpServletRequest
+                     , @RequestBody(required = false) map: Map<String, String>): String {
+        var mobile = map["mobile"].toString()
+        var smsCode = map["smsCode"].toString()
+        var newMobile = map["newMobile"].toString()
+        var smsCode2 = map["smsCode2"].toString()
+
+        var messageResult = MessageResult()
+
+        when {
+            userService!!.getUser(newMobile) != null -> {
+                messageResult.code = -3
+                messageResult.message = "新手机号码已绑定平台其他用户，请更换新手机号码"
+            }
+            userService!!.updateMobile(user.id, mobile, smsCode, newMobile, smsCode2) -> {
+                //删除用户session
+                request.session.removeAttribute("USER_CONTEXT")
+                //设定手机号码
+                user.username = newMobile
+                user.mobile = newMobile
+                user.password = null
+                //更新用户session
+                request.session.setAttribute("USER_CONTEXT", user)
+                messageResult.code = 200
+                messageResult.message = "SUCCESS"
+            }
+            else -> {
+                messageResult.code = -1
+                messageResult.message = "验证码无效，请重新获取验证码更换手机号码"
+            }
+        }
+
+        return JsonUtils.toJson(messageResult)
+    }
+
+    /**
+     * 更新登录密码
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/changePassword2", method = [RequestMethod.POST])
+    @ResponseBody
+    fun changePassword2(@ModelAttribute("user") user: User
+                        , request: HttpServletRequest
+                        , @RequestBody(required = false) map: Map<String, String>): String {
+        var oldPassword = map["oldPassword"].toString()
+        var password = map["password"].toString()
+
+        var messageResult = MessageResult()
+        var coder = BCryptPasswordEncoder()
+        //读取原密码
+        var userPassword = userService!!.getUser(user.id).password
+        //验证原密码是否匹配
+        if (!coder.matches(oldPassword, userPassword)) {
+            messageResult.code = -1
+            messageResult.message = "旧密码输入不正确"
+        } else {
+            if (userService!!.changePassword(user.id, password)) {
+                messageResult.code = 200
+                messageResult.message = "SUCCESS"
+            } else {
+                messageResult.code = -2
+                messageResult.message = "密码更新操作失败"
+            }
+        }
+
+        return JsonUtils.toJson(messageResult)
     }
 }
