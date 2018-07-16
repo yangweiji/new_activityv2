@@ -7,6 +7,7 @@ import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.databases.tables.pojos.Vercode
 import com.kylin.activity.model.AuthUser
+import com.kylin.activity.sms.SmsTemplateListProperties
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
@@ -24,6 +25,9 @@ class UserService {
 
     @Autowired
     private val commonService: CommonService? = null
+
+    @Autowired
+    private val smsTemplateListProperties: SmsTemplateListProperties? = null
 
     @Autowired
     private val userDao: UserDao? = null
@@ -46,14 +50,6 @@ class UserService {
     }
 
     /**
-     * 发送注册验证码
-     */
-    fun sendRegisterSms(mobile: String): String {
-        var response = commonService!!.sendSms(mobile, "1234")
-        return response.code
-    }
-
-    /**
      * 注册用户
      */
     fun register(username: String, password: String, code: String): String {
@@ -61,13 +57,14 @@ class UserService {
                 .where(Tables.VERCODE.MOBILE.eq(username).and(Tables.VERCODE.CODE.eq(code)))
                 .orderBy(Tables.VERCODE.CREATED.desc())
                 .fetchInto(Vercode::class.java).firstOrNull()
-        if (vercode != null && DateUtil.betweenMs(DateUtil.date(), vercode.created) <= 1000 * 60) {
+        if (vercode != null && DateUtil.betweenMs(DateUtil.date(), vercode.created) <= smsTemplateListProperties!!.timeout) {
             var users = userDao!!.fetchByUsername(username)
-            if (users != null && users.count() > 0) {
-                return "exist"  //用户已经存在
+            return if (users != null && users.count() > 0) {
+                "exist"  //用户已经存在
             } else {
                 var user = User()
                 user.username = username
+                user.mobile = username
                 var coder = BCryptPasswordEncoder()
                 user.password = coder.encode(password)
                 user.enabled = true
@@ -75,7 +72,7 @@ class UserService {
                 user.displayname = username
 
                 userDao!!.insert(user)
-                return "success" // 用户注册成功
+                "success" // 用户注册成功
             }
         } else {
             return "vercode" // 验证码错误或过期
@@ -105,11 +102,13 @@ class UserService {
             } else {
                 var user = User()
                 user.username = username
+                user.mobile = username
                 var coder = BCryptPasswordEncoder()
                 user.password = coder.encode(password)
                 user.enabled = true
                 user.created = DateUtil.date().toTimestamp()
                 user.displayname = nickName
+                user.nickName = nickName
                 user.avatar = avatarUrl
                 user.openId = openId
 

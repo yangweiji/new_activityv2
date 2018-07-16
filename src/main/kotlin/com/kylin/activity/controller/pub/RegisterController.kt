@@ -35,7 +35,7 @@ class RegisterController {
         return if(result == "success"){
             "redirect:" + util!!.redirectAfterLogin(request,response)
         } else {
-            "redirect:/pub/register?" + result
+            "redirect:/pub/register?$result"
         }
     }
 

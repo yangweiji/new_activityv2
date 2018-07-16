@@ -28,18 +28,7 @@ new Vue({
         getVerCode: function () {
             var that = this;
             that.canGetVerCode = true;
-            if (!that.username || that.username.length < 11) {
-                nativeToast({
-                    message: '请输入有效的手机号码！',
-                    position: 'center',
-                    timeout: 3000,
-                    square: true,
-                    // type: 'error'
-                });
-                return;
-            }
-
-            if (!that.username.match(/^1\d{10}$/)) {
+            if (!that.username || that.username.length < 11 || !that.username.match(/^1\d{10}$/)) {
                 nativeToast({
                     message: '请输入有效的手机号码！',
                     position: 'center',
@@ -65,7 +54,7 @@ new Vue({
                             // type: 'error'
                         });
 
-                        that.code = data.message;
+                        // that.code = data.message;
                         that.canGetVerCode = false;
                         that.codeCount = 60;
                         var fun = function () {
