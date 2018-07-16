@@ -183,7 +183,7 @@ class ProfileController : BaseController() {
             wxMpUser = wxService!!.mpService!!.oauth2getUserInfo(wxMpOAuth2AccessToken, "zh_CN")
             LogUtil.printLog("wxMpUser: " + wxMpUser!!.toString())
 
-            user.openId = wxMpUser.openId
+            //user.openId = wxMpUser.openId
             user.unionId = wxMpUser.unionId
             user.nickName = wxMpUser.nickname
             if (user.avatar.isNullOrBlank()) {
@@ -209,7 +209,7 @@ class ProfileController : BaseController() {
     @RequestMapping(value = "/unbindwx", method = [RequestMethod.GET, RequestMethod.POST])
     private fun unbindWechat(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
         user.nickName = null
-        user.openId = null
+        //user.openId = null
         user.unionId = null
         userService!!.update(user)
         log.info("更新用户OK: ${user.id}")

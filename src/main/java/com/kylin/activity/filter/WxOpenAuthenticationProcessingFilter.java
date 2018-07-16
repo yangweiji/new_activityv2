@@ -112,10 +112,8 @@ public class WxOpenAuthenticationProcessingFilter extends AbstractAuthentication
             user = new User();
             user.setEnabled(true);
             user.setCreated(DateUtil.date().toTimestamp());
-
-            //user.setUsername(wxMpUser.getUnionId());
             user.setUnionId(wxMpOAuth2AccessToken.getUnionId());
-            user.setOpenId(wxMpOAuth2AccessToken.getOpenId());
+            //user.setOpenId(wxMpOAuth2AccessToken.getOpenId());
             user.setGender(wxMpUser.getSex());
             user.setDisplayname(wxMpUser.getNickname());
             user.setAvatar(wxMpUser.getHeadImgUrl());
