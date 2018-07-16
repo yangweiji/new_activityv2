@@ -122,9 +122,11 @@ class WxAuthController {
     fun getUserInfo(openid: String?, unionId: String?): User? {
         var user = userService!!.getUserByOpenOrUnionId(openid, unionId)
         if (user != null) {
-            //设定小程序openid值
-            user.openId = openid
-            userService!!.update(user)
+            if (user.openId != openid) {
+                //设定小程序openid值
+                user.openId = openid
+                userService!!.update(user)
+            }
 
             user!!.password = null
         }
