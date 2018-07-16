@@ -61,6 +61,11 @@
                     <div class="register_HDB">
                         <form th:action="@{/pub/register}" method="post">
                             <p class="tit2">免费注册</p>
+
+                            <div class="error_ts" th:if="${param.exist}">
+                                该用户手机号已注册，请更换新的手机号！
+                            </div>
+
                             <ul class="reg_Ul">
                                 <li class="k_sj"><span></span>
                                     <input name="username" type="tel" placeholder="输入手机号" id="username" maxlength="11"
@@ -75,12 +80,15 @@
                                         <span v-if="!canGetVerCode" class="cxhuo">重新获取 ( {{codeCount}}s )</span>
                                     </span>
                                 </li>
-                                <li class="k_mm"><span></span><input name="password" type="password" placeholder="输入密码"
-                                                                     id="password" autocomplete="off"
+                                <li class="k_mm"><span></span><input name="password" type="password"
+                                                                     placeholder="输入密码，长度6-12位"
+                                                                     id="password" autocomplete="off" minlength="6"
+                                                                     maxlength="12"
                                                                      v-model="password"></li>
                                 <li class="k_mm"><span></span><input name="password2" type="password"
-                                                                     placeholder="再次输入密码"
-                                                                     id="password2" autocomplete="off"
+                                                                     placeholder="再次输入密码，长度6-12位"
+                                                                     id="password2" autocomplete="off" minlength="6"
+                                                                     maxlength="12"
                                                                      v-model="password2"></li>
                             </ul>
                             <button type="submit" class="c-login-form-submit am-btn am-btn-xl am-btn-block"

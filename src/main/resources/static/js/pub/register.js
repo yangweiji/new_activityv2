@@ -15,7 +15,9 @@ new Vue({
     computed: {
         disabled() {
             if (!this.username || this.username.length != 11
-                || !this.password || !this.password2 || (this.password != this.password2)
+                || !this.password || this.password.length < 6
+                || !this.password2 || this.password2.length < 6
+                || (this.password != this.password2)
             ) {
                 return true;
             }
