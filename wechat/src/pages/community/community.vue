@@ -10,7 +10,7 @@
       <div>
         <navigator hover-class="navigator-hover">
             <span class="community-search">
-              搜索团体
+              <!-- 搜索团体 -->
             </span>
         </navigator>  
         <kyimage src="fl01.png" folder="wx_home" type="banner" />
@@ -194,6 +194,9 @@ page,
 }
 .page__bd {
   padding-bottom: 0;
+}
+.weui-tab {
+  position: relative;
 }
 .weui-tab__content {
   padding-top: 0px;
