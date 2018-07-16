@@ -34,6 +34,12 @@ class UserService {
     @Autowired
     private val create: DSLContext? = null
 
+    /**
+     * 短信验证码服务
+     */
+    @Autowired
+    private val verCodeService: VerCodeService? = null
+
     fun getRoles(): Map<String, String> {
         val roles = mapOf<String,String>("ADMIN" to "管理员", "PUBLISH" to "发布者")
         return roles
@@ -381,5 +387,62 @@ class UserService {
         } else {
             userDao!!.fetchByUnionId(unionId).firstOrNull()
         }
+    }
+
+
+    /**
+     * 添加手机号码
+     */
+    fun addMobile(id: Int, mobile: String, password: String): Boolean {
+        var user = this.getUser(id)
+
+        if (user != null) {
+            var coder = BCryptPasswordEncoder()
+            user.username = mobile
+            user.password = coder.encode(password)
+            user.mobile = mobile
+            user.enabled = true
+
+            this.update(user)
+            return true
+        }
+
+        return false
+    }
+
+    /**
+     * 更换手机号码
+     */
+    fun updateMobile(id: Int, mobile: String, smsCode: String, newMobile: String, smsCode2: String): Boolean {
+        var user = this.getUser(id)
+        var verCode = verCodeService!!.getVerCode(mobile, smsCode)
+        var verCode2 = verCodeService!!.getVerCode(newMobile, smsCode2)
+
+        if (verCode != null && verCode2 != null) {
+            user!!.username = newMobile
+            user!!.mobile = newMobile
+            user!!.enabled = true
+            this.update(user)
+            return true
+        }
+
+        return false
+    }
+
+    /**
+     * 更新登录密码
+     */
+    fun changePassword(id: Int, password: String): Boolean {
+        var user = this.getUser(id)
+        if (user != null) {
+            var coder = BCryptPasswordEncoder()
+            user.password = coder.encode(password)
+            user.enabled = true
+
+            this.update(user)
+            return true
+        }
+
+        return false
     }
 }

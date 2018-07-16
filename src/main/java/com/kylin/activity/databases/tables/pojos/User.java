@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User implements Serializable {
 
-    private static final long serialVersionUID = -560055654;
+    private static final long serialVersionUID = -49702778;
 
     private Integer   id;
     private String    username;
@@ -51,6 +51,7 @@ public class User implements Serializable {
     private String    wechatId;
     private String    unionId;
     private String    nickName;
+    private String mobile;
 
     public User() {}
 
@@ -82,36 +83,38 @@ public class User implements Serializable {
         this.wechatId = value.wechatId;
         this.unionId = value.unionId;
         this.nickName = value.nickName;
+        this.mobile = value.mobile;
     }
 
     public User(
-        Integer   id,
-        String    username,
-        String    displayname,
-        String    password,
-        String    role,
-        Boolean   enabled,
-        Integer   gender,
-        Timestamp created,
-        Integer   level,
-        String    idCard,
-        String    realName,
-        Timestamp realTime,
-        Boolean   isReal,
-        String    openId,
-        String    avatar,
-        String    email,
-        String    workCompany,
-        Boolean   isParty,
-        String    address,
-        String    bloodType,
-        String    clothingSize,
-        String    occupation,
-        String    emergencyContactName,
-        String    emergencyContactMobile,
-        String    wechatId,
-        String    unionId,
-        String    nickName
+            Integer   id,
+            String    username,
+            String    displayname,
+            String    password,
+            String    role,
+            Boolean   enabled,
+            Integer   gender,
+            Timestamp created,
+            Integer   level,
+            String    idCard,
+            String    realName,
+            Timestamp realTime,
+            Boolean   isReal,
+            String    openId,
+            String    avatar,
+            String    email,
+            String    workCompany,
+            Boolean   isParty,
+            String    address,
+            String    bloodType,
+            String    clothingSize,
+            String    occupation,
+            String    emergencyContactName,
+            String    emergencyContactMobile,
+            String    wechatId,
+            String    unionId,
+            String nickName,
+            String mobile
     ) {
         this.id = id;
         this.username = username;
@@ -140,6 +143,7 @@ public class User implements Serializable {
         this.wechatId = wechatId;
         this.unionId = unionId;
         this.nickName = nickName;
+        this.mobile = mobile;
     }
 
     public Integer getId() {
@@ -358,6 +362,14 @@ public class User implements Serializable {
         this.nickName = nickName;
     }
 
+    public String getMobile() {
+        return this.mobile;
+    }
+
+    public void setMobile(String mobile) {
+        this.mobile = mobile;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("User (");
@@ -389,6 +401,7 @@ public class User implements Serializable {
         sb.append(", ").append(wechatId);
         sb.append(", ").append(unionId);
         sb.append(", ").append(nickName);
+        sb.append(", ").append(mobile);
 
         sb.append(")");
         return sb.toString();

@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.MessageResult
 import com.kylin.activity.service.UserService
@@ -66,6 +67,12 @@ class WxAuthController {
      */
     @Autowired
     private val templateListProperties: SmsTemplateListProperties? = null
+
+    /**
+     * 活动配置
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
 
     @GetMapping("/getSessionInfo")
     fun getSessionInfo(@RequestParam(required = false) code: String?): Any {
@@ -197,7 +204,7 @@ class WxAuthController {
                 user.username = username
                 var coder = BCryptPasswordEncoder()
                 //初始密码: 123456
-                user.password = coder.encode("123456")
+                user.password = coder.encode(activityProperties!!.defaultPassword)
                 user.enabled = true
                 user.created = DateUtil.date().toTimestamp()
                 //显示名称与登录名一致
