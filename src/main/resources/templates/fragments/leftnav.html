@@ -6,15 +6,15 @@
 
     <ul class="am-nav">
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/community/communities'?'am-nav-header':''">
-            <span class="fa fa-home"></span>
+            <span class="fa fa-home fa-fw"></span>
             <a class="ttgl" th:href="@{/sec/admin/community/communities}"><b></b>团体管理</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/article/articles'?'am-nav-header':''">
-            <span class="fa fa-bell"></span>
+            <span class="fa fa-bell fa-fw"></span>
             <a class="nrgl" th:href="@{/sec/admin/article/articles}"><b></b>内容管理</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/poster/posters'?'am-nav-header':''">
-            <span class="fa fa-file-image-o"></span>
+            <span class="fa fa-file-image-o fa-fw"></span>
             <a class="hbgl" th:href="@{/sec/admin/poster/posters}"><b></b>海报管理</a>
         </li>
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
@@ -24,7 +24,7 @@
         <!--<a class="zxhd" th:href="@{/sec/manage/home/0}"><b></b>最新活动</a>-->
         <!--</li>-->
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/activity/activities'?'am-nav-header':''">
-            <span class="fa fa-cog"></span>
+            <span class="fa fa-cog fa-fw"></span>
             <a class="hdgl" th:href="@{/sec/admin/activity/activities}"><b></b>活动赛事</a>
         </li>
         <!--<li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/activity/attendusers'?'am-nav-header':''">-->
@@ -34,7 +34,7 @@
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/user/users'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
-            <span class="fa fa-user"></span>
+            <span class="fa fa-user fa-fw"></span>
             <a class="yhgl" th:href="@{/sec/admin/user/users}"><b></b>平台用户</a>
         </li>
         <!--<li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/members'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">-->
@@ -44,13 +44,13 @@
         <li class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <li  th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/manage/scores'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
-            <span class="fa fa-yen"></span>
+            <span class="fa fa-yen fa-fw"></span>
             <a class="jfgl" th:href="@{/sec/admin/manage/scores}"><b></b>用户积分</a>
         </li>
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <li  th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/manage/payments'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">
-            <span class="fa fa-file-text"></span>
+            <span class="fa fa-file-text fa-fw"></span>
             <a class="ddgl" th:href="@{/sec/admin/manage/payments}"><b></b>用户订单</a>
         </li>
         <!--<li style="display: none" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/manage/ordersstatistics'?'am-nav-header':''" th:if="${session.USER_CONTEXT.role}=='管理员'">-->

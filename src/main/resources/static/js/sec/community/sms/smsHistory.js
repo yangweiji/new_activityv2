@@ -64,8 +64,8 @@ $(function () {
                 {"data": "id", "width": "50px"},
                 {"data": "template_name"},
                 {"data": "message_content"},
-                {"data": "displayname"},
                 {"data": "title"},
+                {"data": "displayname"},
                 {"data": "send_time"},
                 {"data": "template_code"},
                 {"data": "send_result_code"},
@@ -79,17 +79,8 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7], visible: true},
+                {targets: [0, 1, 2, 4, 5, 6, 7], visible: true},
                 {targets: '_all', visible: false}
-                // {
-                //     targets:[8],//身份证号的导出处理
-                //     render: function(data){
-                //         return "\u200C" + data ;
-                //     }
-                // },
-                /* {
-                     targets: [7,8,9,10,11,12,13,14,15,16,17,18,19,20], visible: false
-                 },*/
             ],
             //默认排序
             "order": [[6, 'desc']],

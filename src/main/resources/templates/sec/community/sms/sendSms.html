@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -24,22 +24,23 @@
         </div>
 
         <div class="am-tabs-bd am_bdfw">
+            <div class="am-g">
+                <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
+                    <p>
+                        <span class="am-icon-lg am-success am-icon-check"></span>
+                        <span th:text="${globalMessage}">Some Success message</span>
+                    </p>
+                </div>
 
-            <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
-                <button type="button" class="am-close">&times;</button>
-                <!--<a href="##" class="am-icon-btn am-success am-icon-shield"></a>-->
-                <p>
-                    <span class="am-icon-lg am-success am-icon-check"></span>
-                    <span th:text="${globalMessage}">Some Success message</span>
-                </p>
-            </div>
-
-            <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
-                <button type="button" class="am-close">&times;</button>
-                <p>
-                    <span class="am-icon-lg am-warning am-icon-warning"></span>
-                    <span th:text="${errorMessage}">Some Error message</span>
-                </p>
+                <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <p>
+                        <span class="am-icon-lg am-warning am-icon-warning"></span>
+                        <span th:text="${errorMessage}">Some Error message</span>
+                    </p>
+                </div>
             </div>
 
             <div class="am-g">
@@ -76,6 +77,7 @@
                             <div class="am-u-sm-10">
                                 <input required type="text" id="messageContent" name="messageContent" th:maxlength="20"
                                        th:placeholder="不超过20个中文字符" th:value="${sms.messageContent}" class="am-form-field am-radius"/>
+                                <span class="c-avatar-tip">譬如：天气、设备故障等</span>
                             </div>
                         </div>
 

@@ -14,7 +14,7 @@
                     <img title="点击上传" id="c-upload-avatar" v-bind:src="getAvatar()" alt="" />
                 </div>
                 <div class="am_user_head_l_ico_info">
-                    <span>
+                    <div>
                         <span v-if="!isUpdateDisplayname">
                             <span v-text="user.displayname" class="am_user_head_l_name"></span>
                             <span style="padding: 0px 5px" v-on:click="startUpdateDisplayname()"><i class="fa fa-pencil"></i></span>
@@ -24,12 +24,13 @@
                             <button v-on:click="updateDisplayname()" class="am-btn am-btn-primary am-btn-xs">保存</button>
                             <button v-on:click="cancelUpdateDisplayname()" class="am-btn default am-btn-xs">取消</button>
                         </span>
-                    </span>
+                    </div>
                     <br />
                     <span class="am_user_head_l_map">
                         <i class="fa fa-mobile"></i>
                         <span v-text="user.username"></span>
                     </span>
+
                 </div>
             </div>
             <div class="am_user_head_r">

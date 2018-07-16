@@ -116,9 +116,14 @@
 
 <div th:replace="fragments/footer :: default"></div>
 <style rel="stylesheet">
-#app {
-    width: 100%;
-}
+    #app {
+        width: 100%;
+    }
+
+    div.dataTables_wrapper div.dataTables_paginate {
+        position: relative;
+        top: -20px;
+    }
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/

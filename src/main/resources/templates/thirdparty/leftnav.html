@@ -4,55 +4,56 @@
 <div th:fragment="default">
     <ul class="am-nav">
         <li th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/community/thirdmanage/home')}?'am-nav-header':''">
-            <span class="fa fa-home"></span>
+            <span class="fa fa-home fa-fw"></span>
             <a class="zxhd" th:href="@{/sec/community/thirdmanage/home/0}"><b></b>最新活动</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdactivity/activities'?'am-nav-header':''">
-            <span class="fa fa-cog"></span>
+            <span class="fa fa-cog fa-fw"></span>
             <a class="hdgl" th:href="@{/sec/community/thirdactivity/activities}"><b></b>活动管理</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdactivity/attendusers'?'am-nav-header':''">
-            <span class="fa fa-pencil-square"></span>
+            <span class="fa fa-pencil-square fa-fw"></span>
             <a class="bmgl" th:href="@{/sec/community/thirdactivity/attendusers}"><b></b>报名管理</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdactivity/checkInData'?'am-nav-header':''">
-            <span class="fa fa-check-square"></span>
+            <span class="fa fa-check-square fa-fw"></span>
             <a class="bmgl" th:href="@{/sec/community/thirdactivity/checkInData}"><b></b>打卡统计</a>
         </li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdphotos/photos'?'am-nav-header':''">
-            <span class="fa fa-camera"></span>
+            <span class="fa fa-camera fa-fw"></span>
             <a class="xcgl" th:href="@{/sec/community/thirdphotos/photos}"><b></b>相册管理</a>
         </li>
         <!--<li th:classappend="${#httpServletRequest.getRequestURI()}=='#'?'am-nav-header':''"><a class="spgl" th:href="@{#}"><b></b>视频管理</a></li>-->
         <li class="am-nav-divider"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirduser/users'?'am-nav-header':''" th:if="${true}">
-            <span class="fa fa-user"></span>
+            <span class="fa fa-user fa-fw"></span>
             <a class="yhgl" th:href="@{/sec/community/thirduser/users}"><b></b>用户管理</a></li>
         <li class="am-nav-divider"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdmanage/scores'?'am-nav-header':''" th:if="${true}">
-            <span class="fa fa-yen"></span>
+            <span class="fa fa-yen fa-fw"></span>
             <a class="jfgl" th:href="@{/sec/community/thirdmanage/scores}"><b></b>积分管理</a>
         </li>
         <li class="am-nav-divider"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdmanage/payments'?'am-nav-header':''" th:if="${true}">
-            <span class="fa fa-file-text"></span>
+            <span class="fa fa-file-text fa-fw"></span>
             <a class="ddgl" th:href="@{/sec/community/thirdmanage/payments}"><b></b>订单管理</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdmanage/ordersstatistics'?'am-nav-header':''" th:if="${true}">
-            <span class="fa fa-line-chart"></span>
+            <span class="fa fa-line-chart fa-fw"></span>
             <a class="ddtj" th:href="@{/sec/community/thirdmanage/ordersstatistics}"><b></b>订单统计</a>
         </li>
         <li class="am-nav-divider"></li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/sms/sendSms'?'am-nav-header':''" th:if="${true}">
-            <span class="fa fa-envelope"></span><a class="dxgl" th:href="@{/sec/community/sms/sendSms}"><b></b>发送短信</a>
+            <span class="fa fa-envelope fa-fw"></span><a class="dxgl" th:href="@{/sec/community/sms/sendSms}"><b></b>发送短信</a>
         </li>
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/sms/smsHistory'?'am-nav-header':''" th:if="${true}">
-            <span class="fa fa-envelope-o"></span><a class="dxcx" th:href="@{/sec/community/sms/smsHistory}"><b></b>短信历史</a>
+            <span class="fa fa-envelope-o fa-fw"></span><a class="dxcx"
+                                                           th:href="@{/sec/community/sms/smsHistory}"><b></b>短信历史</a>
         </li>
         <li class="am-nav-divider"></li>
     </ul>

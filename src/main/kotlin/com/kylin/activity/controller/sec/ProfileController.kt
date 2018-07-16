@@ -2,29 +2,36 @@ package com.kylin.activity.controller.sec
 
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.Tables
-import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.User
-import com.kylin.activity.service.ActivityService
-import com.kylin.activity.service.ScoreService
-import com.kylin.activity.service.OrderService
-import com.kylin.activity.service.UserService
+import com.kylin.activity.service.*
+import com.kylin.activity.util.LogUtil
+import me.chanjar.weixin.common.error.WxErrorException
+import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken
+import me.chanjar.weixin.mp.bean.result.WxMpUser
 import org.jooq.DSLContext
 import org.jooq.impl.DSL
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import javax.servlet.http.HttpServletRequest
 
 class ProfileUpdateProperty {
     val property: String? = null
     val value: Any? = null
 }
 
+/**
+ * 个人中心、基本信息控制器
+ */
 @Controller
 @RequestMapping("sec/user")
 @SessionAttributes("user")
 class ProfileController : BaseController() {
+    private val log: Logger = LoggerFactory.getLogger(this.javaClass)
 
     @Autowired
     private val activityService: ActivityService? = null
@@ -41,10 +48,13 @@ class ProfileController : BaseController() {
     @Autowired
     private val userService: UserService? = null
 
+    @Autowired
+    private val wxService: WxService? = null
+
     /**
      * 个人信息
      */
-    @CrossOrigin( origins = arrayOf("*"), methods= arrayOf(RequestMethod.GET, RequestMethod.POST ))
+    @CrossOrigin(origins = ["*"], methods = [RequestMethod.GET, RequestMethod.POST])
     @RequestMapping("/profile")
     fun profile(model: Model): String {
         var user = this.sessionUser
@@ -79,7 +89,7 @@ class ProfileController : BaseController() {
     /**
      * 我的收藏
      */
-    @CrossOrigin( origins = arrayOf("*"), methods= arrayOf(RequestMethod.GET, RequestMethod.POST ))
+    @CrossOrigin(origins = ["*"], methods = [RequestMethod.GET, RequestMethod.POST])
     @RequestMapping("/favorite")
     fun favorite(@ModelAttribute user: User, model: Model): String {
 
@@ -92,7 +102,7 @@ class ProfileController : BaseController() {
     /**
      * 个人积分
      */
-    @RequestMapping(value = "/personalscore", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/personalscore", method = [RequestMethod.GET, RequestMethod.POST])
     private fun getPersonalScore(@ModelAttribute user: User, model: Model): String {
         var community=this.sessionCommunity
         //取得活动积分明细
@@ -110,12 +120,122 @@ class ProfileController : BaseController() {
     /**
      * 个人缴费
      */
-    @RequestMapping(value = "/personalpayment", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/personalpayment", method = [RequestMethod.GET, RequestMethod.POST])
     private fun getPersonalPayment(@ModelAttribute user: User, model: Model): String {
         //取得缴费订单
         val items = orderService!!.getPersonalPayment(user.id!!)
 
         model.addAttribute("items", items)
         return "sec/user/personalpayment"
+    }
+
+    /**
+     * 基本信息
+     */
+    @RequestMapping(value = "/baseinfo", method = [RequestMethod.GET, RequestMethod.POST])
+    private fun getBaseInfo(model: Model): String {
+        var user = this.sessionUser
+        model.addAttribute("user", user)
+
+        return "sec/user/baseinfo"
+    }
+
+    /**
+     * 账户安全
+     */
+    @RequestMapping(value = "/account", method = [RequestMethod.GET, RequestMethod.POST])
+    private fun getAccount(@ModelAttribute user: User, model: Model): String {
+
+        return "sec/user/account"
+    }
+
+    /**
+     * 绑定微信号
+     */
+    @RequestMapping(value = "/bindwx", method = [RequestMethod.GET, RequestMethod.POST])
+    private fun bindWechat(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
+        var code = request.getParameter("code")
+        var state = request.getParameter("state")
+        log.info("code: {}, state: {}", code, state)
+        var wxMpOAuth2AccessToken: WxMpOAuth2AccessToken? = null
+        var wxMpUser: WxMpUser? = null
+
+        //检查state是有效的
+        if (request.session.getAttribute("WECHAT_STATE").toString() != state) {
+            LogUtil.printLog("wechat state is invalid!")
+        }
+
+        try {
+            //取得AccessToken
+            wxMpOAuth2AccessToken = wxService!!.mpService!!.oauth2getAccessToken(code)
+            LogUtil.printLog("wxMpOAuth2AccessToken: " + wxMpOAuth2AccessToken!!.toString())
+
+            wxMpUser = wxService!!.mpService!!.oauth2getUserInfo(wxMpOAuth2AccessToken, "zh_CN")
+            LogUtil.printLog("wxMpUser: " + wxMpUser!!.toString())
+
+            user.openId = wxMpUser.openId
+            user.unionId = wxMpUser.unionId
+            user.nickName = wxMpUser.nickname
+            if (user.avatar.isNullOrBlank()) {
+                user.avatar = wxMpUser.headImgUrl
+            }
+            if (user.gender == null) {
+                user.gender = wxMpUser.sex
+            }
+            userService!!.update(user)
+            log.info("更新用户OK: ${user.id}")
+
+            model.addAttribute("user", user)
+        } catch (e: WxErrorException) {
+            e.printStackTrace()
+        }
+
+        return "redirect:/sec/user/account"
+    }
+
+    /**
+     * 解除绑定
+     */
+    @RequestMapping(value = "/unbindwx", method = [RequestMethod.GET, RequestMethod.POST])
+    private fun unbindWechat(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
+        user.nickName = null
+        user.openId = null
+        user.unionId = null
+        userService!!.update(user)
+        log.info("更新用户OK: ${user.id}")
+
+        model.addAttribute("user", user)
+        return "redirect:/sec/user/account"
+    }
+
+    /**
+     * 解除绑定
+     */
+    @RequestMapping(value = "/update", method = [RequestMethod.GET, RequestMethod.POST])
+    private fun update(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
+        var u = userService!!.getUser(user.id)
+
+        u.displayname = user.displayname
+        u.gender = user.gender
+        u.idCard = user.idCard
+        u.wechatId = user.wechatId
+        u.email = user.email
+        u.bloodType = user.bloodType
+        u.clothingSize = user.clothingSize
+        u.workCompany = user.workCompany
+        u.occupation = user.occupation
+        u.emergencyContactName = user.emergencyContactName
+        u.emergencyContactMobile = user.emergencyContactMobile
+        u.isParty = user.isParty
+        u.address = user.address
+
+        userService!!.update(u)
+        log.info("更新用户OK: ${u.id}")
+        model.addAttribute("user", u)
+        model.addAttribute("globalMessage", "操作成功！")
+
+        //更新USER_CONTEXT
+        request.session.setAttribute("USER_CONTEXT", u)
+        return "/sec/user/baseinfo"
     }
 }

@@ -6,15 +6,14 @@ import com.kylin.activity.service.UserService
 import com.kylin.activity.service.VerCodeService
 import com.kylin.activity.service.WxService
 import com.kylin.activity.sms.SmsTemplateListProperties
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
-import me.chanjar.weixin.common.exception.WxErrorException
 import com.kylin.activity.util.JsonUtils
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
+import me.chanjar.weixin.common.error.WxErrorException
 import org.apache.commons.lang3.StringUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.*
 
 /**
  * 小程序登录认证结果
@@ -193,10 +192,6 @@ class WxAuthController {
         if (verCodeInfo != null && DateUtil.betweenMs(DateUtil.date(), verCodeInfo!!.created) <= templateListProperties!!.timeout) {
             var user = userService!!.getUser(username.toString())
             if (user == null) {
-//                messageResult.code = -2
-//                messageResult.message = "用户名无效！"
-//                return JsonUtils.toJson(messageResult)
-
                 //添加用户信息
                 var user = User()
                 user.username = username
@@ -211,6 +206,7 @@ class WxAuthController {
                 user.gender = gender!!.toInt()
                 user.openId = openId
                 user.unionId = unionId
+                user.nickName = nickName
 
                 userService!!.insert(user)
                 LogUtil.printLog("注册用户OK, ID: ${user.id}")
@@ -219,6 +215,7 @@ class WxAuthController {
                 //更新OpenId
                 user!!.openId = openId
                 user!!.unionId = unionId
+                user!!.nickName = nickName
                 if (user.displayname == null) {
                     //显示名称与登录名一致
                     user.displayname = nickName
@@ -236,21 +233,6 @@ class WxAuthController {
 
             messageResult.code = 200
             messageResult.message = "SUCCESS"
-
-//            var coder = BCryptPasswordEncoder()
-//            if (coder.matches(password, user!!.password)){
-//                //更新openid
-//                user!!.openId = openId
-//                userService!!.update(user)
-//                LogUtil.printLog("更新用户OK, ID: ${user.id}")
-//
-//                messageResult.code = 200
-//                messageResult.message = "SUCCESS"
-//            }
-//            else {
-//                messageResult.code = -3
-//                messageResult.message = "密码无效！"
-//            }
 
         }
         else {

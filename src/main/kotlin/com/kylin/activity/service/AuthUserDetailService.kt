@@ -27,4 +27,12 @@ class AuthUserDetailsServiceImpl : UserDetailsService {
                 .fetchOneInto(User::class.java)
         return if (user != null) AuthUser(user) else null
     }
+
+    fun loadUserByUnionId(unionId: String): UserDetails? {
+
+        var user = create!!.selectFrom(Tables.USER)
+                .where(Tables.USER.UNION_ID.eq(unionId))
+                .fetchOneInto(User::class.java)
+        return if (user != null) AuthUser(user) else null
+    }
 }

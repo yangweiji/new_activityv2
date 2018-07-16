@@ -59,9 +59,10 @@ dependencies {
 	compile('com.aliyun:aliyun-java-sdk-core:3.3.1')
     compile('com.aliyun:aliyun-java-sdk-sts:3.0.0')
     compile('com.aliyun.oss:aliyun-sdk-oss:2.8.1')
-    compile('com.github.binarywang:weixin-java-miniapp:3.0.0')
-    compile('com.github.binarywang:weixin-java-pay:3.0.0')
-    compile('com.github.binarywang:weixin-java-open:3.0.0')
+    compile('com.github.binarywang:weixin-java-miniapp:3.1.0')
+    compile('com.github.binarywang:weixin-java-pay:3.1.0')
+    compile('com.github.binarywang:weixin-java-open:3.1.0')
+    compile('com.github.binarywang:weixin-java-mp:3.1.0')
 
     compile('net.glxn:qrgen:1.4')
 	compile files('lib/aliyun-java-sdk-dysmsapi-1.0.0.jar')
@@ -76,6 +77,8 @@ dependencies {
     compile group: 'com.alibaba', name: 'fastjson', version: '1.2.12'
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.0'
 
+    // https://mvnrepository.com/artifact/redis.clients/jedis
+    compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
 }
 
 

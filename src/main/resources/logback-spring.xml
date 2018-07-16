@@ -77,7 +77,7 @@
     <springProfile name="dev">
         <root level="INFO">
             <appender-ref ref="CONSOLE" />
-            <appender-ref ref="SYSTEM_FILE" />
+            <appender-ref ref="DEV_FILE"/>
         </root>
     </springProfile>
 

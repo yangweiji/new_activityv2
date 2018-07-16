@@ -4,45 +4,14 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.ActionHistory;
-import com.kylin.activity.databases.tables.Activity;
-import com.kylin.activity.databases.tables.ActivityFavorite;
-import com.kylin.activity.databases.tables.ActivityPhoto;
-import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-import com.kylin.activity.databases.tables.ActivitySms;
-import com.kylin.activity.databases.tables.ActivityTicket;
-import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.Article;
-import com.kylin.activity.databases.tables.Community;
-import com.kylin.activity.databases.tables.CommunityUser;
-import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.Poster;
-import com.kylin.activity.databases.tables.ScoreHistory;
-import com.kylin.activity.databases.tables.User;
-import com.kylin.activity.databases.tables.Vercode;
-import com.kylin.activity.databases.tables.records.ActionHistoryRecord;
-import com.kylin.activity.databases.tables.records.ActivityFavoriteRecord;
-import com.kylin.activity.databases.tables.records.ActivityPhotoPictureRecord;
-import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
-import com.kylin.activity.databases.tables.records.ActivityRecord;
-import com.kylin.activity.databases.tables.records.ActivitySmsRecord;
-import com.kylin.activity.databases.tables.records.ActivityTicketRecord;
+import com.kylin.activity.databases.tables.*;
+import com.kylin.activity.databases.tables.records.*;
 import com.kylin.activity.databases.tables.records.ActivityUserRecord;
-import com.kylin.activity.databases.tables.records.ActivityUserRecordRecord;
-import com.kylin.activity.databases.tables.records.ArticleRecord;
-import com.kylin.activity.databases.tables.records.CommunityRecord;
-import com.kylin.activity.databases.tables.records.CommunityUserRecord;
-import com.kylin.activity.databases.tables.records.PayOrderRecord;
-import com.kylin.activity.databases.tables.records.PosterRecord;
-import com.kylin.activity.databases.tables.records.ScoreHistoryRecord;
-import com.kylin.activity.databases.tables.records.UserRecord;
-import com.kylin.activity.databases.tables.records.VercodeRecord;
-
-import javax.annotation.Generated;
-
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+
+import javax.annotation.Generated;
 
 
 /**

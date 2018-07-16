@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+>
+<head th:include="fragments/backhead :: default">
+</head>
+<body>
+<div th:replace="fragments/header :: default"></div>
+
+<div id="app" class="am_user">
+
+    <div class="am-g amz-container">
+        <div class="am-tabs am-tabs-d2 am_news_tab">
+            <ul class="am-tabs-nav am-cf am_cf">
+                <li class="" v-bind:class="tab==1?'am-active':''">
+                    <a href="javascript:void(0)" v-on:click="go(1)">个人信息</a>
+                </li>
+                <li class="" v-bind:class="tab==2?'am-active':''">
+                    <a href="javascript:void(0)" v-on:click="go(2)">账户安全</a>
+                </li>
+
+            </ul>
+
+            <div class="am-tabs-bd am_bdfw">
+                <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <p>
+                        <span class="am-icon-lg am-success am-icon-check"></span>
+                        <span th:text="${globalMessage}">Some Success message</span>
+                    </p>
+                </div>
+
+                <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
+                    <button type="button" class="am-close">&times;</button>
+                    <p>
+                        <span class="am-icon-lg am-warning am-icon-warning"></span>
+                        <span th:text="${errorMessage}">Some Error message</span>
+                    </p>
+                </div>
+
+                <div class="am-g">
+                    <div class="am-u-lg-12">
+                        <form class="am-form am-form-horizontal" data-am-validator method="post"
+                              action="/sec/user/update">
+                            <input type="hidden" id="id" name="id" th:value="${user.id}"/>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">头像：</label>
+                                <div class="am-u-sm-10">
+                                    <div class="am_user_head_l_ico">
+                                        <img title="点击上传" id="c-upload-avatar" v-bind:src="getAvatar()" alt=""/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="displayname" class="am-u-sm-2 am-form-label">显示名（昵称）：</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="displayname" name="displayname"
+                                           th:value="${user.displayname}"
+                                           placeholder="请输入显示名" class="am-form-field am-radius" required/>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">性别：</label>
+                                <div class="am-u-sm-10">
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.gender == 1}" value="1" name="gender"> 男
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.gender == 2}" value="2" name="gender"> 女
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="realName" class="am-u-sm-2 am-form-label">真实姓名：</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="realName" name="realName" th:value="${user.realName}"
+                                           placeholder="真实姓名" class="am-form-field am-radius" required/>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="idCard" class="am-u-sm-2 am-form-label">身份证号：</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="idCard" name="idCard" th:value="${user.idCard}"
+                                           placeholder="身份证号" class="am-form-field am-radius" required/>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label for="wechatId" class="am-u-sm-2 am-form-label">微信号：</label>
+                                <div class="am-u-sm-10">
+                                    <input class="am-form-field am-radius" type="text" id="wechatId" name="wechatId"
+                                           placeholder="微信号" th:value="${user.wechatId}" required/>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="email" class="am-u-sm-2 am-form-label">邮箱：</label>
+                                <div class="am-u-sm-10">
+
+                                    <input type="email" id="email" name="email" th:value="${user.email}"
+                                           placeholder="请输入邮箱" class="am-form-field am-radius" required/>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">血型：</label>
+                                <div class="am-u-sm-10">
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.bloodType == 'A'}" value="A"
+                                               name="bloodType"> A
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.bloodType == 'B'}" value="B"
+                                               name="bloodType"> B
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.bloodType == 'AB'}" value="AB"
+                                               name="bloodType"> AB
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.bloodType == 'O'}" value="O"
+                                               name="bloodType"> O
+                                    </label>
+                                </div>
+
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">T恤尺寸：</label>
+                                <div class="am-u-sm-10">
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.clothingSize == 'S'}" value="S"
+                                               name="clothingSize"> S
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.clothingSize == 'M'}" value="M"
+                                               name="clothingSize"> M
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.clothingSize == 'L'}" value="L"
+                                               name="clothingSize"> L
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.clothingSize == 'XL'}" value="XL"
+                                               name="clothingSize"> XL
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.clothingSize == 'XXL'}" value="XXL"
+                                               name="clothingSize"> XXL
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.clothingSize == 'XXXL'}" value="XXXL"
+                                               name="clothingSize"> XXXL
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="am-form-group">
+                                <label for="workCompany" class="am-u-sm-2 am-form-label">工作单位：</label>
+                                <div class="am-u-sm-10">
+                                    <input type="text" id="workCompany" name="workCompany"
+                                           class="am-form-field am-radius" th:value="${user.workCompany}"/>
+
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="occupation" class="am-u-sm-2 am-form-label">职业：</label>
+                                <div class="am-u-sm-10">
+                                    <input class="am-form-field am-radius" type="text" id="occupation" name="occupation"
+                                           placeholder="职业" th:value="${user.occupation}"/>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="emergencyContactName" class="am-u-sm-2 am-form-label">紧急联系人姓名：</label>
+                                <div class="am-u-sm-10">
+                                    <input class="am-form-field am-radius" type="text" id="emergencyContactName"
+                                           name="emergencyContactName" placeholder="紧急联系人姓名"
+                                           th:value="${user.emergencyContactName}"/>
+                                </div>
+                            </div>
+                            <div class="am-form-group">
+                                <label for="emergencyContactMobile" class="am-u-sm-2 am-form-label">紧急联系人电话：</label>
+                                <div class="am-u-sm-10">
+                                    <input class="am-form-field am-radius" type="text" id="emergencyContactMobile"
+                                           name="emergencyContactMobile" placeholder="紧急联系人电话"
+                                           th:value="${user.emergencyContactMobile}"/>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <label class="am-u-sm-2 am-form-label">是否党员：</label>
+                                <div class="am-u-sm-10">
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.isParty!=true}" value="false"
+                                               name="isParty"> 群众
+                                    </label>
+                                    <label class="am-radio-inline">
+                                        <input type="radio" th:checked="${user.isParty}" value="true" name="isParty"> 党员
+                                    </label>
+                                </div>
+
+                            </div>
+                            <div class="am-form-group">
+                                <label for="address" class="am-u-sm-2 am-form-label">家庭地址：</label>
+                                <div class="am-u-sm-10">
+                                    <input class="am-form-field am-radius" type="text" id="address" name="address"
+                                           placeholder="家庭地址" th:value="${user.address}"/>
+                                </div>
+                            </div>
+
+                            <div class="am-form-group">
+                                <div class="am-u-sm-10 am-u-sm-offset-2">
+                                    <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: default"></div>
+<style rel="stylesheet">
+    #app {
+        width: 100%;
+    }
+
+    .am-g {
+        background-color: #fff;
+    }
+</style>
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var _global_data = [[${user}]]
+    /*]]>*/
+</script>
+
+<script type="text/javascript" src="/asset/plupload/js/plupload.full.min.js"></script>
+<script type="text/javascript" src="/js/upload.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
+<script type="text/javascript" src="/js/directive/directive.js"></script>
+<script type="text/javascript" src="/js/sec/user/baseinfo.js"></script>
+</body>
+</html>
