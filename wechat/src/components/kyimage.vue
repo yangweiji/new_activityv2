@@ -1,5 +1,5 @@
 <template>
-  <image @click="previewClick" :class="{'weui-media-box__thumb': type=='thumb','banner': type=='banner', 'weui-article__img' : type=='article'}" 
+  <image @click="previewClick" :class="{'weui-media-box__thumb': type=='thumb','banner': type=='banner', 'weui-article__img' : type=='article', 'userinfo-avatar' : type=='avatar'}" 
     :src="url" :model="imageMode"  />
 </template>
 

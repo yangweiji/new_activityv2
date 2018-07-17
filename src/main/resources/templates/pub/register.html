@@ -53,21 +53,7 @@
         </div>
         <div class="summary">
             <div class="summary left">
-                <!--<div class="get-title">-->
-                <!--<div class="get_font_left font_line">-->
-                <!--<span>已经有</span>-->
-                <!--</div>-->
-                <!--<div class="get_font_center" th:attr="count=${count}" id="banner_num">-->
-                <!--<span th:text="${count}"></span>-->
-                <!--</div>-->
-                <!--<div class="get_font_rigth font_line">-->
-                <!--<span>个活动</span>-->
-                <!--</div>-->
-                <!--</div>-->
 
-                <!--<div class="font_line">-->
-                <!--<span th:text="${community.description}"></span>-->
-                <!--</div>-->
             </div>
 
             <div class="summary right">
@@ -75,17 +61,15 @@
                     <div class="register_HDB">
                         <form th:action="@{/pub/register}" method="post">
                             <p class="tit2">免费注册</p>
+
+                            <div class="error_ts" th:if="${param.exist}">
+                                该用户手机号已注册，请更换新的手机号！
+                            </div>
+
                             <ul class="reg_Ul">
                                 <li class="k_sj"><span></span>
                                     <input name="username" type="tel" placeholder="输入手机号" id="username" maxlength="11"
                                            autocomplete="off" v-model="username"></li>
-                                <!--<li class="k_txm"><span></span>-->
-                                <!--<input name="" type="text" placeholder="输入图形码" id="rg_form_pic_code" maxlength="4"-->
-                                <!--onkeyup="_register._icon()">-->
-                                <!--<img id="picYzm" src="/captcha?send_type=0" alt="" title="图形码看不清，换一张"-->
-                                <!--onclick="_register._change()">-->
-                                <!--<img id="picYesno" src="http://img.sys.hudongba.com/static_v4/images/other/yzm_no.png">-->
-                                <!--</li>-->
                                 <li class="k_yzm"><span class="yzm_icon"></span>
                                     <span class="yzm_icon"></span>
                                     <input name="code" type="tel" placeholder="输入短信验证码"
@@ -96,12 +80,15 @@
                                         <span v-if="!canGetVerCode" class="cxhuo">重新获取 ( {{codeCount}}s )</span>
                                     </span>
                                 </li>
-                                <li class="k_mm"><span></span><input name="password" type="password" placeholder="输入密码"
-                                                                     id="password" autocomplete="off"
+                                <li class="k_mm"><span></span><input name="password" type="password"
+                                                                     placeholder="输入密码，长度6-12位"
+                                                                     id="password" autocomplete="off" minlength="6"
+                                                                     maxlength="12"
                                                                      v-model="password"></li>
                                 <li class="k_mm"><span></span><input name="password2" type="password"
-                                                                     placeholder="再次输入密码"
-                                                                     id="password2" autocomplete="off"
+                                                                     placeholder="再次输入密码，长度6-12位"
+                                                                     id="password2" autocomplete="off" minlength="6"
+                                                                     maxlength="12"
                                                                      v-model="password2"></li>
                             </ul>
                             <button type="submit" class="c-login-form-submit am-btn am-btn-xl am-btn-block"
@@ -198,12 +185,6 @@
 
     .am-topbar {
         border-bottom: none;
-    }
-
-    .am-topbar-logo img {
-        width: 160px;
-        height: 60px;
-        margin-top: 10px;
     }
 
     .am-topbar-right {

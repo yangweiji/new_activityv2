@@ -339,3 +339,22 @@ button[type=primary] {
 .weui-vcode-btn {
     color: #F37B1D;
 }
+
+.userinfo-avatar {
+  margin: 0 auto;
+  margin-top: 50 rpx;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  width: 161 rpx;
+  height: 161 rpx;
+  border-radius: 50%;
+}
+
+.userinfo-name {
+  margin: 0 auto;
+  margin-top: 20 rpx;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}

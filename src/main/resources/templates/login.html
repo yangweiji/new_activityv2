@@ -89,6 +89,9 @@
                                 <div class="login_tcs login_tc0" v-bind:class="{'thisOver': loginType==1}"
                                      v-show="loginType==1">
                                     <form th:action="@{/login}" method="post">
+                                        <div class="success_ts" th:if="${param.registerok}">
+                                            用户注册成功，请重新登录！
+                                        </div>
 
                                         <div class="error_ts" th:if="${param.error}">
                                             登录名或密码无效！
@@ -153,11 +156,6 @@
 
                             </div>
 
-                            <!--<div class="top_img">-->
-                            <!--<div class="img" data-code="true" onclick="loginHDB.loginToggle($(this))"></div>-->
-                            <!--<img src="http://img.sys.hudongba.com/static_v4/images/other/sweep_code_landing_bg_arrow.jpg" alt="">-->
-                            <!--<p class="txt">扫码登录点这里</p>-->
-                            <!--</div>-->
                         </li>
                     </ul>
 

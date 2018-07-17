@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.MessageResult
 import com.kylin.activity.service.UserService
@@ -67,6 +68,12 @@ class WxAuthController {
     @Autowired
     private val templateListProperties: SmsTemplateListProperties? = null
 
+    /**
+     * 活动配置
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
+
     @GetMapping("/getSessionInfo")
     fun getSessionInfo(@RequestParam(required = false) code: String?): Any {
 
@@ -115,6 +122,12 @@ class WxAuthController {
     fun getUserInfo(openid: String?, unionId: String?): User? {
         var user = userService!!.getUserByOpenOrUnionId(openid, unionId)
         if (user != null) {
+            if (user.openId != openid) {
+                //设定小程序openid值
+                user.openId = openid
+                userService!!.update(user)
+            }
+
             user!!.password = null
         }
 
@@ -172,7 +185,7 @@ class WxAuthController {
     @RequestMapping(value = "/userLogin", method = [RequestMethod.POST])
     fun userLogin(@RequestBody(required = false) map: Map<String, String>): Any {
         var username = map["username"]
-        var password = map["password"]
+        //var password = map["password"]
         var verCode = map["vercode"]
         //OpenId
         var openId = map["openId"]
@@ -195,9 +208,10 @@ class WxAuthController {
                 //添加用户信息
                 var user = User()
                 user.username = username
+                user.mobile = username
                 var coder = BCryptPasswordEncoder()
                 //初始密码: 123456
-                user.password = coder.encode("123456")
+                user.password = coder.encode(activityProperties!!.defaultPassword)
                 user.enabled = true
                 user.created = DateUtil.date().toTimestamp()
                 //显示名称与登录名一致

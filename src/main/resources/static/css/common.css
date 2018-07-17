@@ -110,6 +110,16 @@ button {
     text-align: left;
 }
 
+.tc_login .success_ts {
+    height: 35px;
+    line-height: 35px;
+    font-size: 13px;
+    color: #ddd;
+    /*background: url(/static/img/tan_13.png) no-repeat left;*/
+    padding-left: 17px;
+    text-align: left;
+}
+
 .tc_login .k_sj,
 .tc_login .k_mm {
     height: 48px;

@@ -63,7 +63,8 @@ class KylinUtil {
         return if (savedRequest != null) {
             savedRequest.redirectUrl
         } else {
-            "/"
+            //跳转至登录页面
+            "/login?registerok"
         }
     }
 
