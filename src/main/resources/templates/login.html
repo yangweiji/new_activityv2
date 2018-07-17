@@ -92,7 +92,9 @@
                                         <div class="success_ts" th:if="${param.registerok}">
                                             用户注册成功，请重新登录！
                                         </div>
-
+                                        <div class="success_ts" th:if="${param.changepasswordok}">
+                                            用户密码修改成功，请重新登录！
+                                        </div>
                                         <div class="error_ts" th:if="${param.error}">
                                             登录名或密码无效！
                                         </div>
