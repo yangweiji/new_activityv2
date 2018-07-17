@@ -110,7 +110,7 @@ new Vue({
             }
 
             $.ajax({
-                url: "/pub/wx/vercode/getVerCode/" + this.mobile,
+                url: "/pub/wx/vercode/getVerCode?mobile=" + this.mobile + "&templateId=3",
                 contentType: "application/json;charset=utf-8",
                 type: "get",
                 dataType: "json",
@@ -160,7 +160,7 @@ new Vue({
             }
 
             $.ajax({
-                url: "/pub/wx/vercode/getVerCode/" + this.newMobile,
+                url: "/pub/wx/vercode/getVerCode?mobile=" + this.newMobile + "&templateId=3",
                 contentType: "application/json;charset=utf-8",
                 type: "get",
                 dataType: "json",
@@ -210,7 +210,7 @@ new Vue({
             }
 
             $.ajax({
-                url: "/pub/wx/vercode/getVerCode/" + this.mobile3,
+                url: "/pub/wx/vercode/getVerCode?mobile=" + this.mobile3 + "&templateId=3",
                 contentType: "application/json;charset=utf-8",
                 type: "get",
                 dataType: "json",

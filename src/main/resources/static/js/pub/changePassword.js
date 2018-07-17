@@ -42,7 +42,7 @@ new Vue({
             }
 
             $.ajax({
-                url: "/pub/wx/vercode/getVerCode?mobile=" + this.username + "&templateId=3",
+                url: "/pub/wx/vercode/getVerCode?mobile=" + this.username + "&templateId=4",
                 contentType: "application/json;charset=utf-8",
                 type: "get",
                 dataType: "json",
