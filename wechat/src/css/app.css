@@ -342,18 +342,18 @@ button[type=primary] {
 
 .userinfo-avatar {
   margin: 0 auto;
-  margin-top: 50 rpx;
+  margin-top: 25px;
   display: flex;
   justify-content: center;
   overflow: hidden;
-  width: 161 rpx;
-  height: 161 rpx;
+  width: 80px;
+  height: 80px;
   border-radius: 50%;
 }
 
 .userinfo-name {
   margin: 0 auto;
-  margin-top: 20 rpx;
+  margin-top: 10px;
   display: flex;
   justify-content: center;
   overflow: hidden;
