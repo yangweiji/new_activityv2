@@ -779,7 +779,7 @@ class ActivityService {
      */
     fun getUserFavoriteActivities(userId: Int): Result<Record> {
         var sql = "select t1.* from activity t1 " +
-                "left join activity_favorite t2 on t1.id = t2.activity_id and t2.user_id = ? "
+                "inner join activity_favorite t2 on t1.id = t2.activity_id and t2.user_id = ? "
         var items = create!!.resultQuery(sql, userId).fetch()
         return items
     }

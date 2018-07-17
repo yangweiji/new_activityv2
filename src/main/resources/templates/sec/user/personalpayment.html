@@ -26,7 +26,7 @@
                         </span>
                     </span>
                     <br />
-                    <span class="am_user_head_l_map">
+                    <span class="am_user_head_l_map" v-if="user.mobile">
                         <i class="fa fa-mobile"></i>
                         <span v-text="user.username"></span>
                     </span>
@@ -35,15 +35,6 @@
             <div class="am_user_head_r">
                 <div class="am_user_head_r_tag">
                     <div class="am_user_head_l_ico_info_ti">累计有 <span class="cff5656" th:text="${items.size()}"></span> 缴费订单</div>
-                    <!--<span>-->
-                        <!--<i class="am-icon-star"></i> 粉丝：<span class="am_user_head_unm">15</span>-->
-                    <!--</span>-->
-                                        <!--<span>-->
-                        <!--<i class="am-icon-user"></i> 关注：<span class="am_user_head_unm">6</span>-->
-                    <!--</span>-->
-                                        <!--<span>-->
-                        <!--<i class="am-icon-heart"></i>被喜欢：<span class="am_user_head_unm">60</span>-->
-                    <!--</span>-->
                 </div>
             </div>
         </div>
@@ -52,16 +43,20 @@
     <div class="am-g amz-container">
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
-                <li class="" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/profile'?'am-active'">
+                <li class=""
+                    th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/profile'?'am-active':''">
                     <a href="/sec/user/profile">我参与的</a>
                 </li>
-                <li class="" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/favorite'?'am-active'">
+                <li class=""
+                    th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/favorite'?'am-active':''">
                     <a href="/sec/user/favorite">我收藏的</a>
                 </li>
-                <li class="" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/personalscore'?'am-active'">
+                <li class=""
+                    th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/personalscore'?'am-active':''">
                     <a href="/sec/user/personalscore">我的积分</a>
                 </li>
-                <li class="" th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/personalpayment'?'am-active'">
+                <li class=""
+                    th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/user/personalpayment'?'am-active':''">
                     <a href="/sec/user/personalpayment">缴费记录</a>
                 </li>
             </ul>
