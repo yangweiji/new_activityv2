@@ -27,7 +27,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class UserRecord extends UpdatableRecordImpl<UserRecord> {
 
-    private static final long serialVersionUID = 1166488379;
+    private static final long serialVersionUID = -194963553;
 
     /**
      * Setter for <code>user.id</code>. 编号
@@ -394,28 +394,28 @@ public class UserRecord extends UpdatableRecordImpl<UserRecord> {
     }
 
     /**
-     * Setter for <code>user.nick_name</code>.
+     * Setter for <code>user.nick_name</code>. 微信昵称
      */
     public void setNickName(String value) {
         set(26, value);
     }
 
     /**
-     * Getter for <code>user.nick_name</code>.
+     * Getter for <code>user.nick_name</code>. 微信昵称
      */
     public String getNickName() {
         return (String) get(26);
     }
 
     /**
-     * Setter for <code>user.mobile</code>.
+     * Setter for <code>user.mobile</code>. 双向绑定时，使用的手机号码
      */
     public void setMobile(String value) {
         set(27, value);
     }
 
     /**
-     * Getter for <code>user.mobile</code>.
+     * Getter for <code>user.mobile</code>. 双向绑定时，使用的手机号码
      */
     public String getMobile() {
         return (String) get(27);
