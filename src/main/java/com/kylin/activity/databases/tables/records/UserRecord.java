@@ -5,11 +5,13 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.User;
-import org.jooq.Record1;
-import org.jooq.impl.UpdatableRecordImpl;
+
+import java.sql.Timestamp;
 
 import javax.annotation.Generated;
-import java.sql.Timestamp;
+
+import org.jooq.Record1;
+import org.jooq.impl.UpdatableRecordImpl;
 
 
 /**
