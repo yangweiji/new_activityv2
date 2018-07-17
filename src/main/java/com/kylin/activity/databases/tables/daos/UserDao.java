@@ -6,14 +6,16 @@ package com.kylin.activity.databases.tables.daos;
 
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.records.UserRecord;
+
+import java.sql.Timestamp;
+import java.util.List;
+
+import javax.annotation.Generated;
+
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import javax.annotation.Generated;
-import java.sql.Timestamp;
-import java.util.List;
 
 
 /**
@@ -254,5 +256,12 @@ public class UserDao extends DAOImpl<UserRecord, com.kylin.activity.databases.ta
      */
     public List<com.kylin.activity.databases.tables.pojos.User> fetchByNickName(String... values) {
         return fetch(User.USER.NICK_NAME, values);
+    }
+
+    /**
+     * Fetch records that have <code>mobile IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.User> fetchByMobile(String... values) {
+        return fetch(User.USER.MOBILE, values);
     }
 }

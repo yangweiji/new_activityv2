@@ -904,6 +904,7 @@ class ActivityService {
                 scoreHistory.userId = activityUser.userId
                 scoreHistory.memo = "参加活动抵扣"
                 scoreHistory.score = -activityUser.score
+                scoreHistory.communityId = activity.communityId
                 scoreHistoryDao!!.insert(scoreHistory)
             }
 
