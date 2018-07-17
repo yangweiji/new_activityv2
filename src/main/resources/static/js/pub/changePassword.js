@@ -1,48 +1,23 @@
-$(function () {
-    //@首页 数字跳动
-    var options = {
-        useEasing: true,
-        useGrouping: true,
-        separator: '',
-        decimal: '.',
-        prefix: '',
-        suffix: ''
-    };
-    var banner_num = new CountUp("banner_num", 0, parseInt($('#banner_num').attr('count')), 0, 5, options);
-    banner_num.start();
-});
-
-//noinspection JSAnnotator
 new Vue({
     el: '#app',
-    data: function () {
+    data: function() {
         return {
-            //登录方式，1：手机号+密码 2：手机号+短信验证码 3: 微信扫码
-            loginType: 1,
             //验证码时间计数
             codeCount: 0,
             canGetVerCode: true,
             error: '',
             username: null,
             password: null,
-            mobile: null,
+            password2: null,
             code: null,
         }
     },
     computed: {
-        disabled1 () {
+        disabled() {
             if (!this.username || this.username.length != 11
-                || !this.password
-            ) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        },
-        disabled2 () {
-            if (!this.mobile || this.mobile.length != 11
-                || !this.code || this.code.length < 6
+                || !this.password || this.password.length < 6
+                || !this.password2 || this.password2.length < 6
+                || (this.password != this.password2)
             ) {
                 return true;
             }
@@ -52,13 +27,10 @@ new Vue({
         },
     },
     methods: {
-        show: function (e) {
-            this.loginType = e
-        },
         getVerCode: function () {
             var that = this;
             that.canGetVerCode = true;
-            if (!that.mobile || that.mobile.length < 11 || !that.mobile.match(/^1\d{10}$/)) {
+            if (!that.username || that.username.length < 11 || !that.username.match(/^1\d{10}$/)) {
                 nativeToast({
                     message: '请输入有效的手机号码！',
                     position: 'center',
@@ -70,7 +42,7 @@ new Vue({
             }
 
             $.ajax({
-                url: "/pub/wx/vercode/getVerCode?mobile=" + this.mobile + "&templateId=3",
+                url: "/pub/wx/vercode/getVerCode?mobile=" + this.username + "&templateId=4",
                 contentType: "application/json;charset=utf-8",
                 type: "get",
                 dataType: "json",
@@ -79,7 +51,7 @@ new Vue({
                         nativeToast({
                             message: '短信验证码已发送，十分钟内有效！',
                             position: 'center',
-                            timeout: 3000,
+                            timeout: 5000,
                             square: true,
                             // type: 'error'
                         });
@@ -104,8 +76,7 @@ new Vue({
                     that.error = "发送验证码出现错误"
                 }
             });
+        },
+    }
 
-
-        }
-    },
 })

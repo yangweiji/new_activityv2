@@ -49,7 +49,7 @@ class RegisterController {
         model.addAttribute("username", username)
         var result = userService!!.changePassword(username, password, code)
         return if(result == "success"){
-            "redirect:/login"
+            "redirect:/login?changepasswordok"
         } else {
             "redirect:/pub/changepassword?" + result
         }
