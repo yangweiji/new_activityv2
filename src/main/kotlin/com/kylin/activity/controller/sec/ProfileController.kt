@@ -21,6 +21,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import javax.servlet.http.HttpServletRequest
 
 class ProfileUpdateProperty {
@@ -62,13 +63,20 @@ class ProfileController : BaseController() {
     private val verCodeService: VerCodeService? = null
 
     /**
+     * 向隐含模型中添加user的模型属性
+     */
+    @ModelAttribute("user")
+    fun getUser(): User? {
+        return this.sessionUser
+    }
+
+    /**
      * 个人信息
      */
     @CrossOrigin(origins = ["*"], methods = [RequestMethod.GET, RequestMethod.POST])
     @RequestMapping("/profile")
-    fun profile(model: Model): String {
-        var user = this.sessionUser
-        model.addAttribute("user", user)
+    fun profile(@ModelAttribute("user") user: User, model: Model): String {
+
         var activities = create!!.select(Tables.ACTIVITY.fields().toList())
                 .from(Tables.ACTIVITY)
                 .innerJoin(Tables.ACTIVITY_USER)
@@ -101,7 +109,7 @@ class ProfileController : BaseController() {
      */
     @CrossOrigin(origins = ["*"], methods = [RequestMethod.GET, RequestMethod.POST])
     @RequestMapping("/favorite")
-    fun favorite(@ModelAttribute user: User, model: Model): String {
+    fun favorite(@ModelAttribute("user") user: User, model: Model): String {
 
         var activities = activityService!!.getUserFavoriteActivities(user!!.id)
 
@@ -113,10 +121,10 @@ class ProfileController : BaseController() {
      * 个人积分
      */
     @RequestMapping(value = "/personalscore", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun getPersonalScore(@ModelAttribute user: User, model: Model): String {
-        var community=this.sessionCommunity
+    private fun getPersonalScore(@ModelAttribute("user") user: User, model: Model): String {
+        var community = this.sessionCommunity
         //取得活动积分明细
-        val items = scoreService!!.getPersonalScore(user.id!!,community.id!!)
+        val items = scoreService!!.getPersonalScore(user.id!!, community.id!!)
         var totalscore: Int? = 0
         for (r in items) {
             totalscore = totalscore!!.plus(r.getValue("score") as Int)
@@ -131,7 +139,7 @@ class ProfileController : BaseController() {
      * 个人缴费
      */
     @RequestMapping(value = "/personalpayment", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun getPersonalPayment(@ModelAttribute user: User, model: Model): String {
+    private fun getPersonalPayment(@ModelAttribute("user") user: User, model: Model): String {
         //取得缴费订单
         val items = orderService!!.getPersonalPayment(user.id!!)
 
@@ -143,9 +151,7 @@ class ProfileController : BaseController() {
      * 基本信息
      */
     @RequestMapping(value = "/baseinfo", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun getBaseInfo(model: Model): String {
-        var user = this.sessionUser
-        model.addAttribute("user", user)
+    private fun getBaseInfo(@ModelAttribute("user") user: User): String {
 
         return "sec/user/baseinfo"
     }
@@ -154,7 +160,7 @@ class ProfileController : BaseController() {
      * 账户安全
      */
     @RequestMapping(value = "/account", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun getAccount(@ModelAttribute user: User, model: Model): String {
+    private fun getAccount(@ModelAttribute("user") user: User): String {
 
         return "sec/user/account"
     }
@@ -163,7 +169,10 @@ class ProfileController : BaseController() {
      * 绑定微信号
      */
     @RequestMapping(value = "/bindwx", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun bindWechat(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
+    private fun bindWechat(@ModelAttribute("user") user: User
+                           , model: Model
+                           , request: HttpServletRequest
+                           , redirectAttributes: RedirectAttributes): String {
         var code = request.getParameter("code")
         var state = request.getParameter("state")
         log.info("code: {}, state: {}", code, state)
@@ -183,6 +192,13 @@ class ProfileController : BaseController() {
             wxMpUser = wxService!!.mpService!!.oauth2getUserInfo(wxMpOAuth2AccessToken, "zh_CN")
             LogUtil.printLog("wxMpUser: " + wxMpUser!!.toString())
 
+            //检查微信账号是否已绑定
+            var u = userService!!.getUserByUnionId(wxMpUser.unionId)
+            if (u != null) {
+                redirectAttributes.addFlashAttribute("errorMessage", "微信账号: ${wxMpUser.nickname} 已被绑定，如需绑定当前登录用户，请先微信扫码登录平台解绑或注销账户！")
+                return "redirect:/sec/user/account"
+            }
+
             //user.openId = wxMpUser.openId
             user.unionId = wxMpUser.unionId
             user.nickName = wxMpUser.nickname
@@ -192,10 +208,14 @@ class ProfileController : BaseController() {
             if (user.gender == null) {
                 user.gender = wxMpUser.sex
             }
+
             userService!!.update(user)
             log.info("更新用户OK: ${user.id}")
 
-            model.addAttribute("user", user)
+            this.sessionUser = user
+
+            redirectAttributes.addFlashAttribute("globalMessage", "操作成功！微信账号: ${wxMpUser.nickname} 已成功绑定当前用户！")
+            return "redirect:/sec/user/account"
         } catch (e: WxErrorException) {
             e.printStackTrace()
         }
@@ -207,22 +227,28 @@ class ProfileController : BaseController() {
      * 解除绑定
      */
     @RequestMapping(value = "/unbindwx", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun unbindWechat(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
+    private fun unbindWechat(@ModelAttribute("user") user: User
+                             , model: Model
+                             , redirectAttributes: RedirectAttributes): String {
+        var nickName = user.nickName
+
         user.nickName = null
         //user.openId = null
         user.unionId = null
         userService!!.update(user)
         log.info("更新用户OK: ${user.id}")
 
-        model.addAttribute("user", user)
+        this.sessionUser = user
+
+        redirectAttributes.addFlashAttribute("globalMessage", "操作成功！微信账号: $nickName 已成功解绑！")
         return "redirect:/sec/user/account"
     }
 
     /**
-     * 解除绑定
+     * 更新个人信息
      */
     @RequestMapping(value = "/update", method = [RequestMethod.GET, RequestMethod.POST])
-    private fun update(@ModelAttribute user: User, model: Model, request: HttpServletRequest): String {
+    private fun update(@ModelAttribute("user") user: User, model: Model, request: HttpServletRequest): String {
         var u = userService!!.getUser(user.id)
 
         u.displayname = user.displayname
@@ -246,11 +272,10 @@ class ProfileController : BaseController() {
 
         userService!!.update(u)
         log.info("更新用户OK: ${u.id}")
-        model.addAttribute("user", u)
+
         model.addAttribute("globalMessage", "操作成功！")
 
-        //更新USER_CONTEXT
-        request.session.setAttribute("USER_CONTEXT", u)
+        this.sessionUser = u
         return "/sec/user/baseinfo"
     }
 
@@ -276,6 +301,7 @@ class ProfileController : BaseController() {
     @RequestMapping(value = "/addMobile", method = [RequestMethod.POST])
     @ResponseBody
     fun addMobile(@ModelAttribute("user") user: User
+                  , model: Model
                   , request: HttpServletRequest
                   , @RequestBody(required = false) map: Map<String, String>): String {
         var mobile = map["mobile"].toString()
@@ -294,14 +320,11 @@ class ProfileController : BaseController() {
                 messageResult.message = "该手机号已绑定平台其他用户，请更换手机号码"
             }
             userService!!.addMobile(user.id, mobile, password) -> {
-                //删除用户session
-                request.session.removeAttribute("USER_CONTEXT")
                 //设定手机号码
                 user.username = mobile
                 user.mobile = mobile
-                user.password = null
-                //更新用户session
-                request.session.setAttribute("USER_CONTEXT", user)
+
+                this.sessionUser = user
                 messageResult.code = 200
                 messageResult.message = "SUCCESS"
             }
@@ -322,6 +345,7 @@ class ProfileController : BaseController() {
     @RequestMapping(value = "/updateMobile", method = [RequestMethod.POST])
     @ResponseBody
     fun updateMobile(@ModelAttribute("user") user: User
+                     , model: Model
                      , request: HttpServletRequest
                      , @RequestBody(required = false) map: Map<String, String>): String {
         var mobile = map["mobile"].toString()
@@ -341,14 +365,11 @@ class ProfileController : BaseController() {
                 messageResult.message = "新手机号码已绑定平台其他用户，请更换新手机号码"
             }
             userService!!.updateMobile(user.id, mobile, smsCode, newMobile, smsCode2) -> {
-                //删除用户session
-                request.session.removeAttribute("USER_CONTEXT")
                 //设定手机号码
                 user.username = newMobile
                 user.mobile = newMobile
-                user.password = null
-                //更新用户session
-                request.session.setAttribute("USER_CONTEXT", user)
+
+                this.sessionUser = user
                 messageResult.code = 200
                 messageResult.message = "SUCCESS"
             }
@@ -368,6 +389,7 @@ class ProfileController : BaseController() {
     @RequestMapping(value = "/changePassword2", method = [RequestMethod.POST])
     @ResponseBody
     fun changePassword2(@ModelAttribute("user") user: User
+                        , model: Model
                         , request: HttpServletRequest
                         , @RequestBody(required = false) map: Map<String, String>): String {
         var oldPassword = map["oldPassword"].toString()
@@ -382,13 +404,12 @@ class ProfileController : BaseController() {
             messageResult.code = -1
             messageResult.message = "旧密码输入不正确"
         } else {
-            if (userService!!.changePassword(user.id, password)) {
-                messageResult.code = 200
-                messageResult.message = "SUCCESS"
-            } else {
-                messageResult.code = -2
-                messageResult.message = "密码更新操作失败"
-            }
+            user.password = coder.encode(password)
+            userService!!.update(user)
+            messageResult.code = 200
+            messageResult.message = "SUCCESS"
+
+            this.sessionUser = user
         }
 
         return JsonUtils.toJson(messageResult)

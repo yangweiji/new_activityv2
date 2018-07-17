@@ -373,7 +373,9 @@ class UserService {
      * @return 用户信息
      */
     fun getUserByOpenId(openId: String): User? {
-        return userDao!!.fetchByOpenId(openId).firstOrNull()
+        return create!!.selectFrom(Tables.USER)
+                .where(Tables.USER.OPEN_ID.eq(openId))
+                .fetchOneInto(User::class.java)
     }
 
     /**
@@ -382,12 +384,26 @@ class UserService {
      */
     fun getUserByOpenOrUnionId(openId: String?, unionId:String?):User? {
         return if(unionId.isNullOrBlank()){
-            userDao!!.fetchByOpenId(openId).firstOrNull()
+            create!!.selectFrom(Tables.USER)
+                    .where(Tables.USER.OPEN_ID.eq(openId))
+                    .fetchOneInto(User::class.java)
+
         } else {
-            userDao!!.fetchByUnionId(unionId).firstOrNull()
+            create!!.selectFrom(Tables.USER)
+                    .where(Tables.USER.UNION_ID.eq(unionId))
+                    .fetchOneInto(User::class.java)
         }
     }
 
+    /**
+     * 依据unionId取得唯一的用户
+     * @return 用户信息
+     */
+    fun getUserByUnionId(unionId: String): User? {
+        return create!!.selectFrom(Tables.USER)
+                .where(Tables.USER.UNION_ID.eq(unionId))
+                .fetchOneInto(User::class.java)
+    }
 
     /**
      * 添加手机号码
@@ -421,23 +437,6 @@ class UserService {
             user!!.username = newMobile
             user!!.mobile = newMobile
             user!!.enabled = true
-            this.update(user)
-            return true
-        }
-
-        return false
-    }
-
-    /**
-     * 更新登录密码
-     */
-    fun changePassword(id: Int, password: String): Boolean {
-        var user = this.getUser(id)
-        if (user != null) {
-            var coder = BCryptPasswordEncoder()
-            user.password = coder.encode(password)
-            user.enabled = true
-
             this.update(user)
             return true
         }
