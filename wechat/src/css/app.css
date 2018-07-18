@@ -26,7 +26,7 @@ page {
 }
 
 .page__title {
-    text-align: left;
+    text-align: center;
     font-size: 20px;
     font-weight: 400;
 }
@@ -291,6 +291,9 @@ page {
 
 .weui-badge {
     background-color: #F37B1D;
+    /* background-color: none; */
+    /* border: 1px solid #F37B1D; */
+    /* color: #999; */
 }
 
 .weui-form-preview__btn_danger {
@@ -360,4 +363,8 @@ button[type=primary] {
     display: flex;
     justify-content: center;
     overflow: hidden;
+}
+
+.fa {
+    color: #F37B1D;
 }

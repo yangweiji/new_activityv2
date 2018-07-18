@@ -165,10 +165,10 @@ function Login() {
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
                         HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
-                          // console.log("user: ", res)
+                            // console.log("user: ", res)
                             if (res) {
                                 wx.setStorageSync("user", res)
-                              console.log("storage user->", res)
+                                console.log("storage user->", res)
                             }
                         });
                     }
@@ -180,9 +180,10 @@ function Login() {
 }
 
 //验证用户身份，小程序页面创建时调用此方法
+//检查用户手机号是否填写，没有绑定手机号强制绑定手机号登录
 function CheckUserValidation() {
-  // console.log("user: ", wx.getStorageSync("user"));
-    if (!wx.getStorageSync("user")) {
+    var user = wx.getStorageSync("user")
+    if (!user || !user.mobile) {
         // 跳转至登录界面验证身份
         wx.redirectTo({
             url: "/pages/login/login"

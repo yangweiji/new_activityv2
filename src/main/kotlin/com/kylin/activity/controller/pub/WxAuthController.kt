@@ -201,15 +201,15 @@ class WxAuthController {
         var messageResult = MessageResult()
         var verCodeInfo = verCodeService!!.getVerCode(username.toString(), verCode.toString())
 
+        var coder = BCryptPasswordEncoder()
         //登录，短信有效期10分钟
         if (verCodeInfo != null && DateUtil.betweenMs(DateUtil.date(), verCodeInfo!!.created) <= templateListProperties!!.timeout) {
-            var user = userService!!.getUser(username.toString())
+            var user = userService!!.checkUserExist(username, openId, unionId)
             if (user == null) {
                 //添加用户信息
                 var user = User()
                 user.username = username
                 user.mobile = username
-                var coder = BCryptPasswordEncoder()
                 //初始密码: 123456
                 user.password = coder.encode(activityProperties!!.defaultPassword)
                 user.enabled = true
@@ -226,15 +226,19 @@ class WxAuthController {
                 LogUtil.printLog("注册用户OK, ID: ${user.id}")
             }
             else {
+                user.username = username
+                user.mobile = username
+                //初始密码: 123456
+                user.password = coder.encode(activityProperties!!.defaultPassword)
                 //更新OpenId
                 user!!.openId = openId
                 user!!.unionId = unionId
                 user!!.nickName = nickName
-                if (user.displayname == null) {
+                if (user.displayname.isNullOrBlank()) {
                     //显示名称与登录名一致
                     user.displayname = nickName
                 }
-                if (user.avatar == null) {
+                if (user.avatar.isNullOrBlank()) {
                     user.avatar = avatarUrl
                 }
                 if (user.gender == null) {

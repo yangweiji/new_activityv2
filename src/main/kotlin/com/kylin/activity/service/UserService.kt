@@ -405,6 +405,27 @@ class UserService {
                 .fetchOneInto(User::class.java)
     }
 
+    /***
+     * 检查用户信息是否已存在
+     * @param username: 手机号
+     * @param openId: 小程序openId
+     * @param unionId: 开放平台统一ID
+     */
+    fun checkUserExist(username: String?, openId: String?, unionId: String?): User? {
+        var user1 = this.getUser(username!!)
+        var user2 = this.getUserByOpenOrUnionId(openId, unionId)
+
+        if (user1 != null)
+        {
+            return user1
+        }
+        else if (user2 != null) {
+            return user2
+        }
+
+        return null
+    }
+
     /**
      * 添加手机号码
      */
