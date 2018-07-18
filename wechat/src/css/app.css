@@ -341,20 +341,22 @@ button[type=primary] {
 }
 
 .userinfo-avatar {
-  margin: 0 auto;
-  margin-top: 25px;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 3px solid #aaa;
 }
 
 .userinfo-name {
-  margin: 0 auto;
-  margin-top: 10px;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
 }

@@ -160,6 +160,7 @@
       //获取活动信息
       getData() {
         var that = this;
+        that.items = null;
         var param = {
           communityId: that.community.id,
           t: that.activeTab
@@ -171,7 +172,7 @@
       },
       search() {
         var that = this;
-        that.items = null
+        that.items = null;
         var param = {
           communityId: that.community.id,
           t: that.activeTab

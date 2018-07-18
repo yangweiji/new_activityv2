@@ -1,87 +1,104 @@
 <template>
-       <div class="page">
-         <div class="page__hd">
-      <!-- <div class="page__desc">表单输入</div> -->
-      <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->
-      <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
-      <open-data class="userinfo-name" type="userNickName"></open-data>
-         </div>
-          <div class="weui-media-box weui-media-box_appmsg" v-for="item in grids" :key="item.id">
-             <div class="weui-media-box__title" style="float:left;width:50%">{{item.title}}</div>
-              <div class="weui-media-box-text" > +{{item.score}}</div>
-          </div>
+  <div class="page">
+    <div class="page__hd">
+      <div class="community-avatar">
+        <kyimage :src="user.avatar" type="avatar" />
+        <span class="userinfo-name">{{user.displayname}}</span>
       </div>
-      
+    </div>
+    <div class="page__bd">
+      <div class="weui-media-box weui-media-box_appmsg" v-for="item in grids" :key="item.id">
+        <div class="weui-media-box__title">{{item.title}}</div>
+        <div class="weui-media-box-text"> +{{item.score}}</div>
+      </div>
+    </div>
+
+  </div>
 
 </template>
 
 <script>
+import kyimage from '@/components/kyimage.vue'
 import base64 from "../../../static/images/base64";
-import global from '../../global/index';
-import wxParse from 'mpvue-wxparse'
 export default {
   data() {
     return {
       //活动相册
-      grids: [
-      ],
-  
+      grids: [],
+      user: null,
     };
   },
-  computed: {
-  },
+  computed: {},
   components: {
+    kyimage
   },
   methods: {
     //取得文章信息
-    getData()  {
+    getData() {
       var that = this;
       var param = {
         communityId: that.community.id,
         userId: wx.getStorageSync("user").id
       };
-      this.$kyutil.get("/pub/wx/profile/scores",param).then(res=>{
-        that.grids=res;
-      })
-    },
+      this.$kyutil.get("/pub/wx/profile/scores", param).then(res => {
+        that.grids = res;
+      });
+    }
   },
   created() {
-    // console.log("photos created");
   },
-   onShow () {
-  //   console.log('小程序触发的 onshow, 获取参数: '+ this.$root.$mp.query);
+  onShow() {
     var that = this;
-   this.community = this.$store.state.community;
-   this.getData();
-   }
+    this.community = this.$store.state.community;
+    that.user = this.$kyutil.GetUser();
+    if (that.user) {
+      this.getData();
+    }
+    wx.setNavigationBarTitle({
+      title: "积分"
+    })
+  }
 };
 </script>
 
 <style scoped>
-@import url("~mpvue-wxparse/src/wxParse.css");
-.userinfo-avatar {
-  margin: 0 auto;  
-  margin-top: 50rpx;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
-  width: 161rpx;
-  height: 161rpx;
-  border-radius: 50%;
+.page__hd {
+  padding: 0 0;
 }
-.userinfo-name {
-  margin: 0 auto;  
-  margin-top: 20rpx;
-  display: flex;
-  justify-content: center;
-  overflow: hidden;
+.weui-media-box__title {
+  float: left;
+  width: 80%;
 }
-.weui-media-box-text{
+.weui-media-box-text {
   float: right;
-  width: 50%;
+  width: 20%;
   text-align: right;
   font-size: 18px;
-  color: #F37B1D;
+  color: #f37b1d;
 }
-
+.community-avatar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color:#1E364E;
+  }
+  .userinfo-avatar {
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #aaa;
+  }
+  .userinfo-name {
+    color: #fff;
+    margin: 0 auto;
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
 </style>

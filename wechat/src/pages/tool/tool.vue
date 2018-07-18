@@ -41,5 +41,8 @@ export default {
 </script>
 
 <style scoped>
-
+.weui-grid__icon {
+  width: 32px;
+  height: 32px;
+}
 </style>

@@ -1,24 +1,20 @@
 <template>
   <div class="page">
     <div v-if="item" class="page__bd">
-      <div>
+      
         <!-- banner -->
         <div>
           <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
             <span style="top:5px;">
-                切换团体
-              </span>
+              <!-- <i class="fa fa-exchange" aria-hidden="true"></i>切换团体 -->
+            </span>
           </navigator>
-          <!-- <kyimage :src="community.background" model="aspectFit" type="banner" /> -->
-          <!-- <div class="community-avatar">
-            <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
-            <open-data class="userinfo-name" type="userNickName"></open-data>
-          </div> -->
           <div class="community-avatar">
             <kyimage :src="user.avatar" type="avatar" />
-            <span class="userinfo-name">{{user.nickName}}</span>
+            <span class="userinfo-name">{{user.displayname}}</span>
           </div>
         </div>
+
         <div class="wx_group_count weui-flex">
           <div class="wx_attend_count weui-flex__item">
             <navigator url="/pages/myactivitys/myactivitys?type=1">
@@ -69,17 +65,7 @@
             </navigator>
           </div>
         </div>
-        <!-- <div>
-              <div style="position:absolute;right:0;margin-top:10px;margin-right:20px;" @click="qh(2)">
-                切换到管理者 >>
-              </div>
-              <div style="position:absolute;margin-top:15%;width:100%;">
-              <images :src="'../../../static/images/a2.jpg'" style="width:4rem;height:4rem;border-radius:50%;margin-left:40%"></images>
-                <p class="p-text__xx">用户信息【参与者】</p>
-                <p class="p-text__xx">用户加入的团体信息</p>
-              </div>
-              <image style="height:200px; width:100%;" />
-          </div> -->
+        
         <div>
           <navigator url="/pages/userinfo/userinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
@@ -118,10 +104,10 @@
             </div>
             <div class="weui-cell_comment">{{vipText}}</div>
           </navigator>
-          <!-- 如下为全局功能 -->
+
           
         </div>
-      </div>
+      
     </div>
   </div>
 </template>
@@ -154,22 +140,6 @@
       qh(cs) {
         this.xs = cs;
       },
-    //   getAvatar: function () {
-    //     var that = this;
-    //     that.user = this.$kyutil.GetUser();
-    //     var avatar = that.user.avatar;
-    //     if (avatar) {
-    //       if(avatar && (avatar.toLowerCase().indexOf('http://') == 0 || avatar.toLowerCase().indexOf('https://') == 0)){
-    //           return avatar
-    //       }
-    //       var url = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/' + avatar
-    //       url += '?x-oss-process=style/small'
-    //       return url;
-    //     }
-    //     else {
-    //         return '/img/activity/man.png'
-    //     }
-    //   },
     },
     computed: {
       vipText() {
@@ -267,23 +237,7 @@
     width: 100%;
     text-align: center;
   }
-  .userinfo-avatar {
-    margin: 0 auto;
-    margin-top: 50rpx;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-    width: 161rpx;
-    height: 161rpx;
-    border-radius: 50%;
-  }
-  .userinfo-name {
-    margin: 0 auto;
-    margin-top: 20rpx;
-    display: flex;
-    justify-content: center;
-    overflow: hidden;
-  }
+  
   .wx_counts {
     width: 100%;
     height: 60px;
@@ -317,5 +271,36 @@
   .user-avatar {
     height: 65px;
     width: 65px;
+  }
+  .community-avatar {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color:#1E364E;
+  }
+  .userinfo-avatar {
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid #aaa;
+  }
+  .userinfo-name {
+    color: #fff;
+    margin: 0 auto;
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .community-select {
+    padding: 0 0;
+    margin-top: 5px;
+    margin-right: 5px;
+    background-color: rgba(0, 0, 0, 0);
   }
 </style>

@@ -38,6 +38,12 @@
               <div class="weui-form-preview__btn weui-form-preview__btn_danger" hover-class="weui-form-preview__btn_active" @click="cancelAttend()">取消报名</div>
             </div>
           </div>
+          
+          <div class="weui-btn-area">
+            <navigator url="../../pages/index/index" open-type="switchTab" hover-class="navigator-hover">
+              <button class="weui-btn" type="primary">返回首页</button>
+            </navigator>
+          </div>
         </div>
         <!--未报名-->
         <div v-if="!isAttend && !overDue">

@@ -298,7 +298,6 @@ class ActivityService {
      *  @param tag: 活动标签分类
      *  @return 团体组织活动信息集合
      */
-    @Cacheable()
     fun getTeamActivities(sid: Int, tag: String): Result<Record> {
 
         //获取团队活动信息

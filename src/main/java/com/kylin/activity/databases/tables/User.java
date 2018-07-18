@@ -8,23 +8,14 @@ import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.UserRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class User extends TableImpl<UserRecord> {
 
-    private static final long serialVersionUID = 411942626;
+    private static final long serialVersionUID = -383962870;
 
     /**
      * The reference instance of <code>user</code>
@@ -186,14 +177,14 @@ public class User extends TableImpl<UserRecord> {
     public final TableField<UserRecord, String> UNION_ID = createField("union_id", org.jooq.impl.SQLDataType.VARCHAR(225), this, "微信开放平台，联合身份ID");
 
     /**
-     * The column <code>user.nick_name</code>.
+     * The column <code>user.nick_name</code>. 微信昵称
      */
-    public final TableField<UserRecord, String> NICK_NAME = createField("nick_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "");
+    public final TableField<UserRecord, String> NICK_NAME = createField("nick_name", org.jooq.impl.SQLDataType.VARCHAR(255), this, "微信昵称");
 
     /**
-     * The column <code>user.mobile</code>.
+     * The column <code>user.mobile</code>. 双向绑定时，使用的手机号码
      */
-    public final TableField<UserRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR(20), this, "");
+    public final TableField<UserRecord, String> MOBILE = createField("mobile", org.jooq.impl.SQLDataType.VARCHAR(20), this, "双向绑定时，使用的手机号码");
 
     /**
      * Create a <code>user</code> table reference
