@@ -4,40 +4,34 @@ $(function () {
 
     //定义表栏位
     var _columns = [
-        { "data": "id" },
-        { "data": "id" },
-        { "data": "title" },
-        { "data": "real_name" },
-        { "data": "mobile" },
-        { "data": "ticket_title" },
-        { "data": "activity_price" },
-        { "data": "attend_time" },
-        { "data": "check_in_time" },
-        { "data": "status", "defaultContent": "",
+        {"data": "id"},
+        {"data": "id"},
+        {"data": "title"},
+        {"data": "real_name"},
+        {"data": "mobile"},
+        {"data": "ticket_title"},
+        {"data": "activity_price"},
+        {"data": "attend_time"},
+        {"data": "check_in_time"},
+        {
+            "data": "status", "defaultContent": "",
             render: function (data, type, row) {
-                if (data == 2) {
-                    return "中签";
-                }
-                else if (data == 1) {
-                    return "退回";
-                }
-                else if (data == 3) {
-                    return "已申请退款";
-                }
-                else if (data == 4) {
-                    return "已完成退款";
-                }
-                else if (data == 0){
-                    return "待抽签";
-                }
-                else {
+                if (data == 0) {
+                    return "不抽签"
+                } else if (data == 1) {
                     return "待抽签"
+                } else if (data == 2) {
+                    return "中签"
+                } else if (data == 3) {
+                    return "已申请退费"
+                } else if (data == 4) {
+                    return "已完成退费"
                 }
             }
         }];
     //添加动态栏位
     g_attendColumns.forEach(function (value) {
-        _columns.push({ "data": value, "defaultContent": "" });
+        _columns.push({"data": value, "defaultContent": ""});
     });
 
     //JQuery DataTables HTML (DOM) sourced data
@@ -45,10 +39,10 @@ $(function () {
         .on('init.dt', function () {
             // $('#bmBody').show();
         })
-        .on('preXhr.dt', function ( e, settings, data ) {
+        .on('preXhr.dt', function (e, settings, data) {
             Util.loading(true);
         })
-        .on('xhr.dt', function ( e, settings, json, xhr ) {
+        .on('xhr.dt', function (e, settings, json, xhr) {
             // for ( var i=0, ien=json.aaData.length ; i<ien ; i++ ) {
             //     json.aaData[i].sum = json.aaData[i].one + json.aaData[i].two;
             // }
@@ -56,142 +50,142 @@ $(function () {
             $('#totalCount').text(json.length);
             Util.loading(false);
         }).DataTable({
-        language: {
-            url: "/json/chinese.json",
-            buttons: {
-                colvis: '显示栏位',
-            }
-        },
+            language: {
+                url: "/json/chinese.json",
+                buttons: {
+                    colvis: '显示栏位',
+                }
+            },
 
-        // 定位
-        // l - Length changing 每页显示多少条数据选项
-        // f - Filtering input 搜索框
-        // t - The Table 表格
-        // i - Information 表格信息
-        // p - Pagination 分页按钮
-        // r - pRocessing 加载等待显示信息
-        // < and > - div elements 一个div元素
-        // <"#id" and > - div with an id 指定id的div元素
-        // <"class" and > - div with a class 指定样式名的div元素
-        // <"#id.class" and > - div with an id and class 指定id和样式的div元素
+            // 定位
+            // l - Length changing 每页显示多少条数据选项
+            // f - Filtering input 搜索框
+            // t - The Table 表格
+            // i - Information 表格信息
+            // p - Pagination 分页按钮
+            // r - pRocessing 加载等待显示信息
+            // < and > - div elements 一个div元素
+            // <"#id" and > - div with an id 指定id的div元素
+            // <"class" and > - div with a class 指定样式名的div元素
+            // <"#id.class" and > - div with an id and class 指定id和样式的div元素
 
-        // dom: 'Blfrtip',
-        dom: '<"top">Bfrt<"bottom">lip<"clear">',
-        buttons: [
-            {
-                extend: 'approve',
-                text: '中签',
-                enabled: false,
-            },
-            {
-                extend: 'cancel',
-                text: '取消中签',
-                enabled: false,
-            },
-            {
-                extend: 'refund',
-                text: '申请退款',
-                enabled: false,
-            },
-            {
-                extend: 'check',
-                text: '检查退款',
-                enabled: false,
-            },
-            {
-                extend: 'delete',
-                text: '删除',
-                enabled: false,
-            },
-            {
-                extend: 'excel',
-                text: '导出Excel',
-                title: '报名签到记录',
-                exportOptions: {
-                    // columns: ':visible'
-                    // columns: [
-                    //     1,2,3,4,5,6,7,8
-                    // ],
-                    columns: ':not(:eq(0))',//jquery to exclude column 0
-                    modifier: {
-                        search: 'none',//ignore search
-                    },
-                    format: {
-                        body: function ( data, row, column, node ) {
-                            if (data && data.length >= 15) {
-                                return ("\u200C" + data);
-                            }
-                            else {
-                                return data;
+            // dom: 'Blfrtip',
+            dom: '<"top">Bfrt<"bottom">lip<"clear">',
+            buttons: [
+                {
+                    extend: 'approve',
+                    text: '中签',
+                    enabled: false,
+                },
+                {
+                    extend: 'cancel',
+                    text: '取消中签',
+                    enabled: false,
+                },
+                {
+                    extend: 'refund',
+                    text: '申请退款',
+                    enabled: false,
+                },
+                {
+                    extend: 'check',
+                    text: '检查退款',
+                    enabled: false,
+                },
+                {
+                    extend: 'delete',
+                    text: '删除',
+                    enabled: false,
+                },
+                {
+                    extend: 'excel',
+                    text: '导出Excel',
+                    title: '报名签到记录',
+                    exportOptions: {
+                        // columns: ':visible'
+                        // columns: [
+                        //     1,2,3,4,5,6,7,8
+                        // ],
+                        columns: ':not(:eq(0))',//jquery to exclude column 0
+                        modifier: {
+                            search: 'none',//ignore search
+                        },
+                        format: {
+                            body: function (data, row, column, node) {
+                                if (data && data.length >= 15) {
+                                    return ("\u200C" + data);
+                                }
+                                else {
+                                    return data;
+                                }
                             }
                         }
-                    }
+                    },
+                    filename: '报名签到记录',
                 },
-                filename: '报名签到记录',
-            },
-            {
-                extend: 'colvis',
-                // postfixButtons: [ 'colvisRestore' ],
-                columns: ':not(.noVis)',
-                collectionLayout: 'fixed four-column'
-            }
-        ],
+                {
+                    extend: 'colvis',
+                    // postfixButtons: [ 'colvisRestore' ],
+                    columns: ':not(.noVis)',
+                    collectionLayout: 'fixed four-column'
+                }
+            ],
 
-        // processing: true,
-        // serverSide: true,
-        ajax: {
-            "url": "/sec/community/thirdactivity/getAttendUsers",
-            "contentType": "application/json;charset=utf-8",
-            "type": "POST",
-            "data": function () {
-                //查询条件参数
-                var param = {
-                    start: $("#start").val().trim(),
-                    end: $("#end").val().trim(),
-                    activityId: $("#activityId").val().trim(),
-                    title: $("#title").val().trim(),
-                    real_name: $("#real_name").val().trim(),
-                    mobile: $("#mobile").val().trim(),
-                    ticket_title: $("#ticket_title").val().trim(),
-                    other_info: $("#other_info").val().trim(),
-                    status: $("#status").val().trim()
-                };
-                return JSON.stringify(param);
-            },
-            "dataSrc": ""
-        },
-        columns: _columns,
-
-        //栏定义
-        columnDefs: [
-            {
-                searchable: false,
-                orderable: false,
-                targets: [0,1]
-            },
-            {
-                targets: 0,
-                className: 'noVis',
-                render: function (data, type, row, meta) {
-                    return '<input type="checkbox" id="checkbox" class="icheckbox_minimal childcheck"  value="' + data + '" />';
+            // processing: true,
+            // serverSide: true,
+            ajax: {
+                "url": "/sec/community/thirdactivity/getAttendUsers",
+                "contentType": "application/json;charset=utf-8",
+                "type": "POST",
+                "data": function () {
+                    //查询条件参数
+                    var param = {
+                        start: $("#start").val().trim(),
+                        end: $("#end").val().trim(),
+                        activityId: $("#activityId").val().trim(),
+                        title: $("#title").val().trim(),
+                        real_name: $("#real_name").val().trim(),
+                        mobile: $("#mobile").val().trim(),
+                        ticket_title: $("#ticket_title").val().trim(),
+                        other_info: $("#other_info").val().trim(),
+                        status: $("#status").val().trim()
+                    };
+                    return JSON.stringify(param);
                 },
+                "dataSrc": ""
             },
-            { targets: [0,1,2,3,4,5,6,7,9], visible: true},
-            { targets: '_all', visible: false }
-        ],
+            columns: _columns,
 
-        //默认排序
+            //栏定义
+            columnDefs: [
+                {
+                    searchable: false,
+                    orderable: false,
+                    targets: [0, 1]
+                },
+                {
+                    targets: 0,
+                    className: 'noVis',
+                    render: function (data, type, row, meta) {
+                        return '<input type="checkbox" id="checkbox" class="icheckbox_minimal childcheck"  value="' + data + '" />';
+                    },
+                },
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 9], visible: true},
+                {targets: '_all', visible: false}
+            ],
+
+            //默认排序
             order: [[1, 'desc']],
-        autoWidth: false,
-        scrollX: true,
-        // scrollY: '50vh',
-        // scrollCollapse: true,
-        deferRender: true,
-        // select: true,
-        // autoFill: {
-        //     columns: ':not(:first-child)'
-        // },
-    });
+            autoWidth: false,
+            scrollX: true,
+            // scrollY: '50vh',
+            // scrollCollapse: true,
+            deferRender: true,
+            // select: true,
+            // autoFill: {
+            //     columns: ':not(:first-child)'
+            // },
+        });
 
     /**
      * 查询
@@ -209,12 +203,11 @@ $(function () {
             // this.text( '<i class="fa fa-spinner fa-pulse"></i>' );
             // this.enable(false);
             var d = [];
-            $('.childcheck:checked').each(function(){
+            $('.childcheck:checked').each(function () {
                 d.push($(this).val());
             });
 
-            if (d.length == 0)
-            {
+            if (d.length == 0) {
                 alert("至少选择一项记录！");
                 return;
             }
@@ -255,12 +248,11 @@ $(function () {
         className: '',
         action: function (e, dt, node, config) {
             var d = [];
-            $('.childcheck:checked').each(function(){
+            $('.childcheck:checked').each(function () {
                 d.push($(this).val());
             });
 
-            if (d.length == 0)
-            {
+            if (d.length == 0) {
                 alert("至少选择一项记录！");
                 return;
             }
@@ -301,16 +293,15 @@ $(function () {
         className: '',
         action: function (e, dt, node, config) {
             var d = [];
-            $('.childcheck:checked').each(function(){
+            $('.childcheck:checked').each(function () {
                 d.push($(this).val());
             });
 
-            if (d.length == 0)
-            {
+            if (d.length == 0) {
                 alert("至少选择一项记录！");
                 return;
             }
-            if(confirm("请检查选择的退费人员是否正确，退费操作不可逆，请确定是否继续退费")) {
+            if (confirm("请检查选择的退费人员是否正确，退费操作不可逆，请确定是否继续退费")) {
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -348,12 +339,11 @@ $(function () {
         className: '',
         action: function (e, dt, node, config) {
             var d = [];
-            $('.childcheck:checked').each(function(){
+            $('.childcheck:checked').each(function () {
                 d.push($(this).val());
             });
 
-            if (d.length == 0)
-            {
+            if (d.length == 0) {
                 alert("至少选择一项记录！");
                 return;
             }
@@ -403,12 +393,11 @@ $(function () {
             // this.text( '<i class="fa fa-spinner fa-pulse"></i>' );
             // this.enable(false);
             var d = [];
-            $('.childcheck:checked').each(function(){
+            $('.childcheck:checked').each(function () {
                 d.push($(this).val());
             });
 
-            if (d.length == 0)
-            {
+            if (d.length == 0) {
                 alert("至少选择一项记录！");
                 return;
             }
@@ -482,7 +471,7 @@ $(function () {
 
     //定义模态窗口
     var $modal = $('#stat-modal');
-    $modal.siblings('.am-btn').on('click', function(e) {
+    $modal.siblings('.am-btn').on('click', function (e) {
         var $target = $(e.target);
         if (($target).hasClass('js-modal-open')) {
             $modal.modal();
@@ -512,7 +501,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'input#checkbox', function () {
         var d = [];
-        $('.childcheck:checked').each(function(){
+        $('.childcheck:checked').each(function () {
             d.push($(this).val());
         });
 
@@ -521,17 +510,14 @@ $(function () {
         t.button(2).enable(d.length > 0);
         t.button(3).enable(d.length > 0);
         t.button(4).enable(d.length > 0);
-    } );
+    });
 });
 
 
 new Vue({
     el: '#app',
-    data: {
-    },
+    data: {},
     mounted: function () {
     },
-    methods: {
-
-    }
+    methods: {}
 });
