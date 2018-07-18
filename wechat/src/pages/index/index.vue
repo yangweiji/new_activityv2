@@ -5,8 +5,9 @@
       <div>
         <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
           <span class="">
-              切换团体
-            </span>
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+            切换团体
+          </span>
         </navigator>
         <div>
           <swiper :indicator-dots="indicatorDots" :autoplay="autoplay" :interval="interval" :duration="duration" :circular="circular">
