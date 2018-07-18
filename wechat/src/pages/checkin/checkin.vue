@@ -35,7 +35,7 @@
 
       <div class="weui-btn-area">
         <navigator url="../../pages/index/index" open-type="switchTab" hover-class="navigator-hover">
-          <button class="weui-btn" type="primary">返回首页</button>
+          <button class="weui-btn" type="default">返回首页</button>
         </navigator>
       </div>
     </div>

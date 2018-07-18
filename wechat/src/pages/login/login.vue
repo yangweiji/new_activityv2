@@ -23,7 +23,7 @@
             v-if="showTopTips">{{infoMessage}}</div>
 
       <div class="weui-cells__title">
-        <navigator url="../../pages/index/index" open-type="switchTab" hover-class="navigator-hover" class="weui-agree__link">回到首页</navigator>
+        欢迎登录
       </div>
       <div class="weui-cells weui-cells_after-title">
         <div class="weui-cell weui-cell_input weui-cell_vcode">
@@ -35,7 +35,7 @@
           </div>
           <div class="weui-cell__ft">
             <div class="weui-vcode-btn" @click="bindGetVerCode" 
-                v-if="validateUserName" :class="{'vcode-btn-disabled': !canGetVerCode}">获取验证码
+                v-if="validateUserName" :class="{'vcode-btn-disabled': !canGetVerCode}" style="font-size:12px;">获取验证码
               <span v-if="count">({{count}})</span>
             </div>
           </div>
@@ -84,6 +84,9 @@
         <button class="weui-btn" type="primary" open-type="getUserInfo" @getuserinfo="bindGetUserInfo" v-if="canIUse" :disabled="disabled">授权登录</button>
         <view v-else>请升级微信版本</view>
         <!-- <button class="weui-btn" type="warn" @click="register">注册新用户</button> -->
+        <div style="text-align:center;margin-top:10px;">
+          <navigator url="../../pages/index/index" open-type="switchTab" hover-class="navigator-hover" class="weui-agree__link">回到首页</navigator>
+        </div>
       </div>
     </div>
   </div>
@@ -136,7 +139,7 @@ export default {
       //获取短信验证码
       var that = this;
       if (that.canGetVerCode) {
-        this.$kyutil.get("/pub/wx/vercode/getVerCode/" + that.username).then(res=>{
+        this.$kyutil.get("/pub/wx/vercode/getVerCode?mobile=" + that.username + "&templateId=3").then(res=>{
           if (res.code != 200) {
             console.log("获取短信验证码出错！");
             return;
@@ -147,7 +150,7 @@ export default {
           that.showTopTipsFun();
 
           //测试环境下，直接显示出验证码
-          that.vercode = res.message;
+          //that.vercode = res.message;
           
           that.canGetVerCode = false;
           that.count = 60;

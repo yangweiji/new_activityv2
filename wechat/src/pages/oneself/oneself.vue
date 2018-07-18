@@ -6,7 +6,7 @@
         <div>
           <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
             <span style="top:5px;">
-              <!-- <i class="fa fa-exchange" aria-hidden="true"></i>切换团体 -->
+              <i class="fa fa-exchange" aria-hidden="true"></i>切换
             </span>
           </navigator>
           <div class="community-avatar">

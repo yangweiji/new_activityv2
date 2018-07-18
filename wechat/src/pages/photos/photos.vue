@@ -1,6 +1,16 @@
 <template>
   <div class="page">
     <div class="page__bd">
+      <!-- banner -->
+      <div>
+        <navigator hover-class="navigator-hover">
+            <span class="community-search">
+            </span>
+        </navigator>  
+        <kyimage src="photo.jpg" folder="wx_home" type="banner" />
+        <!-- <div class="c-bg"></div> -->
+      </div>
+
       <div class="flex-row photos">
 
         <div class="flex-div-item photo-w" v-for="item in items" :key="item.id">
@@ -11,10 +21,10 @@
           <div>
             <p>
               <span class="photo-img-l">
-                {{item.pictureCount}} 张
+                <i class="fa fa-picture-o"></i> {{item.pictureCount}} 张
               </span>
               <span class="photo-img-r">
-                <image src="/static/images/browse.png" class="photo-icon" />{{item.browse_count}}
+                <i class="fa fa-eye"></i> {{item.browse_count}} 次
               </span>
             </p>
             <p class="photo-desc">
@@ -32,6 +42,7 @@
 </template>
 
 <script>
+import kyimage from '@/components/kyimage.vue'
 export default {
   data() {
     return {
@@ -47,7 +58,11 @@ export default {
       description: ""
     };
   },
-  computed: {},
+  components:{
+    kyimage
+  },
+  computed: {
+  },
   methods: {
     getData() {
       var that = this;
@@ -61,7 +76,6 @@ export default {
     }
   },
   created() {
-    console.log("photos created");
   },
   onShow() {
     //接受参数
@@ -73,10 +87,6 @@ export default {
       });
     }
     this.getData();
-
-    // wx.setNavigationBarTitle({
-    //   title: "活动相册"
-    // });
   }
 };
 </script>

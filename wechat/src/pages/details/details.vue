@@ -2,7 +2,12 @@
   <div class="page">
     <div v-if="item" class="page__bd">
       <div class="weui-article">
-        <div class="weui-article__h1">{{item.title}}</div>
+        <div class="weui-article__h1">{{item.title}}
+          <!-- <span class="weui-badge" v-if="item.activity_type==1">活动</span>
+          <span class="weui-badge" v-if="item.activity_type==2">赛事</span>
+          <span class="weui-badge" v-if="item.activity_type==3">抽签</span> -->
+          <span class="weui-badge" v-if="item.activity_type==4">打卡</span>
+        </div>
         <div class="weui-article__section">
           <div class="weui-article__title">
             <image :src="item.avatar" style="width: 40px; height: 40px; overflow: hidden; border-radius: 50%; float: left; position: relative;" />
@@ -11,7 +16,7 @@
             <div class="weui-article__h3 c-display-text">
               {{item.displayname}}   {{item.created}}
               <navigator v-if="item.picture_count > 0" :url="'/pages/photosdetails/photosdetails?activityId='+item.id" class="c-photo">
-                <image src="/static/images/photos.png" style="width: 25px;height:20px;margin-right:5px;margin-bottom:-2px;" /> <div class="weui-badge">{{item.picture_count}}</div>
+                <i class="fa fa-picture-o"></i> {{item.picture_count}} 张
               </navigator>
             </div>
             <div v-if="item.body" class="weui-article__p">
@@ -115,12 +120,12 @@
    */
   .c-display-text {
     line-height: 40px;
-    color: grey;
+    color: #aaa;
     margin-left: 50px;
   }
   .c-photo{
     float: right;
-    color:#008cff;
+    color:#aaa;
   }
   .c-photo .weui-badge{
     background-color: #008cff;
