@@ -364,9 +364,13 @@ class ThirdActivityController : BaseController() {
     fun approve(@RequestBody ids: Array<Int>): List<ActivityUser> {
         var list = mutableListOf<ActivityUser>()
         for (id in ids) {
-            //更新报名状态值
-            thirdActivityService!!.updateActivityUserStatus(id, 2)
-            list.add(thirdActivityService!!.getActivityUser(id))
+            var activityUser=thirdActivityService!!.getActivityUser(id)
+            var activity=thirdActivityService!!.getActivity(activityUser!!.activityId)
+            if(activity!!.activityType==3){
+                //更新报名状态值
+                thirdActivityService!!.updateActivityUserStatus(id, 2)
+                list.add(thirdActivityService!!.getActivityUser(id))
+            }
         }
 
         return list
@@ -561,9 +565,13 @@ class ThirdActivityController : BaseController() {
     fun cancel(@RequestBody ids: Array<Int>): List<ActivityUser> {
         var list = mutableListOf<ActivityUser>()
         for (id in ids) {
-            //更新报名状态值
-            thirdActivityService!!.updateActivityUserStatus(id, null)
-            list.add(thirdActivityService!!.getActivityUser(id))
+            var activityUser=thirdActivityService!!.getActivityUser(id)
+            var activity=thirdActivityService!!.getActivity(activityUser!!.activityId)
+            if(activity!!.activityType==3){
+                //更新报名状态值
+                thirdActivityService!!.updateActivityUserStatus(id, 1)
+                list.add(thirdActivityService!!.getActivityUser(id))
+            }
         }
 
         return list
