@@ -59,7 +59,7 @@
                           </label>
             </radio-group>
           </div>
-          <div class="weui-cells__title" v-if="!item.hasTickets">活动票已售完</div>
+          <div class="weui-cells__title" v-if="!item.hasTickets">没有可购买的活动票</div>
           <field :config="attFields[index]" v-model="attItem.value" v-for="(attItem, index) in item.attendInfos" :key="attItem.title" />
           <div v-if="item.checkInScore > 0" lass="weui-cells__title">
             <label class="c-block-text">活动签到后可得积分：<span class="c-money">{{item.checkInScore}}</span></label>
@@ -302,7 +302,7 @@
         if(that.processing){
           return
         }
-        
+
         that.errorMessage = null;
         if (!this.ticket) {
           that.errorMessage = "请选择一张活动票";
