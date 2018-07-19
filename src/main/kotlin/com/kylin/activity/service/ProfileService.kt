@@ -39,7 +39,7 @@ class ProfileService {
 
     /**
      * 个人中心4个活动数+积分总额
-     * counts:已参加/我喜欢/需签到/已签到/积分总额
+     * counts:已参加/我喜欢/需签到/已签到/积分总额/需打卡活动
      * @param userId 用户编号
      * @param communityId 团体编号
      */
@@ -54,9 +54,11 @@ class ProfileService {
                  "select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id  \n" +
                  "and t1.user_id=? and t2.community_id=?  and check_in_time is not null \n" +
                  "union all\n" +
-                 "select count(activity_id) counts from activity_favorite t1 inner join activity t2 on t1.activity_id=t2.id  and t1.user_id=? and t2.community_id=? "
+                 "select count(activity_id) counts from activity_favorite t1 inner join activity t2 on t1.activity_id=t2.id  and t1.user_id=? and t2.community_id=? \n"+
+                 "union all\n" +
+                 "select count(t1.activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? and t2.end_time > now() and t2.activity_type=4"
        return create!!.resultQuery(sql,userId,communityId,userId,communityId,userId,
-                communityId,userId,communityId,userId,communityId).fetch()
+                communityId,userId,communityId,userId,communityId,userId,communityId).fetch()
 
     }
 
@@ -134,10 +136,16 @@ class ProfileService {
                     "and t4.check_in_time is null and t.end_time > now()\n "+
                     "and t4.user_id=?\n" +
                     "and t.community_id=?"
-        } else {
+        } else if(type==3){
             //已签到活动数
             "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
                     "and t4.check_in_time is not null\n"+
+                    "and t4.user_id=?\n" +
+                    "and t.community_id=?"
+        }else{
+            //需打卡活动数
+            "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
+                    "and t.activity_type=4 and t.end_time > now()\n"+
                     "and t4.user_id=?\n" +
                     "and t.community_id=?"
         }

@@ -5,12 +5,12 @@
       <div class="userinfo-name" v-if="items && items.length == 0">还没有{{types[type]}}的活动</div>
     </div>
      <div class="weui-panel__bd">
-       <activity :item="item" v-for="item in items" :key="item.id"></activity>
+       <activity :item="item" v-for="item in items" :key="item.id" :link-page= "type==5?'activityrecord':''"></activity>
      </div>
-            
-   </div>           
-                   
-                       
+
+   </div>
+
+
 
 </template>
 
@@ -30,7 +30,8 @@ export default {
         '1':'已参与',
         '2':'需签到',
         '3':'已签到',
-        '4':'我喜欢'
+        '4':'我喜欢',
+        '5':'需打卡'
       }
     };
   },
@@ -51,7 +52,7 @@ export default {
         };
         this.$kyutil.get("/pub/wx/profile/getmyactivities", param).then(res => {
           that.items = res
-          
+
         })
     },
   },
@@ -79,7 +80,7 @@ export default {
 <style scoped>
 @import url("~mpvue-wxparse/src/wxParse.css");
 .userinfo-avatar {
-  margin: 0 auto;  
+  margin: 0 auto;
   margin-top: 50rpx;
   display: flex;
   justify-content: center;
@@ -89,7 +90,7 @@ export default {
   border-radius: 50%;
 }
 .userinfo-name {
-  margin: 0 auto;  
+  margin: 0 auto;
   margin-top: 20rpx;
   display: flex;
   justify-content: center;
