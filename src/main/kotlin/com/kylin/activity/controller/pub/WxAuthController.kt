@@ -228,8 +228,11 @@ class WxAuthController {
             else {
                 user.username = username
                 user.mobile = username
-                //初始密码: 123456
-                user.password = coder.encode(activityProperties!!.defaultPassword)
+                if (user.password.isNullOrBlank()) {
+                    //初始密码: 123456
+                    user.password = coder.encode(activityProperties!!.defaultPassword)
+                }
+
                 //更新OpenId
                 user!!.openId = openId
                 user!!.unionId = unionId
