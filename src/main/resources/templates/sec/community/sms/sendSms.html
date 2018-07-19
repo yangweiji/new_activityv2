@@ -63,16 +63,23 @@
                                    class="am-u-sm-2 am-form-label"><span>消息模板</span></label>
                             <div class="am-u-sm-10">
                                 <select @change="selectVal" id="templateCode" name="templateCode" v-model="sms.templateCode">
-                                    <option value="SMS_136386421">活动通知</option>
-                                    <option value="SMS_136391188">活动取消</option>
+                                    <option v-for="option in smsTemplateList" v-bind:value="option.code">
+                                        {{option.name}}
+                                    </option>
                                 </select>
-                                <!--<p>选择的项是：{{sms.templateCode}}</p>-->
-                                <p v-if="sms.templateCode==='SMS_136386421'"><span class="c-picture-tip">消息模板：您好，您已报名参加${title}活动，活动开始时间:${time}，地点:${address}，请准时参加！</span></p>
-                                <p v-if="sms.templateCode==='SMS_136391188'"><span class="c-picture-tip">消息模板：客户您好，十分抱歉，因${reason}原因，原定于${time}举办的${title}活动取消！</span></p>
+                                <p><span class="c-picture-tip">{{sms.template}}</span></p>
+
+
+                                <!--<select @change="selectVal" id="templateCode" name="templateCode" v-model="sms.templateCode">-->
+                                    <!--<option value="SMS_136386421">活动通知</option>-->
+                                    <!--<option value="SMS_136391188">活动取消</option>-->
+                                <!--</select>-->
+                                <!--<p v-if="sms.templateCode==='SMS_136386421'"><span class="c-picture-tip">消息模板：您好，您已报名参加${title}活动，活动开始时间:${time}，地点:${address}，请准时参加！</span></p>-->
+                                <!--<p v-if="sms.templateCode==='SMS_136391188'"><span class="c-picture-tip">消息模板：客户您好，十分抱歉，因${reason}原因，原定于${time}举办的${title}活动取消！</span></p>-->
                             </div>
                         </div>
 
-                        <div class="am-form-group" v-if="sms.templateCode==='SMS_136391188'">
+                        <div class="am-form-group" v-if="sms.templateName==='活动取消通知'">
                             <label for="messageContent" class="am-u-sm-2 am-form-label"><span>活动取消原因</span></label>
                             <div class="am-u-sm-10">
                                 <input required type="text" id="messageContent" name="messageContent" th:maxlength="20"
