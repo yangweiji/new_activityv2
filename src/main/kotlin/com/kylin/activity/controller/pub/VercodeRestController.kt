@@ -45,7 +45,8 @@ class VercodeRestController {
         var code = (random.nextInt(900000) + 100000).toString()
         LogUtil.printLog("短信验证码: $code")
         //发送短信
-        commonService!!.sendSms(mobile, code, 2)
+        var sendSmsResponse = commonService!!.sendSms(mobile, code, 2)
+        LogUtil.printLog("手机号: $mobile, 短信发送状态：${sendSmsResponse.code}, ${sendSmsResponse.message}")
 
         var verCode = Vercode()
         verCode.mobile = mobile
@@ -70,9 +71,10 @@ class VercodeRestController {
     fun getVerCode(@RequestParam mobile: String, @RequestParam templateId: Int): Any {
         val random = Random()
         var code = (random.nextInt(900000) + 100000).toString()
-        LogUtil.printLog("短信验证码: $code")
+        LogUtil.printLog("手机号: $mobile, 短信验证码: $code")
         //发送短信
-        commonService!!.sendSms(mobile, code, templateId)
+        var sendSmsResponse = commonService!!.sendSms(mobile, code, templateId)
+        LogUtil.printLog("手机号: $mobile, 短信发送状态：${sendSmsResponse.code}, ${sendSmsResponse.message}")
 
         var verCode = Vercode()
         verCode.mobile = mobile

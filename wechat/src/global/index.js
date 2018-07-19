@@ -164,6 +164,11 @@ function Login() {
                     console.log("sessionInfo: ", res)
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
+                        if (!res.unionId) {
+                            //如果unionId没有获取到,设置unionId=''空字符串,通过openId去获取用户信息
+                            res.unionId = ''
+                        }
+
                         HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
                             // console.log("user: ", res)
                             if (res) {
