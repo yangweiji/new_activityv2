@@ -9,7 +9,7 @@
     <div class="page__bd">
       <div class="weui-media-box weui-media-box_appmsg" v-for="item in grids" :key="item.id">
         <div class="weui-media-box__title">{{item.title}}</div>
-        <div class="weui-media-box-text"> +{{item.score}}</div>
+        <div class="weui-media-box-text" ><span v-if='item.score>0'> +</span>{{item.score}}</div>
       </div>
     </div>
 

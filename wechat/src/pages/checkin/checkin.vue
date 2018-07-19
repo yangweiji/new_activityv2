@@ -2,9 +2,18 @@
   <div class="page">
     <div v-if="item" class="page__bd">
       <activity :item="item.activity"></activity>
-      <div class="weui-cells__title" v-if="!item.checkInTime">
-        <h1 class="c-title-text">
+      <div class="weui-cells__title" >
+        <h1 class="c-title-text" v-if="item.isOverdue">
           报名截止时间已过
+        </h1>
+        <h1 class="c-title-text" v-else-if="!item.checkInUserId">
+          您未报名
+        </h1>
+        <h1 class="c-title-text" v-else-if="item.activity.activity_type == 3 && item.status != 2">
+          您未中签
+        </h1>
+        <h1 class="c-title-text" v-else-if="!item.checkInTime">
+          您已签到
         </h1>
       </div>
       <div class="weui-cells__title c-text-center">
@@ -15,11 +24,11 @@
           </div>
         </h1>
       </div>
-      <div class="weui-cells__title">
+      <!-- <div class="weui-cells__title">
         <h1 class="am-article-title">
           您已签到
         </h1>
-      </div>
+      </div> -->
       <div class="weui-form-preview">
         <div class="weui-form-preview__hd">
           <div v-if="item.checkInScore > 0" class="weui-form-preview__item">
