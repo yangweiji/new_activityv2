@@ -6,6 +6,7 @@ import com.kylin.activity.databases.tables.pojos.ActivitySms
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ActivitySmsService
 import com.kylin.activity.sms.SmsTemplateListProperties
+import com.kylin.activity.sms.SmsTemplateProperties
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
@@ -47,6 +48,20 @@ class SmsController : BaseController() {
      */
     @Autowired
     private val templateListProperties: SmsTemplateListProperties? = null
+
+    /**
+     * 读取短信模板列表
+     */
+    @RequestMapping(value = "/getSmsTemplateList", method = [RequestMethod.POST, RequestMethod.GET])
+    @ResponseBody
+    fun getSmsTemplateList(): Any {
+        var templates = templateListProperties!!.templates!!
+        var items: MutableList<SmsTemplateProperties?> = mutableListOf()
+        items.add(0, templates[0])
+        items.add(1, templates[1])
+
+        return items
+    }
 
     /**
      * 查询短信信息
@@ -121,11 +136,12 @@ class SmsController : BaseController() {
         var title = activity.get("title", String::class.java)
         var address = activity.get("address", String::class.java)
         var reason = ""
-        when (sms.templateCode) {
-            "SMS_136386421" -> {
+        sms.templateName = templateListProperties!!.templateMap!![sms.templateCode]!!.name
+        when (sms.templateName) {
+            "活动提醒通知" -> {
                 //活动通知
             }
-            "SMS_136391188" -> {
+            "活动取消通知" -> {
                 //活动取消
                 reason = sms.messageContent
             }
@@ -145,7 +161,6 @@ class SmsController : BaseController() {
         //发送短信
         var response = commonService!!.sendBatchSms(mobiles, commonService!!.activitySmsSign, sms.templateCode, templateParam)
 
-        sms.templateName = templateListProperties!!.templateMap!![sms.templateCode]!!.name
         sms.messageContent = reason
         sms.sendTime = DateUtil.date().toTimestamp()
         sms.sendUserId = this.sessionUser!!.id
