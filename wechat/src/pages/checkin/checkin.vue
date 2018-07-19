@@ -6,7 +6,7 @@
         <h1 class="c-title-text" v-if="item.isOverdue">
           报名截止时间已过
         </h1>
-        <h1 class="c-title-text" v-else-if="!!item.checkInUserId">
+        <h1 class="c-title-text" v-else-if="!item.checkInUserId">
           您未报名
         </h1>
         <h1 class="c-title-text" v-else-if="item.activity.activity_type == 3 && item.status != 2">
