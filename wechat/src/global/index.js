@@ -1,6 +1,7 @@
 //引入filter
 import Vue2Filters from 'vue2-filters'
 import Dateutil from './date'
+import store from '../store'
 var kyFilters = {}
 kyFilters.filter = (key, value) => {
     kyFilters[key] = value
