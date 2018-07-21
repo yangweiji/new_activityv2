@@ -44,7 +44,9 @@ export default {
             'pages/toolbomamatch/toolbomamatch',
             'pages/toolmaf180/toolmaf180',
             'pages/toolsizemap/toolsizemap',
-            'pages/attendusers/attendusers'
+            'pages/attendusers/attendusers',
+            'pages/search_activity/search_activity'
+
         ],
 
         // Will be filled in webpack
@@ -62,6 +64,11 @@ export default {
                     iconPath: 'static/images/home_page.png',
                     selectedIconPath: 'static/images/home_pages.png',
                     text: '首页'
+                }, {
+                    pagePath: 'pages/search_activity/search_activity',
+                    iconPath: 'static/images/search_cheched.png',
+                    selectedIconPath: 'static/images/search_image.png',
+                    text: '发现'
                 },
                 {
                     pagePath: 'pages/tool/tool',

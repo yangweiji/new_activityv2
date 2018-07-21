@@ -5,15 +5,17 @@ package com.kylin.activity.databases.tables.records;
 
 
 import com.kylin.activity.databases.tables.ActivityUser;
+
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+
+import javax.annotation.Generated;
+
 import org.jooq.Field;
 import org.jooq.Record1;
 import org.jooq.Record16;
 import org.jooq.Row16;
 import org.jooq.impl.UpdatableRecordImpl;
-
-import javax.annotation.Generated;
-import java.math.BigDecimal;
-import java.sql.Timestamp;
 
 
 /**
@@ -29,7 +31,7 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> implements Record16<Integer, Integer, Integer, Integer, Timestamp, Integer, Timestamp, Timestamp, String, String, String, BigDecimal, Integer, Timestamp, Integer, Integer> {
 
-    private static final long serialVersionUID = 504634040;
+    private static final long serialVersionUID = 1360406960;
 
     /**
      * Setter for <code>activity_user.id</code>. 编号
@@ -242,14 +244,14 @@ public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> 
     }
 
     /**
-     * Setter for <code>activity_user.status</code>. 中签状态（待审，中签，已申请退费，已完成退费）
+     * Setter for <code>activity_user.status</code>. 中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）
      */
     public void setStatus(Integer value) {
         set(15, value);
     }
 
     /**
-     * Getter for <code>activity_user.status</code>. 中签状态（待审，中签，已申请退费，已完成退费）
+     * Getter for <code>activity_user.status</code>. 中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）
      */
     public Integer getStatus() {
         return (Integer) get(15);

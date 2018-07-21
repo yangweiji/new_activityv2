@@ -8,15 +8,24 @@ import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.ActivityUserRecord;
-import org.jooq.*;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
-import javax.annotation.Generated;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
+
+import javax.annotation.Generated;
+
+import org.jooq.Field;
+import org.jooq.Identity;
+import org.jooq.Index;
+import org.jooq.Name;
+import org.jooq.Schema;
+import org.jooq.Table;
+import org.jooq.TableField;
+import org.jooq.UniqueKey;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
 
 /**
@@ -32,7 +41,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser extends TableImpl<ActivityUserRecord> {
 
-    private static final long serialVersionUID = 335105194;
+    private static final long serialVersionUID = -1938058788;
 
     /**
      * The reference instance of <code>activity_user</code>
@@ -123,9 +132,9 @@ public class ActivityUser extends TableImpl<ActivityUserRecord> {
     public final TableField<ActivityUserRecord, Integer> MODIFIED_BY = createField("modified_by", org.jooq.impl.SQLDataType.INTEGER, this, "修改人");
 
     /**
-     * The column <code>activity_user.status</code>. 中签状态（待审，中签，已申请退费，已完成退费）
+     * The column <code>activity_user.status</code>. 中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）
      */
-    public final TableField<ActivityUserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "中签状态（待审，中签，已申请退费，已完成退费）");
+    public final TableField<ActivityUserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）");
 
     /**
      * Create a <code>activity_user</code> table reference
