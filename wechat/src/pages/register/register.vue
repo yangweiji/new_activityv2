@@ -211,7 +211,7 @@ export default {
                         wx.setStorageSync("user", res)
 
                         if (res.community) {
-                          this.$store.state.community = res.community
+                          that.$store.state.community = res.community
                         }
                         // wx.navigateBack({
                         //   delta: 1
