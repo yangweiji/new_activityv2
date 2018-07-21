@@ -510,12 +510,16 @@ class WxActivityController {
         val result = mutableMapOf<String, Any?>()
 
 
-        var activitySql = "select t1.*, t2.user_id , t2.check_in_time, ifnull(t3.score, 0) check_in_score from activity t1 left join activity_user t2 on t1.id = t2.activity_id and t2.user_id = ? left join score_history t3 on t3.activity_id = t1.id and t3.user_id =?  where t1.id=?"
+        var activitySql = "select t1.*, t2.user_id , t2.check_in_time, t2.status as zqStatus, ifnull(t3.score, 0) check_in_score from activity t1 left join activity_user t2 on t1.id = t2.activity_id and t2.user_id = ? left join score_history t3 on t3.activity_id = t1.id and t3.user_id =?  where t1.id=?"
 
 
         var checkInUser = create!!.resultQuery(activitySql, userId, userId, activityId).fetchOne()
 
         var communityId = checkInUser.get("community_id") as Int
+        //活动类型
+        var activityType = checkInUser.get("activity_type") as Int
+        //获取中签状态
+        var zqStatus = checkInUser.get("zqStatus") as Int?
 
         //是否为本年的VIP
         val isVip = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
@@ -536,10 +540,16 @@ class WxActivityController {
                 scoreInfo.generalUserScore
             }
         }
+        //报名截止时间
+        var dueTime = checkInUser.get("attend_due_time", Date::class.java)
+        //是否已过截止时间 true-已过   false-未过
+        var isOverdue = dueTime <= DateUtil.date().toTimestamp()
 
         var checkInTime = checkInUser.get("check_in_time")
         var checkInUserId = checkInUser.get("user_id")
-        if (checkInUserId != null && checkInTime == null) {
+        //未过截至时间，已报名，不是中签活动 或者 中签活动中签，为签到
+        if (!isOverdue && checkInUserId != null && ((activityType!=3)||(activityType==3 && zqStatus==2)) && checkInTime == null) {
+
             checkInTime = DateUtil.date().toTimestamp()
             create!!.execute("update activity_user set check_in_time=? where activity_id=? and user_id=?", checkInTime, activityId, userId)
 
@@ -555,12 +565,17 @@ class WxActivityController {
                 scoreService!!.save(scoreHistory)
             }
         }
-
-        result["checkInTime"] = util!!.fromNow(checkInTime)
+        if(checkInTime != null){
+            result["checkInTime"] = util!!.fromNow(checkInTime)
+        }
         result["checkInScore"] = checkInScore
 
-
-
+        //是否已过截止时间
+        result["isOverdue"] = isOverdue
+        //是否已报名 null-未报名
+        result["checkInUserId"] = checkInUserId
+        //中签状态
+        result["zqStatus"] = zqStatus
 
         result["activity"] = activityService!!.getActivityItem(activity)
 

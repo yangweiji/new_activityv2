@@ -1,7 +1,6 @@
 //引入filter
 import Vue2Filters from 'vue2-filters'
 import Dateutil from './date'
-import store from '../store'
 var kyFilters = {}
 kyFilters.filter = (key, value) => {
     kyFilters[key] = value
@@ -165,6 +164,11 @@ function Login() {
                     console.log("sessionInfo: ", res)
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
+                        if (!res.unionId) {
+                            //如果unionId没有获取到,设置unionId=''空字符串,通过openId去获取用户信息
+                            res.unionId = ''
+                        }
+
                         HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
                             // console.log("user: ", res)
                             if (res.user) {
@@ -185,9 +189,10 @@ function Login() {
 }
 
 //验证用户身份，小程序页面创建时调用此方法
+//检查用户手机号是否填写，没有绑定手机号强制绑定手机号登录
 function CheckUserValidation() {
-    // console.log("user: ", wx.getStorageSync("user"));
-    if (!wx.getStorageSync("user")) {
+    var user = wx.getStorageSync("user")
+    if (!user || !user.mobile) {
         // 跳转至登录界面验证身份
         wx.redirectTo({
             url: "/pages/login/login"

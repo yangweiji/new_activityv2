@@ -38,10 +38,10 @@
               <div class="weui-form-preview__btn weui-form-preview__btn_danger" hover-class="weui-form-preview__btn_active" @click="cancelAttend()">取消报名</div>
             </div>
           </div>
-          
+
           <div class="weui-btn-area">
             <navigator url="../../pages/index/index" open-type="switchTab" hover-class="navigator-hover">
-              <button class="weui-btn" type="primary">返回首页</button>
+              <button class="weui-btn" type="default">返回首页</button>
             </navigator>
           </div>
         </div>
@@ -89,6 +89,7 @@
         提交报名信息
       </div>
     </div>
+    <!--<button @click="getoCheckIn">签到</button>-->
     <!-- 打卡活动， 显示打卡按钮 -->
     <div v-if="item && item.attendUser && item.activity.activity_type == 4" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="gotoActivityUserRecord()" class="weui-flex__item c-bg-primary">

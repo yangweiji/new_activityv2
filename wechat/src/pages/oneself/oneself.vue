@@ -1,12 +1,12 @@
 <template>
   <div class="page">
     <div v-if="item" class="page__bd">
-      
+
         <!-- banner -->
         <div>
           <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
             <span style="top:5px;">
-              <!-- <i class="fa fa-exchange" aria-hidden="true"></i>切换团体 -->
+              <i class="fa fa-exchange" aria-hidden="true"></i>切换
             </span>
           </navigator>
           <div class="community-avatar">
@@ -64,8 +64,9 @@
               </dl>
             </navigator>
           </div>
-        </div>
         
+        </div>
+
         <div>
           <navigator url="/pages/userinfo/userinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
@@ -76,6 +77,15 @@
             </div>
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </navigator>
+           <navigator url="/pages/myactivitys/myactivitys?type=5" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+             <div class="weui-cell__hd">
+               <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
+                 </div>
+                   <div class="weui-cell__bd weui-cell_primary">
+                     <div>打卡活动</div>
+                   </div>
+             <div class="weui-cell_integral">{{item.activityCounts[4].counts}}</div>
+           </navigator>
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
@@ -85,7 +95,7 @@
             </div>
             <div class="weui-cell_integral">{{item.score}}</div>
           </navigator>
-          
+
           <navigator url="/pages/realinfo/realinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/real_name.png" style="width: 25px;height: 25px;margin-right: 5px" />
@@ -105,9 +115,9 @@
             <div class="weui-cell_comment">{{vipText}}</div>
           </navigator>
 
-          
+
         </div>
-      
+
     </div>
   </div>
 </template>
@@ -237,7 +247,7 @@
     width: 100%;
     text-align: center;
   }
-  
+
   .wx_counts {
     width: 100%;
     height: 60px;

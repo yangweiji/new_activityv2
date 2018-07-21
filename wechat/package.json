@@ -1,8 +1,8 @@
 {
-    "name": "mpvue-weui",
+    "name": "9kylin-mpvue",
     "version": "1.0.2",
-    "description": "用 vue 写小程序，使用 mpvue 框架重写 WeUI。",
-    "author": "kuangpengfei <kuangpf1995@gmail.com>",
+    "description": "9kylin activity platform",
+    "author": "",
     "private": false,
     "scripts": {
         "dev": "node build/dev-server.js",
@@ -12,7 +12,6 @@
     },
     "dependencies": {
         "decimal.js": "^10.0.1",
-        "font-awesome": "^4.7.0",
         "mpvue": "^1.0.7",
         "mpvue-calendar": "^1.0.1",
         "mpvue-wxparse": "^0.6.1",

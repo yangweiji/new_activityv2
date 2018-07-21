@@ -344,7 +344,6 @@ class ActivityService {
      * @param pay:
      * @return 活动信息集合
      */
-    @Cacheable()
     fun getPublicActivities(tag: String, time: String, pay: String): Result<Record> {
 
         var sql_count = "select count(*) count from activity t1 where 1=1 {0} {1}"
