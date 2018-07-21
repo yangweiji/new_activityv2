@@ -1,6 +1,7 @@
 //引入filter
 import Vue2Filters from 'vue2-filters'
 import Dateutil from './date'
+import store from '../store'
 var kyFilters = {}
 kyFilters.filter = (key, value) => {
     kyFilters[key] = value
@@ -165,10 +166,14 @@ function Login() {
                     if (res.code == 200) {
                         wx.setStorageSync("sessionInfo", res)
                         HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
-                          // console.log("user: ", res)
-                            if (res) {
-                                wx.setStorageSync("user", res)
-                              console.log("storage user->", res)
+                            // console.log("user: ", res)
+                            if (res.user) {
+                                wx.setStorageSync("user", res.user)
+
+                                console.log("storage user->", res)
+                            }
+                            if (res.community) {
+                                store.state.community = res.community
                             }
                         });
                     }
@@ -181,7 +186,7 @@ function Login() {
 
 //验证用户身份，小程序页面创建时调用此方法
 function CheckUserValidation() {
-  // console.log("user: ", wx.getStorageSync("user"));
+    // console.log("user: ", wx.getStorageSync("user"));
     if (!wx.getStorageSync("user")) {
         // 跳转至登录界面验证身份
         wx.redirectTo({

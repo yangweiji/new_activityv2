@@ -1,8 +1,10 @@
 package com.kylin.activity.controller.pub
 
 import com.kylin.activity.config.ActivityProperties
+import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.model.MessageResult
+import com.kylin.activity.service.CommunityService
 import com.kylin.activity.service.UserService
 import com.kylin.activity.service.VerCodeService
 import com.kylin.activity.service.WxService
@@ -15,6 +17,7 @@ import org.apache.commons.lang3.StringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.web.bind.annotation.*
+
 
 /**
  * 小程序登录认证结果
@@ -74,6 +77,12 @@ class WxAuthController {
     @Autowired
     private val activityProperties: ActivityProperties? = null
 
+    /**
+     * 团体服务
+     */
+    @Autowired
+    private var communityService: CommunityService? = null
+
     @GetMapping("/getSessionInfo")
     fun getSessionInfo(@RequestParam(required = false) code: String?): Any {
 
@@ -119,8 +128,9 @@ class WxAuthController {
      * @return 返回用户信息
      */
     @GetMapping("/getUserInfo")
-    fun getUserInfo(openid: String?, unionId: String?): User? {
+    fun getUserInfo(openid: String?, unionId: String?): Any {
         var user = userService!!.getUserByOpenOrUnionId(openid, unionId)
+        var community: Community? = null
         if (user != null) {
             if (user.openId != openid) {
                 //设定小程序openid值
@@ -129,9 +139,10 @@ class WxAuthController {
             }
 
             user!!.password = null
+            community = communityService!!.getDefaultCommunity(user.id)
         }
 
-        return user
+        return mapOf("user" to user, "community" to community)
     }
 
     /**

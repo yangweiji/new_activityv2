@@ -87,6 +87,12 @@ class ActivityService {
     private val actionHistoryDao: ActionHistoryDao? = null
 
     /**
+     * 团体用户关联DAO
+     */
+    @Autowired
+    private val communityUserDao: CommunityUserDao? = null
+
+    /**
      * 定义分页索引起始位置
      */
     var page: Int = 0
@@ -911,6 +917,18 @@ class ActivityService {
             var selfAttendCount = selfCheck.get("self_attend_count", Int::class.java)
             if (selfAttendCount == 0) {
                 activityUserDao!!.insert(activityUser)
+
+                //参加活动报名成功后，检查是否加入了该团体，没加入自动加入
+                var communityUserCount = create!!.resultQuery("select count(*) from community_user where user_id=? and community_id=?", activityUser.userId, activity.communityId).fetchOne()
+                if(communityUserCount == null || communityUserCount.into(Long::class.java) == 0L){
+                    var communityUser = CommunityUser()
+                    communityUser.communityId = activity.communityId
+                    communityUser.created = DateUtil.date().toTimestamp()
+                    communityUser.userId = activityUser.userId
+                    communityUserDao!!.insert(communityUser)
+
+                }
+
             } else {
                 throw Exception("您已经报名，不能重复报名")
             }
