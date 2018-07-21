@@ -157,6 +157,16 @@ class CommunityService {
         return if (item != null) item.into(CommunityUser::class.java) else null
     }
 
+
+    /**
+     * 获取最近一次加入的团体
+     */
+    fun getDefaultCommunity(userId:Int): Community{
+        var sql = "select t1.* from community t1 left join community_user t2 on t1.id = t2.community_id and t2.user_id = ?\n" +
+                "where t2.id is not null or t1.id = 1 order by t2.created desc limit 1"
+        return create!!.resultQuery(sql, userId).fetchOne().into(Community::class.java)
+    }
+
     /**
      * 团体组织排行榜
      */
@@ -175,4 +185,6 @@ class CommunityService {
                 "where t2.user_id = ?"
         return create!!.fetch(sql, userId).into(Community::class.java)
     }
+
+
 }

@@ -207,8 +207,12 @@ export default {
                 var currentUser = wx.getStorageSync("sessionInfo")
                 that.$kyutil.get("/pub/wx/auth/getUserInfo", { "openid": currentUser.openid, "unionId": currentUser.unionId }).then(res => {
                     console.log("user: ", res)
-                    if (res) {
+                    if (res.user) {
                         wx.setStorageSync("user", res)
+
+                        if (res.community) {
+                          that.$store.state.community = res.community
+                        }
                         // wx.navigateBack({
                         //   delta: 1
                         // });

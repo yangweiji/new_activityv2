@@ -1,6 +1,7 @@
 //引入filter
 import Vue2Filters from 'vue2-filters'
 import Dateutil from './date'
+import store from '../store'
 var kyFilters = {}
 kyFilters.filter = (key, value) => {
     kyFilters[key] = value
@@ -171,9 +172,13 @@ function Login() {
 
                         HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
                             // console.log("user: ", res)
-                            if (res) {
-                                wx.setStorageSync("user", res)
+                            if (res.user) {
+                                wx.setStorageSync("user", res.user)
+
                                 console.log("storage user->", res)
+                            }
+                            if (res.community) {
+                                store.state.community = res.community
                             }
                         });
                     }

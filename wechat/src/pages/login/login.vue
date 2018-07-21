@@ -201,10 +201,14 @@ export default {
                 //取得用户信息
                 that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId, "unionId": param.unionId }).then(res => {
                     // console.log("user: ", res)
-                    if (res) {
+                    if (res.user) {
                         //将user存储于storage
-                        wx.setStorageSync("user", res)
-                        console.log("storage user->", res)
+                        wx.setStorageSync("user", res.user)
+                        console.log("storage user->", res.user)
+
+                        if (res.community) {
+                          that.$store.state.community = res.community
+                        }
 
                         wx.showToast({
                           title: '登录成功，跳转中...',
