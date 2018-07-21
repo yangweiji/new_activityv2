@@ -338,7 +338,7 @@ class ActivityService {
      * @param pay:
      * @return 活动信息集合
      */
-    fun getPublicActivities(tag: String, time: String, pay: String): Result<Record> {
+    fun getPublicActivities(tag: String, time: String, pay: String,searchText: String? = null): Result<Record> {
 
         var sql_count = "select count(*) count from activity t1 where 1=1 {0} {1}"
 
@@ -349,7 +349,7 @@ class ActivityService {
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by = t2.id " +
-                "where 1=1 {0} {1} " +
+                "where 1=1 {0} {1} {2} "
                 "order by t1.start_time desc " +
                 "limit {99}, {100}"
         var strTag = ""
@@ -358,6 +358,11 @@ class ActivityService {
         }
         sql_count = sql_count.replace("{0}", strTag)
         sql = sql.replace("{0}", strTag)
+
+        var strSearchText = ""
+        if (!searchText.isNullOrBlank() && !searchText.equals("0")) strSearchText = "and t1.title like '{2}'".replace("{2}", "%$searchText%")
+        sql_count = sql_count.replace("{2}", strSearchText)
+        sql = sql.replace("{2}", strSearchText)
 
         var strTime = ""
         if (!time.isNullOrBlank() && !time.equals("0")) {
