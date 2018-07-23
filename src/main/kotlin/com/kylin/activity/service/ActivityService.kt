@@ -901,7 +901,13 @@ class ActivityService {
             activityUser.attendTime = DateUtil.date().toTimestamp()
             activityUser.created = DateUtil.date().toTimestamp()
             activityUser.createdBy = activityUser.userId
-
+            if(activity.activityType==3){
+                //是抽签活动，状态：待抽签
+                activityUser.status=1
+            }else{
+                //不是抽签活动，状态：不抽签
+                activityUser.status=0
+            }
             if (activityUser.score > 0) {
                 var userScore = thirdScoreService!!.getUseableScore(activityUser.userId, activity!!.communityId)
                 if (userScore < activityUser.score) {
