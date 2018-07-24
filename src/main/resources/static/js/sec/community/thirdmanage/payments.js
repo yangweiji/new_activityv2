@@ -174,7 +174,7 @@ $(function () {
                         t.ajax.reload();
                     }
                     else {
-                        alert("订单未支付！");
+                        alert("订单状态正常！");
                     }
                     Util.loading(false);
                 },
