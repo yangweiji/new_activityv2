@@ -547,7 +547,7 @@ class WxActivityController {
 
         var checkInTime = checkInUser.get("check_in_time")
         var checkInUserId = checkInUser.get("user_id")
-        //未过截至时间，已报名，不是中签活动 或者 中签活动中签，为签到
+        //未过截至时间，已报名，不是中签活动 或者 中签活动中签，未签到
         if (!isOverdue && checkInUserId != null && ((activityType!=3)||(activityType==3 && zqStatus==2)) && checkInTime == null) {
 
             checkInTime = DateUtil.date().toTimestamp()
