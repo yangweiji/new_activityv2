@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
+import java.math.BigDecimal
 
 /**
  * 第三方团体组织团体中心控制器
@@ -317,8 +318,11 @@ class ThirdManageController : BaseController() {
         //取得用户缴费订单信息
         var items = oderService!!.getOrdersStatistics(title, start, end, this.sessionCommunity.id)
         var totalAmount: Double = 0.0
-        for (item in items)
+        for (item in items) {
             totalAmount += java.lang.Double.parseDouble(item.getValue("amount").toString())
+            //BigDecimal可以把一个double类型的数值保留两位小数，并且可以实现数值的四舍五入
+            totalAmount=BigDecimal(totalAmount).setScale(2,BigDecimal.ROUND_HALF_UP).toDouble()
+        }
 
         model.addAttribute("start", start)
         model.addAttribute("end", end)

@@ -10,7 +10,7 @@
           您未报名
         </h1>
         <h1 class="c-title-text" v-else-if="item.activity.activity_type == 3 && item.zqStatus != 2  ">
-          您未中签
+          您未中签，不能签到
         </h1>
         <h1 class="c-title-text" v-else-if="item.checkInTime">
           您已签到
