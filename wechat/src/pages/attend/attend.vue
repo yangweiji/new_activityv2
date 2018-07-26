@@ -12,15 +12,15 @@
         <!--已经报名-->
         <div v-if="item && item.attendUser">
           <div class="weui-cells__title">
-            <h1 class="am-article-title"  v-if="!item.isAttendNow">
+            <h1 class="am-article-title" v-if="isAttendNow">
+              报名成功
+            </h1>
+            <h1 class="am-article-title" v-else>
               您已报名
               <!--抽签活动显示抽签状态-->
               <span v-if="item.activity.activity_type == 3" class="c-text-primary">
                   【<span>{{activityStatusText}}</span>】
               </span>
-            </h1>
-            <h1 class="am-article-title"  v-else>
-              报名成功
             </h1>
           </div>
           <div class="weui-form-preview">
@@ -92,7 +92,7 @@
         提交报名信息
       </div>
     </div>
-    <!--<button @click="getoCheckIn">签到</button>-->
+    <!-- <button @click="getoCheckIn">签到</button>-->
     <!-- 打卡活动， 显示打卡按钮 -->
     <div v-if="item && item.attendUser && item.activity.activity_type == 4" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="gotoActivityUserRecord()" class="weui-flex__item c-bg-primary">
@@ -128,6 +128,7 @@
         item: {},
         errorMessage: null,
         processing: false,
+        isAttendNow: false,
         attFields: null
       };
     },
@@ -356,6 +357,7 @@
           //免费活动，直接报名
           that.$kyutil.post("/pub/wx/activity/attend", activityUser).then(() => {
             that.getData();
+            that.isAttendNow=true;
           })
         }
       },
@@ -392,6 +394,7 @@
           //支付成功后，检查订单也成功，报名最终成功
           if (orderStatus == 2) {
             that.getData(); // 支付成功
+            that.isAttendNow=true;
           } else {
             console.error("支付出现错误[orderStatus]:" ,e)
             that.$kyutil.alert("支付出现问题，在确定是否支付成功前，请不要重复支付")
@@ -426,6 +429,7 @@
       var user = this.$kyutil.GetUser();
       if (user) {
         this.userId = user.id;
+        this.isAttendNow=false;
         this.getData();
       }
     },
