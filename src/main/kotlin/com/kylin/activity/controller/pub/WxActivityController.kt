@@ -211,10 +211,8 @@ class WxActivityController {
         map["checkInScore"] = checkInScore
 
         var cancelMessage: String? = null
-        var isAttendNow=false //是否刚报名
         //还未报名
         if (attendUser == null) {
-            isAttendNow=true
             var ticketSql = "select t1.*, ifnull(t2.attend_count, 0) attend_count from activity_ticket t1 left join \n" +
                     "( select activity_ticket_id, count(user_id) attend_count from activity_user where activity_id = ? group by activity_ticket_id ) t2\n" +
                     "  on t1.id = t2.activity_ticket_id\n" +
@@ -268,7 +266,6 @@ class WxActivityController {
 
         } else {
             //已报名，填充报名信息
-
             var title = attendUser.get("ticket_title", String::class.java)
             var level = attendUser.get("ticket_user_level", Int::class.java)
             if (level > 0) {
@@ -307,7 +304,6 @@ class WxActivityController {
         var dueTime = currentActivity.get("attend_due_time", Date::class.java)
         map["cancelMessage"] = if (cancelMessage.isNullOrEmpty()) "" else cancelMessage!!
         map["is_over_due"] = dueTime <= DateUtil.date().toTimestamp()
-        map["is_attendNow"]=isAttendNow
 
         return map
     }

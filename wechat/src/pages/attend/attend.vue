@@ -12,7 +12,7 @@
         <!--已经报名-->
         <div v-if="item && item.attendUser">
           <div class="weui-cells__title">
-            <h1 class="am-article-title" v-if="item.isAttendNow">
+            <h1 class="am-article-title" v-if="isAttendNow">
               报名成功
             </h1>
             <h1 class="am-article-title" v-else>
@@ -128,6 +128,7 @@
         item: {},
         errorMessage: null,
         processing: false,
+        isAttendNow: false,
         attFields: null
       };
     },
@@ -356,6 +357,7 @@
           //免费活动，直接报名
           that.$kyutil.post("/pub/wx/activity/attend", activityUser).then(() => {
             that.getData();
+            that.isAttendNow=true;
           })
         }
       },
@@ -392,6 +394,7 @@
           //支付成功后，检查订单也成功，报名最终成功
           if (orderStatus == 2) {
             that.getData(); // 支付成功
+            that.isAttendNow=true;
           } else {
             console.error("支付出现错误[orderStatus]:" ,e)
             that.$kyutil.alert("支付出现问题，在确定是否支付成功前，请不要重复支付")
@@ -426,6 +429,7 @@
       var user = this.$kyutil.GetUser();
       if (user) {
         this.userId = user.id;
+        this.isAttendNow=false;
         this.getData();
       }
     },
