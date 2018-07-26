@@ -548,9 +548,12 @@ class WxActivityController {
 
         var checkInTime = checkInUser.get("check_in_time")
         var checkInUserId = checkInUser.get("user_id")
+        //判断是否刚签到
+        var isCheckInTimeNow = false
+
         //未过截至时间，已报名，不是中签活动 或者 中签活动中签，未签到
         if (!isOverdue && checkInUserId != null && ((activityType!=3)||(activityType==3 && zqStatus==2)) && checkInTime == null) {
-
+            isCheckInTimeNow = true //刚签到
             checkInTime = DateUtil.date().toTimestamp()
             create!!.execute("update activity_user set check_in_time=? where activity_id=? and user_id=?", checkInTime, activityId, userId)
 
@@ -585,6 +588,8 @@ class WxActivityController {
         var checkInCount = create!!.resultQuery(checkInCountSql, activityId).fetchOne().get("check_in_count")
 
         result["checkInCount"] = checkInCount
+
+        result["is_CheckInTimeNow"] = isCheckInTimeNow
 
 
         return result

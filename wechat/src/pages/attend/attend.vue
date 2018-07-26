@@ -12,15 +12,15 @@
         <!--已经报名-->
         <div v-if="item && item.attendUser">
           <div class="weui-cells__title">
-            <h1 class="am-article-title"  v-if="!item.isAttendNow">
+            <h1 class="am-article-title" v-if="item.isAttendNow">
+              报名成功
+            </h1>
+            <h1 class="am-article-title" v-else>
               您已报名
               <!--抽签活动显示抽签状态-->
               <span v-if="item.activity.activity_type == 3" class="c-text-primary">
                   【<span>{{activityStatusText}}</span>】
               </span>
-            </h1>
-            <h1 class="am-article-title"  v-else>
-              报名成功
             </h1>
           </div>
           <div class="weui-form-preview">
@@ -92,7 +92,7 @@
         提交报名信息
       </div>
     </div>
-    <!--<button @click="getoCheckIn">签到</button>-->
+    <!-- <button @click="getoCheckIn">签到</button>-->
     <!-- 打卡活动， 显示打卡按钮 -->
     <div v-if="item && item.attendUser && item.activity.activity_type == 4" class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
       <div :disabled="processing" @click="gotoActivityUserRecord()" class="weui-flex__item c-bg-primary">

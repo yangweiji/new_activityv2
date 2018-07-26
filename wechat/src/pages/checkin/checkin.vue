@@ -12,7 +12,7 @@
         <h1 class="c-title-text" v-else-if="item.activity.activity_type == 3 && item.zqStatus != 2  ">
           您未中签，不能签到
         </h1>
-        <h1 class="c-title-text" v-else-if="item.checkInTime">
+        <h1 class="c-title-text" v-else-if="!item.is_CheckInTimeNow">
           您已签到
         </h1>
         <h1 class="c-title-text" v-else>
