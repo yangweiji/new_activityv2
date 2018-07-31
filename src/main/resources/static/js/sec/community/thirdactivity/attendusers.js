@@ -148,7 +148,8 @@ $(function () {
                         mobile: $("#mobile").val().trim(),
                         ticket_title: $("#ticket_title").val().trim(),
                         other_info: $("#other_info").val().trim(),
-                        status: $("#status").val().trim()
+                        status: $("#status").val().trim(),
+                        checked:$("#checked").is(":checked")
                     };
                     return JSON.stringify(param);
                 },

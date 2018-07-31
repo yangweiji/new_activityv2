@@ -199,7 +199,7 @@ class ThirdActivityService {
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!checked.isNullOrBlank()) {
+        if (!checked.isNullOrBlank()&&checked!="false") {
             strCondition = "and t1.check_in_time is not null"
         }
         sql = sql.replace("{4}", strCondition)
