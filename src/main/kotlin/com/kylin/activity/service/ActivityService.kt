@@ -786,10 +786,10 @@ class ActivityService {
      * @param userId: 用户ID
      * @return 用户收藏的活动信息集合
      */
-    fun getUserFavoriteActivities(userId: Int): Result<Record> {
+    fun getUserFavoriteActivities(userId: Int,communityId:Int): Result<Record> {
         var sql = "select t1.* from activity t1 " +
-                "inner join activity_favorite t2 on t1.id = t2.activity_id and t2.user_id = ? "
-        var items = create!!.resultQuery(sql, userId).fetch()
+                "inner join activity_favorite t2 on t1.id = t2.activity_id and t2.user_id = ? and t1.community_id=? "
+        var items = create!!.resultQuery(sql, userId,communityId).fetch()
         return items
     }
 

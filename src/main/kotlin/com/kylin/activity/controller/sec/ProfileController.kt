@@ -81,6 +81,7 @@ class ProfileController : BaseController() {
                 .from(Tables.ACTIVITY)
                 .innerJoin(Tables.ACTIVITY_USER)
                 .on(Tables.ACTIVITY.ID.eq(Tables.ACTIVITY_USER.ACTIVITY_ID).and(Tables.ACTIVITY_USER.USER_ID.eq(user!!.id)))
+                .and(Tables.ACTIVITY.COMMUNITY_ID.eq(sessionCommunity.id))
                 .fetch()
         model.addAttribute("items", activities)
 
@@ -110,8 +111,7 @@ class ProfileController : BaseController() {
     @CrossOrigin(origins = ["*"], methods = [RequestMethod.GET, RequestMethod.POST])
     @RequestMapping("/favorite")
     fun favorite(@ModelAttribute("user") user: User, model: Model): String {
-
-        var activities = activityService!!.getUserFavoriteActivities(user!!.id)
+        var activities = activityService!!.getUserFavoriteActivities(user!!.id,sessionCommunity.id)
 
         model.addAttribute("items", activities)
         return "sec/user/favorite"
@@ -141,7 +141,7 @@ class ProfileController : BaseController() {
     @RequestMapping(value = "/personalpayment", method = [RequestMethod.GET, RequestMethod.POST])
     private fun getPersonalPayment(@ModelAttribute("user") user: User, model: Model): String {
         //取得缴费订单
-        val items = orderService!!.getPersonalPayment(user.id!!)
+        val items = orderService!!.getPersonalPayment(user.id!!,sessionCommunity.id)
 
         model.addAttribute("items", items)
         return "sec/user/personalpayment"

@@ -27,16 +27,16 @@ class OrderService {
     /**
      * 取得当前用户的积分明细
      */
-    fun getPersonalPayment(id: Int): Result<Record> {
+    fun getPersonalPayment(id: Int,communityId:Int): Result<Record> {
         var sql = "select t1.*, t2.username, t2.displayname, t2.avatar user_avatar" +
                 ", t3.title activity_title, t4.title ticket_title " +
                 "from pay_order t1 " +
                 "left join user t2 on t1.user_id = t2.id " +
                 "left join activity t3 on t1.activity_id = t3.id " +
                 "left join activity_ticket t4 on t1.activity_ticket_id = t4.id " +
-                "where t1.status = 2 and t1.user_id = ? " +
+                "where t1.status = 2 and t1.user_id = ? and t1.community_id=? " +
                 "order by t1.created desc "
-        return dslContext!!.resultQuery(sql, id).fetch()
+        return dslContext!!.resultQuery(sql, id,communityId).fetch()
     }
 
     /**
