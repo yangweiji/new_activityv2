@@ -80,7 +80,7 @@ $(function () {
             columns: [
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
-                {"data": "title", "width": "200px"},
+                {"data": "title", "width": "150px"},
                 {"data": "name"},
                 {"data": "start_time"},
                 {"data": "end_time"},
