@@ -23,7 +23,7 @@
               {{item.activityCounts[0].counts}}
              </dt>
                 <dd>
-                  已参与
+                  已报名
                 </dd>
               </dl>
             </navigator>
@@ -143,7 +143,7 @@
         var that = this;
         var param = {
           communityId: that.community.id,
-          userId: this.userId
+          userId: that.userId
         };
         this.$kyutil.get("/pub/wx/profile/info", param).then(res => this.item = res)
       },

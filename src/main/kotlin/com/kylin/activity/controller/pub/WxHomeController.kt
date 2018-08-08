@@ -1,12 +1,14 @@
 package com.kylin.activity.controller.pub
 
-import com.kylin.activity.databases.tables.Poster
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.PosterService
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 /**
  * 微信海报相关控制器
@@ -77,7 +79,7 @@ class WxHomeController {
         var teamActivities = activityService!!.getTeamActivities(communityId, tag)
         //团体组织活动信息
         var teamActivityItems = mutableListOf<MutableMap<String, Any?>>()
-        for (activity in teamActivities) {
+        for (activity in teamActivities.sortDesc("start_time")) {
             var map = mutableMapOf<String, Any?>()
             var avatar: String? = null
             if (activity["avatar"] != null) {

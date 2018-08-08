@@ -1,12 +1,14 @@
 package com.kylin.activity.controller.pub
 
 import com.kylin.activity.databases.tables.Activity
-import com.kylin.activity.service.ActivityService
 import com.kylin.activity.service.ArticleService
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 
 /**
  * 微信活动相关控制器
@@ -46,7 +48,7 @@ class WxArticleController {
         var items = articleService!!.getArticleListByCategory(category)
         //文章信息
         var mapList = mutableListOf<MutableMap<String, Any?>>()
-        for (item in items) {
+        for (item in items.sortDesc("publish_time")) {
             var map = mutableMapOf<String, Any?>()
             var avatar: String? = null
             if (item["avatar"] != null) {

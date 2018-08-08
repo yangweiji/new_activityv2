@@ -23,6 +23,7 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.mvc.support.RedirectAttributes
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
@@ -106,13 +107,8 @@ class ThirdActivityController : BaseController() {
      * @param model: 模型数据
      * @return 发布或编辑活动视图页面
      */
-    @GetMapping("/publish")
+    @RequestMapping("/publish", method = [RequestMethod.GET])
     fun publish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
-
-//        //检查用户权限
-//        if (!userService!!.checkPermission("PUBLISH")) {
-//            return "pub/error/20"
-//        }
 
         var data = ThirdActivityPublishData()
         if (id != null && id > 0) {
@@ -162,9 +158,10 @@ class ThirdActivityController : BaseController() {
      * 第三方最新活动
      * 保存活动信息
      */
-    @RequestMapping("/publish")
+    @RequestMapping("/publish", method = [RequestMethod.POST])
     @Transactional
-    fun postPublish(@RequestBody formData: MultiValueMap<String, String>, model: Model): String {
+    fun postPublish(@RequestBody formData: MultiValueMap<String, String>, model: Model
+                    , redirectAttributes: RedirectAttributes): String {
         var jsonData = formData["json_data"]!![0]
 
         val mapper = jacksonObjectMapper()
@@ -205,8 +202,67 @@ class ThirdActivityController : BaseController() {
             thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
         }
 
-        return "redirect:/sec/community/thirdactivity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"
+        if (data.activity!!.status == 1) {
+            return "redirect:/sec/community/thirdactivity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"
+        }
+        else  {
+            redirectAttributes.addFlashAttribute("globalMessage", "活动已保存成功！")
+            return "redirect:/sec/community/thirdactivity/publish?id=${data.activity!!.id}"
+        }
     }
+
+//    /**
+//     * 第三方最新活动
+//     * 暂存活动信息
+//     */
+//    @RequestMapping("/save")
+//    @ResponseBody
+//    @Transactional
+//    fun save(@RequestBody formData: MultiValueMap<String, String>, model: Model): Any {
+//        var jsonData = formData["json_data"]!![0]
+//
+//        val mapper = jacksonObjectMapper()
+//        var data = mapper.readValue(jsonData, ThirdActivityPublishData::class.java)
+//
+//        //设置活动为草稿状态
+//        data.activity!!.status = 0
+//        //设置活动为公开状态
+//        data.activity!!.public = true
+//        //设置活动归属组织团体
+//        data.activity!!.communityId = this.sessionCommunity.id
+//
+//        if (data.canAttend) {
+//            data.activity!!.attendDueTime = data.activity!!.endTime
+//        }
+//        data.activity!!.attendInfos = mapper.writeValueAsString(data.attendInfos)
+//        data.activity!!.scoreInfos = mapper.writeValueAsString(data.scoreInfos)
+//
+//        var user = this.sessionUser
+//        if (data.activity!!.id == null || data.activity!!.id == 0) {
+//            //添加活动
+//            data.activity!!.created = DateUtil.date().toTimestamp()
+//            data.activity!!.createdBy = user!!.id
+//            data.activity!!.modified = DateUtil.date().toTimestamp()
+//            data.activity!!.modifiedBy = user!!.id
+//            thirdActivityService!!.insert(data.activity)
+//            data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
+//            //添加活动票种
+//            thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
+//        } else {
+//            //更新活动
+//
+//            data.activity!!.modified = DateUtil.date().toTimestamp()
+//            data.activity!!.modifiedBy = user!!.id
+//            thirdActivityService!!.update(data.activity)
+//            data.tickets!!.forEach { t -> t.activityId = data.activity!!.id }
+//            //删除活动票种
+//            thirdActivityService!!.deleteActivityTickets(data.activity!!.id)
+//            //重新添加票种
+//            thirdActivityService!!.insertActivityTickets(data.tickets!!.toList())
+//        }
+//
+//        return true
+//    }
 
     /**
      * 跳转到编辑活动发布成功页面

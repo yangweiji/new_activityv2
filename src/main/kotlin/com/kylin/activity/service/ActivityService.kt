@@ -211,7 +211,7 @@ class ActivityService {
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by = t2.id " +
-                "where ?=t1.community_id " +
+                "where t1.status=1 and ?=t1.community_id " +
                 "order by t1.start_time desc " +
                 "limit 1000"
 
@@ -228,75 +228,75 @@ class ActivityService {
         return create!!.fetchValue(sql) as Long
     }
 
-    /**
-     * 取得指定团体组织下的活动总数
-     */
-    @Cacheable()
-    fun getCommunityTotalActivityCount(communityId: Int): Long {
-        var sql = "select count(*) from activity t1 where t1.community = ?"
-        return create!!.fetchValue(sql, communityId) as Long
-    }
+//    /**
+//     * 取得指定团体组织下的活动总数
+//     */
+//    @Cacheable()
+//    fun getCommunityTotalActivityCount(communityId: Int): Long {
+//        var sql = "select count(*) from activity t1 where t1.community = ?"
+//        return create!!.fetchValue(sql, communityId) as Long
+//    }
 
-    /**
-     * 取得指定团体组织下的活动信息
-     * @param id: 团体组织ID
-     * @return 活动集合
-     */
-    fun getActivitiesByCommunityId(id: Int): Result<Record> {
+//    /**
+//     * 取得指定团体组织下的活动信息
+//     * @param id: 团体组织ID
+//     * @return 活动集合
+//     */
+//    fun getActivitiesByCommunityId(id: Int): Result<Record> {
+//
+//        //构建活动数据源
+//        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+//                ", t2.displayname, t2.avatar user_avatar," +
+//                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
+//                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) checked , " +
+//                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is null) no_checked , " +
+//                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+//                "from activity t1 " +
+//                "left join user t2 on t1.created_by = t2.id " +
+//                "where ?=t1.community_id " +
+//                "order by t1.start_time desc " +
+//                "limit 1000"
+//
+//        var items = create!!.resultQuery(sql, id).fetch()
+//        return items
+//    }
 
-        //构建活动数据源
-        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
-                ", t2.displayname, t2.avatar user_avatar," +
-                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
-                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) checked , " +
-                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is null) no_checked , " +
-                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
-                "from activity t1 " +
-                "left join user t2 on t1.created_by = t2.id " +
-                "where ?=t1.community_id " +
-                "order by t1.start_time desc " +
-                "limit 1000"
-
-        var items = create!!.resultQuery(sql, id).fetch()
-        return items
-    }
-
-    /**
-     * 取得活动信息、活动参与人数、活动收藏人数
-     * 最新的前1000条记录
-     * @param tags: 活动标签分类
-     * @return 活动信息集合
-     */
-    @Cacheable()
-    fun getPublicActivities(tags: String): Result<Record> {
-
-        //构建活动数据源
-        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
-                ", t2.displayname, t2.avatar user_avatar," +
-                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
-                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
-                "from activity t1 " +
-                "left join user t2 on t1.created_by = t2.id " +
-                "where 1=1 {0} " +
-                "order by t1.start_time desc " +
-                "limit 1000"
-        var strCondition = ""
-        if (!tags.isNullOrBlank()) {
-            if (tags.contains('-')) {
-                var ss = ""
-                for (s in tags.split("-")) {
-                    ss = "$ss,'$s'"
-                }
-                strCondition = "and t1.tags in ({0})".replace("{0}", ss.substring(1))
-            } else {
-                strCondition = "and t1.tags = '{0}'".replace("{0}", tags)
-            }
-        }
-        sql = sql.replace("{0}", strCondition)
-
-        var items = create!!.resultQuery(sql).fetch()
-        return items
-    }
+//    /**
+//     * 取得活动信息、活动参与人数、活动收藏人数
+//     * 最新的前1000条记录
+//     * @param tags: 活动标签分类
+//     * @return 活动信息集合
+//     */
+//    @Cacheable()
+//    fun getPublicActivities(tags: String): Result<Record> {
+//
+//        //构建活动数据源
+//        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
+//                ", t2.displayname, t2.avatar user_avatar," +
+//                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
+//                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+//                "from activity t1 " +
+//                "left join user t2 on t1.created_by = t2.id " +
+//                "where 1=1 {0} " +
+//                "order by t1.start_time desc " +
+//                "limit 1000"
+//        var strCondition = ""
+//        if (!tags.isNullOrBlank()) {
+//            if (tags.contains('-')) {
+//                var ss = ""
+//                for (s in tags.split("-")) {
+//                    ss = "$ss,'$s'"
+//                }
+//                strCondition = "and t1.tags in ({0})".replace("{0}", ss.substring(1))
+//            } else {
+//                strCondition = "and t1.tags = '{0}'".replace("{0}", tags)
+//            }
+//        }
+//        sql = sql.replace("{0}", strCondition)
+//
+//        var items = create!!.resultQuery(sql).fetch()
+//        return items
+//    }
 
     /**
      *  获取活动信息、活动参与人数、活动收藏人数及用户选择的团队活动信息
@@ -310,8 +310,8 @@ class ActivityService {
         var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count," +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
-                "from activity t1" +
-                " where 1=1 {0} {1}"
+                "from activity t1 " +
+                "where t1.status=1 {0} {1}"
         var sqlsid = ""
         if (sid != 0) {
             sqlsid = "and community_id = {0}".replace("{0}", sid.toString())
@@ -344,7 +344,7 @@ class ActivityService {
      * @param pay:
      * @return 活动信息集合
      */
-    fun getPublicActivities(tag: String, time: String, pay: String,searchText: String? = null): Result<Record> {
+    fun getPublicActivities(tag: String, time: String, pay: String, searchText: String? = null): Result<Record> {
 
         var sql_count = "select count(*) count from activity t1 where 1=1 {0} {1}"
 
@@ -355,7 +355,7 @@ class ActivityService {
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by = t2.id " +
-                "where 1=1 {0} {1} {2} "
+                "where t1.status=1 {0} {1} {2} " +
                 "order by t1.start_time desc " +
                 "limit {99}, {100}"
         var strTag = ""
@@ -786,10 +786,10 @@ class ActivityService {
      * @param userId: 用户ID
      * @return 用户收藏的活动信息集合
      */
-    fun getUserFavoriteActivities(userId: Int,communityId:Int): Result<Record> {
+    fun getUserFavoriteActivities(userId: Int, communityId: Int): Result<Record> {
         var sql = "select t1.* from activity t1 " +
                 "inner join activity_favorite t2 on t1.id = t2.activity_id and t2.user_id = ? and t1.community_id=? "
-        var items = create!!.resultQuery(sql, userId,communityId).fetch()
+        var items = create!!.resultQuery(sql, userId, communityId).fetch()
         return items
     }
 
@@ -901,12 +901,12 @@ class ActivityService {
             activityUser.attendTime = DateUtil.date().toTimestamp()
             activityUser.created = DateUtil.date().toTimestamp()
             activityUser.createdBy = activityUser.userId
-            if(activity.activityType==3){
+            if (activity.activityType == 3) {
                 //是抽签活动，状态：待抽签
-                activityUser.status=1
-            }else{
+                activityUser.status = 1
+            } else {
                 //不是抽签活动，状态：不抽签
-                activityUser.status=0
+                activityUser.status = 0
             }
             if (activityUser.score > 0) {
                 var userScore = thirdScoreService!!.getUseableScore(activityUser.userId, activity!!.communityId)
@@ -930,7 +930,7 @@ class ActivityService {
 
                 //参加活动报名成功后，检查是否加入了该团体，没加入自动加入
                 var communityUserCount = create!!.resultQuery("select count(*) from community_user where user_id=? and community_id=?", activityUser.userId, activity.communityId).fetchOne()
-                if(communityUserCount == null || communityUserCount.into(Long::class.java) == 0L){
+                if (communityUserCount == null || communityUserCount.into(Long::class.java) == 0L) {
                     var communityUser = CommunityUser()
                     communityUser.communityId = activity.communityId
                     communityUser.created = DateUtil.date().toTimestamp()

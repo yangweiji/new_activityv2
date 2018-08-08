@@ -82,7 +82,7 @@ $(function () {
             columns: [
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
-                {"data": "title", "width": "200px"},
+                {"data": "title", "width": "150px"},
                 {"data": "start_time"},
                 {"data": "end_time"},
                 {"data": "attend_user_count"},
@@ -131,11 +131,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
-            //默认排序
-            order: [[1, 'desc']],
+            //默认排序:活动开始时间降序排列
+            order: [[3, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',

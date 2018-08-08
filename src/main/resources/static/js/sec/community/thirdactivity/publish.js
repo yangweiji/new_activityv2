@@ -1,3 +1,16 @@
+$(function() {
+    // $('#saveBtn').on('click', function () {
+    //     console.log("save");
+    //     $('#c-thirdactivity-create-form').action = "/sec/community/thirdactivity/publish"
+    //     $('#c-thirdactivity-create-form').validator({
+    //     }).submit(function() {
+    //         alert("submit");
+    //         $('input[name=json_data]').val(JSON.stringify(that.cacheData))
+    //         return true; // return false to cancel form action
+    //     });
+    // });
+});
+
 var type = Util.getQueryStrings("type")
 var __c_activity_publish_cookie_key_activity = '__c2_activity_publish_cookie_key_activity_' + type
 var __c_activity_publish_cookie_key_editor = '__c2_activity_publish_cookie_key_editor_' + type
@@ -52,11 +65,11 @@ new Vue({
             scoreInfo:{
 
             },
-            showAddressMap:false
+            showAddressMap:false,
         }
     },
     mounted: function(){
-        var that = this
+        var that = this;
         ///时间控件
         $('.c-datetimepicker.start-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
@@ -93,6 +106,7 @@ new Vue({
         if(that.cacheData.activity.attendDueTime) {
             $('.c-datetimepicker.attend-due-time').datetimepicker('update', new Date(that.cacheData.activity.attendDueTime))
         }
+
         //类别
         $('#activity_type').on('change', function(ev) {
             that.cacheData.activity.activityType = ev.currentTarget.value
@@ -179,8 +193,33 @@ new Vue({
             bodyInput.trigger('change')
         })
 
+        //表单验证提交
         $('#c-thirdactivity-create-form').validator({
+            validate: function (validity) {
+                if ($(validity.field).is('.c-datetimepicker.start-time')) {
+                    var v = $(validity.field).val();
+                    var v1 = moment(v);
+                    var v2 = moment(that.cacheData.activity.endTime);
+                    if (v1.isAfter(v2)) {
+                        $('#date-alert').show();
+                        validity.valid = false;
+                    } else {
+                        $('#date-alert').hide();
+                    }
+                }
 
+                // if ($(validity.field).is('.c-datetimepicker.end-time')) {
+                //     var v = $(validity.field).val();
+                //     var v1 = moment(that.cacheData.activity.startTime);
+                //     var v2 = moment(v);
+                //     if (v2.isBefore(v1)) {
+                //         $('#date-alert').show();
+                //         validity.valid = false;
+                //     } else {
+                //         $('#date-alert').hide();
+                //     }
+                // }
+            }
         }).submit(function() {
             $('input[name=json_data]').val(JSON.stringify(that.cacheData))
             return true; // return false to cancel form action
@@ -232,8 +271,19 @@ new Vue({
         },
         addAttendInfoOpt:function (info) {
             info.options.push({title: ''});
+        },
+        //活动暂存
+        save: function () {
+            var that = this;
+            //保存草稿
+            that.cacheData.activity.status = 0;
+        },
+        //活动发布
+        publish: function () {
+            var that = this;
+            //保存正式发布
+            that.cacheData.activity.status = 1;
         }
-
 
     }
 
