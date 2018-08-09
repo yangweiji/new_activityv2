@@ -75,7 +75,26 @@ class ThirdActivityController : BaseController() {
      */
     @CrossOrigin
     @RequestMapping(value = "/activities", method = [RequestMethod.POST, RequestMethod.GET])
-    fun activities(): String {
+    fun activities(request: HttpServletRequest, model: Model): String {
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank()) {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
+
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank()) {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+
         return "sec/community/thirdactivity/activities"
     }
 
@@ -90,11 +109,13 @@ class ThirdActivityController : BaseController() {
     @RequestMapping(value = "/getActivities", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
     fun getActivities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
         var activityId = map["id"]
-        var items = thirdActivityService!!.getAllActivityUserItemsAndCommunity(activityId, title, tags, status, this.sessionCommunity.id)
+        var items = thirdActivityService!!.getAllActivityUserItemsAndCommunity(start, end, activityId, title, tags, status, this.sessionCommunity.id)
         return items.intoMaps()
     }
 

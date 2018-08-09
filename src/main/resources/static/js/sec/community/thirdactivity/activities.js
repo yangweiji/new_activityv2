@@ -39,7 +39,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
                         ],
                         // columns: ':not(:eq(-1))',//jquery to exclude column -1
                         modifier: {
@@ -70,6 +70,8 @@ $(function () {
                 "data": function () {
                     //查询条件参数
                     var param = {
+                        start: $("#start").val().trim(),
+                        end: $("#end").val().trim(),
                         status: $("#status").val().trim(),
                         tags: $("#tags").val().trim(),
                         title: $("#title").val().trim(),
@@ -100,6 +102,8 @@ $(function () {
                 },
                 {"data": "created"},
                 {"data": "displayname"},
+                {"data": "modified"},
+                {"data": "modifiedbyname"},
                 {
                     "data": "public", defaultContent: "",
                     render: function (data, type, row) {

@@ -92,6 +92,8 @@ class ThirdActivityService {
     /**
      * 团体切换传参id，绑定status,tags,title
      * 按活动标题、分类、状态查询活动
+     * @param start: 活动创建开始时间
+     * @param end: 活动创建结束时间
      * @param activityId: 活动ID
      * @param title: 活动标题
      * @param tags: 活动标签分类
@@ -99,13 +101,16 @@ class ThirdActivityService {
      * @param id: 团体组织ID
      * @return 活动列表信息
      */
-    fun getAllActivityUserItemsAndCommunity(activityId: String?, title: String?, tags: String?, status: String?, id: Int): Result<Record> {
+    fun getAllActivityUserItemsAndCommunity(start: String?, end: String?, activityId: String?, title: String?, tags: String?, status: String?, id: Int): Result<Record> {
         var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
-                ", t2.displayname, t2.avatar user_avatar," +
+                ", t2.displayname, t2.avatar user_avatar " +
+                ", t3.displayname as modifiedbyname, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
-                "from activity t1 left join user t2 on t1.created_by = t2.id " +
-                "where 1=1 {0} {1} {2} {3} " +
+                "from activity t1 " +
+                "left join user t2 on t1.created_by = t2.id " +
+                "left join user t3 on t1.modified_by = t3.id " +
+                "where 1=1 {0} {1} {2} {3} {4} {5} " +
                 "and ?=t1.community_id " +
                 "order by t1.start_time desc "
         var strCondition = ""
@@ -135,6 +140,16 @@ class ThirdActivityService {
             strCondition = "and t1.id = $activityId"
         }
         sql = sql.replace("{3}", strCondition)
+
+        if (!start.isNullOrBlank()) {
+            strCondition = "and date(t1.created) >= '$start'"
+        }
+        sql = sql.replace("{4}", strCondition)
+
+        if (!end.isNullOrBlank()) {
+            strCondition = "and date(t1.created) <= '$end'"
+        }
+        sql = sql.replace("{5}", strCondition)
 
         return create!!.resultQuery(sql, id).fetch()
     }
