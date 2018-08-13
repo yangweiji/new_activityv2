@@ -210,7 +210,7 @@ $(function () {
      */
     $('#bmTable tbody').on('click', 'button#attendrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        window.open("/sec/community/thirdactivity/attendusers?activityId=" + data.id + "&title=" + data.title + "&start=2018-01-01&end=");
+        window.open("/sec/community/thirdactivity/attendusers?activityId=" + data.id + "&title=" + encodeURIComponent(data.title) + "&start=2018-01-01&end=");
     });
 
     /**
