@@ -137,13 +137,13 @@
         if (this.item && this.item.attendUser) {
           var item = this.item;
           if (item.attendUser.status == 2) {
-            return "中签";
+            return "已中签";
           } else if (item.attendUser.status == 1) {
-            return "未中签";
+            return "待抽签";
           } else if (item.attendUser.status == 3) {
-            return "未中签，退款中";
+            return "已申请退费";
           } else if (item.attendUser.status == 4) {
-            return "未中签，已完成退款";
+            return "已完成退费";
           }
           return "抽签中";
         }

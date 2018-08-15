@@ -45,8 +45,8 @@ export default {
             'pages/toolmaf180/toolmaf180',
             'pages/toolsizemap/toolsizemap',
             'pages/attendusers/attendusers',
-            'pages/search_activity/search_activity'
-
+            'pages/search_activity/search_activity',
+            'pages/page/page'
         ],
 
         // Will be filled in webpack
