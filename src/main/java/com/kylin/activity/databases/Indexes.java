@@ -4,29 +4,12 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.ActionHistory;
-import com.kylin.activity.databases.tables.Activity;
-import com.kylin.activity.databases.tables.ActivityFavorite;
-import com.kylin.activity.databases.tables.ActivityPhoto;
-import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-import com.kylin.activity.databases.tables.ActivitySms;
-import com.kylin.activity.databases.tables.ActivityTicket;
-import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.ActivityUserRecord;
-import com.kylin.activity.databases.tables.Article;
-import com.kylin.activity.databases.tables.Community;
-import com.kylin.activity.databases.tables.CommunityUser;
-import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.Poster;
-import com.kylin.activity.databases.tables.ScoreHistory;
-import com.kylin.activity.databases.tables.User;
-import com.kylin.activity.databases.tables.Vercode;
-
-import javax.annotation.Generated;
-
+import com.kylin.activity.databases.tables.*;
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.AbstractKeys;
+
+import javax.annotation.Generated;
 
 
 /**
@@ -58,6 +41,7 @@ public class Indexes {
     public static final Index ACTIVITY_USER_RECORD_PRIMARY = Indexes0.ACTIVITY_USER_RECORD_PRIMARY;
     public static final Index ARTICLE_PRIMARY = Indexes0.ARTICLE_PRIMARY;
     public static final Index COMMUNITY_PRIMARY = Indexes0.COMMUNITY_PRIMARY;
+    public static final Index COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = Indexes0.COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID;
     public static final Index COMMUNITY_USER_PRIMARY = Indexes0.COMMUNITY_USER_PRIMARY;
     public static final Index PAY_ORDER_PRIMARY = Indexes0.PAY_ORDER_PRIMARY;
     public static final Index POSTER_PRIMARY = Indexes0.POSTER_PRIMARY;
@@ -83,6 +67,7 @@ public class Indexes {
         public static Index ACTIVITY_USER_RECORD_PRIMARY = createIndex("PRIMARY", ActivityUserRecord.ACTIVITY_USER_RECORD, new OrderField[] { ActivityUserRecord.ACTIVITY_USER_RECORD.ID }, true);
         public static Index ARTICLE_PRIMARY = createIndex("PRIMARY", Article.ARTICLE, new OrderField[] { Article.ARTICLE.ID }, true);
         public static Index COMMUNITY_PRIMARY = createIndex("PRIMARY", Community.COMMUNITY, new OrderField[] { Community.COMMUNITY.ID }, true);
+        public static Index COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = createIndex("idx_community_user_community_id_user_id", CommunityUser.COMMUNITY_USER, new OrderField[] { CommunityUser.COMMUNITY_USER.COMMUNITY_ID, CommunityUser.COMMUNITY_USER.USER_ID }, true);
         public static Index COMMUNITY_USER_PRIMARY = createIndex("PRIMARY", CommunityUser.COMMUNITY_USER, new OrderField[] { CommunityUser.COMMUNITY_USER.ID }, true);
         public static Index PAY_ORDER_PRIMARY = createIndex("PRIMARY", PayOrder.PAY_ORDER, new OrderField[] { PayOrder.PAY_ORDER.ID }, true);
         public static Index POSTER_PRIMARY = createIndex("PRIMARY", Poster.POSTER, new OrderField[] { Poster.POSTER.ID }, true);

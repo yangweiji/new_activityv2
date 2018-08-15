@@ -4,45 +4,14 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.ActionHistory;
-import com.kylin.activity.databases.tables.Activity;
-import com.kylin.activity.databases.tables.ActivityFavorite;
-import com.kylin.activity.databases.tables.ActivityPhoto;
-import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-import com.kylin.activity.databases.tables.ActivitySms;
-import com.kylin.activity.databases.tables.ActivityTicket;
-import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.Article;
-import com.kylin.activity.databases.tables.Community;
-import com.kylin.activity.databases.tables.CommunityUser;
-import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.Poster;
-import com.kylin.activity.databases.tables.ScoreHistory;
-import com.kylin.activity.databases.tables.User;
-import com.kylin.activity.databases.tables.Vercode;
-import com.kylin.activity.databases.tables.records.ActionHistoryRecord;
-import com.kylin.activity.databases.tables.records.ActivityFavoriteRecord;
-import com.kylin.activity.databases.tables.records.ActivityPhotoPictureRecord;
-import com.kylin.activity.databases.tables.records.ActivityPhotoRecord;
-import com.kylin.activity.databases.tables.records.ActivityRecord;
-import com.kylin.activity.databases.tables.records.ActivitySmsRecord;
-import com.kylin.activity.databases.tables.records.ActivityTicketRecord;
+import com.kylin.activity.databases.tables.*;
+import com.kylin.activity.databases.tables.records.*;
 import com.kylin.activity.databases.tables.records.ActivityUserRecord;
-import com.kylin.activity.databases.tables.records.ActivityUserRecordRecord;
-import com.kylin.activity.databases.tables.records.ArticleRecord;
-import com.kylin.activity.databases.tables.records.CommunityRecord;
-import com.kylin.activity.databases.tables.records.CommunityUserRecord;
-import com.kylin.activity.databases.tables.records.PayOrderRecord;
-import com.kylin.activity.databases.tables.records.PosterRecord;
-import com.kylin.activity.databases.tables.records.ScoreHistoryRecord;
-import com.kylin.activity.databases.tables.records.UserRecord;
-import com.kylin.activity.databases.tables.records.VercodeRecord;
-
-import javax.annotation.Generated;
-
 import org.jooq.Identity;
 import org.jooq.UniqueKey;
 import org.jooq.impl.AbstractKeys;
+
+import javax.annotation.Generated;
 
 
 /**
@@ -98,6 +67,7 @@ public class Keys {
     public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = UniqueKeys0.KEY_ARTICLE_PRIMARY;
     public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = UniqueKeys0.KEY_COMMUNITY_PRIMARY;
     public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = UniqueKeys0.KEY_COMMUNITY_USER_PRIMARY;
+    public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = UniqueKeys0.KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID;
     public static final UniqueKey<PayOrderRecord> KEY_PAY_ORDER_PRIMARY = UniqueKeys0.KEY_PAY_ORDER_PRIMARY;
     public static final UniqueKey<PosterRecord> KEY_POSTER_PRIMARY = UniqueKeys0.KEY_POSTER_PRIMARY;
     public static final UniqueKey<ScoreHistoryRecord> KEY_SCORE_HISTORY_PRIMARY = UniqueKeys0.KEY_SCORE_HISTORY_PRIMARY;
@@ -148,6 +118,7 @@ public class Keys {
         public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = createUniqueKey(Article.ARTICLE, "KEY_article_PRIMARY", Article.ARTICLE.ID);
         public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = createUniqueKey(Community.COMMUNITY, "KEY_community_PRIMARY", Community.COMMUNITY.ID);
         public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_PRIMARY", CommunityUser.COMMUNITY_USER.ID);
+        public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_idx_community_user_community_id_user_id", CommunityUser.COMMUNITY_USER.COMMUNITY_ID, CommunityUser.COMMUNITY_USER.USER_ID);
         public static final UniqueKey<PayOrderRecord> KEY_PAY_ORDER_PRIMARY = createUniqueKey(PayOrder.PAY_ORDER, "KEY_pay_order_PRIMARY", PayOrder.PAY_ORDER.ID);
         public static final UniqueKey<PosterRecord> KEY_POSTER_PRIMARY = createUniqueKey(Poster.POSTER, "KEY_poster_PRIMARY", Poster.POSTER.ID);
         public static final UniqueKey<ScoreHistoryRecord> KEY_SCORE_HISTORY_PRIMARY = createUniqueKey(ScoreHistory.SCORE_HISTORY, "KEY_score_history_PRIMARY", ScoreHistory.SCORE_HISTORY.ID);

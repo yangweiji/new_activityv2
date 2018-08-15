@@ -1,20 +1,23 @@
 package com.kylin.activity.controller.sec
 
+import com.github.binarywang.wxpay.bean.request.WxPayRefundRequest
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.databases.tables.pojos.ScoreHistory
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.LogUtil
+import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Controller
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
-import java.math.BigDecimal
 
 /**
  * 第三方团体组织团体中心控制器
@@ -48,6 +51,12 @@ class ThirdManageController : BaseController() {
     private val thirdActivityService: ThirdActivityService? = null
 
     /**
+     * 微信接口服务
+     */
+    @Autowired
+    private val wxService: WxService? = null
+
+    /**
      * 团体组织积分服务
      */
     @Autowired
@@ -58,6 +67,7 @@ class ThirdManageController : BaseController() {
      */
     @Autowired
     private val userService: UserService? = null
+
 
     /**
      * 第三方管理中心，最新活动查询页面
@@ -202,7 +212,7 @@ class ThirdManageController : BaseController() {
     private fun saveActivityScore(@ModelAttribute("score") score: ScoreHistory
                                   , redirectAttributes: RedirectAttributes
                                   , model: Model): String {
-        var user=this.sessionUser
+        var user = this.sessionUser
         //取得用户信息
         var u = userService!!.getUser(user!!.username)
 
@@ -294,21 +304,19 @@ class ThirdManageController : BaseController() {
      * 用户订单统计信息
      */
     @CrossOrigin
-    @RequestMapping(value = "/ordersstatistics",method = arrayOf(RequestMethod.GET,RequestMethod.POST))
-     private fun ordersstatistics(request: HttpServletRequest,model: Model):String{
+    @RequestMapping(value = "/ordersstatistics", method = [RequestMethod.GET, RequestMethod.POST])
+    private fun ordersstatistics(request: HttpServletRequest, model: Model): String {
         var calendar = GregorianCalendar()
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
-        if (start.isNullOrBlank())
-        {
+        if (start.isNullOrBlank()) {
             //设置为月初
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
 
         var end = request.getParameter("end")
-        if (end.isNullOrBlank())
-        {
+        if (end.isNullOrBlank()) {
             //当日
             calendar = GregorianCalendar()
             end = sdf.format(calendar.time)
@@ -321,7 +329,7 @@ class ThirdManageController : BaseController() {
         for (item in items) {
             totalAmount += java.lang.Double.parseDouble(item.getValue("amount").toString())
             //BigDecimal可以把一个double类型的数值保留两位小数，并且可以实现数值的四舍五入
-            totalAmount=BigDecimal(totalAmount).setScale(2,BigDecimal.ROUND_HALF_UP).toDouble()
+            totalAmount = BigDecimal(totalAmount).setScale(2, BigDecimal.ROUND_HALF_UP).toDouble()
         }
 
         model.addAttribute("start", start)
@@ -331,4 +339,108 @@ class ThirdManageController : BaseController() {
 
         return "sec/community/thirdmanage/ordersstatistics"
     }
+
+
+    /**
+     * 申请退款处理
+     * @param ids: 报名ID数组
+     * @return 处理成功记录数
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/refund", method = [RequestMethod.POST])
+    @ResponseBody
+    private fun refund(@RequestBody ids: Array<Int>): Int {
+
+        return ids.count { innerRefund(it) }
+    }
+
+    /**
+     * 检查退款是否成功
+     * @param ids: 报名ID数组
+     * @return 处理成功记录数
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/checkrefund", method = [RequestMethod.POST])
+    @ResponseBody
+    private fun checkRefund(@RequestBody ids: Array<Int>): Int {
+
+        return ids.count { innerCheckRefund(it) }
+    }
+
+    /**
+     * 单个活动报名记录退款处理
+     * @param id: 报名ID
+     * @return true/false
+     */
+    @Transactional
+    private fun innerRefund(id: Int): Boolean {
+        var start = DateUtil.date()
+        var order = thirdActivityService!!.getPayOrder(id)
+        //已完成付款的订单，尚未申请退款的订单处理
+        if (order!!.status == 2 && order!!.refundStatus == null) {
+            var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)
+
+            var refundRequest = WxPayRefundRequest()
+            refundRequest.outTradeNo = order.extenalId
+            refundRequest.outRefundNo = refundOutTradeNo
+
+            var price = (order.price.toDouble() * 100).toInt()
+            refundRequest.totalFee = price
+            refundRequest.refundFee = price
+
+            var result = wxService!!.refund(refundRequest)
+            if (result.resultCode == "SUCCESS") {
+                thirdActivityService!!.updateActivityUserStatus(id, 3)
+
+                order.refundTradeNo = refundOutTradeNo
+                order.refundTime = start.toTimestamp()
+                //退款状态->已申请退款
+                order.refundStatus = 1
+
+                thirdActivityService!!.updateActivityUserOrder(order)
+                return true
+            }
+        }
+        return false
+    }
+
+    /**
+     * 单个活动报名记录检查退款处理
+     * @param id: 报名ID
+     * @return true/false
+     */
+    @Transactional
+    private fun innerCheckRefund(id: Int): Boolean {
+
+        var order = thirdActivityService!!.getPayOrder(id)
+        //已申请退款的订单处理
+        if (order!!.status == 2 && order!!.refundStatus == 1) {
+            var refundOutTradeNo = order.refundTradeNo
+            var result = wxService!!.payService!!.refundQuery(null, null, refundOutTradeNo, null)
+            if (result.resultCode == "SUCCESS") {
+                thirdActivityService!!.updateActivityUserStatus(id, 4)
+                //退款状态->已完成退款
+                order.refundStatus = 2
+                thirdActivityService!!.updateActivityUserOrder(order)
+
+//                if (order!!.activityId == null)
+//                {
+//                    //已完成退款后，对升级会员用户进行更新
+//                    var user = userService!!.getUser(order.userId)
+//                    user.level = null
+//                    userService!!.update(user)
+//                    LogUtil.printLog("取消用户的会员资格, 用户ID: ${order.userId}")
+//                }
+//                else {
+//                    //已完成退款后，对活动报名记录进行删除
+//                    thirdActivityService!!.deleteActivityUser(order!!.userId, order!!.activityId, order!!.activityTicketId)
+//                    LogUtil.printLog("删除活动报名记录, 用户ID: ${order.userId}, 活动ID: ${order.activityId}, 活动票种ID: ${order.activityTicketId}")
+//                }
+
+                return true
+            }
+        }
+        return false
+    }
+
 }

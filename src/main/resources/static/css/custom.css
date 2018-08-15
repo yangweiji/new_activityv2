@@ -465,6 +465,11 @@
     top: 10px;
 }
 
+div.dataTables_wrapper {
+    width: 1000px;
+    margin: 0 auto;
+}
+
 div.dataTables_wrapper div.dataTables_info {
     position: relative;
     top: 10px;

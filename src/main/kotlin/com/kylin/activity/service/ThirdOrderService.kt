@@ -105,7 +105,7 @@ class ThirdOrderService {
                 ", t1.body, t1.price, t1.pay_time " +
                 "from pay_order t1 " +
                 "left join activity t2 on t1.activity_id = t2.id " +
-                "where t1.community_id = ? and t1.status = 2 {0} {1} " +
+                "where t1.community_id = ? and (t1.status = 2 and t1.refund_status is null) {0} {1} " +
                 ") t " +
                 "GROUP BY t.activity_id, t.title " +
                 "ORDER BY sum(t.price) desc"

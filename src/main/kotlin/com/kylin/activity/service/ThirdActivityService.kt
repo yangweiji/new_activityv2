@@ -377,6 +377,16 @@ class ThirdActivityService {
     }
 
     /**
+     * 取得缴费订单
+     * @param id: 订单ID
+     * @return 缴费订单信息
+     */
+    fun getPayOrder(id: Int): PayOrder? {
+        return payOrderDao!!.findById(id)
+    }
+
+
+    /**
      * 取得报名用户的缴费订单
      * @param id: 报名ID
      * @return 缴费订单信息
@@ -437,6 +447,21 @@ class ThirdActivityService {
      * 取得报名用户的缴费订单
      * @param id: 报名ID
      * @param status: 订单状态
+     * @return 缴费订单信息
+     */
+    fun getPayOrder(id: Int, status: Int, refund_status: Int?): PayOrder? {
+        var order = create!!.selectFrom(Tables.PAY_ORDER)
+                .where(Tables.PAY_ORDER.ID.eq(id))
+                .and(Tables.PAY_ORDER.STATUS.eq(status))
+                .and(Tables.PAY_ORDER.REFUND_STATUS.eq(refund_status))
+                .fetchOneInto(PayOrder::class.java)
+        return order
+    }
+
+    /**
+     * 取得报名用户的缴费订单
+     * @param id: 报名ID
+     * @param status: 订单状态
      * @param refund_status: 订单退款状态
      * @return 缴费订单信息
      */
@@ -490,6 +515,17 @@ class ThirdActivityService {
     fun deleteActivityUser(id: Int) {
         activityUserDao!!.deleteById(id)
     }
+
+    /**
+     * 删除活动报名记录
+     * @param userId: 用户ID
+     * @param activityId: 活动ID
+     * @param activityTicketId: 活动票种ID
+     */
+    fun deleteActivityUser(userId: Int, activityId: Int, activityTicketId: Int) {
+        create!!.execute("delete from activity_user where user_id = ? and activity_id = ? and activity_ticket_id = ?", userId, activityId, activityTicketId)
+    }
+
 
     /**
      * 取得所有活动信息，返回List

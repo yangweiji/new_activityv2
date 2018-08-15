@@ -671,10 +671,33 @@ class ThirdActivityController : BaseController() {
      */
     @Transactional
     fun innerDelete(id: Int): Boolean {
-        if (this.innerRefund(id) && this.innerCheckRefund(id)) {
-            //删除报名记录
+
+        //删除报名记录时，检查是否有缴费订单
+        var order = thirdActivityService!!.getActivityUserOrder(id)
+        if (order == null) {
+            //直接删除报名记录
             thirdActivityService!!.deleteActivityUser(id)
             return true
+        }
+        else {
+            if (order!!.refundStatus == 1) {
+                //已申请退款，但是未完成退款，不可删除
+                LogUtil.printLog("报名记录已申请退款，但是未完成退款，不可删除！报名ID: $id")
+                return false
+            }
+            else if (order!!.refundStatus == 2) {
+                //已完成退款
+                //直接删除报名记录
+                thirdActivityService!!.deleteActivityUser(id)
+                return true
+            }
+            else {
+                if (this.innerRefund(id) && this.innerCheckRefund(id)) {
+                    //先退款、后删除报名记录
+                    thirdActivityService!!.deleteActivityUser(id)
+                    return true
+                }
+            }
         }
 
         return false

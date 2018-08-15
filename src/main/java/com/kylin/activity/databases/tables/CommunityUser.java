@@ -8,23 +8,14 @@ import com.kylin.activity.databases.DefaultSchema;
 import com.kylin.activity.databases.Indexes;
 import com.kylin.activity.databases.Keys;
 import com.kylin.activity.databases.tables.records.CommunityUserRecord;
+import org.jooq.*;
+import org.jooq.impl.DSL;
+import org.jooq.impl.TableImpl;
 
+import javax.annotation.Generated;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.annotation.Generated;
-
-import org.jooq.Field;
-import org.jooq.Identity;
-import org.jooq.Index;
-import org.jooq.Name;
-import org.jooq.Schema;
-import org.jooq.Table;
-import org.jooq.TableField;
-import org.jooq.UniqueKey;
-import org.jooq.impl.DSL;
-import org.jooq.impl.TableImpl;
 
 
 /**
@@ -40,7 +31,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = -1058763866;
+    private static final long serialVersionUID = 655938122;
 
     /**
      * The reference instance of <code>community_user</code>
@@ -132,7 +123,7 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.COMMUNITY_USER_PRIMARY);
+        return Arrays.<Index>asList(Indexes.COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID, Indexes.COMMUNITY_USER_PRIMARY);
     }
 
     /**
@@ -156,7 +147,7 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      */
     @Override
     public List<UniqueKey<CommunityUserRecord>> getKeys() {
-        return Arrays.<UniqueKey<CommunityUserRecord>>asList(Keys.KEY_COMMUNITY_USER_PRIMARY);
+        return Arrays.<UniqueKey<CommunityUserRecord>>asList(Keys.KEY_COMMUNITY_USER_PRIMARY, Keys.KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID);
     }
 
     /**
