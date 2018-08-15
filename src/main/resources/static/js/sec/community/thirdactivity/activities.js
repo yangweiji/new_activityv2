@@ -39,7 +39,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13
+                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
                         ],
                         // columns: ':not(:eq(-1))',//jquery to exclude column -1
                         modifier: {
@@ -85,6 +85,26 @@ $(function () {
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "title", "width": "150px"},
+                {
+                    "data": "activity_type", defaultContent: "",
+                    render: function (data, type, row) {
+                        if (data == 1) {
+                            return "一般活动";
+                        }
+                        else if (data == 2){
+                            return "体育赛事";
+                        }
+                        else if (data == 3){
+                            return "抽签活动";
+                        }
+                        else if (data == 4){
+                            return "打卡活动";
+                        }
+                        else {
+                            return "非公开";
+                        }
+                    }
+                },
                 {"data": "start_time"},
                 {"data": "end_time"},
                 {"data": "attend_user_count"},
@@ -135,11 +155,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序:活动开始时间降序排列
-            order: [[3, 'desc']],
+            order: [[4, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',

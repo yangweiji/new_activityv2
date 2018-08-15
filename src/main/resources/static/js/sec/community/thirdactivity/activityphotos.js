@@ -34,15 +34,50 @@ new Vue({
         }
     },
     mounted: function () {
-        var that = this
-        //图片上传
-        this.uploader = Util.file.uploader({
-            randomName: true,
-            selectId: 'c-upload-activity-pictures',
-            success: function (file) {
-                that.cacheData.activityPhotoPicture.picture = file.randomName
-            }
-        })
+        //验证
+        $('#c-activity-picture-create-form').validator({
+            // ignore: ':hidden:not(.am-validate)',
+            onValid: function(validity) {
+                $(validity.field).closest('.am-u-sm-10').find('.am-alert').hide();
+            },
+
+            onInValid: function(validity) {
+                var $field = $(validity.field);
+                var $group = $field.closest('.am-u-sm-10');
+                var $alert = $group.find('.am-alert');
+                // 使用自定义的提示信息 或 插件内置的提示信息
+                var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+                if (!$alert.length) {
+                    $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+                    appendTo($group);
+                }
+
+                $alert.html(msg).show();
+            },
+            // validate: function(validity) {
+            //     var v = $('#picture').val()
+            //     if (!v) {
+            //         var $field = $(validity.field);
+            //         var $group = $field.closest('.am-u-sm-10');
+            //         var $alert = $group.find('.am-alert');
+            //         // 使用自定义的提示信息 或 插件内置的提示信息
+            //         // var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+            //         var msg = "请上传图片";
+            //         if (!$alert.length) {
+            //             $alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+            //             appendTo($group);
+            //         }
+            //
+            //         $alert.html(msg).show();
+            //         validity.valid = false;
+            //     }
+            // },
+
+        }).submit(function() {
+            return true; // return false to cancel form action
+        });
+
     },
     methods: {
         getActivityPhotoPicture: function () {

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+>
 <head th:include="fragments/backhead :: default">
 </head>
 <body>
@@ -48,8 +48,8 @@
                             <div class=" am-u-sm-9 am-list-main am_list_main">
                                 <h3 class="am-list-item-hd am_list_title">
                                     <a th:href="@{/pub/activity/detail/{id}(id=${item.get('id')})}" target="_blank" class="" th:text="${item.get('title')}"></a>
-                                    <span class="am-badge am-badge-primary am-round" th:if="${item.get('activity_type')}==1">活动</span>
-                                    <span class="am-badge am-badge-secondary am-round" th:if="${item.get('activity_type')}==2">赛事</span>
+                                    <span class="am-badge am-badge-primary am-round" th:if="${item.get('activity_type')}==1">一般活动</span>
+                                    <span class="am-badge am-badge-secondary am-round" th:if="${item.get('activity_type')}==2">体育赛事</span>
                                     <span class="am-badge am-badge-success am-round" th:if="${item.get('activity_type')}==3">抽签活动</span>
                                     <span class="am-badge am-badge-warning am-round" th:if="${item.get('activity_type')}==4">打卡活动</span>
                                 </h3>
