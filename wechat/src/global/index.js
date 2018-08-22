@@ -100,11 +100,7 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method, ask, ca
                     wx.setStorageSync('sessionId', res.sessionId);
                     if (res.isNeedUserInfo == true) {
                         wx.getUserInfo({
-                            success: function(res) {
-                                // HttpRequst(true, "ztc/product/saveUser", 3, wx.getStorageSync("sessionId"), { "encryptedData": res.encryptedData, "iv": res.iv }, "POST", false, function (res) {
-                                //     HttpRequst(loading, url, sessionChoose, wx.getStorageSync("sessionId"), params, method, ask, callBack);
-                                // })
-                            },
+                            success: function(res) {},
                             fail: function(res) {
                                 console.log("我还没有授权");
                                 if (ask == true) {
@@ -122,11 +118,7 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method, ask, ca
                                                             //这里是授权成功之后 填写你重新获取数据的js
                                                             wx.getUserInfo({
                                                                 withCredentials: false,
-                                                                success: function(data) {
-                                                                    // HttpRequest(true, "ztc/product/saveUser", 3, wx.getStorageSync("sessionId"), { "encryptedData": res.encryptedData, "iv": res.iv }, "POST", false, function (res) {
-                                                                    //     HttpRequest(loading, url, sessionChoose, wx.getStorageSync("sessionId"), params, method, ask, callBack);
-                                                                    // })
-                                                                },
+                                                                success: function(data) {},
                                                                 fail: function() {
                                                                     console.info("3授权失败返回数据");
                                                                 }
@@ -153,56 +145,83 @@ function wxLogin(loading, url, sessionChoose, sessionId, params, method, ask, ca
 function Login() {
     wx.clearStorageSync()
 
-    wx.login({
-        success: res => {
-            // 发送 res.code 到后台换取 openId, sessionKey, unionId
-            var errMsg = res.errMsg;
-            if (errMsg != "login:ok") {
-                console.log("错误提示", "出错了，请稍后再试试...")
-            } else {
-                var code = res.code;
-                HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function(res) {
-                    console.log("sessionInfo: ", res)
-                    if (res.code == 200) {
-                        wx.setStorageSync("sessionInfo", res)
-                        if (!res.unionId) {
-                            //如果unionId没有获取到,设置unionId=''空字符串,通过openId去获取用户信息
-                            res.unionId = ''
+    let promisevariable = new Promise(function(resolve, reject) {
+        wx.login({
+            success: res => {
+                // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                var errMsg = res.errMsg;
+                if (errMsg != "login:ok") {
+                    console.log("错误提示", "出错了，请稍后再试试...")
+                } else {
+                    var code = res.code;
+                    HttpRequest(true, "/pub/wx/auth/login", false, "", { "code": code }, "GET", false, function(res) {
+                        console.log("sessionInfo: ", res)
+                        if (res.code == 200) {
+                            wx.setStorageSync("sessionInfo", res)
+                            if (!res.unionId) {
+                                //如果unionId没有获取到,设置unionId=''空字符串,通过openId去获取用户信息
+                                res.unionId = ''
+                            }
+
+                            HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
+                                // console.log("user: ", res)
+                                if (res.user) {
+                                    wx.setStorageSync("user", res.user)
+                                    console.log("storage user->", res)
+                                }
+                                if (res.community) {
+                                    store.state.community = res.community
+                                }
+
+                                if (res) {
+                                    resolve(res);
+                                }
+                            });
                         }
-
-                        HttpRequest(true, "/pub/wx/auth/getUserInfo", false, "", { "openid": res.openid, "unionId": res.unionId }, "GET", false, function(res) {
-                            // console.log("user: ", res)
-                            if (res.user) {
-                                wx.setStorageSync("user", res.user)
-
-                                console.log("storage user->", res)
-                            }
-                            if (res.community) {
-                                store.state.community = res.community
-                            }
-                        });
-                    }
-                });
+                    });
+                }
             }
-        }
+        });
     });
 
+    return promisevariable;
 }
 
 //验证用户身份，小程序页面创建时调用此方法
 //检查用户手机号是否填写，没有绑定手机号强制绑定手机号登录
 function CheckUserValidation() {
-    var user = wx.getStorageSync("user")
-    if (!user || !user.mobile) {
-        // 跳转至登录界面验证身份
-        wx.redirectTo({
-            url: "/pages/login/login"
-        });
+    // var user = wx.getStorageSync("user")
+    // if (!user || !user.mobile) {
+    //     跳转至登录界面验证身份
+    //     wx.redirectTo({
+    //         url: "/pages/login/login"
+    //     });
+    //     return;
+    // }
 
-        return;
-    }
+    return new Promise((resolve, reject) => {
+        console.log("验证用户身份...")
+        var user = wx.getStorageSync("user")
+        if (!user || !user.mobile) {
+            //重新进行登录
+            Login().then(function(res) {
+                if (res.user) {
+                    console.log("验证用户身份OK");
+                    resolve(res.user);
+                } else {
+                    console.log("跳转至登录注册页面");
+                    wx.redirectTo({
+                        url: "/pages/login/login"
+                    });
+                }
+            });
+        } else {
+            console.log("验证用户身份OK");
+            resolve(user);
+        }
+    });
+
 }
-
 
 /*
 根据〖中华人民共和国国家标准 GB 11643-1999〗中有关公民身份号码的规定，公民身份号码是特征组合码，由十七位数字本体码和一位数字校验码组成。排列顺序从左至右依次为：六位数字地址码，八位数字出生日期码，三位数字顺序码和一位数字校验码。

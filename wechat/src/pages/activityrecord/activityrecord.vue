@@ -275,13 +275,20 @@
       that.activeTab = that.activeTab || that.tabs[0]
       var activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
       that.isBackPage = activityId == that.activityId
-      that.activityId = activityId
-      this.$kyutil.CheckUserValidation();
-      var user = this.$kyutil.GetUser();
-      if (user) {
-        this.userId = user.id;
-        this.getData();
-      }
+      that.activityId = activityId;
+
+      // this.$kyutil.CheckUserValidation();
+      // var user = this.$kyutil.GetUser();
+      // if (user) {
+      //   this.userId = user.id;
+      //   this.getData();
+      // }
+
+      this.$kyutil.CheckUserValidation().then(function(res) {
+          var user = that.$kyutil.GetUser();
+          that.userId = user.id;
+          that.getData();
+      });
     }
   };
 </script>

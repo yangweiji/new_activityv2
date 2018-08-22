@@ -60,15 +60,24 @@ export default {
     console.log("photos created");
   },
   onShow () {
+    var that = this;
     if (this.$store.state.community) {
         this.community = this.$store.state.community
         this.type = this.$root.$mp.query.type
-        this.$kyutil.CheckUserValidation()
-        var user = this.$kyutil.GetUser()
-        if (user) {
-          this.userId = user.id;
-          this.getData();
-        }
+        
+        // this.$kyutil.CheckUserValidation()
+        // var user = this.$kyutil.GetUser()
+        // if (user) {
+        //   this.userId = user.id;
+        //   this.getData();
+        // }
+        
+        this.$kyutil.CheckUserValidation().then(function(res) {
+          var user = that.$kyutil.GetUser();
+          that.userId = user.id;
+          that.getData();
+        });
+        
         wx.setNavigationBarTitle({
           title: this.community.name
         });

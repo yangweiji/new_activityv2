@@ -84,6 +84,7 @@ import kyuploader from '@/components/kyuploader.vue'
       this.isIpx = this.$kyutil.data.isIpx
     },
     onShow() {
+      var that = this;
       var pages = getCurrentPages()
 
       //修改小程序 chooseImage 会触发页面重新 onShow 事件问题, url参数和缓存页面数据相同事， 不重新加载数据
@@ -92,15 +93,21 @@ import kyuploader from '@/components/kyuploader.vue'
       }
       
       this.loaded = false;
-      this.recordId =
-        this.$root.$mp.query.id
+      this.recordId = this.$root.$mp.query.id
       this.activityUserId = this.$root.$mp.query.uid
-      this.$kyutil.CheckUserValidation();
-      var user = this.$kyutil.GetUser();
-      if (user) {
-        this.userId = user.id;
-        this.getData();
-      }
+
+      // this.$kyutil.CheckUserValidation();
+      // var user = this.$kyutil.GetUser();
+      // if (user) {
+      //   this.userId = user.id;
+      //   this.getData();
+      // }
+
+      this.$kyutil.CheckUserValidation().then(function(res) {
+          var user = that.$kyutil.GetUser();
+          that.userId = user.id;
+          that.getData();
+      });
     }
   };
 </script>

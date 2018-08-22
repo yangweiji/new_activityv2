@@ -192,12 +192,20 @@
       this.isIpx = this.$kyutil.data.isIpx
     },
     onShow() {
-      this.$kyutil.CheckUserValidation();
-      var user = this.$kyutil.GetUser();
-      if (user) {
-        this.userId = user.id;
-        this.getData();
-      }
+      var that = this;
+      // this.$kyutil.CheckUserValidation();
+      // var user = this.$kyutil.GetUser();
+      // if (user) {
+      //   this.userId = user.id;
+      //   this.getData();
+      // }
+
+      this.$kyutil.CheckUserValidation().then(function(res) {
+          var user = that.$kyutil.GetUser();
+          that.userId = user.id;
+          that.getData();
+      });
+
       wx.setNavigationBarTitle({
         title: "个人信息"
       })

@@ -230,22 +230,29 @@
       this.isIpx = this.$kyutil.data.isIpx
     },
     onLoad() {
-      this.$kyutil.CheckUserValidation();
     },
     onShow() {
+      var that = this;
       //接受参数
-      this.$kyutil.CheckUserValidation();
       this.communityId = this.$root.$mp.query.communityId || this.$root.$mp.query.scene
       this.start = this.$root.$mp.query.start
       if (!this.communityId) {
         var community = this.$store.state.community;
         this.communityId = community.id
       }
-      var user = this.$kyutil.GetUser();
-      if (user) {
-        this.userId = user.id;
-        this.getData();
-      }
+
+      // this.$kyutil.CheckUserValidation();
+      // var user = this.$kyutil.GetUser();
+      // if (user) {
+      //   this.userId = user.id;
+      //   this.getData();
+      // }
+
+      this.$kyutil.CheckUserValidation().then(function(res) {
+          var user = that.$kyutil.GetUser();
+          that.userId = user.id;
+          that.getData();
+      });
     },
     onShareAppMessage(res) {
       return {

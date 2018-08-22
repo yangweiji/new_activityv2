@@ -170,10 +170,15 @@ export default {
     console.log("community created");
   },
   onLoad() {
-    this.$kyutil.CheckUserValidation();
-    if (wx.getStorageSync("user")) {
-      this.getData();
-    }
+    var that = this;
+    // this.$kyutil.CheckUserValidation();
+    // if (wx.getStorageSync("user")) {
+    //   this.getData();
+    // }
+    
+    this.$kyutil.CheckUserValidation().then(function(res) {
+      that.getData();
+    });
   },
   onShow() {
     wx.setNavigationBarTitle({

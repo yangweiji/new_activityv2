@@ -108,6 +108,7 @@
   } from "decimal.js";
   import activity from '@/components/activity.vue'
   import field from '@/components/field.vue'
+  import store from '../../store'
   export default {
     components: {
       activity,
@@ -425,13 +426,20 @@
       var that = this;
       that.loaded = false;
       that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
-      this.$kyutil.CheckUserValidation();
-      var user = this.$kyutil.GetUser();
-      if (user) {
-        this.userId = user.id;
-        this.isAttendNow=false;
-        this.getData();
-      }
+      // this.$kyutil.CheckUserValidation();
+      // var user = this.$kyutil.GetUser();
+      // if (user) {
+      //   this.userId = user.id;
+      //   this.isAttendNow=false;
+      //   this.getData();
+      // }
+
+      this.$kyutil.CheckUserValidation().then(function(res) {
+          var user = that.$kyutil.GetUser();
+          that.userId = user.id;
+          that.isAttendNow=false;
+          that.getData();
+      });
     },
     mounted() {},
     onShareAppMessage(res) {

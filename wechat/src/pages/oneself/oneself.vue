@@ -124,6 +124,7 @@
 
 <script>
   import kyimage from '@/components/kyimage.vue'
+  import store from '../../store'
 
   export default {
     data() {
@@ -166,16 +167,26 @@
       this.$kyutil.CheckUserValidation();
     },
     onShow() {
+      var that = this;
       //接受参数
       if (this.$store.state.community) {
         this.community = this.$store.state.community;
-        this.$kyutil.CheckUserValidation();
-        var user = this.$kyutil.GetUser();
-        this.user = user;
-        if (user) {
-          this.userId = user.id;
-          this.getData();
-        }
+        // this.$kyutil.CheckUserValidation();
+        // var user = this.$kyutil.GetUser();
+        // this.user = user;
+        // if (user) {
+        //   this.userId = user.id;
+        //   this.getData();
+        // }
+
+        this.$kyutil.CheckUserValidation().then(function(res) {
+            var user = that.$kyutil.GetUser();
+            that.user = user;
+            that.userId = user.id;
+            that.getData();
+        });
+
+
         wx.setNavigationBarTitle({
           title: this.community.name
         });

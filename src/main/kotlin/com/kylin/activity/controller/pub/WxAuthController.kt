@@ -252,6 +252,11 @@ class WxAuthController {
                     //显示名称与登录名一致
                     user.displayname = nickName
                 }
+                else if (user.displayname.startsWith("1")) {
+                    //以手机号码首位字符串"1"开头，则更新成为昵称
+                    user.displayname = nickName
+                }
+
                 if (user.avatar.isNullOrBlank()) {
                     user.avatar = avatarUrl
                 }

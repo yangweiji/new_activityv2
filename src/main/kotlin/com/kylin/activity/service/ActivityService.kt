@@ -311,7 +311,9 @@ class ActivityService {
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count," +
                 "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
                 "from activity t1 " +
-                "where t1.status=1 {0} {1}"
+                "where t1.status=1 {0} {1} " +
+                "order by t1.start_time desc " +
+                "limit 50"
         var sqlsid = ""
         if (sid != 0) {
             sqlsid = "and community_id = {0}".replace("{0}", sid.toString())

@@ -131,7 +131,7 @@ export default {
         time: this.time,
         tag: this.tag
       };
-      this.$kyutil.get("pub/wx/search/activities", param).then(res => {
+      this.$kyutil.get("/pub/wx/search/activities", param).then(res => {
         console.log(res);
         that.items = res;
       });
