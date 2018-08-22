@@ -197,7 +197,7 @@ class ActivityService {
 
     /**
      * 取得团体组织下的活动信息、活动参与人数、活动收藏人数
-     * 最新的前1000条记录
+     * 最新的前100条记录
      * @param id: 团体组织标识
      * @return 活动信息集合
      */
@@ -213,7 +213,7 @@ class ActivityService {
                 "left join user t2 on t1.created_by = t2.id " +
                 "where t1.status=1 and ?=t1.community_id " +
                 "order by t1.start_time desc " +
-                "limit 1000"
+                "limit 100"
 
         var items = create!!.resultQuery(sql, id).fetch()
         return items

@@ -44,6 +44,7 @@ public class Keys {
     public static final Identity<ArticleRecord, Integer> IDENTITY_ARTICLE = Identities0.IDENTITY_ARTICLE;
     public static final Identity<CommunityRecord, Integer> IDENTITY_COMMUNITY = Identities0.IDENTITY_COMMUNITY;
     public static final Identity<CommunityUserRecord, Integer> IDENTITY_COMMUNITY_USER = Identities0.IDENTITY_COMMUNITY_USER;
+    public static final Identity<MaterialLibraryRecord, Integer> IDENTITY_MATERIAL_LIBRARY = Identities0.IDENTITY_MATERIAL_LIBRARY;
     public static final Identity<PayOrderRecord, Integer> IDENTITY_PAY_ORDER = Identities0.IDENTITY_PAY_ORDER;
     public static final Identity<PosterRecord, Integer> IDENTITY_POSTER = Identities0.IDENTITY_POSTER;
     public static final Identity<ScoreHistoryRecord, Integer> IDENTITY_SCORE_HISTORY = Identities0.IDENTITY_SCORE_HISTORY;
@@ -68,6 +69,7 @@ public class Keys {
     public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = UniqueKeys0.KEY_COMMUNITY_PRIMARY;
     public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = UniqueKeys0.KEY_COMMUNITY_USER_PRIMARY;
     public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = UniqueKeys0.KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID;
+    public static final UniqueKey<MaterialLibraryRecord> KEY_MATERIAL_LIBRARY_PRIMARY = UniqueKeys0.KEY_MATERIAL_LIBRARY_PRIMARY;
     public static final UniqueKey<PayOrderRecord> KEY_PAY_ORDER_PRIMARY = UniqueKeys0.KEY_PAY_ORDER_PRIMARY;
     public static final UniqueKey<PosterRecord> KEY_POSTER_PRIMARY = UniqueKeys0.KEY_POSTER_PRIMARY;
     public static final UniqueKey<ScoreHistoryRecord> KEY_SCORE_HISTORY_PRIMARY = UniqueKeys0.KEY_SCORE_HISTORY_PRIMARY;
@@ -97,6 +99,7 @@ public class Keys {
         public static Identity<ArticleRecord, Integer> IDENTITY_ARTICLE = createIdentity(Article.ARTICLE, Article.ARTICLE.ID);
         public static Identity<CommunityRecord, Integer> IDENTITY_COMMUNITY = createIdentity(Community.COMMUNITY, Community.COMMUNITY.ID);
         public static Identity<CommunityUserRecord, Integer> IDENTITY_COMMUNITY_USER = createIdentity(CommunityUser.COMMUNITY_USER, CommunityUser.COMMUNITY_USER.ID);
+        public static Identity<MaterialLibraryRecord, Integer> IDENTITY_MATERIAL_LIBRARY = createIdentity(MaterialLibrary.MATERIAL_LIBRARY, MaterialLibrary.MATERIAL_LIBRARY.ID);
         public static Identity<PayOrderRecord, Integer> IDENTITY_PAY_ORDER = createIdentity(PayOrder.PAY_ORDER, PayOrder.PAY_ORDER.ID);
         public static Identity<PosterRecord, Integer> IDENTITY_POSTER = createIdentity(Poster.POSTER, Poster.POSTER.ID);
         public static Identity<ScoreHistoryRecord, Integer> IDENTITY_SCORE_HISTORY = createIdentity(ScoreHistory.SCORE_HISTORY, ScoreHistory.SCORE_HISTORY.ID);
@@ -119,6 +122,7 @@ public class Keys {
         public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = createUniqueKey(Community.COMMUNITY, "KEY_community_PRIMARY", Community.COMMUNITY.ID);
         public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_PRIMARY", CommunityUser.COMMUNITY_USER.ID);
         public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_idx_community_user_community_id_user_id", CommunityUser.COMMUNITY_USER.COMMUNITY_ID, CommunityUser.COMMUNITY_USER.USER_ID);
+        public static final UniqueKey<MaterialLibraryRecord> KEY_MATERIAL_LIBRARY_PRIMARY = createUniqueKey(MaterialLibrary.MATERIAL_LIBRARY, "KEY_material_library_PRIMARY", MaterialLibrary.MATERIAL_LIBRARY.ID);
         public static final UniqueKey<PayOrderRecord> KEY_PAY_ORDER_PRIMARY = createUniqueKey(PayOrder.PAY_ORDER, "KEY_pay_order_PRIMARY", PayOrder.PAY_ORDER.ID);
         public static final UniqueKey<PosterRecord> KEY_POSTER_PRIMARY = createUniqueKey(Poster.POSTER, "KEY_poster_PRIMARY", Poster.POSTER.ID);
         public static final UniqueKey<ScoreHistoryRecord> KEY_SCORE_HISTORY_PRIMARY = createUniqueKey(ScoreHistory.SCORE_HISTORY, "KEY_score_history_PRIMARY", ScoreHistory.SCORE_HISTORY.ID);

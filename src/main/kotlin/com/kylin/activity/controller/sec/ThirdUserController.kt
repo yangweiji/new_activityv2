@@ -2,11 +2,9 @@ package com.kylin.activity.controller.sec
 
 import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.controller.BaseController
-import com.kylin.activity.databases.tables.daos.UserDao
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.databases.tables.pojos.User
 import com.kylin.activity.service.ThirdUserService
-import com.kylin.activity.service.UserService
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
@@ -86,7 +84,7 @@ class ThirdUserController : BaseController() {
         var start = request.getParameter("start")
         if (start.isNullOrBlank()) {
             //设置为月初
-            calendar.set(Calendar.DAY_OF_YEAR, 1)
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
 

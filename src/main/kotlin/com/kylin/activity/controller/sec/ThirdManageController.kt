@@ -113,7 +113,7 @@ class ThirdManageController : BaseController() {
         var start = request.getParameter("start")
         if (start.isNullOrBlank()) {
             //设置为月初
-            calendar.set(Calendar.DAY_OF_YEAR, 1)
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
 

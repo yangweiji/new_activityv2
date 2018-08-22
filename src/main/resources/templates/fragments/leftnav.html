@@ -17,6 +17,10 @@
             <span class="fa fa-file-image-o fa-fw"></span>
             <a class="hbgl" th:href="@{/sec/admin/poster/posters}"><b></b>海报管理</a>
         </li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/admin/material/materials'?'am-nav-header':''">
+            <span class="fa fa-file-image-o fa-fw"></span>
+            <a class="hbgl" th:href="@{/sec/admin/material/materials}"><b></b>素材库</a>
+        </li>
         <li  class="am-nav-divider" th:if="${session.USER_CONTEXT.role}=='管理员'"></li>
 
         <!--<li style="display:none" th:classappend="${#strings.startsWith(#httpServletRequest.getRequestURI(),'/sec/manage/home')}?'am-nav-header':''">-->

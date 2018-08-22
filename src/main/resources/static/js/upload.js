@@ -118,7 +118,7 @@ Util.file.uploader = function (opt) {
         //container: document.getElementById('container'),
         flash_swf_url: libPath + '/js/Moxie.swf',
         silverlight_xap_url: libPath +'/js/Moxie.xap',
-        url: 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com',
+        url: 'https://hxzt2018.oss-cn-beijing.aliyuncs.com',
 
         filters: {
             mime_types: [ //只允许上传图片

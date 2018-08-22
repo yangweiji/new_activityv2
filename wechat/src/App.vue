@@ -1,11 +1,11 @@
 <script>
 export default {
-  data() {
-    return {
-      serverUrl: "https://a.9kylin.cn/",
-      imageServer: "http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/"
-    };
-  },
+  // data() {
+  //   return {
+  //     serverUrl: "https://hdb.81dong.com/",
+  //     imageServer: "http://hxzt2018.oss-cn-beijing.aliyuncs.com/activity/"
+  //   };
+  // },
   created() {
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync("logs") || [];

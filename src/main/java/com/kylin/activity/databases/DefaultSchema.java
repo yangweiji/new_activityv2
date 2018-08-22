@@ -4,33 +4,15 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.ActionHistory;
-import com.kylin.activity.databases.tables.Activity;
-import com.kylin.activity.databases.tables.ActivityFavorite;
-import com.kylin.activity.databases.tables.ActivityPhoto;
-import com.kylin.activity.databases.tables.ActivityPhotoPicture;
-import com.kylin.activity.databases.tables.ActivitySms;
-import com.kylin.activity.databases.tables.ActivityTicket;
-import com.kylin.activity.databases.tables.ActivityUser;
-import com.kylin.activity.databases.tables.ActivityUserRecord;
-import com.kylin.activity.databases.tables.Article;
-import com.kylin.activity.databases.tables.Community;
-import com.kylin.activity.databases.tables.CommunityUser;
-import com.kylin.activity.databases.tables.PayOrder;
-import com.kylin.activity.databases.tables.Poster;
-import com.kylin.activity.databases.tables.ScoreHistory;
-import com.kylin.activity.databases.tables.User;
-import com.kylin.activity.databases.tables.Vercode;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.annotation.Generated;
-
+import com.kylin.activity.databases.tables.*;
 import org.jooq.Catalog;
 import org.jooq.Table;
 import org.jooq.impl.SchemaImpl;
+
+import javax.annotation.Generated;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**
@@ -46,7 +28,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1252067113;
+    private static final long serialVersionUID = 2098956612;
 
     /**
      * The reference instance of <code></code>
@@ -114,6 +96,11 @@ public class DefaultSchema extends SchemaImpl {
     public final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
+     * The table <code>material_library</code>.
+     */
+    public final MaterialLibrary MATERIAL_LIBRARY = com.kylin.activity.databases.tables.MaterialLibrary.MATERIAL_LIBRARY;
+
+    /**
      * 付款订单
      */
     public final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;
@@ -175,6 +162,7 @@ public class DefaultSchema extends SchemaImpl {
             Article.ARTICLE,
             Community.COMMUNITY,
             CommunityUser.COMMUNITY_USER,
+            MaterialLibrary.MATERIAL_LIBRARY,
             PayOrder.PAY_ORDER,
             Poster.POSTER,
             ScoreHistory.SCORE_HISTORY,

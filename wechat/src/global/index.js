@@ -15,8 +15,8 @@ Vue2Filters.install(kyFilters)
 
 //全局变量
 const data = {
-    serverUrl: "https://a.9kylin.cn/",
-    imageServer: "https://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/",
+    serverUrl: "https://hdb.81dong.com",
+    imageServer: "https://hxzt2018.oss-cn-beijing.aliyuncs.com/",
     isIpx: false
 }
 
@@ -309,7 +309,7 @@ function downloadUrl(name, style, folder) {
     if (name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0 || name.indexOf('/') == 0)) {
         return name
     }
-    var url = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com/'
+    var url = data.imageServer;
     if (folder) {
         url += folder + "/"
     } else {

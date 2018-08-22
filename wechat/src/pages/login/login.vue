@@ -1,7 +1,7 @@
 <template>
   <div class="page">
     <div class="page__hd">
-      <div class="page__title">华兴众泰活动平台管理系统</div>
+      <div class="page__title">燃宁running</div>
       <!-- <div class="page__desc">用户登录与注册</div> -->
       
       <!-- 如果只是展示用户头像昵称，可以使用 <open-data /> 组件 -->

@@ -37,7 +37,6 @@
                 <div @click="bindSwitchCommunity(item)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
                     <kyimage :src="item.avatar" type="thumb"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -61,7 +60,6 @@
               <div @click="bindSwitchCommunity(item)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
                     <kyimage :src="item.avatar" type="thumb"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
@@ -83,7 +81,6 @@
               <div @click="bindSwitchCommunity(item)" open-type="switchTab" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
                   v-for="item in items" :key="item.id">
                   <div class="weui-media-box__hd weui-media-box__hd_in-appmsg">
-                    <!-- <image class="weui-media-box__thumb" :src="'http://bjmlsxh.oss-cn-beijing.aliyuncs.com/activity/'+item.avatar"  /> -->
                     <kyimage :src="item.avatar" type="thumb"/>
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">

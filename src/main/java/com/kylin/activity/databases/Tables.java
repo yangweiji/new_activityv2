@@ -83,6 +83,11 @@ public class Tables {
     public static final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
+     * The table <code>material_library</code>.
+     */
+    public static final MaterialLibrary MATERIAL_LIBRARY = com.kylin.activity.databases.tables.MaterialLibrary.MATERIAL_LIBRARY;
+
+    /**
      * 付款订单
      */
     public static final PayOrder PAY_ORDER = com.kylin.activity.databases.tables.PayOrder.PAY_ORDER;

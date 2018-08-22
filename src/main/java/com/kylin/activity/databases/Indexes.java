@@ -43,6 +43,7 @@ public class Indexes {
     public static final Index COMMUNITY_PRIMARY = Indexes0.COMMUNITY_PRIMARY;
     public static final Index COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = Indexes0.COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID;
     public static final Index COMMUNITY_USER_PRIMARY = Indexes0.COMMUNITY_USER_PRIMARY;
+    public static final Index MATERIAL_LIBRARY_PRIMARY = Indexes0.MATERIAL_LIBRARY_PRIMARY;
     public static final Index PAY_ORDER_PRIMARY = Indexes0.PAY_ORDER_PRIMARY;
     public static final Index POSTER_PRIMARY = Indexes0.POSTER_PRIMARY;
     public static final Index SCORE_HISTORY_PRIMARY = Indexes0.SCORE_HISTORY_PRIMARY;
@@ -69,6 +70,7 @@ public class Indexes {
         public static Index COMMUNITY_PRIMARY = createIndex("PRIMARY", Community.COMMUNITY, new OrderField[] { Community.COMMUNITY.ID }, true);
         public static Index COMMUNITY_USER_IDX_COMMUNITY_USER_COMMUNITY_ID_USER_ID = createIndex("idx_community_user_community_id_user_id", CommunityUser.COMMUNITY_USER, new OrderField[] { CommunityUser.COMMUNITY_USER.COMMUNITY_ID, CommunityUser.COMMUNITY_USER.USER_ID }, true);
         public static Index COMMUNITY_USER_PRIMARY = createIndex("PRIMARY", CommunityUser.COMMUNITY_USER, new OrderField[] { CommunityUser.COMMUNITY_USER.ID }, true);
+        public static Index MATERIAL_LIBRARY_PRIMARY = createIndex("PRIMARY", MaterialLibrary.MATERIAL_LIBRARY, new OrderField[] { MaterialLibrary.MATERIAL_LIBRARY.ID }, true);
         public static Index PAY_ORDER_PRIMARY = createIndex("PRIMARY", PayOrder.PAY_ORDER, new OrderField[] { PayOrder.PAY_ORDER.ID }, true);
         public static Index POSTER_PRIMARY = createIndex("PRIMARY", Poster.POSTER, new OrderField[] { Poster.POSTER.ID }, true);
         public static Index SCORE_HISTORY_PRIMARY = createIndex("PRIMARY", ScoreHistory.SCORE_HISTORY, new OrderField[] { ScoreHistory.SCORE_HISTORY.ID }, true);
