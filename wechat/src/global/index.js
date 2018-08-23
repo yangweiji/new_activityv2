@@ -15,8 +15,16 @@ Vue2Filters.install(kyFilters)
 
 //全局变量
 const data = {
-    serverUrl: "https://hdb.81dong.com",
-    imageServer: "https://hxzt2018.oss-cn-beijing.aliyuncs.com/",
+    // 正式
+    // fsurl: "https://fs.81dong.com",
+    // serverUrl: "https://hdb.81dong.com",
+    // imageServer: "https://hxzt2018.oss-cn-beijing.aliyuncs.com/",
+
+    // 测试
+    fsurl: "https://fs.9kylin.cn",
+    serverUrl: "https://a.9kylin.cn",
+    imageServer: "https://bjmlsxh.oss-cn-beijing.aliyuncs.com/",
+
     isIpx: false
 }
 

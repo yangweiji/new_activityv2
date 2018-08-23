@@ -1,4 +1,8 @@
+var OssUrl = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com'; //测试环境
+// var OssUrl = 'https://hxzt2018.oss-cn-beijing.aliyuncs.com'; //正式环境
+
 var Util = window.Util || {}
+
 
 Util.global_object_id = 0;
 Util.global_obj_map = new WeakMap;
@@ -189,7 +193,7 @@ Util.file.downloadUrl = function (name, style) {
     if(name && (name.toLowerCase().indexOf('http://') == 0 || name.toLowerCase().indexOf('https://') == 0)){
         return name
     }
-    var url = 'https://hxzt2018.oss-cn-beijing.aliyuncs.com/activity/' + name
+    var url = OssUrl + '/activity/' + name
     if(style){
         url += '?x-oss-process=style/' + style
     }

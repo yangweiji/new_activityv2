@@ -61,7 +61,7 @@ $(function () {
                 {"data": "id", "width": "50px"},
                 {"data": "name", "width": "100px", defaultContent: "",
                     render: function (data, type, row) {
-                        return '<img class="img_thumb" src="https://hxzt2018.oss-cn-beijing.aliyuncs.com/activity/'+data+'">'
+                        return '<img class="img_thumb" src="'+OssUrl+'/activity/'+data+'">'
                     }
                 },
                 {"data": "name", "width": "100px"},

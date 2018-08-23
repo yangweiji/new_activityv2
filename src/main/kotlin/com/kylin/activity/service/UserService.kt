@@ -464,4 +464,22 @@ class UserService {
 
         return false
     }
+
+    /**
+     * 小程序端退出当前账户
+     * @param userId: 用户ID
+     * @return true/false
+     */
+    fun miniAppLogout(userId: Int): Boolean {
+        var user = this.getUser(userId)
+
+        if (user != null) {
+            user.openId = null
+            user.unionId = null
+            this.update(user)
+            return true
+        }
+
+        return false
+    }
 }

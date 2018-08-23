@@ -1,11 +1,5 @@
 <script>
 export default {
-  // data() {
-  //   return {
-  //     serverUrl: "https://hdb.81dong.com/",
-  //     imageServer: "http://hxzt2018.oss-cn-beijing.aliyuncs.com/activity/"
-  //   };
-  // },
   created() {
     // 调用API从本地缓存中获取数据
     const logs = wx.getStorageSync("logs") || [];
@@ -22,6 +16,7 @@ export default {
     });
     //用户登录小程序
     this.$kyutil.Login();
+    console.log("App created");
   },
   onLaunch: function(options) {},
   onShow: function(options) {

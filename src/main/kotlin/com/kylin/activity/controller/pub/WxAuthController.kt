@@ -90,6 +90,18 @@ class WxAuthController {
     }
 
     /**
+     * 退出
+     * @param map: 参数
+     * @return WxAuthResult
+     */
+    @PostMapping(value = "/logout")
+    fun logout(@RequestBody(required = false) map: Map<String, String>): Any {
+        var userId = map["userId"]!!.toInt()
+        return userService!!.miniAppLogout(userId)
+    }
+
+
+    /**
      * 登录
      * @param code: 临时登录凭证code
      * @return WxAuthResult

@@ -98,7 +98,7 @@
           var fileName = random_string(10) + get_suffix(uploadFilePath)
           that.loadings++
           wx.uploadFile({
-            url: "https://fs.81dong.com",
+            url: that.$kyutil.data.fsurl,
             filePath: uploadFilePath,
             name: 'file',
             formData: {

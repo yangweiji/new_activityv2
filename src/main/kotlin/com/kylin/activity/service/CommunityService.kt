@@ -6,12 +6,14 @@ import com.kylin.activity.databases.tables.daos.CommunityUserDao
 import com.kylin.activity.databases.tables.pojos.Community
 import com.kylin.activity.databases.tables.pojos.CommunityUser
 import com.kylin.activity.util.LogUtil
+import org.jooq.DSLContext
+import org.jooq.Record
+import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Service
-import org.jooq.*
 import org.springframework.cache.annotation.CacheConfig
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
+import org.springframework.stereotype.Service
 
 @Service
 @CacheConfig(cacheNames = ["community"])
@@ -162,7 +164,7 @@ class CommunityService {
      * 获取最近一次加入的团体
      */
     fun getDefaultCommunity(userId:Int): Community{
-        var sql = "select t1.* from community t1 left join community_user t2 on t1.id = t2.community_id and t2.user_id = ?\n" +
+        var sql = "select t1.* from community t1 left join community_user t2 on t1.id = t2.community_id and t2.user_id = ? " +
                 "where t2.id is not null or t1.id = 1 order by t2.created desc limit 1"
         return create!!.resultQuery(sql, userId).fetchOne().into(Community::class.java)
     }

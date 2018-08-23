@@ -77,15 +77,17 @@
             </div>
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </navigator>
-           <navigator url="/pages/myactivitys/myactivitys?type=5" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-             <div class="weui-cell__hd">
-               <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
-                 </div>
-                   <div class="weui-cell__bd weui-cell_primary">
-                     <div>打卡活动</div>
-                   </div>
-             <div class="weui-cell_integral">{{item.activityCounts[4].counts}}</div>
-           </navigator>
+
+          <navigator url="/pages/myactivitys/myactivitys?type=5" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
+                </div>
+                  <div class="weui-cell__bd weui-cell_primary">
+                    <div>打卡活动</div>
+                  </div>
+            <div class="weui-cell_integral">{{item.activityCounts[4].counts}}</div>
+          </navigator>
+
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
@@ -105,6 +107,7 @@
             </div>
             <div class="weui-cell_comment">{{item.user.isReal!=true?"未认证":"已认证"}}</div>
           </navigator>
+
           <navigator url="/pages/myvip/myvip" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/vip_image.png" style="width: 25px;height: 25px;margin-right: 5px" />
@@ -117,6 +120,15 @@
 
 
         </div>
+
+        <!--Footer Begin-->
+        <div class="weui-footer">
+          <div class="weui-footer__links">
+            <div class="weui-footer__link" @click="logout">退出当前账号</div>
+          </div>
+          <!-- <div class="weui-footer__text">Copyright © 2017-2018</div> -->
+        </div>
+        <!--Footer End-->
 
     </div>
   </div>
@@ -150,6 +162,37 @@
       },
       qh(cs) {
         this.xs = cs;
+      },
+      logout() {
+        //退出当前账号
+        console.log("logout");
+        var that = this;
+        var param = {
+          userId: that.userId
+        }
+        this.$kyutil.post("/pub/wx/auth/logout", param).then(res => {
+          if (res == true) {
+            //清除本地缓存
+            wx.clearStorageSync();
+            wx.showToast({
+              title: '退出当前账号',
+              icon: 'success',
+              duration: 3000,
+              success: function (e) {
+                wx.redirectTo({
+                    url: "/pages/login/login"
+                });
+              }
+            });
+          }
+          else {
+            wx.showToast({
+              title: '退出当前账户异常！',
+              icon: 'none',
+              duration: 3000,
+            });
+          }
+        })
       },
     },
     computed: {

@@ -205,6 +205,13 @@
     created() {
     },
     onShow() {
+      console.log("index onShow");
+      var that = this;
+      that.activeTab = this.$root.$mp.query.activeTab;
+      if (!that.activeTab) {
+        that.activeTab = 'b5'; //训练
+      }
+
       //接受参数
       if (this.$store.state.community) {
         this.community = this.$store.state.community;
