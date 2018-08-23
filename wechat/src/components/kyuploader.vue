@@ -64,7 +64,7 @@
             for(var i= 0; i < res.tempFilePaths.length; i++){
               that.uploadToSSO(res.tempFilePaths[i])
             }
-            
+
           },
           fail: function() {
             console.log('fail');
@@ -98,7 +98,7 @@
           var fileName = random_string(10) + get_suffix(uploadFilePath)
           that.loadings++
           wx.uploadFile({
-            url: "https://fs.9kylin.cn",
+            url: "https://fs.81dong.com",
             filePath: uploadFilePath,
             name: 'file',
             formData: {
