@@ -89,8 +89,8 @@ dependencies {
 def writer = new StringWriter()
 new groovy.xml.MarkupBuilder(writer).configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.10.0.xsd') {
     jdbc() {
-        driver('com.mysql.jdbc.Driver')
-        url('jdbc:mysql://47.92.92.242:3306/activityv2?serverTimezone=GMT%2b8')
+        driver('com.mysql.cj.jdbc.Driver')
+        url('jdbc:mysql://47.92.92.242:3306/activityv2?serverTimezone=GMT%2b8&useSSL=false')
         user('9kylin')
         password('9kylin!QAZ@WSX')
     }
