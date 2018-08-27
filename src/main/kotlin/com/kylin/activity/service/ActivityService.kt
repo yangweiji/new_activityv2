@@ -519,19 +519,21 @@ class ActivityService {
 
     /**
      * 按活动标题、分类、状态查询活动
+     * @param start: 活动创建开始日期
+     * @param end: 活动创建结束日期
      * @param title: 活动标题
      * @param tags: 活动标签分类
      * @param status: 活动进行状态
      * @return 活动信息集合
      */
     @Cacheable()
-    fun getAllActivityUserItems(title: String?, tags: String?, status: String?, communityname: String?): Result<Record> {
+    fun getAllActivityUserItems(start: String?, end: String?, title: String?, tags: String?, status: String?, communityname: String?): Result<Record> {
         var sql = "select t1.*, t2.displayname, t2.avatar user_avatar, t3.name, " +
                 "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
                 "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
                 "from activity t1 left join user t2 on t1.created_by = t2.id " +
                 "left join community t3 on t1.community_id=t3.id " +
-                "where 1=1 {0} {1} {2} ?  " +
+                "where 1=1 {0} {1} {2} {3} {4} ?  " +
                 "order by t1.start_time desc "
         var strCondition = ""
         if (!title.isNullOrBlank()) {
@@ -556,6 +558,16 @@ class ActivityService {
         }
         sql = sql.replace("{2}", strCondition)
 
+
+        if (!start.isNullOrBlank()) {
+            strCondition = "and date(t1.created) >= '$start'"
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        if (!end.isNullOrBlank()) {
+            strCondition = "and date(t1.created) <= '$end'"
+        }
+        sql = sql.replace("{4}", strCondition)
 
         //团体名称
         if (!communityname.isNullOrBlank()) {
