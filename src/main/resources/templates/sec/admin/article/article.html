@@ -24,7 +24,7 @@
             <div class="vip_adv"></div>
         </div>
 
-        <div class="am-tabs-bd am_bdfw">
+        <div class="amz-container">
             <div class="am-g">
                 <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
                     <button type="button" class="am-close">&times;</button>
@@ -43,116 +43,113 @@
                 </div>
             </div>
 
-            <div class="am-g">
-                <div class="am-u-lg-12">
-                    <form class="am-form am-form-horizontal" data-am-validator method="post"
-                          action="/sec/admin/article/saveArticle">
-                        <input type="hidden" id="id" name="id"
-                               th:value="${article.id}"/>
-                        <input type="hidden" id="created"
-                               name="created" th:value="${article.created}"/>
-                        <input type="hidden" id="createdBy"
-                               name="createdBy" th:value="${article.createdBy}"/>
+            <form class="am-form am-form-horizontal" data-am-validator method="post"
+                  action="/sec/admin/article/saveArticle">
+                <input type="hidden" id="id" name="id"
+                       th:value="${article.id}"/>
+                <input type="hidden" id="created"
+                       name="created" th:value="${article.created}"/>
+                <input type="hidden" id="createdBy"
+                       name="createdBy" th:value="${article.createdBy}"/>
 
-                        <div class="am-form-group">
-                            <label for="title" class="am-u-sm-2 am-form-label">内容标题</label>
+                <fieldset>
+
+
+                    <div class="am-form-group">
+                        <label for="title" class="am-u-sm-2 am-form-label">内容标题</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" id="title" name="title" required
+                                   placeholder="请输入标题" th:value="${article.title}"/>
+                        </div>
+                    </div>
+
+
+                    <div class="am-form-group">
+                        <label for="summary" class="am-u-sm-2 am-form-label">内容摘要</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" id="summary" name="summary"
+                                   placeholder="请输入摘要" th:value="${article.summary}"/>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">摘要图片</label>
+                        <div class="am-u-sm-10">
+                            <input-image-uploader v-model="article.avatar"
+                                                  name-text="avatar"
+                                                  desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <div class="time">
+                            <label for="publishTime" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
                             <div class="am-u-sm-10">
-                                <input type="text" id="title" name="title" required
-                                       placeholder="请输入标题" th:value="${article.title}"/>
+                                <input required="required" class="c-datetimepicker publish-time" type="text"
+                                       id="publishTime"
+                                       name="publishTime" placeholder="请输入发布时间" th:value="${article.publishTime}"/>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="am-form-group">
+                        <label for="category" class="am-u-sm-2 am-form-label">内容类型</label>
+                        <div class="am-u-sm-10">
+                            <select required="required" id="category" name="category" placeholder="请选择内容类型"
+                                    data-am-selected="">
+                                <option value="">--请选择--</option>
+                                <option th:selected="${article.category==1}"
+                                        th:value="1" th:text="公告通知"></option>
+                                <option th:selected="${article.category==2}"
+                                        th:value="2" th:text="赛事新闻"></option>
+                                <option th:selected="${article.category==3}"
+                                        th:value="3" th:text="运动指南"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">内容详情</label>
+                        <div class="am-u-sm-10">
+                            <quill-text v-model="article.body" name-text="body" save-to-library="true"></quill-text>
+                            <!--{{article.body}}-->
+                        </div>
+                    </div>
+                    <!--发布状态 -->
+                    <div class="am-form-group">
+                        <label for="status" class="am-u-sm-2 am-form-label"></span>发布状态</label>
+                        <div class="am-u-sm-10">
+                            <select required="required" id="status" name="status" placeholder="请选择发布状态"
+                                    data-am-selected="">
+                                <option value="">--请选择--</option>
+                                <option th:selected="${article.status==1}"
+                                        th:value="1" th:text="发布"></option>
+                                <option th:selected="${article.status==0}"
+                                        th:value="0" th:text="草稿"></option>
+                                <option th:selected="${article.status== -1}"
+                                        th:value="-1" th:text="禁用"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="article_unit" class="am-u-sm-2 am-form-label">发布单位</label>
+                        <div class="am-u-sm-10">
+                            <input required="required" type="text" id="article_unit" name="unit"
+                                   th:value="${article.unit}"
+                                   placeholder="请输入发布单位名称"/>
+                        </div>
+                    </div>
 
-                        <div class="am-form-group">
-                            <label for="summary" class="am-u-sm-2 am-form-label">内容摘要</label>
-                            <div class="am-u-sm-10">
-                                <input type="text" id="summary" name="summary"
-                                       placeholder="请输入摘要" th:value="${article.summary}"/>
-                            </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                            <a class="am-btn am-btn-default" type="button"
+                               th:href="@{/sec/admin/article/articles}">返回</a>
                         </div>
+                    </div>
 
-                        <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">摘要图片</label>
-                            <div class="am-u-sm-10">
-                                <input-image-uploader v-model="article.avatar"
-                                                      name-text="avatar"
-                                                      desc-text="温馨提示：图片尺寸建议为：900*525，小于4M"></input-image-uploader>
-                            </div>
-                        </div>
+                </fieldset>
 
-                        <div class="am-form-group">
-                            <div class="time">
-                                <label for="publishTime" class="am-u-sm-2 am-form-label"><span></span>发布时间</label>
-                                 <div class="am-u-sm-10">
-                                     <input required="required" class="c-datetimepicker publish-time" type="text"
-                                            id="publishTime"
-                                            name="publishTime" placeholder="请输入发布时间" th:value="${article.publishTime}"/>
-                                 </div>
-                             </div>
-                        </div>
-
-                        <div class="am-form-group">
-                            <label for="category" class="am-u-sm-2 am-form-label">内容类型</label>
-                            <div class="am-u-sm-10">
-                                <select required="required" id="category" name="category" placeholder="请选择内容类型"
-                                        data-am-selected="">
-                                    <option value="">--请选择--</option>
-                                    <option th:selected="${article.category==1}"
-                                            th:value="1" th:text="公告通知"></option>
-                                    <option th:selected="${article.category==2}"
-                                            th:value="2" th:text="赛事新闻"></option>
-                                    <option th:selected="${article.category==3}"
-                                            th:value="3" th:text="运动指南"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="c-article-body-text" class="am-u-sm-2 am-form-label">内容详情</label>
-                            <div class="am-u-sm-10">
-                                <div id="c-upload-article-body-editor"></div>
-                                <input id="c-article-body-text" required="required" style="display: none;" type="text"
-                                       v-model="article.body"
-                                       name="body"/>
-                                <div id="c-article-body-editor">
-                                </div>
-                            </div>
-                        </div>
-                        <!--发布状态 -->
-                        <div class="am-form-group">
-                            <label for="status" class="am-u-sm-2 am-form-label"></span>发布状态</label>
-                            <div class="am-u-sm-10">
-                                <select required="required" id="status" name="status" placeholder="请选择发布状态"
-                                        data-am-selected="">
-                                    <option value="">--请选择--</option>
-                                    <option th:selected="${article.status==1}"
-                                            th:value="1" th:text="发布"></option>
-                                    <option th:selected="${article.status==0}"
-                                            th:value="0" th:text="草稿"></option>
-                                    <option th:selected="${article.status== -1}"
-                                            th:value="-1" th:text="禁用"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="article_unit" class="am-u-sm-2 am-form-label">发布单位</label>
-                            <div class="am-u-sm-10">
-                                <input required="required" type="text" id="article_unit" name="unit"
-                                       th:value="${article.unit}"
-                                       placeholder="请输入发布单位名称"/>
-                            </div>
-                        </div>
-
-                        <div class="am-form-group">
-                            <div class="am-u-sm-10 am-u-sm-offset-2">
-                                <button class="am-btn am-btn-secondary" type="submit">保存</button>
-                                <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/article/articles}">返回</a>
-                            </div>
-                        </div>
-
-                    </form>
-
-                </div>
-            </div>
+            </form>
         </div>
 
     </div>
@@ -164,9 +161,9 @@
         width: 200px;
     }
 
-    #c-article-body-editor {
-        background-color: white;
-        min-height: 200px;
+    #app .ql-editor {
+        max-height: 200px;
+        overflow-y: scroll;
     }
 </style>
 <script th:inline="javascript">

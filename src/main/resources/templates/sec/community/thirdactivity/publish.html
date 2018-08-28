@@ -131,11 +131,12 @@
                 <div class="am-form-group">
                     <label for="activity_title" class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>详情</label>
                     <div class="am-u-sm-10">
-                        <div id="c-upload-activity-body-editor"></div>
-                        <input v-model="cacheData.activity.body" id="c-activity-body-text" required="required" style="display: none;" type="text" name="body" />
-                        <div id="c-activity-body-editor">
+                        <!--<div id="c-upload-activity-body-editor"></div>-->
+                        <!--<input v-model="cacheData.activity.body" id="c-activity-body-text" required="required" style="display: none;" type="text" name="body" />-->
+                        <!--<div id="c-activity-body-editor">-->
+                        <!--</div>-->
 
-                        </div>
+                        <quill-text v-model="cacheData.activity.body" name-text="body" save-to-library="true"></quill-text>
                     </div>
                 </div>
                 <div class="am-form-group">
@@ -268,12 +269,17 @@
                         <button type="submit" class="am-btn am-btn-primary" id="saveBtn" v-on:click="save()">保存草稿</button>
                         <button type="submit" class="am-btn am-btn-primary" id="publishBtn" v-on:click="publish()">发布</button>
                         <a th:href="@{/sec/community/thirdactivity/activities}" type="button" class="am-btn am-btn-default">返回</a>
+
+
                     </div>
                 </div>
             </fieldset>
         </form>
+
     </div>
+
 </div>
+
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
     #c_sec_thirdactivity_publish_app{
@@ -336,7 +342,6 @@
         vertical-align: top;
 
     }
-
     #c_sec_thirdactivity_publish_app .c-attend-infos .c-attend-left .c-attend-item:hover{
         background-color: #f9fafc;
         border: 1px solid #ecf0f5;
@@ -353,7 +358,11 @@
     }
     #c_sec_thirdactivity_publish_app .c-attend-infos .c-attend-right .c-attend-custom-item>button{
         width: 100%;
+    }
 
+    #c_sec_thirdactivity_publish_app .ql-editor {
+        max-height: 500px;
+        overflow-y: scroll;
     }
 </style>
 <script th:inline="javascript">

@@ -23,7 +23,7 @@
 
         </div>
 
-        <div class="am-tabs-bd am_bdfw">
+        <div class="amz-container">
             <div class="am-g">
                 <div class="am-alert am-alert-warning" data-am-alert th:if="${errorMessage}">
                     <button type="button" class="am-close">&times;</button>
@@ -34,16 +34,16 @@
                 </div>
             </div>
 
-            <div class="am-g">
-                <div class="am-u-lg-12">
-                    <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
-                          action="/sec/admin/community/saveCommunity">
-                        <input type="hidden" id="id"
-                               name="id" th:value="${community.id}"/>
-                        <input type="hidden" id="created"
-                               name="created" th:value="${community.created}"/>
-                        <input type="hidden" id="createdBy"
-                               name="createdBy" th:value="${community.createdBy}"/>
+            <form id="c-community-add-form" data-am-validator method="post" class="am-form am-form-horizontal"
+                  action="/sec/admin/community/saveCommunity">
+                <input type="hidden" id="id"
+                       name="id" th:value="${community.id}"/>
+                <input type="hidden" id="created"
+                       name="created" th:value="${community.created}"/>
+                <input type="hidden" id="createdBy"
+                       name="createdBy" th:value="${community.createdBy}"/>
+
+                <fieldset>
 
                         <div class="am-form-group">
                             <label for="name" class="am-u-sm-2 am-form-label">团体名称</label>
@@ -140,13 +140,14 @@
                         </div>
 
                         <div class="am-form-group">
-                            <label for="c-community-about-text" class="am-u-sm-2 am-form-label">团体介绍</label>
+                            <label class="am-u-sm-2 am-form-label">团体介绍</label>
                             <div class="am-u-sm-10">
-                                <div id="c-upload-community-about-editor"></div>
-                                <input id="c-community-about-text" required="required"
-                                       style="display: none;" type="text" name="about" v-model="community.about"/>
-                                <div id="c-community-about-editor">
-                                </div>
+                                <!--<div id="c-upload-community-about-editor"></div>-->
+                                <!--<input id="c-community-about-text" required="required"-->
+                                       <!--style="display: none;" type="text" name="about" v-model="community.about"/>-->
+                                <!--<div id="c-community-about-editor">-->
+                                <!--</div>-->
+                                <quill-text v-model="community.about" name-text="about"></quill-text>
                             </div>
                         </div>
 
@@ -187,12 +188,13 @@
                         <div class="am-form-group" v-show="community.isVip===true">
                             <label class="am-u-sm-2 am-form-label">会员条款</label>
                             <div class="am-u-sm-10">
-                                <div id="c-upload-community-vip-editor"></div>
-                                <input id="c-community-vip-text" th:required="${community.isVip==true}"
-                                       style="display: none;" type="text" name="vipAgreement"
-                                       v-model="community.vipAgreement"/>
-                                <div id="c-community-vip-editor">
-                                </div>
+                                <!--<div id="c-upload-community-vip-editor"></div>-->
+                                <!--<input id="c-community-vip-text" th:required="${community.isVip==true}"-->
+                                       <!--style="display: none;" type="text" name="vipAgreement"-->
+                                       <!--v-model="community.vipAgreement"/>-->
+                                <!--<div id="c-community-vip-editor">-->
+                                <!--</div>-->
+                                <quill-text v-model="community.vipAgreement" name-text="vipAgreement"></quill-text>
                             </div>
                         </div>
 
@@ -203,25 +205,18 @@
                                    th:href="@{/sec/admin/community/communities}">返回</a>
                             </div>
                         </div>
-                    </form>
+                </fieldset>
 
-                </div>
-
-            </div>
+            </form>
         </div>
     </div>
 </div>
 
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-    #c-community-about-editor {
-        background-color: white;
-        min-height: 200px;
-    }
-
-    #c-community-vip-editor {
-        background-color: white;
-        min-height: 200px;
+    #app .ql-editor {
+        max-height: 200px;
+        overflow-y: scroll;
     }
 </style>
 <script th:inline="javascript">

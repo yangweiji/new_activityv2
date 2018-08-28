@@ -66,11 +66,18 @@ new Vue({
 
             },
             showAddressMap:false,
+
+            //素材库
+            images: [],
+            //素材库图片分类数组
+            categories: [],
+            //默认的分组
+            category: '未分组',
         }
     },
     mounted: function(){
         var that = this;
-        ///时间控件
+        ///时间控件:活动开始时间
         $('.c-datetimepicker.start-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
             language: 'zh-CN'
@@ -79,10 +86,12 @@ new Vue({
                 that.cacheData.activity.startTime = ev.date
             }
         })
+        //显示活动开始时间
         if(that.cacheData.activity.startTime) {
             $('.c-datetimepicker.start-time').datetimepicker('update', new Date(that.cacheData.activity.startTime))
         }
 
+        //活动结束时间
         $('.c-datetimepicker.end-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
             language: 'zh-CN'
@@ -91,10 +100,12 @@ new Vue({
                 that.cacheData.activity.endTime = ev.date
             }
         });
+        //显示活动结束时间
         if(that.cacheData.activity.endTime) {
             $('.c-datetimepicker.end-time').datetimepicker('update', new Date(that.cacheData.activity.endTime))
         }
 
+        //报名结束时间
         $('.c-datetimepicker.attend-due-time').datetimepicker({
             format: 'yyyy-mm-dd hh:ii',
             language: 'zh-CN'
@@ -103,95 +114,19 @@ new Vue({
                 that.cacheData.activity.attendDueTime = ev.date
             }
         });
+        //显示报名结束时间
         if(that.cacheData.activity.attendDueTime) {
             $('.c-datetimepicker.attend-due-time').datetimepicker('update', new Date(that.cacheData.activity.attendDueTime))
         }
 
-        //类别
+        //活动类别变更
         $('#activity_type').on('change', function(ev) {
             that.cacheData.activity.activityType = ev.currentTarget.value
         }).val(that.cacheData.activity.activityType);
-
+        //活动标签变更
         $('#activity_tags').on('change', function(ev) {
             that.cacheData.activity.tags = ev.currentTarget.value
         }).val(that.cacheData.activity.tags);
-
-        ///富文本控件
-        var imageHandleCallback;
-        var toolbarOptions = {
-            container: [
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                ['blockquote', 'code-block'],
-
-                [{'header': 1}, {'header': 2}],               // custom button values
-                [{'list': 'ordered'}, {'list': 'bullet'}],
-                [{'script': 'sub'}, {'script': 'super'}],      // superscript/subscript
-                [{'indent': '-1'}, {'indent': '+1'}],          // outdent/indent
-                [{'direction': 'rtl'}],                         // text direction
-
-                [{'size': ['small', false, 'large', 'huge']}],  // custom dropdown
-
-                [{'color': []}, {'background': []}],          // dropdown with defaults from theme
-                [{'font': []}],
-                [{'align': []}],
-                ['link', 'image'],
-                ['clean']                                         // remove formatting button
-            ],
-            handlers: {
-                'image': function(callback){
-                    imageHandleCallback = callback
-                    document.getElementById('c-upload-activity-body-editor').click()
-                }
-            }
-        }
-
-        Quill.prototype.getHtml = function() {
-            return this.container.querySelector('.ql-editor').innerHTML;
-        };
-
-        var quill = new Quill('#c-activity-body-editor', {
-            modules: {
-                toolbar: toolbarOptions
-            },
-            placeholder: '请在此输入活动详情',
-            theme: 'snow'  // or 'bubble'
-        });
-
-        this.editorUploader = Util.file.uploader({
-            randomName: true,
-            selectId:'c-upload-activity-body-editor',
-            success:function (file) {
-                if(imageHandleCallback) {
-                    var url = Util.file.downloadUrl(file.randomName)
-                    var range = quill.getSelection()
-                    if(!range){
-                        range= { index : 0}
-                    }
-                    quill.clipboard.dangerouslyPasteHTML(range.index, "<img src='" + url + "' />")
-                }
-            }
-        })
-
-
-        if(that.cacheData.activity.body){
-            quill.clipboard.dangerouslyPasteHTML(that.cacheData.activity.body)
-        }
-
-        quill.on('editor-change', function(eventName) {
-            if (eventName === 'text-change') {
-                // args[0] will be delta
-            } else if (eventName === 'selection-change') {
-                // args[0] will be old range
-            }
-
-
-            var bodyInput = $('#c-activity-body-text')
-            bodyInput.val(quill.getText())
-
-            that.cacheData.activity.body = quill.getHtml()
-
-            bodyInput.trigger('change')
-        })
 
         //表单验证提交
         $('#c-thirdactivity-create-form').validator({
@@ -225,7 +160,7 @@ new Vue({
             return true; // return false to cancel form action
         });
 
-
+        //加载缓存内容
         $(window).on("unload", function(){
             if( !_global_data.activity.id) {
                 var body = that.cacheData.activity.body
@@ -235,6 +170,7 @@ new Vue({
             }
         });
 
+        //监听活动地点位置变更
         window.addEventListener('message', function(event) {
             // 接收位置信息，用户选择确认位置点后选点组件会触发该事件，回传用户的位置信息
             var loc = event.data;
@@ -244,6 +180,7 @@ new Vue({
                 that.cacheData.activity.address = loc.poiaddress
             }
         }, false);
+
     },
     methods: {
         objectId: function (obj) {
@@ -283,8 +220,7 @@ new Vue({
             var that = this;
             //保存正式发布
             that.cacheData.activity.status = 1;
-        }
-
+        },
     }
 
 })

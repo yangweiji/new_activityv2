@@ -24,7 +24,7 @@
 
         </div>
 
-        <div class="am-tabs-bd am_bdfw">
+        <div class="amz-container">
             <div class="am-g">
                 <!--成功消息提示-->
                 <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
@@ -44,114 +44,60 @@
                     </p>
                 </div>
             </div>
-            <div class="am-g">
-                <div class="am-u-lg-12">
-                    <form class="am-form am-form-horizontal" data-am-validator method="post"
-                          action="/sec/admin/material/save">
-                        <input type="hidden" id="id" name="id"
-                               placeholder="" th:value="${material.id}"/>
 
-                        <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">素材图片</label>
-                            <div class="am-u-sm-10">
-                                <input-image-uploader v-model="material.name"
-                                                      name-text="name"
-                                                      save-to-library="false"
-                                                      desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
-                            </div>
-                        </div>
+            <form class="am-form am-form-horizontal" data-am-validator method="post"
+                  action="/sec/admin/material/save">
+                <input type="hidden" id="id" name="id" placeholder="" th:value="${material.id}"/>
 
-                        <div class="am-form-group">
-                            <label for="category" class="am-u-sm-2 am-form-label">分组</label>
-                            <div class="am-u-sm-10">
-                                <input required type="text" id="category" name="category"
-                                       th:value="${material.category}"
-                                       placeholder="请输入分组标题"/>
-                                <span class="c-avatar-tip"></span>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="sequence" class="am-u-sm-2 am-form-label">排序</label>
-                            <div class="am-u-sm-10">
-                                <input required type="number" id="sequence" name="sequence"
-                                       th:value="${material.sequence}"
-                                       placeholder="请输入排序编号"/>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <div class="am-u-sm-10 am-u-sm-offset-2">
-                                <button class="am-btn am-btn-secondary" type="submit">保存</button>
-                                <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/material/materials}">返回</a>
-                            </div>
-                        </div>
-                    </form>
+                <fieldset>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 图片素材库 BEGIN -->
-    <div class="am-modal am-modal-no-btn" tabindex="-1" id="material-library-modal">
-        <div class="am-modal-dialog">
-            <div class="am-modal-hd">素材库图片
-                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
-            </div>
-            <div class="am-modal-bd">
-
-                <div class="am-tabs" data-am-tabs>
-                    <ul class="am-tabs-nav am-nav am-nav-tabs">
-                        <li v-for="(category, index) in categories" v-bind:class="{'am-active': category.category=='未分组'}">
-                            <a :href="'#tab' + index" v-on:click="switchCategory(category)">{{category.category}}</a>
-                        </li>
-                    </ul>
-
-                    <div class="am-tabs-bd">
-                        <div class="am-tab-panel am-fade am-in am-active" :id="'tab' + index" v-for="(category, index) in categories">
-
-                            <div class="am-g dis_line">
-                                <div class="am-g am-imglist">
-                                    <ul data-am-widget="gallery"
-                                        class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">
-                                        <li v-for="(item, index) in images">
-                                            <div class="am-gallery-item am_list_block">
-                                                <a href="javascript:void(0)" v-on:click="selectImage(item)"><img v-translator class="am_img animated c-img" :data-url="item.name" alt=""/></a>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">素材图片</label>
+                        <div class="am-u-sm-10">
+                            <input-image-uploader v-model="material.name"
+                                                  name-text="name"
+                                                  save-to-library="false"
+                                                  select-from-library="false"
+                                                  desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
                         </div>
                     </div>
-                </div>
 
+                    <div class="am-form-group">
+                        <label for="category" class="am-u-sm-2 am-form-label">分组</label>
+                        <div class="am-u-sm-10">
+                            <input required type="text" id="category" name="category"
+                                   th:value="${material.category}"
+                                   placeholder="请输入分组标题"/>
+                            <span class="c-avatar-tip"></span>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="sequence" class="am-u-sm-2 am-form-label">排序</label>
+                        <div class="am-u-sm-10">
+                            <input required type="number" id="sequence" name="sequence"
+                                   th:value="${material.sequence}"
+                                   placeholder="请输入排序编号"/>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                            <a class="am-btn am-btn-default" type="button"
+                               th:href="@{/sec/admin/material/materials}">返回</a>
+                        </div>
+                    </div>
 
-            </div>
+                </fieldset>
+            </form>
+
         </div>
     </div>
-    <!-- 图片素材库 END -->
 </div>
-
-
-
-
 
 
 <div th:replace="fragments/footer :: default"></div>
 <style type="text/css">
-    .am-tab-panel {
-        min-height: 200px;
-        max-height: 400px;
-        overflow-y: scroll;
-    }
-    .am-gallery-item.am_list_block {
-        width: 200px;
-    }
-    .am_img.animated.c-img {
-        width: 180px;
-        height: 100px;
-    }
+
 </style>
 <script th:inline="javascript">
     /*<![CDATA[*/

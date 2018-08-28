@@ -24,7 +24,7 @@
 
         </div>
 
-        <div class="am-tabs-bd am_bdfw">
+        <div class="amz-container">
             <div class="am-g">
                 <!--成功消息提示-->
                 <div class="am-alert am-alert-secondary" data-am-alert th:if="${globalMessage}">
@@ -44,125 +44,128 @@
                     </p>
                 </div>
             </div>
-            <div class="am-g">
-                <div class="am-u-lg-12">
-                    <form class="am-form am-form-horizontal" data-am-validator method="post"
-                          action="/sec/admin/poster/savePoster">
-                        <input type="hidden" id="id" name="id"
-                               placeholder="" th:value="${poster.id}"/>
-                        <input type="hidden" id="created" name="created"
-                               placeholder="" th:value="${poster.created}"/>
 
-                        <div class="am-form-group">
-                            <label for="poster_title" class="am-u-sm-2 am-form-label">海报标题</label>
-                            <div class="am-u-sm-10">
-                                <input type="text" id="poster_title" name="title" th:value="${poster.title}" required
-                                       placeholder="请输入标题"/>
-                            </div>
-                        </div>
+            <form class="am-form am-form-horizontal" data-am-validator method="post"
+                  action="/sec/admin/poster/savePoster">
+                <input type="hidden" id="id" name="id"
+                       placeholder="" th:value="${poster.id}"/>
+                <input type="hidden" id="created" name="created"
+                       placeholder="" th:value="${poster.created}"/>
 
-                        <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">海报(PC)</label>
-                            <div class="am-u-sm-10">
-                                <input-image-uploader v-model="poster.avatar"
-                                                      name-text="avatar"
-                                                      desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
-                            </div>
-                        </div>
+                <fieldset>
 
-                        <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">海报(手机)</label>
-                            <div class="am-u-sm-10">
-                                <input-image-uploader v-model="poster.mobileAvatar"
-                                                      name-text="mobileAvatar"
-                                                      desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
-                            </div>
-                        </div>
 
-                        <div class="am-form-group">
-                            <label for="link" class="am-u-sm-2 am-form-label">链接地址</label>
-                            <div class="am-u-sm-10">
-                                <input type="text" id="link" name="link"
-                                       th:value="${poster.link}"
-                                       placeholder="请输入外部链接地址"/>
-                                <span class="c-avatar-tip">温馨提示：外部链接地址与活动编号，至少输入一项，不能均为空！</span>
-                            </div>
+                    <div class="am-form-group">
+                        <label for="poster_title" class="am-u-sm-2 am-form-label">海报标题</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" id="poster_title" name="title" th:value="${poster.title}" required
+                                   placeholder="请输入标题"/>
                         </div>
-                        <div class="am-form-group">
-                            <label for="activityId" class="am-u-sm-2 am-form-label">活动编号</label>
-                            <div class="am-u-sm-10">
-                                <input type="number" max="999999999" id="activityId" name="activityId"
-                                       th:value="${poster.activityId}"
-                                       placeholder="请输入活动编号"/>
-                                <span class="c-avatar-tip">温馨提示：外部链接地址与活动编号，至少输入一项，不能均为空！</span>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="posterType" class="am-u-sm-2 am-form-label">海报类型</label>
-                            <div class="am-u-sm-10">
-                                <select required="required" id="posterType" name="posterType" placeholder="请选择海报类型"
-                                        data-am-selected="">
-                                    <option value="">--</option>
-                                    <option th:selected="${poster.posterType=='n1'}"
-                                            th:value="n1" th:text="赛事新闻"></option>
-                                    <option th:selected="${poster.posterType=='b5'}"
-                                            th:value="b5" th:text="跑步训练"></option>
-                                    <option th:selected="${poster.posterType=='b13'}"
-                                            th:value="b13" th:text="运动装备"></option>
-                                    <option th:selected="${poster.posterType=='b12'}"
-                                            th:value="b12" th:text="会员福利"></option>
-                                    <option th:selected="${poster.posterType=='b10'}"
-                                            th:value="b10" th:text="国内赛事"></option>
-                                    <option th:selected="${poster.posterType=='b11'}"
-                                            th:value="b11" th:text="国际赛事"></option>
-                                    <option th:selected="${poster.posterType=='b1'}"
-                                            th:value="b1" th:text="徒步"></option>
-                                    <option th:selected="${poster.posterType=='b2'}"
-                                            th:value="b2" th:text="越野"></option>
-                                    <option th:selected="${poster.posterType=='b3'}"
-                                            th:value="b3" th:text="聚餐"></option>
-                                    <option th:selected="${poster.posterType=='b4'}"
-                                            th:value="b4" th:text="骑行"></option>
-                                    <option th:selected="${poster.posterType=='b6'}"
-                                            th:value="b6" th:text="会议"></option>
-                                    <option th:selected="${poster.posterType=='b7'}"
-                                            th:value="b7" th:text="招募"></option>
-                                    <option th:selected="${poster.posterType=='b8'}"
-                                            th:value="b8" th:text="讲座"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="show" class="am-u-sm-2 am-form-label">是否显示</label>
-                            <div class="am-u-sm-10">
-                                <select required="required" id="show" name="show" placeholder="请选择是否显示海报"
-                                        data-am-selected="">
-                                    <option value="">--</option>
-                                    <option th:selected="${poster.show==true}"
-                                            th:value="true" th:text="是"></option>
-                                    <option th:selected="${poster.show==false}"
-                                            th:value="false" th:text="否"></option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <label for="sequence" class="am-u-sm-2 am-form-label">海报排序</label>
-                            <div class="am-u-sm-10">
-                                <input type="number" id="sequence" name="sequence"
-                                       th:value="${poster.sequence}"
-                                       placeholder="请输入排序编号"/>
-                            </div>
-                        </div>
-                        <div class="am-form-group">
-                            <div class="am-u-sm-10 am-u-sm-offset-2">
-                                <button class="am-btn am-btn-secondary" type="submit">保存</button>
-                                <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/poster/posters}">返回</a>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
 
-                </div>
-            </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">海报(PC)</label>
+                        <div class="am-u-sm-10">
+                            <input-image-uploader v-model="poster.avatar"
+                                                  name-text="avatar"
+                                                  desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label class="am-u-sm-2 am-form-label">海报(手机)</label>
+                        <div class="am-u-sm-10">
+                            <input-image-uploader v-model="poster.mobileAvatar"
+                                                  name-text="mobileAvatar"
+                                                  desc-text="温馨提示：图片尺寸建议为：1500*400，小于4M"></input-image-uploader>
+                        </div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label for="link" class="am-u-sm-2 am-form-label">链接地址</label>
+                        <div class="am-u-sm-10">
+                            <input type="text" id="link" name="link"
+                                   th:value="${poster.link}"
+                                   placeholder="请输入外部链接地址"/>
+                            <span class="c-avatar-tip">温馨提示：外部链接地址与活动编号，至少输入一项，不能均为空！</span>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="activityId" class="am-u-sm-2 am-form-label">活动编号</label>
+                        <div class="am-u-sm-10">
+                            <input type="number" max="999999999" id="activityId" name="activityId"
+                                   th:value="${poster.activityId}"
+                                   placeholder="请输入活动编号"/>
+                            <span class="c-avatar-tip">温馨提示：外部链接地址与活动编号，至少输入一项，不能均为空！</span>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="posterType" class="am-u-sm-2 am-form-label">海报类型</label>
+                        <div class="am-u-sm-10">
+                            <select required="required" id="posterType" name="posterType" placeholder="请选择海报类型"
+                                    data-am-selected="">
+                                <option value="">--</option>
+                                <option th:selected="${poster.posterType=='n1'}"
+                                        th:value="n1" th:text="赛事新闻"></option>
+                                <option th:selected="${poster.posterType=='b5'}"
+                                        th:value="b5" th:text="跑步训练"></option>
+                                <option th:selected="${poster.posterType=='b13'}"
+                                        th:value="b13" th:text="运动装备"></option>
+                                <option th:selected="${poster.posterType=='b12'}"
+                                        th:value="b12" th:text="会员福利"></option>
+                                <option th:selected="${poster.posterType=='b10'}"
+                                        th:value="b10" th:text="国内赛事"></option>
+                                <option th:selected="${poster.posterType=='b11'}"
+                                        th:value="b11" th:text="国际赛事"></option>
+                                <!--<option th:selected="${poster.posterType=='b1'}"-->
+                                        <!--th:value="b1" th:text="徒步"></option>-->
+                                <!--<option th:selected="${poster.posterType=='b2'}"-->
+                                        <!--th:value="b2" th:text="越野"></option>-->
+                                <!--<option th:selected="${poster.posterType=='b3'}"-->
+                                        <!--th:value="b3" th:text="聚餐"></option>-->
+                                <!--<option th:selected="${poster.posterType=='b4'}"-->
+                                        <!--th:value="b4" th:text="骑行"></option>-->
+                                <!--<option th:selected="${poster.posterType=='b6'}"-->
+                                        <!--th:value="b6" th:text="会议"></option>-->
+                                <!--<option th:selected="${poster.posterType=='b7'}"-->
+                                        <!--th:value="b7" th:text="招募"></option>-->
+                                <!--<option th:selected="${poster.posterType=='b8'}"-->
+                                        <!--th:value="b8" th:text="讲座"></option>-->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="show" class="am-u-sm-2 am-form-label">是否显示</label>
+                        <div class="am-u-sm-10">
+                            <select required="required" id="show" name="show" placeholder="请选择是否显示海报"
+                                    data-am-selected="">
+                                <option value="">--</option>
+                                <option th:selected="${poster.show==true}"
+                                        th:value="true" th:text="是"></option>
+                                <option th:selected="${poster.show==false}"
+                                        th:value="false" th:text="否"></option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="sequence" class="am-u-sm-2 am-form-label">海报排序</label>
+                        <div class="am-u-sm-10">
+                            <input type="number" id="sequence" name="sequence"
+                                   th:value="${poster.sequence}"
+                                   placeholder="请输入排序编号"/>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <div class="am-u-sm-10 am-u-sm-offset-2">
+                            <button class="am-btn am-btn-secondary" type="submit">保存</button>
+                            <a class="am-btn am-btn-default" type="button" th:href="@{/sec/admin/poster/posters}">返回</a>
+                        </div>
+                    </div>
+
+
+                </fieldset>
+
+            </form>
         </div>
     </div>
 </div>

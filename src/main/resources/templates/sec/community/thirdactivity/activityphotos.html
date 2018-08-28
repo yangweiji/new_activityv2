@@ -20,7 +20,7 @@
             <div class="l"><strong>活动相册-<span th:text="${activity.title}"></span></strong></div>
         </div>
 
-        <div class="am-tabs-bd am_bdfw">
+        <div class="amz-container">
             <form id="c-activity-picture-create-form" method="post" class="am-form am-form-horizontal"
                   action="/sec/community/thirdactivity/savePictures">
 
@@ -43,8 +43,7 @@
                     </div>
                 </div>
 
-                <div class="am-g">
-                    <div class="am-u-lg-8">
+                <fieldset>
 
                         <input type="hidden" id="activityId" name="activityId" th:value="${activityId}"/>
                         <input type="hidden" id="activityPhotoId" name="activityPhotoId"
@@ -64,8 +63,8 @@
                             <button type="submit" class="am-btn am-btn-primary">保存</button>
                         </div>
 
-                    </div>
-                </div>
+                </fieldset>
+
             </form>
         </div>
         <div class="hd_list_right_tt">

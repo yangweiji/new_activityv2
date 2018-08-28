@@ -45,7 +45,7 @@ class MaterialService {
     }
 
     /**
-     * 获取海报信息集合
+     * 获取信息集合
      * @param category: 分组
      * @return 海报信息集合
      */
@@ -54,6 +54,8 @@ class MaterialService {
         if (!category.isNullOrBlank()) {
             sql += "and category like '%$category%'"
         }
+
+        sql += " order by sequence, created desc"
         return create!!.resultQuery(sql).fetch()
     }
 
@@ -67,8 +69,8 @@ class MaterialService {
     }
 
     /**
-     * 删除海报信息
-     * @param id 海报id
+     * 删除信息
+     * @param id id
      */
     fun delete(id: Int) {
         materialDao!!.deleteById(id)

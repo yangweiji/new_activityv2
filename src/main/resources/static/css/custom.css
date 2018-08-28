@@ -537,3 +537,24 @@ div.dataTables_wrapper div.dataTables_info {
     width: 100px;
     height: 60px;
 }
+
+/*富文本编辑框*/
+.ql-editor {
+    min-height: 200px;
+}
+
+/*素材库图片*/
+.am-modal .am-tab-panel {
+    min-height: 500px;
+    max-height: 500px;
+    overflow-y: scroll;
+}
+
+.am-modal .am-gallery-item.am_list_block {
+    width: 200px;
+}
+
+.am-modal .am_img.animated.c-img {
+    width: 180px;
+    height: 100px;
+}
