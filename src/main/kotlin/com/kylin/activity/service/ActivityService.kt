@@ -418,9 +418,11 @@ class ActivityService {
         var sql = "select t1.*, t2.avatar user_avatar, t2.displayname, " +
                 "ifnull(tu.attend_count, 0) attend_count, " +
                 "ifnull(tf.favorite_count, 0) favorite_count, " +
-                "ifnull(p.picture_count, 0) picture_count " +
+                "ifnull(p.picture_count, 0) picture_count, " +
+                "t3.name community_name " +
                 "from activity t1 " +
                 "left join user t2 on t1.created_by  = t2.id " +
+                "left join community t3 on t1.community_id = t3.id " +
                 "left join ( " +
                 " select activity_id, count(user_id) attend_count from activity_user where activity_id=? " +
                 ") as tu on t1.id = tu.activity_id " +

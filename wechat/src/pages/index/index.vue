@@ -205,22 +205,51 @@
     created() {
     },
     onShow() {
-      console.log("index onShow");
+      console.log("首页显示...");
       var that = this;
       that.activeTab = this.$root.$mp.query.activeTab;
       if (!that.activeTab) {
         that.activeTab = 'b5'; //训练
       }
 
-      //接受参数
-      if (this.$store.state.community) {
-        this.community = this.$store.state.community;
+      //如果有参数值，获取北京市马拉松协会的活动内容
+      if (this.$root.$mp.query.activeTab) {
+        that.community = {
+          id: 1, //默认的组织团体ID
+          name: "北京市马拉松协会",
+          background: "NzrSDNSBEP.png",
+        };
         //设置标题
         wx.setNavigationBarTitle({
-          title: this.community.name
+          title: that.community.name
+        });
+        that.getData();
+        return;
+      };
+
+      //切换团体组织后的处理
+      if (!that.$store.state.community) {
+        //根据用户登录后获取的团体组织信息加载活动内容
+        this.$kyutil.Login().then(function(res) {
+          //接受参数
+          if (that.$store.state.community) {
+            that.community = that.$store.state.community;
+            //设置标题
+            wx.setNavigationBarTitle({
+              title: that.community.name
+            });
+          }
+          that.getData();
         });
       }
-      this.getData();
+      else {
+        that.community = that.$store.state.community;
+        //设置标题
+        wx.setNavigationBarTitle({
+          title: that.community.name
+        });
+        that.getData();
+      }
     }
   };
 </script>

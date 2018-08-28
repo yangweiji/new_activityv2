@@ -134,7 +134,7 @@ Vue.component('input-image-uploader', {
 
             //打开素材库
             var $modal = $('#' + that.getMaterialLibraryModel);
-            $modal.modal({width: 800});
+            $modal.modal({width: 800, height: 600});
 
             //获取素材库图片分类
             $.ajax({
@@ -397,7 +397,7 @@ Vue.component('quill-text', {
 
             //打开素材库
             var $modal = $('#' + that.getMaterialLibraryModel);
-            $modal.modal({width: 800});
+            $modal.modal({width: 800, height: 600});
 
             //关闭当前图片选择对话框
             var $modal = $('#' + that.getImageSelectModal);

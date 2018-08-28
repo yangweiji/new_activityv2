@@ -156,7 +156,6 @@ export default {
     },
     bindSwitchCommunity(community) {
       //设置团体组织
-      // this.$store.state.communityId = communityId;
       this.$store.state.community = community
       wx.switchTab({
         url: "../../pages/index/index",
@@ -171,10 +170,6 @@ export default {
   },
   onLoad() {
     var that = this;
-    // this.$kyutil.CheckUserValidation();
-    // if (wx.getStorageSync("user")) {
-    //   this.getData();
-    // }
     
     this.$kyutil.CheckUserValidation().then(function(res) {
       that.getData();
