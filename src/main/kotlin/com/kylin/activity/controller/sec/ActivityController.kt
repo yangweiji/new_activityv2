@@ -175,8 +175,26 @@ class ActivityController : BaseController() {
      * @return
      */
     @CrossOrigin
-    @RequestMapping(value = "/activities", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
+    @RequestMapping(value = "/activities", method = [RequestMethod.GET, RequestMethod.POST])
     fun activities(request: HttpServletRequest, model: Model): String {
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank()) {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
+
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank()) {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
 
         return "sec/admin/activity/activities"
     }
@@ -185,15 +203,17 @@ class ActivityController : BaseController() {
      * 取得活动信息集合
      */
     @CrossOrigin
-    @RequestMapping(value = "/getActivities", method = arrayOf(RequestMethod.POST, RequestMethod.GET))
+    @RequestMapping(value = "/getActivities", method = [RequestMethod.POST, RequestMethod.GET])
     @ResponseBody
-    fun activities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+    fun getActivities(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
         var status = map["status"]
         var tags = map["tags"]
         var title = map["title"]
         //团体名称
         var communityname = map["communityname"]
-        var items = activityService!!.getAllActivityUserItems(title, tags, status, communityname)
+        var items = activityService!!.getAllActivityUserItems(start, end, title, tags, status, communityname)
         var list = items.intoMaps()
         return list
     }

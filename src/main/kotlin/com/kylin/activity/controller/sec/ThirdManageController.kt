@@ -210,9 +210,9 @@ class ThirdManageController : BaseController() {
     @RequestMapping(value = "/saveActivityScore", method = [RequestMethod.POST])
     @Throws(Exception::class)
     private fun saveActivityScore(@ModelAttribute("score") score: ScoreHistory
+                                  , @ModelAttribute("user") user: User?
                                   , redirectAttributes: RedirectAttributes
                                   , model: Model): String {
-        var user = this.sessionUser
         //取得用户信息
         var u = userService!!.getUser(user!!.username)
 

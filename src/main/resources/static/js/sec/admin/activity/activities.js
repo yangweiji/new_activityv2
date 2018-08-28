@@ -68,6 +68,8 @@ $(function () {
                 "data": function () {
                     //查询条件参数
                     var param = {
+                        start: $("#start").val().trim(),
+                        end: $("#end").val().trim(),
                         status: $("#status").val().trim(),
                         tags: $("#tags").val().trim(),
                         title: $("#title").val().trim(),
