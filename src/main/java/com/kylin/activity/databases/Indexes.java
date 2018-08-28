@@ -4,12 +4,30 @@
 package com.kylin.activity.databases;
 
 
-import com.kylin.activity.databases.tables.*;
+import com.kylin.activity.databases.tables.ActionHistory;
+import com.kylin.activity.databases.tables.Activity;
+import com.kylin.activity.databases.tables.ActivityFavorite;
+import com.kylin.activity.databases.tables.ActivityPhoto;
+import com.kylin.activity.databases.tables.ActivityPhotoPicture;
+import com.kylin.activity.databases.tables.ActivitySms;
+import com.kylin.activity.databases.tables.ActivityTicket;
+import com.kylin.activity.databases.tables.ActivityUser;
+import com.kylin.activity.databases.tables.ActivityUserRecord;
+import com.kylin.activity.databases.tables.Article;
+import com.kylin.activity.databases.tables.Community;
+import com.kylin.activity.databases.tables.CommunityUser;
+import com.kylin.activity.databases.tables.MaterialLibrary;
+import com.kylin.activity.databases.tables.PayOrder;
+import com.kylin.activity.databases.tables.Poster;
+import com.kylin.activity.databases.tables.ScoreHistory;
+import com.kylin.activity.databases.tables.User;
+import com.kylin.activity.databases.tables.Vercode;
+
+import javax.annotation.Generated;
+
 import org.jooq.Index;
 import org.jooq.OrderField;
 import org.jooq.impl.AbstractKeys;
-
-import javax.annotation.Generated;
 
 
 /**
