@@ -185,9 +185,9 @@ class UserController : BaseController() {
         var displayname = map["displayname"]
         var real_name = map["real_name"]
         var id_card = map["id_card"]
-
+        var role = map["role"]
         //查询用户
-        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card)
+        var items = userService!!.getAllUsersAndScores(start, end, username, displayname, real_name, id_card, role)
         var list = items.intoMaps()
         return list
     }

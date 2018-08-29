@@ -86,6 +86,7 @@ $(function () {
                         displayname: $("#displayname").val().trim(),
                         real_name: $("#real_name").val().trim(),
                         id_card: $("#id_card").val().trim(),
+                        role: $("#role").val().trim()
                     };
                     return JSON.stringify(param);
                 },
@@ -155,6 +156,7 @@ $(function () {
                 {"data": "emergency_contact_name"},
                 {"data": "emergency_contact_mobile"},
                 {"data": "wechat_id"},
+                {"data": "role"},  //平台角色
                 {"data": "total_score", "width": "30px"}, //积分
                 {
                     "data": "action", "width": "100px", "defaultContent": "",
@@ -172,7 +174,7 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, -2, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, -3, -2, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序

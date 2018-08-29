@@ -1,22 +1,17 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.controller.BaseController
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.util.CommonService
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.DateTimeFormatter
-import org.jooq.Record
-import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.PageRequest
-import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-
 import java.text.ParseException
 
 /**
@@ -33,6 +28,12 @@ class SearchController : BaseController() {
 
     @Autowired
     private val commonService: CommonService? = null
+
+    /**
+     * 活动配置
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
 
     /**
      * 图片真实URL
@@ -56,7 +57,7 @@ class SearchController : BaseController() {
      * @param model：模型数据
      * @return
      */
-    @RequestMapping(value = "/search/{s}", method = arrayOf(RequestMethod.GET))
+    @RequestMapping(value = "/search/{s}", method = [RequestMethod.GET])
     @Throws(ParseException::class)
     private fun search(
             @PathVariable s: Int?,
@@ -68,7 +69,7 @@ class SearchController : BaseController() {
         var s = s
 
         //设置记录数
-        activityService!!.size = PAGE_SIZE
+        activityService!!.size = activityProperties!!.pageSize
         //设置起始记录位置
         activityService!!.page = page!!
 

@@ -45,7 +45,7 @@ class UserService {
     private val verCodeService: VerCodeService? = null
 
     fun getRoles(): Map<String, String> {
-        val roles = mapOf<String,String>("ADMIN" to "管理员", "PUBLISH" to "发布者")
+        val roles = mapOf<String, String>("ADMIN" to "管理员", "PUBLISH" to "发布者")
         return roles
     }
 
@@ -197,49 +197,48 @@ class UserService {
     /**
      * 查询全部用户与积分
      */
-    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?): Result<Record> {
+    fun getAllUsersAndScores(start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, role: String?): Result<Record> {
         var sql = "select t1.*, t2.total_score from user t1 " +
                 "left join (select user_id, sum(score) total_score " +
                 "from score_history " +
                 "group by user_id) t2 " +
-                "on t1.id = t2.user_id "+
-        "where 1=1 {0} {1} {2} {3} {4} {5} "
+                "on t1.id = t2.user_id " +
+                "where 1=1 {0} {1} {2} {3} {4} {5} {6} "
         var strCondition = ""
-        if (!username.isNullOrBlank())
-        {
+        if (!username.isNullOrBlank()) {
             strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
         }
         sql = sql.replace("{0}", strCondition)
 
-        if (!displayname.isNullOrBlank())
-        {
+        if (!displayname.isNullOrBlank()) {
             strCondition = "and t1.displayname like '%{0}%'".replace("{0}", displayname!!)
         }
         sql = sql.replace("{1}", strCondition)
 
-        if (!real_name.isNullOrBlank())
-        {
+        if (!real_name.isNullOrBlank()) {
             strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
         }
         sql = sql.replace("{2}", strCondition)
 
-        if (!id_card.isNullOrBlank())
-        {
+        if (!id_card.isNullOrBlank()) {
             strCondition = "and t1.id_card like '%{0}%'".replace("{0}", id_card!!)
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!start.isNullOrBlank())
-        {
+        if (!start.isNullOrBlank()) {
             strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
         }
         sql = sql.replace("{4}", strCondition)
 
-        if (!end.isNullOrBlank())
-        {
+        if (!end.isNullOrBlank()) {
             strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
         }
         sql = sql.replace("{5}", strCondition)
+
+        if (!role.isNullOrBlank()) {
+            strCondition = "and t1.role = '$role'"
+        }
+        sql = sql.replace("{6}", strCondition)
 
         var items = create!!.resultQuery(sql).fetch()
         return items
@@ -256,7 +255,7 @@ class UserService {
     /**
      * 认证会员
      */
-    fun getMembers(start: String?, end: String?, username: String?, displayname: String?,real_name: String?,id_card: String?,level: String?): Result<Record> {
+    fun getMembers(start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?): Result<Record> {
 
         var sql = "select t1.*, t2.total_score from user t1 " +
                 "left join (select user_id, sum(score) total_score " +
@@ -265,44 +264,37 @@ class UserService {
                 "on t1.id = t2.user_id " +
                 "where t1.level > 0 {0} {1} {2} {3} {4} {5} {6} "
         var strCondition = ""
-        if (!username.isNullOrBlank())
-        {
+        if (!username.isNullOrBlank()) {
             strCondition = "and t1.username like '%{0}%'".replace("{0}", username!!)
         }
         sql = sql.replace("{0}", strCondition)
 
-        if (!displayname.isNullOrBlank())
-        {
+        if (!displayname.isNullOrBlank()) {
             strCondition = "and t1.displayname like '%{0}%'".replace("{0}", displayname!!)
         }
         sql = sql.replace("{1}", strCondition)
 
-        if (!real_name.isNullOrBlank())
-        {
+        if (!real_name.isNullOrBlank()) {
             strCondition = "and t1.real_name like '%{0}%'".replace("{0}", real_name!!)
         }
         sql = sql.replace("{2}", strCondition)
 
-        if (!id_card.isNullOrBlank())
-        {
+        if (!id_card.isNullOrBlank()) {
             strCondition = "and t1.id_card like '%{0}%'".replace("{0}", id_card!!)
         }
         sql = sql.replace("{3}", strCondition)
 
-        if (!level.isNullOrBlank())
-        {
+        if (!level.isNullOrBlank()) {
             strCondition = "and t1.level = {0}".replace("{0}", level!!)
         }
         sql = sql.replace("{4}", strCondition)
 
-        if (!start.isNullOrBlank())
-        {
+        if (!start.isNullOrBlank()) {
             strCondition = "and date(t1.created) >= '{0}'".replace("{0}", start!!)
         }
         sql = sql.replace("{5}", strCondition)
 
-        if (!end.isNullOrBlank())
-        {
+        if (!end.isNullOrBlank()) {
             strCondition = "and date(t1.created) <= '{0}'".replace("{0}", end!!)
         }
         sql = sql.replace("{6}", strCondition)
@@ -319,7 +311,7 @@ class UserService {
         userDao!!.update(user)
     }
 
-    fun checkPermission(role:String):Boolean{
+    fun checkPermission(role: String): Boolean {
         var user = getCurrentUserInfo()
         var roles = getRoles()
         return user!!.role == roles.get("ADMIN") || user!!.role == roles.get(role)
@@ -382,8 +374,8 @@ class UserService {
      * 依据openId 或 unionId 取得唯一的用户， unionId优先
      * @return 用户信息
      */
-    fun getUserByOpenOrUnionId(openId: String?, unionId:String?):User? {
-        return if(unionId.isNullOrBlank()){
+    fun getUserByOpenOrUnionId(openId: String?, unionId: String?): User? {
+        return if (unionId.isNullOrBlank()) {
             create!!.selectFrom(Tables.USER)
                     .where(Tables.USER.OPEN_ID.eq(openId))
                     .fetchOneInto(User::class.java)
@@ -415,11 +407,9 @@ class UserService {
         var user1 = this.getUser(username!!)
         var user2 = this.getUserByOpenOrUnionId(openId, unionId)
 
-        if (user1 != null)
-        {
+        if (user1 != null) {
             return user1
-        }
-        else if (user2 != null) {
+        } else if (user2 != null) {
             return user2
         }
 

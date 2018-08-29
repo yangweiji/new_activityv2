@@ -15,6 +15,10 @@ class ActivityProperties {
      */
     var defaultPassword: String? = null
 
+    /**
+     * 每页记录数据
+     */
+    var pageSize: Int = 12
 
     override fun toString(): String {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE)

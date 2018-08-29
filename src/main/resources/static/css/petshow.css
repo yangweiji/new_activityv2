@@ -2689,3 +2689,15 @@ ul.am-tabs-nav.am-cf.am_cf {
     overflow: hidden;
     white-space: nowrap;
 }
+
+.am_browse {
+    text-align: center;
+}
+
+.am_browse span {
+    display: inline-block;
+    color:#d3d3d3;
+    font-size: 12px;
+    margin-bottom: 17px;
+
+}

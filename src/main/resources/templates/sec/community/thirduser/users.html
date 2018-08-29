@@ -81,6 +81,15 @@
                                placeholder="请输入会员年度" class="am-form-field am-radius"/>
                     </div>
                     <div class="am-form-group">
+                        <select id="role" name="role" placeholder="" data-am-selected="" class="am-form-field am-radius">
+                            <option value=" ">请选择团体角色</option>
+                            <option value="管理员" th:selected="${#httpServletRequest.getParameter('role')=='管理员'}">团体管理员
+                            </option>
+                            <option value="发布者" th:selected="${#httpServletRequest.getParameter('role')=='发布者'}">团体发布者
+                            </option>
+                        </select>
+                    </div>
+                    <div class="am-form-group">
                         <select id="is_black" name="is_black" placeholder="" data-am-selected="" class="am-form-field am-radius">
                             <option value=" ">请选择用户状态</option>
                             <option value="false" th:selected="${#httpServletRequest.getParameter('is_black')==false}">正常用户

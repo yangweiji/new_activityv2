@@ -119,9 +119,9 @@ class ThirdUserController : BaseController() {
         var level = map["level"]
         var isMember = map["isMember"]
         var is_black=map["is_black"]
-
+        var role = map["role"]
         //查询用户
-        var items = userService!!.getCommunityUsersAndScores(this.sessionCommunity.id, start, end, username, displayname, real_name, id_card, level, isMember,is_black)
+        var items = userService!!.getCommunityUsersAndScores(this.sessionCommunity.id, start, end, username, displayname, real_name, id_card, level, isMember,is_black,role)
         return items.intoMaps()
     }
 

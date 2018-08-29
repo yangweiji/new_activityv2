@@ -30,11 +30,11 @@ class MyHandlerInterceptor : HandlerInterceptor {
                 var communityUser = communityService!!.getCommunityUser(user.id, community.id)
 
                 //平台管理员
-                if (!user!!.role.isNullOrEmpty()) {
+                if (user!!.role == "管理员") {
                     return true
                 }
 
-                //当前用户在当前团体组织下为普通用户
+                //平台发布者，当前用户在当前团体组织下为普通用户
                 if (communityUser == null || communityUser!!.role.isNullOrEmpty()) {
                     LogUtil.printLog("${request.servletPath} 操作无权限！")
 
