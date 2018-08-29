@@ -170,11 +170,11 @@ $(function () {
                         if(row.is_black==true) {
                             return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
                                 + '<button id="btnDelete" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
-                                + '<button id="removeBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="加入黑名单"><i class="fas fa-unlock-alt"></i></button>'
+                                + '<button id="removeBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="移除黑名单"><i class="fas fa-lock"></i></button>'
                         }else{
                             return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
                                 + '<button id="btnDelete" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
-                                + '<button id="addBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="移除黑名单"><i class="fas fa-lock"></i></button>'
+                                + '<button id="addBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="加入黑名单"><i class="fas fa-unlock-alt"></i></button>'
                         }
                     }
                 }
@@ -248,13 +248,13 @@ $(function () {
     /**
      * 移除黑名单
      */
-    $("#bmTable tbody").on('click', 'button#addBlack', function () {
+    $("#bmTable tbody").on('click', 'button#removeBlack', function () {
         var data = t.row($(this).parents('tr')).data();
         if (window.confirm('黑名单用户，是否移除黑名单？')) {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/sec/community/thirduser/addBlack',
+                url: '/sec/community/thirduser/removeBlack',
                 data: {
                     userId: data.id
                 },
@@ -270,13 +270,13 @@ $(function () {
     /**
      * 加入黑名单
      */
-    $("#bmTable tbody").on('click', 'button#removeBlack', function () {
+    $("#bmTable tbody").on('click', 'button#addBlack', function () {
         var data = t.row($(this).parents('tr')).data();
         if (window.confirm('正常用户，是否加入黑名单？')) {
             $.ajax({
                 type: 'post',
                 dataType: 'json',
-                url: '/sec/community/thirduser/removeBlack',
+                url: '/sec/community/thirduser/addBlack',
                 data: {
                     userId: data.id
                 },
