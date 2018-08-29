@@ -545,8 +545,8 @@ div.dataTables_wrapper div.dataTables_info {
 
 /*素材库图片*/
 .am-modal .am-tab-panel {
-    min-height: 500px;
-    max-height: 500px;
+    min-height: 480px;
+    max-height: 480px;
     overflow-y: scroll;
 }
 

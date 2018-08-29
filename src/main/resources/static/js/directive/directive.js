@@ -72,7 +72,7 @@ Vue.component('input-image-uploader', {
                                 </li>\
                             </ul>\
                             <div class="am-tabs-bd">\
-                                <div class="am-tab-panel am-fade am-in am-active" :id="\'tab\' + index" v-for="(category, index) in categories">\
+                                <div class="am-tab-panel am-fade am-in" v-bind:class="{\'am-active\': category.category==\'未分组\'}"  :id="\'tab\' + index" v-for="(category, index) in categories">\
                                     <div class="am-g dis_line">\
                                         <div class="am-g am-imglist">\
                                             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">\
@@ -85,6 +85,17 @@ Vue.component('input-image-uploader', {
                                         </div>\
                                     </div>\
                                 </div>\
+                                <ul class="am-pagination am-pagination-centered" v-if="pageCount>1">\
+                                    <li v-bind:class="{\'am-disabled\': pageIndex==0}">\
+                                        <a href="#" v-on:click="getItems(category, pageIndex-1)">&laquo;</a>\
+                                    </li>\
+                                    <li v-for="(item,index) in pageCount" v-bind:class="{\'am-active\': pageIndex==index}">\
+                                        <a href="#" v-on:click="getItems(category, index)">{{item}}</a>\
+                                    </li>\
+                                    <li v-bind:class="{\'am-disabled\': pageIndex==(pageCount-1)}">\
+                                        <a href="#" v-on:click="getItems(category, pageIndex+1)">&raquo;</a>\
+                                    </li>\
+                                </ul>\
                             </div>\
                         </div>\
                     </div>\
@@ -123,6 +134,15 @@ Vue.component('input-image-uploader', {
             categories: [],
             //默认的分组
             category: '未分组',
+
+            //当前页索引
+            pageIndex: 0,
+            //总记录数
+            totalCount: 0,
+            //总页数
+            pageCount: 0,
+            //每页记录数
+            pageSize: 12,
         }
     },
     methods: {
@@ -167,14 +187,18 @@ Vue.component('input-image-uploader', {
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
                 data: JSON.stringify({
-                    category: that.category
+                    category: that.category,
+                    index: 0,
+                    pageSize: that.pageSize
                 }),
                 beforeSend: function () {
                     Util.loading(true);
                 },
                 success: function (data) {
                     if (data) {
-                        that.images = data;
+                        that.totalCount = data.totalCount;
+                        that.images = data.items;
+                        that.pageCount = that.getPageCount(that.totalCount);
                     }
                 },
                 complete: function () {
@@ -196,6 +220,7 @@ Vue.component('input-image-uploader', {
         //切换素材库图片的分组选项卡
         switchCategory: function (e) {
             var that = this;
+            that.category = e.category;
             //获取素材库图片:指定分类下的图片
             $.ajax({
                 type: "POST",
@@ -203,14 +228,18 @@ Vue.component('input-image-uploader', {
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
                 data: JSON.stringify({
-                    category: e.category
+                    category: that.category,
+                    index: 0,
+                    pageSize: that.pageSize
                 }),
                 beforeSend: function () {
                     Util.loading(true);
                 },
                 success: function (data) {
                     if (data) {
-                        that.images = data;
+                        that.totalCount = data.totalCount;
+                        that.images = data.items;
+                        that.pageCount = that.getPageCount(that.totalCount);
                     }
                 },
                 complete: function () {
@@ -220,6 +249,49 @@ Vue.component('input-image-uploader', {
                     console.info("error: " + data.responseText);
                 }
             });
+        },
+        //分页获取
+        getItems: function (e, index) {
+            var that = this;
+            that.pageIndex = index;
+            //获取素材库图片:指定分类下的图片
+            $.ajax({
+                type: "POST",
+                url: '/sec/admin/material/getMaterials',
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({
+                    category: that.category,
+                    index: that.pageIndex,
+                    pageSize: that.pageSize
+                }),
+                beforeSend: function () {
+                    Util.loading(true);
+                },
+                success: function (data) {
+                    if (data) {
+                        that.totalCount = data.totalCount;
+                        that.images = data.items;
+                        that.pageCount = that.getPageCount(that.totalCount);
+                    }
+                },
+                complete: function () {
+                    Util.loading(false);
+                },
+                error: function (data) {
+                    console.info("error: " + data.responseText);
+                }
+            });
+        },
+        getPageCount: function (totalCount) {
+            var i = totalCount%this.pageSize;
+            if (i == 0) {
+                return totalCount/this.pageSize;
+            }
+            else
+            {
+                return Math.ceil(totalCount/this.pageSize);
+            }
         }
     },
     computed: {
@@ -236,7 +308,8 @@ Vue.component('input-image-uploader', {
         },
         getMaterialLibraryModel: function () {
             return "material-library-modal-" + this.nameText;
-        }
+        },
+
     },
     mounted: function () {
         var that = this;
@@ -327,7 +400,7 @@ Vue.component('quill-text', {
                                 </li>\
                             </ul>\
                             <div class="am-tabs-bd">\
-                                <div class="am-tab-panel am-fade am-in am-active" :id="\'tab\' + index" v-for="(category, index) in categories">\
+                                <div class="am-tab-panel am-fade am-in" v-bind:class="{\'am-active\': category.category==\'未分组\'}" :id="\'tab\' + index" v-for="(category, index) in categories">\
                                     <div class="am-g dis_line">\
                                         <div class="am-g am-imglist">\
                                             <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-default">\
@@ -340,6 +413,17 @@ Vue.component('quill-text', {
                                         </div>\
                                     </div>\
                                 </div>\
+                                <ul class="am-pagination am-pagination-centered" v-if="pageCount>1">\
+                                    <li v-bind:class="{\'am-disabled\': pageIndex==0}">\
+                                        <a href="#" v-on:click="getItems(category, pageIndex-1)">&laquo;</a>\
+                                    </li>\
+                                    <li v-for="(item,index) in pageCount" v-bind:class="{\'am-active\': pageIndex==index}">\
+                                        <a href="#" v-on:click="getItems(category, index)">{{item}}</a>\
+                                    </li>\
+                                    <li v-bind:class="{\'am-disabled\': pageIndex==(pageCount-1)}">\
+                                        <a href="#" v-on:click="getItems(category, pageIndex+1)">&raquo;</a>\
+                                    </li>\
+                                </ul>\
                             </div>\
                         </div>\
                     </div>\
@@ -374,6 +458,16 @@ Vue.component('quill-text', {
             categories: [],
             //默认的分组
             category: '未分组',
+
+            //当前页索引
+            pageIndex: 0,
+            //总记录数
+            totalCount: 0,
+            //总页数
+            pageCount: 0,
+            //每页记录数
+            pageSize: 12,
+
             //图像回传
             imageHandleCallback: null,
             //文本控件
@@ -434,14 +528,18 @@ Vue.component('quill-text', {
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
                 data: JSON.stringify({
-                    category: that.category
+                    category: that.category,
+                    index: 0,
+                    pageSize: that.pageSize
                 }),
                 beforeSend: function () {
                     Util.loading(true);
                 },
                 success: function (data) {
                     if (data) {
-                        that.images = data;
+                        that.totalCount = data.totalCount;
+                        that.images = data.items;
+                        that.pageCount = that.getPageCount(that.totalCount);
                     }
                 },
                 complete: function () {
@@ -470,6 +568,7 @@ Vue.component('quill-text', {
         //切换素材库图片的分组选项卡
         switchCategory: function (e) {
             var that = this;
+            that.category = e.category;
             //获取素材库图片:指定分类下的图片
             $.ajax({
                 type: "POST",
@@ -477,14 +576,18 @@ Vue.component('quill-text', {
                 contentType: 'application/json;charset=utf-8',
                 dataType: "json",
                 data: JSON.stringify({
-                    category: e.category
+                    category: that.category,
+                    index: 0,
+                    pageSize: that.pageSize
                 }),
                 beforeSend: function () {
                     Util.loading(true);
                 },
                 success: function (data) {
                     if (data) {
-                        that.images = data;
+                        that.totalCount = data.totalCount;
+                        that.images = data.items;
+                        that.pageCount = that.getPageCount(that.totalCount);
                     }
                 },
                 complete: function () {
@@ -494,6 +597,49 @@ Vue.component('quill-text', {
                     console.info("error: " + data.responseText);
                 }
             });
+        },
+        //分页获取
+        getItems: function (e, index) {
+            var that = this;
+            that.pageIndex = index;
+            //获取素材库图片:指定分类下的图片
+            $.ajax({
+                type: "POST",
+                url: '/sec/admin/material/getMaterials',
+                contentType: 'application/json;charset=utf-8',
+                dataType: "json",
+                data: JSON.stringify({
+                    category: that.category,
+                    index: that.pageIndex,
+                    pageSize: that.pageSize
+                }),
+                beforeSend: function () {
+                    Util.loading(true);
+                },
+                success: function (data) {
+                    if (data) {
+                        that.totalCount = data.totalCount;
+                        that.images = data.items;
+                        that.pageCount = that.getPageCount(that.totalCount);
+                    }
+                },
+                complete: function () {
+                    Util.loading(false);
+                },
+                error: function (data) {
+                    console.info("error: " + data.responseText);
+                }
+            });
+        },
+        getPageCount: function (totalCount) {
+            var i = totalCount%this.pageSize;
+            if (i == 0) {
+                return totalCount/this.pageSize;
+            }
+            else
+            {
+                return Math.ceil(totalCount/this.pageSize);
+            }
         }
     },
     computed: {

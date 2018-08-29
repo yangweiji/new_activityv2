@@ -1,5 +1,6 @@
 package com.kylin.activity.service
 
+import com.kylin.activity.databases.Tables
 import com.kylin.activity.databases.tables.daos.MaterialLibraryDao
 import com.kylin.activity.databases.tables.pojos.MaterialLibrary
 import org.jooq.DSLContext
@@ -47,16 +48,33 @@ class MaterialService {
     /**
      * 获取信息集合
      * @param category: 分组
-     * @return 海报信息集合
+     * @return 信息集合
      */
     fun getMaterials(category: String?): Result<Record> {
         var sql = "select * from material_library where 1=1 "
         if (!category.isNullOrBlank()) {
-            sql += "and category like '%$category%'"
+            sql += " and category like '%$category%'"
         }
 
         sql += " order by sequence, created desc"
         return create!!.resultQuery(sql).fetch()
+    }
+
+    /**
+     * 获取信息集合
+     * @param category: 分组
+     * @param index: 记录索引,返回记录行的偏移量
+     * @param pageSize: 返回记录行的最大数目
+     * @return 信息集合
+     */
+    fun getMaterials(category: String?, index: Int, pageSize: Int): Result<Record> {
+        var sql = "select * from material_library where 1=1 "
+        if (!category.isNullOrBlank()) {
+            sql += " and category like '%$category%'"
+        }
+
+        sql += " order by sequence, created desc limit ?, ?"
+        return create!!.resultQuery(sql, index, pageSize).fetch()
     }
 
     /**
@@ -82,5 +100,16 @@ class MaterialService {
     fun getMaterialCategories(): Result<Record> {
         var sql = "select distinct category from material_library where 1=1 "
         return create!!.resultQuery(sql).fetch()
+    }
+
+    /**
+     * 图片数量
+     * @param category: 分组
+     * @return 记录数量
+     */
+    fun getMaterialsCount(category: String?): Any {
+        return create!!.selectCount().from(Tables.MATERIAL_LIBRARY)
+                .where(Tables.MATERIAL_LIBRARY.CATEGORY.eq(category))
+                .fetchOne(0, Int::class.java)
     }
 }

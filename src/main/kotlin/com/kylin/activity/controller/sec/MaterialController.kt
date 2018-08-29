@@ -1,5 +1,6 @@
 package com.kylin.activity.controller.sec
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.databases.tables.pojos.MaterialLibrary
 import com.kylin.activity.service.MaterialService
 import com.xiaoleilu.hutool.date.DateUtil
@@ -19,6 +20,12 @@ class MaterialController {
 
     @Autowired
     private val materialService: MaterialService? = null
+
+    /**
+     * 活动配置
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
 
     /**
      * 跳转至素材管理界面
@@ -50,10 +57,19 @@ class MaterialController {
     @RequestMapping(value = "/getMaterials", method = [RequestMethod.POST, RequestMethod.GET])
     @CrossOrigin
     @ResponseBody
-    fun getMaterials(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+    fun getMaterials(@RequestBody(required = false) map: Map<String, String>): Any {
         var category = map["category"]
-        var items = materialService!!.getMaterials(category)
-        return items.intoMaps()
+        var index = map["index"]!!.toInt()
+        var pageSize = map["pageSize"]!!.toInt()
+
+
+        //记录记录总数
+        var totalCount = materialService!!.getMaterialsCount(category)
+        //分页获取数据
+        var items = materialService!!.getMaterials(category, index*pageSize, pageSize)
+
+        //返回总数和记录列表
+        return mapOf("items" to items.intoMaps(), "totalCount" to totalCount)
     }
 
     /**
