@@ -558,3 +558,8 @@ div.dataTables_wrapper div.dataTables_info {
     width: 180px;
     height: 100px;
 }
+
+.am-activity.am-badge {
+    font-size: 3rem;
+    margin-top: 10px;
+}
