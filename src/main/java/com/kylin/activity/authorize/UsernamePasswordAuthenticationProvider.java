@@ -30,6 +30,7 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         if (userDetails == null) {
             throw new UsernameNotFoundException("找不到该用户");
         }
+
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         if (!encoder.matches(token.getCredentials().toString(), userDetails.getPassword())) {
             throw new BadCredentialsException("密码错误");

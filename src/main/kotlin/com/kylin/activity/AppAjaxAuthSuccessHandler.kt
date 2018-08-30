@@ -31,7 +31,6 @@ class AppAjaxAuthSuccessHandler : SimpleUrlAuthenticationSuccessHandler() {
         //将登录用户信息存入session中
         session.setAttribute("USER_CONTEXT", (userDetails as AuthUser).user)
 
-        //LogUtil.printLog("登录系统IP :" + getIpAddress(request))
         log.info("登录系统IP : {}", getIpAddress(request))
         super.onAuthenticationSuccess(request, response, authentication)
 

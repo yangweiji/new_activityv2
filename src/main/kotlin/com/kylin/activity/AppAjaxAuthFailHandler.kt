@@ -15,8 +15,6 @@ import javax.servlet.http.HttpServletResponse
 class AppAjaxAuthFailHandler : SimpleUrlAuthenticationFailureHandler() {
     @Throws(IOException::class, ServletException::class)
     override fun onAuthenticationFailure(request: HttpServletRequest, response: HttpServletResponse, exception: AuthenticationException) {
-//        response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Authentication failed: " + exception.message)
-
         response.sendRedirect("/login?error")
     }
 }
