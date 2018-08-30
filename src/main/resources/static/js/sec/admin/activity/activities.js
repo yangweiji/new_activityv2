@@ -83,6 +83,70 @@ $(function () {
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "title", "width": "150px"},
+                {
+                    "data": "activity_type", defaultContent: "",
+                    render: function (data, type, row) {
+                        if (data == 1) {
+                            return "一般活动";
+                        }
+                        else if (data == 2){
+                            return "体育赛事";
+                        }
+                        else if (data == 3){
+                            return "抽签活动";
+                        }
+                        else if (data == 4){
+                            return "打卡活动";
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
+                {
+                    "data": "tags", defaultContent: "",
+                    render: function (data, type, row) {
+                        if (data == 'b1'){
+                            return "徒步";
+                        }
+                        else if (data == 'b2'){
+                            return "越野";
+                        }
+                        else if (data == 'b3'){
+                            return "聚餐";
+                        }
+                        else if (data == 'b4'){
+                            return "骑行";
+                        }
+                        else if (data == 'b5') {
+                            return "跑步训练";
+                        }
+                        else if (data == 'b6'){
+                            return "会议";
+                        }
+                        else if (data == 'b7'){
+                            return "招募";
+                        }
+                        else if (data == 'b8'){
+                            return "讲座";
+                        }
+                        else if (data == 'b10'){
+                            return "国内赛事";
+                        }
+                        else if (data == 'b11'){
+                            return "国际赛事";
+                        }
+                        else if (data == 'b12'){
+                            return "会员福利";
+                        }
+                        else if (data == 'b13'){
+                            return "运动装备";
+                        }
+                        else {
+                            return "";
+                        }
+                    }
+                },
                 {"data": "name"},
                 {"data": "start_time"},
                 {"data": "end_time"},
@@ -133,7 +197,7 @@ $(function () {
                 {targets: '_all', visible: false}
             ],
             //默认排序
-            order: [[3, 'desc']],
+            order: [[6, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',

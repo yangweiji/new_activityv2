@@ -89,7 +89,7 @@
             <div class="am-tab-panel am-fade am-in am-active">
 
                 <div class="am-g dis_line">
-                    <table class="am-table am-table-striped am-table-compact am-table-hover" id="bmTable"
+                    <table class="am-table am-table-striped am-table-compact am-table-hover  display nowrap" id="bmTable"
                            cellspacing="0" width="100%">
                         <thead>
                         <tr>
@@ -121,45 +121,6 @@
                         </thead>
 
                         <tbody id="bmBody">
-                        <!--<tr th:each="item, stat : ${users}">-->
-                            <!--<td th:text="${stat.index+1}"></td>-->
-                            <!--<td th:text="${item.get('id')}"></td>-->
-                            <!--<td th:text="${item.get('username')}"></td>-->
-                            <!--<td th:text="${item.get('displayname')}"></td>-->
-                            <!--<td th:text="${#dates.format(item.get('created'),'yyyy-MM-dd HH:mm:ss')}"></td>-->
-                            <!--<td th:text="${item.get('real_name')}"></td>-->
-                            <!--<td th:text="${item.get('total_score')}"></td>-->
-                            <!--<td th:text="${item.get('gender')==1?'男':(item.get('gender')==2?'女':'')}"></td>-->
-                            <!--<td th:text="${item.get('id_card')}"></td>-->
-                            <!--<td th:text="${item.get('is_real')==true?'是':'否'}"></td>-->
-                            <!--<td th:text="${(item.get('real_time')!=null)?#dates.format(item.get('real_time'),'yyyy-MM-dd HH:mm:ss'):''}"></td>-->
-                            <!--<td th:text="${item.get('email')}"></td>-->
-                            <!--<td th:text="${item.get('work_company')}"></td>-->
-                            <!--<td th:text="${item.get('is_party')==true?'是':'否'}"></td>-->
-                            <!--<td th:text="${item.get('address')}"></td>-->
-                            <!--<td th:switch="${item.get('blood_type')}">-->
-                                <!--<span th:case="'A'">A</span>-->
-                                <!--<span th:case="'B'">B</span>-->
-                                <!--<span th:case="'AB'">AB</span>-->
-                                <!--<span th:case="'O'">O</span>-->
-                            <!--</td>-->
-                            <!--<td th:switch="${item.get('clothing_size')}">-->
-                                <!--<span th:case="'S'">S</span>-->
-                                <!--<span th:case="'M'">M</span>-->
-                                <!--<span th:case="'L'">L</span>-->
-                                <!--<span th:case="'XL'">XL</span>-->
-                                <!--<span th:case="'XXL'">XXL</span>-->
-                                <!--<span th:case="'XXXL'">XXXL</span>-->
-                            <!--</td>-->
-                            <!--<td th:text="${item.get('occupation')}"></td>-->
-                            <!--<td th:text="${item.get('emergency_contact_name')}"></td>-->
-                            <!--<td th:text="${item.get('emergency_contact_mobile')}"></td>-->
-                            <!--<td th:text="${item.get('wechat_id')}"></td>-->
-                            <!--<td>-->
-                                <!--<button th:onclick="'location.href=\'/sec/user/update/' + ${item.get('id')} + '\''"  class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>-->
-                                <!--<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>-->
-                            <!--</td>-->
-                        <!--</tr>-->
                         </tbody>
                     </table>
                 </div>

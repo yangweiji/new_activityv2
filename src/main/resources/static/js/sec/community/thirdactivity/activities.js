@@ -101,7 +101,51 @@ $(function () {
                             return "打卡活动";
                         }
                         else {
-                            return "非公开";
+                            return "";
+                        }
+                    }
+                },
+                {
+                    "data": "tags", defaultContent: "",
+                    render: function (data, type, row) {
+                        if (data == 'b1'){
+                            return "徒步";
+                        }
+                        else if (data == 'b2'){
+                            return "越野";
+                        }
+                        else if (data == 'b3'){
+                            return "聚餐";
+                        }
+                        else if (data == 'b4'){
+                            return "骑行";
+                        }
+                        else if (data == 'b5') {
+                            return "跑步训练";
+                        }
+                        else if (data == 'b6'){
+                            return "会议";
+                        }
+                        else if (data == 'b7'){
+                            return "招募";
+                        }
+                        else if (data == 'b8'){
+                            return "讲座";
+                        }
+                        else if (data == 'b10'){
+                            return "国内赛事";
+                        }
+                        else if (data == 'b11'){
+                            return "国际赛事";
+                        }
+                        else if (data == 'b12'){
+                            return "会员福利";
+                        }
+                        else if (data == 'b13'){
+                            return "运动装备";
+                        }
+                        else {
+                            return "";
                         }
                     }
                 },
@@ -155,11 +199,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序:活动开始时间降序排列
-            order: [[4, 'desc']],
+            order: [[5, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',
