@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser implements Serializable {
 
-    private static final long serialVersionUID = -739952495;
+    private static final long serialVersionUID = 1403479528;
 
     private Integer   id;
     private Integer   communityId;
@@ -31,6 +31,7 @@ public class CommunityUser implements Serializable {
     private Timestamp created;
     private Integer   level;
     private Boolean   isBlack;
+    private Timestamp memberTime;
 
     public CommunityUser() {}
 
@@ -42,6 +43,7 @@ public class CommunityUser implements Serializable {
         this.created = value.created;
         this.level = value.level;
         this.isBlack = value.isBlack;
+        this.memberTime = value.memberTime;
     }
 
     public CommunityUser(
@@ -51,7 +53,8 @@ public class CommunityUser implements Serializable {
         String    role,
         Timestamp created,
         Integer   level,
-        Boolean   isBlack
+        Boolean   isBlack,
+        Timestamp memberTime
     ) {
         this.id = id;
         this.communityId = communityId;
@@ -60,6 +63,7 @@ public class CommunityUser implements Serializable {
         this.created = created;
         this.level = level;
         this.isBlack = isBlack;
+        this.memberTime = memberTime;
     }
 
     public Integer getId() {
@@ -118,6 +122,14 @@ public class CommunityUser implements Serializable {
         this.isBlack = isBlack;
     }
 
+    public Timestamp getMemberTime() {
+        return this.memberTime;
+    }
+
+    public void setMemberTime(Timestamp memberTime) {
+        this.memberTime = memberTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("CommunityUser (");
@@ -129,6 +141,7 @@ public class CommunityUser implements Serializable {
         sb.append(", ").append(created);
         sb.append(", ").append(level);
         sb.append(", ").append(isBlack);
+        sb.append(", ").append(memberTime);
 
         sb.append(")");
         return sb.toString();

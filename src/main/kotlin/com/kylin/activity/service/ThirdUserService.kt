@@ -108,7 +108,7 @@ class ThirdUserService {
      * @return 用户列表信息
      */
     fun getCommunityUsersAndScores(communityId: Int, start: String?, end: String?, username: String?, displayname: String?, real_name: String?, id_card: String?, level: String?, isMember: String?, is_black: String?, role: String?): Result<Record> {
-        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name,t3.is_black,t3.created as join_time from user t1 " +
+        var sql = "select t1.*, t2.total_score, t3.role as role_name, t3.level as level_name,t3.is_black,t3.created as join_time,t3.member_time from user t1 " +
                 "inner join community_user t3 on t1.id = t3.user_id " +
                 "left join (select user_id, sum(score) total_score from score_history group by user_id) t2 " +
                 "on t1.id = t2.user_id " +
@@ -310,6 +310,8 @@ class ThirdUserService {
 
         if (communityUser!!.level != year) {
             communityUser!!.level = year
+            //记录成为会员时间
+            communityUser.memberTime = DateUtil.date().toTimestamp()
             if (communityUser!!.id != null && communityUser!!.id > 0) {
                 updateCommunityUser(communityUser)
             } else {

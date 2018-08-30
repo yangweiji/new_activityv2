@@ -111,16 +111,6 @@ $(function () {
                 {"data": "id_card"},
                 {"data": "created"},
                 {
-                    "data": "is_black", "defaultContent": "",
-                    render: function (data, type, row) {
-                        if (data == true) {
-                            return "黑名单"
-                        } else if(data==false) {
-                            return "正常"
-                        }
-                    }
-                },
-                {
                     "data": "is_real", "defaultContent": "",
                     render: function (data, type, row) {
                         if (data == true) {
@@ -133,6 +123,7 @@ $(function () {
                 },
                 {"data": "real_time"},
                 {"data": "level_name"}, //会员年度
+                {"data": "member_time"}, //会员时间
                 {"data": "email"},
                 {"data": "work_company"},
                 {
@@ -167,6 +158,16 @@ $(function () {
                 {"data": "total_score", "width": "30px"}, //积分
                 {"data": "join_time"},  //加入时间
                 {
+                    "data": "is_black", "defaultContent": "",
+                    render: function (data, type, row) {
+                        if (data == true) {
+                            return "黑名单"
+                        } else {
+                            return "正常"
+                        }
+                    }
+                },
+                {
                     "data": "action", "width": "100px", "defaultContent": "",
                     render: function (data, type, row) {
                         if(row.is_black==true) {
@@ -188,7 +189,7 @@ $(function () {
                     orderable: false,
                     targets: 0,
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, -4, -3, -2, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -5, -4, -3, -2, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序

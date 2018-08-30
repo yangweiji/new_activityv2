@@ -108,4 +108,11 @@ public class CommunityUserDao extends DAOImpl<CommunityUserRecord, com.kylin.act
     public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByIsBlack(Boolean... values) {
         return fetch(CommunityUser.COMMUNITY_USER.IS_BLACK, values);
     }
+
+    /**
+     * Fetch records that have <code>member_time IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByMemberTime(Timestamp... values) {
+        return fetch(CommunityUser.COMMUNITY_USER.MEMBER_TIME, values);
+    }
 }

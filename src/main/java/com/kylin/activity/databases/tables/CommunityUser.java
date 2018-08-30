@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = 655938122;
+    private static final long serialVersionUID = -196915255;
 
     /**
      * The reference instance of <code>community_user</code>
@@ -80,6 +80,11 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      * The column <code>community_user.is_black</code>.
      */
     public final TableField<CommunityUserRecord, Boolean> IS_BLACK = createField("is_black", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "");
+
+    /**
+     * The column <code>community_user.member_time</code>. 成为团体会员的时间
+     */
+    public final TableField<CommunityUserRecord, Timestamp> MEMBER_TIME = createField("member_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "成为团体会员的时间");
 
     /**
      * Create a <code>community_user</code> table reference
