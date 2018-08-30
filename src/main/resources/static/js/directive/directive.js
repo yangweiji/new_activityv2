@@ -1,42 +1,42 @@
 //图片URL
 Vue.directive('translator', {
 
-    bind:function (el, binding, vnode) { //1-被绑定
-        console.log("1-bind 被绑定");
+    bind: function (el, binding, vnode) { //1-被绑定
+        // console.log("1-bind 被绑定");
         // console.log("el:",el);
         // console.log("binding:",binding);
         // console.log("vnode:",vnode);
         // el.style.color=binding.value;
     },
-    inserted:function (el, binding, vnode) { //2-被插入
-        console.log("2-inserted 被插入");
+    inserted: function (el, binding, vnode) { //2-被插入
+        // console.log("2-inserted 被插入");
         $.ajax({
             url: "/pub/images",
             type: "get",
-            data: { fileId: el.attributes["data-url"].value },
+            data: {fileId: el.attributes["data-url"].value},
             dataType: "text",
-            success: function(data) {
+            success: function (data) {
                 el.src = data;
             },
         });
     },
-    update:function (el, binding, vnode) { //3-更新
-        console.log("3-update 更新");
+    update: function (el, binding, vnode) { //3-更新
+        // console.log("3-update 更新");
         $.ajax({
             url: "/pub/images",
             type: "get",
-            data: { fileId: el.attributes["data-url"].value },
+            data: {fileId: el.attributes["data-url"].value},
             dataType: "text",
-            success: function(data) {
+            success: function (data) {
                 el.src = data;
             },
         });
     },
-    componentUpdated:function (el, binding, vnode) { //4-更新完成
-        console.log("4-componentUpdated 更新完成");
+    componentUpdated: function (el, binding, vnode) { //4-更新完成
+        // console.log("4-componentUpdated 更新完成");
     },
-    unbind:function (el, binding, vnode) { //5-解绑
-        console.log("5-unbind 解绑");
+    unbind: function (el, binding, vnode) { //5-解绑
+        // console.log("5-unbind 解绑");
     }
 
 });
@@ -89,9 +89,27 @@ Vue.component('input-image-uploader', {
                                     <li v-bind:class="{\'am-disabled\': pageIndex==0}">\
                                         <a href="#" v-on:click="getItems(category, pageIndex-1)">&laquo;</a>\
                                     </li>\
-                                    <li v-for="(item,index) in pageCount" v-bind:class="{\'am-active\': pageIndex==index}">\
-                                        <a href="#" v-on:click="getItems(category, index)">{{item}}</a>\
+                                    \
+                                    <li v-bind:class="{\'am-active\': pageIndex==0}">\
+                                        <a href="#" v-on:click="getItems(category, 0)">1</a>\
                                     </li>\
+                                    \
+                                    <li v-if="pageIndex>=offset">\
+                                        <span>...</span>\
+                                    </li>\
+                                    \
+                                    <li v-for="(item,index) in mArr" v-bind:class="{\'am-active\': pageIndex==(item-1)}">\
+                                        <a href="#" v-on:click="getItems(category, (item-1))">{{item}}</a>\
+                                    </li>\
+                                    \
+                                    <li v-if="pageIndex<(pageCount-offset)">\
+                                        <span>...</span>\
+                                    </li>\
+                                    \
+                                    <li v-bind:class="{\'am-active\': pageIndex==(pageCount-1)}">\
+                                        <a href="#" v-on:click="getItems(category, (pageCount-1))">{{pageCount}}</a>\
+                                    </li>\
+                                    \
                                     <li v-bind:class="{\'am-disabled\': pageIndex==(pageCount-1)}">\
                                         <a href="#" v-on:click="getItems(category, pageIndex+1)">&raquo;</a>\
                                     </li>\
@@ -143,11 +161,15 @@ Vue.component('input-image-uploader', {
             pageCount: 0,
             //每页记录数
             pageSize: 12,
+            //分页首尾固定数
+            offset: 4,
+            //动态页码
+            mArr: [],
         }
     },
     methods: {
         showLibrary: function () {
-          return (this.selectFromLibrary === 'false')?false:true;
+            return (this.selectFromLibrary === 'false') ? false : true;
         },
         material: function () {
             var that = this;
@@ -162,8 +184,7 @@ Vue.component('input-image-uploader', {
                 url: '/sec/admin/material/getMaterialCatgories',
                 contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                 dataType: "json",
-                data: JSON.stringify({
-                }),
+                data: JSON.stringify({}),
                 beforeSend: function () {
                     Util.loading(true);
                 },
@@ -180,6 +201,7 @@ Vue.component('input-image-uploader', {
                 }
             });
 
+            that.pageIndex = 0;
             //获取素材库图片: 默认未分组下的图片
             $.ajax({
                 type: "POST",
@@ -188,7 +210,7 @@ Vue.component('input-image-uploader', {
                 dataType: "json",
                 data: JSON.stringify({
                     category: that.category,
-                    index: 0,
+                    index: that.pageIndex,
                     pageSize: that.pageSize
                 }),
                 beforeSend: function () {
@@ -199,6 +221,7 @@ Vue.component('input-image-uploader', {
                         that.totalCount = data.totalCount;
                         that.images = data.items;
                         that.pageCount = that.getPageCount(that.totalCount);
+                        that.mArr = that.getMArray();
                     }
                 },
                 complete: function () {
@@ -221,6 +244,8 @@ Vue.component('input-image-uploader', {
         switchCategory: function (e) {
             var that = this;
             that.category = e.category;
+            that.pageIndex = 0;
+
             //获取素材库图片:指定分类下的图片
             $.ajax({
                 type: "POST",
@@ -229,7 +254,7 @@ Vue.component('input-image-uploader', {
                 dataType: "json",
                 data: JSON.stringify({
                     category: that.category,
-                    index: 0,
+                    index: that.pageIndex,
                     pageSize: that.pageSize
                 }),
                 beforeSend: function () {
@@ -240,6 +265,7 @@ Vue.component('input-image-uploader', {
                         that.totalCount = data.totalCount;
                         that.images = data.items;
                         that.pageCount = that.getPageCount(that.totalCount);
+                        that.mArr = that.getMArray();
                     }
                 },
                 complete: function () {
@@ -273,6 +299,8 @@ Vue.component('input-image-uploader', {
                         that.totalCount = data.totalCount;
                         that.images = data.items;
                         that.pageCount = that.getPageCount(that.totalCount);
+                        that.mArr = that.getMArray();
+                        console.log("pageIndex: ", that.pageIndex, " pageCount: ", that.pageCount, " mArr: " + that.mArr);
                     }
                 },
                 complete: function () {
@@ -284,14 +312,44 @@ Vue.component('input-image-uploader', {
             });
         },
         getPageCount: function (totalCount) {
-            var i = totalCount%this.pageSize;
+            var i = totalCount % this.pageSize;
             if (i == 0) {
-                return totalCount/this.pageSize;
+                return totalCount / this.pageSize;
             }
-            else
-            {
-                return Math.ceil(totalCount/this.pageSize);
+            else {
+                return Math.ceil(totalCount / this.pageSize);
             }
+        },
+        getMArray: function () {
+            var that = this;
+            var arr = [];
+            if (that.offset < 3) {
+                //最小为3
+                that.offset = 3;
+            }
+            if (that.pageCount <= that.offset + 1) {
+                for (var i = 1; i <= that.pageCount - 2; i++) {
+                    arr.push(i + 1);
+                }
+                return arr;
+            }
+
+            if (that.pageIndex < that.offset) {
+                for (var i = 1; i <= that.offset; i++) {
+                    arr.push(i + 1);
+                }
+            }
+            else if (that.pageIndex >= that.pageCount - that.offset) {
+                for (var i = that.pageCount - that.offset; i <= that.pageCount - 1; i++) {
+                    arr.push(i);
+                }
+            }
+            else {
+                for (var i = that.pageIndex; i < that.pageIndex + 3; i++) {
+                    arr.push(i);
+                }
+            }
+            return arr;
         }
     },
     computed: {
@@ -321,7 +379,7 @@ Vue.component('input-image-uploader', {
                 var fileName = file.randomName;
                 that.$emit('input', file.randomName);
                 //文件保存至素材库
-                var b = that.saveToLibrary === "false" ? false: true;
+                var b = that.saveToLibrary === "false" ? false : true;
                 if (b) {
                     $.ajax({
                         type: "POST",
@@ -417,9 +475,27 @@ Vue.component('quill-text', {
                                     <li v-bind:class="{\'am-disabled\': pageIndex==0}">\
                                         <a href="#" v-on:click="getItems(category, pageIndex-1)">&laquo;</a>\
                                     </li>\
-                                    <li v-for="(item,index) in pageCount" v-bind:class="{\'am-active\': pageIndex==index}">\
-                                        <a href="#" v-on:click="getItems(category, index)">{{item}}</a>\
+                                    \
+                                    <li v-bind:class="{\'am-active\': pageIndex==0}">\
+                                        <a href="#" v-on:click="getItems(category, 0)">1</a>\
                                     </li>\
+                                    \
+                                    <li v-if="pageIndex>=offset">\
+                                        <span>...</span>\
+                                    </li>\
+                                    \
+                                    <li v-for="(item,index) in mArr" v-bind:class="{\'am-active\': pageIndex==(item-1)}">\
+                                        <a href="#" v-on:click="getItems(category, (item-1))">{{item}}</a>\
+                                    </li>\
+                                    \
+                                    <li v-if="pageIndex<(pageCount-offset)">\
+                                        <span>...</span>\
+                                    </li>\
+                                    \
+                                    <li v-bind:class="{\'am-active\': pageIndex==(pageCount-1)}">\
+                                        <a href="#" v-on:click="getItems(category, (pageCount-1))">{{pageCount}}</a>\
+                                    </li>\
+                                    \
                                     <li v-bind:class="{\'am-disabled\': pageIndex==(pageCount-1)}">\
                                         <a href="#" v-on:click="getItems(category, pageIndex+1)">&raquo;</a>\
                                     </li>\
@@ -467,6 +543,10 @@ Vue.component('quill-text', {
             pageCount: 0,
             //每页记录数
             pageSize: 12,
+            //分页首尾固定数
+            offset: 4,
+            //动态页码
+            mArr: [],
 
             //图像回传
             imageHandleCallback: null,
@@ -503,8 +583,7 @@ Vue.component('quill-text', {
                 url: '/sec/admin/material/getMaterialCatgories',
                 contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
                 dataType: "json",
-                data: JSON.stringify({
-                }),
+                data: JSON.stringify({}),
                 beforeSend: function () {
                     Util.loading(true);
                 },
@@ -521,6 +600,7 @@ Vue.component('quill-text', {
                 }
             });
 
+            that.pageIndex = 0;
             //获取素材库图片: 默认未分组下的图片
             $.ajax({
                 type: "POST",
@@ -529,7 +609,7 @@ Vue.component('quill-text', {
                 dataType: "json",
                 data: JSON.stringify({
                     category: that.category,
-                    index: 0,
+                    index: that.pageIndex,
                     pageSize: that.pageSize
                 }),
                 beforeSend: function () {
@@ -540,6 +620,7 @@ Vue.component('quill-text', {
                         that.totalCount = data.totalCount;
                         that.images = data.items;
                         that.pageCount = that.getPageCount(that.totalCount);
+                        that.mArr = that.getMArray();
                     }
                 },
                 complete: function () {
@@ -553,11 +634,11 @@ Vue.component('quill-text', {
         //从素材库中选择图片
         selectImage: function (e) {
             var that = this;
-            if(that.imageHandleCallback) {
+            if (that.imageHandleCallback) {
                 var url = OssUrl + '/activity/' + e.name;
                 var range = that.quill.getSelection()
-                if(!range){
-                    range= { index : 0}
+                if (!range) {
+                    range = {index: 0}
                 }
                 that.quill.clipboard.dangerouslyPasteHTML(range.index, "<img src='" + url + "' />")
             }
@@ -569,6 +650,7 @@ Vue.component('quill-text', {
         switchCategory: function (e) {
             var that = this;
             that.category = e.category;
+            that.pageIndex = 0;
             //获取素材库图片:指定分类下的图片
             $.ajax({
                 type: "POST",
@@ -577,7 +659,7 @@ Vue.component('quill-text', {
                 dataType: "json",
                 data: JSON.stringify({
                     category: that.category,
-                    index: 0,
+                    index: that.pageIndex,
                     pageSize: that.pageSize
                 }),
                 beforeSend: function () {
@@ -588,6 +670,7 @@ Vue.component('quill-text', {
                         that.totalCount = data.totalCount;
                         that.images = data.items;
                         that.pageCount = that.getPageCount(that.totalCount);
+                        that.mArr = that.getMArray();
                     }
                 },
                 complete: function () {
@@ -621,6 +704,8 @@ Vue.component('quill-text', {
                         that.totalCount = data.totalCount;
                         that.images = data.items;
                         that.pageCount = that.getPageCount(that.totalCount);
+                        that.mArr = that.getMArray();
+                        console.log("pageIndex: ", that.pageIndex, " pageCount: ", that.pageCount, " mArr: " + that.mArr);
                     }
                 },
                 complete: function () {
@@ -632,22 +717,52 @@ Vue.component('quill-text', {
             });
         },
         getPageCount: function (totalCount) {
-            var i = totalCount%this.pageSize;
+            var i = totalCount % this.pageSize;
             if (i == 0) {
-                return totalCount/this.pageSize;
+                return totalCount / this.pageSize;
             }
-            else
-            {
-                return Math.ceil(totalCount/this.pageSize);
+            else {
+                return Math.ceil(totalCount / this.pageSize);
             }
+        },
+        getMArray: function () {
+            var that = this;
+            var arr = [];
+            if (that.offset < 3) {
+                //最小为3
+                that.offset = 3;
+            }
+            if (that.pageCount <= that.offset + 1) {
+                for (var i = 1; i <= that.pageCount - 2; i++) {
+                    arr.push(i + 1);
+                }
+                return arr;
+            }
+
+            if (that.pageIndex < that.offset) {
+                for (var i = 1; i <= that.offset; i++) {
+                    arr.push(i + 1);
+                }
+            }
+            else if (that.pageIndex >= that.pageCount - that.offset) {
+                for (var i = that.pageCount - that.offset; i <= that.pageCount - 1; i++) {
+                    arr.push(i);
+                }
+            }
+            else {
+                for (var i = that.pageIndex; i < that.pageIndex + 3; i++) {
+                    arr.push(i);
+                }
+            }
+            return arr;
         }
     },
     computed: {
         getEditorId: function () {
-          return "c-upload-" + this.nameText + "-editor";
+            return "c-upload-" + this.nameText + "-editor";
         },
         getQuillId: function () {
-          return "c-" + this.nameText + "-editor";
+            return "c-" + this.nameText + "-editor";
         },
         getImageSelectModal: function () {
             return "image-select-modal-" + this.nameText;
@@ -681,7 +796,7 @@ Vue.component('quill-text', {
                 ['clean']                                         // remove formatting button
             ],
             handlers: {
-                'image': function(callback){
+                'image': function (callback) {
                     that.imageHandleCallback = callback;
                     //弹出图片选择器
                     var $modal = $('#' + that.getImageSelectModal);
@@ -691,7 +806,7 @@ Vue.component('quill-text', {
         };
 
         //构建文本控件
-        that.quill = new Quill('#'+that.getQuillId, {
+        that.quill = new Quill('#' + that.getQuillId, {
             modules: {
                 toolbar: toolbarOptions
             },
@@ -700,11 +815,11 @@ Vue.component('quill-text', {
         });
 
         //显示活动详情
-        if (that.value){
+        if (that.value) {
             that.quill.clipboard.dangerouslyPasteHTML(that.value);
         }
         //活动详情内容变更
-        that.quill.on('editor-change', function(eventName) {
+        that.quill.on('editor-change', function (eventName) {
             if (eventName === 'text-change') {
                 // args[0] will be delta
             } else if (eventName === 'selection-change') {
@@ -719,7 +834,7 @@ Vue.component('quill-text', {
             that.$emit('input', that.quill.getHtml());
         });
 
-        Quill.prototype.getHtml = function() {
+        Quill.prototype.getHtml = function () {
             var html = this.container.querySelector('.ql-editor').innerHTML;
             // console.log("html: ", html);
             return html;
@@ -729,19 +844,19 @@ Vue.component('quill-text', {
         Util.file.uploader({
             randomName: true,
             selectId: that.getEditorId,
-            success:function (file) {
+            success: function (file) {
                 var fileName = file.randomName;
-                if(that.imageHandleCallback) {
+                if (that.imageHandleCallback) {
                     var url = Util.file.downloadUrl(fileName)
                     var range = that.quill.getSelection()
-                    if(!range){
-                        range= { index : 0}
+                    if (!range) {
+                        range = {index: 0}
                     }
                     that.quill.clipboard.dangerouslyPasteHTML(range.index, "<img src='" + url + "' />")
                 }
 
                 //文件保存至素材库
-                var b = that.saveToLibrary === "false" ? false: true;
+                var b = that.saveToLibrary === "false" ? false : true;
                 if (b) {
                     $.ajax({
                         type: "POST",
