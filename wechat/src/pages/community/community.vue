@@ -64,8 +64,9 @@
                   </div>
                   <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
                     <div class="weui-media-box__title">{{item.name}}</div>
-                    <div class="weui-media-box__title weui-media-box__title-r">{{item.countPeople}}人</div>
+                    <div class="weui-media-box__title weui-media-box__title-r">{{item.count_people}}人</div>
                     <div class="weui-media-box__desc">{{item.description}}</div>
+                    <div class="weui-media-box__desc" v-if="item.member_time">{{item.member_time}} 入会</div>
                     <!-- <div class="weui-media-box__desc">
                       <div class="weui-badge-label">跑步</div>
                     </div> -->
@@ -108,6 +109,7 @@
 <script>
 import base64 from "../../../static/images/base64";
 import kyimage from '@/components/kyimage.vue'
+import dateutil from '../../global/date.js';
 
 export default {
   components:{kyimage},
@@ -163,6 +165,10 @@ export default {
           console.log("-> index");
         }
       });
+    },
+    getDateFormat(src) {
+      console.log("c:", dateutil.format(new Date(src), "yyyy年MM月dd日"))
+      return dateutil.format(new Date(src), "yyyy年MM月dd日");
     }
   },
   created() {

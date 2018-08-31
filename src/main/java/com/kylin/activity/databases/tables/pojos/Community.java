@@ -4,10 +4,9 @@
 package com.kylin.activity.databases.tables.pojos;
 
 
+import javax.annotation.Generated;
 import java.io.Serializable;
 import java.sql.Timestamp;
-
-import javax.annotation.Generated;
 
 
 /**
@@ -23,7 +22,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community implements Serializable {
 
-    private static final long serialVersionUID = -316372327;
+    private static final long serialVersionUID = -1053674581;
 
     private Integer   id;
     private String    name;
@@ -45,6 +44,7 @@ public class Community implements Serializable {
     private String    businessLicense;
     private String    managerPhoneNumber;
     private Integer   countPeople;
+    private Boolean   canRefund;
 
     public Community() {}
 
@@ -69,6 +69,7 @@ public class Community implements Serializable {
         this.businessLicense = value.businessLicense;
         this.managerPhoneNumber = value.managerPhoneNumber;
         this.countPeople = value.countPeople;
+        this.canRefund = value.canRefund;
     }
 
     public Community(
@@ -91,7 +92,8 @@ public class Community implements Serializable {
         String    controlName,
         String    businessLicense,
         String    managerPhoneNumber,
-        Integer   countPeople
+        Integer   countPeople,
+        Boolean   canRefund
     ) {
         this.id = id;
         this.name = name;
@@ -113,6 +115,7 @@ public class Community implements Serializable {
         this.businessLicense = businessLicense;
         this.managerPhoneNumber = managerPhoneNumber;
         this.countPeople = countPeople;
+        this.canRefund = canRefund;
     }
 
     public Integer getId() {
@@ -275,6 +278,14 @@ public class Community implements Serializable {
         this.countPeople = countPeople;
     }
 
+    public Boolean getCanRefund() {
+        return this.canRefund;
+    }
+
+    public void setCanRefund(Boolean canRefund) {
+        this.canRefund = canRefund;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Community (");
@@ -299,6 +310,7 @@ public class Community implements Serializable {
         sb.append(", ").append(businessLicense);
         sb.append(", ").append(managerPhoneNumber);
         sb.append(", ").append(countPeople);
+        sb.append(", ").append(canRefund);
 
         sb.append(")");
         return sb.toString();

@@ -54,6 +54,23 @@ class MaterialController {
      * @param map 海报集合
      * @return 海报信息集合
      */
+    @RequestMapping(value = "/getItems", method = [RequestMethod.POST, RequestMethod.GET])
+    @CrossOrigin
+    @ResponseBody
+    fun getItems(@RequestBody(required = false) map: Map<String, String>): Any {
+        var category = map["category"]
+
+        //分页获取数据
+        var items = materialService!!.getMaterials(category)
+
+        return items.intoMaps()
+    }
+
+    /**
+     * 异步获取海报信息集合
+     * @param map 海报集合
+     * @return 海报信息集合
+     */
     @RequestMapping(value = "/getMaterials", method = [RequestMethod.POST, RequestMethod.GET])
     @CrossOrigin
     @ResponseBody

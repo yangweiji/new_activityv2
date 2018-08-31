@@ -4,7 +4,6 @@ import './css/app.css'
 import store from './store';
 import kyutil from './global';
 
-
 Vue.config.productionTip = false
 App.mpType = 'app'
 Vue.prototype.$store = store;

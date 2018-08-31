@@ -181,11 +181,13 @@ class CommunityService {
      * @param userId: 用户ID
      * @return 团体列表信息
      */
-    fun getCommunitiesByUser(userId: Int): List<Community> {
-        var sql = "select t1.* from community t1 " +
+    fun getCommunitiesByUser(userId: Int): Any {
+        var sql = "select t1.*, date_format(t2.member_time, '%Y年%m月%d日') as member_time  from community t1 " +
                 "inner join community_user t2 on t1.id = t2.community_id " +
                 "where t2.user_id = ?"
-        return create!!.fetch(sql, userId).into(Community::class.java)
+
+        var items = create!!.fetch(sql, userId).intoMaps()
+        return items
     }
 
 

@@ -45,7 +45,7 @@ $(function () {
 
             ],
             ajax: {
-                "url": "/sec/admin/material/getMaterials",
+                "url": "/sec/admin/material/getItems",
                 "contentType": "application/json;charset=utf-8",
                 "type": "POST",
                 "data": function () {

@@ -6,6 +6,7 @@
           本团体暂未开通会员功能
         </h1>
       </div>
+
       <div v-if="item.community.isVip" class="c-kind kind-list">
         <div>
           
@@ -13,6 +14,7 @@
             <div class="weui-flex,kind-list__item-hd kind-list__item-hd_show c-text-center">
               <div class="weui-flex__item">您已成为{{item.vipYear}}年度会员</div>
             </div>
+            
             <div class="kind-list__item-bd kind-list__item-bd_show c-text-center">
               <div class="weui-cells weui-cells_show">
                 <div class="c-text-primary c-price-text">{{item.vipYear}}</div>
@@ -22,7 +24,13 @@
                 </div>
               </div>
             </div>
+
+            <div class="weui-flex,kind-list__item-hd kind-list__item-hd_show c-text-center" v-if="item.communityUser.memberTime">
+              <div class="weui-flex__item"><span style="color:#8a8a8a;">入会时间：{{item.communityUser.memberTime}}</span></div>
+            </div>
+            
           </div>
+
           <div v-if="canBuyVip" class="kind-list__item">
             <div class="weui-flex,kind-list__item-hd kind-list__item-hd_show c-text-center">
               <div class="weui-flex__item">年费标准</div>
@@ -65,6 +73,7 @@
 <script>
   import base64 from "../../../static/images/base64";
   import wxParse from "mpvue-wxparse";
+
   export default {
     data() {
       return {
@@ -76,7 +85,7 @@
         processing: false,
         item: null,
         year: null,
-        vipPrice: 0
+        vipPrice: 0,
       };
     },
     computed: {

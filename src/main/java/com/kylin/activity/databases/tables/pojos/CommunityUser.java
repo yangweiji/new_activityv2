@@ -22,7 +22,7 @@ import java.sql.Timestamp;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser implements Serializable {
 
-    private static final long serialVersionUID = 1403479528;
+    private static final long serialVersionUID = -1030232737;
 
     private Integer   id;
     private Integer   communityId;
@@ -32,6 +32,7 @@ public class CommunityUser implements Serializable {
     private Integer   level;
     private Boolean   isBlack;
     private Timestamp memberTime;
+    private Boolean   isDefault;
 
     public CommunityUser() {}
 
@@ -44,6 +45,7 @@ public class CommunityUser implements Serializable {
         this.level = value.level;
         this.isBlack = value.isBlack;
         this.memberTime = value.memberTime;
+        this.isDefault = value.isDefault;
     }
 
     public CommunityUser(
@@ -54,7 +56,8 @@ public class CommunityUser implements Serializable {
         Timestamp created,
         Integer   level,
         Boolean   isBlack,
-        Timestamp memberTime
+        Timestamp memberTime,
+        Boolean   isDefault
     ) {
         this.id = id;
         this.communityId = communityId;
@@ -64,6 +67,7 @@ public class CommunityUser implements Serializable {
         this.level = level;
         this.isBlack = isBlack;
         this.memberTime = memberTime;
+        this.isDefault = isDefault;
     }
 
     public Integer getId() {
@@ -130,6 +134,14 @@ public class CommunityUser implements Serializable {
         this.memberTime = memberTime;
     }
 
+    public Boolean getIsDefault() {
+        return this.isDefault;
+    }
+
+    public void setIsDefault(Boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("CommunityUser (");
@@ -142,6 +154,7 @@ public class CommunityUser implements Serializable {
         sb.append(", ").append(level);
         sb.append(", ").append(isBlack);
         sb.append(", ").append(memberTime);
+        sb.append(", ").append(isDefault);
 
         sb.append(")");
         return sb.toString();

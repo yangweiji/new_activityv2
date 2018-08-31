@@ -62,7 +62,7 @@ class WxProfileController {
      * @param communityId 团体ID
      */
     @GetMapping("/scores")
-    fun getScores(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any{
+    fun getScores(@RequestParam(required = false) userId: Int?, @RequestParam(required = false) communityId: Int?): Any {
         val scores = proFileService!!.getActivityIntegral(communityId, userId)
         return scores.intoMaps()
     }
@@ -102,8 +102,6 @@ class WxProfileController {
     }
 
 
-
-
     /**
      * 完成实名认证，同时更新用户信息
      * @param user 用户信息
@@ -135,8 +133,6 @@ class WxProfileController {
     }
 
 
-
-
     /**
      * 个人中心我的活动
      * @param type 活动类型
@@ -160,7 +156,7 @@ class WxProfileController {
             map["title"] = activity.get("title").toString()
             map["avatar"] = avatar
             map["start_time"] = util!!.fromNow(activity.get("start_time"))
-            map["activity_type"]=activity.get("activity_type",Int::class.java)
+            map["activity_type"] = activity.get("activity_type", Int::class.java)
             map["attend_count"] = activity.get("attend_count", Int::class.java)
             map["favorite_count"] = activity.get("favorite_count", Int::class.java)
 
@@ -183,11 +179,11 @@ class WxProfileController {
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
-        result["vipYear"] =thirdUserService!!.getVipYear(communityId, userId)
+        result["vipYear"] = thirdUserService!!.getVipYear(communityId, userId)
         result["score"] = thirdScoreService!!.getUseableScore(userId, communityId)
-        var personalInfoCounts=proFileService!!.getPersonalInfoCounts(userId, communityId)
-        var counts= personalInfoCounts.intoMaps()
-        result["activityCounts"] =counts
+        var personalInfoCounts = proFileService!!.getPersonalInfoCounts(userId, communityId)
+        var counts = personalInfoCounts.intoMaps()
+        result["activityCounts"] = counts
         return result
     }
 
@@ -206,7 +202,9 @@ class WxProfileController {
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
-        result["vipYear"] =thirdUserService!!.getVipYear(communityId, userId)
+        result["vipYear"] = thirdUserService!!.getVipYear(communityId, userId)
+        //取得团体用户信息
+        result["communityUser"] = thirdUserService!!.getCommunityUser(communityId, userId)!!
 
         return result
     }
@@ -216,7 +214,7 @@ class WxProfileController {
      */
     @GetMapping("/updatevip")
     fun updateVipYear(@RequestParam(required = false) userId: Int,
-                      @RequestParam(required = false) communityId: Int, @RequestParam(required = false) year:Int){
+                      @RequestParam(required = false) communityId: Int, @RequestParam(required = false) year: Int) {
         thirdUserService!!.updateVipYear(communityId, userId, year)
     }
 
@@ -224,11 +222,9 @@ class WxProfileController {
      * VIP会员查看条款页面内容
      */
     @GetMapping("/agreement")
-    fun getVipAgreement(@RequestParam(required = false) communityId: Int): Community{
+    fun getVipAgreement(@RequestParam(required = false) communityId: Int): Community {
         return communityService!!.getCommunity(communityId)
     }
-
-
 
 
 }

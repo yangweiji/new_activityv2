@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Community extends TableImpl<CommunityRecord> {
 
-    private static final long serialVersionUID = -80935034;
+    private static final long serialVersionUID = 931851945;
 
     /**
      * The reference instance of <code>community</code>
@@ -145,6 +145,11 @@ public class Community extends TableImpl<CommunityRecord> {
      * The column <code>community.count_people</code>. 团体规模人数
      */
     public final TableField<CommunityRecord, Integer> COUNT_PEOPLE = createField("count_people", org.jooq.impl.SQLDataType.INTEGER, this, "团体规模人数");
+
+    /**
+     * The column <code>community.can_refund</code>. 是否可以在线退款，1：是
+     */
+    public final TableField<CommunityRecord, Boolean> CAN_REFUND = createField("can_refund", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "是否可以在线退款，1：是");
 
     /**
      * Create a <code>community</code> table reference

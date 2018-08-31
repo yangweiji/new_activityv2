@@ -65,6 +65,7 @@ class SearchController : BaseController() {
             @MatrixVariable(defaultValue = "0") time: String,
             @MatrixVariable(defaultValue = "0") pay: String,
             @MatrixVariable(defaultValue = "0") page: Int?,
+            @MatrixVariable(defaultValue = "") searchText: String,
             model: Model): String {
         var s = s
 
@@ -74,7 +75,7 @@ class SearchController : BaseController() {
         activityService!!.page = page!!
 
         //取得活动信息
-        var activities = activityService!!.getPublicActivities(tag, time, pay)
+        var activities = activityService!!.getPublicActivities(tag, time, pay, searchText)
         val pageable = PageRequest(page!!, activityService!!.size)
         val pageImpl = PageImpl(activities, pageable, activityService!!.activityCount)
         model.addAttribute("pageImpl", pageImpl)

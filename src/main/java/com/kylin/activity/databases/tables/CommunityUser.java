@@ -31,7 +31,7 @@ import java.util.List;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class CommunityUser extends TableImpl<CommunityUserRecord> {
 
-    private static final long serialVersionUID = -196915255;
+    private static final long serialVersionUID = -990561832;
 
     /**
      * The reference instance of <code>community_user</code>
@@ -85,6 +85,11 @@ public class CommunityUser extends TableImpl<CommunityUserRecord> {
      * The column <code>community_user.member_time</code>. 成为团体会员的时间
      */
     public final TableField<CommunityUserRecord, Timestamp> MEMBER_TIME = createField("member_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "成为团体会员的时间");
+
+    /**
+     * The column <code>community_user.is_default</code>. 用户默认关注的团体组织，加入多个团体后，只能有一个是默认关注团体组织，1：是
+     */
+    public final TableField<CommunityUserRecord, Boolean> IS_DEFAULT = createField("is_default", org.jooq.impl.SQLDataType.BIT.defaultValue(org.jooq.impl.DSL.inline("b'0'", org.jooq.impl.SQLDataType.BIT)), this, "用户默认关注的团体组织，加入多个团体后，只能有一个是默认关注团体组织，1：是");
 
     /**
      * Create a <code>community_user</code> table reference

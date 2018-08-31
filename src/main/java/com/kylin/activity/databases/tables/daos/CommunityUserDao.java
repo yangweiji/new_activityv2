@@ -115,4 +115,11 @@ public class CommunityUserDao extends DAOImpl<CommunityUserRecord, com.kylin.act
     public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByMemberTime(Timestamp... values) {
         return fetch(CommunityUser.COMMUNITY_USER.MEMBER_TIME, values);
     }
+
+    /**
+     * Fetch records that have <code>is_default IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.CommunityUser> fetchByIsDefault(Boolean... values) {
+        return fetch(CommunityUser.COMMUNITY_USER.IS_DEFAULT, values);
+    }
 }

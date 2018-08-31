@@ -6,6 +6,7 @@ import com.kylin.activity.databases.tables.daos.*
 import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
+import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.jooq.DSLContext
 import org.jooq.Record
@@ -228,76 +229,6 @@ class ActivityService {
         return create!!.fetchValue(sql) as Long
     }
 
-//    /**
-//     * 取得指定团体组织下的活动总数
-//     */
-//    @Cacheable()
-//    fun getCommunityTotalActivityCount(communityId: Int): Long {
-//        var sql = "select count(*) from activity t1 where t1.community = ?"
-//        return create!!.fetchValue(sql, communityId) as Long
-//    }
-
-//    /**
-//     * 取得指定团体组织下的活动信息
-//     * @param id: 团体组织ID
-//     * @return 活动集合
-//     */
-//    fun getActivitiesByCommunityId(id: Int): Result<Record> {
-//
-//        //构建活动数据源
-//        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
-//                ", t2.displayname, t2.avatar user_avatar," +
-//                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
-//                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) checked , " +
-//                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is null) no_checked , " +
-//                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
-//                "from activity t1 " +
-//                "left join user t2 on t1.created_by = t2.id " +
-//                "where ?=t1.community_id " +
-//                "order by t1.start_time desc " +
-//                "limit 1000"
-//
-//        var items = create!!.resultQuery(sql, id).fetch()
-//        return items
-//    }
-
-//    /**
-//     * 取得活动信息、活动参与人数、活动收藏人数
-//     * 最新的前1000条记录
-//     * @param tags: 活动标签分类
-//     * @return 活动信息集合
-//     */
-//    @Cacheable()
-//    fun getPublicActivities(tags: String): Result<Record> {
-//
-//        //构建活动数据源
-//        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
-//                ", t2.displayname, t2.avatar user_avatar," +
-//                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
-//                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
-//                "from activity t1 " +
-//                "left join user t2 on t1.created_by = t2.id " +
-//                "where 1=1 {0} " +
-//                "order by t1.start_time desc " +
-//                "limit 1000"
-//        var strCondition = ""
-//        if (!tags.isNullOrBlank()) {
-//            if (tags.contains('-')) {
-//                var ss = ""
-//                for (s in tags.split("-")) {
-//                    ss = "$ss,'$s'"
-//                }
-//                strCondition = "and t1.tags in ({0})".replace("{0}", ss.substring(1))
-//            } else {
-//                strCondition = "and t1.tags = '{0}'".replace("{0}", tags)
-//            }
-//        }
-//        sql = sql.replace("{0}", strCondition)
-//
-//        var items = create!!.resultQuery(sql).fetch()
-//        return items
-//    }
-
     /**
      *  获取活动信息、活动参与人数、活动收藏人数及用户选择的团队活动信息
      *  @param sid: 团体组织标识
@@ -340,15 +271,16 @@ class ActivityService {
 
 
     /**
-     * 取得活动信息、活动参与人数、活动收藏人数
+     * PC端取得活动信息、活动参与人数、活动收藏人数
      * @param tag: 活动标签分类
      * @param time：活动时间段
      * @param pay:
+     * @param searchText: 关键词
      * @return 活动信息集合
      */
-    fun getPublicActivities(tag: String, time: String, pay: String, searchText: String? = null): Result<Record> {
+    fun getPublicActivities(tag: String, time: String, pay: String, searchText: String): Result<Record> {
 
-        var sql_count = "select count(*) count from activity t1 where 1=1 {0} {1}"
+        var sqlCount = "select count(*) count from activity t1 where t1.status=1 {0} {1}"
 
         //构建活动数据源
         var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id" +
@@ -360,20 +292,24 @@ class ActivityService {
                 "where t1.status=1 {0} {1} {2} " +
                 "order by t1.start_time desc " +
                 "limit {99}, {100}"
+
         var strTag = ""
-        if (!tag.isNullOrBlank() && !tag.equals("0")) {
+        if (!tag.isNullOrBlank() && tag != "0") {
             strTag = "and t1.tags = '{0}'".replace("{0}", tag)
         }
-        sql_count = sql_count.replace("{0}", strTag)
+        sqlCount = sqlCount.replace("{0}", strTag)
         sql = sql.replace("{0}", strTag)
 
+
         var strSearchText = ""
-        if (!searchText.isNullOrBlank() && !searchText.equals("0")) strSearchText = "and t1.title like '{2}'".replace("{2}", "%$searchText%")
-        sql_count = sql_count.replace("{2}", strSearchText)
+        if (!searchText.isNullOrBlank()) {
+            strSearchText = "and t1.title like '{2}'".replace("{2}", "%$searchText%")
+        }
+        sqlCount = sqlCount.replace("{2}", strSearchText)
         sql = sql.replace("{2}", strSearchText)
 
         var strTime = ""
-        if (!time.isNullOrBlank() && !time.equals("0")) {
+        if (!time.isNullOrBlank() && time != "0") {
 
             if (time == "d") {
                 //今天
@@ -389,14 +325,14 @@ class ActivityService {
                 strTime = "and (DATE_FORMAT(t1.start_time,'%w') = 6 or DATE_FORMAT(t1.start_time,'%w') = 7)"
             } else {
                 //指定日期
-                strTime = "and DATE_FORMAT(t1.start_time,'%Y%m%d') = " + time
+                strTime = "and DATE_FORMAT(t1.start_time,'%Y%m%d') = $time"
             }
         }
-
-        sql_count = sql_count.replace("{1}", strTime)
-        activityCount = create!!.resultQuery(sql_count).fetch("count")[0] as Long
+        sqlCount = sqlCount.replace("{1}", strTime)
+        activityCount = create!!.resultQuery(sqlCount).fetch("count")[0] as Long
 
         sql = sql.replace("{1}", strTime)
+
         //分页条件
         if (page * size < 0) {
             sql = sql.replace("{99}", "0")
@@ -404,9 +340,67 @@ class ActivityService {
             sql = sql.replace("{99}", (page * size).toString())
         }
         sql = sql.replace("{100}", size.toString())
-        var items = create!!.resultQuery(sql).fetch()
 
-        return items
+        LogUtil.printLog("pc activity search: $sql")
+        return create!!.resultQuery(sql).fetch()
+    }
+
+    /**
+     * 微信小程序搜索：取得活动信息、活动参与人数、活动收藏人数，前50条记录
+     * @param tag: 活动标签分类
+     * @param time：活动时间段
+     * @param searchText: 关键词
+     * @return 活动信息集合
+     */
+    fun getPublicActivities(tag: String, time: String, searchText: String): Result<Record> {
+
+        //构建活动数据源
+        var sql = "select t1.id, t1.title, t1.avatar, t1.tags, t1.start_time, t1.activity_type, " +
+                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
+                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+                "from activity t1 " +
+                "left join user t2 on t1.created_by = t2.id " +
+                "where t1.status=1 {0} {1} {2} " +
+                "order by t1.start_time desc " +
+                "limit 50"
+
+        var strTag = ""
+        if (!tag.isNullOrBlank() && tag != "0") {
+            strTag = "and t1.tags = '{0}'".replace("{0}", tag)
+        }
+        sql = sql.replace("{0}", strTag)
+
+
+        var strSearchText = ""
+        if (!searchText.isNullOrBlank()) {
+            strSearchText = "and t1.title like '{2}'".replace("{2}", "%$searchText%")
+        }
+        sql = sql.replace("{2}", strSearchText)
+
+        var strTime = ""
+        if (!time.isNullOrBlank() && time != "0") {
+
+            if (time == "d") {
+                //今天
+                strTime = "and to_days(t1.start_time) = to_days(now())"
+            } else if (time == "w") {
+                //近一周
+                strTime = "and DATE_SUB(CURDATE(), INTERVAL 7 DAY) <= date(t1.start_time)"
+            } else if (time == "m") {
+                //近一月
+                strTime = "and DATE_SUB(CURDATE(), INTERVAL 1 MONTH) <= date(t1.start_time)"
+            } else if (time == "z") {
+                //周末
+                strTime = "and (DATE_FORMAT(t1.start_time,'%w') = 6 or DATE_FORMAT(t1.start_time,'%w') = 7)"
+            } else {
+                //指定日期
+                strTime = "and DATE_FORMAT(t1.start_time,'%Y%m%d') = $time"
+            }
+        }
+        sql = sql.replace("{1}", strTime)
+
+        LogUtil.printLog("wx activity search: $sql")
+        return create!!.resultQuery(sql).fetch()
     }
 
     /**

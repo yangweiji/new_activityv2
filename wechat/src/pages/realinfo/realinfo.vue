@@ -43,6 +43,10 @@
           name: 'wechatId',
           title: '微信号',
           type: 'text'
+        },{
+          name: 'realTime',
+          title: '认证时间',
+          type: 'text'
         }
         ],
         fields: [{

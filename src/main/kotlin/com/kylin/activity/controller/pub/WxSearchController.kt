@@ -1,10 +1,14 @@
 package com.kylin.activity.controller.pub
 
+import com.kylin.activity.config.ActivityProperties
 import com.kylin.activity.service.ActivityService
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.text.ParseException
 
 /**
@@ -12,7 +16,7 @@ import java.text.ParseException
  */
 @RestController
 @RequestMapping("pub/wx/search")
-class WxSearchController  {
+class WxSearchController {
     /**
      * 第三方工具
      */
@@ -28,6 +32,13 @@ class WxSearchController  {
      */
     @Autowired
     private val activityService: ActivityService? = null
+
+    /**
+     * 活动配置
+     */
+    @Autowired
+    private val activityProperties: ActivityProperties? = null
+
     /**
      * 搜索活动
      * /pub/search/s;tag=0;time=0;pay=0
@@ -42,12 +53,13 @@ class WxSearchController  {
     private fun searchActivities(
             @RequestParam(defaultValue = "0") tag: String,
             @RequestParam(defaultValue = "0") time: String,
-            @RequestParam(defaultValue = "0") searchText: String?
-          ): Any {
-        //取得活动信息
-        var activities= activityService!!.getPublicActivities(tag, time, "",searchText)
-        var result = mutableListOf<MutableMap<String, Any?>>()
+            @RequestParam(defaultValue = "") searchText: String
+    ): Any {
 
+        //取得活动信息
+        var activities = activityService!!.getPublicActivities(tag, time, searchText)
+
+        var result = mutableListOf<MutableMap<String, Any?>>()
         for (activity in activities) {
             var map = mutableMapOf<String, Any?>()
             var avatar: String? = null
@@ -63,9 +75,6 @@ class WxSearchController  {
             map["title"] = activity.get("title").toString()
             result.add(map)
         }
-
-        //if(activities.isNotEmpty)
-        //activities.forEach {  result.add(it.intoMap())}
 
         return result
     }
