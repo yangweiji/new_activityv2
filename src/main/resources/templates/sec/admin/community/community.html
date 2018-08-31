@@ -48,7 +48,7 @@
                         <div class="am-form-group">
                             <label for="name" class="am-u-sm-2 am-form-label">团体名称</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="name"
+                                <input required="required" type="text" id="name" maxlength="100"
                                        name="name" th:placeholder="请输入团体名称" th:value="${community.name}"/>
                             </div>
                         </div>
@@ -56,28 +56,28 @@
                         <div class="am-form-group">
                             <label for="description" class="am-u-sm-2 am-form-label">标语</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="description"
+                                <input required="required" type="text" id="description" maxlength="50"
                                        name="description" th:placeholder="请输入标语" th:value="${community.description}"/>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="address" class="am-u-sm-2 am-form-label">地址</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="address"
+                                <input required="required" type="text" id="address" maxlength="200"
                                        name="address" th:placeholder="请输入地址" th:value="${community.address}"/>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="contact" class="am-u-sm-2 am-form-label">联系电话</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="contact"
+                                <input required="required" type="text" id="contact" maxlength="50"
                                        name="contact" th:placeholder="请输入联系电话" th:value="${community.contact}"/>
                             </div>
                         </div>
                         <div class="am-form-group">
                             <label for="company" class="am-u-sm-2 am-form-label">公司名称</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="company"
+                                <input required="required" type="text" id="company" maxlength="100"
                                        name="company" th:placeholder="请输入公司名称" th:value="${community.company}"/>
                             </div>
                         </div>
@@ -86,7 +86,7 @@
                         <div class="am-form-group">
                             <label for="controlName" class="am-u-sm-2 am-form-label">负责人名称</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="text" id="controlName"
+                                <input required="required" type="text" id="controlName" maxlength="50"
                                        name="controlName" th:placeholder="请输入负责人名称"
                                        th:value="${community.controlName}"/>
                             </div>
@@ -97,7 +97,7 @@
                         <div class="am-form-group">
                             <label for="managerPhoneNumber" class="am-u-sm-2 am-form-label">管理员手机号码</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="tel" id="managerPhoneNumber"
+                                <input required="required" type="tel" id="managerPhoneNumber" maxlength="50"
                                        name="managerPhoneNumber" th:placeholder="请输入管理员手机号码"
                                        th:value="${community.managerPhoneNumber}"/>
                                 <span class="c-avatar-tip">温馨提示：团体管理员使用此手机号码登录平台，初始密码为123456</span>
@@ -107,7 +107,7 @@
                         <div class="am-form-group">
                             <label for="countPeople" class="am-u-sm-2 am-form-label">规模人数</label>
                             <div class="am-u-sm-10">
-                                <input required="required" type="number" id="countPeople"
+                                <input required="required" type="number" id="countPeople" min="0" max="1000000"
                                        name="countPeople" th:placeholder="请输入规模人数" th:value="${community.countPeople}"/>
                             </div>
                         </div>
@@ -152,7 +152,7 @@
                         </div>
 
                         <div class="am-form-group">
-                            <label class="am-u-sm-2 am-form-label">启动积分</label>
+                            <label class="am-u-sm-2 am-form-label">启用积分</label>
                             <div class="am-u-sm-10">
                                 <label class="am-radio-inline">
                                     <input type="checkbox" id="usingScore"
@@ -160,6 +160,18 @@
                                 </label>
                                 <br>
                                 <span class="c-avatar-tip">温馨提示：启用积分后，发布活动时，可进行积分奖励设置；用户报名时，可使用积分抵扣；换算：1积分=1元（人民币）</span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <label class="am-u-sm-2 am-form-label">启用在线退款</label>
+                            <div class="am-u-sm-10">
+                                <label class="am-radio-inline">
+                                    <input type="checkbox" id="canRefund"
+                                           name="canRefund" v-model="community.canRefund">
+                                </label>
+                                <br>
+                                <span class="c-avatar-tip">温馨提示：启用在线退款，针对活动缴费用户可在线退款</span>
                             </div>
                         </div>
 
@@ -178,7 +190,7 @@
                         <div class="am-form-group" v-show="community.isVip===true">
                             <label class="am-u-sm-2 am-form-label">会费</label>
                             <div class="am-u-sm-10">
-                                <input type="number" id="vipAmount" th:required="${community.isVip==true}"
+                                <input type="number" id="vipAmount" th:required="${community.isVip==true}" min="0" max="10000"
                                        name="vipAmount" th:placeholder="请输入会费金额"
                                        th:value="${community.vipAmount}"/>
                                 <span class="c-avatar-tip">温馨提示：按自然年缴纳会费！</span>

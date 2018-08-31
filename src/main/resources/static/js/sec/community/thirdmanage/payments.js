@@ -4,6 +4,19 @@ $(function () {
     var t = $('#bmTable')
         .on('init.dt', function () {
             // $('#bmBody').show();
+            //检查当前团体是否可以在线退款，如果有则添加操作按钮
+            if (g_community_context.canRefund) {
+                t.button().add(1, {
+                    extend: 'refund',
+                    text: '申请退款',
+                    enabled: false,
+                });
+                t.button().add(2, {
+                    extend: 'check',
+                    text: '检查退款',
+                    enabled: false,
+                });
+            }
         })
         .on('preXhr.dt', function ( e, settings, data ) {
             Util.loading(true);
@@ -26,16 +39,16 @@ $(function () {
                     text: '检查付款',
                     enabled: false,
                 },
-                {
-                    extend: 'refund',
-                    text: '申请退款',
-                    enabled: false,
-                },
-                {
-                    extend: 'check',
-                    text: '检查退款',
-                    enabled: false,
-                },
+                // {
+                //     extend: 'refund',
+                //     text: '申请退款',
+                //     enabled: false,
+                // },
+                // {
+                //     extend: 'check',
+                //     text: '检查退款',
+                //     enabled: false,
+                // },
                 {
                     extend: 'excel',
                     text: '导出Excel',

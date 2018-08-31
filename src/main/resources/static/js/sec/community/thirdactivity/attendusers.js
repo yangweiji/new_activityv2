@@ -38,6 +38,25 @@ $(function () {
     var t = $('#bmTable')
         .on('init.dt', function () {
             // $('#bmBody').show();
+            //检查当前团体是否可以在线退款，如果有则添加操作按钮
+            if (g_community_context.canRefund) {
+                t.button().add(2, {
+                    extend: 'refund',
+                    text: '申请退款',
+                    enabled: false,
+                    // action: function ( e, dt, button, config ) {
+                    //     dt.ajax.reload();
+                    // },
+                });
+                t.button().add(3, {
+                    extend: 'check',
+                    text: '检查退款',
+                    enabled: false,
+                    // action: function ( e, dt, button, config ) {
+                    //     dt.ajax.reload();
+                    // },
+                });
+            }
         })
         .on('preXhr.dt', function (e, settings, data) {
             Util.loading(true);
@@ -82,16 +101,16 @@ $(function () {
                     text: '取消中签',
                     enabled: false,
                 },
-                {
-                    extend: 'refund',
-                    text: '申请退款',
-                    enabled: false,
-                },
-                {
-                    extend: 'check',
-                    text: '检查退款',
-                    enabled: false,
-                },
+                // {
+                //     extend: 'refund',
+                //     text: '申请退款',
+                //     enabled: false,
+                // },
+                // {
+                //     extend: 'check',
+                //     text: '检查退款',
+                //     enabled: false,
+                // },
                 {
                     extend: 'delete',
                     text: '删除',
@@ -442,13 +461,6 @@ $(function () {
         }
     };
 
-    // //添加索引序号
-    // t.on('order.dt search.dt', function () {
-    //     t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
-    //         cell.innerHTML = i + 1;
-    //     });
-    // }).draw();
-
     //JQuery DataTables HTML (DOM) sourced data
     var t1 = $('#statTable').DataTable({
         language: {
@@ -496,7 +508,6 @@ $(function () {
         t.button(4).enable(check === true);
     });
 
-
     /**
      * 监听checkbox
      */
@@ -512,12 +523,18 @@ $(function () {
         t.button(3).enable(d.length > 0);
         t.button(4).enable(d.length > 0);
     });
-});
 
+
+
+});
 
 new Vue({
     el: '#app',
-    data: {},
+    data: function () {
+        return {
+            communityContext: g_community_context,
+        }
+    },
     mounted: function () {
     },
     methods: {}

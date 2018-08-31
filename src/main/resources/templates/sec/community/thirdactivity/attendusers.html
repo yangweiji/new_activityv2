@@ -204,8 +204,12 @@
 
 <div th:replace="fragments/footer :: default"></div>
 <script th:inline="javascript">
+    //定义报名选项栏位
     var g_attendColumns = [[${attendColumns}]];
-    console.log(g_attendColumns);
+//    console.log(g_attendColumns);
+    //定义当前团体中心
+    var g_community_context = [[${session.COMMUNITY_CONTEXT}]];
+//    console.log(g_community_context);
 </script>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
 <script type="text/javascript" src="/js/sec/community/thirdactivity/attendusers.js"></script>

@@ -131,6 +131,11 @@
 </div>
 
 <div th:replace="fragments/footer :: default"></div>
+<script th:inline="javascript">
+    //定义当前团体中心
+    var g_community_context = [[${session.COMMUNITY_CONTEXT}]];
+    //    console.log(g_community_context);
+</script>
 <style type="text/css">
 </style>
 <script src="https://cdn.bootcss.com/vue/2.5.9/vue.min.js"></script>
