@@ -140,8 +140,8 @@ class CommunityController : BaseController() {
             }
 
             //更新团体组织信息
-            community.createdBy = user!!.id
-            community.created = DateUtil.date().toTimestamp()
+            //community.createdBy = user!!.id
+            //community.created = DateUtil.date().toTimestamp()
             communityService!!.update(community)
             LogUtil.printLog("更新成功,团体组织ID：${community.id}")
         } else {
