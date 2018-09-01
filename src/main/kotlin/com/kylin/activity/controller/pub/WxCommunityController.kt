@@ -2,10 +2,7 @@ package com.kylin.activity.controller.pub
 
 import com.kylin.activity.service.CommunityService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.CrossOrigin
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 /**
  * Created by 9kylin on 2018-06-12.
@@ -26,6 +23,17 @@ class WxCommunityController {
     @CrossOrigin
     @RequestMapping(value = "/get", method = [RequestMethod.POST, RequestMethod.GET])
     fun get(communityId: Int): Any {
+        return communityService!!.getCommunity(communityId)
+    }
+
+    /**
+     * 取得唯一的团体组织信息
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/detail", method = [RequestMethod.POST, RequestMethod.GET])
+    fun getCommunityDetail(@RequestBody(required = false) map: Map<String, String>): Any {
+        var communityId = map["communityId"]!!.toInt()
+
         return communityService!!.getCommunity(communityId)
     }
 
@@ -82,4 +90,17 @@ class WxCommunityController {
 
         return null
     }
+
+    /**
+     * 设置为默认的团体组织
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/default", method = [RequestMethod.POST, RequestMethod.GET])
+    fun setDefault(@RequestBody(required = false) map: Map<String, String>): Boolean {
+        var userId = map["userId"]!!.toInt()
+        var communityId = map["communityId"]!!.toInt()
+
+        return communityService!!.setDefault(userId, communityId)
+    }
+
 }

@@ -2,7 +2,7 @@
   <div class="page">
     <div v-if="item" class="page__bd">
 
-        <!-- banner -->
+        <!-- banner begin -->
         <div>
           <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
             <span style="top:5px;">
@@ -14,6 +14,7 @@
             <span class="userinfo-name">{{user.displayname}}</span>
           </div>
         </div>
+        <!-- banner end -->
 
         <div class="wx_group_count weui-flex">
           <div class="wx_attend_count weui-flex__item">
@@ -88,16 +89,6 @@
             <div class="weui-cell_integral">{{item.activityCounts[4].counts}}</div>
           </navigator>
 
-          <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <div class="weui-cell__hd">
-              <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
-            </div>
-            <div class="weui-cell__bd weui-cell_primary">
-              <div>积分</div>
-            </div>
-            <div class="weui-cell_integral">{{item.score}}</div>
-          </navigator>
-
           <navigator url="/pages/realinfo/realinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/real_name.png" style="width: 25px;height: 25px;margin-right: 5px" />
@@ -106,6 +97,28 @@
               <div>实名认证</div>
             </div>
             <div class="weui-cell_comment">{{item.user.isReal!=true?"未认证":"已认证"}}</div>
+          </navigator>
+
+          <navigator url="/pages/mycommunity/mycommunity" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image src="/static/images/personal_information.png" style="width: 25px;height: 25px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>我的团体</div>
+            </div>
+            <div class="weui-cell__ft weui-cell__ft_in-access"></div>
+          </navigator>
+
+          <div class="line"></div>
+
+          <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
+            </div>
+            <div class="weui-cell__bd weui-cell_primary">
+              <div>积分</div>
+            </div>
+            <div class="weui-cell_integral">{{item.score}}</div>
           </navigator>
 
           <navigator url="/pages/myvip/myvip" class="weui-cell weui-cell_access" hover-class="weui-cell_active">

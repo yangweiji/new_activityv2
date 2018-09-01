@@ -161,19 +161,12 @@ class CommunityService {
 
 
     /**
-     * 获取最近一次加入的团体
+     * 获取首次加入的团体
      */
     fun getDefaultCommunity(userId:Int): Community{
         var sql = "select t1.* from community t1 left join community_user t2 on t1.id = t2.community_id and t2.user_id = ? " +
-                "where t2.id is not null or t1.id = 1 order by t2.created desc limit 1"
+                "where t2.id is not null or t1.id = 1 order by t2.created limit 1"
         return create!!.resultQuery(sql, userId).fetchOne().into(Community::class.java)
-    }
-
-    /**
-     * 团体组织排行榜
-     */
-    fun getCommunityTop(): Any? {
-        return communityDao!!.findAll()
     }
 
     /**
@@ -182,12 +175,28 @@ class CommunityService {
      * @return 团体列表信息
      */
     fun getCommunitiesByUser(userId: Int): Any {
-        var sql = "select t1.*, date_format(t2.member_time, '%Y年%m月%d日') as member_time  from community t1 " +
+        var sql = "select t1.*" +
+                ", date_format(t2.member_time, '%Y年%m月%d日') as member_time " +
+                ", date_format(t2.created, '%Y年%m月%d日') as created_time " +
+                ", t2.is_default " +
+                "from community t1 " +
                 "inner join community_user t2 on t1.id = t2.community_id " +
-                "where t2.user_id = ?"
+                "where t2.user_id = ? " +
+                "order by t2.is_default desc, t2.created"
 
         var items = create!!.fetch(sql, userId).intoMaps()
         return items
+    }
+
+
+    /**
+     * 设置某团体组织为用户的默认团体组织,默认团体组织有且只有一个
+     */
+    fun setDefault(userId: Int, communityId: Int): Boolean {
+        var sql = "update community_user set is_default = 0 where user_id = ?"
+        create!!.execute(sql, userId)
+        sql = "update community_user set is_default = 1 where user_id = ? and community_id = ?"
+        return create!!.execute(sql, userId, communityId) > 0
     }
 
 

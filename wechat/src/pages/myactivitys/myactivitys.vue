@@ -104,6 +104,7 @@ export default {
   display: flex;
   justify-content: center;
   overflow: hidden;
+  font-size: 40rpx;
 }
 
 </style>

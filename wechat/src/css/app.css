@@ -51,6 +51,11 @@ page {
     width: 100%;
 }
 
+.community-logo {
+    height: 200rpx;
+    width: 100%;
+}
+
 .c-bg {
     position: absolute;
     top: 0;
@@ -367,4 +372,11 @@ button[type=primary] {
 
 .fa {
     color: #F37B1D;
+}
+
+.line {
+    margin: 0 auto;
+    /*width: 150rpx;*/
+    height: 2rpx;
+    background-color: #D8D8D8;
 }

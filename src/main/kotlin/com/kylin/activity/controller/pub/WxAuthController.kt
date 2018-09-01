@@ -114,10 +114,7 @@ class WxAuthController {
 
         return try {
             val session = this.wxService!!.maService!!.userService.getSessionInfo(code)
-            LogUtil.printLog("sessionKey: ${session.sessionKey}")
-            LogUtil.printLog("openId: ${session.openid}")
-
-            //JsonUtils.toJson(session)
+            //LogUtil.printLog(JsonUtils.toJson(session))
 
             var result = WxAuthResult()
             result.openid = session.openid
@@ -151,7 +148,9 @@ class WxAuthController {
             }
 
             user!!.password = null
+            //默认团体组织信息
             community = communityService!!.getDefaultCommunity(user.id)
+            LogUtil.printLog("username: ${user.username}, openid: ${user.openId}, unionid: ${user.unionId}, community: ${community.id}")
         }
 
         return mapOf("user" to user, "community" to community)

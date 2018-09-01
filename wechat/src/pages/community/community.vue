@@ -66,10 +66,10 @@
                     <div class="weui-media-box__title">{{item.name}}</div>
                     <div class="weui-media-box__title weui-media-box__title-r">{{item.count_people}}人</div>
                     <div class="weui-media-box__desc">{{item.description}}</div>
-                    <div class="weui-media-box__desc" v-if="item.member_time">{{item.member_time}} 入会</div>
-                    <!-- <div class="weui-media-box__desc">
-                      <div class="weui-badge-label">跑步</div>
-                    </div> -->
+                    <div class="weui-media-box__desc" style="font-size:12px;">
+                      <span v-if="item.member_time">{{item.member_time}} 入会</span>
+                      <div class="weui-badge-label" v-if="item.is_default==1" style="margin-left:5px;">默认团体</div>
+                    </div>
                   </div>
               </div>
             </div>

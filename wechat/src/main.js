@@ -28,6 +28,8 @@ export default {
             'pages/posterlist/posterlist',
             'pages/article/article',
             'pages/community/community',
+            'pages/mycommunity/mycommunity',
+            'pages/communitydetail/communitydetail',
             'pages/attend/attend',
             'pages/attendupdate/attendupdate',
             'pages/photos/photos',
