@@ -161,12 +161,17 @@ class CommunityService {
 
 
     /**
-     * 获取首次加入的团体
+     * 获取默认加入的团体
      */
     fun getDefaultCommunity(userId:Int): Community{
-        var sql = "select t1.* from community t1 left join community_user t2 on t1.id = t2.community_id and t2.user_id = ? " +
-                "where t2.id is not null or t1.id = 1 order by t2.created limit 1"
-        return create!!.resultQuery(sql, userId).fetchOne().into(Community::class.java)
+        var sql = "select t1.* from community t1 " +
+                "inner join community_user t2 " +
+                "on t1.id = t2.community_id and t2.user_id = ? and t2.is_default = 1"
+
+        var item = create!!.resultQuery(sql, userId).fetchOne()
+        return if ( item == null) {
+             communityDao!!.fetchOneById(1)
+        } else item.into(Community::class.java)
     }
 
     /**
