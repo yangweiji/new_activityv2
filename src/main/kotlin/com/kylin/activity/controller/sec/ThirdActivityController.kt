@@ -794,4 +794,52 @@ class ThirdActivityController : BaseController() {
 
         return thirdActivityService!!.getCheckInData(start, end, activityId, title, username, displayname, this.sessionCommunity.id).intoMaps()
     }
+
+    /**
+     * 第三方打卡明细查询
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/checkInList", method = [RequestMethod.POST, RequestMethod.GET])
+    fun checkInList(request: HttpServletRequest, model: Model): String {
+        var calendar = GregorianCalendar()
+        var sdf = SimpleDateFormat("yyyy-MM-dd")
+        var start = request.getParameter("start")
+        if (start.isNullOrBlank()) {
+            //设置为月初
+            calendar.set(Calendar.DAY_OF_MONTH, 1)
+            start = sdf.format(calendar.time)
+        }
+
+        var end = request.getParameter("end")
+        if (end.isNullOrBlank()) {
+            //当日
+            calendar = GregorianCalendar()
+            end = sdf.format(calendar.time)
+        }
+
+        model.addAttribute("start", start)
+        model.addAttribute("end", end)
+
+        return "sec/community/thirdactivity/checkInList"
+    }
+
+    /**
+     *
+     * 第三方打卡活动明细
+     * @param map: 查询条件参数
+     * @return
+     */
+    @CrossOrigin
+    @RequestMapping(value = "/getCheckInList", method = [RequestMethod.POST, RequestMethod.GET])
+    @ResponseBody
+    fun getCheckInList(@RequestBody(required = false) map: Map<String, String>): List<Any> {
+        var start = map["start"]
+        var end = map["end"]
+        var activityId = map["activityId"]
+        var title = map["title"]
+        var username = map["username"]
+        var displayname = map["displayname"]
+
+        return thirdActivityService!!.getCheckInList(start, end, activityId, title, username, displayname, this.sessionCommunity.id).intoMaps()
+    }
 }

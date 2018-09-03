@@ -543,6 +543,7 @@ class ThirdActivityService {
      * @param title: 活动标题
      * @param username: 用户登录账户
      * @param displayname: 用户显示名称
+     * @param id: 团体组织ID
      * @return 打卡统计结果
      */
     fun getCheckInData(start: String?, end: String?, activityId: String?, title: String?, username: String?, displayname: String?, id: Int?): Result<Record> {
@@ -557,6 +558,58 @@ class ThirdActivityService {
                 ") t\n" +
                 "group by t.username, t.displayname, t.real_name\n" +
                 "order by count(*) desc"
+        var strCondition = ""
+        if (!start.isNullOrBlank()) {
+            strCondition = " and date(t1.record_time) >= '$start'"
+        }
+        sql = sql.replace("{0}", strCondition)
+
+        if (!end.isNullOrBlank()) {
+            strCondition = " and date(t1.record_time) <= '$end'"
+        }
+        sql = sql.replace("{1}", strCondition)
+
+        if (!activityId.isNullOrBlank()) {
+            strCondition = " and t3.id = $activityId"
+        }
+        sql = sql.replace("{2}", strCondition)
+
+        if (!title.isNullOrBlank()) {
+            strCondition = " and t3.title like '%$title%'"
+        }
+        sql = sql.replace("{3}", strCondition)
+
+        if (!username.isNullOrBlank()) {
+            strCondition = " and t4.username like '%$username%'"
+        }
+        sql = sql.replace("{4}", strCondition)
+
+        if (!displayname.isNullOrBlank()) {
+            strCondition = " and t4.displayname like '%$displayname%'"
+        }
+        sql = sql.replace("{5}", strCondition)
+
+        return create!!.resultQuery(sql, id).fetch()
+    }
+
+    /**
+     * 打卡查询，返回统计结果集合
+     * @param start: 打卡开始日期
+     * @param end: 打卡结束日期
+     * @param activityId: 活动编号
+     * @param title: 活动标题
+     * @param username: 用户登录账户
+     * @param displayname: 用户显示名称
+     * @param id: 团体组织ID
+     * @return 打卡统计结果
+     */
+    fun getCheckInList(start: String?, end: String?, activityId: String?, title: String?, username: String?, displayname: String?, id: Int?): Result<Record> {
+        var sql = "select t1.*, t3.title, t4.username, t4.displayname, t4.real_name from activity_user_record t1\n" +
+                "inner join activity_user t2 on t2.id = t1.activity_user_id\n" +
+                "inner join activity t3 on t3.id = t2.activity_id\n" +
+                "inner join `user` t4 on t2.user_id = t4.id\n" +
+                "where t3.community_id = ? {0} {1} {2} {3} {4} {5} \n"
+
         var strCondition = ""
         if (!start.isNullOrBlank()) {
             strCondition = " and date(t1.record_time) >= '$start'"

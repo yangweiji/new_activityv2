@@ -39,6 +39,15 @@
             <span class="fa fa-check-square fa-fw"></span>
             <a class="bmgl" th:href="@{/sec/community/thirdactivity/checkInData}"><b></b>打卡统计</a>
         </li>
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdactivity/checkInList'?'am-nav-header':''"
+            th:if="${#httpServletRequest.remoteUser}
+                    and (${session.USER_CONTEXT.role}=='管理员'
+                            or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '管理员')
+                            or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '发布者')
+                         )">
+            <span class="fa fa-search fa-fw"></span>
+            <a class="bmgl" th:href="@{/sec/community/thirdactivity/checkInList}"><b></b>打卡查询</a>
+        </li>
 
         <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdphotos/photos'?'am-nav-header':''"
             th:if="${#httpServletRequest.remoteUser}
