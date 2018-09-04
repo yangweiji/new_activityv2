@@ -115,7 +115,8 @@
               that.loadings--
               that.$emit('loading', that.loadings)
             },
-            fail(){
+            fail(res) {
+              console.log(res);
               that.loadings--
               that.$emit('loading', that.loadings)
             }
