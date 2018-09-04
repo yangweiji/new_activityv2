@@ -90,10 +90,6 @@ class ActivityDetailController : BaseController() {
     @GetMapping(value ="/attendqrcode/{id}", produces = [MediaType.IMAGE_PNG_VALUE])
     @ResponseBody
     fun attendQrcode(@PathVariable("id") id: Int): Any {
-//        var url = wechatProperties!!.baseUrl + "sec/activity/attend/" + id
-//        val inputStream = QRCode.from(url).to(ImageType.PNG).withSize(500,500).stream()
-//        return inputStream.toByteArray()
-
         var page = wechatProperties!!.attendPage
         var file = wxService!!.getQrCode(id.toString(), page!!)
         LogUtil.printLog("生成小程序报名二维码OK, name:${file.name}")
@@ -107,13 +103,22 @@ class ActivityDetailController : BaseController() {
     @GetMapping(value ="/checkinqrcode/{id}", produces = [MediaType.IMAGE_PNG_VALUE])
     @ResponseBody
     fun checkInQrcode(@PathVariable("id") id: Int): Any {
-//        var url = wechatProperties!!.baseUrl + "sec/activity/checkin/" + id
-//        val inputStream = QRCode.from(url).to(ImageType.PNG).withSize(500,500).stream()
-//        return inputStream.toByteArray()
-
         var page = wechatProperties!!.checkInPage
         var file = wxService!!.getQrCode(id.toString(), page!!)
         LogUtil.printLog("生成小程序签到二维码OK, name:${file.name}")
+
+        return this.readInputStream(file.inputStream())
+    }
+
+    /**
+     * 活动预览二维码图片
+     */
+    @GetMapping(value ="/previewqrcode/{id}", produces = [MediaType.IMAGE_PNG_VALUE])
+    @ResponseBody
+    fun previewQrcode(@PathVariable("id") id: Int): Any {
+        var page = wechatProperties!!.previewPage
+        var file = wxService!!.getQrCode(id.toString(), page!!)
+        LogUtil.printLog("生成小程序活动预览二维码OK, name:${file.name}")
 
         return this.readInputStream(file.inputStream())
     }

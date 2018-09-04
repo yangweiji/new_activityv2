@@ -68,6 +68,15 @@
                     </div>
                 </div>
 
+                <div class="am-g qr_code">
+                    <div class="am-u-sm-6">
+                        <img th:src="@{/pub/activity/previewqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/><br>
+                        <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/previewqrcode/{id}(id=${activity.get('id')})}">下载预览二维码</a>
+                    </div>
+                    <div class="am-u-sm-6">
+                    </div>
+                </div>
+
             </div>
 
         </div>

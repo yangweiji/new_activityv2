@@ -44,9 +44,16 @@ class WxMaProperties {
      */
     var checkInPage: String? = null
 
+    /**
+     * 微信小程序活动预览Page
+     */
+    var previewPage: String? = null
+
     override fun toString(): String {
         return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE)
     }
+
+
 
 
 }

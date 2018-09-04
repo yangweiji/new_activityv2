@@ -26,17 +26,7 @@
         </div>
       </div>
     </div>
-    <div class="c-footer-btns weui-flex c-border-top" :class="{'fix-iphonex': isIpx}">
-      <div @click="addFavorite()" class="c-default-btn">
-       喜欢<span class="weui-badge">{{item.favorite_count}}</span>
-      </div>
-      <div @click="gotoAttendUsers()" class="c-default-btn">
-        参加<span class="weui-badge">{{item.attend_count}}</span>
-      </div>
-      <div @click="gotoAttend()" class="weui-flex__item c-bg-primary">
-        立即报名
-      </div>
-    </div>
+    
   </div>
 </template>
 
@@ -70,36 +60,6 @@
           });
         })
       },
-      gotoAttend() {
-        wx.navigateTo({
-          url: "../../pages/attend/attend?activityId=" + this.activityId
-        });
-      },
-      gotoAttendUsers() {
-        wx.navigateTo({
-          url: "../../pages/attendusers/attendusers?activityId=" + this.activityId
-        });
-      },
-      addFavorite() {
-        var that = this;
-
-        // this.$kyutil.CheckUserValidation();
-        // var user = this.$kyutil.GetUser();
-        // if (user) {
-        //   this.$kyutil.get("/pub/wx/activity/favorite",{
-        //       activityId: that.activityId,
-        //       userId: user.id
-        //     }).then(res => that.item.favorite_count = res)
-        // }
-
-        this.$kyutil.CheckUserValidation().then(function(res) {
-          var user = that.$kyutil.GetUser();
-          that.$kyutil.get("/pub/wx/activity/favorite",{
-            activityId: that.activityId,
-            userId: user.id
-          }).then(res => that.item.favorite_count = res)
-        });
-      }
     },
     created() {
       this.isIpx = this.$kyutil.data.isIpx
@@ -107,13 +67,14 @@
     onShow() {
       console.log("小程序触发的 onshow, 获取参数: " + this.$root.$mp.query);
       var that = this;
-      that.activityId = this.$root.$mp.query.activityId;
+      //扫码进入接收参数:scene
+      that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
       this.getData();
     },
     onShareAppMessage(res) {
       return {
         title: this.item.title,
-        path: 'pages/details/details?activityId=' + this.activityId
+        path: 'pages/preview/preview?activityId=' + this.activityId
       }
     }
   };

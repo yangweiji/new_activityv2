@@ -24,6 +24,7 @@ export default {
             'pages/myvip/myvip',
             'pages/agreement/agreement',
             'pages/details/details',
+            'pages/preview/preview',
             'pages/articlelist/articlelist',
             'pages/posterlist/posterlist',
             'pages/article/article',
