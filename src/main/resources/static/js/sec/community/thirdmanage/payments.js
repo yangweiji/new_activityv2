@@ -39,16 +39,6 @@ $(function () {
                     text: '检查付款',
                     enabled: false,
                 },
-                // {
-                //     extend: 'refund',
-                //     text: '申请退款',
-                //     enabled: false,
-                // },
-                // {
-                //     extend: 'check',
-                //     text: '检查退款',
-                //     enabled: false,
-                // },
                 {
                     extend: 'excel',
                     text: '导出Excel',
@@ -230,7 +220,7 @@ $(function () {
                 alert("至少选择一项记录！");
                 return;
             }
-            if (confirm("请检查选择的退费人员是否正确，退费操作不可逆，请确定是否继续退费")) {
+            if (confirm("请检查选择的退费人员是否正确，退费操作不可逆，请确定是否继续退费？")) {
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -262,6 +252,7 @@ $(function () {
             }
         }
     };
+
     //检查退款
     $.fn.dataTable.ext.buttons.check = {
         className: '',

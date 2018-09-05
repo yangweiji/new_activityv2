@@ -386,6 +386,7 @@ class ThirdManageController : BaseController() {
     private fun innerRefund(id: Int): Boolean {
         var start = DateUtil.date()
         var order = thirdActivityService!!.getPayOrder(id)
+
         //已完成付款的订单，尚未申请退款的订单处理
         if (order!!.status == 2 && order!!.refundStatus == null) {
             var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)

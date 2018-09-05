@@ -79,16 +79,6 @@
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </navigator>
 
-          <navigator url="/pages/myactivitys/myactivitys?type=5" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
-            <div class="weui-cell__hd">
-              <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
-                </div>
-                  <div class="weui-cell__bd weui-cell_primary">
-                    <div>打卡活动</div>
-                  </div>
-            <div class="weui-cell_integral">{{item.activityCounts[4].counts}}</div>
-          </navigator>
-
           <navigator url="/pages/realinfo/realinfo" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
             <div class="weui-cell__hd">
               <image src="/static/images/real_name.png" style="width: 25px;height: 25px;margin-right: 5px" />
@@ -109,6 +99,16 @@
             <div class="weui-cell__ft weui-cell__ft_in-access"></div>
           </navigator>
 
+          <navigator url="/pages/myactivitys/myactivitys?type=5" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+            <div class="weui-cell__hd">
+              <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
+                </div>
+                  <div class="weui-cell__bd weui-cell_primary">
+                    <div>打卡活动</div>
+                  </div>
+            <div class="weui-cell_integral">{{item.activityCounts[4].counts}}</div>
+          </navigator>
+          
           <div class="line"></div>
 
           <navigator url="/pages/integrals/integrals" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
@@ -131,7 +131,8 @@
             <div class="weui-cell_comment">{{vipText}}</div>
           </navigator>
 
-
+          <div class="line"></div>
+          
         </div>
 
         <!--Footer Begin-->

@@ -69,6 +69,7 @@ class ThirdActivityController : BaseController() {
      */
     @Autowired
     private val communityService: CommunityService? = null
+
     /**
      * 第三方活动管理之
      * 查询活动信息
@@ -238,8 +239,7 @@ class ThirdActivityController : BaseController() {
 
         if (data.activity!!.status == 1) {
             return "redirect:/sec/community/thirdactivity/result?success&type=${data.activity!!.activityType}&id=${data.activity!!.id}"
-        }
-        else  {
+        } else {
             redirectAttributes.addFlashAttribute("globalMessage", "活动已保存成功！")
             return "redirect:/sec/community/thirdactivity/publish?id=${data.activity!!.id}"
         }
@@ -466,11 +466,39 @@ class ThirdActivityController : BaseController() {
     fun approve(@RequestBody ids: Array<Int>): List<ActivityUser> {
         var list = mutableListOf<ActivityUser>()
         for (id in ids) {
-            var activityUser=thirdActivityService!!.getActivityUser(id)
-            var activity=thirdActivityService!!.getActivity(activityUser!!.activityId)
-            if(activity!!.activityType==3){
+            var activityUser = thirdActivityService!!.getActivityUser(id)
+            var activity = thirdActivityService!!.getActivity(activityUser!!.activityId)
+
+            //如果活动类型是抽签活动：activityType = 3，则更新报名状态为【中签】
+            //并且报名状态不是【已申请退款】和【已完成退款】
+            if (activity!!.activityType == 3 && (activityUser!!.status != 3 && activityUser!!.status != 4)) {
                 //更新报名状态值
                 thirdActivityService!!.updateActivityUserStatus(id, 2)
+                list.add(thirdActivityService!!.getActivityUser(id))
+            }
+        }
+
+        return list
+    }
+
+    /**
+     * 取消中签处理
+     * @param ids: 报名ID数组
+     * @return 报名列表信息
+     */
+    @RequestMapping(value = "/cancel", method = [RequestMethod.POST])
+    @ResponseBody
+    fun cancel(@RequestBody ids: Array<Int>): List<ActivityUser> {
+        var list = mutableListOf<ActivityUser>()
+        for (id in ids) {
+            var activityUser = thirdActivityService!!.getActivityUser(id)
+            var activity = thirdActivityService!!.getActivity(activityUser!!.activityId)
+
+            //如果活动类型是抽签活动：activityType = 3，则更新报名状态为【待抽签】
+            //并且报名状态不是【已申请退款】和【已完成退款】
+            if (activity!!.activityType == 3 && (activityUser!!.status != 3 && activityUser!!.status != 4)) {
+                //更新报名状态值
+                thirdActivityService!!.updateActivityUserStatus(id, 1)
                 list.add(thirdActivityService!!.getActivityUser(id))
             }
         }
@@ -511,8 +539,9 @@ class ThirdActivityController : BaseController() {
     fun innerRefund(id: Int): Boolean {
         var start = DateUtil.date()
         var order = thirdActivityService!!.getActivityUserOrder(id)
-        //更新报名状态值
-        if (order != null) {
+
+        //已完成付款的订单，尚未申请退款的订单处理
+        if (order != null && order!!.status == 2 && order.refundStatus == null) {
             var refundOutTradeNo = "D${start.toString("yyyyMMddHHmmss")}" + String.format("%08d", order.id)
 
             var refundRequest = WxPayRefundRequest()
@@ -546,9 +575,10 @@ class ThirdActivityController : BaseController() {
      */
     @Transactional
     fun innerCheckRefund(id: Int): Boolean {
-
         var order = thirdActivityService!!.getActivityUserOrder(id, 2, 1)
-        if (order != null) {
+
+        //已申请退款的订单处理
+        if (order != null && order!!.status == 2 && order!!.refundStatus == 1) {
             var refundOutTradeNo = order.refundTradeNo
             var result = wxService!!.payService!!.refundQuery(null, null, refundOutTradeNo, null)
             if (result.resultCode == "SUCCESS") {
@@ -593,9 +623,7 @@ class ThirdActivityController : BaseController() {
             var rs: WxPayOrderQueryResult?
             try {
                 rs = wxService!!.payService!!.queryOrder(null, tradeNo)
-            }
-            catch (e: WxPayException)
-            {
+            } catch (e: WxPayException) {
                 LogUtil.printLog("查询订单异常: $e")
                 return false
             }
@@ -623,11 +651,10 @@ class ThirdActivityController : BaseController() {
                         activityUser.realName = map["realName"]
                         activityUser.mobile = map["mobile"]
                         activityUser.otherInfo = map["otherInfo"]
-                        activityUser.price =  map["price"] as BigDecimal
+                        activityUser.price = map["price"] as BigDecimal
                         activityUser.score = map["score"] as Int
                         thirdActivityService!!.insertActivityUser(activityUser)
                         LogUtil.printLog("补充用户报名记录：$otherInfo")
-
 
                         //更新订单付款状态和付款时间
                         order.status = 2
@@ -638,8 +665,7 @@ class ThirdActivityController : BaseController() {
                     } else {
                         LogUtil.printLog("用户报名记录已存在：$otherInfo")
                     }
-                }
-                else {
+                } else {
 
                     //升级成员马协会员
                     var user = userService!!.getUser(order.userId)
@@ -655,28 +681,6 @@ class ThirdActivityController : BaseController() {
             }
         }
         return false
-    }
-
-    /**
-     * 取消中签处理
-     * @param ids: 报名ID数组
-     * @return 报名列表信息
-     */
-    @RequestMapping(value = "/cancel", method = [RequestMethod.POST])
-    @ResponseBody
-    fun cancel(@RequestBody ids: Array<Int>): List<ActivityUser> {
-        var list = mutableListOf<ActivityUser>()
-        for (id in ids) {
-            var activityUser=thirdActivityService!!.getActivityUser(id)
-            var activity=thirdActivityService!!.getActivity(activityUser!!.activityId)
-            if(activity!!.activityType==3){
-                //更新报名状态值
-                thirdActivityService!!.updateActivityUserStatus(id, 1)
-                list.add(thirdActivityService!!.getActivityUser(id))
-            }
-        }
-
-        return list
     }
 
     /**
@@ -703,20 +707,17 @@ class ThirdActivityController : BaseController() {
             //直接删除报名记录
             thirdActivityService!!.deleteActivityUser(id)
             return true
-        }
-        else {
+        } else {
             if (order!!.refundStatus == 1) {
                 //已申请退款，但是未完成退款，不可删除
                 LogUtil.printLog("报名记录已申请退款，但是未完成退款，不可删除！报名ID: $id")
                 return false
-            }
-            else if (order!!.refundStatus == 2) {
+            } else if (order!!.refundStatus == 2) {
                 //已完成退款
                 //直接删除报名记录
                 thirdActivityService!!.deleteActivityUser(id)
                 return true
-            }
-            else {
+            } else {
                 if (this.innerRefund(id) && this.innerCheckRefund(id)) {
                     //先退款、后删除报名记录
                     thirdActivityService!!.deleteActivityUser(id)
