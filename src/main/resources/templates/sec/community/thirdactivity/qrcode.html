@@ -58,21 +58,23 @@
                 </div>
 
                 <div class="am-g qr_code">
-                    <div class="am-u-sm-6">
-                        <img th:src="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/><br>
+                    <div class="am-u-sm-4">
+                        <img th:src="@{/pub/activity/previewqrcode/{id}(id=${activity.get('id')})}" alt="活动预览二维码"/><br>
+                        <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/previewqrcode/{id}(id=${activity.get('id')})}">下载预览二维码</a>
+                    </div>
+
+                    <div class="am-u-sm-4">
+                        <img th:src="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}" alt="活动报名二维码"/><br>
                         <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/attendqrcode/{id}(id=${activity.get('id')})}">下载报名二维码</a>
                     </div>
-                    <div class="am-u-sm-6">
-                        <img th:src="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/><br>
+
+                    <div class="am-u-sm-4">
+                        <img th:src="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}" alt="活动签到二维码"/><br>
                         <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/checkinqrcode/{id}(id=${activity.get('id')})}">下载签到二维码</a>
                     </div>
                 </div>
 
                 <div class="am-g qr_code">
-                    <div class="am-u-sm-6">
-                        <img th:src="@{/pub/activity/previewqrcode/{id}(id=${activity.get('id')})}" alt="二维码"/><br>
-                        <a class="am-btn am-btn-secondary" th:href="@{/pub/activity/previewqrcode/{id}(id=${activity.get('id')})}">下载预览二维码</a>
-                    </div>
                     <div class="am-u-sm-6">
                     </div>
                 </div>

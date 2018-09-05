@@ -472,4 +472,26 @@ class UserService {
 
         return false
     }
+
+
+    /**
+     * 检查平台管理员角色
+     * @param user: 当前用户信息
+     * @return
+     */
+    fun checkMangerRole(user: User): Boolean {
+        return (user.role == "管理员")
+    }
+
+    /**
+     * 检查平台发布者角色
+     * @param user: 当前用户信息
+     * @return
+     */
+    fun checkPublishRole(user: User): Boolean {
+        return (user.role == "发布者")
+    }
+
+
+
 }

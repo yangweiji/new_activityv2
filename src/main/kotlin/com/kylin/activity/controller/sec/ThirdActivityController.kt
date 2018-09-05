@@ -129,10 +129,17 @@ class ThirdActivityController : BaseController() {
      * @return 发布或编辑活动视图页面
      */
     @RequestMapping("/publish", method = [RequestMethod.GET])
-    fun publish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model): String {
+    fun publish(@RequestParam(required = false) id: Int?, @RequestParam(required = false) type: Int?, model: Model, redirectAttributes: RedirectAttributes): String {
 
         var data = ThirdActivityPublishData()
         if (id != null && id > 0) {
+            //编辑活动
+            //Todo:编辑活动时需要验证用户权限
+            if (!thirdActivityService!!.checkPermission(id, this.sessionUser!!)) {
+                redirectAttributes.addFlashAttribute("errorMessage", "拒绝访问，操作无权限！")
+                return "redirect:/sec/community/thirdactivity/error"
+            }
+
             data.activity = thirdActivityService!!.getActivity(id)
             data.tickets = thirdActivityService!!.getActivityTickets(id)
             val mapper = jacksonObjectMapper()
@@ -145,6 +152,12 @@ class ThirdActivityController : BaseController() {
                 data.scoreInfos = ActivityScoreInfo()
             }
         } else {
+            //Todo:创建活动需要验证用户权限
+            if (!thirdActivityService!!.checkPublishRole(this.sessionUser!!)) {
+                redirectAttributes.addFlashAttribute("errorMessage", "拒绝访问，操作无权限！")
+                return "redirect:/sec/community/thirdactivity/error"
+            }
+
             data.activityType = type!!
             data.activity = Activity()
             data.activity!!.activityType = data.activityType
@@ -292,6 +305,18 @@ class ThirdActivityController : BaseController() {
     fun result(): String {
         return "sec/community/thirdactivity/result"
     }
+
+    /**
+     * 跳转到错误提示页面
+     */
+    @GetMapping("/error")
+    fun error(model: Model, request: HttpServletRequest): String {
+        var message = request.getParameter("message")
+
+        model.addAttribute("message", message)
+        return "sec/community/thirdactivity/error"
+    }
+
 
     /**
      * 第三方最新活动签到二维码

@@ -46,6 +46,16 @@
                     </div>
                 </div>
 
+                <div class="am-g">
+                    <div class="am-alert am-alert-secondary" data-am-alert th:if="${data.activity.status != 1 && data.activity.id > 0}">
+                        <button type="button" class="am-close">&times;</button>
+                        <p style="text-align: center">
+                            <img style="width:160px" th:src="@{/pub/activity/previewqrcode/{id}(id=${data.activity.id})}" alt="微信扫二维码"/><br>
+                            <span>微信扫二维码，预览活动详情</span>
+                        </p>
+                    </div>
+                </div>
+
                 <div class="am-form-group">
                     <label for="activity_title" class="am-u-sm-2 am-form-label"><span th:text="${typeName}"></span>主题</label>
                     <div class="am-u-sm-10">

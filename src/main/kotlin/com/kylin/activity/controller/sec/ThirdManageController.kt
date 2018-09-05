@@ -270,8 +270,14 @@ class ThirdManageController : BaseController() {
             calendar = GregorianCalendar()
             end = sdf.format(calendar.time)
         }
+
+        var status = request.getParameter("status")
+        if (status.isNullOrBlank()) {
+            status = "2" //完成付款
+        }
         model.addAttribute("start", start)
         model.addAttribute("end", end)
+        model.addAttribute("status", status)
 
         return "sec/community/thirdmanage/payments"
     }
@@ -287,16 +293,20 @@ class ThirdManageController : BaseController() {
     fun getPayments(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var start = map["start"]
         var end = map["end"]
+        var activityId = map["activityId"]
         var title = map["title"]
         var username = map["username"]
         var real_name = map["real_name"]
+        var mobile = map["mobile"]
+        var ticket_title = map["ticket_title"]
+
         var extenal_id = map["extenal_id"]
         var status = map["status"]
         var refund_trade_no = map["refund_trade_no"]
         var refund_status = map["refund_status"]
 
-        //取得活动积分明细
-        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name, extenal_id, status, refund_trade_no, refund_status, this.sessionCommunity.id)
+        //取得订单信息
+        var items = oderService!!.getUserActivityPayments(start, end, activityId, title, username, real_name, mobile, ticket_title, extenal_id, status, refund_trade_no, refund_status, this.sessionCommunity.id)
         return items.intoMaps()
     }
 

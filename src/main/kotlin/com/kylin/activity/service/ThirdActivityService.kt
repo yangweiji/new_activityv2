@@ -5,10 +5,7 @@ import com.kylin.activity.databases.tables.daos.ActivityDao
 import com.kylin.activity.databases.tables.daos.ActivityTicketDao
 import com.kylin.activity.databases.tables.daos.ActivityUserDao
 import com.kylin.activity.databases.tables.daos.PayOrderDao
-import com.kylin.activity.databases.tables.pojos.Activity
-import com.kylin.activity.databases.tables.pojos.ActivityTicket
-import com.kylin.activity.databases.tables.pojos.ActivityUser
-import com.kylin.activity.databases.tables.pojos.PayOrder
+import com.kylin.activity.databases.tables.pojos.*
 import org.jooq.DSLContext
 import org.jooq.Record
 import org.jooq.Result
@@ -54,6 +51,9 @@ class ThirdActivityService {
      */
     @Autowired
     private val create: DSLContext? = null
+
+    @Autowired
+    private val communityService: CommunityService? = null
 
     /**
      * 团体切换传参id，绑定status
@@ -642,5 +642,52 @@ class ThirdActivityService {
         sql = sql.replace("{5}", strCondition)
 
         return create!!.resultQuery(sql, id).fetch()
+    }
+
+    /**
+     * 针对平台用户检查编辑活动权限，避免跨团体组织编辑活动信息
+     * @param activityId: 活动编号
+     * @param user: 当前用户信息
+     * @return
+     */
+    fun checkPermission(activityId: Int, user: User): Boolean {
+        var has = false
+        //取得活动信息
+        var activity = this.getActivity(activityId)
+        if (user.role == "管理员") {
+            return true
+        }
+
+        //检查是否是团体管理员或团体发布者
+        var communityUser = communityService!!.getCommunityUser(user.id, activity!!.communityId)
+        if (communityUser != null && !communityUser!!.isBlack)
+        {
+            if (communityUser!!.role == "管理员" || communityUser!!.role == "发布者") {
+                has = true
+            }
+        }
+
+        return has
+    }
+
+    /**
+     * 检查是否具备对应的角色（平台管理员、团体管理员或团体发布者）
+     * @param user: 当前用户信息
+     * @return
+     */
+    fun checkPublishRole(user: User): Boolean {
+        var has = false
+        if (user.role == "管理员") {
+            return true
+        }
+
+        //团体管理员或发布者
+        var communityUser = communityService!!.getCommunityAdminUser(user.id)
+        if (communityUser != null)
+        {
+            has = true
+        }
+
+        return has
     }
 }

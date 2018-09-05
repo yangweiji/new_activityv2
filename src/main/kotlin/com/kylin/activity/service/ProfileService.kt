@@ -7,7 +7,6 @@ import org.jooq.Record
 import org.jooq.Result
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.math.BigInteger
 
 /*data class InfoData(
         var counts:Int=0
@@ -43,22 +42,22 @@ class ProfileService {
      * @param userId 用户编号
      * @param communityId 团体编号
      */
-    fun getPersonalInfoCounts(userId: Int?,communityId: Int?):Result<Record>{
-         val sql="select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? \n" +
-                 "union all\n" +
-                 "select count(t1.activity_id) counts from activity_user t1 inner join \n" +
-                 "activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=?\n" +
-                 "and t2.end_time > now()\n" +
-                 "and t1.check_in_time is null\n"+
-                 "union all\n" +
-                 "select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id  \n" +
-                 "and t1.user_id=? and t2.community_id=?  and check_in_time is not null \n" +
-                 "union all\n" +
-                 "select count(activity_id) counts from activity_favorite t1 inner join activity t2 on t1.activity_id=t2.id  and t1.user_id=? and t2.community_id=? \n"+
-                 "union all\n" +
-                 "select count(t1.activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? and t2.end_time > now() and t2.activity_type=4"
-       return create!!.resultQuery(sql,userId,communityId,userId,communityId,userId,
-                communityId,userId,communityId,userId,communityId,userId,communityId).fetch()
+    fun getPersonalInfoCounts(userId: Int?, communityId: Int?): Result<Record> {
+        val sql = "select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? \n" +
+                "union all\n" +
+                "select count(t1.activity_id) counts from activity_user t1 inner join \n" +
+                "activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=?\n" +
+                "and t2.end_time > now()\n" +
+                "and t1.check_in_time is null\n" +
+                "union all\n" +
+                "select count(activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id  \n" +
+                "and t1.user_id=? and t2.community_id=?  and check_in_time is not null \n" +
+                "union all\n" +
+                "select count(activity_id) counts from activity_favorite t1 inner join activity t2 on t1.activity_id=t2.id  and t1.user_id=? and t2.community_id=? \n" +
+                "union all\n" +
+                "select count(t1.activity_id) counts from activity_user t1 inner join activity t2 on t1.activity_id=t2.id and t1.user_id=? and t2.community_id=? and t2.activity_type=4"
+        return create!!.resultQuery(sql, userId, communityId, userId, communityId, userId,
+                communityId, userId, communityId, userId, communityId, userId, communityId).fetch()
 
     }
 
@@ -89,67 +88,72 @@ class ProfileService {
      * @param userId 用户id
      * @param communityId 团体id
      */
-    fun myActivities(type: Int?,userId:Int?,communityId: Int?): Result<Record> {
-        var activitySql =   "select\n" +
-                            "t1.id, \n" +
-                            "t1.title,\n" +
-                            "t1.community_id,\n" +
-                            "t1.start_time, \n" +
-                            "t1.end_time,\n" +
-                            "t1.avatar, \n" +
-                            "t1.activity_type,\n" +
-                            "t2.attend_count,\n" +
-                            "t3.favorite_count\n" +
-                            "from activity as t1\n" +
-                            "left  join \n" +
-                            "(select\n" +
-                            "activity_user.activity_id, \n" +
-                            "ifnull(count(activity_user.id), 0) as attend_count\n" +
-                            "from activity_user \n" +
-                            "group by activity_user.activity_id\n" +
-                            ") as t2\n" +
-                            "on t1.id = t2.activity_id \n" +
-                            "left join(\n" +
-                            "select \n" +
-                            "activity_favorite.activity_id,\n" +
-                            "ifnull(count(activity_favorite.id), 0) as favorite_count\n" +
-                            "from activity_favorite \n" +
-                            "group by activity_favorite.activity_id\n" +
-                            ") as t3 on t1.id=t3.activity_id\n" +
-                            "where t1.public = true\n" +
-                            "order by t1.start_time desc"
+    fun myActivities(type: Int?, userId: Int?, communityId: Int?): Result<Record> {
+        var activitySql = "select\n" +
+                "t1.id, \n" +
+                "t1.title,\n" +
+                "t1.community_id,\n" +
+                "t1.start_time, \n" +
+                "t1.end_time,\n" +
+                "t1.avatar, \n" +
+                "t1.activity_type,\n" +
+                "t2.attend_count,\n" +
+                "t3.favorite_count\n" +
+                "from activity as t1\n" +
+                "left  join \n" +
+                "(select\n" +
+                "activity_user.activity_id, \n" +
+                "ifnull(count(activity_user.id), 0) as attend_count\n" +
+                "from activity_user \n" +
+                "group by activity_user.activity_id\n" +
+                ") as t2\n" +
+                "on t1.id = t2.activity_id \n" +
+                "left join(\n" +
+                "select \n" +
+                "activity_favorite.activity_id,\n" +
+                "ifnull(count(activity_favorite.id), 0) as favorite_count\n" +
+                "from activity_favorite \n" +
+                "group by activity_favorite.activity_id\n" +
+                ") as t3 on t1.id=t3.activity_id\n" +
+                "where t1.public = true\n" +
+                "order by t1.start_time desc"
         var sql = if (type == 1) {
             //已参加活动数
             "select t.* from ($activitySql) t inner join activity_user t4 " +
-                    "on t.id=t4.activity_id \n"+
-                    "and t4.user_id=?\n"+
-                    "and t.community_id=?"
+                    "on t.id=t4.activity_id \n" +
+                    "and t4.user_id=?\n" +
+                    "and t.community_id=?\n" +
+                    "order by t.start_time desc"
         } else if (type == 4) {
             //收藏活动数
             "select t.* from ($activitySql) t inner join activity_favorite t4 " +
                     "on t.id=t4.activity_id \n" +
-                    "and t4.user_id=?\n"+
-                    "and t.community_id=?"
+                    "and t4.user_id=?\n" +
+                    "and t.community_id=?\n" +
+                    "order by t.start_time desc"
         } else if (type == 2) {
             //需签到活动数
             "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
-                    "and t4.check_in_time is null and t.end_time > now()\n "+
+                    "and t4.check_in_time is null and t.end_time > now()\n " +
                     "and t4.user_id=?\n" +
-                    "and t.community_id=?"
-        } else if(type==3){
+                    "and t.community_id=?\n" +
+                    "order by t.start_time desc"
+        } else if (type == 3) {
             //已签到活动数
             "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
-                    "and t4.check_in_time is not null\n"+
+                    "and t4.check_in_time is not null\n" +
                     "and t4.user_id=?\n" +
-                    "and t.community_id=?"
-        }else{
+                    "and t.community_id=?\n" +
+                    "order by t.start_time desc"
+        } else {
             //需打卡活动数
             "select t.* from ($activitySql) t inner join activity_user t4 on t.id=t4.activity_id\n" +
-                    "and t.activity_type=4 and t.end_time > now()\n"+
+                    "and t.activity_type=4\n" +
                     "and t4.user_id=?\n" +
-                    "and t.community_id=?"
+                    "and t.community_id=?\n" +
+                    "order by t.start_time desc"
         }
-        return create!!.resultQuery(sql,userId,communityId).fetch()
+        return create!!.resultQuery(sql, userId, communityId).fetch()
 
     }
 }
