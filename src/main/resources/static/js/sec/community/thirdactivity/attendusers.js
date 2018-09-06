@@ -39,26 +39,25 @@ $(function () {
     var t = $('#bmTable')
         .on('init.dt', function () {
             // $('#bmBody').show();
-            // 报名管理：申请退款和检查退款均通过订单管理实现，不在报名管理中体现
-            // //检查当前团体是否可以在线退款，如果有则添加操作按钮
-            // if (g_community_context.canRefund) {
-            //     t.button().add(3, {
-            //         extend: 'refund',
-            //         text: '申请退款',
-            //         enabled: false,
-            //         // action: function ( e, dt, button, config ) {
-            //         //     dt.ajax.reload();
-            //         // },
-            //     });
-            //     t.button().add(4, {
-            //         extend: 'check',
-            //         text: '检查退款',
-            //         enabled: false,
-            //         // action: function ( e, dt, button, config ) {
-            //         //     dt.ajax.reload();
-            //         // },
-            //     });
-            // }
+            //检查当前团体是否可以在线退款，如果有则添加操作按钮
+            if (g_community_context.canRefund) {
+                t.button().add(3, {
+                    extend: 'refund',
+                    text: '申请退款',
+                    enabled: false,
+                    // action: function ( e, dt, button, config ) {
+                    //     dt.ajax.reload();
+                    // },
+                });
+                t.button().add(4, {
+                    extend: 'check',
+                    text: '检查退款',
+                    enabled: false,
+                    // action: function ( e, dt, button, config ) {
+                    //     dt.ajax.reload();
+                    // },
+                });
+            }
         })
         .on('preXhr.dt', function (e, settings, data) {
             Util.loading(true);
@@ -222,7 +221,7 @@ $(function () {
                 return;
             }
 
-            if (window.confirm("提示：【已申请退款】、【已完成退款】状态的用户报名记录无法进行中签操作，请确认？")) {
+            if (window.confirm("提示：【不抽签】、【已申请退款】、【已完成退款】状态的用户报名记录无法进行中签操作，请确认？")) {
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -275,7 +274,7 @@ $(function () {
                 return;
             }
 
-            if (window.confirm("提示：【已申请退款】、【已完成退款】状态的用户报名记录无法进行取消中签操作，请确认？")) {
+            if (window.confirm("提示：【不抽签】、【已申请退款】、【已完成退款】状态的用户报名记录无法进行取消中签操作，请确认？")) {
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -313,102 +312,6 @@ $(function () {
             }
         }
     };
-
-    // //申请退款
-    // $.fn.dataTable.ext.buttons.refund = {
-    //     className: '',
-    //     action: function (e, dt, node, config) {
-    //         var d = [];
-    //         $('.childcheck:checked').each(function () {
-    //             d.push($(this).val());
-    //         });
-    //
-    //         if (d.length == 0) {
-    //             alert("至少选择一项记录！");
-    //             return;
-    //         }
-    //         if (confirm("请检查选择的退费人员是否正确，退费操作不可逆，请确定是否继续退费")) {
-    //             $.ajax({
-    //                 cache: true,
-    //                 type: "POST",
-    //                 url: '/sec/community/thirdactivity/refund',
-    //                 data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
-    //                 contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
-    //                 dataType: "json",
-    //                 async: false,
-    //                 beforeSend: function () {
-    //                     // 禁用按钮防止重复提交
-    //                     t.button(3).enable(false);
-    //                     Util.loading(true);
-    //                 },
-    //                 success: function (data) {
-    //                     if (data) {
-    //                         alert("申请退款成功" + data + "人，请稍后检查退款是否成功");
-    //                         //location.reload();
-    //                         t.ajax.reload();
-    //                     }
-    //                 },
-    //                 complete: function () {
-    //                     $("#all_checked").prop("checked", false);
-    //                     t.button(3).enable(true);
-    //                     Util.loading(false);
-    //                 },
-    //                 error: function (data) {
-    //                     console.info("error: " + data.responseText);
-    //                 }
-    //             });
-    //         }
-    //     }
-    // };
-    //
-    // //检查退款
-    // $.fn.dataTable.ext.buttons.check = {
-    //     className: '',
-    //     action: function (e, dt, node, config) {
-    //         var d = [];
-    //         $('.childcheck:checked').each(function () {
-    //             d.push($(this).val());
-    //         });
-    //
-    //         if (d.length == 0) {
-    //             alert("至少选择一项记录！");
-    //             return;
-    //         }
-    //
-    //         $.ajax({
-    //             cache: true,
-    //             type: "POST",
-    //             url: '/sec/community/thirdactivity/checkrefund',
-    //             data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
-    //             contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
-    //             dataType: "json",
-    //             async: false,
-    //             beforeSend: function () {
-    //                 // 禁用按钮防止重复提交
-    //                 t.button(4).enable(false);
-    //                 Util.loading(true);
-    //             },
-    //             success: function (data) {
-    //                 $("#all_checked").prop("checked", false);
-    //                 if (data) {
-    //                     alert("检查退款成功" + data + "人");
-    //                     //location.reload();
-    //                     t.ajax.reload();
-    //                 }
-    //
-    //                 Util.loading(false);
-    //             },
-    //             complete: function () {
-    //                 $("#all_checked").prop("checked", false);
-    //                 t.button(4).enable(true);
-    //                 Util.loading(false);
-    //             },
-    //             error: function (data) {
-    //                 console.info("error: " + data.responseText);
-    //             }
-    //         });
-    //     }
-    // };
 
     /***
      * 删除报名记录
@@ -466,6 +369,104 @@ $(function () {
         }
     };
 
+    //申请退款
+    $.fn.dataTable.ext.buttons.refund = {
+        className: '',
+        action: function (e, dt, node, config) {
+            var d = [];
+            $('.childcheck:checked').each(function () {
+                d.push($(this).val());
+            });
+
+            if (d.length == 0) {
+                alert("至少选择一项记录！");
+                return;
+            }
+            if (confirm("请检查选择的退费人员是否正确，退费操作不可逆，请确定是否继续退费")) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: '/sec/community/thirdactivity/refund',
+                    data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
+                    contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
+                    dataType: "json",
+                    async: false,
+                    beforeSend: function () {
+                        // 禁用按钮防止重复提交
+                        t.button(3).enable(false);
+                        Util.loading(true);
+                    },
+                    success: function (data) {
+                        if (data) {
+                            alert("申请退款成功" + data + "人，请稍后检查退款是否成功");
+                            //location.reload();
+                            t.ajax.reload();
+                        }
+                    },
+                    complete: function () {
+                        $("#all_checked").prop("checked", false);
+                        t.button(3).enable(true);
+                        Util.loading(false);
+                    },
+                    error: function (data) {
+                        console.info("error: " + data.responseText);
+                    }
+                });
+            }
+        }
+    };
+
+    //检查退款
+    $.fn.dataTable.ext.buttons.check = {
+        className: '',
+        action: function (e, dt, node, config) {
+            var d = [];
+            $('.childcheck:checked').each(function () {
+                d.push($(this).val());
+            });
+
+            if (d.length == 0) {
+                alert("至少选择一项记录！");
+                return;
+            }
+
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: '/sec/community/thirdactivity/checkrefund',
+                data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
+                contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
+                dataType: "json",
+                async: false,
+                beforeSend: function () {
+                    // 禁用按钮防止重复提交
+                    t.button(4).enable(false);
+                    Util.loading(true);
+                },
+                success: function (data) {
+                    $("#all_checked").prop("checked", false);
+                    if (data) {
+                        alert("检查退款成功" + data + "人");
+                        //location.reload();
+                        t.ajax.reload();
+                    }
+
+                    Util.loading(false);
+                },
+                complete: function () {
+                    $("#all_checked").prop("checked", false);
+                    t.button(4).enable(true);
+                    Util.loading(false);
+                },
+                error: function (data) {
+                    console.info("error: " + data.responseText);
+                }
+            });
+        }
+    };
+
+
+
     //JQuery DataTables HTML (DOM) sourced data
     var t1 = $('#statTable').DataTable({
         language: {
@@ -509,8 +510,8 @@ $(function () {
         t.button(0).enable(check === true);
         t.button(1).enable(check === true);
         t.button(2).enable(check === true);
-        // t.button(3).enable(check === true);
-        // t.button(4).enable(check === true);
+        t.button(3).enable(check === true);
+        t.button(4).enable(check === true);
     });
 
     /**
@@ -525,8 +526,8 @@ $(function () {
         t.button(0).enable(d.length > 0);
         t.button(1).enable(d.length > 0);
         t.button(2).enable(d.length > 0);
-        // t.button(3).enable(d.length > 0);
-        // t.button(4).enable(d.length > 0);
+        t.button(3).enable(d.length > 0);
+        t.button(4).enable(d.length > 0);
     });
 });
 
