@@ -2,15 +2,26 @@
   <div class="page">
     <div v-if="item" class="page__bd">
       <activity :item="item.activity"></activity>
+      <div class="weui-cells weui-cells_after-title">
+          <div class="weui-cell weui-cell_input">
+            <div class="weui-cell__hd">
+              <div class="weui-label">结束时间</div>
+            </div>
+            <div class="weui-cell__bd" style="text-align:right;">
+              <span>{{item.activity.end_time}}</span>
+            </div>
+          </div>
+        </div>
+
       <div class="weui-cells__title" >
         <h1 class="c-title-text" v-if="item.isOverdue">
-          报名截止时间已过
+            已超过活动结束时间，无法签到
         </h1>
         <h1 class="c-title-text" v-else-if="!item.checkInUserId">
           您未报名
         </h1>
         <h1 class="c-title-text" v-else-if="item.activity.activity_type == 3 && item.zqStatus != 2  ">
-          未中签，不能签到
+          未中签，无法签到
         </h1>
         <h1 class="c-title-text" v-else-if="!item.is_CheckInTimeNow">
           您已签到
@@ -20,8 +31,8 @@
         </h1>
       </div>
       <div class="weui-cells__title c-text-center">
-        <h1>
-          当前签到人数
+        <h1 style="font-size:20px;">
+          已签到人数
           <div class="c-text-primary c-checkin-num">
             <span>{{item.checkInCount}}</span>
           </div>
@@ -79,7 +90,7 @@
         }
         this.$kyutil.get("/pub/wx/activity/checkin",param).then(res=>{
           that.item = res;
-            that.loaded = true;
+          that.loaded = true;
         })
       }
     },
@@ -98,6 +109,26 @@
           var user = that.$kyutil.GetUser();
           that.userId = user.id;
           that.getData();
+
+          // wx.showModal({
+          //   title: '活动签到',
+          //   content: '感谢您参与此次活动，请点击【确定】完成活动报名签到！',
+          //   confirmText: "确定",
+          //   cancelText: "取消",
+          //   success: function (res) {
+          //     // console.log(res);
+          //     if (res.confirm) {
+          //       that.getData();
+          //     } else {
+          //       wx.switchTab({
+          //         url:"../../pages/index/index",
+          //         success: function (e) {
+          //           console.log("登录成功，转向首页")
+          //         }
+          //       }); 
+          //     }
+          //   }
+          // });
       });
     },
   }

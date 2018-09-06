@@ -141,12 +141,13 @@ class ThirdManageController : BaseController() {
     fun getScores(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var start = map["start"]
         var end = map["end"]
+        var activityId = map["activityId"]
         var title = map["title"]
         var username = map["username"]
         var real_name = map["real_name"]
 
         //取得活动积分明细
-        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name, this.sessionCommunity.id)
+        var items = scoreService!!.getUserActivityScores(start, end, activityId, title, username, real_name, this.sessionCommunity.id)
         return items.intoMaps()
     }
 

@@ -17,6 +17,7 @@ import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.util.*
 
 /**
  * 活动服务
@@ -449,7 +450,7 @@ class ActivityService {
         map["picture_count"] = activity.get("picture_count", Int::class.java)
         map["avatar"] = avatar
         map["start_time"] = util!!.fromNow(activity.get("start_time"))
-
+        map["end_time"] = activity.get("end_time", Date::class.java)
         map["title"] = activity.get("title").toString()
         return map
     }
@@ -524,11 +525,14 @@ class ActivityService {
      */
     @Cacheable()
     fun getAllActivityUserItems(start: String?, end: String?, title: String?, tags: String?, status: String?, communityname: String?): Result<Record> {
-        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar, t3.name, " +
-                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count, " +
-                "(select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
-                "from activity t1 left join user t2 on t1.created_by = t2.id " +
-                "left join community t3 on t1.community_id=t3.id " +
+        var sql = "select t1.*, t2.displayname, t2.avatar user_avatar, t4.name" +
+                ", t3.displayname as modifiedbyname " +
+                ", (select count(*) from activity_user where activity_id = t1.id) attend_user_count" +
+                ", (select count(*) from activity_user where activity_id = t1.id and check_in_time is not null) check_user_count " +
+                "from activity t1 " +
+                "left join user t2 on t1.created_by = t2.id " +
+                "left join user t3 on t1.modified_by = t3.id " +
+                "left join community t4 on t1.community_id=t4.id " +
                 "where 1=1 {0} {1} {2} {3} {4} ?  " +
                 "order by t1.start_time desc "
         var strCondition = ""
@@ -567,7 +571,7 @@ class ActivityService {
 
         //团体名称
         if (!communityname.isNullOrBlank()) {
-            strCondition += "and t3.name like '%?%' ".replace("?", communityname!!)
+            strCondition += "and t4.name like '%?%' ".replace("?", communityname!!)
         }
         sql = sql.replace("?", strCondition)
 

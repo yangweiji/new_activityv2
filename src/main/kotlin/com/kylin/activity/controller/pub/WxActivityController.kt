@@ -20,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 import java.util.*
 import javax.servlet.http.HttpServletRequest
+import java.util.Calendar
+
+
 
 /**
  * 微信活动相关控制器
@@ -122,9 +125,9 @@ class WxActivityController {
     @GetMapping("/attendusers")
     fun getAttendusers(@RequestParam(required = false) activityId: Int): Any {
         //活动详情信息
-        var tickets =activityService!!.getActivityTickets(activityId)
+        var tickets = activityService!!.getActivityTickets(activityId)
         var users = activityService!!.getAttendUsers(activityId)
-        return mapOf( "tickets" to tickets, "users" to users )
+        return mapOf("tickets" to tickets, "users" to users)
     }
 
     /**
@@ -171,18 +174,18 @@ class WxActivityController {
         //自动填充报名信息
         var attendInfos = mapper.readValue<List<ActivityAttendInfo>>(currentActivity.get("attend_infos", String::class.java))
 
-        for(attendInfo in attendInfos){
+        for (attendInfo in attendInfos) {
             attendInfo.value = when {
                 attendInfo.title == "昵称" -> user.displayname
                 attendInfo.title == "邮件" -> user.email
-                attendInfo.title == "性别" -> if(user.gender == 2) "女" else "男"
+                attendInfo.title == "性别" -> if (user.gender == 2) "女" else "男"
                 attendInfo.title == "血型" -> user.bloodType
                 attendInfo.title == "T恤尺寸" -> user.clothingSize
                 attendInfo.title == "工作单位" -> user.workCompany
                 attendInfo.title == "职业" -> user.occupation
                 attendInfo.title == "紧急联系人姓名" -> user.emergencyContactName
                 attendInfo.title == "紧急联系人电话" -> user.emergencyContactMobile
-                attendInfo.title == "是否党员" -> if(user.isParty != null && user.isParty) "党员" else "群众"
+                attendInfo.title == "是否党员" -> if (user.isParty != null && user.isParty) "党员" else "群众"
                 attendInfo.title == "家庭地址" -> user.address
                 attendInfo.title == "微信号" -> user.wechatId
                 attendInfo.title == "身份证号" -> user.idCard
@@ -505,10 +508,13 @@ class WxActivityController {
     fun getCheckIn(request: HttpServletRequest, @RequestParam(required = true) activityId: Int, @RequestParam(required = true) userId: Int): Any {
 
         val result = mutableMapOf<String, Any?>()
-
-
-        var activitySql = "select t1.*, t2.user_id , t2.check_in_time, t2.status as zqStatus, ifnull(t3.score, 0) check_in_score from activity t1 left join activity_user t2 on t1.id = t2.activity_id and t2.user_id = ? left join score_history t3 on t3.activity_id = t1.id and t3.user_id =?  where t1.id=?"
-
+        var activitySql = "select t1.*, t2.user_id , t2.check_in_time, t2.status as zqStatus, ifnull(t3.score, 0) check_in_score " +
+                "from activity t1 " +
+                "left join activity_user t2 " +
+                "on t1.id = t2.activity_id and t2.user_id = ? " +
+                "left join score_history t3 " +
+                "on t3.activity_id = t1.id and t3.user_id =? and t3.score > 0 " +
+                "where t1.id=?"
 
         var checkInUser = create!!.resultQuery(activitySql, userId, userId, activityId).fetchOne()
 
@@ -517,16 +523,16 @@ class WxActivityController {
         var activityType = checkInUser.get("activity_type") as Int
         //获取中签状态
         var zqStatus = checkInUser.get("zqStatus") as Int?
-
         //是否为本年的VIP
         val isVip = thirdUserService!!.isVip(communityId, userId, DateUtil.thisYear())
-
+        //活动信息
         var activity = activityService!!.getActivityDetail(activityId)
-
+        //如果后台有调整积分：取得真实积分
         var realCheckInScore = checkInUser.get("check_in_score", Int::class.java)
 
+        //签到积分
         var checkInScore = 0
-        //积分初始化
+        //积分初始化：从活动信息读取配置
         var activityScoreInfos = activity.get("score_infos", String::class.java)
         if (!activityScoreInfos.isNullOrBlank()) {
             val mapper = jacksonObjectMapper()
@@ -537,24 +543,35 @@ class WxActivityController {
                 scoreInfo.generalUserScore
             }
         }
-        //报名截止时间
-        var dueTime = checkInUser.get("attend_due_time", Date::class.java)
-        //是否已过截止时间 true-已过   false-未过
-        var isOverdue = dueTime <= DateUtil.date().toTimestamp()
 
+        //2018-09-06 王晓玲： 活动结束时间后两小时之内签到仍然有效
+        //取活动结束时间
+        var dueTime = checkInUser.get("end_time", Date::class.java)
+
+        val cal = Calendar.getInstance()
+        cal.time = dueTime
+        cal.add(Calendar.HOUR, 2)
+
+        //是否已过活动结束时间 true-已过   false-未过
+        var isOverdue = cal.time <= DateUtil.date().toTimestamp()
+
+        //签到时间
         var checkInTime = checkInUser.get("check_in_time")
+        //签到用户
         var checkInUserId = checkInUser.get("user_id")
         //判断是否刚签到
         var isCheckInTimeNow = false
 
         //未过截至时间，已报名，不是中签活动 或者 中签活动中签，未签到
-        if (!isOverdue && checkInUserId != null && ((activityType!=3)||(activityType==3 && zqStatus==2)) && checkInTime == null) {
+        if (!isOverdue && checkInUserId != null && ((activityType != 3) || (activityType == 3 && zqStatus == 2)) && checkInTime == null) {
             isCheckInTimeNow = true //刚签到
             checkInTime = DateUtil.date().toTimestamp()
+            //更新报名记录签到时间
             create!!.execute("update activity_user set check_in_time=? where activity_id=? and user_id=?", checkInTime, activityId, userId)
 
             if (checkInScore > 0 && realCheckInScore == 0) {
                 realCheckInScore = checkInScore
+
                 var scoreHistory = ScoreHistory()
                 scoreHistory.score = realCheckInScore
                 scoreHistory.activityId = activityId
@@ -565,11 +582,13 @@ class WxActivityController {
                 scoreService!!.save(scoreHistory)
             }
         }
-        if(checkInTime != null){
+
+        if (checkInTime != null) {
             result["checkInTime"] = util!!.fromNow(checkInTime)
         }
-        result["checkInScore"] = checkInScore
 
+        //积分
+        result["checkInScore"] = checkInScore
         //是否已过截止时间
         result["isOverdue"] = isOverdue
         //是否已报名 null-未报名
@@ -587,14 +606,13 @@ class WxActivityController {
 
         result["is_CheckInTimeNow"] = isCheckInTimeNow
 
-
         return result
     }
 
 
-   /* @CrossOrigin
-    @GetMapping("/getMyActivities")
-    fun getMyActivities(@RequestParam(required = false) communityId: Int?,activityId: Int?):Any{
-        var activities=activityService!!
-    }*/
+    /* @CrossOrigin
+     @GetMapping("/getMyActivities")
+     fun getMyActivities(@RequestParam(required = false) communityId: Int?,activityId: Int?):Any{
+         var activities=activityService!!
+     }*/
 }

@@ -68,6 +68,7 @@ $(function () {
                     var param = {
                         start: $("#start").val().trim(),
                         end: $("#end").val().trim(),
+                        activityId: $("#activityId").val().trim(),
                         title: $("#title").val().trim(),
                         username: $("#username").val().trim(),
                         real_name: $("#real_name").val().trim(),
@@ -79,24 +80,15 @@ $(function () {
             },
             columns: [
                 {"data": "id", "width": "30px"},
-                {"data": "id", "width": "50px"},
+                {"data": "id", "width": "30px"},
+                {"data": "name"},
                 {"data": "title", "width": "120px"},
                 {"data": "username"},
-                {"data": "name"},
                 {"data": "real_name"},
                 {"data": "score", "width": "30px"},
                 {"data": "created"},
                 {"data": "memo"},
-                {
-                    "data": "action", "width": "80px", "defaultContent": "",
-                   /* render: function (data, type, row) {
-                        return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
-                            + '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
-                    }*/
-                },
             ],
-
-
             //栏定义
             columnDefs: [
                 {

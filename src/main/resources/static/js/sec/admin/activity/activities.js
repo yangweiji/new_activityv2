@@ -26,8 +26,8 @@ $(function () {
             dom: '<"top">Bfrt<"bottom">lip<"clear">',
             buttons: [
                 /* {
-                     extend: 'create',
-                     text: '添加'
+                 extend: 'create',
+                 text: '添加'
                  },*/
                 {
                     extend: 'excel',
@@ -37,7 +37,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
                         ],
                         // columns: ':not(:eq(-1))',//jquery to exclude column -1
                         modifier: {
@@ -82,6 +82,7 @@ $(function () {
             columns: [
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
+                {"data": "name"}, //团体组织
                 {"data": "title", "width": "150px"},
                 {
                     "data": "activity_type", defaultContent: "",
@@ -89,13 +90,13 @@ $(function () {
                         if (data == 1) {
                             return "一般活动";
                         }
-                        else if (data == 2){
+                        else if (data == 2) {
                             return "体育赛事";
                         }
-                        else if (data == 3){
+                        else if (data == 3) {
                             return "抽签活动";
                         }
-                        else if (data == 4){
+                        else if (data == 4) {
                             return "打卡活动";
                         }
                         else {
@@ -106,40 +107,40 @@ $(function () {
                 {
                     "data": "tags", defaultContent: "",
                     render: function (data, type, row) {
-                        if (data == 'b1'){
+                        if (data == 'b1') {
                             return "徒步";
                         }
-                        else if (data == 'b2'){
+                        else if (data == 'b2') {
                             return "越野";
                         }
-                        else if (data == 'b3'){
+                        else if (data == 'b3') {
                             return "聚餐";
                         }
-                        else if (data == 'b4'){
+                        else if (data == 'b4') {
                             return "骑行";
                         }
                         else if (data == 'b5') {
                             return "跑步训练";
                         }
-                        else if (data == 'b6'){
+                        else if (data == 'b6') {
                             return "会议";
                         }
-                        else if (data == 'b7'){
+                        else if (data == 'b7') {
                             return "招募";
                         }
-                        else if (data == 'b8'){
+                        else if (data == 'b8') {
                             return "讲座";
                         }
-                        else if (data == 'b10'){
+                        else if (data == 'b10') {
                             return "国内赛事";
                         }
-                        else if (data == 'b11'){
+                        else if (data == 'b11') {
                             return "国际赛事";
                         }
-                        else if (data == 'b12'){
+                        else if (data == 'b12') {
                             return "会员福利";
                         }
-                        else if (data == 'b13'){
+                        else if (data == 'b13') {
                             return "运动装备";
                         }
                         else {
@@ -147,12 +148,12 @@ $(function () {
                         }
                     }
                 },
-                {"data": "name"},
+
                 {"data": "start_time"},
                 {"data": "end_time"},
+                {"data": "attend_due_time"},
                 {"data": "attend_user_count"},
                 {"data": "check_user_count"},
-                {"data": "displayname"},
                 {
                     "data": "status", defaultContent: "",
                     render: function (data, type, row) {
@@ -165,6 +166,9 @@ $(function () {
                     }
                 },
                 {"data": "created"},
+                {"data": "displayname"},
+                {"data": "modified"},
+                {"data": "modifiedbyname"},
                 {
                     "data": "public", defaultContent: "",
                     render: function (data, type, row) {
@@ -177,13 +181,13 @@ $(function () {
                     }
                 },
                 {"data": "unit"},
-                  {
-                      "data": "action", "width": "80px", defaultContent: "",
-                      render: function (data, type, row) {
-                          return '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
-                              + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
-                      }
-                  },
+                {
+                    "data": "action", "width": "80px", defaultContent: "",
+                    render: function (data, type, row) {
+                        return '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
+                            + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
+                    }
+                },
             ],
 
             //栏定义
@@ -193,7 +197,7 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 9, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序

@@ -39,7 +39,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14
+                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
                         ],
                         // columns: ':not(:eq(-1))',//jquery to exclude column -1
                         modifier: {
@@ -151,6 +151,7 @@ $(function () {
                 },
                 {"data": "start_time"},
                 {"data": "end_time"},
+                {"data": "attend_due_time"},
                 {"data": "attend_user_count"},
                 {"data": "check_user_count"},
                 {
@@ -199,7 +200,7 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, -1], visible: true},
                 {targets: '_all', visible: false}
             ],
             //默认排序:活动开始时间降序排列

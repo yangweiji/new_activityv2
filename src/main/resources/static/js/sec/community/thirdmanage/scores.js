@@ -68,6 +68,7 @@ $(function () {
                     var param = {
                         start: $("#start").val().trim(),
                         end: $("#end").val().trim(),
+                        activityId: $("#activityId").val().trim(),
                         title: $("#title").val().trim(),
                         username: $("#username").val().trim(),
                         real_name: $("#real_name").val().trim(),
@@ -87,8 +88,8 @@ $(function () {
                 {"data": "memo"},
                 {"data": "action", "width": "80px", "defaultContent": "",
                     render: function (data, type, row) {
-                        return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
-                            +  '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
+                        return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑"><i class="am-icon-edit"></i></button>'
+                            +  '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除"><i class="am-icon-trash-o"></i></button>';
                     }},
             ],
 

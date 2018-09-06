@@ -13,12 +13,9 @@ import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
-import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
-import java.util.GregorianCalendar
-import java.util.Calendar
 
 
 /**
@@ -113,16 +110,10 @@ class ManageCenterController : BaseController() {
             end = sdf.format(calendar.time)
         }
 
-//        var title = request.getParameter("title")
-//        var username = request.getParameter("username")
-//        var real_name = request.getParameter("real_name")
-//        //取得活动积分明细
-//        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name)
-
         model.addAttribute("start", start)
         model.addAttribute("end", end)
-//        model.addAttribute("items", items)
         model.addAttribute("score", score)
+
         return "sec/admin/manage/scores"
     }
 
@@ -136,15 +127,16 @@ class ManageCenterController : BaseController() {
     fun scores(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var start = map["start"]
         var end = map["end"]
+        var activityId = map["activityId"]
         var title = map["title"]
         var username = map["username"]
         var real_name = map["real_name"]
 
         //团体名称
-        var communityname=map["communityname"]
+        var communityname = map["communityname"]
 
         //取得活动积分明细
-        var items = scoreService!!.getUserActivityScores(start, end, title, username, real_name,communityname)
+        var items = scoreService!!.getUserActivityScores(start, end, activityId, title, username, real_name, communityname)
         var list = items.intoMaps()
         return list
     }
@@ -267,20 +259,19 @@ class ManageCenterController : BaseController() {
             end = sdf.format(calendar.time)
         }
 
-//        var title = request.getParameter("title")
-//        var username = request.getParameter("username")
-//        var real_name = request.getParameter("real_name")
-//        //取得用户缴费订单信息
-//        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name)
-
+        var status = request.getParameter("status")
+        if (status.isNullOrBlank()) {
+            status = "2" //完成付款
+        }
         model.addAttribute("start", start)
         model.addAttribute("end", end)
-//        model.addAttribute("items", items)
+        model.addAttribute("status", status)
+
         return "sec/admin/manage/payments"
     }
 
     /**
-     * 查找积分RestController
+     * 平台订单RestController
      * @author Richard
      */
     @CrossOrigin
@@ -289,15 +280,23 @@ class ManageCenterController : BaseController() {
     fun payments(@RequestBody(required = false) map: Map<String, String>): List<Any> {
         var start = map["start"]
         var end = map["end"]
+        var activityId = map["activityId"]
         var title = map["title"]
         var username = map["username"]
         var real_name = map["real_name"]
+        var mobile = map["mobile"]
+        var ticket_title = map["ticket_title"]
+
+        var extenal_id = map["extenal_id"]
+        var status = map["status"]
+        var refund_trade_no = map["refund_trade_no"]
+        var refund_status = map["refund_status"]
 
         //用户所属团体
-        var community_user=map["community_user"]
+        var community_user = map["community_user"]
 
         //取得活动积分明细
-        var items = oderService!!.getUserActivityPayments(start, end, title, username, real_name,community_user)
+        var items = oderService!!.getUserActivityPayments(start, end, activityId, title, username, real_name, mobile, ticket_title, extenal_id, status, refund_trade_no, refund_status, community_user)
         var list = items.intoMaps()
         return list
     }

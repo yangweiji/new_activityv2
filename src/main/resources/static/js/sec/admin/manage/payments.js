@@ -30,10 +30,7 @@ $(function () {
                     // charset: 'utf8',
                     title: '订单',
                     exportOptions: {
-                        // columns: ':visible'
-                        columns: [
-                            1, 2, 3, 4, 5, 6, 7
-                        ],
+                        columns: ':not(:eq(0))',//jquery to exclude column 0
                         modifier: {
                             search: 'none'
                         }
@@ -58,10 +55,17 @@ $(function () {
                     var param = {
                         start: $("#start").val().trim(),
                         end: $("#end").val().trim(),
+                        activityId: $("#activityId").val().trim(),
                         title: $("#title").val().trim(),
                         username: $("#username").val().trim(),
                         real_name: $("#real_name").val().trim(),
-                        community_user: $("#community_user").val().trim()
+                        mobile: $("#mobile").val().trim(),
+                        ticket_title: $("#ticket_title").val().trim(),
+                        extenal_id: $('#extenal_id').val().trim(),
+                        status: $('#status').val().trim(),
+                        refund_trade_no: $('#refund_trade_no').val().trim(),
+                        refund_status: $('#refund_status').val().trim(),
+                        community_user: $('#community_user').val().trim(),
                     };
                     return JSON.stringify(param);
                 },
@@ -70,16 +74,16 @@ $(function () {
             columns: [
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "30px"},
+                {"data": "name"},   //团体名称
                 {"data": "username"},
                 {"data": "real_name"},
-                {"data": "name"},
+                {"data": "mobile"},
                 {"data": "price"},
                 {"data": "pay_time"},
                 {"data": "body"},
-                {"data": "activity_title", "width": "100px"},
-                {"data": "ticket_title", "width": "80px"},
-                {
-                    "data": "status", defaultContent: "",
+                {"data": "activity_title", width: "160px"},
+                {"data": "ticket_title"},
+                {"data": "status", defaultContent: "",
                     render: function (data, type, row) {
                         if (data == 2) {
                             return "完成";
@@ -88,11 +92,27 @@ $(function () {
                             return "未付";
                         }
                         else {
-                            return "取消";
+                            return "";
                         }
-                    }
-                },
+                    }},
                 {"data": "created"},
+                {"data": "extenal_id"},
+                {"data": "refund_trade_no"},
+                {"data": "refund_time"},
+                {"data": "refund_status", defaultContent: "",
+                    render: function (data, type, row) {
+                        if (data == 1)
+                        {
+                            return "申请退款";
+                        }
+                        else if (data == 2)
+                        {
+                            return "完成退款";
+                        }
+                        else {
+                            return "";
+                        }
+                    }},
             ],
             //栏定义
             columnDefs: [
@@ -102,7 +122,7 @@ $(function () {
                     targets: 0,
                 },
                 {
-                    targets: -1, visible: false
+                    targets: [], visible: false
                 },
             ],
             //默认排序
