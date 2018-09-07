@@ -51,7 +51,7 @@
             <div class="weui-form-preview__ft">
               <div class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" @click="changeAttendInfo()">修改报名信息</div>
               <div class="weui-form-preview__btn weui-form-preview__btn_danger" hover-class="weui-form-preview__btn_active" @click="cancelAttend()">取消报名</div>
-              <div class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" @click="afterUpload()">赛后上传</div>
+              <div class="weui-form-preview__btn weui-form-preview__btn_default" hover-class="weui-form-preview__btn_active" @click="afterUpload()" v-if="overEnd">活动图片</div>
             </div>
 
           </div>
@@ -152,6 +152,8 @@ export default {
       processing: false,
       isAttendNow: false,
       attFields: null,
+      //活动是否结束
+      overEnd: false,
     };
   },
   computed: {
@@ -228,6 +230,7 @@ export default {
       this.$kyutil.get("/pub/wx/activity/attend", param).then(res => {
         that.isAttend = !!res.attendUser;
         that.overDue = !res.attendUser && res.is_over_due;
+        that.overEnd = res.is_over_end;
         that.score = res.userScore;
         that.scoreRate = res.scoreRate;
         if (res.ticketInfos) {

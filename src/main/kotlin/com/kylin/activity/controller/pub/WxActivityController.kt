@@ -308,6 +308,11 @@ class WxActivityController {
         map["cancelMessage"] = if (cancelMessage.isNullOrEmpty()) "" else cancelMessage!!
         map["is_over_due"] = dueTime <= DateUtil.date().toTimestamp()
 
+        //活动结束时间
+        var endTime = currentActivity.get("end_time", Date::class.java)
+        //活动已结束
+        map["is_over_end"] = endTime <= DateUtil.date().toTimestamp()
+
         return map
     }
 
@@ -487,6 +492,10 @@ class WxActivityController {
         map["cancelMessage"] = if (cancelMessage.isNullOrEmpty()) "" else cancelMessage!!
         map["is_over_due"] = dueTime <= DateUtil.date().toTimestamp()
 
+        //活动结束时间
+        var endTime = currentActivity.get("end_time", Date::class.java)
+        //活动已结束
+        map["is_over_end"] = endTime <= DateUtil.date().toTimestamp()
 
         return map
     }
