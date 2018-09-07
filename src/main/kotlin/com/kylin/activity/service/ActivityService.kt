@@ -1009,4 +1009,24 @@ class ActivityService {
         return if (list != null && list.size > 0) list.first() else null
     }
 
+    /*
+    *  修改活动后上传图片信息
+    * */
+    fun updateAfterUpload(activityUser: ActivityUser) {
+        var preActivityUser = activityUserDao!!.fetchOneById(activityUser.id)
+        preActivityUser.afterFiles = activityUser.afterFiles
+        preActivityUser.afterTime = DateUtil.date().toTimestamp()
+        activityUserDao!!.update(preActivityUser)
+    }
+
+    /**
+     * 获取用户报名记录信息
+     * @param userId: 用户Id
+     * @param activityId: 活动ID
+     */
+    fun getUserActivity(userId: Int, activityId: Int): ActivityUser {
+        return create!!.selectFrom(Tables.ACTIVITY_USER)
+                .where(Tables.ACTIVITY_USER.USER_ID.eq(userId)).and(Tables.ACTIVITY_USER.ACTIVITY_ID.eq(activityId))
+                .fetchOne().into(ActivityUser::class.java)
+    }
 }

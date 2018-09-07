@@ -82,16 +82,6 @@
       },
       addFavorite() {
         var that = this;
-
-        // this.$kyutil.CheckUserValidation();
-        // var user = this.$kyutil.GetUser();
-        // if (user) {
-        //   this.$kyutil.get("/pub/wx/activity/favorite",{
-        //       activityId: that.activityId,
-        //       userId: user.id
-        //     }).then(res => that.item.favorite_count = res)
-        // }
-
         this.$kyutil.CheckUserValidation().then(function(res) {
           var user = that.$kyutil.GetUser();
           that.$kyutil.get("/pub/wx/activity/favorite",{

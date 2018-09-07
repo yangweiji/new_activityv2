@@ -174,4 +174,18 @@ public class ActivityUserDao extends DAOImpl<ActivityUserRecord, com.kylin.activ
     public List<com.kylin.activity.databases.tables.pojos.ActivityUser> fetchByStatus(Integer... values) {
         return fetch(ActivityUser.ACTIVITY_USER.STATUS, values);
     }
+
+    /**
+     * Fetch records that have <code>after_files IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.ActivityUser> fetchByAfterFiles(String... values) {
+        return fetch(ActivityUser.ACTIVITY_USER.AFTER_FILES, values);
+    }
+
+    /**
+     * Fetch records that have <code>after_time IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.ActivityUser> fetchByAfterTime(Timestamp... values) {
+        return fetch(ActivityUser.ACTIVITY_USER.AFTER_TIME, values);
+    }
 }

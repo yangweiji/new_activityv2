@@ -183,7 +183,7 @@ class ThirdActivityService {
     fun getAttendUsers(communityId: Int, start: String?, end: String?, activityId: String?, title: String?, mobile: String?, real_name: String?, ticket_title: String?, checked: String?, status: String?, other_info: String?): Result<Record> {
         //构建数据源
         var sql = "select t1.id, t1.user_id, t1.activity_id, t1.activity_ticket_id, t1.created, t1.created_by " +
-                ", t1.attend_time, t1.check_in_time, t1.real_name, t1.mobile, t1.other_info, t1.price, t1.score, t1.status " +
+                ", t1.attend_time, t1.check_in_time, t1.real_name, t1.mobile, t1.other_info, t1.price, t1.score, t1.status, t1.after_files, t1.after_time " +
                 ", t2.displayname, t2.avatar user_avatar " +
                 ", t3.title, t4.price as activity_price, t4.title as ticket_title " +
                 "from activity_user t1 " +

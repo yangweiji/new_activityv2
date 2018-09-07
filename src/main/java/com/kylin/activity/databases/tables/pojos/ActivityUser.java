@@ -24,7 +24,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser implements Serializable {
 
-    private static final long serialVersionUID = 592219239;
+    private static final long serialVersionUID = -749818649;
 
     private Integer    id;
     private Integer    userId;
@@ -42,6 +42,8 @@ public class ActivityUser implements Serializable {
     private Timestamp  modified;
     private Integer    modifiedBy;
     private Integer    status;
+    private String     afterFiles;
+    private Timestamp  afterTime;
 
     public ActivityUser() {}
 
@@ -62,6 +64,8 @@ public class ActivityUser implements Serializable {
         this.modified = value.modified;
         this.modifiedBy = value.modifiedBy;
         this.status = value.status;
+        this.afterFiles = value.afterFiles;
+        this.afterTime = value.afterTime;
     }
 
     public ActivityUser(
@@ -80,7 +84,9 @@ public class ActivityUser implements Serializable {
         Integer    score,
         Timestamp  modified,
         Integer    modifiedBy,
-        Integer    status
+        Integer    status,
+        String     afterFiles,
+        Timestamp  afterTime
     ) {
         this.id = id;
         this.userId = userId;
@@ -98,6 +104,8 @@ public class ActivityUser implements Serializable {
         this.modified = modified;
         this.modifiedBy = modifiedBy;
         this.status = status;
+        this.afterFiles = afterFiles;
+        this.afterTime = afterTime;
     }
 
     public Integer getId() {
@@ -228,6 +236,22 @@ public class ActivityUser implements Serializable {
         this.status = status;
     }
 
+    public String getAfterFiles() {
+        return this.afterFiles;
+    }
+
+    public void setAfterFiles(String afterFiles) {
+        this.afterFiles = afterFiles;
+    }
+
+    public Timestamp getAfterTime() {
+        return this.afterTime;
+    }
+
+    public void setAfterTime(Timestamp afterTime) {
+        this.afterTime = afterTime;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("ActivityUser (");
@@ -248,6 +272,8 @@ public class ActivityUser implements Serializable {
         sb.append(", ").append(modified);
         sb.append(", ").append(modifiedBy);
         sb.append(", ").append(status);
+        sb.append(", ").append(afterFiles);
+        sb.append(", ").append(afterTime);
 
         sb.append(")");
         return sb.toString();

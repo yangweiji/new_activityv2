@@ -615,4 +615,22 @@ class WxActivityController {
      fun getMyActivities(@RequestParam(required = false) communityId: Int?,activityId: Int?):Any{
          var activities=activityService!!
      }*/
+
+    /**
+     *  依据报名用户记录信息
+     */
+    @GetMapping("/getActivityUser")
+    fun getActivityUser(@RequestParam(required = true) userId: Int, @RequestParam(required = true) activityId: Int): ActivityUser {
+        return activityService!!.getUserActivity(userId, activityId)
+    }
+
+    /**
+     *  修改报名信息，仅修改活动后上传图片信息
+     */
+    @PostMapping("/afterUpload")
+    fun afterUpload(@RequestBody activityUser: ActivityUser): Boolean {
+
+        activityService!!.updateAfterUpload(activityUser)
+        return true
+    }
 }

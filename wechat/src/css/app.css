@@ -380,3 +380,49 @@ button[type=primary] {
     height: 4rpx;
     background-color: #D8D8D8;
 }
+
+.weui-uploader {
+    margin-top: 10px;
+    min-height: 84px;
+}
+
+.weui-uploader__file {
+    position: relative;
+}
+
+.weui-uploader__bd {
+    overflow: visible;
+}
+
+.delete-icon {
+    position: absolute;
+    width: 40rpx;
+    height: 40rpx;
+    background: #f43530;
+    right: 0;
+    top: -20rpx;
+    border-radius: 40rpx;
+    z-index: 5;
+}
+
+.delete-icon::before {
+    content: "";
+    width: 26rpx;
+    height: 4rpx;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+}
+
+.loading {
+    background-color: rgba(0, 0, 0, 0.5);
+    float: left;
+    position: relative;
+    margin-right: 9px;
+    margin-bottom: 9px;
+    width: 77px;
+    height: 77px;
+    border: 1px solid #d9d9d9;
+}

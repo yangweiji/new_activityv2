@@ -12,7 +12,10 @@ const store = new Vuex.Store({
         //     name: "北京市马拉松协会",
         //     background: "NzrSDNSBEP.png",
         // },
+        //选择的团体组织
         community: null,
+        //是否调用了图片选择器
+        isUpload: false,
     },
     mutations: {
         increment(state) {

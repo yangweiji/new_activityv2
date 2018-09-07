@@ -373,6 +373,7 @@ class ThirdActivityController : BaseController() {
         val items = thirdActivityService!!.getAttendUsers(this.sessionCommunity.id, start, end, activityId, title, mobile, real_name, ticket_title, checked, status, other_info)
 
         var listItems = mutableListOf<Any>()
+        //构建报名选项栏位数组
         var attendColumns = mutableListOf<String>()
         val mapper = jacksonObjectMapper()
         for (item in items) {

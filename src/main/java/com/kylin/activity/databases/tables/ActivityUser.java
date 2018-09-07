@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser extends TableImpl<ActivityUserRecord> {
 
-    private static final long serialVersionUID = -1938058788;
+    private static final long serialVersionUID = 1220735418;
 
     /**
      * The reference instance of <code>activity_user</code>
@@ -135,6 +135,16 @@ public class ActivityUser extends TableImpl<ActivityUserRecord> {
      * The column <code>activity_user.status</code>. 中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）
      */
     public final TableField<ActivityUserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）");
+
+    /**
+     * The column <code>activity_user.after_files</code>. 活动后，上传图片
+     */
+    public final TableField<ActivityUserRecord, String> AFTER_FILES = createField("after_files", org.jooq.impl.SQLDataType.VARCHAR(1000).defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.VARCHAR)), this, "活动后，上传图片");
+
+    /**
+     * The column <code>activity_user.after_time</code>.
+     */
+    public final TableField<ActivityUserRecord, Timestamp> AFTER_TIME = createField("after_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
 
     /**
      * Create a <code>activity_user</code> table reference

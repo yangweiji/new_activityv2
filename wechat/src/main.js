@@ -41,6 +41,7 @@ export default {
             'pages/realinfo/realinfo',
             'pages/activityrecord/activityrecord',
             'pages/activityrecorditem/activityrecorditem',
+            'pages/activityafter/activityafter',
             'pages/toolcaculate/toolcaculate',
             'pages/toolbomamatch/toolbomamatch',
             'pages/toolmaf180/toolmaf180',

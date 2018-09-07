@@ -254,14 +254,14 @@
                                     常用信息
                                     <hr style="margin-top: 5px; margin-bottom: 10px" />
                                     <div class="c-attend-common-item" v-for="info in attendInfo.commons" v-bind:key="objectId(info)">
-                                        <button v-bind:title="info.title" type="button" v-on:click="addAttendInfo(info)" class="am-btn am-btn-secondary" v-text="info.title"></button>
+                                        <button v-bind:title="info.title" type="button" v-on:click="addAttendInfo(info)" class="am-btn am-btn-secondary" v-text="info.title" style="white-space:pre-wrap;"></button>
                                     </div>
                                     <div style="clear: both"></div>
                                     <br/>
                                     自定义项
                                     <hr style="margin-top: 5px; margin-bottom: 10px" />
                                     <div class="c-attend-custom-item" v-for="info in attendInfo.customs" v-bind:key="objectId(info)">
-                                        <button type="button" v-on:click="addAttendInfo(info)" class="am-btn am-btn-secondary" v-text="info.title"></button>
+                                        <button type="button" v-on:click="addAttendInfo(info)" class="am-btn am-btn-secondary" v-text="info.title" style="white-space:pre-wrap;"></button>
                                     </div>
                                 </div>
                             </div>

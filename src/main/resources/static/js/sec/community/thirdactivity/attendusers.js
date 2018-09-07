@@ -29,10 +29,48 @@ $(function () {
                     return "已完成退费"
                 }
             }
-        }];
+        },
+        {"data": "after_files", "defaultContent:": "",
+            render: function(data, type, row) {
+                if(!data) {
+                    return '';
+                }
+
+                var html = '';
+                var arr = data.split(',');
+                for (var i = 0; i < arr.length; i ++) {
+                    var url = OssUrl+'/activity/'+arr[i];
+                    html += '<a target="_blank" href="'+url+'" title="点击查看大图"><img class="img_thumb" src="'+url+'"></a>'
+                }
+                return html;
+            }
+        },
+        {"data": "after_time"}
+    ];
     //添加动态栏位
     g_attendColumns.forEach(function (value) {
-        _columns.push({"data": value, "defaultContent": ""});
+        //依据data值检查 {"姓名":"胡冲","手机":"13910438997","昵称":"胡冲","邮件":"chong.hu@9kylin.cn","性别":"男","血型":"O","T恤尺寸":"XL","工作单位":"北京九麒信息技术有限公司","职业":"IT经理","紧急联系人姓名":"九麒","紧急联系人电话":"18610806245","是否党员":"党员","家庭地址":"北京市朝阳区八里庄西里99","微信号":"cf_hc1980","身份证号":"421023198008080050","出生日期":null,"备注":null,"图像上传":"yGaEts4JWf.jpg,sFbXcfTSRd.jpg,FSkDxBKchS.jpg"}
+        _columns.push({
+            "data": value, "defaultContent": "",
+            render: function (data, type, row) {
+                if (!data) {
+                    return '';
+                }
+
+                if (data.toLowerCase().indexOf(".jpg") >= 0 || data.toLowerCase().indexOf(".png") >= 0 || data.toLowerCase().indexOf(".gif") >= 0) {
+                    //图片类型
+                    var html = '';
+                    var arr = data.split(',');
+                    for (var i = 0; i < arr.length; i ++) {
+                        var url = OssUrl+'/activity/'+arr[i];
+                        html += '<a target="_blank" href="'+url+'" title="点击查看大图"><img class="img_thumb" src="'+url+'"></a>'
+                    }
+                    return html;
+                }
+
+                return data;
+            }
+        });
     });
 
     //JQuery DataTables HTML (DOM) sourced data
