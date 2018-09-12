@@ -57,7 +57,10 @@ $(function () {
                     return '';
                 }
 
-                if (data.toLowerCase().indexOf(".jpg") >= 0 || data.toLowerCase().indexOf(".png") >= 0 || data.toLowerCase().indexOf(".gif") >= 0) {
+                if (data.toLowerCase().indexOf(".jpg") >= 0
+                    || data.toLowerCase().indexOf(".png") >= 0
+                    || data.toLowerCase().indexOf(".gif") >= 0
+                    || data.toLowerCase().indexOf(".jpeg") >= 0) {
                     //图片类型
                     var html = '';
                     var arr = data.split(',');
