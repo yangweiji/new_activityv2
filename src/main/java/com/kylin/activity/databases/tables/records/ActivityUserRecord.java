@@ -31,7 +31,7 @@ import org.jooq.impl.UpdatableRecordImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> implements Record18<Integer, Integer, Integer, Integer, Timestamp, Integer, Timestamp, Timestamp, String, String, String, BigDecimal, Integer, Timestamp, Integer, Integer, String, Timestamp> {
 
-    private static final long serialVersionUID = -755723202;
+    private static final long serialVersionUID = 1869337564;
 
     /**
      * Setter for <code>activity_user.id</code>. 编号
@@ -272,14 +272,14 @@ public class ActivityUserRecord extends UpdatableRecordImpl<ActivityUserRecord> 
     }
 
     /**
-     * Setter for <code>activity_user.after_time</code>.
+     * Setter for <code>activity_user.after_time</code>. 活动图片上传时间
      */
     public void setAfterTime(Timestamp value) {
         set(17, value);
     }
 
     /**
-     * Getter for <code>activity_user.after_time</code>.
+     * Getter for <code>activity_user.after_time</code>. 活动图片上传时间
      */
     public Timestamp getAfterTime() {
         return (Timestamp) get(17);

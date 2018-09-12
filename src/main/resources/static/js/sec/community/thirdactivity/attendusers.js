@@ -63,7 +63,7 @@ $(function () {
                     var arr = data.split(',');
                     for (var i = 0; i < arr.length; i ++) {
                         var url = OssUrl+'/activity/'+arr[i];
-                        html += '<a target="_blank" href="'+url+'" title="点击查看大图"><img class="img_thumb" src="'+url+'"></a>'
+                        html += '<a target="_blank" href="'+url+'" title="点击查看大图"><img src="'+url+'" class="img_thumb"></a>'
                     }
                     return html;
                 }
@@ -148,7 +148,7 @@ $(function () {
                 {
                     extend: 'excel',
                     text: '导出Excel',
-                    title: '报名签到记录',
+                    title: g_title + '报名签到记录',
                     exportOptions: {
                         // columns: ':visible'
                         // columns: [
@@ -161,7 +161,20 @@ $(function () {
                         format: {
                             body: function (data, row, column, node) {
                                 if (data && data.length >= 15) {
-                                    return ("\u200C" + data);
+
+                                    if (data.indexOf('img') >= 0) {
+                                        var urls = [];
+                                        var regex=/<img.*?src="([^">]*\/([^">]*?))".*?>/g;
+                                        while ( m = regex.exec( data ) ) {
+                                            // console.log(m[1]);
+                                            urls.push( m[1] );
+                                        }
+                                        // console.log(urls.join('\r\n'));
+                                        return urls.join('\r\n');
+                                    }
+                                    else {
+                                        return ("\u200C" + data);
+                                    }
                                 }
                                 else {
                                     return data;
@@ -169,7 +182,7 @@ $(function () {
                             }
                         }
                     },
-                    filename: '报名签到记录',
+                    filename: g_title + '报名签到记录',
                 },
                 {
                     extend: 'colvis',

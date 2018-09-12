@@ -231,14 +231,12 @@
       if (!that.$store.state.community) {
         //根据用户登录后获取的团体组织信息加载活动内容
         this.$kyutil.Login().then(function(res) {
-          //接受参数
-          if (that.$store.state.community) {
-            that.community = that.$store.state.community;
-            //设置标题
-            wx.setNavigationBarTitle({
-              title: that.community.name
-            });
-          }
+          that.community = that.$store.state.community;
+          //设置标题
+          wx.setNavigationBarTitle({
+            title: that.community.name
+          });
+
           that.getData();
         });
       }

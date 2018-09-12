@@ -177,8 +177,16 @@ function Login() {
                                     wx.setStorageSync("user", res.user)
                                     console.log("storage user->", res)
                                 }
+
+                                //取得用户的默认团体组织，如果没有则默认为【北京市马拉松协会】
                                 if (res.community) {
                                     store.state.community = res.community
+                                } else {
+                                    store.state.community = {
+                                        id: 1, //默认的组织团体ID
+                                        name: "北京市马拉松协会",
+                                        background: "NzrSDNSBEP.png",
+                                    };
                                 }
 
                                 if (res) {

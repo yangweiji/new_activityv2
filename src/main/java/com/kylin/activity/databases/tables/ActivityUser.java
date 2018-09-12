@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser extends TableImpl<ActivityUserRecord> {
 
-    private static final long serialVersionUID = 1220735418;
+    private static final long serialVersionUID = 1202081663;
 
     /**
      * The reference instance of <code>activity_user</code>
@@ -139,12 +139,12 @@ public class ActivityUser extends TableImpl<ActivityUserRecord> {
     /**
      * The column <code>activity_user.after_files</code>. 活动后，上传图片
      */
-    public final TableField<ActivityUserRecord, String> AFTER_FILES = createField("after_files", org.jooq.impl.SQLDataType.VARCHAR(1000).defaultValue(org.jooq.impl.DSL.inline("NULL", org.jooq.impl.SQLDataType.VARCHAR)), this, "活动后，上传图片");
+    public final TableField<ActivityUserRecord, String> AFTER_FILES = createField("after_files", org.jooq.impl.SQLDataType.VARCHAR(1000).defaultValue(org.jooq.impl.DSL.inline("", org.jooq.impl.SQLDataType.VARCHAR)), this, "活动后，上传图片");
 
     /**
-     * The column <code>activity_user.after_time</code>.
+     * The column <code>activity_user.after_time</code>. 活动图片上传时间
      */
-    public final TableField<ActivityUserRecord, Timestamp> AFTER_TIME = createField("after_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "");
+    public final TableField<ActivityUserRecord, Timestamp> AFTER_TIME = createField("after_time", org.jooq.impl.SQLDataType.TIMESTAMP, this, "活动图片上传时间");
 
     /**
      * Create a <code>activity_user</code> table reference
