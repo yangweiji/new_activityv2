@@ -245,21 +245,17 @@
       //接受参数
       this.communityId = this.$root.$mp.query.communityId || this.$root.$mp.query.scene
       this.start = this.$root.$mp.query.start
-      if (!this.communityId) {
-        var community = this.$store.state.community;
-        this.communityId = community.id
-      }
-
-      // this.$kyutil.CheckUserValidation();
-      // var user = this.$kyutil.GetUser();
-      // if (user) {
-      //   this.userId = user.id;
-      //   this.getData();
-      // }
 
       this.$kyutil.CheckUserValidation().then(function(res) {
           var user = that.$kyutil.GetUser();
           that.userId = user.id;
+          
+          //如果没有获取到团体组织ID，从$store中获取
+          if (!that.communityId) {
+            var community = that.$store.state.community;
+            that.communityId = community.id
+          }
+
           that.getData();
       });
     },
