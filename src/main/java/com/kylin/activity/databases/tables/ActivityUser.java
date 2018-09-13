@@ -41,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUser extends TableImpl<ActivityUserRecord> {
 
-    private static final long serialVersionUID = 1202081663;
+    private static final long serialVersionUID = -934631073;
 
     /**
      * The reference instance of <code>activity_user</code>
@@ -132,9 +132,9 @@ public class ActivityUser extends TableImpl<ActivityUserRecord> {
     public final TableField<ActivityUserRecord, Integer> MODIFIED_BY = createField("modified_by", org.jooq.impl.SQLDataType.INTEGER, this, "修改人");
 
     /**
-     * The column <code>activity_user.status</code>. 中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）
+     * The column <code>activity_user.status</code>. 中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费，5-未中签）
      */
-    public final TableField<ActivityUserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费）");
+    public final TableField<ActivityUserRecord, Integer> STATUS = createField("status", org.jooq.impl.SQLDataType.INTEGER, this, "中签状态（0-不抽签；1-待抽签，2-中签，3-已申请退费，4-已完成退费，5-未中签）");
 
     /**
      * The column <code>activity_user.after_files</code>. 活动后，上传图片
