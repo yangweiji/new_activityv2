@@ -899,3 +899,158 @@ Vue.component('quill-text', {
     }
 
 });
+
+//用户信息
+Vue.component('user-info', {
+    template: '<!-- 用户详细信息 begin -->\n' +
+        '    <div class="am-modal am-modal-no-btn" tabindex="-1" id="userinfo-modal">\n' +
+        '        <div class="am-modal-dialog">\n' +
+        '            <div class="am-modal-hd">\n' +
+        '                <div style="margin: 0 auto;width: 65px;height: 65px;"><img style="width: 100%;border-radius: 50%" v-translator :data-url="userInfo.avatar" /></div>\n' +
+        '                {{userInfo.displayname}}\n' +
+        '                <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>\n' +
+        '            </div>\n' +
+        '\n' +
+        '            <div class="am-modal-bd">\n' +
+        '                <div class="am-g dis_line">\n' +
+        '                    <table class="am-table am-table-striped am-table-compact am-table-hover" id="userintoTable" cellspacing="0"\n' +
+        '                           width="100%">\n' +
+        '                        <tbody>\n' +
+        '                        <tr>\n' +
+        '                            <td>用户账号</td>\n' +
+        '                            <td><span>{{userInfo.username}}</span></td>\n' +
+        '                            <td>显示名称</td>\n' +
+        '                            <td><span>{{userInfo.displayname}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>手机号码</td>\n' +
+        '                            <td><span>{{userInfo.mobile}}</span></td>\n' +
+        '                            <td>微信昵称</td>\n' +
+        '                            <td><span>{{userInfo.nickName}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>性别</td>\n' +
+        '                            <td><span>{{userInfo.gender}}</span></td>\n' +
+        '                            <td>用户姓名</td>\n' +
+        '                            <td><span>{{userInfo.realName}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>创建时间</td>\n' +
+        '                            <td><span>{{userInfo.created}}</span></td>\n' +
+        '                            <td>会员年份</td>\n' +
+        '                            <td><span>{{userInfo.level}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>身份证号</td>\n' +
+        '                            <td><span>{{userInfo.idCard}}</span></td>\n' +
+        '                            <td>是否认证</td>\n' +
+        '                            <td><span>{{userInfo.isReal?\'是\':\'否\'}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>微信账号</td>\n' +
+        '                            <td><span>{{userInfo.wechatId}}</span></td>\n' +
+        '                            <td>认证时间</td>\n' +
+        '                            <td><span>{{userInfo.realTime}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>电子邮箱</td>\n' +
+        '                            <td><span>{{userInfo.email}}</span></td>\n' +
+        '                            <td>家庭地址</td>\n' +
+        '                            <td><span>{{userInfo.address}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>血型</td>\n' +
+        '                            <td><span>{{userInfo.bloodType}}</span></td>\n' +
+        '                            <td>T恤尺寸</td>\n' +
+        '                            <td><span>{{userInfo.clothingSize}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>紧急联系人</td>\n' +
+        '                            <td><span>{{userInfo.emergencyContactName}}</span></td>\n' +
+        '                            <td>紧急联系方式</td>\n' +
+        '                            <td><span>{{userInfo.emergencyContactMobile}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>工作单位</td>\n' +
+        '                            <td><span>{{userInfo.workCompany}}</span></td>\n' +
+        '                            <td>是否党员</td>\n' +
+        '                            <td><span>{{userInfo.isParty?\'是\':\'否\'}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>职业</td>\n' +
+        '                            <td><span>{{userInfo.occupation}}</span></td>\n' +
+        '                            <td></td>\n' +
+        '                            <td></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>平台角色</td>\n' +
+        '                            <td><span>{{userInfo.role}}</span></td>\n' +
+        '                            <td>是否启用</td>\n' +
+        '                            <td><span>{{userInfo.enabled?\'是\':\'否\'}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        <tr>\n' +
+        '                            <td>unionId</td>\n' +
+        '                            <td><span>{{userInfo.unionId}}</span></td>\n' +
+        '                            <td>openId</td>\n' +
+        '                            <td><span>{{userInfo.openId}}</span></td>\n' +
+        '                        </tr>\n' +
+        '                        </tbody>\n' +
+        '                    </table>\n' +
+        '                </div>\n' +
+        '                <hr data-am-widget="divider" style="" class="am-divider am-divider-default"/>\n' +
+        '                <div class="am-g">\n' +
+        '                    <button type="button" class="am-btn am-btn-secondary js-modal-close" data-am-modal-close>\n' +
+        '                        关闭\n' +
+        '                    </button>\n' +
+        '                </div>\n' +
+        '            </div>\n' +
+        '        </div>\n' +
+        '    </div>\n' +
+        '    <!-- 用户详细信息 end -->',
+    props: {
+        value: {
+            type: String,
+            default: ''
+        }
+    },
+    data: function () {
+        return {
+            userInfo: {}
+        }
+    },
+    watch: {
+        // 如果 `question` 发生改变，这个函数就会运行
+        value: function (nv, ov) {
+            let that = this;
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: '/sec/admin/user/getUserInfo',
+                data: JSON.stringify({ username: nv }),// 指定请求的数据格式为json，实际上传的是json字符串
+                contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
+                dataType: "json",
+                async: false,
+                beforeSend: function () {
+                    Util.loading(true);
+                },
+                success: function (data) {
+                    if (data) {
+                        that.userInfo = data;
+                    }
+                },
+                complete: function () {
+                    Util.loading(false);
+                },
+                error: function (data) {
+                    console.info("error: " + data.responseText);
+                }
+            });
+        }
+    },
+    mounted: function () {
+    },
+    computed: {
+    },
+    methods: {
+    }
+});

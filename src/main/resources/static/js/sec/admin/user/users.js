@@ -1,23 +1,21 @@
-$(function () {
-});
+// $(function () {
+// });
 
 new Vue({
     el: '#app',
     data: function () {
         return {
-            tab: 'users',
-            userInfo: {},
+            //用户ID
+            userId: null,
         };
     },
     mounted: function () {
         var that = this;
-        var $modal = $('#userinfo-modal');
 
         //自定义添加按钮事件
         $.fn.dataTable.ext.buttons.create = {
             className: '',
             action: function (e, dt, node, config) {
-                // alert( this.text() );
                 location.href = "/sec/admin/user/create";
             }
         };
@@ -238,36 +236,10 @@ new Vue({
          */
         $('#bmTable tbody').on('click', 'a#view', function () {
             var data = t.row($(this).parents('tr')).data();
-            var d = { username: data.username };
-            $.ajax({
-                cache: true,
-                type: "POST",
-                url: '/sec/admin/user/getUserInfo',
-                data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
-                contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
-                dataType: "json",
-                async: false,
-                beforeSend: function () {
-                    Util.loading(true);
-                },
-                success: function (data) {
-                    if (data) {
-                        that.userInfo = data;
-                        $modal.modal({width: 800, height: 600});
-                    }
-                },
-                complete: function () {
-                    Util.loading(false);
-                },
-                error: function (data) {
-                    console.info("error: " + data.responseText);
-                }
-            });
+            that.userId = data.username;
+            $('#userinfo-modal').modal({width: 800, height: 600});
         });
     },
     methods: {
-        go: function (e) {
-            console.log(e);
-        }
     }
-})
+});
