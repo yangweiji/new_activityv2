@@ -473,8 +473,33 @@ class ThirdActivityController : BaseController() {
             //如果活动类型是抽签活动：activityType = 3，则更新报名状态为【中签】
             //并且报名状态不是【已申请退款】和【已完成退款】
             if (activity!!.activityType == 3 && (activityUser!!.status != 3 && activityUser!!.status != 4)) {
-                //更新报名状态值
+                //更新报名状态值, 2->中签
                 thirdActivityService!!.updateActivityUserStatus(id, 2)
+                list.add(thirdActivityService!!.getActivityUser(id))
+            }
+        }
+
+        return list
+    }
+
+    /**
+     * 未中签处理
+     * @param ids: 报名ID数组
+     * @return 报名记录集合信息
+     */
+    @RequestMapping(value = "/reject", method = [RequestMethod.POST])
+    @ResponseBody
+    fun reject(@RequestBody ids: Array<Int>): List<ActivityUser> {
+        var list = mutableListOf<ActivityUser>()
+        for (id in ids) {
+            var activityUser = thirdActivityService!!.getActivityUser(id)
+            var activity = thirdActivityService!!.getActivity(activityUser!!.activityId)
+
+            //如果活动类型是抽签活动：activityType = 3，则更新报名状态为【中签】
+            //并且报名状态不是【已申请退款】和【已完成退款】
+            if (activity!!.activityType == 3 && (activityUser!!.status != 3 && activityUser!!.status != 4)) {
+                //更新报名状态值, 5->未中签
+                thirdActivityService!!.updateActivityUserStatus(id, 5)
                 list.add(thirdActivityService!!.getActivityUser(id))
             }
         }

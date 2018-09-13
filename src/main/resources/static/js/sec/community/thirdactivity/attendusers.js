@@ -27,7 +27,10 @@ $(function () {
                     return "已申请退费"
                 } else if (data == 4) {
                     return "已完成退费"
+                } else if (data == 5) {
+                    return "未中签"
                 }
+
             }
         },
         {"data": "after_files", "defaultContent:": "",
@@ -82,7 +85,7 @@ $(function () {
             // $('#bmBody').show();
             //检查当前团体是否可以在线退款，如果有则添加操作按钮
             if (g_community_context.canRefund) {
-                t.button().add(3, {
+                t.button().add(4, {
                     extend: 'refund',
                     text: '申请退款',
                     enabled: false,
@@ -90,7 +93,7 @@ $(function () {
                     //     dt.ajax.reload();
                     // },
                 });
-                t.button().add(4, {
+                t.button().add(5, {
                     extend: 'check',
                     text: '检查退款',
                     enabled: false,
@@ -136,6 +139,11 @@ $(function () {
                 {
                     extend: 'approve',
                     text: '中签',
+                    enabled: false,
+                },
+                {
+                    extend: 'reject',
+                    text: '未中签',
                     enabled: false,
                 },
                 {
@@ -265,6 +273,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.approve = {
         className: '',
         action: function (e, dt, node, config) {
+            var that = this;
             var d = [];
             $('.childcheck:checked').each(function () {
                 d.push($(this).val());
@@ -286,7 +295,7 @@ $(function () {
                     async: false,
                     beforeSend: function () {
                         // 禁用按钮防止重复提交
-                        t.button(0).enable(false);
+                        that.enable(false);
                         Util.loading(true);
                     },
                     success: function (data) {
@@ -303,7 +312,61 @@ $(function () {
                     },
                     complete: function () {
                         $("#all_checked").prop("checked", false);
-                        t.button(0).enable(true);
+                        that.enable(true);
+                        Util.loading(false);
+                    },
+                    error: function (data) {
+                        console.info("error: " + data.responseText);
+                    }
+                });
+            }
+        }
+    };
+
+    //未中签处理
+    $.fn.dataTable.ext.buttons.reject = {
+        className: '',
+        action: function (e, dt, node, config) {
+            var that = this;
+            var d = [];
+            $('.childcheck:checked').each(function () {
+                d.push($(this).val());
+            });
+
+            if (d.length == 0) {
+                alert("至少选择一项记录！");
+                return;
+            }
+
+            if (window.confirm("提示：【不抽签】、【已申请退款】、【已完成退款】状态的用户报名记录无法进行中签操作，请确认？")) {
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: '/sec/community/thirdactivity/reject',
+                    data: JSON.stringify(d),// 指定请求的数据格式为json，实际上传的是json字符串
+                    contentType: 'application/json;charset=utf-8',//指定请求的数据格式为json,这样后台才能用@RequestBody 接受java bean
+                    dataType: "json",
+                    async: false,
+                    beforeSend: function () {
+                        // 禁用按钮防止重复提交
+                        that.enable(false);
+                        Util.loading(true);
+                    },
+                    success: function (data) {
+                        if (data) {
+                            nativeToast({
+                                message: '操作成功！',
+                                position: 'center',
+                                timeout: 3000,
+                                square: true,
+                                type: 'success'
+                            });
+                            t.ajax.reload();
+                        }
+                    },
+                    complete: function () {
+                        $("#all_checked").prop("checked", false);
+                        that.enable(true);
                         Util.loading(false);
                     },
                     error: function (data) {
@@ -318,6 +381,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.cancel = {
         className: '',
         action: function (e, dt, node, config) {
+            var that = this;
             var d = [];
             $('.childcheck:checked').each(function () {
                 d.push($(this).val());
@@ -339,7 +403,7 @@ $(function () {
                     async: false,
                     beforeSend: function () {
                         // 禁用按钮防止重复提交
-                        t.button(1).enable(false);
+                        that.enable(false);
                         Util.loading(true);
                     },
                     success: function (data) {
@@ -356,7 +420,7 @@ $(function () {
                     },
                     complete: function () {
                         $("#all_checked").prop("checked", false);
-                        t.button(1).enable(true);
+                        that.enable(true);
                         Util.loading(false);
                     },
                     error: function (data) {
@@ -374,6 +438,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.delete = {
         className: '',
         action: function (e, dt, node, config) {
+            var that = this;
             var d = [];
             $('.childcheck:checked').each(function () {
                 d.push($(this).val());
@@ -395,7 +460,7 @@ $(function () {
                     async: false,
                     beforeSend: function () {
                         // 禁用按钮防止重复提交
-                        t.button(2).enable(false);
+                        that.enable(false);
                         Util.loading(true);
                     },
                     success: function (data) {
@@ -412,7 +477,7 @@ $(function () {
                     },
                     complete: function () {
                         $("#all_checked").prop("checked", false);
-                        t.button(2).enable(true);
+                        that.enable(true);
                         Util.loading(false);
                     },
                     error: function (data) {
@@ -427,6 +492,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.refund = {
         className: '',
         action: function (e, dt, node, config) {
+            var that = this;
             var d = [];
             $('.childcheck:checked').each(function () {
                 d.push($(this).val());
@@ -447,7 +513,7 @@ $(function () {
                     async: false,
                     beforeSend: function () {
                         // 禁用按钮防止重复提交
-                        t.button(3).enable(false);
+                        that.enable(false);
                         Util.loading(true);
                     },
                     success: function (data) {
@@ -459,7 +525,7 @@ $(function () {
                     },
                     complete: function () {
                         $("#all_checked").prop("checked", false);
-                        t.button(3).enable(true);
+                        that.enable(true);
                         Util.loading(false);
                     },
                     error: function (data) {
@@ -474,6 +540,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.check = {
         className: '',
         action: function (e, dt, node, config) {
+            var that = this;
             var d = [];
             $('.childcheck:checked').each(function () {
                 d.push($(this).val());
@@ -494,7 +561,7 @@ $(function () {
                 async: false,
                 beforeSend: function () {
                     // 禁用按钮防止重复提交
-                    t.button(4).enable(false);
+                    that.enable(false);
                     Util.loading(true);
                 },
                 success: function (data) {
@@ -509,7 +576,7 @@ $(function () {
                 },
                 complete: function () {
                     $("#all_checked").prop("checked", false);
-                    t.button(4).enable(true);
+                    that.enable(true);
                     Util.loading(false);
                 },
                 error: function (data) {
@@ -561,11 +628,9 @@ $(function () {
     $("#all_checked").click(function () {
         var check = $(this).prop("checked");
         $(".icheckbox_minimal").prop("checked", check);
-        t.button(0).enable(check === true);
-        t.button(1).enable(check === true);
-        t.button(2).enable(check === true);
-        t.button(3).enable(check === true);
-        t.button(4).enable(check === true);
+        for (var i = 0; i <= 5; i ++) {
+            t.button(i).enable(check === true);
+        }
     });
 
     /**
@@ -576,12 +641,9 @@ $(function () {
         $('.childcheck:checked').each(function () {
             d.push($(this).val());
         });
-
-        t.button(0).enable(d.length > 0);
-        t.button(1).enable(d.length > 0);
-        t.button(2).enable(d.length > 0);
-        t.button(3).enable(d.length > 0);
-        t.button(4).enable(d.length > 0);
+        for (var i = 0; i <= 5; i ++) {
+            t.button(i).enable(d.length > 0);
+        }
     });
 });
 
