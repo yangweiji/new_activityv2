@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest
 @RequestMapping("sec/admin/user")
 @SessionAttributes("user")
 class UserController : BaseController() {
+
     @Autowired
     private val userService: UserService? = null
 
@@ -42,6 +43,20 @@ class UserController : BaseController() {
     private fun getUser(@RequestParam("id") id: Int): User {
         return userService!!.getUser(id)
     }
+
+    /**
+     * 取得用户信息
+     * @param id
+     * @return
+     */
+    @PostMapping("/getUserInfo")
+    @ResponseBody
+    fun getUserInfo(@RequestBody(required = false) map: Map<String, String>): User? {
+        var username = map["username"].toString()
+
+        return userService!!.getUser(username)
+    }
+
 
     /**
      * 取得用户信息集合

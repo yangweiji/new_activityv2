@@ -10,27 +10,33 @@ Vue.directive('translator', {
     },
     inserted: function (el, binding, vnode) { //2-被插入
         // console.log("2-inserted 被插入");
-        $.ajax({
-            url: "/pub/images",
-            type: "get",
-            data: {fileId: el.attributes["data-url"].value},
-            dataType: "text",
-            success: function (data) {
-                el.src = data;
-            },
-        });
+        var attr = el.attributes["data-url"];
+        if (attr) {
+            $.ajax({
+                url: "/pub/images",
+                type: "get",
+                data: {fileId: el.attributes["data-url"].value},
+                dataType: "text",
+                success: function (data) {
+                    el.src = data;
+                },
+            });
+        }
     },
     update: function (el, binding, vnode) { //3-更新
         // console.log("3-update 更新");
-        $.ajax({
-            url: "/pub/images",
-            type: "get",
-            data: {fileId: el.attributes["data-url"].value},
-            dataType: "text",
-            success: function (data) {
-                el.src = data;
-            },
-        });
+        var attr = el.attributes["data-url"];
+        if (attr) {
+            $.ajax({
+                url: "/pub/images",
+                type: "get",
+                data: {fileId: el.attributes["data-url"].value},
+                dataType: "text",
+                success: function (data) {
+                    el.src = data;
+                },
+            });
+        }
     },
     componentUpdated: function (el, binding, vnode) { //4-更新完成
         // console.log("4-componentUpdated 更新完成");
