@@ -71,7 +71,7 @@ export default {
 
       //团体组织
       items: [],
-      user: null
+      user: {}
     };
   },
   computed: {},

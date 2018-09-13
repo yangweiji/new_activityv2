@@ -206,14 +206,6 @@ function Login() {
 //验证用户身份，小程序页面创建时调用此方法
 //检查用户手机号是否填写，没有绑定手机号强制绑定手机号登录
 function CheckUserValidation() {
-    // var user = wx.getStorageSync("user")
-    // if (!user || !user.mobile) {
-    //     跳转至登录界面验证身份
-    //     wx.redirectTo({
-    //         url: "/pages/login/login"
-    //     });
-    //     return;
-    // }
 
     return new Promise((resolve, reject) => {
         console.log("验证用户身份...")

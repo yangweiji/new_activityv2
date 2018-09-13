@@ -14,13 +14,22 @@ export default {
         }
       }
     });
-    //用户登录小程序
-    this.$kyutil.Login();
-    console.log("App created");
+    // //用户登录小程序
+    // this.$kyutil.Login();
+    console.log("App created...");
   },
   onLaunch: function(options) {},
   onShow: function(options) {
-    console.log("Do something when show.");
+    console.log("App onShow...");
+  },
+  onHide: function() {
+    console.log("App onHide...");
+    wx.clearStorageSync();
+    console.log("clear storage");
+  },
+  onError: function(msg) {
+    console.log("App onError...")
+    console.log(msg)
   },
   methods: {}
 };
