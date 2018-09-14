@@ -1,26 +1,8 @@
 <template>
   <div class="page">
-    <!-- <div class="page__hd">
-      <kyimage src="fl01.png" folder="wx_home" type="banner" />
-      <div class="page__title">北京市马拉松协会</div>
-      <div class="page__desc">运动、健康、快乐、分享、梦想</div>
-    </div> -->
-
     <div class="page__bd">
       <!-- banner begin -->
       <div>
-        <!-- <navigator hover-class="navigator-hover">
-            <span class="community-search">
-            </span>
-        </navigator>  
-        <kyimage src="fl01.png" folder="wx_home" type="banner" />
-        <div class="c-bg"></div> -->
-
-        <!-- <navigator url="../../pages/community/community" hover-class="navigator-hover" class="community-select">
-          <span style="top:5px;">
-            <i class="fa fa-exchange" aria-hidden="true"></i>切换
-          </span>
-        </navigator> -->
         <div class="community-avatar">
           <kyimage :src="user.avatar" type="avatar" />
           <span class="userinfo-name">{{user.displayname}}</span>

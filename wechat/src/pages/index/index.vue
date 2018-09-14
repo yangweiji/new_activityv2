@@ -15,8 +15,8 @@
               <swiper-item>
                 <image mode="aspectFill" :src="item.mobile_avatar" @click="checkdetails(item.activity_id)" class="slide-image" />
                 <span class="poster_title">
-                    {{item.title}}
-                  </span>
+                  {{item.title}}
+                </span>
               </swiper-item>
             </div>
           </swiper>
@@ -47,177 +47,175 @@
 </template>
 
 <script>
-  import activity from '@/components/activity.vue'
-  import kytabs from "@/components/kytabs.vue";
-  export default {
-    data() {
-      return {
-        //ICON
-        //活动信息
-        items: [],
-        //其他活动标签
-        ces: "",
-        //文章集合
-        grids: [{
-            src: "/static/images/images_news.png",
-            name: "赛事活动",
-            url: "/pages/posterlist/posterlist"
-          },
-          {
-            src: "/static/images/activity_notices.png",
-            name: "通知公告",
-            url: "/pages/articlelist/articlelist?articleCategory=1"
-          },
-          {
-            src: "/static/images/images_sport.png",
-            name: "运动指南",
-            url: "/pages/articlelist/articlelist?articleCategory=3"
-          },
-          {
-            src: "/static/images/pictures.png",
-            name: "活动相册",
-            url: "/pages/photos/photos"
-          }
-        ],
-        categories: [{
-            id: "b5",
-            name: "训练"
-          },
-          {
-            id: "b13",
-            name: "装备"
-          },
-          {
-            id: "b12",
-            name: "福利"
-          },
-          {
-            id: "b10,b11",
-            name: "赛事"
-          },
-          {
-            id: "b1",
-            name: "徒步"
-          },
-          {
-            id: "b2",
-            name: "越野"
-          },
-          {
-            id: "b3",
-            name: "聚餐"
-          },
-          {
-            id: "b4",
-            name: "骑行"
-          },
-          {
-            id: "b6",
-            name: "会议"
-          },
-          {
-            id: "b7",
-            name: "招募"
-          },
-          {
-            id: "b8",
-            name: "讲座"
-          },
-          {
-            id: "b10",
-            name: "国内赛事"
-          },
-          {
-            id: "b11",
-            name: "国际赛事"
-          }
-        ],
-        activeTab: 'b5',
-        //活动标签分类
-        //默认的团体组织
-        community: null,
-        //是否显示面板指示点
-        indicatorDots: true,
-        //是否自动切换
-        autoplay: true,
-        //自动切换时间间隔
-        interval: 5000,
-        //滑动动画时长
-        duration: 900,
-        //是否采用衔接滑动
-        circular: true,
-        //图片的url地址
-        imgUrls: [],
-        posters: null
-      };
-    },
-    computed: {
-    },
-    components: {
-      activity,
-      kytabs
-    },
-    methods: {
-      //获取活动信息
-      getData() {
-        var that = this;
-        that.items = null;
-        var param = {
-          communityId: that.community.id,
-          t: that.activeTab
+import activity from "@/components/activity.vue";
+import kytabs from "@/components/kytabs.vue";
+export default {
+  data() {
+    return {
+      //ICON
+      //活动信息
+      items: [],
+      //其他活动标签
+      ces: "",
+      //文章集合
+      grids: [
+        {
+          src: "/static/images/images_news.png",
+          name: "赛事活动",
+          url: "/pages/posterlist/posterlist"
+        },
+        {
+          src: "/static/images/activity_notices.png",
+          name: "通知公告",
+          url: "/pages/articlelist/articlelist?articleCategory=1"
+        },
+        {
+          src: "/static/images/images_sport.png",
+          name: "运动指南",
+          url: "/pages/articlelist/articlelist?articleCategory=3"
+        },
+        {
+          src: "/static/images/pictures.png",
+          name: "活动相册",
+          url: "/pages/photos/photos"
         }
-        this.$kyutil.get("/pub/wx/home/data", param).then(res => {
-          that.items = res.activities
-          that.posters = res.posters
-        })
-      },
-      search() {
-        var that = this;
-        that.items = null;
-        var param = {
-          communityId: that.community.id,
-          t: that.activeTab
+      ],
+      categories: [
+        {
+          id: "b5",
+          name: "训练"
+        },
+        {
+          id: "b13",
+          name: "装备"
+        },
+        {
+          id: "b12",
+          name: "福利"
+        },
+        {
+          id: "b10,b11",
+          name: "赛事"
+        },
+        {
+          id: "b1",
+          name: "徒步"
+        },
+        {
+          id: "b2",
+          name: "越野"
+        },
+        {
+          id: "b3",
+          name: "聚餐"
+        },
+        {
+          id: "b4",
+          name: "骑行"
+        },
+        {
+          id: "b6",
+          name: "会议"
+        },
+        {
+          id: "b7",
+          name: "招募"
+        },
+        {
+          id: "b8",
+          name: "讲座"
+        },
+        {
+          id: "b10",
+          name: "国内赛事"
+        },
+        {
+          id: "b11",
+          name: "国际赛事"
         }
-        this.$kyutil.get("/pub/wx/home/search", param).then(res => {
-          that.items = res
-        })
-      },
-      //主要活动标签分类触发事件，重新获取相应的数据
-      tabClick(e) {
-        this.search();
-      },
-      //查看活动详情
-      checkdetails(activityId) {
-        if (activityId)
-          wx.navigateTo({
-            url: "../../pages/details/details?activityId=" + activityId
-          })
-      },
-      //查看文章分类列表
-      articlelist(articleCategory) {
-        wx.navigateTo({
-          url: "../../pages/articlelist/articlelist?articleCategory=" +
-            articleCategory
-        })
-      }
-    },
-    //页面创建完成，获取活动信息
-    created() {
-    },
-    onShow() {
-      console.log("首页显示...");
+      ],
+      activeTab: null,
+      //活动标签分类
+      //默认的团体组织
+      community: null,
+      //是否显示面板指示点
+      indicatorDots: true,
+      //是否自动切换
+      autoplay: true,
+      //自动切换时间间隔
+      interval: 5000,
+      //滑动动画时长
+      duration: 900,
+      //是否采用衔接滑动
+      circular: true,
+      //图片的url地址
+      imgUrls: [],
+      posters: null
+    };
+  },
+  computed: {},
+  components: {
+    activity,
+    kytabs
+  },
+  methods: {
+    //获取活动信息
+    getData() {
       var that = this;
-      that.activeTab = this.$root.$mp.query.activeTab;
-      if (!that.activeTab) {
-        that.activeTab = 'b5'; //训练
-      }
-
+      that.items = null;
+      var param = {
+        communityId: that.community.id,
+        t: that.activeTab
+      };
+      this.$kyutil.get("/pub/wx/home/data", param).then(res => {
+        that.items = res.activities;
+        that.posters = res.posters;
+      });
+    },
+    search() {
+      var that = this;
+      that.items = null;
+      var param = {
+        communityId: that.community.id,
+        t: that.activeTab
+      };
+      this.$kyutil.get("/pub/wx/home/search", param).then(res => {
+        that.items = res;
+      });
+    },
+    //主要活动标签分类触发事件，重新获取相应的数据
+    tabClick(e) {
+      this.search();
+    },
+    //查看活动详情
+    checkdetails(activityId) {
+      if (activityId)
+        wx.navigateTo({
+          url: "../../pages/details/details?activityId=" + activityId
+        });
+    },
+    //查看文章分类列表
+    articlelist(articleCategory) {
+      wx.navigateTo({
+        url:
+          "../../pages/articlelist/articlelist?articleCategory=" +
+          articleCategory
+      });
+    }
+  },
+  //页面创建完成，获取活动信息
+  created() {},
+  onShow() {
+    console.log("首页显示...");
+    var that = this;
+    if (!that.activeTab) {
+      that.activeTab = this.$root.$mp.query.activeTab || "b5"; //训练
       //如果有参数值，获取北京市马拉松协会的活动内容
       if (this.$root.$mp.query.activeTab) {
         that.community = {
           id: 1, //默认的组织团体ID
           name: "北京市马拉松协会",
-          background: "NzrSDNSBEP.png",
+          background: "NzrSDNSBEP.png"
         };
         //设置标题
         wx.setNavigationBarTitle({
@@ -225,47 +223,47 @@
         });
         that.getData();
         return;
-      };
-
-      //切换团体组织后的处理
-      if (!that.$store.state.community) {
-        //根据用户登录后获取的团体组织信息加载活动内容
-        this.$kyutil.Login().then(function(res) {
-          that.community = that.$store.state.community;
-          //设置标题
-          wx.setNavigationBarTitle({
-            title: that.community.name
-          });
-
-          that.getData();
-        });
       }
-      else {
+    }
+
+    //切换团体组织后的处理
+    if (!that.$store.state.community) {
+      //根据用户登录后获取的团体组织信息加载活动内容
+      this.$kyutil.Login().then(function(res) {
         that.community = that.$store.state.community;
         //设置标题
         wx.setNavigationBarTitle({
           title: that.community.name
         });
+
         that.getData();
-      }
+      });
+    } else {
+      that.community = that.$store.state.community;
+      //设置标题
+      wx.setNavigationBarTitle({
+        title: that.community.name
+      });
+      that.getData();
     }
-  };
+  }
+};
 </script>
 
 <style scoped>
-  .slide-image {
-    width: 100%;
-    height: 100%;
-  }
-  .poster_title {
-    font-size: 12px;
-    color: #fff;
-    background-color: #fff;
-  }
-  .c-blocks {
-    border-top: 0px;
-    border-left: 0px;
-    background-color: #ffffff;
-    text-align: center;
-  }
+.slide-image {
+  width: 100%;
+  height: 100%;
+}
+.poster_title {
+  font-size: 12px;
+  color: #fff;
+  background-color: #fff;
+}
+.c-blocks {
+  border-top: 0px;
+  border-left: 0px;
+  background-color: #ffffff;
+  text-align: center;
+}
 </style>
