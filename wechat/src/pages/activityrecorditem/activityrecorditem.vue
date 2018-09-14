@@ -80,6 +80,8 @@ export default {
         .then(res => {});
     },
     back() {
+      //保存处理
+      this.save();
       wx.navigateBack({
         delta: 1
       });
