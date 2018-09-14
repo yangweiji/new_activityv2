@@ -4,6 +4,7 @@ import com.kylin.activity.databases.tables.daos.*
 import com.kylin.activity.databases.tables.pojos.*
 import com.kylin.activity.util.CommonService
 import com.kylin.activity.util.KylinUtil
+import com.kylin.activity.util.LogUtil
 import org.jooq.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -119,16 +120,23 @@ class ActivityUserRecordService {
         if(record.id != null && record.id > 0){
             activityUserRecordDao!!.update(record)
         } else {
-            synchronized(record.activityUserId) {
-                var existRecord: ActivityUserRecord?
-                var item = create!!.resultQuery("select * from  activity_user_record   where activity_user_id = ? and DATE(`record_time`)=DATE(?)", record.activityUserId, record.recordTime)
-                if (item.count() > 0) {
-                    existRecord = item.fetchOneInto(ActivityUserRecord::class.java)
-                    existRecord.pictures = record.pictures
-                    existRecord.notes = record.notes
-                    activityUserRecordDao!!.update(existRecord)
-                } else {
-                    activityUserRecordDao!!.insert(record)
+            if (record.activityUserId == null) {
+                LogUtil.printLog("保存打卡记录时，参数异常，打卡用户ID不能为空！")
+            }
+            else {
+                synchronized(record.activityUserId) {
+                    var existRecord: ActivityUserRecord?
+                    var item = create!!.resultQuery("select * from  activity_user_record   where activity_user_id = ? and DATE(`record_time`)=DATE(?)", record.activityUserId, record.recordTime)
+                    if (item.count() > 0) {
+                        existRecord = item.fetchOneInto(ActivityUserRecord::class.java)
+                        existRecord.pictures = record.pictures
+                        existRecord.notes = record.notes
+                        activityUserRecordDao!!.update(existRecord)
+                        LogUtil.printLog("更新打卡记录OK: ${record.activityUserId}, ${record.pictures}")
+                    } else {
+                        activityUserRecordDao!!.insert(record)
+                        LogUtil.printLog("添加打卡记录OK: ${record.activityUserId}, ${record.pictures}")
+                    }
                 }
             }
         }
