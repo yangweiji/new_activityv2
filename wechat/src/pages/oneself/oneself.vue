@@ -116,7 +116,7 @@
               <image src="/static/images/integral_image.png" style="width:25px;height: 25px;margin-right: 5px" />
             </div>
             <div class="weui-cell__bd weui-cell_primary">
-              <div>积分</div>
+              <div>团体个人积分</div>
             </div>
             <div class="weui-cell_integral">{{item.score}}</div>
           </navigator>
@@ -126,7 +126,7 @@
               <image src="/static/images/vip_image.png" style="width: 25px;height: 25px;margin-right: 5px" />
             </div>
             <div class="weui-cell__bd weui-cell_primary">
-              <div>会员</div>
+              <div>认证团体会员</div>
             </div>
             <div class="weui-cell_comment">{{vipText}}</div>
           </navigator>

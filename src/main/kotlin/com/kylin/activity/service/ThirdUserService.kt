@@ -258,7 +258,11 @@ class ThirdUserService {
         var item = create!!.selectFrom(Tables.COMMUNITY_USER)
                 .where(Tables.COMMUNITY_USER.COMMUNITY_ID.eq(communityId))
                 .and(Tables.COMMUNITY_USER.USER_ID.eq(userId))
-                .fetchOneInto(CommunityUser::class.java)
+                .fetchOne()
+        if (item != null)
+        {
+            return item.into(CommunityUser::class.java)
+        }
         return item
     }
 

@@ -197,14 +197,16 @@ class WxProfileController {
     fun getVipInfo(@RequestParam(required = false) userId: Int,
                    @RequestParam(required = false) communityId: Int): Any {
 
-        var result = mutableMapOf<String, Any>()
+        var result = mutableMapOf<String, Any?>()
         var user = userService!!.getUser(userId)
         result["user"] = user
         var community = communityService!!.getCommunity(communityId)
         result["community"] = community
         result["vipYear"] = thirdUserService!!.getVipYear(communityId, userId)
+
         //取得团体用户信息
-        result["communityUser"] = thirdUserService!!.getCommunityUser(communityId, userId)!!
+        //有可能为null值，新用户注册后认证成为会员，没有加入任何团体的情况
+        result["communityUser"] = thirdUserService!!.getCommunityUser(communityId, userId)
 
         return result
     }
