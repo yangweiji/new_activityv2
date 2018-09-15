@@ -98,6 +98,7 @@ public class Keys {
     public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_PRIMARY;
     public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = UniqueKeys0.KEY_ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID;
     public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_PRIMARY = UniqueKeys0.KEY_ACTIVITY_USER_RECORD_PRIMARY;
+    public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX = UniqueKeys0.KEY_ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX;
     public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = UniqueKeys0.KEY_ARTICLE_PRIMARY;
     public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = UniqueKeys0.KEY_COMMUNITY_PRIMARY;
     public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = UniqueKeys0.KEY_COMMUNITY_USER_PRIMARY;
@@ -151,6 +152,7 @@ public class Keys {
         public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_PRIMARY = createUniqueKey(ActivityUser.ACTIVITY_USER, "KEY_activity_user_PRIMARY", ActivityUser.ACTIVITY_USER.ID);
         public static final UniqueKey<ActivityUserRecord> KEY_ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = createUniqueKey(ActivityUser.ACTIVITY_USER, "KEY_activity_user_idx_activity_user_user_id_activity_id", ActivityUser.ACTIVITY_USER.USER_ID, ActivityUser.ACTIVITY_USER.ACTIVITY_ID);
         public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_PRIMARY = createUniqueKey(com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD, "KEY_activity_user_record_PRIMARY", com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD.ID);
+        public static final UniqueKey<ActivityUserRecordRecord> KEY_ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX = createUniqueKey(com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD, "KEY_activity_user_record_activity_user_record_unique_idx", com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD.ACTIVITY_USER_ID, com.kylin.activity.databases.tables.ActivityUserRecord.ACTIVITY_USER_RECORD.RECORD_TIME);
         public static final UniqueKey<ArticleRecord> KEY_ARTICLE_PRIMARY = createUniqueKey(Article.ARTICLE, "KEY_article_PRIMARY", Article.ARTICLE.ID);
         public static final UniqueKey<CommunityRecord> KEY_COMMUNITY_PRIMARY = createUniqueKey(Community.COMMUNITY, "KEY_community_PRIMARY", Community.COMMUNITY.ID);
         public static final UniqueKey<CommunityUserRecord> KEY_COMMUNITY_USER_PRIMARY = createUniqueKey(CommunityUser.COMMUNITY_USER, "KEY_community_user_PRIMARY", CommunityUser.COMMUNITY_USER.ID);

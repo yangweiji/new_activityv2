@@ -56,6 +56,7 @@ public class Indexes {
     public static final Index ACTIVITY_TICKET_PRIMARY = Indexes0.ACTIVITY_TICKET_PRIMARY;
     public static final Index ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = Indexes0.ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID;
     public static final Index ACTIVITY_USER_PRIMARY = Indexes0.ACTIVITY_USER_PRIMARY;
+    public static final Index ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX = Indexes0.ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX;
     public static final Index ACTIVITY_USER_RECORD_PRIMARY = Indexes0.ACTIVITY_USER_RECORD_PRIMARY;
     public static final Index ARTICLE_PRIMARY = Indexes0.ARTICLE_PRIMARY;
     public static final Index COMMUNITY_PRIMARY = Indexes0.COMMUNITY_PRIMARY;
@@ -83,6 +84,7 @@ public class Indexes {
         public static Index ACTIVITY_TICKET_PRIMARY = createIndex("PRIMARY", ActivityTicket.ACTIVITY_TICKET, new OrderField[] { ActivityTicket.ACTIVITY_TICKET.ID }, true);
         public static Index ACTIVITY_USER_IDX_ACTIVITY_USER_USER_ID_ACTIVITY_ID = createIndex("idx_activity_user_user_id_activity_id", ActivityUser.ACTIVITY_USER, new OrderField[] { ActivityUser.ACTIVITY_USER.USER_ID, ActivityUser.ACTIVITY_USER.ACTIVITY_ID }, true);
         public static Index ACTIVITY_USER_PRIMARY = createIndex("PRIMARY", ActivityUser.ACTIVITY_USER, new OrderField[] { ActivityUser.ACTIVITY_USER.ID }, true);
+        public static Index ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX = createIndex("activity_user_record_unique_idx", ActivityUserRecord.ACTIVITY_USER_RECORD, new OrderField[] { ActivityUserRecord.ACTIVITY_USER_RECORD.ACTIVITY_USER_ID, ActivityUserRecord.ACTIVITY_USER_RECORD.RECORD_TIME }, true);
         public static Index ACTIVITY_USER_RECORD_PRIMARY = createIndex("PRIMARY", ActivityUserRecord.ACTIVITY_USER_RECORD, new OrderField[] { ActivityUserRecord.ACTIVITY_USER_RECORD.ID }, true);
         public static Index ARTICLE_PRIMARY = createIndex("PRIMARY", Article.ARTICLE, new OrderField[] { Article.ARTICLE.ID }, true);
         public static Index COMMUNITY_PRIMARY = createIndex("PRIMARY", Community.COMMUNITY, new OrderField[] { Community.COMMUNITY.ID }, true);

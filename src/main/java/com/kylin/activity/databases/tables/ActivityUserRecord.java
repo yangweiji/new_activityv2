@@ -40,7 +40,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
 
-    private static final long serialVersionUID = -295839332;
+    private static final long serialVersionUID = 1282821156;
 
     /**
      * The reference instance of <code>activity_user_record</code>
@@ -122,7 +122,7 @@ public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
      */
     @Override
     public List<Index> getIndexes() {
-        return Arrays.<Index>asList(Indexes.ACTIVITY_USER_RECORD_PRIMARY);
+        return Arrays.<Index>asList(Indexes.ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX, Indexes.ACTIVITY_USER_RECORD_PRIMARY);
     }
 
     /**
@@ -146,7 +146,7 @@ public class ActivityUserRecord extends TableImpl<ActivityUserRecordRecord> {
      */
     @Override
     public List<UniqueKey<ActivityUserRecordRecord>> getKeys() {
-        return Arrays.<UniqueKey<ActivityUserRecordRecord>>asList(Keys.KEY_ACTIVITY_USER_RECORD_PRIMARY);
+        return Arrays.<UniqueKey<ActivityUserRecordRecord>>asList(Keys.KEY_ACTIVITY_USER_RECORD_PRIMARY, Keys.KEY_ACTIVITY_USER_RECORD_ACTIVITY_USER_RECORD_UNIQUE_IDX);
     }
 
     /**
