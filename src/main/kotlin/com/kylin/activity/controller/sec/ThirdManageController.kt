@@ -112,7 +112,8 @@ class ThirdManageController : BaseController() {
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
         if (start.isNullOrBlank()) {
-            //设置为月初
+            //设置为上个月第一日
+            calendar.add(Calendar.MONTH, -1)
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
@@ -260,7 +261,8 @@ class ThirdManageController : BaseController() {
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
         if (start.isNullOrBlank()) {
-            //设置为月初
+            //设置为上个月第一日
+            calendar.add(Calendar.MONTH, -1)
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
@@ -321,7 +323,8 @@ class ThirdManageController : BaseController() {
         var sdf = SimpleDateFormat("yyyy-MM-dd")
         var start = request.getParameter("start")
         if (start.isNullOrBlank()) {
-            //设置为月初
+            //设置为上个月第一日
+            calendar.add(Calendar.MONTH, -1)
             calendar.set(Calendar.DAY_OF_MONTH, 1)
             start = sdf.format(calendar.time)
         }
