@@ -305,6 +305,16 @@ function emailValid(email) {
     return false
 }
 
+//出生日期验证，格式YYYY-MM-DD
+function birthdayValid(val) {
+    var pattern = /^((19[2-9]\d{1})|(20((0[0-9])|(1[0-8]))))\-((0?[1-9])|(1[0-2]))\-((0?[1-9])|([1-2][0-9])|30|31)$/;
+    if (pattern.test(val)) {
+        var date = new Date(val);
+        var month = val.substring(val.indexOf("-") + 1, val.lastIndexOf("-"));
+        return date && (date.getMonth() + 1 == parseInt(month));
+    }
+    return false;
+}
 
 function wxAlert(msg) {
     return new Promise((resolve, reject) => {
@@ -376,5 +386,6 @@ export default {
     post: httpPost,
     idcardValid: IdentityCodeValid,
     emailValid: emailValid,
+    birthdayValid: birthdayValid,
     alert: wxAlert
 }

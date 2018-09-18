@@ -219,6 +219,19 @@ export default {
           activityUser.mobile = attendInfo.value;
         }
         activityUser.otherInfo[attendInfo.title] = attendInfo.value;
+
+        //验证出生日期
+        if (attendInfo.title.indexOf('出生日期') >= 0 && !that.$kyutil.birthdayValid(attendInfo.value)) {
+          that.errorMessage = "您的出生日期不合法，正确格式:如1990-09-09，请重新输入";
+          that.resetError();
+          return;
+        }
+        //验证身份证号
+        if (attendInfo.title.indexOf('身份证号') >= 0 && !that.$kyutil.idcardValid(attendInfo.value)) {
+          that.errorMessage = "您的身份证号不合法，请重新输入";
+          that.resetError();
+          return;
+        }
       }
       activityUser.otherInfo = JSON.stringify(activityUser.otherInfo);
       activityUser.price = that.realPrice; // 抵扣后金额
@@ -250,12 +263,6 @@ export default {
 
     that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
     that.loaded = false;
-    // this.$kyutil.CheckUserValidation();
-    // var user = this.$kyutil.GetUser();
-    // if (user) {
-    //   this.userId = user.id;
-    //   this.getData();
-    // }
 
     this.$kyutil.CheckUserValidation().then(function(res) {
       var user = that.$kyutil.GetUser();

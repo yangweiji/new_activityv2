@@ -40,7 +40,7 @@
               <div class="weui-form-preview__item" v-for="attendInfoItem in item.attendInfos" :key="attendInfoItem.key">
                 <div class="weui-form-preview__label" v-if="attendInfoItem.type=='file'">{{attendInfoItem.title}}</div>
                 <div class="weui-form-preview__value" v-if="attendInfoItem.type=='file'" style="float:left;width:100%;">
-                  <field :config="{type: 'file'}" :disabled="true" v-model="item.otherInfo[attendInfoItem.title]" />      
+                  <field :config="{type: 'file'}" :disabled="true" v-model="item.otherInfo[attendInfoItem.title]" />
                 </div>
               </div>
               <!-- 图像上传字段靠最后 end -->
@@ -62,7 +62,6 @@
             </navigator>
           </div>
         </div>
-
 
         <!--未报名-->
         <div v-if="!isAttend && !overDue">
@@ -153,7 +152,7 @@ export default {
       isAttendNow: false,
       attFields: null,
       //活动是否结束
-      overEnd: false,
+      overEnd: false
     };
   },
   computed: {
@@ -373,6 +372,19 @@ export default {
           activityUser.mobile = attendInfo.value;
         }
         activityUser.otherInfo[attendInfo.title] = attendInfo.value;
+
+        //验证出生日期
+        if (attendInfo.title.indexOf('出生日期') >= 0 && !that.$kyutil.birthdayValid(attendInfo.value)) {
+          that.errorMessage = "您的出生日期不合法，正确格式:如1990-09-09，请重新输入";
+          that.resetError();
+          return;
+        }
+        //验证身份证号
+        if (attendInfo.title.indexOf('身份证号') >= 0 && !that.$kyutil.idcardValid(attendInfo.value)) {
+          that.errorMessage = "您的身份证号不合法，请重新输入";
+          that.resetError();
+          return;
+        }
       }
       activityUser.otherInfo = JSON.stringify(activityUser.otherInfo);
       activityUser.price = that.realPrice; // 抵扣后金额
@@ -485,7 +497,8 @@ export default {
       return;
     }
 
-    that.activityId = this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
+    that.activityId =
+      this.$root.$mp.query.activityId || this.$root.$mp.query.scene;
     that.loaded = false;
 
     this.$kyutil.CheckUserValidation().then(function(res) {
@@ -506,5 +519,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

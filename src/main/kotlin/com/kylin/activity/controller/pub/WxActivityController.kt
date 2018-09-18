@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.env.Environment
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.servlet.http.HttpServletRequest
 import java.util.Calendar
@@ -189,6 +190,9 @@ class WxActivityController {
                 attendInfo.title == "家庭地址" -> user.address
                 attendInfo.title == "微信号" -> user.wechatId
                 attendInfo.title == "身份证号" -> user.idCard
+                attendInfo.title == "出生日期" -> {
+                    if (!user.idCard.isNullOrBlank() && user.idCard.length >= 18) SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("yyyyMMdd").parse(user.idCard.substring(6, 14))) else ""
+                }
                 else -> null
             }
         }
