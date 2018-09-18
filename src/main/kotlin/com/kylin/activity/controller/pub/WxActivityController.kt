@@ -193,6 +193,7 @@ class WxActivityController {
                 attendInfo.title == "出生日期" -> {
                     if (!user.idCard.isNullOrBlank() && user.idCard.length >= 18) SimpleDateFormat("yyyy-MM-dd").format(SimpleDateFormat("yyyyMMdd").parse(user.idCard.substring(6, 14))) else ""
                 }
+                attendInfo.title == "微信昵称" -> user.nickName
                 else -> null
             }
         }
