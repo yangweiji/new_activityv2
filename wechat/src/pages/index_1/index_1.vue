@@ -25,14 +25,14 @@
       <!-- 通知公告、赛事新闻、运动指南、活动相册 -->
       <div class="weui-grids c-blocks">
         <div class="c-kynav" @touchmove="touchmove">
-          <block v-for="(item,index) in grids" :key='index'>
+          <!-- <block v-for="(item,index) in grids" :key='index'>
             <navigator :url="item.url" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
               <image :src='item.src' style="width:50px;height:50px" />
               <div class="weui-grid_label" style="text-align:center">{{item.name}}</div>
             </navigator>
-          </block>
+          </block> -->
 
-          <!-- <block>
+          <block>
             <navigator url="/pages/posterlist/posterlist" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
               <image src='/static/images/images_news.png' style="width:50px;height:50px" />
               <div class="weui-grid_label" style="text-align:center">赛事</div>
@@ -58,29 +58,85 @@
               <image src='/static/images/pictures.png' style="width:50px;height:50px" />
               <div class="weui-grid_label" style="text-align:center">相册</div>
             </navigator>
-          </block> -->
+          </block>
 
-          <!-- 跳转到另外一个小程序中 -->
-          <!-- <block>
+          <!-- 测试跳转到另外一个小程序中 -->
+          <block>
             <navigator target="miniProgram" app-id="wxfe00747cfa9a07f9" path="/pages/index/index" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
               <image src='/static/images/store.png' style="width:50px;height:50px" />
               <div class="weui-grid_label" style="text-align:center">燃宁</div>
             </navigator>
-          </block> -->
+          </block>
+
+          <block>
+            <navigator url="/pages/posterlist/posterlist" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
+              <image src='/static/images/images_news.png' style="width:50px;height:50px" />
+              <div class="weui-grid_label" style="text-align:center">赛事</div>
+            </navigator>
+          </block>
+
+          <block>
+            <navigator url="/pages/articlelist/articlelist?articleCategory=1" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
+              <image src='/static/images/activity_notices.png' style="width:50px;height:50px" />
+              <div class="weui-grid_label" style="text-align:center">公告</div>
+            </navigator>
+          </block>
+
+          <block>
+            <navigator url="/pages/articlelist/articlelist?articleCategory=3" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
+              <image src='/static/images/images_sport.png' style="width:50px;height:50px" />
+              <div class="weui-grid_label" style="text-align:center">指南</div>
+            </navigator>
+          </block>
+
+          <block>
+            <navigator url="/pages/photos/photos" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
+              <image src='/static/images/pictures.png' style="width:50px;height:50px" />
+              <div class="weui-grid_label" style="text-align:center">相册</div>
+            </navigator>
+          </block>
+
+          <!-- 测试跳转到另外一个小程序中 -->
+          <block>
+            <navigator target="miniProgram" app-id="wxfe00747cfa9a07f9" path="/pages/index/index" class="weui-grid" hover-class="weui-grid_active" style="width:25%;border-right:0px;border-bottom:0px">
+              <image src='/static/images/store.png' style="width:50px;height:50px" />
+              <div class="weui-grid_label" style="text-align:center">燃宁</div>
+            </navigator>
+          </block>
         </div>
       </div>
 
+      <!-- tab导航栏 -->
+      <!-- scroll-left属性可以控制滚动条位置 -->
+      <!-- scroll-with-animation滚动添加动画过渡 -->
+      <!-- <scroll-view scroll-x="true" class="c-nav" :scroll-left="navScrollLeft" scroll-with-animation="true">
+        <block v-for="(navItem, index) in categories" :key="index">
+          <view class="c-nav-item" :class="currentTab == index ?'active':''" :data-current="index" @click="switchNav">{{navItem.name}}</view>
+        </block>
+      </scroll-view> -->
+
+      <!-- 页面内容 -->
+      <!-- <swiper class="c-tab-box" :current="currentTab" duration="300" @change="switchTab">
+        <block v-for="(tabItem, index) in swipers" :key="index">
+          <swiper-item class="c-tab-content">
+            <view class="">AAAAAAAAAAAAAAAAAAAAAAAAAAA{{tabItem}}</view>
+          </swiper-item>
+        </block>
+      </swiper> -->
+
       <!-- navbar -->
       <div class="weui-tab">
-        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="5" :tab-width="150" />
+        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="5" />
         <activity :item="item" v-for="item in items" :key="item.id"></activity>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 import activity from "@/components/activity.vue";
+import kytabs from "@/components/kytabs.vue";
 import kytabs_1 from "@/components/kytabs_1.vue";
 export default {
   data() {
@@ -90,29 +146,29 @@ export default {
       items: [],
       //其他活动标签
       ces: "",
-      //文章集合
-      grids: [
-        {
-          src: "/static/images/images_news.png",
-          name: "赛事",
-          url: "/pages/posterlist/posterlist"
-        },
-        {
-          src: "/static/images/activity_notices.png",
-          name: "公告",
-          url: "/pages/articlelist/articlelist?articleCategory=1"
-        },
-        {
-          src: "/static/images/images_sport.png",
-          name: "指南",
-          url: "/pages/articlelist/articlelist?articleCategory=3"
-        },
-        {
-          src: "/static/images/pictures.png",
-          name: "相册",
-          url: "/pages/photos/photos"
-        }
-      ],
+      // //文章集合
+      // grids: [
+      //   {
+      //     src: "/static/images/images_news.png",
+      //     name: "赛事",
+      //     url: "/pages/posterlist/posterlist"
+      //   },
+      //   {
+      //     src: "/static/images/activity_notices.png",
+      //     name: "公告",
+      //     url: "/pages/articlelist/articlelist?articleCategory=1"
+      //   },
+      //   {
+      //     src: "/static/images/images_sport.png",
+      //     name: "指南",
+      //     url: "/pages/articlelist/articlelist?articleCategory=3"
+      //   },
+      //   {
+      //     src: "/static/images/pictures.png",
+      //     name: "相册",
+      //     url: "/pages/photos/photos"
+      //   }
+      // ],
       categories: [
         {
           id: "b5",
@@ -160,11 +216,11 @@ export default {
         },
         {
           id: "b10",
-          name: "国内"
+          name: "国内赛事"
         },
         {
           id: "b11",
-          name: "国际"
+          name: "国际赛事"
         }
       ],
       activeTab: null,
@@ -183,12 +239,19 @@ export default {
       circular: true,
       //图片的url地址
       imgUrls: [],
-      posters: null
+      posters: null,
+
+      // currentTab: 0,
+      // navScrollLeft: 0,
+      // pixelRatio: null,
+      // windowHeight: null,
+      // windowWidth: null
     };
   },
   computed: {},
   components: {
     activity,
+    kytabs,
     kytabs_1
   },
   methods: {
@@ -234,11 +297,42 @@ export default {
           "../../pages/articlelist/articlelist?articleCategory=" +
           articleCategory
       });
-    }
+    },
+
+    // switchNav(event, item) {
+    //   var cur = event.mp.currentTarget.dataset.current;
+    //   //每个tab选项宽度占1/5
+    //   var singleNavWidth = this.windowWidth / 5;
+    //   //tab选项居中
+    //   this.navScrollLeft = (cur - 2) * singleNavWidth;
+    //   if (this.currentTab == cur) {
+    //     return false;
+    //   } else {
+    //     this.currentTab = cur;
+    //   }
+
+    //   this.activeTab = item.id;
+    //   this.tabClick(event);
+    // },
+    // switchTab(event) {
+    //   var cur = event.mp.detail.current;
+    //   var singleNavWidth = this.windowWidth / 5;
+    //   this.currentTab = cur;
+    //   this.navScrollLeft = (cur - 2) * singleNavWidth;
+    // }
   },
   //页面创建完成，获取活动信息
   created() {},
-  onLoad() {},
+  onLoad() {
+    // var that = this;
+    // wx.getSystemInfo({
+    //   success: res => {
+    //     (that.pixelRatio = res.pixelRatio),
+    //       (that.windowHeight = res.windowHeight),
+    //       (that.windowWidth = res.windowWidth);
+    //   }
+    // });
+  },
   onShow() {
     console.log("首页显示...");
     var that = this;

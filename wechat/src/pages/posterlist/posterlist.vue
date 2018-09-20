@@ -2,28 +2,20 @@
   <div class="page">
 
     <div class="page__bd">
-        <div class="weui-tab">
-        <kytabs :tabs="categories" @input="tabClick" v-model="activeTab" :tab-width="200" />
+      <div class="weui-tab">
+        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="4" :tab-width="200" />
 
-        <div class="weui-tab__panel">
-            
-            <div class="weui-panel weui-panel_access">
-              <div class="weui-panel__bd">
-                <div @click="gotoDetails(item)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" 
-                  v-for="item in items" :key="item.id">    
-                    <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
-                      <image class="weui-media-box__thumb" :src="item.mobile_avatar" />
-                    </div>
-                    <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
-                        <div class="weui-media-box__title">{{item.title}}</div>
-                        <div class="weui-media-box__desc" style="float:left"></div>
-                        <div class="weui-media-box__desc" style="float:right">{{item.created}}</div>
-                    </div>
-                </div>
-              </div>
-            </div>
+        <div @click="gotoDetails(item)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" v-for="item in items" :key="item.id">
+          <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
+            <image class="weui-media-box__thumb" :src="item.mobile_avatar" />
+          </div>
+          <div class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+            <div class="weui-media-box__title">{{item.title}}</div>
+            <div class="weui-media-box__desc" style="float:left"></div>
+            <div class="weui-media-box__desc" style="float:right">{{item.created}}</div>
+          </div>
         </div>
-        
+
       </div>
     </div>
 
@@ -31,7 +23,7 @@
 </template>
 
 <script>
-import kytabs from "@/components/kytabs.vue";
+import kytabs_1 from "@/components/kytabs_1.vue";
 export default {
   data() {
     return {
@@ -43,7 +35,7 @@ export default {
         { id: "b13", name: "运动装备" },
         { id: "b12", name: "会员福利" },
         { id: "b10", name: "国内赛事" },
-        { id: "b11", name: "国际赛事" },
+        { id: "b11", name: "国际赛事" }
         // { id: "b1", name: "徒步" },
         // { id: "b2", name: "越野" },
         // { id: "b3", name: "聚餐" },
@@ -56,25 +48,25 @@ export default {
       activeTab: "n1"
     };
   },
-  computed: {
-    
-  },
+  computed: {},
   components: {
-    kytabs
+    kytabs_1
   },
   methods: {
     touchmove(e) {},
     getData() {
       var that = this;
-      this.$kyutil.get("/pub/wx/poster/getPosters", { posterType: this.activeTab }).then(res => {
-        that.items = res;
-      });
+      this.$kyutil
+        .get("/pub/wx/poster/getPosters", { posterType: this.activeTab })
+        .then(res => {
+          that.items = res;
+        });
     },
-    tabClick(){
-      this.getData()
+    tabClick() {
+      this.getData();
     },
     gotoDetails(item) {
-      if(item.activity_id){
+      if (item.activity_id) {
         wx.navigateTo({
           url: "../../pages/details/details?activityId=" + item.activity_id
         });

@@ -16,6 +16,7 @@ export default {
     config: {
         pages: [
             '^pages/index/index',
+            'pages/index/index_1',
             'pages/login/login',
             'pages/register/register',
             'pages/error/error',

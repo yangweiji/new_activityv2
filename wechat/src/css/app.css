@@ -291,6 +291,58 @@ page {
     margin-bottom: -4px;
 }
 
+.c-kynav {
+    overflow-x: auto;
+    display: -webkit-flex;
+    display: flex;
+    top: 0;
+    width: 100%;
+}
+
+.c-nav {
+    height: 100rpx;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    line-height: 80rpx;
+    background: #f7f7f7;
+    font-size: 16px;
+    white-space: nowrap;
+    /* position: fixed; */
+    left: 0;
+}
+
+.c-nav-item {
+    width: 20%;
+    display: inline-block;
+    text-align: center;
+    height: 80rpx;
+    padding-top: 12rpx;
+}
+
+.c-nav-active {
+    color: #F37B1D;
+}
+
+.c-nav-item.active {
+    color: #F37B1D;
+    border-bottom: #F37B1D solid 6rpx;
+    -webkit-transition: -webkit-transform 0.3s;
+    transition: -webkit-transform 0.3s;
+    transition: transform 0.3s;
+    transition: transform 0.3s, -webkit-transform 0.3s;
+}
+
+.c-tab-box {
+    background: greenyellow;
+    padding-top: 80rpx;
+    box-sizing: border-box;
+}
+
+.c-tab-content {
+    overflow-y: scroll;
+}
+
 
 /* weui override */
 
