@@ -68,8 +68,15 @@ new Vue({
                                 body: function (data, row, column, node) {
                                     if (data && data.length > 15) {
                                         //身份证号格式化
-                                        return ("\u200C" + data)
+                                        data =  ("\u200C" + data)
                                     }
+
+                                    if (column == 1) {
+                                        //username, ‌<a id="view" href="javascript:void(0);">15011059477</a>
+                                        data = node.innerText;
+                                    }
+
+                                    return data;
                                 }
                             }
                         },
