@@ -29,12 +29,34 @@ $(function () {
                     text: '导出Excel',
                     title: '素材记录',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6]
+                        columns: [2, 3, 4, 5, 6, 7],
+                        format: {
+                            body: function (data, row, column, node) {
+                                if (data && data.length >= 15) {
+
+                                    if (data.indexOf('img') >= 0) {
+                                        var urls = [];
+                                        var regex = /<img.*?src="([^">]*\/([^">]*?))".*?>/g;
+                                        while (m = regex.exec(data)) {
+                                            // console.log(m[1]);
+                                            urls.push(m[1]);
+                                        }
+                                        // console.log(urls.join('\r\n'));
+                                        return urls.join('\r\n');
+                                    }
+                                    else {
+                                        return ("\u200C" + data);
+                                    }
+                                }
+                                else {
+                                    return data;
+                                }
+                            }
+                        },
                     },
                     modifier: {
                         search: 'none'
                     },
-                    format: {},
                     filename: '素材记录'
                 },
                 {
@@ -50,24 +72,12 @@ $(function () {
                 "type": "POST",
                 "data": function () {
                     //查询条件参数
-                    var param = {
-                    };
+                    var param = {};
                     return JSON.stringify(param);
                 },
                 "dataSrc": ""
             },
             columns: [
-                {"data": "id", "width": "30px"},
-                {"data": "id", "width": "50px"},
-                {"data": "name", "width": "100px", defaultContent: "",
-                    render: function (data, type, row) {
-                        return '<img class="img_thumb" src="'+OssUrl+'/activity/'+data+'">'
-                    }
-                },
-                {"data": "name", "width": "100px"},
-                {"data": "created"},
-                {"data": "category"},
-                {"data": "sequence"},
                 {
                     "data": "action", "width": "120px", defaultContent: "",
                     render: function (data, type, row) {
@@ -75,7 +85,19 @@ $(function () {
                             + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
 
                     }
-                }
+                },
+                {"data": "id", "width": "30px"},
+                {"data": "id", "width": "50px"},
+                {
+                    "data": "name", "width": "100px", defaultContent: "",
+                    render: function (data, type, row) {
+                        return '<img class="img_thumb" src="' + OssUrl + '/activity/' + data + '">'
+                    }
+                },
+                {"data": "name", "width": "100px"},
+                {"data": "created"},
+                {"data": "category"},
+                {"data": "sequence"}
             ],
             //定义指定的栏
             columnDefs: [
@@ -88,7 +110,7 @@ $(function () {
                 {targets: "_all", visible: false}
             ],
             //默认排序
-            order: [[4, 'desc']],
+            order: [[5, 'desc']],
             autoWidth: false,
             scrollX: true,
             //推迟渲染
@@ -96,7 +118,7 @@ $(function () {
         });
     //添加索引号
     t.on('order.dt search.dt', function () {
-        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+        t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         })
     })

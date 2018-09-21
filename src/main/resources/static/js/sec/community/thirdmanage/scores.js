@@ -32,11 +32,11 @@ $(function () {
                     text: '导出Excel',
                     title: '积分',
                     exportOptions: {
-                        // columns: ':visible'
-                        // columns: [
-                        //    1,2,3,4,5,6,7
-                        // ],
-                        columns: ':not(:eq(0))',//jquery to exclude column 0
+                        //columns: ':visible',
+                        columns: [
+                            2,3,4,5,6,7,8
+                         ],
+                       /* columns: ':not(:eq(0))',*///jquery to exclude column 0
                         modifier: {
                             search: 'none'
                         },
@@ -78,6 +78,11 @@ $(function () {
                 "dataSrc": ""
             },
             columns: [
+                {"data": "action", "width": "120px", "defaultContent": "",
+                    render: function (data, type, row) {
+                        return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑"><i class="am-icon-edit"></i></button>'
+                            +  '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除"><i class="am-icon-trash-o"></i></button>';
+                    }},
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "title", "width": "120px"},
@@ -85,12 +90,7 @@ $(function () {
                 {"data": "real_name"},
                 {"data": "score", "width": "30px"},
                 {"data": "created"},
-                {"data": "memo"},
-                {"data": "action", "width": "80px", "defaultContent": "",
-                    render: function (data, type, row) {
-                        return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑"><i class="am-icon-edit"></i></button>'
-                            +  '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除"><i class="am-icon-trash-o"></i></button>';
-                    }},
+                {"data": "memo"}
             ],
 
 
@@ -103,7 +103,7 @@ $(function () {
                 },
             ],
             //默认排序
-            order: [[1, 'desc']],
+            order: [[2, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',
@@ -113,7 +113,7 @@ $(function () {
 
     //添加索引序号
     t.on('order.dt search.dt', function () {
-        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+        t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();

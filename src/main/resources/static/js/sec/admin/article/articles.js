@@ -1,6 +1,6 @@
 $(function () {
     //动态计算主要区域宽度
-   /* $("div.manage-r").width(window.screen.width - 100);*/
+    /* $("div.manage-r").width(window.screen.width - 100);*/
 
     //dataTables部分
     var t = $('#bmTable')
@@ -29,7 +29,7 @@ $(function () {
                     text: '导出Excel',
                     title: '内容记录',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
                     },
                     modifier: {
                         search: 'none'
@@ -59,11 +59,19 @@ $(function () {
                 "dataSrc": ""
             },
             columns: [
+                {
+                    "data": "action", "width": "120px", defaultContent: "",
+                    render: function (data, type, row) {
+                        return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
+                            + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
+                    }
+                },
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "title", "width": "200px"},
                 {"data": "publish_time"},
-                {"data": "status", defaultContent: "",
+                {
+                    "data": "status", defaultContent: "",
                     render: function (data, type, row) {
                         if (data == -1) {
                             return "禁用"
@@ -75,7 +83,8 @@ $(function () {
                     }
                 },
                 {"data": "unit"},
-                {"data": "category", defaultContent: "",
+                {
+                    "data": "category", defaultContent: "",
                     render: function (data, type, row) {
                         if (data == 1) {
                             return "公告通知"
@@ -88,7 +97,8 @@ $(function () {
                         }
                     }
                 },
-                {"data": "community_id", "width": "50px", defaultContent: "",
+                {
+                    "data": "community_id", "width": "50px", defaultContent: "",
                     render: function (data, type, row) {
                         if (data == 0) {
                             return "平台发布"
@@ -104,13 +114,7 @@ $(function () {
                 {"data": "created"},
                 {"data": "created_by"},
                 {"data": "modified"},
-                {"data": "modified_by"},
-                {"data": "action", "width": "80px", defaultContent: "",
-                    render: function (data, type, row) {
-                        return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
-                            + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
-                    }
-                }
+                {"data": "modified_by"}
             ],
             //定义指定的栏
             columnDefs: [
@@ -119,11 +123,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0,1,2,3,4,5,6,-1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 5, 6, -1], visible: true},
                 {targets: "_all", visible: false}
             ],
             //默认排序
-            order: [[3, 'desc']],
+            order: [[4, 'desc']],
             autoWidth: false,
             scrollX: true,
             //推迟渲染
@@ -131,7 +135,7 @@ $(function () {
         });
     //添加索引号
     t.on('order.dt search.dt', function () {
-        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+        t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         })
     })
@@ -159,24 +163,24 @@ $(function () {
      */
     $("#bmTable tbody").on('click', 'button#editrow', function () {
         var data = t.row($(this).parents('tr')).data();
-        location.href="/sec/admin/article/article?id="+data.id;
+        location.href = "/sec/admin/article/article?id=" + data.id;
     })
 
     /**
      * 删除内容
      */
-    $("#bmTable tbody").on('click','button#delrow',function () {
-        var data=t.row($(this).parents('tr')).data()
-        if(window.confirm("确定删除吗？")){
+    $("#bmTable tbody").on('click', 'button#delrow', function () {
+        var data = t.row($(this).parents('tr')).data()
+        if (window.confirm("确定删除吗？")) {
             $.ajax({
-                type:'post',
-                dataType:'json',
-                url:'/sec/admin/article/deleteArticle',
-                data:{
-                    articleId:data.id
+                type: 'post',
+                dataType: 'json',
+                url: '/sec/admin/article/deleteArticle',
+                data: {
+                    articleId: data.id
                 },
-                success:function (data) {
-                    if(data) {
+                success: function (data) {
+                    if (data) {
                         alert("操作成功！")
                         location.reload()
                     }

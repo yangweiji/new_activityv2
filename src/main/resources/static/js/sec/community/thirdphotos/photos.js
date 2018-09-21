@@ -7,10 +7,10 @@ $(function () {
         .on('init.dt', function () {
             // $('#bmBody').show();
         })
-        .on('preXhr.dt', function ( e, settings, data ) {
+        .on('preXhr.dt', function (e, settings, data) {
             Util.loading(true);
         })
-        .on('xhr.dt', function ( e, settings, json, xhr ) {
+        .on('xhr.dt', function (e, settings, json, xhr) {
             // for ( var i=0, ien=json.aaData.length ; i<ien ; i++ ) {
             //     json.aaData[i].sum = json.aaData[i].one + json.aaData[i].two;
             // }
@@ -39,7 +39,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7
+                            2, 3, 4, 5, 6, 7, 8
                         ],
                         // columns: ':not(:eq(-1))',//jquery to exclude column -1
                         modifier: {
@@ -71,19 +71,21 @@ $(function () {
                 "dataSrc": ""
             },
             columns: [
+                {
+                    "data": "action", "width": "120px", defaultContent: "",
+                    render: function (data, type, row) {
+                        return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
+                            + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
+                    }
+                },
                 {"data": "id", "width": "50px"},
                 {"data": "id", "width": "80px"},
-                {"data": "description","width": "300px"},
+                {"data": "description", "width": "300px"},
                 {"data": "activity_id"},
                 {"data": "created"},
                 {"data": "picture"},
                 {"data": "created_by"},
-                {"data": "axtenal_url"},
-                {"data": "action", "width": "80px", defaultContent: "",
-                    render: function (data, type, row) {
-                        return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑活动"><i class="am-icon-edit"></i></button>'
-                            + '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除活动"><i class="am-icon-trash-o"></i></button>'
-                    }},
+                {"data": "axtenal_url"}
             ],
 
             //栏定义
@@ -93,11 +95,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                { targets: [0,1,2,3,4,-1], visible: true},
-                { targets: '_all', visible: false }
+                {targets: [0, 1, 2, 3, 4, 5,-2], visible: true},
+                {targets: '_all', visible: false}
             ],
             //默认排序
-            order: [[1, 'desc']],
+            order: [[2, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',
@@ -111,7 +113,7 @@ $(function () {
 
     //添加索引序号
     t.on('order.dt search.dt', function () {
-        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+        t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();
@@ -131,7 +133,7 @@ $(function () {
     $.fn.dataTable.ext.buttons.create = {
         className: '',
 
-        action: function ( e, dt, node, config ) {
+        action: function (e, dt, node, config) {
             // alert( this.text() );
             location.href = "/sec/community/thirdphotos/createActivityPhoto";
         }
@@ -141,30 +143,27 @@ $(function () {
      * 编辑相册
      */
     $('#bmTable tbody').on('click', 'button#editrow', function () {
-        var data = t.row( $(this).parents('tr') ).data();
+        var data = t.row($(this).parents('tr')).data();
         //->活动相册信息页面
-        location.href = "/sec/community/thirdactivity/activityphotos?activityId="+data.activity_id;
+        location.href = "/sec/community/thirdactivity/activityphotos?activityId=" + data.activity_id;
     });
 
     /**
      * 删除相册
      */
     $('#bmTable tbody').on('click', 'button#delrow', function () {
-        var data = t.row( $(this).parents('tr') ).data();
-        if (window.confirm("删除相册，相册下的图片也将被清除，请确认删除？"))
-        {
-            location.href = "/sec/community/thirdphotos/deleteActivityPhoto/"+data.id;
+        var data = t.row($(this).parents('tr')).data();
+        if (window.confirm("删除相册，相册下的图片也将被清除，请确认删除？")) {
+            location.href = "/sec/community/thirdphotos/deleteActivityPhoto/" + data.id;
         }
     });
 });
 
 new Vue({
     el: '#app',
-    data: {
-    },
+    data: {},
     mounted: function () {
         var that = this;
     },
-    methods: {
-    },
+    methods: {},
 });

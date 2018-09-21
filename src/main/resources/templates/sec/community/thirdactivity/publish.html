@@ -224,7 +224,7 @@
                     <div class="am-u-sm-10">
                         <label class="am-form-label"><input v-model="cacheData.canAttend" type="checkbox" /><span th:text="${typeName}"></span>结束前均可报名</label>
                         <br />
-                        <input v-model="cacheData.activity.attendDueTime" v-show="!cacheData.canAttend" required="required" class="c-datetimepicker attend-due-time" type="text" id="activity_attendDueTime" name="attendDueTime" placeholder="报名截止时间" />
+                        <input v-show="!cacheData.canAttend" required="required" class="c-datetimepicker attend-due-time" type="text" id="activity_attendDueTime" name="attendDueTime" placeholder="报名截止时间" />
                     </div>
                 </div>
                 <div class="am-form-group">

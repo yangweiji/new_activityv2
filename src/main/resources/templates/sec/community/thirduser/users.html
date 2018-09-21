@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
 >
@@ -40,48 +39,58 @@
                 <div class="am-g">
                     <div class="am-form-group">
                         <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
-                            <input id="start" name="start" type="text" class="am-form-field" placeholder="注册开始日期" readonly th:value="${start}">
+                            <input id="start" name="start" type="text" class="am-form-field" placeholder="注册开始日期"
+                                   readonly th:value="${start}">
                             <span class="am-input-group-btn am-datepicker-add-on">
-                                <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                                <button class="am-btn am-btn-default" type="button"><span
+                                        class="am-icon-calendar"></span> </button>
                               </span>
                         </div>
                     </div>
 
                     <div class="am-form-group">
                         <div class="am-input-group am-datepicker-date" data-am-datepicker="{format: 'yyyy-mm-dd'}">
-                            <input id="end" name="end" type="text" class="am-form-field" placeholder="注册结束日期" readonly th:value="${end}">
+                            <input id="end" name="end" type="text" class="am-form-field" placeholder="注册结束日期" readonly
+                                   th:value="${end}">
                             <span class="am-input-group-btn am-datepicker-add-on">
-                                <button class="am-btn am-btn-default" type="button"><span class="am-icon-calendar"></span> </button>
+                                <button class="am-btn am-btn-default" type="button"><span
+                                        class="am-icon-calendar"></span> </button>
                               </span>
                         </div>
                     </div>
                 </div>
                 <div class="am-g">
                     <div class="am-form-group">
-                        <input type="text" id="username" name="username" th:value="${#httpServletRequest.getParameter('username')}"
+                        <input type="text" id="username" name="username"
+                               th:value="${#httpServletRequest.getParameter('username')}"
                                placeholder="请输入用户账号" class="am-form-field am-radius"/>
                     </div>
                     <div class="am-form-group">
-                        <input type="text" id="displayname" name="displayname" th:value="${#httpServletRequest.getParameter('displayname')}"
+                        <input type="text" id="displayname" name="displayname"
+                               th:value="${#httpServletRequest.getParameter('displayname')}"
                                placeholder="请输入显示名称" class="am-form-field am-radius"/>
                     </div>
 
                     <div class="am-form-group">
-                        <input type="text" id="real_name" name="real_name" th:value="${#httpServletRequest.getParameter('real_name')}"
+                        <input type="text" id="real_name" name="real_name"
+                               th:value="${#httpServletRequest.getParameter('real_name')}"
                                placeholder="请输入用户姓名" class="am-form-field am-radius"/>
                     </div>
 
                     <div class="am-form-group">
-                        <input type="text" id="id_card" name="id_card" th:value="${#httpServletRequest.getParameter('id_card')}"
+                        <input type="text" id="id_card" name="id_card"
+                               th:value="${#httpServletRequest.getParameter('id_card')}"
                                placeholder="请输入身份证号" class="am-form-field am-radius"/>
                     </div>
 
                     <div class="am-form-group">
-                        <input type="text" id="level" name="level" th:value="${#httpServletRequest.getParameter('level')}"
+                        <input type="text" id="level" name="level"
+                               th:value="${#httpServletRequest.getParameter('level')}"
                                placeholder="请输入会员年度" class="am-form-field am-radius"/>
                     </div>
                     <div class="am-form-group">
-                        <select id="role" name="role" placeholder="" data-am-selected="" class="am-form-field am-radius">
+                        <select id="role" name="role" placeholder="" data-am-selected=""
+                                class="am-form-field am-radius">
                             <option value=" ">请选择团体角色</option>
                             <option value="管理员" th:selected="${#httpServletRequest.getParameter('role')=='管理员'}">团体管理员
                             </option>
@@ -90,11 +99,14 @@
                         </select>
                     </div>
                     <div class="am-form-group">
-                        <select id="is_black" name="is_black" placeholder="" data-am-selected="" class="am-form-field am-radius">
+                        <select id="is_black" name="is_black" placeholder="" data-am-selected=""
+                                class="am-form-field am-radius">
                             <option value=" ">请选择用户状态</option>
-                            <option value="false" th:selected="${#httpServletRequest.getParameter('is_black')==false}">正常用户
+                            <option value="false" th:selected="${#httpServletRequest.getParameter('is_black')==false}">
+                                正常用户
                             </option>
-                            <option value="true" th:selected="${#httpServletRequest.getParameter('is_black')==true}">黑名单用户
+                            <option value="true" th:selected="${#httpServletRequest.getParameter('is_black')==true}">
+                                黑名单用户
                             </option>
                         </select>
                     </div>
@@ -115,6 +127,7 @@
                            cellspacing="0" width="100%">
                         <thead>
                         <tr>
+                            <th>操作</th>
                             <th>序号</th>
                             <th>编号</th>
                             <th>用户账号</th>
@@ -141,7 +154,6 @@
                             <th>积分</th>
                             <th>加入时间</th>
                             <th>用户状态</th>
-                            <th>操作</th>
                         </tr>
                         </thead>
 

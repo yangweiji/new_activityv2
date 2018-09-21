@@ -37,7 +37,7 @@ $(function () {
                     exportOptions: {
                         // columns: ':visible'
                         columns: [
-                            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+                            2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18
                         ],
                         // columns: ':not(:eq(-1))',//jquery to exclude column -1
                         modifier: {
@@ -80,6 +80,13 @@ $(function () {
                 "dataSrc": ""
             },
             columns: [
+                {
+                    "data": "action", "width": "80px", defaultContent: "",
+                    render: function (data, type, row) {
+                        return '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
+                            + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
+                    }
+                },
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "name"}, //团体组织
@@ -181,13 +188,6 @@ $(function () {
                     }
                 },
                 {"data": "unit"},
-                {
-                    "data": "action", "width": "80px", defaultContent: "",
-                    render: function (data, type, row) {
-                        return '<button id="qrcoderow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="活动二维码"><i class="fa fa-qrcode"></i></button>'
-                            + '<button id="attendrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="活动报名签到"><i class="fa fa-user-o"></i></button>'
-                    }
-                },
             ],
 
             //栏定义
@@ -201,7 +201,7 @@ $(function () {
                 {targets: '_all', visible: false}
             ],
             //默认排序
-            order: [[6, 'desc']],
+            order: [[7, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',
@@ -215,7 +215,7 @@ $(function () {
 
     //添加索引序号
     t.on('order.dt search.dt', function () {
-        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+        t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         });
     }).draw();

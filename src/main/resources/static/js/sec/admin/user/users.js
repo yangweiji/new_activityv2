@@ -59,7 +59,7 @@ new Vue({
                         exportOptions: {
                             // columns: ':visible'
                             columns: [
-                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+                                2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,21,22
                             ],
                             modifier: {
                                 search: 'none'
@@ -102,6 +102,13 @@ new Vue({
                     "dataSrc": ""
                 },
                 columns: [
+                    {
+                        "data": "action", "width": "100px", "defaultContent": "",
+                        render: function (data, type, row) {
+                            return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
+                                + '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
+                        }
+                    },
                     {"data": "id", "width": "30px"},
                     {"data": "id", "width": "50px"},
                     {"data": "username", "default": '',
@@ -170,14 +177,7 @@ new Vue({
                     {"data": "emergency_contact_mobile"},
                     {"data": "wechat_id"},
                     {"data": "role"},  //平台角色
-                    {"data": "total_score", "width": "30px"}, //积分
-                    {
-                        "data": "action", "width": "100px", "defaultContent": "",
-                        render: function (data, type, row) {
-                            return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
-                                + '<button id="btnDelete" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>';
-                        }
-                    },
+                    {"data": "total_score", "width": "30px"}//积分
                 ],
                 //栏定义
                 columnDefs: [
@@ -190,7 +190,7 @@ new Vue({
                     {targets: '_all', visible: false}
                 ],
                 //默认排序
-                "order": [[1, 'desc']],
+                "order": [[2, 'desc']],
                 "autoWidth": false,
                 "scrollX": true,
                 // "scrollY": '50vh',
@@ -200,7 +200,7 @@ new Vue({
 
         //添加索引序号
         t.on('order.dt search.dt', function () {
-            t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+            t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1;
             });
         }).draw();

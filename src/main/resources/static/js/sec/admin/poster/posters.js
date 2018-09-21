@@ -29,7 +29,7 @@ $(function () {
                     text: '导出Excel',
                     title: '海报记录',
                     exportOptions: {
-                        columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                        columns: [2, 3, 4, 5, 6, 7, 8, 9, 10]
                     },
                     modifier: {
                         search: 'none'
@@ -59,6 +59,23 @@ $(function () {
                 "dataSrc": ""
             },
             columns: [
+                {
+                    "data": "action", "width": "140px", defaultContent: "",
+                    render: function (data, type, row) {
+                        if (row.show == true) {
+                            return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
+                                + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
+                                + '<button id="showPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
+                                + '<button id="displayPoster" style="width: 42px;display: none" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
+                        }else{
+                            return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
+                                + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
+                                + '<button id="showPoster" style="width: 42px;display: none" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
+                                + '<button id="displayPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
+                        }
+
+                    }
+                },
                 {"data": "id", "width": "30px"},
                 {"data": "id", "width": "50px"},
                 {"data": "title", "width": "200px"},
@@ -108,24 +125,7 @@ $(function () {
                 {"data": "sequence"},
                 {"data": "link"},
                 {"data": "avatar"},
-                {"data": "mobile_avatar"},
-                {
-                    "data": "action", "width": "120px", defaultContent: "",
-                    render: function (data, type, row) {
-                        if (row.show == true) {
-                            return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
-                                + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
-                                + '<button id="showPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
-                                + '<button id="displayPoster" style="width: 42px;display: none" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
-                        }else{
-                            return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑内容"><i class="am-icon-edit"></i></button>'
-                                + '<button id="delrow" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除内容"><i class="am-icon-trash-o"></i></button>'
-                                + '<button id="showPoster" style="width: 42px;display: none" class="am-btn am-btn-sm am-btn-warning" type="button" title="隐藏海报"><i class="fas fa-toggle-off"></i></button>'
-                                + '<button id="displayPoster" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="显示海报"><i class="fas fa-toggle-on"></i></button>'
-                        }
-
-                    }
-                }
+                {"data": "mobile_avatar"}
             ],
             //定义指定的栏
             columnDefs: [
@@ -134,11 +134,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4, 6, -1], visible: true},
+                {targets: [0, 1, 2, 3, 4, 6,7, -1], visible: true},
                 {targets: "_all", visible: false}
             ],
             //默认排序
-            order: [[6, 'asc']],
+            order: [[7, 'asc']],
             autoWidth: false,
             scrollX: true,
             //推迟渲染
@@ -146,7 +146,7 @@ $(function () {
         });
     //添加索引号
     t.on('order.dt search.dt', function () {
-        t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+        t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
             cell.innerHTML = i + 1;
         })
     })

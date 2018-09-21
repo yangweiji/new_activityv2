@@ -51,9 +51,9 @@ new Vue({
                         text: '导出Excel',
                         title: '用户',
                         exportOptions: {
-                            // columns: ':visible'
+                            //columns: ':visible',
                             columns: [
-                                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22
+                                2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26
                             ],
                             modifier: {
                                 search: 'none'
@@ -67,7 +67,7 @@ new Vue({
                                 }
                             }
                         },
-                        filename: '用户',
+                        filename: '用户记录',
                     },
                     {
                         extend: 'colvis',
@@ -98,11 +98,26 @@ new Vue({
                     "dataSrc": ""
                 },
                 columns: [
+                    {
+                        "data": "action", "width": "100px", "defaultContent": "",
+                        render: function (data, type, row) {
+                            if (row.is_black == true) {
+                                return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
+                                    + '<button id="btnDelete" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
+                                    + '<button id="removeBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="移除黑名单"><i class="fas fa-unlock-alt"></i></button>'
+                            } else {
+                                return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
+                                    + '<button id="btnDelete" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
+                                    + '<button id="addBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="加入黑名单"><i class="fas fa-lock"></i></button>'
+                            }
+                        }
+                    },
                     {"data": "id", "width": "30px"},
                     {"data": "id", "width": "50px"},
-                    {"data": "username", "default": '',
+                    {
+                        "data": "username", "default": '',
                         render: function (data, type, row) {
-                            return '<a id="view" href="javascript:void(0);">'+data+'</a>';
+                            return '<a id="view" href="javascript:void(0);">' + data + '</a>';
                         }
                     },
                     {"data": "displayname", "width:": "80px"},
@@ -179,20 +194,6 @@ new Vue({
                                 return "正常"
                             }
                         }
-                    },
-                    {
-                        "data": "action", "width": "100px", "defaultContent": "",
-                        render: function (data, type, row) {
-                            if(row.is_black==true) {
-                                return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
-                                    + '<button id="btnDelete" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
-                                    + '<button id="removeBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-success" type="button" title="移除黑名单"><i class="fas fa-unlock-alt"></i></button>'
-                            }else{
-                                return '<button id="btnEdit" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑用户"><i class="am-icon-edit"></i></button>'
-                                    + '<button id="btnDelete" style="width: 42px" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除用户"><i class="am-icon-trash-o"></i></button>'
-                                    + '<button id="addBlack" style="width: 42px" class="am-btn am-btn-sm am-btn-warning" type="button" title="加入黑名单"><i class="fas fa-lock"></i></button>'
-                            }
-                        }
                     }
                 ],
                 //栏定义
@@ -206,7 +207,7 @@ new Vue({
                     {targets: '_all', visible: false}
                 ],
                 //默认排序
-                "order": [[1, 'desc']],
+                "order": [[2, 'desc']],
                 "autoWidth": false,
                 "scrollX": true,
                 // "scrollY": '50vh',
@@ -216,7 +217,7 @@ new Vue({
 
         //添加索引序号
         t.on('order.dt search.dt', function () {
-            t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+            t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
                 cell.innerHTML = i + 1;
             });
         }).draw();
@@ -314,6 +315,5 @@ new Vue({
             $('#userinfo-modal').modal({width: 800, height: 600});
         });
     },
-    methods: {
-    }
+    methods: {}
 })
