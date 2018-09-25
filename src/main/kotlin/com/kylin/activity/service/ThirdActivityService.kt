@@ -368,6 +368,17 @@ class ThirdActivityService {
     }
 
     /**
+     * 更新活动报名状态
+     * @param userId: 用户ID
+     * @param activityId: 活动ID
+     * @param status： 报名中签结果状态
+     */
+    fun updateActivityUserStatus(userId: Int, activityId: Int, status: Int?): Any {
+        val sql = "update activity_user set status = ? where user_id = ? and activity_id = ?"
+        return create!!.execute(sql, status, userId, activityId)
+    }
+
+    /**
      * 取得活动报名用户
      * @param id: 报名ID
      * @return 单个活动报名信息

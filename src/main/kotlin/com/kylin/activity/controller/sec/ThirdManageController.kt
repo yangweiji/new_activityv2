@@ -405,7 +405,8 @@ class ThirdManageController : BaseController() {
 
             var result = wxService!!.refund(refundRequest)
             if (result.resultCode == "SUCCESS") {
-                thirdActivityService!!.updateActivityUserStatus(id, 3)
+                //同步更新报名记录的状态
+                thirdActivityService!!.updateActivityUserStatus(order.userId, order.activityId, 3)
 
                 order.refundTradeNo = refundOutTradeNo
                 order.refundTime = start.toTimestamp()
@@ -433,7 +434,8 @@ class ThirdManageController : BaseController() {
             var refundOutTradeNo = order.refundTradeNo
             var result = wxService!!.payService!!.refundQuery(null, null, refundOutTradeNo, null)
             if (result.resultCode == "SUCCESS") {
-                thirdActivityService!!.updateActivityUserStatus(id, 4)
+                //同步更新报名记录的状态
+                thirdActivityService!!.updateActivityUserStatus(order.userId, order.activityId, 4)
                 //退款状态->已完成退款
                 order.refundStatus = 2
                 thirdActivityService!!.updateActivityUserOrder(order)
