@@ -20,6 +20,7 @@ import com.kylin.activity.databases.tables.MaterialLibrary;
 import com.kylin.activity.databases.tables.PayOrder;
 import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
+import com.kylin.activity.databases.tables.TrainingCamp;
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
 
@@ -47,7 +48,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 2098956612;
+    private static final long serialVersionUID = -133000277;
 
     /**
      * The reference instance of <code></code>
@@ -135,6 +136,11 @@ public class DefaultSchema extends SchemaImpl {
     public final ScoreHistory SCORE_HISTORY = com.kylin.activity.databases.tables.ScoreHistory.SCORE_HISTORY;
 
     /**
+     * The table <code>training_camp</code>.
+     */
+    public final TrainingCamp TRAINING_CAMP = com.kylin.activity.databases.tables.TrainingCamp.TRAINING_CAMP;
+
+    /**
      * 用户表
      */
     public final User USER = com.kylin.activity.databases.tables.User.USER;
@@ -185,6 +191,7 @@ public class DefaultSchema extends SchemaImpl {
             PayOrder.PAY_ORDER,
             Poster.POSTER,
             ScoreHistory.SCORE_HISTORY,
+            TrainingCamp.TRAINING_CAMP,
             User.USER,
             Vercode.VERCODE);
     }

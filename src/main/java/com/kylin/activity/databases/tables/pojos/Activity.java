@@ -9,6 +9,8 @@ import java.sql.Timestamp;
 
 import javax.annotation.Generated;
 
+import org.jooq.types.UInteger;
+
 
 /**
  * 活动
@@ -23,7 +25,7 @@ import javax.annotation.Generated;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activity implements Serializable {
 
-    private static final long serialVersionUID = -468386636;
+    private static final long serialVersionUID = -1925091781;
 
     private Integer   id;
     private String    title;
@@ -47,6 +49,7 @@ public class Activity implements Serializable {
     private Boolean   public_;
     private String    scoreInfos;
     private Integer   communityId;
+    private UInteger  campId;
 
     public Activity() {}
 
@@ -73,6 +76,7 @@ public class Activity implements Serializable {
         this.public_ = value.public_;
         this.scoreInfos = value.scoreInfos;
         this.communityId = value.communityId;
+        this.campId = value.campId;
     }
 
     public Activity(
@@ -97,7 +101,8 @@ public class Activity implements Serializable {
         Integer   activityType,
         Boolean   public_,
         String    scoreInfos,
-        Integer   communityId
+        Integer   communityId,
+        UInteger  campId
     ) {
         this.id = id;
         this.title = title;
@@ -121,6 +126,7 @@ public class Activity implements Serializable {
         this.public_ = public_;
         this.scoreInfos = scoreInfos;
         this.communityId = communityId;
+        this.campId = campId;
     }
 
     public Integer getId() {
@@ -299,6 +305,14 @@ public class Activity implements Serializable {
         this.communityId = communityId;
     }
 
+    public UInteger getCampId() {
+        return this.campId;
+    }
+
+    public void setCampId(UInteger campId) {
+        this.campId = campId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("Activity (");
@@ -325,6 +339,7 @@ public class Activity implements Serializable {
         sb.append(", ").append(public_);
         sb.append(", ").append(scoreInfos);
         sb.append(", ").append(communityId);
+        sb.append(", ").append(campId);
 
         sb.append(")");
         return sb.toString();

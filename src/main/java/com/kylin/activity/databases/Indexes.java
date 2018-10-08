@@ -20,6 +20,7 @@ import com.kylin.activity.databases.tables.MaterialLibrary;
 import com.kylin.activity.databases.tables.PayOrder;
 import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
+import com.kylin.activity.databases.tables.TrainingCamp;
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
 
@@ -66,6 +67,7 @@ public class Indexes {
     public static final Index PAY_ORDER_PRIMARY = Indexes0.PAY_ORDER_PRIMARY;
     public static final Index POSTER_PRIMARY = Indexes0.POSTER_PRIMARY;
     public static final Index SCORE_HISTORY_PRIMARY = Indexes0.SCORE_HISTORY_PRIMARY;
+    public static final Index TRAINING_CAMP_PRIMARY = Indexes0.TRAINING_CAMP_PRIMARY;
     public static final Index USER_PRIMARY = Indexes0.USER_PRIMARY;
     public static final Index USER_UK_USERNAME = Indexes0.USER_UK_USERNAME;
     public static final Index VERCODE_PRIMARY = Indexes0.VERCODE_PRIMARY;
@@ -94,6 +96,7 @@ public class Indexes {
         public static Index PAY_ORDER_PRIMARY = createIndex("PRIMARY", PayOrder.PAY_ORDER, new OrderField[] { PayOrder.PAY_ORDER.ID }, true);
         public static Index POSTER_PRIMARY = createIndex("PRIMARY", Poster.POSTER, new OrderField[] { Poster.POSTER.ID }, true);
         public static Index SCORE_HISTORY_PRIMARY = createIndex("PRIMARY", ScoreHistory.SCORE_HISTORY, new OrderField[] { ScoreHistory.SCORE_HISTORY.ID }, true);
+        public static Index TRAINING_CAMP_PRIMARY = createIndex("PRIMARY", TrainingCamp.TRAINING_CAMP, new OrderField[] { TrainingCamp.TRAINING_CAMP.ID }, true);
         public static Index USER_PRIMARY = createIndex("PRIMARY", User.USER, new OrderField[] { User.USER.ID }, true);
         public static Index USER_UK_USERNAME = createIndex("uk_username", User.USER, new OrderField[] { User.USER.USERNAME }, true);
         public static Index VERCODE_PRIMARY = createIndex("PRIMARY", Vercode.VERCODE, new OrderField[] { Vercode.VERCODE.ID }, true);

@@ -25,6 +25,7 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
 import org.jooq.impl.TableImpl;
+import org.jooq.types.UInteger;
 
 
 /**
@@ -40,7 +41,7 @@ import org.jooq.impl.TableImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Activity extends TableImpl<ActivityRecord> {
 
-    private static final long serialVersionUID = 1288932779;
+    private static final long serialVersionUID = 1137841521;
 
     /**
      * The reference instance of <code>activity</code>
@@ -164,6 +165,11 @@ public class Activity extends TableImpl<ActivityRecord> {
      * The column <code>activity.community_id</code>. 团体编号
      */
     public final TableField<ActivityRecord, Integer> COMMUNITY_ID = createField("community_id", org.jooq.impl.SQLDataType.INTEGER, this, "团体编号");
+
+    /**
+     * The column <code>activity.camp_id</code>. 训练营编号
+     */
+    public final TableField<ActivityRecord, UInteger> CAMP_ID = createField("camp_id", org.jooq.impl.SQLDataType.INTEGERUNSIGNED, this, "训练营编号");
 
     /**
      * Create a <code>activity</code> table reference

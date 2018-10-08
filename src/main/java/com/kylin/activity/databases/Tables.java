@@ -20,6 +20,7 @@ import com.kylin.activity.databases.tables.MaterialLibrary;
 import com.kylin.activity.databases.tables.PayOrder;
 import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
+import com.kylin.activity.databases.tables.TrainingCamp;
 import com.kylin.activity.databases.tables.User;
 import com.kylin.activity.databases.tables.Vercode;
 
@@ -118,6 +119,11 @@ public class Tables {
      * 积分历史
      */
     public static final ScoreHistory SCORE_HISTORY = com.kylin.activity.databases.tables.ScoreHistory.SCORE_HISTORY;
+
+    /**
+     * The table <code>training_camp</code>.
+     */
+    public static final TrainingCamp TRAINING_CAMP = com.kylin.activity.databases.tables.TrainingCamp.TRAINING_CAMP;
 
     /**
      * 用户表

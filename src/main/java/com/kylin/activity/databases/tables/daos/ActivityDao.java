@@ -14,6 +14,7 @@ import javax.annotation.Generated;
 
 import org.jooq.Configuration;
 import org.jooq.impl.DAOImpl;
+import org.jooq.types.UInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -214,5 +215,12 @@ public class ActivityDao extends DAOImpl<ActivityRecord, com.kylin.activity.data
      */
     public List<com.kylin.activity.databases.tables.pojos.Activity> fetchByCommunityId(Integer... values) {
         return fetch(Activity.ACTIVITY.COMMUNITY_ID, values);
+    }
+
+    /**
+     * Fetch records that have <code>camp_id IN (values)</code>
+     */
+    public List<com.kylin.activity.databases.tables.pojos.Activity> fetchByCampId(UInteger... values) {
+        return fetch(Activity.ACTIVITY.CAMP_ID, values);
     }
 }
