@@ -930,7 +930,7 @@ Vue.component('user-info', {
         '                        </tr>\n' +
         '                        <tr>\n' +
         '                            <td>性别</td>\n' +
-        '                            <td><span>{{userInfo.gender}}</span></td>\n' +
+        '                            <td><span>{{userInfo.gender==1?"男":"女"}}</span></td>\n' +
         '                            <td>用户姓名</td>\n' +
         '                            <td><span>{{userInfo.realName}}</span></td>\n' +
         '                        </tr>\n' +
