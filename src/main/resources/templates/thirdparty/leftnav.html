@@ -59,6 +59,15 @@
             <a class="xcgl" th:href="@{/sec/community/thirdphotos/photos}"><b></b>相册管理</a>
         </li>
 
+        <li th:classappend="${#httpServletRequest.getRequestURI()}=='/sec/community/thirdactivity/trainingcamp'?'am-nav-header':''"
+            th:if="${#httpServletRequest.remoteUser}
+                    and (${session.USER_CONTEXT.role}=='管理员'
+                            or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '管理员')
+                            or (${session.COMMUNITY_USER_CONTEXT} != null and ${session.COMMUNITY_USER_CONTEXT.role} == '发布者')
+                         )">
+            <span class="fa fa-cog fa-fw"></span>
+            <a class="hdgl" th:href="@{/sec/community/thirdactivity/trainingcamp}"><b></b>训练营管理</a>
+        </li>
         <!--<li th:classappend="${#httpServletRequest.getRequestURI()}=='#'?'am-nav-header':''"><a class="spgl" th:href="@{#}"><b></b>视频管理</a></li>-->
 
         <li class="am-nav-divider"
