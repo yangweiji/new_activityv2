@@ -62,7 +62,6 @@ $(function () {
                     render: function (data, type, row) {
                         return '<button id="editrow" class="am-btn am-btn-sm am-btn-secondary" type="button" title="编辑训练营"><i class="am-icon-edit"></i></button>' +
                             '<button id="delrow" class="am-btn am-btn-sm am-btn-danger" type="button" title="删除训练营"><i class="am-icon-trash-o"></i></button>'
-
                     }
                 },
                 {"data": "id", "width": "30px"},
@@ -79,11 +78,11 @@ $(function () {
                     orderable: false,
                     targets: 0
                 },
-                {targets: [0, 1, 2, 3, 4,5], visible: true},
+                {targets: [0, 1, 2, 3, 4], visible: true},
                 {targets: "_all", visible: false}
             ],
             //默认排序
-            order: [[5, "desc"]],
+            order: [[2, "asc"]],
             autoWidth: false,
             scrollX: true,
             //推迟渲染
@@ -101,7 +100,7 @@ $(function () {
      */
     $("#btnSearch").click(function () {
         t.ajax.reload();
-    })
+    });
 
     /**
      * 添加训练营
@@ -111,7 +110,7 @@ $(function () {
         action: function (e, dt, node, config) {
             location.href = "/sec/community/thirdactivity/trainingcamps";
         }
-    }
+    };
 
     /**
      * 编辑训练营

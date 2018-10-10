@@ -10,11 +10,7 @@ import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.mvc.support.RedirectAttributes
 
-/**
- * @Auther: Administrator
- * @Date: 2018/10/8 12:01
- * @Description:
- */
+
 @Controller
 @RequestMapping("sec/community/thirdactivity")
 class ThirdTrainingCamp : BaseController() {
@@ -23,6 +19,7 @@ class ThirdTrainingCamp : BaseController() {
 
     /**
      * 查询训练营信息
+     * @return 跳转至训练营信息界面
      */
     @CrossOrigin
     @RequestMapping(value = "/trainingcamp", method = [RequestMethod.GET, RequestMethod.POST])
@@ -32,6 +29,7 @@ class ThirdTrainingCamp : BaseController() {
 
     /**
      * 异步查询训练营信息
+     * @return 训练营集合
      */
     @CrossOrigin
     @RequestMapping(value = "/searchTrainingCamp", method = [RequestMethod.POST, RequestMethod.GET])
@@ -44,6 +42,10 @@ class ThirdTrainingCamp : BaseController() {
 
     /**
      * 编辑或添加训练营信息
+     * @param id 训练营编号
+     * @param model 数据模型
+     * @param trainingCamp 训练营
+     * @return 跳转至编辑或添加训练营信息界面
      */
     @GetMapping("/trainingcamps")
     fun addTrainingcamps(@RequestParam(required = false) id: Int?
@@ -61,6 +63,11 @@ class ThirdTrainingCamp : BaseController() {
 
     /**
      * 保存训练营信息
+     * @param trainingCamp 训练营
+     * @param model 数据模型
+     * @param redirectAttributes 重定向传参
+     * @return 重定向至训练营信息界面
+     *
      */
     @PostMapping("/saveTrainingCamps")
     fun saveTrainingCamps(@ModelAttribute("trainingCamp") trainingCamp: TrainingCamp
@@ -73,7 +80,7 @@ class ThirdTrainingCamp : BaseController() {
             trainingCamp.modified = DateUtil.date().toTimestamp()
             trainingCampService!!.update(trainingCamp)
         } else {
-            if(trainingCampService!!.getTrainingCampName(trainingCamp.campName)!=null){
+            if (trainingCampService!!.getTrainingCampName(trainingCamp.campName) != null) {
                 model.addAttribute("errorMessage", "训练营【${trainingCamp.campName}】已存在！")
                 return "/sec/community/thirdactivity/trainingcamps"
             }
@@ -88,6 +95,8 @@ class ThirdTrainingCamp : BaseController() {
 
     /**
      * 删除训练营
+     * @param id 训练营编号
+     * @return 重定向至训练营信息界面
      */
     @CrossOrigin
     @RequestMapping(value = "/deleteTrainingCamp/{id}", method = arrayOf(RequestMethod.GET, RequestMethod.POST))
