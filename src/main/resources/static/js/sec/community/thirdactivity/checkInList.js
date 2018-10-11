@@ -149,7 +149,7 @@ $(function () {
         var ps = d.pictures.split(',');
         for (var i = 0; i < ps.length; i ++) {
             var url = OssUrl+'/activity/'+ps[i];
-            html += '<li>' + '<div class="am-gallery-item am_list_block">' + '<a href="'+url+'" target="_blank" class="am_img_bg" title="点击查看大图"><img class="am_img animated c-img" src="'+url+'"></a>' + '</div>' + '</li>'
+            html += '<li>' + '<div class="am-gallery-item am_list_block">' + '<a href="'+url+'" target="_blank" class="am_img_bg" title="点击查看大图"><img class="am_img animated m-img" src="'+url+'"></a>' + '</div>' + '</li>'
         }
         html += '</ul>';
         html += '</div>';

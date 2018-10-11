@@ -13,7 +13,7 @@
 <script>
 export default {
   name: "",
-  props: ["tabs", "value", "tabWidth", "tabCount"],
+  props: ["tabs", "value", "tabWidth", "tabCount", "i"],
   data() {
     return {
       currentTab: 0,
@@ -55,7 +55,17 @@ export default {
           (that.windowWidth = res.windowWidth);
       }
     });
-  },
+
+    //定义参数索引
+    var index = 0;
+    for (var i = 0; i < this.tabs.length; i++) {
+      if (this.tabs[i].id == this.value) {
+        index = i;
+        break;
+      }
+    }
+    that.currentTab = index;
+},
   methods: {
     switchNav(event, item) {
       var cur = event.mp.currentTarget.dataset.current;
