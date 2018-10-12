@@ -65,7 +65,7 @@ export default {
       }
     }
     that.currentTab = index;
-},
+  },
   methods: {
     switchNav(event, item) {
       var cur = event.mp.currentTarget.dataset.current;

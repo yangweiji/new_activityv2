@@ -173,68 +173,87 @@ export default {
       var that = this;
       var param = {};
       if (e.mp.detail.userInfo) {
-        //允许授权
-        param = {
-          sessionKey: wx.getStorageSync("sessionInfo").sessionKey,
-          encryptedData: e.mp.detail.encryptedData,
-          ivStr: e.mp.detail.iv,
-        }
-        //取得小程序用户信息
-        that.$kyutil.get("/pub/wx/auth/getMiniAppUserInfo", param).then(res=>{
-          console.log("getMiniAppUserInfo: ", res);
-          if (res.code == 200) {
-            //获取openid
-            param = {
-              username: that.username,
-              password: that.password,
-              vercode: that.vercode,
-              openId: res.openid,
-              unionId: res.unionId,
-              nickName: res.nickName,
-              avatarUrl: res.avatarUrl,
-              gender: res.gender
-            }
-            //用户登录:如果系统没有用户信息则直接创建
-            that.$kyutil.post("/pub/wx/auth/userLogin", param).then(res => {
-              console.log("userLogin: " + res)
-              if (res.code == 200) {
-                //取得用户信息
-                that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId, "unionId": param.unionId }).then(res => {
-                    // console.log("user: ", res)
-                    if (res.user) {
-                        //将user存储于storage
-                        wx.setStorageSync("user", res.user)
-                        console.log("storage user->", res.user)
 
-                        if (res.community) {
-                          that.$store.state.community = res.community
-                        }
+        wx.login({
+            success: res => {
+                // 发送 res.code 到后台换取 openId, sessionKey, unionId
+                var errMsg = res.errMsg;
+                if (errMsg != "login:ok") {
+                    console.log("错误提示", "出错了，请稍后再试试...")
+                } else {
+                    var code = res.code;
+                     that.$kyutil.get("/pub/wx/auth/login", { "code": code }).then(res=>{
+                        console.log("sessionInfo: ", res)
+                        if (res.code == 200) {
+                            wx.setStorageSync("sessionInfo", res)
+                            //允许授权，获取用户敏感信息数据
+                            param = {
+                              sessionKey: res.sessionKey,
+                              encryptedData: e.mp.detail.encryptedData,
+                              ivStr: e.mp.detail.iv,
+                            }
+                            //取得小程序用户信息
+                            that.$kyutil.get("/pub/wx/auth/getMiniAppUserInfo", param).then(res=>{
+                              console.log("getMiniAppUserInfo: ", res);
+                              if (res.code == 200) {
+                                //获取openid
+                                param = {
+                                  username: that.username,
+                                  password: that.password,
+                                  vercode: that.vercode,
+                                  openId: res.openid,
+                                  unionId: res.unionId,
+                                  nickName: res.nickName,
+                                  avatarUrl: res.avatarUrl,
+                                  gender: res.gender
+                                }
+                                //用户登录:如果系统没有用户信息则直接创建
+                                that.$kyutil.post("/pub/wx/auth/userLogin", param).then(res => {
+                                  console.log("userLogin: " + res)
+                                  if (res.code == 200) {
+                                    //取得用户信息
+                                    that.$kyutil.get( "/pub/wx/auth/getUserInfo",{ "openid": param.openId, "unionId": param.unionId }).then(res => {
+                                        // console.log("user: ", res)
+                                        if (res.user) {
+                                            //将user存储于storage
+                                            wx.setStorageSync("user", res.user)
+                                            console.log("storage user->", res.user)
 
-                        wx.showToast({
-                          title: '登录成功，跳转中...',
-                          icon: 'success',
-                          duration: 3000,
-                          success: function (e) {
-                            wx.switchTab({
-                              url:"../../pages/index/index",
-                              success: function (e) {
-                                console.log("登录成功，转向首页")
+                                            if (res.community) {
+                                              that.$store.state.community = res.community
+                                            }
+
+                                            wx.showToast({
+                                              title: '登录成功，跳转中...',
+                                              icon: 'success',
+                                              duration: 3000,
+                                              success: function (e) {
+                                                wx.switchTab({
+                                                  url:"../../pages/index/index",
+                                                  success: function (e) {
+                                                    console.log("登录成功，转向首页")
+                                                  }
+                                                });      
+                                              }
+                                            });
+                                        }
+                                    });
+                                    
+                                  }
+                                  else {
+                                    that.isError = true;
+                                    that.infoMessage = res.message;
+                                    that.showTopTipsFun();
+                                  }
+                                })
                               }
-                            });      
-                          }
-                        });
-                    }
-                });
-                
-              }
-              else {
-                that.isError = true;
-                that.infoMessage = res.message;
-                that.showTopTipsFun();
-              }
-            })
-          }
-        })
+                            })
+                            
+                        }
+                    });
+                }
+            }
+        });
         
       }
       else {
