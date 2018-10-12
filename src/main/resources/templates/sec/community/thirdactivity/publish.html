@@ -275,6 +275,17 @@
                     </div>
                 </div>
                 <div class="am-form-group">
+                    <label for="camp_id" class="am-u-sm-2 am-form-label">训练营</label>
+                    <div class="am-u-sm-10">
+                        <select id="camp_id" name="camp_id" data-am-selected="">
+                            <option value=""> -- 请选择 -- </option>
+                            <option th:selected="${data.activity.campId eq c.id}" th:each="c:${trainingCampList}"  th:value="${c.id}" th:text="${c.campName}">
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
                     <div class="am-u-sm-10 am-u-sm-offset-2">
                         <button type="submit" class="am-btn am-btn-primary" id="saveBtn" v-on:click="save()">保存草稿</button>
                         <button type="submit" class="am-btn am-btn-primary" id="publishBtn" v-on:click="publish()">发布</button>

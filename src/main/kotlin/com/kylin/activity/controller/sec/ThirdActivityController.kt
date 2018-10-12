@@ -11,10 +11,7 @@ import com.kylin.activity.databases.tables.pojos.ActivityTicket
 import com.kylin.activity.databases.tables.pojos.ActivityUser
 import com.kylin.activity.model.ActivityAttendInfo
 import com.kylin.activity.model.ActivityScoreInfo
-import com.kylin.activity.service.CommunityService
-import com.kylin.activity.service.ThirdActivityService
-import com.kylin.activity.service.UserService
-import com.kylin.activity.service.WxService
+import com.kylin.activity.service.*
 import com.kylin.activity.util.LogUtil
 import com.xiaoleilu.hutool.date.DateUtil
 import org.springframework.beans.factory.annotation.Autowired
@@ -69,6 +66,12 @@ class ThirdActivityController : BaseController() {
      */
     @Autowired
     private val communityService: CommunityService? = null
+
+    /**
+     * 训练营服务
+     */
+    @Autowired
+    private val trainingCampService: ThirdTrainingCampService? = null
 
     /**
      * 第三方活动管理之
@@ -182,6 +185,10 @@ class ThirdActivityController : BaseController() {
 
         model.addAttribute("titleName", titleName)
         model.addAttribute("data", data)
+
+        //训练应用
+        var trainingCampList = trainingCampService!!.getCommunityTrainingCampList(this.sessionCommunity.id)
+        model.addAttribute("trainingCampList", trainingCampList)
 
         //重新获取当前团体组织的信息
         var community = communityService!!.getCommunity(this.sessionCommunity.id)

@@ -128,6 +128,10 @@ new Vue({
         $('#activity_tags').on('change', function(ev) {
             that.cacheData.activity.tags = ev.currentTarget.value
         }).val(that.cacheData.activity.tags);
+        //训练营变更
+        $('#camp_id').on('change', function (ev) {
+            that.cacheData.activity.campId = ev.currentTarget.value
+        }).val(that.cacheData.activity.campId);
 
         //表单验证提交
         $('#c-thirdactivity-create-form').validator({

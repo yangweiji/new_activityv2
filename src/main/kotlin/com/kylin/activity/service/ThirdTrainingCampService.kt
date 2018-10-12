@@ -43,6 +43,15 @@ class ThirdTrainingCampService {
     }
 
     /**
+     * 查询团体组织下的训练营信息
+     * @param communityId: 团体编号
+     * @return 团体组织下的所有训练营
+     */
+    fun getCommunityTrainingCampList(communityId: Int): List<TrainingCamp> {
+        return trainingCampDao!!.fetchByCommunityId(communityId)
+    }
+
+    /**
      * 获取训练营信息
      * @param id: 训练营id
      * @return 单个训练营
