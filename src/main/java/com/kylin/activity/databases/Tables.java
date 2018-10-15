@@ -22,6 +22,7 @@ import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
 import com.kylin.activity.databases.tables.TrainingCamp;
 import com.kylin.activity.databases.tables.User;
+import com.kylin.activity.databases.tables.VTrainingcamppeople;
 import com.kylin.activity.databases.tables.Vercode;
 
 import javax.annotation.Generated;
@@ -134,4 +135,9 @@ public class Tables {
      * 验证码
      */
     public static final Vercode VERCODE = com.kylin.activity.databases.tables.Vercode.VERCODE;
+
+    /**
+     * VIEW
+     */
+    public static final VTrainingcamppeople V_TRAININGCAMPPEOPLE = com.kylin.activity.databases.tables.VTrainingcamppeople.V_TRAININGCAMPPEOPLE;
 }

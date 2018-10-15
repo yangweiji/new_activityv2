@@ -22,6 +22,7 @@ import com.kylin.activity.databases.tables.Poster;
 import com.kylin.activity.databases.tables.ScoreHistory;
 import com.kylin.activity.databases.tables.TrainingCamp;
 import com.kylin.activity.databases.tables.User;
+import com.kylin.activity.databases.tables.VTrainingcamppeople;
 import com.kylin.activity.databases.tables.Vercode;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = -133000277;
+    private static final long serialVersionUID = 1903677284;
 
     /**
      * The reference instance of <code></code>
@@ -151,6 +152,11 @@ public class DefaultSchema extends SchemaImpl {
     public final Vercode VERCODE = com.kylin.activity.databases.tables.Vercode.VERCODE;
 
     /**
+     * VIEW
+     */
+    public final VTrainingcamppeople V_TRAININGCAMPPEOPLE = com.kylin.activity.databases.tables.VTrainingcamppeople.V_TRAININGCAMPPEOPLE;
+
+    /**
      * No further instances allowed
      */
     private DefaultSchema() {
@@ -193,6 +199,7 @@ public class DefaultSchema extends SchemaImpl {
             ScoreHistory.SCORE_HISTORY,
             TrainingCamp.TRAINING_CAMP,
             User.USER,
-            Vercode.VERCODE);
+            Vercode.VERCODE,
+            VTrainingcamppeople.V_TRAININGCAMPPEOPLE);
     }
 }
