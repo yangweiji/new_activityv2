@@ -131,7 +131,7 @@ $(function () {
                             return "骑行";
                         }
                         else if (data == 'b5') {
-                            return "跑步训练";
+                            return "训练";
                         }
                         else if (data == 'b6') {
                             return "会议";
@@ -143,16 +143,19 @@ $(function () {
                             return "讲座";
                         }
                         else if (data == 'b10') {
-                            return "国内赛事";
+                            return "赛事";
                         }
                         else if (data == 'b11') {
                             return "国际赛事";
                         }
                         else if (data == 'b12') {
-                            return "会员福利";
+                            return "福利";
                         }
                         else if (data == 'b13') {
                             return "运动装备";
+                        }
+                        else if (data == 'b15') {
+                            return "公告";
                         }
                         else {
                             return "";

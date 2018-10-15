@@ -3,7 +3,7 @@
 
     <div class="page__bd">
 
-      <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="4" :tab-width="200" />
+      <kytabs_1 :tabs="categories" v-model="articleCategory" @input="tabClick" :tab-count="3" :tab-width="200" />
 
       <div @click="articledetails(item.id)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" v-for="item in items" :key="item.id">
         <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">
@@ -35,7 +35,7 @@ export default {
       //文章分类数组
       categories: [
         { id: "1", name: "通知公告" },
-        { id: "2", name: "赛事新闻" },
+        // { id: "2", name: "赛事新闻" },
         { id: "3", name: "运动指南" },
         { id: "0", name: "其他" }
       ],

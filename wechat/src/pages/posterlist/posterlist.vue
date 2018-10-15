@@ -30,19 +30,10 @@ export default {
       items: [],
       //文章分类数组
       categories: [
-        { id: "n1", name: "赛事新闻" },
-        { id: "b5", name: "跑步训练" },
-        { id: "b13", name: "运动装备" },
-        { id: "b12", name: "会员福利" },
-        { id: "b10", name: "国内赛事" },
-        { id: "b11", name: "国际赛事" }
-        // { id: "b1", name: "徒步" },
-        // { id: "b2", name: "越野" },
-        // { id: "b3", name: "聚餐" },
-        // { id: "b4", name: "骑行" },
-        // { id: "b6", name: "会议" },
-        // { id: "b7", name: "招募" },
-        // { id: "b8", name: "讲座" }
+        { id: "n1", name: "赛事" },
+        { id: "b5", name: "训练" },
+        { id: "b12", name: "福利" },
+        { id: "b7", name: "招募" },
       ],
       //默认的选项卡片索引值
       activeTab: "n1"

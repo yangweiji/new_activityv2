@@ -100,10 +100,12 @@
                                 <option value="">--请选择--</option>
                                 <option th:selected="${article.category==1}"
                                         th:value="1" th:text="公告通知"></option>
-                                <option th:selected="${article.category==2}"
-                                        th:value="2" th:text="赛事新闻"></option>
+                                <!--<option th:selected="${article.category==2}"-->
+                                        <!--th:value="2" th:text="赛事新闻"></option>-->
                                 <option th:selected="${article.category==3}"
                                         th:value="3" th:text="运动指南"></option>
+                                <option th:selected="${article.category==0}"
+                                        th:value="0" th:text="其他"></option>
                             </select>
                         </div>
                     </div>

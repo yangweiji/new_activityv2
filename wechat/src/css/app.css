@@ -478,3 +478,10 @@ button[type=primary] {
     height: 77px;
     border: 1px solid #d9d9d9;
 }
+
+.home-community {
+    background-color: #1E364E;
+    text-align: center;
+    display: block;
+    color: #fff;
+}

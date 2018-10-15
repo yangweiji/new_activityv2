@@ -56,6 +56,19 @@ export default {
       }
     });
 
+    var that = this;
+    //定义参数索引
+    var index = 0;
+    for (var i = 0; i < this.tabs.length; i++) {
+      if (this.tabs[i].id == this.value) {
+        index = i;
+        break;
+      }
+    }
+    that.currentTab = index;
+  },
+  updated() {
+    var that = this;
     //定义参数索引
     var index = 0;
     for (var i = 0; i < this.tabs.length; i++) {

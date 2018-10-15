@@ -168,11 +168,14 @@
             <div class="banner_nav">
                 <a th:class="${s == 1 ? 'banner_hover': ''}" th:href="@{/?s=1}">最新活动</a>
                 <a th:class="${s == 2 ? 'banner_hover' : ''}" th:href="@{/?s=2}">人气最高</a>
-                <a th:class="${tags == 'b5' ? 'banner_hover' : ''}" th:href="@{/?tags=b5}">跑步训练</a>
-                <a th:class="${tags == 'b13' ? 'banner_hover' : ''}" th:href="@{/?tags=b13}">运动装备</a>
-                <a th:class="${tags == 'b12' ? 'banner_hover' : ''}" th:href="@{/?tags=b12}">会员福利</a>
-                <a th:class="${tags == 'b10' ? 'banner_hover' : ''}" th:href="@{/?tags=b10}">国内赛事</a>
-                <a th:class="${tags == 'b11' ? 'banner_hover' : ''}" th:href="@{/?tags=b11}">国际赛事</a>
+
+                <a th:class="${tags == 'b5' ? 'banner_hover' : ''}" th:href="@{/?tags=b5}">训练</a>
+                <a th:class="${tags == 'b15' ? 'banner_hover' : ''}" th:href="@{/?tags=b15}">公告</a>
+                <!--<a th:class="${tags == 'b13' ? 'banner_hover' : ''}" th:href="@{/?tags=b13}">运动装备</a>-->
+                <a th:class="${tags == 'b12' ? 'banner_hover' : ''}" th:href="@{/?tags=b12}">福利</a>
+                <a th:class="${tags == 'b10' ? 'banner_hover' : ''}" th:href="@{/?tags=b10}">赛事</a>
+                <!--<a th:class="${tags == 'b11' ? 'banner_hover' : ''}" th:href="@{/?tags=b11}">国际赛事</a>-->
+                <a th:class="${tags == 'b7' ? 'banner_hover' : ''}" th:href="@{/?tags=b7}">招募</a>
             </div>
         </div>
     </div>

@@ -15,24 +15,31 @@
                <span th:if="${category}==1">
                     <strong th:classappend="${category}==1">公告通知</strong>
              </span>
-                <span th:if="${category}==2">
-                    <strong th:classappend="${category}==2">赛事新闻</strong>
-            </span>
+                <!--<span th:if="${category}==2">-->
+                    <!--<strong th:classappend="${category}==2">赛事新闻</strong>-->
+            <!--</span>-->
                 <span th:if="${category}==3">
                     <strong th:classappend="${category}==3">运动指南</strong>
             </span>
-                共<span th:text="${#lists.size(article)}"></span>条记录</div>
+                <span th:if="${category}==0">
+                    <strong th:classappend="${category}==0">其他</strong>
+            </span>
+                共<span th:text="${#lists.size(article)}"></span>条记录
+            </div>
         </div>
         <div class="am-tabs am-tabs-d2 am_news_tab">
             <ul class="am-tabs-nav am-cf am_cf">
                 <li class="" th:classappend="${category}==1?'am-active'">
                     <a href="/pub/article/indexArticleCategory/1">公告通知</a>
                 </li>
-                <li class="" th:classappend="${category}==2?'am-active'">
-                    <a href="/pub/article/indexArticleCategory/2">赛事新闻</a>
-                </li>
+                <!--<li class="" th:classappend="${category}==2?'am-active'">-->
+                    <!--<a href="/pub/article/indexArticleCategory/2">赛事新闻</a>-->
+                <!--</li>-->
                 <li class="" th:classappend="${category}==3?'am-active'">
                     <a href="/pub/article/indexArticleCategory/3">运动指南</a>
+                </li>
+                <li class="" th:classappend="${category}==0?'am-active'">
+                    <a href="/pub/article/indexArticleCategory/0">其他</a>
                 </li>
             </ul>
 

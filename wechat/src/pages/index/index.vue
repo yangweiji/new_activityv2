@@ -69,7 +69,10 @@
           </block> -->
         </div>
       </div>
-
+      <!-- 团体组织名称 -->
+      <div class="home-community">
+        <span>{{community.name}}</span>
+      </div>
       <!-- navbar -->
       <div class="weui-tab">
         <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="5" :tab-width="150" />
@@ -119,8 +122,8 @@ export default {
           name: "训练"
         },
         {
-          id: "b13",
-          name: "装备"
+          id: "b15",
+          name: "公告"
         },
         {
           id: "b12",
@@ -131,41 +134,9 @@ export default {
           name: "赛事"
         },
         {
-          id: "b1",
-          name: "徒步"
-        },
-        {
-          id: "b2",
-          name: "越野"
-        },
-        {
-          id: "b3",
-          name: "聚餐"
-        },
-        {
-          id: "b4",
-          name: "骑行"
-        },
-        {
-          id: "b6",
-          name: "会议"
-        },
-        {
           id: "b7",
           name: "招募"
         },
-        {
-          id: "b8",
-          name: "讲座"
-        },
-        {
-          id: "b10",
-          name: "国内"
-        },
-        {
-          id: "b11",
-          name: "国际"
-        }
       ],
       activeTab: null,
       //活动标签分类
