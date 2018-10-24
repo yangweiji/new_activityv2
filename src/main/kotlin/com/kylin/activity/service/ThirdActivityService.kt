@@ -615,7 +615,7 @@ class ThirdActivityService {
      * @return 打卡统计结果
      */
     fun getCheckInList(start: String?, end: String?, activityId: String?, title: String?, username: String?, displayname: String?, id: Int?): Result<Record> {
-        var sql = "select t1.*, t3.title, t4.username, t4.displayname, t4.real_name from activity_user_record t1\n" +
+        var sql = "select t1.*, t3.title, t4.username, t4.displayname, t4.real_name, t4.work_company from activity_user_record t1\n" +
                 "inner join activity_user t2 on t2.id = t1.activity_user_id\n" +
                 "inner join activity t3 on t3.id = t2.activity_id\n" +
                 "inner join `user` t4 on t2.user_id = t4.id\n" +

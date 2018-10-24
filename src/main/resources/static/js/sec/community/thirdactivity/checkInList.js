@@ -30,7 +30,7 @@ $(function () {
                     // charset: 'utf8',
                     title: '打卡查询',
                     exportOptions: {
-                        columns: ':not(:eq(7))',//jquery to exclude column 0
+                        columns: ':not(:eq(-1))',//jquery to exclude column 0
                         modifier: {
                             search: 'none'
                         },
@@ -70,6 +70,7 @@ $(function () {
                 {data: "username", width: "100px"},
                 {data: "displayname"},
                 {data: "real_name"},
+                {data: "work_company"},
                 {data: "notes", width: "100px"},
                 // {data: "pictures"},
                 {data: "record_time"},
@@ -92,7 +93,7 @@ $(function () {
                 {targets: '_all', visible: true}
             ],
             //默认排序
-            order: [[6, 'desc']],
+            order: [[7, 'desc']],
             autoWidth: false,
             scrollX: true,
             // scrollY: '50vh',

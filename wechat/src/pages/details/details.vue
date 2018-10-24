@@ -20,6 +20,8 @@
               </navigator>
             </div>
             <div v-if="item.body" class="weui-article__p">
+              <p v-if="item.start_time">时间: {{item.start_time}} - {{item.end_time}}</p>
+              <p v-if="item.address">地点: {{item.address}}</p>
               <wxParse :content="item.body" />
             </div>
           </div>

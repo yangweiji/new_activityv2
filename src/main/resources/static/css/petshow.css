@@ -2682,8 +2682,8 @@ ul.am-tabs-nav.am-cf.am_cf {
 
 /*自定义样式*/
 .top-text {
-    /*display: inline-block;*/
-    /*line-height: 12px;*/
+    display: inline-block;
+    line-height: 15px;
     max-width: 120px;
     text-overflow: ellipsis;
     overflow: hidden;
