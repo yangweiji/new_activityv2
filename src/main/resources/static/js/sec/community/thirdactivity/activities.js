@@ -157,6 +157,9 @@ $(function () {
                         else if (data == 'b15') {
                             return "公告";
                         }
+                        else if (data == 'b16') {
+                            return "调查问卷";
+                        }
                         else {
                             return "";
                         }
