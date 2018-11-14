@@ -67,7 +67,7 @@ new Vue({
 
                                     if (column == 1) {
                                         //username, ‌<a id="view" href="javascript:void(0);">15011059477</a>
-                                        data = node.innerText;
+                                        data = $('<div>'+data+'</div>').get(0).innerText;
                                     }
 
                                     return data;
