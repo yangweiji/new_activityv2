@@ -671,7 +671,7 @@ class ThirdActivityService {
 
         //检查是否是团体管理员或团体发布者
         var communityUser = communityService!!.getCommunityUser(user.id, activity!!.communityId)
-        if (communityUser != null && !communityUser!!.isBlack)
+        if (communityUser != null)
         {
             if (communityUser!!.role == "管理员" || communityUser!!.role == "发布者") {
                 has = true
