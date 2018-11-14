@@ -49,7 +49,7 @@ import org.jooq.impl.SchemaImpl;
 @SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class DefaultSchema extends SchemaImpl {
 
-    private static final long serialVersionUID = 1903677284;
+    private static final long serialVersionUID = 1070102313;
 
     /**
      * The reference instance of <code></code>
@@ -117,7 +117,7 @@ public class DefaultSchema extends SchemaImpl {
     public final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
-     * The table <code>material_library</code>.
+     * 素材库
      */
     public final MaterialLibrary MATERIAL_LIBRARY = com.kylin.activity.databases.tables.MaterialLibrary.MATERIAL_LIBRARY;
 
@@ -137,7 +137,7 @@ public class DefaultSchema extends SchemaImpl {
     public final ScoreHistory SCORE_HISTORY = com.kylin.activity.databases.tables.ScoreHistory.SCORE_HISTORY;
 
     /**
-     * The table <code>training_camp</code>.
+     * 训练营
      */
     public final TrainingCamp TRAINING_CAMP = com.kylin.activity.databases.tables.TrainingCamp.TRAINING_CAMP;
 

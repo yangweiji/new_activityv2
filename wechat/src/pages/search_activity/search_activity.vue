@@ -80,6 +80,10 @@ export default {
           id: "b7",
           name: "招募"
         },
+        {
+          id: "b16",
+          name: "调查"
+        },
       ],
       times: [
         { date: "不限", id: "0" },

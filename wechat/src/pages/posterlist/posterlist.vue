@@ -3,7 +3,7 @@
 
     <div class="page__bd">
       <div class="weui-tab">
-        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="4" :tab-width="200" />
+        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="4" :tab-width="180" />
 
         <div @click="gotoDetails(item)" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" v-for="item in items" :key="item.id">
           <div class="weui-media-box__hd weui-media-box__hd_in-appmsg" style="width:90px;height">

@@ -102,7 +102,7 @@ public class Tables {
     public static final CommunityUser COMMUNITY_USER = com.kylin.activity.databases.tables.CommunityUser.COMMUNITY_USER;
 
     /**
-     * The table <code>material_library</code>.
+     * 素材库
      */
     public static final MaterialLibrary MATERIAL_LIBRARY = com.kylin.activity.databases.tables.MaterialLibrary.MATERIAL_LIBRARY;
 
@@ -122,7 +122,7 @@ public class Tables {
     public static final ScoreHistory SCORE_HISTORY = com.kylin.activity.databases.tables.ScoreHistory.SCORE_HISTORY;
 
     /**
-     * The table <code>training_camp</code>.
+     * 训练营
      */
     public static final TrainingCamp TRAINING_CAMP = com.kylin.activity.databases.tables.TrainingCamp.TRAINING_CAMP;
 

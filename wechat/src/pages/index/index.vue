@@ -75,7 +75,7 @@
       </div>
       <!-- navbar -->
       <div class="weui-tab">
-        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="5" :tab-width="150" />
+        <kytabs_1 :tabs="categories" v-model="activeTab" @input="tabClick" :tab-count="6" :tab-width="125" />
         <activity :item="item" v-for="item in items" :key="item.id"></activity>
       </div>
     </div>
@@ -136,6 +136,10 @@ export default {
         {
           id: "b7",
           name: "招募"
+        },
+        {
+          id: "b16",
+          name: "调查"
         },
       ],
       activeTab: null,
