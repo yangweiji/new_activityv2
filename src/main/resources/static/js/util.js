@@ -1,5 +1,5 @@
-// var OssUrl = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com'; //测试环境
-var OssUrl = 'https://hxzt2018.oss-cn-beijing.aliyuncs.com'; //正式环境
+var OssUrl = 'https://bjmlsxh.oss-cn-beijing.aliyuncs.com'; //测试环境
+// var OssUrl = 'https://hxzt2018.oss-cn-beijing.aliyuncs.com'; //正式环境
 
 var Util = window.Util || {}
 

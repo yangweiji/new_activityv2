@@ -65,6 +65,15 @@ class WxHomeController {
         return mapOf("posters" to posters, "activities" to activityies)
     }
 
+    /**
+     * 微信首页，获取海报信息 + 默认活动信息
+     */
+    @GetMapping("/getData")
+    fun getData(@RequestParam(required = false) communityId: Int, @RequestParam(required = false) t: String?, @RequestParam(required = false) p: Int, @RequestParam(required = false) n: Int): Any{
+        var posters = getPosters()
+        var activityies = searchActivities(communityId, t, p, n)
+        return mapOf("posters" to posters, "activities" to activityies)
+    }
 
     /**
      * 查询指定团体组织的活动信息
@@ -98,6 +107,39 @@ class WxHomeController {
         return teamActivityItems
     }
 
+    /**
+     * 查询指定团体组织的活动信息
+     * @param communityId: 团体组织标识
+     * @param t: 活动标签分类
+     * @param p: 分页索引
+     * @param n: 记录数
+     * @return 团体组织活动信息集合
+     */
+    fun searchActivities(communityId: Int, t: String?, p: Int, n: Int): Any {
+        //活动标签分类:默认为【训练】
+        var tag = if (t.isNullOrBlank()) "b5" else t!!
+        //获取团体组织活动信息
+        var teamActivities = activityService!!.getTeamActivities(communityId, tag, p, n)
+        //团体组织活动信息
+        var teamActivityItems = mutableListOf<MutableMap<String, Any?>>()
+        for (activity in teamActivities.sortDesc("start_time")) {
+            var map = mutableMapOf<String, Any?>()
+            var avatar: String? = null
+            if (activity["avatar"] != null) {
+                avatar = commonService!!.getDownloadUrl(activity.get("avatar", String::class.java), "middle")
+            }
+            map["id"] = activity.get("id", Int::class.java)
+            map["activity_type"] = activity.get("activity_type", Int::class.java)
+            map["favorite_count"] = activity.get("favorite_count", Int::class.java)
+            map["attend_count"] = activity.get("attend_user_count", Int::class.java)
+            map["avatar"] = avatar
+            map["start_time"] = util!!.fromNow(activity.get("start_time"))
+            map["title"] = activity.get("title").toString()
+            teamActivityItems.add(map)
+        }
+
+        return teamActivityItems
+    }
 
     /**
      * 获取海报信息

@@ -270,6 +270,47 @@ class ActivityService {
         return items
     }
 
+    /**
+     *  获取活动信息、活动参与人数、活动收藏人数及用户选择的团队活动信息
+     *  @param sid: 团体组织标识
+     *  @param tag: 活动标签分类
+     *  @param p: 分页索引
+     *  @param n: 记录数
+     *  @return 团体组织活动信息集合
+     */
+    fun getTeamActivities(sid: Int, tag: String, p: Int, n: Int): Result<Record> {
+
+        //获取团队活动信息
+        var sql = "select t1.id, t1.title, t1.avatar, t1.summary, t1.unit, t1.tags, t1.status, t1.start_time, t1.end_time, t1.attend_due_time, t1.created, t1.created_by, t1.modified, t1.modified_by, t1.attend_infos, t1.address, t1.coordinate, t1.activity_type, t1.public, t1.score_infos, t1.community_id, " +
+                "(select count(*) from activity_user where activity_id = t1.id) attend_user_count," +
+                "(select count(*) from activity_favorite where activity_id = t1.id) favorite_count " +
+                "from activity t1 " +
+                "where t1.status=1 {0} {1} " +
+                "order by t1.start_time desc " +
+                "LIMIT ? OFFSET ?"
+        var sqlsid = ""
+        if (sid != 0) {
+            sqlsid = "and community_id = {0}".replace("{0}", sid.toString())
+        }
+        sql = sql.replace("{0}", sqlsid)
+
+        var sqltag = ""
+        if (!tag.isNullOrBlank() && tag != "0") {
+            if (tag.contains(',')) {
+                var ss = ""
+                for (s in tag.split(",")) {
+                    ss = "$ss,'$s'"
+                }
+                sqltag = "and t1.tags in ({0})".replace("{0}", ss.substring(1))
+            } else {
+                sqltag = "and t1.tags = '{0}'".replace("{0}", tag)
+            }
+        }
+        sql = sql.replace("{1}", sqltag)
+
+        var items = create!!.resultQuery(sql, n, (p-1)*n).fetch()
+        return items
+    }
 
     /**
      * PC端取得活动信息、活动参与人数、活动收藏人数
