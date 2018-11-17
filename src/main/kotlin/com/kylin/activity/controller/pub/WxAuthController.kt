@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*
 /**
  * 小程序登录认证结果
  */
-data class WxAuthResult (
+data class WxAuthResult(
         var openid: String? = null,
         var sessionKey: String? = null,
         var sessionId: String? = null,
@@ -37,6 +37,25 @@ data class WxAuthResult (
         var country: String? = null,
         var language: String? = null,
         var unionId: String? = null
+)
+
+/**
+ * 小程序用户手机号
+ */
+data class WxPhoneNumberInfo(
+        var code: Int? = null,
+        var phoneNumber: String? = null,
+        var purePhoneNumber: String? = null,
+        var countryCode: String? = null,
+        var watermark: WaterMark? = null
+)
+
+/**
+ * 小程序数据水印
+ */
+data class WaterMark(
+        var timestamp: String? = null,
+        var appid: String? = null
 )
 
 /**
@@ -157,7 +176,7 @@ class WxAuthController {
     }
 
     /**
-     * 登录
+     * 获取小程序用户信息
      * @param sessionKey: 会话密钥
      * @param encryptedData: 消息密文
      * @param ivStr: 加密算法的初始向量
@@ -165,8 +184,8 @@ class WxAuthController {
      */
     @GetMapping("/getMiniAppUserInfo")
     fun getMiniAppUserInfo(@RequestParam(required = true) sessionKey: String
-                    ,@RequestParam(required = true) encryptedData: String
-                    ,@RequestParam(required = true) ivStr: String): Any {
+                           , @RequestParam(required = true) encryptedData: String
+                           , @RequestParam(required = true) ivStr: String): Any {
 
         return try {
             val userInfo = this.wxService!!.maService!!.userService.getUserInfo(sessionKey, encryptedData, ivStr)
@@ -180,6 +199,34 @@ class WxAuthController {
             result.country = userInfo.country
             result.language = userInfo.language
             result.unionId = userInfo.unionId
+            result.code = 200
+
+            JsonUtils.toJson(result)
+        } catch (e: WxErrorException) {
+            LogUtil.printLog(e, WxAuthController::class.java)
+            e.toString()
+        }
+    }
+
+    /**
+     * 获取小程序微信手机号码
+     * @param sessionKey: 会话密钥
+     * @param encryptedData: 消息密文
+     * @param ivStr: 加密算法的初始向量
+     * @return WxAuthResult
+     */
+    @GetMapping("/getMiniAppPhoneNumberInfo")
+    fun getMiniAppPhoneNumberInfo(@RequestParam(required = true) sessionKey: String
+                                  , @RequestParam(required = true) encryptedData: String
+                                  , @RequestParam(required = true) ivStr: String): Any {
+
+        return try {
+            val phoneNumberInfo = this.wxService!!.maService!!.userService.getPhoneNoInfo(sessionKey, encryptedData, ivStr)
+            var result = WxPhoneNumberInfo()
+            result.phoneNumber = phoneNumberInfo.phoneNumber
+            result.purePhoneNumber = phoneNumberInfo.purePhoneNumber
+            result.countryCode = phoneNumberInfo.countryCode
+            result.watermark = WaterMark(phoneNumberInfo.watermark.timestamp, phoneNumberInfo.watermark.appid)
 
             result.code = 200
 
@@ -246,8 +293,7 @@ class WxAuthController {
 
                 userService!!.insert(user)
                 LogUtil.printLog("注册用户OK, ID: ${user.id}")
-            }
-            else {
+            } else {
                 user.username = username
                 user.mobile = username
                 if (user.password.isNullOrBlank()) {
@@ -262,8 +308,7 @@ class WxAuthController {
                 if (user.displayname.isNullOrBlank()) {
                     //显示名称与登录名一致
                     user.displayname = nickName
-                }
-                else if (user.displayname.startsWith("1")) {
+                } else if (user.displayname.startsWith("1")) {
                     //以手机号码首位字符串"1"开头，则更新成为昵称
                     user.displayname = nickName
                 }
@@ -282,8 +327,7 @@ class WxAuthController {
             messageResult.code = 200
             messageResult.message = "SUCCESS"
 
-        }
-        else {
+        } else {
             messageResult.code = -1
             messageResult.message = "短信验证码无效或已过期！"
         }
