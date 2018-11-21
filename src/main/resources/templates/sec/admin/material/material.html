@@ -48,7 +48,7 @@
             <form class="am-form am-form-horizontal" data-am-validator method="post"
                   action="/sec/admin/material/save">
                 <input type="hidden" id="id" name="id" placeholder="" th:value="${material.id}"/>
-
+                <input type="hidden" name="created" th:value="${material.created}"/>
                 <fieldset>
 
                     <div class="am-form-group">
@@ -65,10 +65,28 @@
                     <div class="am-form-group">
                         <label for="category" class="am-u-sm-2 am-form-label">分组</label>
                         <div class="am-u-sm-10">
-                            <input required type="text" id="category" name="category"
-                                   th:value="${material.category}"
-                                   placeholder="请输入分组标题"/>
-                            <span class="c-avatar-tip"></span>
+                            <select required="required" id="category" name="category" placeholder="请选择分组类型"
+                                    data-am-selected="">
+                                <option value="">--请选择--</option>
+                                <option th:selected="${material.category=='人物'}"
+                                        th:value="人物" th:text="人物"></option>
+                                <option th:selected="${material.category=='运动'}"
+                                        th:value="运动" th:text="运动"></option>
+                                <option th:selected="${material.category=='风景'}"
+                                        th:value="风景" th:text="风景"></option>
+                                <option th:selected="${material.category=='美食'}"
+                                        th:value="美食" th:text="美食"></option>
+                                <option th:selected="${material.category=='影视'}"
+                                        th:value="影视" th:text="影视"></option>
+                                <option th:selected="${material.category=='动物'}"
+                                        th:value="动物" th:text="动物"></option>
+                                <option th:selected="${material.category=='花卉'}"
+                                        th:value="花卉" th:text="花卉"></option>
+                                <option th:selected="${material.category=='广告'}"
+                                        th:value="广告" th:text="广告"></option>
+                                <option th:selected="${material.category=='其它'}"
+                                        th:value="其它" th:text="其它"></option>
+                            </select>
                         </div>
                     </div>
                     <div class="am-form-group">

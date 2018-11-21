@@ -96,7 +96,28 @@ $(function () {
                 },
                 {"data": "name", "width": "100px"},
                 {"data": "created"},
-                {"data": "category"},
+                {"data": "category",defaultContent: "",
+                    render: function (data, type, row) {
+                        if (data == "人物") {
+                            return "人物"
+                        } else if (data == "运动") {
+                            return "运动"
+                        } else if (data == "风景") {
+                            return "风景"
+                        } else if (data == "美食") {
+                            return "美食"
+                        } else if (data == "影视") {
+                            return "影视"
+                        } else if (data == "动物") {
+                            return "动物"
+                        } else if (data == "花卉") {
+                            return "花卉"
+                        } else if (data == "广告") {
+                            return "广告"
+                        } else if(data=="其它") {
+                            return "其它"
+                        }
+                    }},
                 {"data": "sequence"}
             ],
             //定义指定的栏
@@ -116,6 +137,7 @@ $(function () {
             //推迟渲染
             deferRender: true
         });
+
     //添加索引号
     t.on('order.dt search.dt', function () {
         t.column(1, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
@@ -129,6 +151,7 @@ $(function () {
     $("#btnSearch").click(function () {
         t.ajax.reload();
     })
+
 
     /**
      * 添加内容
